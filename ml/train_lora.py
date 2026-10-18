@@ -74,12 +74,24 @@ def source_manifest_paths(labels_path: Path, root: Path) -> list[dict[str, str]]
     return result
 
 
-def make_caption_template(labels_path: Path, output: Path, root: Path = ROOT) -> int:
+def make_caption_template(
+    labels_path: Path, output: Path, root: Path = ROOT, overwrite: bool = False
+) -> int:
     rows = source_manifest_paths(labels_path, root)
     output = output.expanduser()
     if not output.is_absolute():
-        output = ROOT / output
+        output = root / output
     output = output.resolve()
+    if output == labels_path.resolve():
+        raise ValueError("Caption template cannot overwrite the original training-labels CSV.")
+    for row in rows:
+        source = (root / row["path"]).resolve()
+        if output == source:
+            raise ValueError(f"Caption template cannot overwrite a source image: {source}")
+    if output.exists() and not overwrite:
+        raise FileExistsError(
+            f"Caption template already exists: {output}. Move it aside or pass --overwrite-caption-template explicitly."
+        )
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=["path", "caption"], lineterminator="\n")
@@ -364,6 +376,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--captions-csv", type=Path, help="Reviewed local CSV with path,caption columns")
     parser.add_argument("--metadata-csv", type=Path, help="Local report from extract_generation_metadata.py")
     parser.add_argument("--caption-template-output", type=Path, default=Path("data/cache/lora-captions-template.csv"))
+    parser.add_argument("--overwrite-caption-template", action="store_true", help="Explicitly overwrite an existing caption template, never the labels manifest or source images")
     parser.add_argument("--model", help="Local Diffusers directory or an explicit/cached model identifier")
     parser.add_argument("--family", choices=("auto", "sd", "sdxl"), default="auto")
     parser.add_argument(
@@ -441,6 +454,34 @@ def choose_precision(torch: Any, requested: str) -> str:
     return requested
 
 
+def validate_resume_compatibility(output_dir: Path, current: dict[str, Any]) -> None:
+    previous_path = output_dir / "training-config.json"
+    if not previous_path.is_file():
+        raise ValueError(
+            "Cannot resume safely without training-config.json from the original run. "
+            "Start a new output directory rather than guessing the prior dataset/configuration."
+        )
+    try:
+        previous = json.loads(previous_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"Could not read previous training configuration: {exc}") from exc
+    for key in (
+        "model", "model_family", "dataset_manifest_sha256",
+        "training_image_paths", "validation_image_paths",
+    ):
+        if previous.get(key) != current.get(key):
+            raise ValueError(f"Resume refused because {key} differs from the original run.")
+    previous_parameters = previous.get("parameters", {})
+    current_parameters = current.get("parameters", {})
+    for key in (
+        "resolution", "train_batch_size", "gradient_accumulation_steps",
+        "max_train_steps", "learning_rate", "rank", "seed", "precision",
+        "checkpointing_steps", "validation_ratio",
+    ):
+        if previous_parameters.get(key) != current_parameters.get(key):
+            raise ValueError(f"Resume refused because training parameter {key} differs from the original run.")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -460,7 +501,7 @@ def main(argv: list[str] | None = None) -> int:
         if not output.is_absolute():
             output = root / output
         try:
-            count = make_caption_template(labels, output, root)
+            count = make_caption_template(labels, output, root, args.overwrite_caption_template)
         except (OSError, csv.Error, UnicodeError, ValueError) as exc:
             parser.error(str(exc))
         print(f"Created local caption template for {count} manifest paths: {output.resolve()}")
@@ -625,6 +666,8 @@ def main(argv: list[str] | None = None) -> int:
             "training_image_paths": [row["path"] for row in train_rows],
             "validation_image_paths": [row["path"] for row in validation_rows],
         }
+        if args.resume_from_checkpoint:
+            validate_resume_compatibility(output_dir, training_config)
         (output_dir / "training-config.json").write_text(
             json.dumps(training_config, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )
