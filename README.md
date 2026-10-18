@@ -15,7 +15,7 @@ Proyecto privado e independiente para crear un generador de personajes anime de 
 
 ## Estado actual del repositorio
 
-La rama `main` ya contiene **546 imágenes: 515 nombres que empiezan por `from-PixAI-` y 31 nombres numéricos**, con un total aproximado de **506,5 MB**. Son datos de inventario tomados de la API de Git; todavía no se verificaron visualmente ni se aprobaron sus derechos de entrenamiento.
+La rama `main` contiene **546 imágenes: 515 nombres que empiezan por `from-PixAI-` y 31 nombres numéricos**, con un total aproximado de **506,5 MB**. Se conserva cada nombre original porque se usa como pista para rastrear la generación; el modelo base y la(s) LoRA se registran en columnas separadas, nunca se deducen automáticamente del nombre. Las imágenes todavía no están aprobadas para entrenamiento.
 
 No he movido ni sobrescrito las imágenes existentes. Se añadirá un inventario local de dimensiones, transparencia, hash y posibles duplicados antes de seleccionar las primeras 100.
 
@@ -56,3 +56,8 @@ Los términos oficiales de PixAI dicen que no reclama la propiedad de las imáge
 ## Lo que todavía no está terminado
 
 No hay un modelo entrenado, no se ha demostrado el límite de 2 GB y las imágenes de este repositorio todavía necesitan inspección visual y de procedencia. Los documentos nuevos preparan la siguiente fase sin afirmar que esas pruebas ya se han realizado.
+
+
+### Rastro del modelo base y LoRA
+
+En `data/training-labels.csv` usa `base_model_identifier`, `lora_identifiers` y `lora_weights_or_settings` para recordar qué modelo base y qué LoRA(s)/pesos se usaron al producir una imagen. El nombre del archivo se conserva intacto y la asociación se debe confirmar manualmente. Esto ayuda a agrupar imágenes por origen, pero no convierte automáticamente ninguna imagen en apta para entrenar.
