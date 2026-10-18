@@ -37,6 +37,21 @@ Buscar bases de cuerpo, cabezas, ojos, cabello delantero/trasero, torso, brazos,
 
 Abre [tools/dataset-reviewer/index.html](tools/dataset-reviewer/index.html) en el navegador o consulta su [README](tools/dataset-reviewer/README.md). Selecciona la carpeta raíz del clon local y carga opcionalmente `data/training-labels.csv`. La interfaz muestra 24 imágenes por página, permite filtrar y editar etiquetas y exporta un CSV. No sube imágenes ni modifica originales.
 
+### Descargar los primeros paquetes gráficos CC0
+
+Con Python 3.10+ no hace falta instalar dependencias extra para conseguir los ZIP de las fuentes originales y dejarlos en una caché local excluida de Git:
+
+```bash
+python scripts/fetch_asset_packs.py --pack all
+```
+
+Esto obtiene dos paquetes de OpenGameArt con tamaño esperado registrado: **Anime Girl and Boy Portraits** (rostro, ojos, boca y pelo; estilo anime pero sin cuerpo/piernas) y **Customizable Character Pack** (fuente GIMP y 16 ejemplos de 64×96; modular y alineado, pero pixel/cartoon). El script comprueba tamaño e integridad, calcula SHA-256, comprueba rutas ZIP inseguras y extrae bajo `data/asset-cache/`. Si el publicador cambia el archivo, el script aborta para que se revise manualmente. No mezcla los dos estilos, no marca los archivos como permitidos para IA, y no los añade automáticamente a Git. Ver [guía de recursos](docs/RESOURCE_HUNT.md).
+
+Para refrescar deliberadamente un paquete existente conservando la copia anterior:
+```bash
+python scripts/fetch_asset_packs.py --pack anime-portraits --force
+```
+
 ### Auditoría de dimensiones y duplicados
 
 Instala Python 3.10+ y las dependencias:
