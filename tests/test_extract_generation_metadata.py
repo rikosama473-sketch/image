@@ -29,10 +29,9 @@ class GenerationMetadataTests(unittest.TestCase):
         self.assertEqual(values["sampler"], "Euler a")
         self.assertEqual(values["cfg_scale"], "6.5")
         self.assertEqual(values["seed"], "1234")
-        self.assertEqual(
-            extractor.parse_parameters("portrait <lora:my-style:0.8>")["lora_identifiers"],
-            "my-style@0.8",
-        )
+        lora = extractor.parse_parameters("portrait <lora:my-style:0.8>")
+        self.assertEqual(lora["lora_identifiers"], "my-style@0.8")
+        self.assertEqual(lora["lora_weights_or_settings"], "my-style=0.8")
 
     def test_embedded_metadata_is_exported_without_changing_image(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -56,6 +55,7 @@ class GenerationMetadataTests(unittest.TestCase):
             self.assertEqual(row["negative_prompt"], "blur")
             self.assertEqual(row["base_model_identifier"], "compatible-base")
             self.assertIn("styleA", row["lora_identifiers"])
+            self.assertIn("styleA=0.75", row["lora_weights_or_settings"])
             self.assertEqual(row["steps"], "20")
             self.assertEqual(row["seed"], "42")
             self.assertEqual(row["metadata_present"], "true")
