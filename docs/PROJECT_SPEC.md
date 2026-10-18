@@ -1,45 +1,51 @@
 # Especificación de IMAGE
 
 ## Producto
-Generador de personajes anime de uso local, estilo limitado, interfaz sencilla y consumo de memoria medido. Debe permitir cambiar atributos visuales controlados, no actuar como un generador de escenas universal.
+Generador local de imágenes anime que aprende el patrón visual de la colección propia. Debe permitir escribir descripciones, ajustar el estilo aprendido, producir variantes y guardar PNG y parámetros. Es independiente de WordWaifu y CharacterWord.
 
-## Generación esperada
-- Cuerpo/personaje completo en un estilo anime constante.
-- Controles: peinado, categoría de ropa, tipo de pierna/calzado, pose, paleta.
-- Fondo: transparente cuando los datos realmente tengan alfa/segmentación; en caso contrario, fondo plano o estilizado añadido en una fase de composición. No confundir fondo eliminado con fondo blanco.
-- Tamaño inicial de investigación: 64×96; aumentar únicamente después de medir los errores anatómicos y el coste de RAM.
-- Salida final: PNG; versiones compactas opcionales para vista previa.
-- Semilla y parámetros guardados para reproducir generaciones.
+## Arquitectura prioritaria
+- **Modelo base generativo compatible:** aporta la capacidad general de generar imágenes. Escoger después de leer metadatos, comprobar compatibilidad, licencia y uso de recursos.
+- **LoRA de estilo propia:** entrenada con un conjunto pequeño, curado y autorizado. Aprende rasgos comunes del estilo; no es un modelo independiente ni asegura copia pixel a pixel.
+- **Motor local de inferencia:** carga el modelo base y una o más adaptaciones compatibles; gestiona prompt, prompt negativo, semilla, dimensiones, pesos/escala, generación de variaciones, guardado y errores.
+- **Interfaz sencilla:** prompt, controles principales, vista previa, historial/galería y parámetros reproducibles. No requiere una aplicación gigante ni un formulario de metadatos.
 
-## Modelo
-- Inicialización aleatoria; no checkpoint general de terceros, LoRA dependiente de base ni DMD2/teacher distillation.
-- Baseline futuro: GAN convolucional condicional pequeño a baja resolución, comparado con un VAE si el GAN colapsa o produce demasiados defectos.
-- Las condiciones se entrenan a partir de etiquetas explícitas de cabello, ropa, piernas, pose y fondo. Sin esas etiquetas, no se puede prometer que cada selector controle su atributo.
-- Dataset piloto: seleccionar 100 imágenes auditadas del corpus existente si son adecuadas. No entrenar automáticamente las 434 imágenes completas.
-- Data augmentation solo dentro de límites que no alteren anatomía/etiquetas; espejado solo si la pose/ropa lo permite.
+## Objetivo visual
+- Aprender similitudes de línea, paleta, sombreado, proporción, rostro, cabello y acabado presentes en las imágenes aprobadas.
+- Generar personajes nuevos con variaciones controlables. Los controles anatómicos independientes solo se prometerán si se implementan y evalúan mediante entrenamiento/captions, máscaras, referencias o un subsistema compositor.
+- Para reproducir exactamente una imagen previa, guardar el original y su hash; no atribuir esa garantía a una LoRA.
 
-## Presupuesto
-- Objetivo de inferencia: ≤ 2 GB de RAM del sistema, medido con proceso/modelo y herramienta de interfaz activos.
-- Entrenamiento: presupuesto aparte; no prometer que cabe en 2 GB.
-- Registrar el peak RSS, tiempo por imagen y tamaño del checkpoint.
-- No utilizar pesos de una IA externa para inicializar, acelerar ni destilar la arquitectura del generador propio.
+## Entrenamiento y datos
+- Ruta principal: adaptar un modelo generativo preentrenado mediante LoRA, no entrenar todo desde inicialización aleatoria.
+- No fijar previamente SD 1.5, SDXL o cualquier otra familia. Primero extraer metadatos de las imágenes; las LoRAs son dependientes de un modelo base compatible.
+- Agrupar por familia de checkpoint si existen fuentes incompatibles. No mezclar sin revisión imágenes de estilos/modelos distintos en una única LoRA.
+- Usar solo imágenes que hayan pasado revisión visual y de permiso de entrenamiento. No entrenar automáticamente con las 759 imágenes.
+- Separar validación. Mantener captions/prompts y metadatos verificables; nunca adivinar el modelo o la LoRA a partir del nombre del archivo.
+- Registrar dataset/manifest, procedencia, permisos, base exacta y hash/revisión, versión del trainer, configuración, semilla, checkpoints, logs y comparativas.
 
-## Condiciones para elegir el conjunto
-Cada imagen debe tener:
-1. Origen identificado; el nombre del archivo es solo una pista.
-2. Revisión visual humana y revisión de posibles personajes/logos de terceros.
-3. Permiso de entrenamiento registrado.
-4. Una etiqueta de estilo y valores para pelo, ropa, piernas, pose y fondo.
-5. Dimensión y canal alfa comprobados.
-6. Revisión de duplicados exactos y perceptuales.
+## Recursos y perfiles
+- La meta es **bajo consumo medido**, no una cifra publicitaria. El objetivo anterior de ≤ 2 GB de RAM del sistema no se considera factible ni cumplido para un pipeline moderno de difusión hasta que una prueba reproducible lo demuestre.
+- Medir RAM de sistema y VRAM por separado, pico de memoria, tiempo de generación, descarga/disco, tamaño de la LoRA y calidad.
+- Comparar familias compatibles de modelo base con una prueba breve y resolución inicial moderada; escoger por calidad/estilo, licencia y recursos reales.
+- Evaluar CPU-only, GPU local y/o ejecución remota como perfiles separados. No subir imágenes a servicios externos sin acción y consentimiento explícitos.
+- Pesos grandes y resultados de prueba se guardan en directorios locales ignorados por Git.
 
-## Prohibiciones del pipeline
-- No entrenar por defecto sobre todo el directorio.
-- No cambiar ni borrar originales automáticamente.
-- No incluir imágenes sin permiso verificado.
-- No declarar el modelo como entrenado o el objetivo de 2 GB como cumplido hasta medirlo.
+## Calidad y pruebas de aceptación
+1. El extractor funciona con imágenes con y sin metadatos y no altera originales.
+2. Se conocen modelo base y origen de la mayor proporción posible de la colección; lo que no se pueda confirmar queda marcado como desconocido.
+3. La LoRA piloto produce mejoras consistentes en un conjunto de validación, no solo en las imágenes memorizadas.
+4. Las comparativas utilizan prompts, semillas y parámetros registrados.
+5. La interfaz puede cargar un modelo y la adaptación compatible, generar una salida y guardarla con sus parámetros.
+6. Las mediciones de recursos y las limitaciones están documentadas sin prometer un presupuesto no medido.
+7. Todos los originales, anotaciones y decisiones de permiso permanecen recuperables.
 
+## Referencias técnicas
+- [Diffusers: LoRA training](https://huggingface.co/docs/diffusers/training/lora): adaptación de una cantidad menor de parámetros y carga posterior sobre un modelo base.
+- [Diffusers: SDXL training](https://huggingface.co/docs/diffusers/training/sdxl): técnicas de gestión de memoria y advertencias por complejidad/sobreajuste.
+- [rhedak/anime-character-creator](https://github.com/rhedak/anime-character-creator): referencia complementaria para composición procedural SVG, no reemplaza la meta de un generador basado en modelo aprendido.
 
-## Referencias de arquitectura investigadas
-- [rhedak/anime-character-creator](https://github.com/rhedak/anime-character-creator): técnica paramétrica de SVG con anclas de anatomía y prendas en capas. Solo referencia de código MIT; su arte de referencia se audita separadamente.
-- [RGS_Dev modular character pack](https://rgsdev.itch.io/free-cc0-modular-animated-vector-characters-2d): CC0 en la fuente original; candidato técnico para ensayo de partes/animación, pero estilo cartoon y no modelo de arte anime final.
+## Fuera del primer hito
+- Entrenar un modelo base completo desde cero.
+- Crear un catálogo obligatorio de assets gráficos externos.
+- Garantizar 2 GB de RAM sin una prueba en hardware real.
+- Garantizar reproducción pixel a pixel de una imagen con una LoRA.
+- Controles anatómicos exactos que todavía no estén respaldados por datos y pruebas.
