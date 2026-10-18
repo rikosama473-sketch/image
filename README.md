@@ -1,83 +1,75 @@
-# IMAGE — generador de personajes anime
+# IMAGE — generador de imágenes anime con estilo propio
 
-Proyecto privado e independiente para crear un generador de personajes anime de un estilo controlado, con cambios de cabello, ropa, piernas y silueta, fondos transparentes o sencillos/estilizados y una ejecución objetivo de hasta aproximadamente **2 GB de RAM del sistema**.
+Proyecto privado e independiente para crear un **motor local de generación de imágenes** que aprenda el patrón visual de la colección del usuario. La ruta prioritaria es utilizar un modelo base generativo compatible y entrenar una LoRA propia con ejemplos seleccionados, buscando imágenes nuevas de estilo similar con bajo consumo de recursos.
 
 **No forma parte de WordWaifu ni de CharacterWord.**
 
-## Restricciones técnicas acordadas
+## Objetivo vigente
 
-- El generador propio se entrenará desde inicialización aleatoria: no usar Haruka v2, SDXL, Stable Diffusion ni otro checkpoint de generación como base.
-- No usar DMD2 ni destilación de un modelo docente como arquitectura central.
-- Un LoRA no es un modelo independiente: requiere un modelo base compatible. Las imágenes iniciales se consideran un conjunto de entrenamiento propio desde cero, no un LoRA.
-- Primera prueba a 64 × 96 píxeles con una arquitectura convolucional pequeña. Las 100 imágenes son un experimento de viabilidad; no garantizan buena anatomía o variedad.
-- Entrenamiento y generación son presupuestos separados. El objetivo de 2 GB para inferencia debe probarse en hardware real; no se afirma que entrenar entre en esa memoria.
-- Para variar cabello, prendas y piernas de verdad, necesitamos anotaciones por atributo, y preferentemente piezas/capas alineadas. Las imágenes completas sin etiquetas no proporcionan automáticamente control modular.
+1. Aprovechar las imágenes propias para descubrir qué estilo, prompts, checkpoints y LoRAs se usaron.
+2. Curar un conjunto de entrenamiento consistente y revisar la procedencia/permisos.
+3. Elegir un modelo base compatible con esas imágenes y el hardware disponible.
+4. Entrenar una LoRA propia que aprenda rasgos visuales comunes sin limitarse a memorizar imágenes.
+5. Crear una aplicación local para generar y guardar nuevas imágenes con controles reproducibles.
+6. Medir memoria, velocidad y calidad; optimizar después de tener una línea base real.
 
-## Estado actual del repositorio
+## Decisión técnica
 
-El árbol actual de `main` contiene **759 imágenes: 728 nombres que empiezan por `from-PixAI-` y 31 nombres numéricos**, con un total de **706.409.784 bytes (aprox. 706,4 MB)**. El manifiesto se ha sincronizado con esas 759 rutas, conservando anotaciones anteriores y dejando las 213 filas nuevas pendientes. Se conserva cada nombre original porque se usa como pista para rastrear la generación; el modelo base y la(s) LoRA se registran en columnas separadas, nunca se deducen automáticamente del nombre. Las imágenes todavía no están aprobadas para entrenamiento.
+- **No entrenar desde cero como ruta principal.** Una arquitectura pequeña creada con pesos aleatorios no ofrece por sí sola la capacidad de un generador moderno de texto a imagen. La adaptación LoRA es la opción inicial que se debe probar.
+- El modelo base y la LoRA deben ser de familias/versiones compatibles. Primero hay que leer los metadatos incrustados en las imágenes; no seleccionar SD 1.5, SDXL u otra familia por intuición.
+- `lora_identifiers` y `lora_weights_or_settings` describen la LoRA y la configuración que generaron una imagen cuando se conocen. `lora_target_identifiers` es un campo separado para la LoRA que se quiera probar como destino.
+- No se promete reproducción pixel a pixel mediante una LoRA. Para la salida exacta se conserva el archivo original y su hash; para imágenes nuevas, la meta es similitud estilística y control.
+- El objetivo antiguo de 2 GB de RAM del sistema no está demostrado y no se debe tratar como garantía para difusión moderna. La memoria del sistema, la VRAM, el tiempo por imagen, el tamaño del modelo y la calidad se medirán por separado.
 
-No he movido ni sobrescrito las imágenes existentes. Aún falta ejecutar la auditoría local de dimensiones, transparencia, hashes y posibles duplicados antes de seleccionar las primeras 100.
+## Colección existente
 
-## Prioridad inmediata: conseguir piezas gráficas compatibles
+El inventario de `main` registra **759 imágenes rasterizadas** (aprox. 706,4 MB): 728 nombres empiezan por `from-PixAI-` y 31 son nombres numéricos. `data/training-labels.csv` conserva las rutas/nombres originales y campos para modelo base, LoRA de origen, configuración y LoRA destino.
 
-Buscar bases de cuerpo, cabezas, ojos, cabello delantero/trasero, torso, brazos, manos, pelvis, piernas, zapatos y ropa en formatos transparentes y alineados. Cada paquete debe pasar por una revisión de licencia, inventario del ZIP y prueba de ensamblaje. Ver [docs/RESOURCE_HUNT.md](docs/RESOURCE_HUNT.md).
+El nombre de un archivo es una pista humana, no prueba del checkpoint ni de la LoRA. Las imágenes todavía necesitan revisión visual, de procedencia, contenido y permisos. No se debe entrenar automáticamente con toda la carpeta.
 
-## Carpetas nuevas
+## Primer paso: rescatar los metadatos
 
-- `assets/parts/`: recursos gráficos que se puedan redistribuir de acuerdo con sus licencias; no añadir archivos ajenos hasta revisar los términos.
-- `data/training-labels.csv`: inventario de las imágenes existentes y plantilla de revisión/atributos.
-- `data/asset-sources.json`: páginas originales, licencias y estado de revisión.
-- `scripts/audit_dataset.py`: auditoría local de dimensiones, canal alfa, SHA-256 y hash perceptual básico.
-- `docs/`: definición del modelo, criterios de datos y búsqueda de recursos.
+Con Python 3.10+ y las dependencias de `requirements.txt`:
 
-## Herramientas locales
-
-### Revisión visual y etiquetas
-
-Abre [tools/dataset-reviewer/index.html](tools/dataset-reviewer/index.html) en el navegador o consulta su [README](tools/dataset-reviewer/README.md). Selecciona la carpeta raíz del clon local y carga opcionalmente `data/training-labels.csv`. La interfaz muestra 24 imágenes por página, permite filtrar y editar etiquetas y exporta un CSV. No sube imágenes ni modifica originales.
-
-### Descargar los primeros paquetes gráficos CC0
-
-Con Python 3.10+ no hace falta instalar dependencias extra para conseguir los ZIP de las fuentes originales y dejarlos en una caché local excluida de Git:
-
-```bash
-python scripts/fetch_asset_packs.py --pack all
-```
-
-Esto obtiene dos paquetes de OpenGameArt con tamaño esperado registrado: **Anime Girl and Boy Portraits** (rostro, ojos, boca y pelo; estilo anime pero sin cuerpo/piernas) y **Customizable Character Pack** (fuente GIMP y 16 ejemplos de 64×96; modular y alineado, pero pixel/cartoon). El script comprueba tamaño e integridad, calcula SHA-256, comprueba rutas ZIP inseguras y extrae bajo `data/asset-cache/`. Si el publicador cambia el archivo, el script aborta para que se revise manualmente. No mezcla los dos estilos, no marca los archivos como permitidos para IA, y no los añade automáticamente a Git. Ver [guía de recursos](docs/RESOURCE_HUNT.md).
-
-Para refrescar deliberadamente un paquete existente conservando la copia anterior:
-```bash
-python scripts/fetch_asset_packs.py --pack anime-portraits --force
-```
-
-### Auditoría de dimensiones y duplicados
-
-Instala Python 3.10+ y las dependencias:
-
-```bash
+~~~bash
 python -m pip install -r requirements.txt
+python scripts/extract_generation_metadata.py --root .
+~~~
+
+El informe se guarda localmente en `data/cache/generation-metadata.csv`, una ruta excluida de Git. Cuando existen metadatos compatibles, el script intenta extraer prompt, prompt negativo, modelo/checkpoint, hash, LoRA, sampler, pasos, CFG y semilla. Los campos que no se encuentren quedan vacíos; **no se adivina la LoRA a partir del nombre**. Revisar el CSV antes de usarlo para decidir el modelo base.
+
+## Auditoría y curación
+
+~~~bash
 python scripts/audit_dataset.py --root . --output data/image-audit.csv
 python scripts/sync_training_labels.py --root .
-```
+~~~
 
-La auditoría no borra ni modifica imágenes; escribe un informe CSV con dimensiones, modo, alfa, SHA-256 y hash perceptual básico. La sincronización incorpora nuevas rutas a `data/training-labels.csv` sin borrar etiquetas revisadas. Para entrenar, completa también los estados de licencia/autorización y las etiquetas de cabello, ropa, piernas, pose y fondo.
+La auditoría reporta dimensiones, modo, transparencia, SHA-256 y un hash perceptual básico. No borra ni cambia originales. Completar las revisiones de contenido, procedencia y entrenamiento en `data/training-labels.csv`. Después:
 
-## Uso de PixAI
+- agrupar imágenes por checkpoint/LoRA compatible cuando esos datos puedan confirmarse;
+- descartar/corregir duplicados y casos inadecuados;
+- escribir captions coherentes y seleccionar ejemplos representativos;
+- mantener una separación de validación no usada durante el entrenamiento;
+- comparar un piloto pequeño con prompts/semillas de prueba antes de ampliar.
 
-Los términos oficiales de PixAI dicen que no reclama la propiedad de las imágenes que tú generas y que puedes usarlas, pero también hacen responsable al usuario de no infringir derechos de terceros. Un nombre de archivo que contiene `from-PixAI` no demuestra por sí solo que sea un resultado tuyo ni que no represente un personaje ajeno. Véase [PixAI Terms](https://pixai.art/en/terms).
+La guía detallada está en [docs/DATASET_GUIDE.md](docs/DATASET_GUIDE.md), y la arquitectura y hoja de ruta en [docs/IMAGE_MODEL_STRATEGY.md](docs/IMAGE_MODEL_STRATEGY.md).
 
-## Lo que todavía no está terminado
+## Motor y creador de imágenes
 
-No hay un modelo entrenado, no se ha demostrado el límite de 2 GB y las imágenes de este repositorio todavía necesitan inspección visual y de procedencia. Los documentos nuevos preparan la siguiente fase sin afirmar que esas pruebas ya se han realizado.
+La aplicación final debe cargar un modelo base y la LoRA elegida, permitir escribir el prompt, ajustar intensidad de la LoRA, dimensiones y semilla, generar variantes y guardar PNG junto con los parámetros. Las funciones de cambio anatómico por piezas pueden incorporarse después como un subsistema opcional, pero ya no sustituyen la meta principal de generar imágenes nuevas desde el modelo.
 
+Todavía **no hay una LoRA propia entrenada ni un motor de difusión local validado**. El siguiente hito es ejecutar el análisis de metadatos sobre la colección real, confirmar qué información sobrevive en los PNG y elegir el camino de entrenamiento según esa evidencia y el hardware.
 
-### Identificación del modelo, LoRA de origen y LoRA destino
+## Investigación de recursos y licencias
 
-En `data/training-labels.csv` se conserva el nombre original de cada archivo: funciona como una pista humana para identificar la imagen y reconocer qué LoRA quieres asociarle o probar con ella. **No se renombran archivos ni se adivina una LoRA a partir del nombre.**
+`docs/RESOURCE_HUNT.md` conserva la búsqueda de recursos gráficos y motores de composición como vía complementaria. Los assets descargables no forman parte de nuestro dataset de entrenamiento por defecto: la licencia para usarlos en la aplicación, redistribuirlos y entrenar IA se revisa por separado.
 
-- `base_model_identifier`, `lora_identifiers` y `lora_weights_or_settings`: registran el modelo base y las LoRA/ajustes de origen usados para producir la imagen, cuando se conocen.
-- `lora_target_identifiers`: registra la(s) LoRA destino que quieres usar/probar con esa imagen. Es un campo de destino distinto del historial de generación.
+## Principios de seguridad del proyecto
 
-Completa las asociaciones manualmente y deja el campo vacío cuando la identificación no sea segura. Estas etiquetas ayudan a localizar y organizar imágenes, pero no prueban derechos de uso ni autorización para entrenamiento.
+- Mantener las imágenes y los pesos originales sin sobrescritura automática.
+- No ejecutar entrenamiento si `training_permission` continúa sin revisar.
+- No cargar ni enviar imágenes a un servicio remoto silenciosamente.
+- No guardar checkpoints pesados en Git; usar carpetas locales ignoradas.
+- No afirmar que una medida de memoria o una calidad se cumplen hasta medirlas.
+- Mantener el proyecto separado de WordWaifu y CharacterWord.
