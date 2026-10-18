@@ -1,6 +1,8 @@
-# Prototipo del modelo propio
+# Baseline experimental legado: GAN condicional desde cero
 
-Este directorio contiene un baseline de GAN condicional pequeño iniciado con pesos aleatorios. No descarga checkpoints y no usa Haruka v2, SDXL, Stable Diffusion, LoRA como modelo independiente ni DMD2.
+> **No es la ruta principal vigente de IMAGE.** Se conserva solo como experimento comparativo de muy bajo nivel. La meta actual es adaptar un modelo generativo base compatible mediante una LoRA propia y construir el motor local alrededor de esa combinación.
+
+Este directorio contiene un GAN condicional pequeño iniciado con pesos aleatorios. No descarga checkpoints y no proporciona la capacidad de un generador moderno de texto a imagen. Úsalo para comparación experimental, no como solución principal de arte similar a la colección.
 
 ## Dependencias de entrenamiento
 
