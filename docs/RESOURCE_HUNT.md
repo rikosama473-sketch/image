@@ -180,3 +180,38 @@ La ficha indica CC0 y ofrece pequeños sprites con variantes de cazadora/cazador
 4. No incorporar The Rose Charisma al corpus generativo: sus términos prohíben ese uso.
 
 En todos los casos la primera prueba de integración debe ser un montaje de muestra en una carpeta temporal, verificando transparencia, tamaño del lienzo, pivotes, orden de capas y licencias. La presencia de una URL en el catálogo no significa que el archivo haya sido descargado, probado o aprobado.
+
+
+## Herramientas de edición y nuevas fuentes de referencia (18-10-2026)
+
+Esta búsqueda también cubre aplicaciones para **abrir, editar, alinear, recolorear, exportar y animar** las piezas. Que el programa acepte un formato no cambia la licencia de la ilustración ni convierte el archivo en material autorizado para entrenar IA.
+
+### Paquete de ilustraciones completas
+
+**[Free Anime Character Sprites: Full-Body Portraits — FreeGameSprites](https://freegamesprites.com/en/packs/anime-portraits)**
+
+- La ficha declara CC0 para cada uno de sus 40 PNG de 384×512; indica que la descarga incluye `README.md` y `LICENSE.txt`.
+- Sus personajes aparecen sobre fondo transparente y muestran cuerpo completo, ropa y equipamiento, por lo que podrían servir para una galería de personajes, pruebas de interfaz o referencias visuales de estilo.
+- **No es un kit modular:** cada imagen es una ilustración estática completa. No incluye capas de ropa, boca/ojos animados, rig o ciclos de movimiento. Un lienzo común tampoco garantiza pies y siluetas perfectamente alineados entre imágenes.
+- La web aclara que su declaración CC0 resume el catálogo, no una auditoría independiente de los derechos. Antes de integrar archivos, revisar los textos del ZIP, los registros individuales y la procedencia. No aprobarlos automáticamente para entrenamiento.
+
+### Aplicaciones para trabajar con las piezas
+
+| Aplicación / documentación | Para qué sirve en IMAGE | Cautelas |
+|---|---|---|
+| [GIMP](https://www.gimp.org/) | Abrir los XCF de las fuentes ya registradas, revisar visibilidad y orden de capas, alinear componentes, exportar copias PNG con alfa. | Trabajar con copias; el permiso viene del recurso, no de GIMP. |
+| [Krita](https://krita.org/) | Dibujar piezas propias, retocar las autorizadas y mantener rostro, cabello, ropa y extremidades en capas separadas. | Probar el PSD exportado antes de una importación a Live2D. |
+| [Inkscape](https://inkscape.org/) | Abrir y editar SVG, recolorear piezas vectoriales y exportar PNG a la resolución requerida. | Código, muestras y arte de cada proyecto pueden tener licencias distintas. |
+| [Live2D Cubism — importación PSD](https://docs.live2d.com/en/cubism-editor-manual/psd-import/) | Validar una separación detallada de ilustración y probar rigging/deformación de capas. Útil si posteriormente se quiere animar pelo, ojos, boca o ropa. | No es banco de arte ni concede derechos de uso sobre el PSD. Su guía de PSD confirma Photoshop y Clip Studio Paint como los editores validados para importación correcta. |
+| [VRoid Studio](https://vroid.com/en/studio) | Crear personajes anime originales en 3D, variar cabello/ropa y renderizar referencias consistentes desde distintos ángulos; exporta modelos VRM. | No genera por sí mismo un kit 2D de PNG. Los recursos incluidos por pixiv no son CC0 y algunos tienen cláusulas propias; leer [las directrices oficiales](https://vroid.com/en/studio/guidelines), especialmente antes de basar una aplicación generadora pública en mallas/texturas de VRoid. |
+
+### Flujo sugerido de uso
+
+1. **Inventariar antes de editar:** registrar URL original, autor, licencia, formato, tamaño, transparencia y qué se permite hacer con cada recurso.
+2. **Abrir una copia del archivo fuente:** para XCF, empezar por GIMP; para SVG, Inkscape; para crear piezas o reparar bordes, GIMP o Krita.
+3. **Conservar el lienzo de referencia:** cada cabello, ojo, boca, prenda o extremidad debe exportarse sobre la misma dimensión y coordenadas cuando sea un kit por capas. Si la fuente trae pivotes/anchors, guardarlos en un manifiesto aparte.
+4. **Hacer una prueba mínima de montaje:** rostro + pelo trasero + cabeza + pelo delantero + torso + ropa. Comprobar que las capas no dejan huecos, que los bordes alfa no tienen halos y que las prendas coinciden con la base.
+5. **No confundir compatibilidad con licencia:** montaje local, distribución del paquete, uso comercial y entrenamiento generativo son revisiones separadas.
+6. **Mantener el rastro de generación:** en `data/training-labels.csv`, completar `base_model_identifier`, `lora_identifiers` y `lora_weights_or_settings` cuando se conozcan. No adivinar esas columnas desde el nombre del archivo, ni cambiar el nombre original que permite encontrar la procedencia.
+
+La descarga de una fuente es solo el primer paso. La integración requiere verificar los archivos reales, el permiso de uso previsto y una muestra montada correctamente.
