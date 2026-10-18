@@ -10,7 +10,6 @@ from __future__ import annotations
 import argparse
 import json
 import platform
-import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -113,6 +112,8 @@ def main(argv: list[str] | None = None) -> int:
     try:
         device = choose_device(torch, args.device)
         dtype = choose_dtype(torch, args.precision, device)
+        if args.cpu_offload and device != "cuda":
+            raise RuntimeError("--cpu-offload requires a CUDA GPU; choose --device cuda or use --device auto on a CUDA machine.")
     except RuntimeError as exc:
         parser.error(str(exc))
 
@@ -146,8 +147,6 @@ def main(argv: list[str] | None = None) -> int:
             if hasattr(pipe, "enable_vae_slicing"):
                 pipe.enable_vae_slicing()
         if args.cpu_offload:
-            if device != "cuda":
-                parser.error("--cpu-offload requires --device cuda (or --device auto on a CUDA machine).")
             pipe.enable_model_cpu_offload()
         else:
             pipe.to(device)
@@ -163,7 +162,7 @@ def main(argv: list[str] | None = None) -> int:
     output_root = args.output_dir.expanduser()
     if not output_root.is_absolute():
         output_root = Path.cwd() / output_root
-    run_stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    run_stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     run_dir = output_root / f"run-{run_stamp}-seed-{args.seed}"
     run_dir.mkdir(parents=True, exist_ok=False)
 
