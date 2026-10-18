@@ -336,7 +336,7 @@ def main() -> int:
     parser.add_argument("--host", default="127.0.0.1", help="Loopback only by default")
     parser.add_argument("--port", type=int, default=8765)
     args = parser.parse_args()
-    if args.host not in {"127.0.0.1", "localhost", "::1"}:
+    if args.host not in {"127.0.0.1", "localhost"}:
         parser.error("Por seguridad, el servidor solo puede escuchar en loopback.")
     if not 1024 <= args.port <= 65535:
         parser.error("--port debe estar entre 1024 y 65535.")
