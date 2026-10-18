@@ -80,6 +80,123 @@ def _list_outputs(limit: int = 30) -> list[dict[str, Any]]:
     return results
 
 
+SUPPORTED_MODEL_PIPELINES = {
+    "StableDiffusionPipeline": "sd",
+    "StableDiffusionXLPipeline": "sdxl",
+}
+BASE_MODEL_WEIGHT_NAMES = {
+    "model.safetensors",
+    "diffusion_pytorch_model.safetensors",
+    "diffusion_pytorch_model.fp16.safetensors",
+}
+MAX_ASSET_SCAN_DIRS = 600
+MAX_LOCAL_ASSETS = 120
+
+
+def _walk_local_dirs(root: Path, max_dirs: int = MAX_ASSET_SCAN_DIRS):
+    """Walk a local directory without following symlinks or entering hidden/cache folders."""
+    if not root.is_dir() or root.is_symlink():
+        return
+    visited = 0
+    for current, directories, files in os.walk(root, topdown=True, followlinks=False):
+        directory = Path(current)
+        directories[:] = sorted(
+            name for name in directories
+            if not name.startswith(".")
+            and name not in {"__pycache__", "node_modules", ".venv", "venv", "checkpoints"}
+            and not (directory / name).is_symlink()
+        )
+        relative_depth = len(directory.relative_to(root).parts)
+        if relative_depth >= 7:
+            directories[:] = []
+        visited += 1
+        if visited > max_dirs:
+            break
+        yield directory, files
+
+
+def _list_local_assets(root: Path = ROOT) -> dict[str, list[dict[str, str]]]:
+    """List recognised local SD/SDXL model folders and plausible local LoRA files only."""
+    root = root.resolve()
+    models_root = root / "models"
+    trained_lora_root = root / "outputs" / "training-lora"
+    models: list[dict[str, str]] = []
+    loras: list[dict[str, str]] = []
+    model_dirs: set[Path] = set()
+
+    for directory, files in _walk_local_dirs(models_root):
+        if "model_index.json" not in files:
+            continue
+        index_path = directory / "model_index.json"
+        model_dirs.add(directory.resolve())
+        try:
+            index = json.loads(index_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        class_name = str(index.get("_class_name", ""))
+        family = SUPPORTED_MODEL_PIPELINES.get(class_name)
+        if family is None:
+            continue
+        relative = directory.relative_to(root).as_posix()
+        models.append({
+            "path": relative,
+            "family": family,
+            "label": f"{relative} ({'SDXL' if family == 'sdxl' else 'Stable Diffusion'})",
+        })
+        if len(models) >= MAX_LOCAL_ASSETS:
+            break
+
+    def inside_model_directory(directory: Path) -> bool:
+        resolved = directory.resolve()
+        return any(resolved == model_dir or model_dir in resolved.parents for model_dir in model_dirs)
+
+    for directory, files in _walk_local_dirs(models_root):
+        if inside_model_directory(directory):
+            continue
+        for filename in sorted(files):
+            candidate = directory / filename
+            if candidate.suffix.lower() != ".safetensors" or filename in BASE_MODEL_WEIGHT_NAMES:
+                continue
+            if not candidate.is_file() or candidate.is_symlink():
+                continue
+            try:
+                relative = candidate.resolve().relative_to(root).as_posix()
+            except ValueError:
+                continue
+            loras.append({"path": relative, "label": relative})
+            if len(loras) >= MAX_LOCAL_ASSETS:
+                break
+        if len(loras) >= MAX_LOCAL_ASSETS:
+            break
+
+    for directory, files in _walk_local_dirs(trained_lora_root):
+        filename = "pytorch_lora_weights.safetensors"
+        if filename not in files:
+            continue
+        artifact = directory / filename
+        result_path = directory / "training-result.json"
+        if not artifact.is_file() or artifact.is_symlink() or not result_path.is_file():
+            continue
+        try:
+            result = json.loads(result_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if result.get("status") != "completed":
+            continue
+        try:
+            relative = artifact.resolve().relative_to(root).as_posix()
+        except ValueError:
+            continue
+        if not any(item["path"] == relative for item in loras):
+            loras.append({"path": relative, "label": relative})
+        if len(loras) >= MAX_LOCAL_ASSETS:
+            break
+
+    models.sort(key=lambda item: (item["family"], item["path"].casefold()))
+    loras.sort(key=lambda item: item["path"].casefold())
+    return {"models": models[:MAX_LOCAL_ASSETS], "loras": loras[:MAX_LOCAL_ASSETS]}
+
+
 def _validate_payload(data: Any) -> dict[str, Any]:
     if not isinstance(data, dict):
         raise ValueError("El cuerpo de la solicitud debe ser un objeto JSON.")
@@ -262,6 +379,8 @@ class CreatorHandler(BaseHTTPRequestHandler):
             return self._serve_file(UI_ROOT / parsed.path.lstrip("/"))
         if parsed.path == "/api/runs":
             return _json_response(self, 200, {"runs": _list_outputs()})
+        if parsed.path == "/api/local-assets":
+            return _json_response(self, 200, _list_local_assets())
         if parsed.path.startswith("/api/jobs/"):
             job_id = parsed.path.rsplit("/", 1)[-1]
             if not JOB_ID_RE.fullmatch(job_id):
