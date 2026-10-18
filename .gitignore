@@ -218,3 +218,20 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+
+# IMAGE: local training caches, processed data and generated outputs
+.venv/
+venv/
+.env
+data/processed/
+data/cache/
+outputs/
+runs/
+checkpoints/
+models/*.pt
+models/*.pth
+models/*.ckpt
+models/*.onnx
+models/*.safetensors
+*.tmp
