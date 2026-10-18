@@ -215,3 +215,53 @@ Esta búsqueda también cubre aplicaciones para **abrir, editar, alinear, recolo
 6. **Mantener el rastro de generación:** en `data/training-labels.csv`, completar `base_model_identifier`, `lora_identifiers` y `lora_weights_or_settings` cuando se conozcan. No adivinar esas columnas desde el nombre del archivo, ni cambiar el nombre original que permite encontrar la procedencia.
 
 La descarga de una fuente es solo el primer paso. La integración requiere verificar los archivos reales, el permiso de uso previsto y una muestra montada correctamente.
+
+
+## Nueva ronda: PSD anime editables y herramientas de separación (18-10-2026)
+
+Esta ronda añade recursos visualmente cercanos al objetivo anime y dos proyectos que ayudan a diseñar el compositor. **Las capas deben poder montarse y conservar el mismo anclaje; la licencia de cada pack decide por separado si se puede modificar, redistribuir o entrenar con él.** Los archivos nuevos no se han descargado ni agregado a Git.
+
+### 1) [Girl Sprites for Visual Novels — Pepo Kukuru](https://cucurbitapepo.itch.io/girl-sprites-for-visual-novel)
+
+**Candidato prioritario para probar un PSD por capas.** La ficha de itch.io indica que los pagos están deshabilitados y el conjunto se puede obtener gratuitamente. La versión gratuita incluye 4 peinados delanteros, 4 traseros, expresiones reducidas y cuatro opciones de ropa; no incluye zapatos. Hay ZIPs de 12 MB para la versión gratuita/premium y de 97 MB para la versión completa; esta última incluye PSD y CLIP de alta resolución. La ficha declara **CC0 1.0** y afirma que no se usó IA generativa para crear el pack.
+
+- Uso previsto: probar cambios de peinado, ropa, expresiones y mapas de degradado en GIMP, Krita o un editor PSD compatible.
+- Límite: las piezas son capas de una ilustración de personaje, no una biblioteca independiente de cada mano, brazo, pierna y zapato.
+- Revisiones pendientes: inspeccionar el ZIP real y su aviso CC0, anotar el archivo exacto y validar que las capas estén bien alineadas. La autora pide no revender el pack tal cual ni con cambios menores.
+
+### 2) [Miu Sprites — Lia](https://liah0227.itch.io/miusprites)
+
+PSD anime de **28 MB**, con compra mínima de USD 10. La ficha enumera tres outfits (escolar, casual y traje de baño), capas de color para cuerpo/cabello/ropa y capas para ojos, cejas, boca y rubor.
+
+- Uso previsto: referencia premium para un compositor de novela visual con cambio de vestuario, color y expresión.
+- Condiciones visibles: permite juegos personales y comerciales; en proyectos comerciales pide crédito a Lia y prohíbe vender el sprite o atribuirse su autoría.
+- Entrenamiento: no aprobado; la página no concede expresamente permiso para entrenamiento generativo. No comprarlo solo con la expectativa de incorporarlo al dataset.
+
+### 3) [ImageToLayers — separación de capas anime](https://imagetolayers.org/solutions/anime-layer-decomposition)
+
+Herramienta web que anuncia exportación a capas PNG transparentes, ZIP o PSD. Su demostración muestra 29 capas —pelo frontal/trasero, rasgos faciales, ropa, calzado y accesorios—, pero la página aclara que es un ejemplo guardado y no garantiza el mismo resultado para cada imagen. El servicio usa créditos (20 por separación) y las exportaciones gratuitas llevan marca de agua.
+
+- Uso previsto: comprobar si una ilustración que tenemos permiso de editar se puede separar rápidamente y cuánto retoque manual necesita.
+- No usarla para procesar dibujos ajenos sin autorización. Separar una imagen no elimina los derechos de su autor. Revisar términos del servicio antes de guardar o redistribuir resultados.
+
+### 4) [character_creator — uglycygnet](https://github.com/uglycygnet/character_creator)
+
+Prototipo LÖVE2D de compositor modular con esqueleto jerárquico, articulaciones, animaciones idle/walk y datos de personaje separados de los datos de animación. Su licencia de código es MIT, pero el propio README describe módulos de arte como placeholders: **no es un paquete de imágenes listo para usar**.
+
+- Uso previsto: referencia pequeña para pivotes de cabeza, hombro, codo, cadera y rodilla; organización por carpetas de cabello, cara, torso, brazos, manos, piernas, pies, ropa y accesorios.
+- Decisión: estudiar la arquitectura; no confundir código MIT con derechos de arte ni copiar piezas que el repositorio no incluye.
+
+### 5) [2D Character Parts Studio — meomeo-dev](https://github.com/meomeo-dev/2d-character-parts)
+
+Proyecto público que documenta un flujo de 19 piezas transparentes y un pipeline por etapas: referencia global, torso, miembros inferiores, miembros superiores, cabeza y expresiones; incluye plantilla SVG y script de composición PNG. En la ficha revisada no aparece una licencia explícita de código.
+
+- Uso previsto: estudiar la lista de partes y la secuencia de composición.
+- Cautela importante: depende de APIs y modelos externos de generación de imágenes; eso puede generar costos y no coincide con el objetivo de tratar el repositorio como un banco de recursos ya autorizado. No adoptar código, muestras ni salidas hasta aclarar la licencia y los términos del proveedor.
+
+### Secuencia recomendada tras esta búsqueda
+
+1. Probar primero el PSD CC0 declarado de **Girl Sprites for Visual Novels**; la versión gratuita permite evaluar la estructura sin comprar recursos.
+2. Montar un ejemplo con peinado frontal/trasero, expresión y cambio de ropa; comparar las capas exportadas con el canvas de destino.
+3. Evaluar ImageToLayers solo con una imagen propia/autorizada si hace falta separar piezas que no existan por capas.
+4. Usar los dos repositorios de código como referencias de estructura, sin importar contenido no autorizado y sin añadir una API de generación externa a la arquitectura por defecto.
+5. Mantener el nombre original de cada imagen y los campos de modelo/LoRA por separado: sirven para reconstruir la procedencia, no para inferir licencia ni compatibilidad automáticamente.

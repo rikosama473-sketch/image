@@ -73,6 +73,11 @@ Los términos oficiales de PixAI dicen que no reclama la propiedad de las imáge
 No hay un modelo entrenado, no se ha demostrado el límite de 2 GB y las imágenes de este repositorio todavía necesitan inspección visual y de procedencia. Los documentos nuevos preparan la siguiente fase sin afirmar que esas pruebas ya se han realizado.
 
 
-### Rastro del modelo base y LoRA
+### Identificación del modelo, LoRA de origen y LoRA destino
 
-En `data/training-labels.csv` usa `base_model_identifier`, `lora_identifiers` y `lora_weights_or_settings` para recordar qué modelo base y qué LoRA(s)/pesos se usaron al producir una imagen. El nombre del archivo se conserva intacto y la asociación se debe confirmar manualmente. Esto ayuda a agrupar imágenes por origen, pero no convierte automáticamente ninguna imagen en apta para entrenar.
+En `data/training-labels.csv` se conserva el nombre original de cada archivo: funciona como una pista humana para identificar la imagen y reconocer qué LoRA quieres asociarle o probar con ella. **No se renombran archivos ni se adivina una LoRA a partir del nombre.**
+
+- `base_model_identifier`, `lora_identifiers` y `lora_weights_or_settings`: registran el modelo base y las LoRA/ajustes de origen usados para producir la imagen, cuando se conocen.
+- `lora_target_identifiers`: registra la(s) LoRA destino que quieres usar/probar con esa imagen. Es un campo de destino distinto del historial de generación.
+
+Completa las asociaciones manualmente y deja el campo vacío cuando la identificación no sea segura. Estas etiquetas ayudan a localizar y organizar imágenes, pero no prueban derechos de uso ni autorización para entrenamiento.

@@ -11,7 +11,7 @@ SKIP_DIRS = {".git", ".venv", "venv", "__pycache__", "outputs", "runs", "checkpo
 FIELDS = [
     "path", "size_bytes", "git_blob_sha", "filename_origin_hint", "source_url", "author",
     "base_model_identifier", "lora_identifiers", "lora_weights_or_settings", "visual_review", "license_review", "training_permission", "hair", "clothing", "legs",
-    "pose", "background", "notes",
+    "pose", "background", "notes", "lora_target_identifiers",
 ]
 
 

@@ -14,3 +14,11 @@ La interfaz no se conecta a GitHub ni escribe sobre archivos originales. El mani
 
 
 Los datos del modelo base y las LoRA identifican cómo se generó una imagen; son diferentes del permiso para reutilizarla o entrenar con ella. Las imágenes que usen una LoRA de terceros requieren verificar también las condiciones de la imagen de salida, la LoRA/base y los derechos sobre personajes o referencias.
+
+
+## Diferenciar LoRA de origen y LoRA destino
+
+- `lora_identifiers` y `lora_weights_or_settings` describen la LoRA/configuración con la que se generó la imagen, si se conoce.
+- `lora_target_identifiers` es la etiqueta manual para la LoRA que quieres asociar, enviar o probar con esa imagen después.
+
+El nombre original del archivo se conserva porque puede ayudar a identificar el destino. No se infiere automáticamente una LoRA desde el nombre ni se considera ese nombre una prueba de procedencia o de permiso de entrenamiento.

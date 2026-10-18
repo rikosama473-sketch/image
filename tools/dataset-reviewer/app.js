@@ -4,7 +4,7 @@
   const PAGE_SIZE = 24;
   const FIELDS = [
     "path","size_bytes","git_blob_sha","filename_origin_hint","source_url","author",
-    "base_model_identifier","lora_identifiers","lora_weights_or_settings","visual_review","license_review","training_permission","hair","clothing","legs","pose","background","notes"
+    "base_model_identifier","lora_identifiers","lora_weights_or_settings","visual_review","license_review","training_permission","hair","clothing","legs","pose","background","notes","lora_target_identifiers"
   ];
   const ATTRIBUTES = ["hair","clothing","legs","pose","background"];
   const REVIEW_FIELDS = ["visual_review","license_review","training_permission"];
@@ -25,6 +25,7 @@
       base_model_identifier: "",
       lora_identifiers: "",
       lora_weights_or_settings: "",
+      lora_target_identifiers: "",
       visual_review: "unreviewed",
       license_review: "unreviewed",
       training_permission: "unreviewed",
@@ -136,7 +137,8 @@
       textField(path,"author","Autor/creador",record.author),
       textField(path,"base_model_identifier","Modelo base usado",record.base_model_identifier),
       textField(path,"lora_identifiers","LoRA(s) usada(s)",record.lora_identifiers),
-      textField(path,"lora_weights_or_settings","Pesos/ajustes de LoRA",record.lora_weights_or_settings),
+      textField(path,"lora_weights_or_settings","Pesos/ajustes de LoRA de origen",record.lora_weights_or_settings),
+      textField(path,"lora_target_identifiers","LoRA destino(s) que quiero usar/probar",record.lora_target_identifiers),
       '<label class="field"><span>Notas</span><input type="text" data-path="' + escapeHtml(path) + '" data-field="notes" value="' + escapeHtml(record.notes) + '"></label>'
     ].join("");
     const labelSet = isReady(record) ? "Listo para entrenar" : isExcluded(record) ? "Excluido del conjunto" : "Revisión pendiente";
@@ -173,7 +175,7 @@
       return {path,file,record:records.get(path)};
     });
     items = items.filter(({path,record}) => {
-      const searchable = [path, record.base_model_identifier, record.lora_identifiers, record.lora_weights_or_settings].join(" ").toLowerCase();
+      const searchable = [path, record.base_model_identifier, record.lora_identifiers, record.lora_weights_or_settings, record.lora_target_identifiers].join(" ").toLowerCase();
       if (search && !searchable.includes(search)) return false;
       if (filter === "ready" && !isReady(record)) return false;
       if (filter === "unreviewed" && (isReady(record) || isExcluded(record))) return false;
