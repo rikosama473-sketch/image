@@ -1,0 +1,15 @@
+# Optional LoRA-training environment for the pinned Hugging Face Diffusers v0.35.1 trainers.
+# Install a matching PyTorch + torchvision pair first with the official selector:
+# https://pytorch.org/get-started/locally/
+# Keep those packages out of this file to avoid replacing a CUDA-specific torch build.
+Pillow>=10.0,<13
+diffusers==0.35.1
+transformers>=4.41.2,<5
+accelerate>=1.0,<2
+datasets>=2.19.1,<4
+peft==0.7.0
+huggingface_hub>=0.34,<1
+safetensors>=0.4,<1
+ftfy>=6.1,<7
+tensorboard>=2.14,<3
+Jinja2>=3.1,<4
