@@ -86,7 +86,7 @@ class MetadataSummaryTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             source = Path(directory) / "metadata.csv"
             source.write_text(
-                "path,metadata_present,prompt\\na.png,true,private\\n",
+                "path,metadata_present,prompt\na.png,true,private\n",
                 encoding="utf-8",
             )
             original = source.read_bytes()
