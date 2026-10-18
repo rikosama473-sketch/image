@@ -1,34 +1,65 @@
-# Auditoría de las imágenes del repositorio
+# Preparación del dataset para la LoRA de estilo de IMAGE
 
-## Estado de entrada
-El árbol actual contiene 759 imágenes (706,409,784 bytes, unos 706,4 MB): 728 rutas cuyos nombres empiezan por `from-PixAI-` y 31 nombres numéricos. El manifiesto fue actualizado de 546 a 759 filas; se incorporaron 213 rutas nuevas preservando las anotaciones existentes y dejando los permisos como pendientes. El nombre/código se conserva porque el usuario lo usa como pista para identificar el modelo/LoRA asociado; aun así, no se deben adivinar esos identificadores si no están confirmados.
+## Estado conocido de la colección
+El inventario de main registra 759 imágenes (706.409.784 bytes, aprox. 706,4 MB): 728 nombres empiezan por `from-PixAI-` y 31 son numéricos. El manifiesto conserva sus rutas/nombres originales y las columnas para modelo base, LoRAs de origen, configuración y LoRA destino. Esas cantidades describen el inventario; no significan que las imágenes estén aprobadas ni listas para entrenamiento.
 
-## Ejecutar auditoría
-```bash
+## Paso 1: rescatar la información embebida
+
+Ejecutar desde la raíz del repositorio:
+
+~~~bash
 python -m pip install -r requirements.txt
+python scripts/extract_generation_metadata.py --root .
+~~~
+
+Se genera `data/cache/generation-metadata.csv` en una carpeta local excluida de Git. El extractor lee metadatos comunes en PNG/JPEG/WebP/TIFF y busca prompts, prompts negativos, identificadores/hash de modelo, datos de LoRA, sampler, pasos, CFG y semilla. También intenta leer bloques de parámetros habituales. Los formatos de cada aplicación difieren: por tanto, el CSV es un informe heurístico que debe revisarse y no una fuente infalible.
+
+- Si una imagen no tiene metadatos, el informe la marca como desconocida; el script no inventa un modelo ni una LoRA a partir del nombre.
+- No modifica el archivo de imagen.
+- Un hash de metadatos ayuda a comparar registros, pero no prueba autoría, procedencia ni derechos.
+- Cruzar los resultados con el manifiesto de etiquetas de manera revisada. Mantener separados los ajustes de origen y la LoRA que se quiere utilizar después.
+
+## Paso 2: auditoría visual/técnica
+
+~~~bash
 python scripts/audit_dataset.py --root . --output data/image-audit.csv
-```
+python scripts/sync_training_labels.py --root .
+~~~
 
-El CSV reporta ruta, dimensiones, modo de color, alfa, hash SHA-256 y un hash perceptual básico. No modifica imágenes ni decide automáticamente si dos imágenes son duplicadas.
+El informe de auditoría reporta dimensiones, modo de color, transparencia, SHA-256 y un hash perceptual básico. No elimina duplicados ni cambia originales. Una persona debe confirmar si las imágenes muestran el tipo de arte y contenido que se desea aprender.
 
-## Etiquetado
-Rellena `data/training-labels.csv`:
-- `visual_review=approved` solo después de abrir la imagen y comprobar el contenido.
-- `license_review=approved` y `training_permission=approved` solo cuando la procedencia/condiciones permiten ese uso.
-- `hair`, `clothing`, `legs`, `pose` y `background` deben tener categorías consistentes para el control condicional.
-- Una imagen sin rótulos suficientes o sin autorización no pasa al entrenamiento.
+## Paso 3: decidir qué se aprende
 
-## Selección del piloto de 100
-No escoger solo las primeras 100 por nombre. Elegir variedad de poses, cuerpos, ropa, peinados y fondos; quitar duplicados; separar validación de entrenamiento; preferir imágenes de un mismo estilo y con cuerpo completo. Si todas pertenecen a una sola pose, el modelo no aprenderá poses nuevas por magia.
+La ruta principal es una LoRA entrenada encima de un modelo base generativo compatible, no una red pequeña aleatoria desde cero. Antes de escoger la base:
 
+1. Agrupar imágenes por el checkpoint o familia confirmada en metadatos.
+2. Comparar el estilo visual dentro de cada grupo.
+3. Verificar que el checkpoint se pueda obtener legalmente, sea compatible con la LoRA prevista y permita el uso deseado.
+4. Si hay muchas familias distintas, probar por separado pequeños subconjuntos en vez de mezclarlos automáticamente.
+5. Si faltan metadatos, escoger con inspección visual y dejar el origen marcado como incierto.
 
-## Interfaz local de revisión
+El número de imágenes útil no equivale necesariamente al tamaño total de la carpeta. La diversidad, calidad, coherencia del estilo, captions, duplicados y permiso de entrenamiento afectan el resultado.
 
-Para revisar las imágenes con miniaturas, filtros y etiquetas, usa [tools/dataset-reviewer](../tools/dataset-reviewer/README.md). Selecciona la carpeta local del repositorio, importa este CSV y exporta un manifiesto actualizado. Toda la revisión ocurre en el navegador local; no se suben imágenes.
+## Paso 4: preparar el piloto
 
+- No elegir simplemente las primeras 100 por nombre.
+- Quitar/revisar duplicados exactos y casi duplicados para evitar sobreponderar una misma composición.
+- Elegir ejemplos variados pero coherentes con el estilo que se pretende aprender.
+- Crear captions honestos que describan lo visible (personaje, encuadre, cabello, ropa, paleta, acabado) sin inventar rasgos invisibles ni atribuir modelos no confirmados.
+- Separar imágenes de validación que nunca entran al entrenamiento.
+- Mantener anotaciones de permiso por imagen; no pasar a entrenamiento si el permiso sigue pendiente.
+- Comenzar con una prueba pequeña y guardar el conjunto exacto usado, parámetros y ejemplos de salida.
 
-## Rastrear el modelo base y las LoRA por imagen
+## Paso 5: evaluar sin engañarnos
 
-El CSV conserva la ruta/nombre original. Para cada archivo, completa por separado `base_model_identifier`, `lora_identifiers` y `lora_weights_or_settings` cuando se conozcan (si hubo varias LoRA, anótalas con sus pesos/ajustes). No renombres imágenes ni conviertas un ID opaco del nombre en el nombre de una LoRA. Esa información identifica la procedencia de generación, pero **no reemplaza** la revisión de derechos: los estados `visual_review`, `license_review` y `training_permission` siguen pendientes hasta comprobar el contenido, la procedencia y la autorización de uso.
+Comparar una selección de prompts con y sin LoRA, usando el mismo modelo base, semillas y configuración. Incluir:
+- prompts que describen imágenes similares a las del entrenamiento;
+- prompts nuevos con peinados, ropa, encuadres y colores que no aparezcan juntos en una sola imagen;
+- ejemplos retenidos de validación;
+- defectos recurrentes, fugas de conceptos no deseados y señales de memorización.
 
-El revisor local permite buscar por nombre o por esos campos. Después de editar, exporta el CSV y copia manualmente el resultado revisado a `data/training-labels.csv`.
+Una LoRA de estilo no garantiza una copia exacta de cualquier ejemplo. Para reproducir un resultado anterior se debe conservar el archivo original y, cuando estén disponibles, el modelo base exacto, las LoRAs y sus pesos, prompt, seed, sampler, pasos y versión del motor.
+
+## Interfaz de revisión
+
+Usa [tools/dataset-reviewer](../tools/dataset-reviewer/README.md) para filtrar y editar etiquetas en el navegador local. No sube las imágenes. Después de editar, exporta y revisa el CSV antes de reemplazar manualmente el manifiesto oficial.

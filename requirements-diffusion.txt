@@ -1,0 +1,8 @@
+# Install PyTorch separately using the official selector for your OS/GPU:
+# https://pytorch.org/get-started/locally/
+# Then install this optional runtime; do not put it in the lightweight audit environment.
+diffusers>=0.35,<1
+transformers>=4.41,<6
+accelerate>=1.0,<2
+safetensors>=0.4,<1
+huggingface_hub>=0.25,<1

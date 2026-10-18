@@ -1,5 +1,6 @@
 Pillow>=10.0,<13
 
-# Optional only for the from-scratch model training prototype:
+# Optional only for the legacy from-scratch GAN comparison prototype:
 # torch>=2.2,<3
 # onnxruntime>=1.17,<2
+# The future LoRA trainer will use a separate, model-family-specific environment.
