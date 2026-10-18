@@ -28,3 +28,17 @@
 4. Separar los permisos para (a) importar/modificar en el motor, (b) distribuir los archivos y (c) entrenar IA. Son decisiones separadas.
 5. Montar base + pelo + ropa + extremidades, exportar una vista y probar si los pivotes coinciden.
 6. No copiar al dataset hasta que la licencia autorice claramente el uso para entrenamiento.
+
+
+## Más candidatos localizados (18-10-2026)
+
+| Recurso | Qué aporta | Licencia / condición | Siguiente prueba |
+|---|---|---|---|
+| [Paper Doll Style Sprites — OpenGameArt](https://opengameart.org/content/paper-doll-style-sprites) | Figuras, pantalones, zapatos y camisas como overlays separados; varios ZIPs. | CC BY-SA 3.0; atribución y compartir adaptaciones bajo términos compatibles. | Inspeccionar cada ZIP, lienzos y orden de capas. Estética RPG vista superior, no anime. |
+| [2D female and male bone-based sprites](https://opengameart.org/content/2d-female-and-male-bone-based-sprites) | Partes 2D con pivotes en los nombres, pensadas para rotación/escalado. | CC0. El autor indica que las figuras tienen poca ropa. | Probar pivotes, muñecas, codos, rodillas y tobillos; no confundir con un paquete de ropa completo. |
+| [80x64 Male and Female Sprites Character Template](https://opengameart.org/content/80x64-male-and-female-sprites-character-template) | Componentes con cabello, ropa y animaciones sencillas en plantilla 80×64. | CC0 según página. | Inspeccionar ZIP, frames y alineación; seleccionar solo los componentes que correspondan al objetivo. |
+| [Paperdoll Characters (template)](https://opengameart.org/content/paperdoll-characters-template) | Maqueta base femenina/masculina simple. | CC0. | Solo referencia de estructura; no es una biblioteca detallada. |
+| [Universal LPC Spritesheet Generator](https://liberatedpixelcup.github.io/Universal-LPC-Spritesheet-Character-Generator/) | Compositor en navegador que selecciona partes y exporta créditos/licencias por recurso. | Licencia mixta por activo; el conjunto debe auditarse pieza a pieza. | Estudiar UI y manifiesto de atribución, no copiar el catálogo entero. |
+| [OverScore Proxy](https://opengameart.org/content/overscore-proxy-modular-low-poly-female-character-creation-set) | Base 3D femenina y cientos de modelos de ropa/accesorios. | CC0 según la página. No es un paquete 2D anime. | Solo considerar una ruta futura de renderizado 3D a sprites. |
+
+La investigación encontró recursos útiles para probar la composición y articulación, pero no todos responden al estilo anime final. **El primer objetivo de integración debe ser el que tenga partes realmente independientes, licencia clara y una prueba de ensamblaje superada.** No se han subido los ZIPs de terceros ni se marca ningún candidato como integrado.
