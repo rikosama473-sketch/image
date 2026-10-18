@@ -239,9 +239,34 @@
       "sourceUrl": "https://opengameart.org/content/anime-girl-and-boy-portraits",
       "kind": "layered-anime-portrait-parts",
       "license": "CC0-as-listed-on-OpenGameArt",
-      "status": "priority-download-and-GIMP-layer-inspection-pending",
+      "status": "downloaded-extracted-and-metadata-inspected-not-committed",
       "testedInProject": false,
-      "notes": "The source page describes two female and two male anime portraits, GIMP XCF layers, and component-level recoloring of hair, eyes and mouths. Useful for face/hairstyle/expression experiments; not a full-body or leg/clothing library. Inspect the downloaded XCF and export layers individually before integration; no files have been downloaded or integrated by this catalog update."
+      "notes": "OpenGameArt source page confirms CC0 and says the author created the portraits and separated components for recoloring. Archive was downloaded and integrity-tested in the browser research session. XCF contains editable layers; eight RGBA samples are 1000x1000 and SampleAll is 2000x4000. Face/eye/mouth/hair study only; no full body or legs. ZIP not committed to this repository.",
+      "archiveFileName": "allanime-11-28-2020.zip",
+      "archiveBytes": 3517503,
+      "packageInspection": {
+        "inspectedAt": "2026-10-18",
+        "zipIntegrity": "passed",
+        "fileTree": [
+          "AllAnime/NewAnime.xcf",
+          "AllAnime/Sample1.png",
+          "AllAnime/Sample2.png",
+          "AllAnime/Sample3.png",
+          "AllAnime/Sample4.png",
+          "AllAnime/Sample5.png",
+          "AllAnime/Sample6.png",
+          "AllAnime/Sample7.png",
+          "AllAnime/Sample8.png",
+          "AllAnime/SampleAll.png"
+        ],
+        "formats": [
+          "XCF",
+          "PNG"
+        ],
+        "dimensions": "NewAnime.xcf: 1000x1000; Sample1-Sample8: RGBA 1000x1000 each; SampleAll: RGBA 2000x4000",
+        "bundledLicenseOrReadme": "No README/LICENSE/COPYING/NOTICE/CREDITS text file in ZIP; source page is the CC0 declaration",
+        "repositoryIntegration": "not-uploaded"
+      }
     },
     {
       "id": "open-peeps-cc0-assets",
@@ -320,9 +345,41 @@
       "sourceUrl": "https://opengameart.org/content/customizable-character-pack",
       "kind": "modular-pixel-character-parts-and-gimp-source",
       "license": "CC0-as-listed-on-OpenGameArt",
-      "status": "priority-parts-and-layer-alignment-inspection-pending",
+      "status": "downloaded-extracted-and-metadata-inspected-not-committed",
       "testedInProject": false,
-      "notes": "OpenGameArt describes a small GIMP source file with base/skin, shoes, pants, upper clothing and hair, plus 16 sample characters. The page says it builds on Kenney's CC0 RPG Urban Pack and lists CC0. Pixel-art/cartoon, not anime; valuable for testing transparent layers, wardrobe overlay alignment and recoloring. ZIP: customizable_characters_w_samples.zip (about 253 KB). Not downloaded or integrated by this catalog update."
+      "notes": "OpenGameArt source page declares CC0 and describes editable GIMP layers for body/skin, shoes, pants, upper clothing and hair, plus 16 sample characters. Archive was downloaded and integrity-tested in the browser research session; XCF and all 16 RGBA PNGs are 64x96. Best first modular assembly experiment at target size, but pixel/cartoon style rather than anime. ZIP not committed to this repository.",
+      "archiveFileName": "customizable_characters_w_samples.zip",
+      "archiveBytes": 252884,
+      "packageInspection": {
+        "inspectedAt": "2026-10-18",
+        "zipIntegrity": "passed",
+        "fileTree": [
+          "customizable_characters.xcf",
+          "sample_character_01.png",
+          "sample_character_02.png",
+          "sample_character_03.png",
+          "sample_character_04.png",
+          "sample_character_05.png",
+          "sample_character_06.png",
+          "sample_character_07.png",
+          "sample_character_08.png",
+          "sample_character_09.png",
+          "sample_character_10.png",
+          "sample_character_11.png",
+          "sample_character_12.png",
+          "sample_character_13.png",
+          "sample_character_14.png",
+          "sample_character_15.png",
+          "sample_character_16.png"
+        ],
+        "formats": [
+          "XCF",
+          "PNG"
+        ],
+        "dimensions": "customizable_characters.xcf: 64x96; all 16 samples: RGBA 64x96 each",
+        "bundledLicenseOrReadme": "No README/LICENSE/COPYING/NOTICE/CREDITS text file in ZIP; source page is the CC0 declaration",
+        "repositoryIntegration": "not-uploaded"
+      }
     }
   ]
 }
