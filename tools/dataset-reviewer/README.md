@@ -7,7 +7,10 @@ Abre `index.html` en un navegador o sirve esta carpeta con un servidor local sen
 3. Revisa una página de imágenes por vez (24 imágenes), asigna estados y categorías.
 4. Descarga `training-labels.csv` y sustituye el manifiesto del repositorio después de revisar el archivo.
 
-Marca las tres aprobaciones solo después de comprobar visualmente el contenido, las licencias y la autorización de entrenamiento. El nombre `from-PixAI-` no aprueba automáticamente una imagen. Esta herramienta no recorta fondos, no cambia imágenes y no determina legalmente el permiso.
+Marca las tres aprobaciones solo después de comprobar visualmente el contenido, las licencias y la autorización de entrenamiento. Conserva cada nombre original como pista de procedencia y completa `base_model_identifier`, `lora_identifiers` y `lora_weights_or_settings` cuando se conozcan; la herramienta permite buscar por esos campos. No adivina LoRA desde IDs del nombre. Esta herramienta no recorta fondos, no cambia imágenes y no determina legalmente el permiso.
 
 
 La interfaz no se conecta a GitHub ni escribe sobre archivos originales. El manifiesto descargado debe copiarse manualmente a `data/training-labels.csv` después de comprobarlo. Ningún estado de autorización se marca automáticamente.
+
+
+Los datos del modelo base y las LoRA identifican cómo se generó una imagen; son diferentes del permiso para reutilizarla o entrenar con ella. Las imágenes que usen una LoRA de terceros requieren verificar también las condiciones de la imagen de salida, la LoRA/base y los derechos sobre personajes o referencias.
