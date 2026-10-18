@@ -18,11 +18,11 @@
     "requireSeparateTrainingPermissionReview": true,
     "neverAssumeFilenameProvesOwnership": true,
     "noAutomaticDeletionOrImageModification": true,
-    "notes": "Metadata-only inventory of 546 image files (515 named from-PixAI-, 31 numeric filenames), about 506.5 MB. Dimensions, image content, duplicate relationships, source ownership, and training permission are not yet visually/individually verified. Filenames are hints, not proof of origin.",
+    "notes": "Metadata-only snapshot as of 2026-10-18: 546 image files (515 names beginning from-PixAI-, 31 numeric filenames), 506,492,103 bytes. Dimensions, visual content, duplicates, image ownership, model/source terms and training permission remain unreviewed per image. Filename hints are not proof of origin.",
     "initialCorpusBytesHuman": "506.5 MB",
     "pixaiFilenamePrefixCount": 515,
     "numericFilenameCount": 31,
-    "corpusSnapshotAt": "2026-10-18T16:xx-03:00"
+    "corpusSnapshotAt": "2026-10-18"
   },
   "sources": [
     {
