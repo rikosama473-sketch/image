@@ -11,7 +11,7 @@
   <header class="top">
     <div class="eyebrow">IMAGE · HERRAMIENTA LOCAL</div>
     <h1>Revisor de imágenes de personajes</h1>
-    <p>Inspecciona el conjunto, etiqueta cabello/ropa/piernas y decide qué imágenes están autorizadas para el entrenamiento. Los archivos no se suben ni se modifican.</p>
+    <p>Inspecciona el conjunto, etiqueta cabello/ropa/piernas, anota el modelo base y las LoRA usadas y revisa la autorización de entrenamiento. Los archivos no se suben ni se modifican.</p>
   </header>
 
   <main>
@@ -27,7 +27,7 @@
           <input id="manifest-input" type="file" accept=".csv,text/csv">
         </label>
       </div>
-      <p class="hint">Abre esta herramienta desde tu clon local. Selecciona la carpeta raíz del repositorio para que las rutas coincidan con <code>data/training-labels.csv</code>. La herramienta solo permite descargar un CSV nuevo; no escribe automáticamente sobre los originales.</p>
+      <p class="hint">Abre esta herramienta desde tu clon local. Selecciona la carpeta raíz del repositorio para que las rutas coincidan con <code>data/training-labels.csv</code>. El nombre original se conserva. Los identificadores de modelo base/LoRA se anotan aparte y sirven también para buscar imágenes relacionadas. La herramienta solo descarga un CSV nuevo; no escribe sobre los originales.</p>
     </section>
 
     <section class="panel">
@@ -39,7 +39,7 @@
       </div>
       <div class="filters">
         <label>Buscar archivo
-          <input id="search-input" type="search" placeholder="from-PixAI…, 0.png…">
+          <input id="search-input" type="search" placeholder="nombre de archivo, modelo base o LoRA…">
         </label>
         <label>Filtrar
           <select id="filter-select">
