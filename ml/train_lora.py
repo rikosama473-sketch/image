@@ -175,6 +175,18 @@ def detect_model_family(model: str, requested_family: str, allow_download: bool)
                 f"Unsupported model pipeline class {class_name!r}. This trainer currently supports "
                 "StableDiffusionPipeline and StableDiffusionXLPipeline only; no model family was guessed."
             )
+        required_components = {"unet", "vae", "scheduler", "tokenizer", "text_encoder"}
+        if detected == "sdxl":
+            required_components.update({"tokenizer_2", "text_encoder_2"})
+        missing_components = sorted(
+            component for component in required_components
+            if not (candidate / component).is_dir()
+        )
+        if missing_components:
+            raise ValueError(
+                f"Local {detected} model folder is incomplete; missing component directories: "
+                f"{', '.join(missing_components)}. Place a complete Diffusers model directory here."
+            )
         if requested_family != "auto" and requested_family != detected:
             raise ValueError(
                 f"--family={requested_family} conflicts with model_index.json class {class_name} ({detected})."
@@ -608,12 +620,26 @@ def main(argv: list[str] | None = None) -> int:
         parser.error(f"Cached trainer failed integrity verification: {trainer_path}")
 
     try:
-        import torch
+        import accelerate
+        import datasets
         import diffusers
-    except ImportError as exc:
+        import peft
+        import safetensors
+        import tensorboard
+        import torch
+        import torchvision
+        import transformers
+    except Exception as exc:
         parser.error(
-            "Training dependencies are missing. Install PyTorch for this machine first, then run "
+            "A required training dependency is missing or cannot be imported "
+            f"({type(exc).__name__}: {exc}). Install the matching PyTorch/torchvision pair first, then run "
             "python -m pip install -r requirements-training-lora.txt"
+        )
+    accelerate_executable = shutil.which("accelerate")
+    if not accelerate_executable:
+        parser.error(
+            "The accelerate command is not on PATH for this Python environment. "
+            "Activate the training environment and reinstall requirements-training-lora.txt."
         )
     try:
         precision = choose_precision(torch, args.precision)
@@ -636,7 +662,15 @@ def main(argv: list[str] | None = None) -> int:
         hardware: dict[str, Any] = {
             "device": "cuda" if cuda_available else "cpu",
             "torch_version": str(torch.__version__),
+            "torchvision_version": str(torchvision.__version__),
             "diffusers_version": str(diffusers.__version__),
+            "accelerate_version": str(accelerate.__version__),
+            "datasets_version": str(datasets.__version__),
+            "transformers_version": str(transformers.__version__),
+            "peft_version": str(peft.__version__),
+            "safetensors_version": str(safetensors.__version__),
+            "tensorboard_version": str(tensorboard.__version__),
+            "accelerate_executable": accelerate_executable,
             "cuda_available": cuda_available,
         }
         if cuda_available:
