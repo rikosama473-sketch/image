@@ -97,6 +97,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--labels", type=Path, default=ROOT / "data/training-labels.csv")
     parser.add_argument("--epochs", type=int, default=200)
+    parser.add_argument("--max-images", type=int, default=100, help="Number of approved images for the pilot; use 0 to include all approved images")
     parser.add_argument("--batch-size", type=int, default=4)
     parser.add_argument("--latent-dim", type=int, default=96)
     parser.add_argument("--generator-channels", type=int, default=128)
@@ -116,6 +117,10 @@ def main() -> int:
     device = torch.device("cuda" if args.device == "cuda" or (args.device == "auto" and torch.cuda.is_available()) else "cpu")
     labels_path = args.labels if args.labels.is_absolute() else ROOT / args.labels
     rows = load_approved_rows(labels_path)
+    if args.max_images < 0:
+        parser.error("--max-images must be 0 (all approved) or a positive count")
+    if args.max_images and len(rows) > args.max_images:
+        rows = random.Random(args.seed).sample(rows, args.max_images)
     if len(rows) < 8:
         parser.error(
             f"Only {len(rows)} images pass visual_review, license_review and training_permission='approved' "
