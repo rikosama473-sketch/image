@@ -22,7 +22,7 @@
       <section class="hero">
         <div class="eyebrow">TU COLECCIÓN · TU ESTILO · TU MOTOR</div>
         <h1>Imágenes a tu manera<span>.</span></h1>
-        <p>Generá nuevas imágenes con un modelo compatible y tu futura LoRA de estilo. Todo el proceso de generación se ejecuta en esta PC.</p>
+        <p>Generá imágenes nuevas con un modelo compatible y una LoRA de estilo opcional. Todo el proceso de generación se ejecuta en esta PC.</p>
       </section>
 
       <div class="workspace">
@@ -35,15 +35,18 @@
           <form id="creator-form">
             <label class="field">
               <span>Modelo base <b>*</b></span>
-              <input id="model" name="model" required autocomplete="off" placeholder="models/tu-modelo-diffusers">
-              <small>Carpeta local del modelo compatible. No hay un modelo elegido automáticamente.</small>
+              <input id="model" name="model" list="local-model-options" required autocomplete="off" placeholder="Elegí un modelo detectado o pegá su ruta local">
+              <datalist id="local-model-options"></datalist>
+              <small>El selector sugiere carpetas Diffusers SD/SDXL detectadas en models/. También podés escribir otra ruta local.</small>
             </label>
 
             <label class="field">
               <span>LoRA de estilo <i>Opcional</i></span>
-              <input id="lora" name="lora" autocomplete="off" placeholder="models/mi-estilo.safetensors">
-              <small>Debe ser compatible con el modelo base. La LoRA propia se entrenará en una fase separada.</small>
+              <input id="lora" name="lora" list="local-lora-options" autocomplete="off" placeholder="Elegí una LoRA validada o pegá su ruta local">
+              <datalist id="local-lora-options"></datalist>
+              <small>Se sugieren LoRAs locales en models/ y LoRAs entrenadas cuya validación final esté registrada.</small>
             </label>
+            <p class="quiet" id="local-assets-status" role="status" aria-live="polite">Buscando modelos y LoRAs locales…</p>
 
             <label class="field">
               <span>¿Qué querés crear? <b>*</b></span>
