@@ -19,6 +19,19 @@ import train_lora  # noqa: E402
 import summarize_generation_metadata  # noqa: E402
 
 
+def write_minimal_model_index(path: Path, class_name: str) -> None:
+    """Create a structural test fixture only; it has no weights and cannot run inference."""
+    path.mkdir(parents=True, exist_ok=True)
+    (path / "model_index.json").write_text(
+        json.dumps({"_class_name": class_name}), encoding="utf-8"
+    )
+    components = ["unet", "vae", "scheduler", "tokenizer", "text_encoder"]
+    if class_name == "StableDiffusionXLPipeline":
+        components.extend(["tokenizer_2", "text_encoder_2"])
+    for component in components:
+        (path / component).mkdir(exist_ok=True)
+
+
 class MetadataSummaryTests(unittest.TestCase):
     def test_summary_reports_coverage_but_never_copies_prompts(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -106,10 +119,7 @@ class LoRATrainingGuardTests(unittest.TestCase):
     def test_model_family_is_read_from_model_index_not_directory_name(self) -> None:
         with tempfile.TemporaryDirectory(prefix="this-name-does-not-imply-sdxl-") as directory:
             model = Path(directory)
-            (model / "model_index.json").write_text(
-                json.dumps({"_class_name": "StableDiffusionPipeline"}),
-                encoding="utf-8",
-            )
+            write_minimal_model_index(model, "StableDiffusionPipeline")
             family, resolved, is_local = train_lora.detect_model_family(str(model), "auto", False)
             self.assertEqual(family, "sd")
             self.assertEqual(resolved, str(model.resolve()))
@@ -124,6 +134,23 @@ class LoRATrainingGuardTests(unittest.TestCase):
         self.assertEqual(family, "sdxl")
         self.assertEqual(model, "org/a-model")
         self.assertFalse(is_local)
+
+    def test_local_model_missing_required_component_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            model = Path(directory)
+            (model / "model_index.json").write_text(
+                json.dumps({"_class_name": "StableDiffusionPipeline"}), encoding="utf-8"
+            )
+            with self.assertRaisesRegex(ValueError, "missing component directories"):
+                train_lora.detect_model_family(str(model), "auto", False)
+
+    def test_sdxl_requires_the_second_text_encoder_and_tokenizer(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            model = Path(directory)
+            write_minimal_model_index(model, "StableDiffusionXLPipeline")
+            family, _, is_local = train_lora.detect_model_family(str(model), "auto", False)
+            self.assertEqual(family, "sdxl")
+            self.assertTrue(is_local)
 
     def test_unknown_and_mixed_source_checkpoints_require_explicit_review(self) -> None:
         examples = [
@@ -288,11 +315,7 @@ class LoRATrainingGuardTests(unittest.TestCase):
             root = Path(directory) / "image-project"
             root.mkdir()
             model = root / "local-base"
-            model.mkdir()
-            (model / "model_index.json").write_text(
-                json.dumps({"_class_name": "StableDiffusionPipeline"}),
-                encoding="utf-8",
-            )
+            write_minimal_model_index(model, "StableDiffusionPipeline")
             labels_path = root / "labels.csv"
             captions_path = root / "captions.csv"
             label_fields = [
