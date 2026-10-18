@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>IMAGE · Revisión local de dataset</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="top">
+    <div class="eyebrow">IMAGE · HERRAMIENTA LOCAL</div>
+    <h1>Revisor de imágenes de personajes</h1>
+    <p>Inspecciona el conjunto, etiqueta cabello/ropa/piernas y decide qué imágenes están autorizadas para el entrenamiento. Los archivos no se suben ni se modifican.</p>
+  </header>
+
+  <main>
+    <section class="panel setup">
+      <h2>1. Cargar carpeta y manifiesto</h2>
+      <div class="load-grid">
+        <label class="file-control">
+          <span>Carpeta local del repositorio (incluye subcarpetas)</span>
+          <input id="folder-input" type="file" webkitdirectory directory multiple accept="image/*">
+        </label>
+        <label class="file-control">
+          <span>Manifiesto CSV actual (opcional)</span>
+          <input id="manifest-input" type="file" accept=".csv,text/csv">
+        </label>
+      </div>
+      <p class="hint">Abre esta herramienta desde tu clon local. Selecciona la carpeta raíz del repositorio para que las rutas coincidan con <code>data/training-labels.csv</code>. La herramienta solo permite descargar un CSV nuevo; no escribe automáticamente sobre los originales.</p>
+    </section>
+
+    <section class="panel">
+      <div class="stats" id="stats" aria-live="polite">
+        <div><strong id="stat-total">0</strong><span>imágenes cargadas</span></div>
+        <div><strong id="stat-pending">0</strong><span>sin revisión completa</span></div>
+        <div><strong id="stat-ready">0</strong><span>aprobadas para entrenar</span></div>
+        <div><strong id="stat-reject">0</strong><span>excluidas</span></div>
+      </div>
+      <div class="filters">
+        <label>Buscar archivo
+          <input id="search-input" type="search" placeholder="from-PixAI…, 0.png…">
+        </label>
+        <label>Filtrar
+          <select id="filter-select">
+            <option value="all">Todas</option>
+            <option value="unreviewed">Pendientes</option>
+            <option value="ready">Aprobadas para entrenar</option>
+            <option value="excluded">Excluidas</option>
+          </select>
+        </label>
+        <label>Ordenar
+          <select id="sort-select">
+            <option value="name">Nombre</option>
+            <option value="size-desc">Tamaño: mayor primero</option>
+            <option value="size-asc">Tamaño: menor primero</option>
+            <option value="pending-first">Pendientes primero</option>
+          </select>
+        </label>
+      </div>
+      <div class="list-head">
+        <div id="range-label">Carga una carpeta para empezar.</div>
+        <div class="pager">
+          <button id="prev-page" type="button" disabled>← Anterior</button>
+          <span id="page-label">Página 0 / 0</span>
+          <button id="next-page" type="button" disabled>Siguiente →</button>
+        </div>
+      </div>
+      <div id="cards" class="cards"></div>
+      <div id="empty-state" class="empty">Selecciona la carpeta local que contiene las imágenes para verlas en esta cuadrícula.</div>
+    </section>
+
+    <section class="panel export">
+      <div>
+        <h2>2. Descargar etiquetas</h2>
+        <p>El entrenamiento solo acepta filas con revisión visual, licencia y permiso de entrenamiento marcados como <code>approved</code>, además de etiquetas para pelo, ropa, piernas, pose y fondo.</p>
+      </div>
+      <button id="export-button" class="primary" type="button">Descargar training-labels.csv</button>
+    </section>
+  </main>
+
+  <datalist id="hair-options">
+    <option value="short"></option><option value="medium"></option><option value="long"></option>
+    <option value="ponytail"></option><option value="twin-tails"></option><option value="braids"></option>
+    <option value="bob"></option><option value="curly"></option><option value="other"></option>
+  </datalist>
+  <datalist id="clothing-options">
+    <option value="casual"></option><option value="school-uniform"></option><option value="dress"></option>
+    <option value="fantasy"></option><option value="armor"></option><option value="sportswear"></option><option value="other"></option>
+  </datalist>
+  <datalist id="legs-options">
+    <option value="bare"></option><option value="socks"></option><option value="stockings"></option>
+    <option value="tights"></option><option value="pants"></option><option value="boots"></option><option value="other"></option>
+  </datalist>
+  <datalist id="pose-options">
+    <option value="front-standing"></option><option value="three-quarter"></option><option value="side"></option>
+    <option value="sitting"></option><option value="walking"></option><option value="other"></option>
+  </datalist>
+  <datalist id="background-options">
+    <option value="transparent"></option><option value="plain"></option><option value="stylized"></option><option value="complex"></option>
+  </datalist>
+
+  <footer>IMAGE · Uso local · No se envían imágenes a ningún servicio desde esta herramienta.</footer>
+</body>
+</html>
