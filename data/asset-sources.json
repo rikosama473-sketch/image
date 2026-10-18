@@ -278,6 +278,36 @@
       "status": "low-priority-small-overlay-needs-base-template",
       "testedInProject": false,
       "notes": "The page lists a single small corset-and-strap PNG that works with a separate half-body portrait template. This is only one clothing example, not a broad wardrobe. Honor the page's Xenodora credit request despite CC0 listing; inspect compatibility before use."
+    },
+    {
+      "id": "anime-cutout-studio-apache2",
+      "name": "Anime Cutout Studio — local character/part extraction application",
+      "sourceUrl": "https://github.com/gino07172002/anime-image-cutout-studio",
+      "kind": "desktop-application-for-separating-authorized-art-into-parts",
+      "license": "Apache-2.0-code; downloaded-segmentation-inpainting-models-have-individual-licenses",
+      "status": "optional-processing-tool-heavy-model-downloads-not-an-asset-source",
+      "testedInProject": false,
+      "notes": "The repository describes an interactive CPU workflow that exports transparent PNG cutouts, layered PSDs and Spine skeleton trees, including character parts such as hair, head, torso, arms and legs. It requires downloading about 1.7 GB of third-party segmentation/inpainting models; check NOTICE for each model's terms. It does not grant rights to the input illustrations. Use only images the project owns or is authorized to modify; not recommended as the first dependency for the lightweight generator."
+    },
+    {
+      "id": "oga-face-4-cc0-xcf",
+      "name": "Face — marionline (editable XCF portrait)",
+      "sourceUrl": "https://opengameart.org/content/face-4",
+      "kind": "editable-2d-portrait-template",
+      "license": "CC0-as-listed-on-OpenGameArt",
+      "status": "secondary-face-recolor-reference-pending-download-inspection",
+      "testedInProject": false,
+      "notes": "The OpenGameArt page lists a GIMP XCF and several PNG variations with different skin tones, and says no credit is required. This is a face/portrait template rather than a full anime body, modular hair wardrobe or legs. Inspect layer structure and rendering style before selecting any layers."
+    },
+    {
+      "id": "oga-feminine-humanoid-base-mesh-cc0",
+      "name": "Feminine Humanoid Base Mesh — GoldenThumbs",
+      "sourceUrl": "https://opengameart.org/content/feminine-humanoid-base-mesh",
+      "kind": "3d-body-base-mesh",
+      "license": "CC0-as-listed-on-OpenGameArt",
+      "status": "optional-3d-body-silhouette-not-2d-parts",
+      "testedInProject": false,
+      "notes": "OpenGameArt lists a small Blender .blend base mesh described as a stylized feminine body with no head. Potentially useful for offline orthographic render experiments or proportions, but it is not an anime PNG kit and provides no head, hair or clothing layers. Verify exact download contents and license metadata before use."
     }
   ]
 }
