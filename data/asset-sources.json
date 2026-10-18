@@ -729,8 +729,159 @@
       "useInTraining": "Not approved. It uses external image-generation models/API by default, and repository/source rights and output terms need separate review. This is not a replacement for IMAGE's chosen model strategy.",
       "redistribution": "Do not copy its code, templates, generated outputs or samples into IMAGE until a license is located and the relevant rights are verified.",
       "notes": "Recent public repository shows a staged anatomical parts pipeline, prompt templates, a local web UI and PNG composition scripts. A license was not visible in the reviewed root listing, so it is a research lead, not an adopted dependency."
+    },
+    {
+      "id": "clara-fullbody-layered-psd-no-ai",
+      "name": "Clara — Fullbody Character Sprite (Memmo)",
+      "sourceUrl": "https://memmoxt.itch.io/clara-character-sprite",
+      "kind": "layered-full-body-visual-novel-character",
+      "license": "creator-specific-usage-guidelines; AI-training-strictly-forbidden; no-redistribution-of-asset-files",
+      "status": "runtime-composition-reference-only-explicitly-excluded-from-training",
+      "testedInProject": false,
+      "sourcePageFacts": {
+        "freeArchive": "Full-body PSD - Clara.zip, 3.8 MB",
+        "freeResolution": "750x1500",
+        "paidArchive": "PAID_PSD - Clara_1000_2000px.zip, 5.5 MB, requires at least USD 1",
+        "layers": [
+          "body",
+          "clothing",
+          "hair",
+          "facial expressions",
+          "accessories"
+        ],
+        "outfits": [
+          "jacket",
+          "tank top",
+          "socks",
+          "sneakers"
+        ],
+        "expressions": 28,
+        "layerDirections": [
+          "left-facing",
+          "right-facing"
+        ]
+      },
+      "useInCompositor": "Useful for testing a full-body, layered PSD workflow and expression/outfit toggles inside an app/game where the asset terms are respected.",
+      "useInTraining": "Strictly prohibited by the creator's page. Never add the PSD or exports to an AI training dataset.",
+      "redistribution": "Do not redistribute raw files or distribute the sprite itself. The creator also prohibits drawing new hair, clothes, expressions or colors beyond the provided layer system.",
+      "notes": "A particularly clear example of an asset that is excellent for runtime composition but must not be used as training material. It is not a reusable anatomical parts library."
+    },
+    {
+      "id": "breezy-visual-novel-sprites-cc0-no-genai",
+      "name": "Visual Novel Sprites! (Breezy)",
+      "sourceUrl": "https://breezy-the-cat.itch.io/visual-novel-sprites",
+      "kind": "layered-visual-novel-character-psd-png-pack",
+      "license": "page-declares-CC0-but-author-explicitly-says-do-not-use-for-generative-AI; treat explicit exclusion as controlling",
+      "status": "runtime-or-editor-prototyping-only-ai-training-explicitly-excluded",
+      "testedInProject": false,
+      "sourcePageFacts": {
+        "archive": "Visual Novel Sprites.rar",
+        "size": "18 MB",
+        "characters": 4,
+        "formats": [
+          "PSD",
+          "PNG"
+        ],
+        "expressions": "more than 5 per character; one character has 18",
+        "includes": "paper animation setup and usage file"
+      },
+      "useInCompositor": "Potentially useful for prototypes involving four pre-made visual-novel characters and expression toggles, subject to its project terms.",
+      "useInTraining": "Explicitly prohibited by the author despite the same page's CC0 summary. Do not use for generative AI training.",
+      "redistribution": "The page's CC0 statement is broad, but because the creator adds a direct no-generative-AI condition, retain this limitation clearly in all project records and do not add to a training corpus.",
+      "notes": "The resource is relevant for layered PSD workflows and multiple character expressions. It is not a generic body-part kit and must remain excluded from training."
+    },
+    {
+      "id": "maihi-layered-anime-vn-sprite-rights-unresolved",
+      "name": "Maihi — Free Visual Novel Sprite (AR_0)",
+      "sourceUrl": "https://ar-0.itch.io/maihi-free-visual-novel-sprite",
+      "kind": "layered-full-body-anime-visual-novel-character",
+      "license": "specific attribution request; no standard asset license identified on the page reviewed",
+      "status": "runtime-editor-candidate-rights-review-required-training-not-approved",
+      "testedInProject": false,
+      "sourcePageFacts": {
+        "archive": "Maihi.zip",
+        "size": "8.7 MB",
+        "imageResolution": "approximately 1700x3200",
+        "outfits": [
+          "sleepwear",
+          "casual",
+          "fancy"
+        ],
+        "toggles": [
+          "accessories",
+          "shoes"
+        ],
+        "expressions": [
+          "12 mouths",
+          "4 eyebrows",
+          "blinking animation",
+          "6 animated emotes"
+        ],
+        "sourceFormat": [
+          "PSD",
+          "Ren'Py layeredimage example"
+        ]
+      },
+      "useInCompositor": "The creator expressly says the sprite may be edited and used in any engine; the page includes a detailed PSD and selectable outfits/shoes. Keep the attribution notice: 'Sprite of Maihi (or the name you give her) by AR_0 (Link to this page)'.",
+      "useInTraining": "Not approved. The page does not provide a clear standard license or explicit generative-AI training permission; ask the author before adding any image/export to the training dataset.",
+      "redistribution": "Do not redistribute the original pack as a standalone asset without clarifying rights. Preserve the requested attribution in any permitted creative project.",
+      "notes": "Good hands-on candidate for evaluating toggled outfit/accessory/footwear layers and facial animation in a Ren'Py-like workflow, but rights are not clear enough to approve for model training."
+    },
+    {
+      "id": "chulagames-vn-male-spritesmaker-layered-psd",
+      "name": "VN Male SpritesMaker (Chulagames / chULang)",
+      "sourceUrl": "https://chulagames.itch.io/visualnovelspritebychulang",
+      "kind": "layered-anime-male-waist-up-character-psd",
+      "license": "creator-terms-permit-free-and-commercial-project-use-with-credit; sharing-resale-and-redistribution-prohibited; AI-training-not-explicitly-addressed",
+      "status": "local-runtime-composition-candidate-redistribution-and-training-not-approved",
+      "testedInProject": false,
+      "sourcePageFacts": {
+        "freeFile": "male 1 FREE.psd",
+        "size": "2.8 MB",
+        "canvas": "900x1000, waist-up",
+        "toggles": [
+          "5 hairstyles",
+          "5 outfits",
+          "2 accessories",
+          "8 mouths",
+          "5 eyebrow pairs",
+          "blush",
+          "pupil movement"
+        ],
+        "paidGoldTier": "thigh-up 1200x1700, requires payment for Gold content"
+      },
+      "useInCompositor": "The source expressly permits personal and commercial project use with credit. The PSD layers can be toggled in a compatible editor to export a chosen combination.",
+      "useInTraining": "Not approved; no generative-AI training permission is stated. Obtain explicit author permission first.",
+      "redistribution": "The author explicitly prohibits sharing, reselling or redistributing the source files; do not commit the PSD/exports as a shared pack.",
+      "notes": "Good low-size male anime layer test covering hairstyle, outfits, expressions and accessory toggles. It is waist-up and not a complete anatomy library."
+    },
+    {
+      "id": "female-vn-sprite-set2-no-ai",
+      "name": "Fem/Female Visual Novel Sprite Set 2 (Eros)",
+      "sourceUrl": "https://residentrabbit.itch.io/femfemale-visual-novel-sprite-set-2",
+      "kind": "large-layered-female-visual-novel-sprite-psd",
+      "license": "page-declares-CC0-but-explicitly-says-DO-NOT-USE-FOR-AI-OR-NFTS",
+      "status": "excluded-from-ai-training-by-explicit-source-condition",
+      "testedInProject": false,
+      "sourcePageFacts": {
+        "canvas": "2688x5810",
+        "variations": [
+          "14 hair colors",
+          "9 skin tones",
+          "many outfit color variants",
+          "facial expressions"
+        ],
+        "formats": [
+          "PSD archive"
+        ],
+        "archiveSize": "55 MB"
+      },
+      "useInCompositor": "Could be relevant to manual visual-novel sprite editing, but use only after interpreting the author's conditions for the intended app and redistribution.",
+      "useInTraining": "Explicitly excluded by the source page. Do not use for AI training even though the page also mentions CC0.",
+      "redistribution": "Review the direct no-AI condition alongside its CC0 summary; do not redistribute or train without resolving the applicable terms.",
+      "notes": "Included to document an important license conflict: broad CC0 language on a listing does not mean the creator permits AI use. Keep it outside all model-training pools."
     }
   ],
   "researchUpdatedAt": "2026-10-18",
-  "researchUpdateNotes": "Expanded with a free CC0-listed layered anime PSD, a paid layered sprite pack, a browser anime layer-splitting service, and two software architecture references. Items with unclear AI-training or code license remain explicitly unapproved."
+  "researchUpdateNotes": "Added layered visual-novel assets with distinct runtime-use, redistribution and AI-training decisions. Explicit creator bans on AI training are preserved even when a listing also uses broad CC0 language."
 }
