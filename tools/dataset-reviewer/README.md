@@ -8,3 +8,6 @@ Abre `index.html` en un navegador o sirve esta carpeta con un servidor local sen
 4. Descarga `training-labels.csv` y sustituye el manifiesto del repositorio después de revisar el archivo.
 
 Marca las tres aprobaciones solo después de comprobar visualmente el contenido, las licencias y la autorización de entrenamiento. El nombre `from-PixAI-` no aprueba automáticamente una imagen. Esta herramienta no recorta fondos, no cambia imágenes y no determina legalmente el permiso.
+
+
+La interfaz no se conecta a GitHub ni escribe sobre archivos originales. El manifiesto descargado debe copiarse manualmente a `data/training-labels.csv` después de comprobarlo. Ningún estado de autorización se marca automáticamente.
