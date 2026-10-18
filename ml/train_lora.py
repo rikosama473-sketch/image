@@ -270,6 +270,10 @@ def load_approved_examples(
             str(metadata_row.get("base_model_identifier", "")).strip()
             or str(row.get("base_model_identifier", "")).strip()
         )
+        source_model_hash = str(metadata_row.get("base_model_hash", "")).strip()
+        if source_model and source_model_hash:
+            # A name alone may refer to different checkpoint revisions. Treat a recovered hash as part of identity.
+            source_model = f"{source_model} [hash:{source_model_hash}]"
         examples.append({
             "path": relative,
             "absolute_path": str(source),
