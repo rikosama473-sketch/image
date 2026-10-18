@@ -265,3 +265,47 @@ Proyecto público que documenta un flujo de 19 piezas transparentes y un pipelin
 3. Evaluar ImageToLayers solo con una imagen propia/autorizada si hace falta separar piezas que no existan por capas.
 4. Usar los dos repositorios de código como referencias de estructura, sin importar contenido no autorizado y sin añadir una API de generación externa a la arquitectura por defecto.
 5. Mantener el nombre original de cada imagen y los campos de modelo/LoRA por separado: sirven para reconstruir la procedencia, no para inferir licencia ni compatibilidad automáticamente.
+
+
+## Nuevos sprites anime por capas: candidatos para montaje en la aplicación (18-10-2026)
+
+Las siguientes páginas tienen capas de expresiones, ropa o peinados y por eso sirven para investigar un compositor visual-novel. Sus restricciones de entrenamiento y redistribución son diferentes; **ninguna de estas fichas nuevas queda aprobada para entrenamiento por el hecho de tener PSD o una descarga gratuita**. En esta ronda se registraron páginas y condiciones, no se descargaron los archivos.
+
+### 1) [Clara — Fullbody Character Sprite (Memmo)](https://memmoxt.itch.io/clara-character-sprite)
+
+- La versión gratuita trae un PSD de cuerpo entero de 750×1500; la edición de pago (mínimo USD 1) ofrece 1000×2000. La ficha declara capas de cuerpo, ropa, cabello, expresiones y accesorios, con 28 expresiones y posiciones izquierda/derecha.
+- Puede ser útil para comprobar la experiencia de cambiar capas de un personaje completo dentro de una aplicación o juego.
+- **Restricciones explícitas:** la autora prohíbe el entrenamiento de IA, redistribuir el archivo como recurso y añadir nuevos peinados, ropa, expresiones o colores fuera del sistema de capas proporcionado.
+- Decisión: prototipo de montaje en el ámbito permitido por su guía; **excluido del entrenamiento** y de una biblioteca que redistribuya sus archivos.
+
+### 2) [Visual Novel Sprites! (Breezy)](https://breezy-the-cat.itch.io/visual-novel-sprites)
+
+- Archivo RAR de 18 MB, con PSD y PNG para cuatro personajes, múltiples expresiones y una configuración de animación tipo paper.
+- La página anuncia CC0, pero el autor escribe expresamente “DO NOT USE MY WORK FOR GENERATIVE AI”.
+- Decisión: la exclusión directa de IA se conserva como restricción obligatoria aunque aparezca lenguaje CC0 en la misma ficha. No incorporar este recurso a los datos de entrenamiento. La disponibilidad de los PSD puede servir para estudiar capas/expresiones dentro de las condiciones de la página.
+
+### 3) [Maihi — Free Visual Novel Sprite (AR_0)](https://ar-0.itch.io/maihi-free-visual-novel-sprite)
+
+- La ficha lista un ZIP de 8,7 MB con personaje de cuerpo entero de aproximadamente 1700×3200, tres atuendos, zapatos y accesorios conmutables, 12 bocas, cuatro cejas, parpadeo, seis emotes y un PSD detallado.
+- La autora permite editarlo y usarlo en cualquier motor y solicita el crédito: “Sprite of Maihi (or the name you give her) by AR_0 (Link to this page)”.
+- No se ha localizado una licencia estándar ni un permiso explícito para entrenamiento generativo en la ficha revisada.
+- Decisión: posible prueba de montaje local con la atribución requerida; pedir aclaración de derechos antes de redistribuir los archivos o entrenar un modelo.
+
+### 4) [VN Male SpritesMaker (Chulagames / chULang)](https://chulagames.itch.io/visualnovelspritebychulang)
+
+- PSD gratuito de 2,8 MB, lienzo 900×1000 y encuadre hasta la cintura: cinco peinados, cinco atuendos, dos accesorios, ocho bocas, cinco pares de cejas, rubor y pupilas movibles.
+- La página permite uso personal y comercial dentro de proyectos y solicita crédito al autor, pero prohíbe expresamente compartir, revender o redistribuir los archivos.
+- No concede de forma clara permiso de entrenamiento generativo.
+- Decisión: buen candidato para una prueba local de montaje de cabello, ropa y expresiones; no añadir el PSD ni sus exports a una biblioteca pública ni al dataset de entrenamiento sin permiso separado.
+
+### 5) [Fem/Female Visual Novel Sprite Set 2 (Eros)](https://residentrabbit.itch.io/femfemale-visual-novel-sprite-set-2)
+
+- La página describe un PSD de 2688×5810 con 14 colores de cabello, nueve tonos de piel, numerosos colores de ropa y expresiones; el ZIP indicado es de 55 MB.
+- Aunque su ficha contiene una declaración CC0, también advierte explícitamente **“DO NOT USE FOR AI OR NFTS”**.
+- Decisión: excluir del entrenamiento generativo. Registrar la condición explícita para no confundir la etiqueta CC0 con una autorización general de IA.
+
+### Qué probar primero
+
+Para una prueba con menor tamaño de descarga, empezaría por **VN Male SpritesMaker** (PSD de 2,8 MB, uso en proyectos permitido con crédito) o por **Clara** (PSD gratis de 3,8 MB, mejor control de cuerpo entero, con importantes restricciones). Para el entrenamiento propio, no usar ninguno de esos archivos sin una autorización que lo permita de forma clara; la condición de no IA prevalece en los packs que la expresan.
+
+La prueba técnica debe abrir el PSD, cambiar una única capa, exportar PNG transparente a una carpeta temporal y comparar la posición de ojos, cabello, ropa, manos y calzado. No publicar ni incluir los archivos fuente en el repositorio durante esta prueba.
