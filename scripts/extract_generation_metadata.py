@@ -142,6 +142,9 @@ def parse_parameters(text: str) -> dict[str, str]:
     loras = [f"{m.group(1).strip()}@{m.group(2).strip()}" for m in LORA_TAG_RE.finditer(text)]
     if loras:
         result["lora_identifiers"] = "; ".join(dict.fromkeys(loras))
+        result["lora_weights_or_settings"] = "; ".join(dict.fromkeys(
+            f"{m.group(1).strip()}={m.group(2).strip()}" for m in LORA_TAG_RE.finditer(text)
+        ))
     return result
 
 
@@ -204,7 +207,15 @@ def extract_one(path: Path, root: Path) -> dict[str, str]:
             if not row.get(field):
                 row[field] = parsed_value
     if lora_entries:
-        row["lora_identifiers"] = "; ".join(lora_entries)
+        identifiers = lora_entries + ([row["lora_identifiers"]] if row["lora_identifiers"] else [])
+        row["lora_identifiers"] = "; ".join(dict.fromkeys(identifiers))
+    weight_entries = [
+        f"{key}={value}" for key, value in flat
+        if value and any(token in _norm_key(key) for token in ("lora_weight", "lora_strength", "adapter_weight", "strength_model", "strength_clip"))
+    ]
+    if weight_entries:
+        prior_weights = [row["lora_weights_or_settings"]] if row["lora_weights_or_settings"] else []
+        row["lora_weights_or_settings"] = "; ".join(dict.fromkeys(prior_weights + weight_entries))
     if row["metadata_present"] == "true":
         row["parse_notes"] = "Embedded generation-like metadata found; review extracted values manually."
     elif metadata:
@@ -217,7 +228,10 @@ def should_skip(path: Path, root: Path) -> bool:
         parts = path.relative_to(root).parts
     except ValueError:
         return True
-    return any(part in SKIP_DIRS or part.startswith(".") for part in parts)
+    if any(part in SKIP_DIRS or part.startswith(".") for part in parts):
+        return True
+    relative = path.relative_to(root).as_posix()
+    return any(relative == prefix or relative.startswith(prefix + "/") for prefix in ("data/cache", "data/processed", "data/asset-cache"))
 
 
 def scan_images(root: Path) -> Iterable[Path]:
