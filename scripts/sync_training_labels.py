@@ -10,7 +10,7 @@ IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".bmp", ".tif", ".tiff"}
 SKIP_DIRS = {".git", ".venv", "venv", "__pycache__", "outputs", "runs", "checkpoints", "processed", "cache"}
 FIELDS = [
     "path", "size_bytes", "git_blob_sha", "filename_origin_hint", "source_url", "author",
-    "visual_review", "license_review", "training_permission", "hair", "clothing", "legs",
+    "base_model_identifier", "lora_identifiers", "lora_weights_or_settings", "visual_review", "license_review", "training_permission", "hair", "clothing", "legs",
     "pose", "background", "notes",
 ]
 
@@ -18,7 +18,7 @@ FIELDS = [
 def origin_hint(path: str) -> str:
     name = Path(path).name
     if name.startswith("from-PixAI-"):
-        return "PixAI-like filename; verify account and origin"
+        return "PixAI filename clue; preserve exact name; verify account/origin and record model/LoRA separately"
     if name.lower().endswith(".png") and name[:-4].isdigit():
         return "numeric filename; origin unknown"
     return "unknown; review source"
