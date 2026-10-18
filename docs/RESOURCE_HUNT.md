@@ -42,3 +42,11 @@
 | [OverScore Proxy](https://opengameart.org/content/overscore-proxy-modular-low-poly-female-character-creation-set) | Base 3D femenina y cientos de modelos de ropa/accesorios. | CC0 según la página. No es un paquete 2D anime. | Solo considerar una ruta futura de renderizado 3D a sprites. |
 
 La investigación encontró recursos útiles para probar la composición y articulación, pero no todos responden al estilo anime final. **El primer objetivo de integración debe ser el que tenga partes realmente independientes, licencia clara y una prueba de ensamblaje superada.** No se han subido los ZIPs de terceros ni se marca ningún candidato como integrado.
+
+
+## Añadidos de investigación (18-10-2026)
+
+- **[RGS_Dev — Free CC0 Modular Animated Vector Characters 2D](https://rgsdev.itch.io/free-cc0-modular-animated-vector-characters-2d)** y [su ficha en OpenGameArt](https://opengameart.org/content/free-cc0-modular-animated-vector-characters-2d): la distribución original se anuncia como CC0. La ficha describe partes separadas, 2048×2048, cabeza/cabello/ojos/boca/cuerpo/mano/pie y seis familias de animación. El paquete es de estilo cartoon/top-down, no anime. Priorizarlo para pruebas de capas/alineación/pivotes después de inspeccionar el ZIP. No usar la copia de GameDevMarket: ese espejo presenta otro Pro License y marca “Allows usage with AI? No”; son términos de distribución diferentes.
+- **[rhedak — Anime Character Creator](https://github.com/rhedak/anime-character-creator)**: generador procedural anime basado en anclas anatómicas y formas SVG separadas para pelo, cara, ropa y extremidades, con código MIT. Es una referencia muy cercana a la meta de un motor ligero sin checkpoint. La licencia MIT es para el código; su README explica que algunos diseños se basaron/trazaron desde referencias generadas con IA, así que no copiamos sus carpetas `ref/` ni `ref-out/` al dataset de IMAGE sin revisión independiente.
+
+Estos candidatos todavía no están integrados en el repositorio: los registros son enlaces y decisiones de investigación, no una afirmación de que se descargaron o probaron los archivos.
