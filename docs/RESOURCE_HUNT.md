@@ -50,3 +50,36 @@ La investigación encontró recursos útiles para probar la composición y artic
 - **[rhedak — Anime Character Creator](https://github.com/rhedak/anime-character-creator)**: generador procedural anime basado en anclas anatómicas y formas SVG separadas para pelo, cara, ropa y extremidades, con código MIT. Es una referencia muy cercana a la meta de un motor ligero sin checkpoint. La licencia MIT es para el código; su README explica que algunos diseños se basaron/trazaron desde referencias generadas con IA, así que no copiamos sus carpetas `ref/` ni `ref-out/` al dataset de IMAGE sin revisión independiente.
 
 Estos candidatos todavía no están integrados en el repositorio: los registros son enlaces y decisiones de investigación, no una afirmación de que se descargaron o probaron los archivos.
+
+
+## Nueva búsqueda ampliada: capas anime, herramientas y rutas 3D (18-10-2026)
+
+### Candidatos con utilidad más directa
+
+| Recurso | Qué trae realmente | Licencia declarada / cautela | Decisión para IMAGE |
+|---|---|---|---|
+| [Anime Girl and Boy Portraits — OpenGameArt](https://opengameart.org/content/anime-girl-and-boy-portraits) | ZIP de 3,5 MB según la ficha, con fuente GIMP XCF; la página describe dos retratos femeninos y dos masculinos y capas/componentes para variar cabello, ojos y boca. | CC0 según la ficha de OpenGameArt. La fuente exacta se debe conservar en el manifiesto. | **Primer candidato anime para descargar e inspeccionar**; extraer capas por separado solo después de comprobar XCF, transparencia y nombres. Es material de rostro/peinado, no cubre cuerpo entero ni piernas. Aún no descargado ni integrado. |
+| [Kenney Modular Characters](https://kenney.nl/assets/modular-characters) / [ficha OpenGameArt](https://lpc.opengameart.org/content/modular-character-pack) | 425 PNG independientes, seis spritesheets y seis archivos vectoriales. | CC0 en la ficha original. | Banco técnico para ver capas, colocación y ropa intercambiable; el estilo plano/cartoon no sirve como dataset anime por defecto. |
+| [Half Body Portrait — Female Cloths](https://opengameart.org/content/half-body-portrait-female-cloths) | Un ejemplo PNG de corsé/correas que necesita la plantilla de retrato de medio cuerpo enlazada por el autor. | Ficha CC0, aunque solicita atribución a Xenodora. | Prioridad baja: sirve como overlay de prueba y no como biblioteca de vestuario. |
+
+### Herramientas de composición y generación (referencias, no packs de entrenamiento)
+
+- [Open Peeps Studio](https://github.com/Hantuhan/peepstudio) usa la biblioteca de ilustraciones Open Peeps (CC0) y permite mezclar cabello, cuerpos y expresiones, y exportar SVG/PNG. El estilo dibujado es genérico/cartoon, no anime. Sirve para estudiar composición y experiencia de usuario; no asumir que el código de la app comunitaria comparte la licencia CC0 de los dibujos.
+- [Anime Avatar — konard](https://github.com/konard/anime-avatar) anuncia licencia Unlicense para el repositorio y divide el renderizado en componentes SVG de cara, ojos, pelo, cuerpo, piernas y fondo, además de una ruta 3D. Es una referencia de arquitectura procedural; sus `reference-images`, modelos y otros recursos requieren revisión aparte y no se añaden al dataset.
+- [VRoid Studio CC0 sample models — OpenGameArt](https://opengameart.org/content/vroid-studio-cc0-models) identifica un subconjunto concreto de modelos de muestras alpha como CC0; la propia ficha advierte que otros modelos de nombre parecido tenían condiciones distintas. No son PNG por piezas, pero se pueden evaluar en el futuro para renders ortográficos controlados a sprites, usando solo el subconjunto exacto con licencia confirmada.
+
+### Exclusiones y criterios que evitan falsas soluciones
+
+- Las láminas de comisiones o ejemplos de separación de capas que aparecen en búsquedas de imágenes son **referencias visuales**, no recursos reutilizables por defecto. No se descarga ni se entrena a partir de ellas sin licencia/autorización clara.
+- [Thin Girl — ani mosity](https://queenofzan.itch.io/modular-character-sprite-thin-girl) sigue excluido de datasets generativos según las condiciones expresas de su autora; una licencia que permite importar/editar un sprite no equivale a permiso para entrenar IA.
+- [Anime Characters — Technopeasant](https://opengameart.org/content/anime-characters) figura como CC0, pero su descripción dice que los borradores se inspiran libremente en Rei y Asuka de *Evangelion*. No lo selecciono para el corpus de entrenamiento: la licencia del archivo no resuelve por sí misma derechos sobre personajes de terceros.
+- [Hachi Bases](https://opengameart.org/content/hachi-bases) se deja pendiente por la procedencia de la obra original citada por el publicador; no la trato como pieza aprobada solo porque la página muestre CC0.
+
+### Orden recomendado de trabajo
+
+1. Descargar el XCF de **Anime Girl and Boy Portraits**, revisar licencia/estructura y exportar una muestra de ojos, boca y peinados a PNG con alfa.
+2. Descargar un paquete CC0 modular como Kenney o RGS_Dev para validar alineación, orden de capas, anchors y recoloración, pero mantenerlo separado de las referencias de estilo anime.
+3. Probar una composición de cabeza/cabello/ojos/ropa con nuestras propias SVG si no aparece un paquete CC0 anime completo que tenga cuerpo, piernas y vestuario independientes.
+4. Registrar por pieza: URL/autor/licencia, permisos separados de uso en motor, redistribución y entrenamiento, formato, tamaño/lienzo, transparencia, pivote y prueba de ensamblaje.
+
+**Estado tras esta búsqueda:** añadí candidaturas y reglas de selección, no afirmo que los archivos descargables ya estén dentro del repo ni que se haya aprobado un solo activo para entrenamiento.
