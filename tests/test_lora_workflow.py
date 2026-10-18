@@ -82,6 +82,18 @@ class MetadataSummaryTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 summarize_generation_metadata.summarize(source)
 
+    def test_summary_cli_refuses_to_overwrite_full_metadata_csv(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / "metadata.csv"
+            source.write_text(
+                "path,metadata_present,prompt\\na.png,true,private\\n",
+                encoding="utf-8",
+            )
+            original = source.read_bytes()
+            with self.assertRaises(SystemExit):
+                summarize_generation_metadata.main(["--input", str(source), "--output", str(source)])
+            self.assertEqual(source.read_bytes(), original)
+
 
 class LoRATrainingGuardTests(unittest.TestCase):
     def test_git_blob_sha_matches_known_empty_git_blob(self) -> None:
