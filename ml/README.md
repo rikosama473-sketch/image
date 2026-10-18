@@ -22,10 +22,12 @@ El script no entrena con las 516 imágenes por defecto: requiere aprobación exp
 ## 2. Entrenar
 
 ```bash
-python ml/train.py --epochs 200 --batch-size 4 --device cpu
+python ml/train.py --max-images 100 --epochs 200 --batch-size 4 --device cpu
 ```
 
 El modelo usa 64×96 RGBA y un lote pequeño. Es una prueba de viabilidad; el resultado puede ser incoherente, repetir siluetas o sobreajustarse. Entrenar en CPU puede ser lento. El consumo de RAM depende del equipo y debe medirse.
+
+El valor predeterminado limita el piloto a 100 imágenes aprobadas escogidas de forma pseudoaleatoria reproducible mediante la semilla. No asume que el primer bloque de 100 archivos sea representativo. Usa `--max-images 0` solo después de revisar todo el conjunto y querer entrenar con todas las imágenes aprobadas.
 
 ## 3. Generar
 
