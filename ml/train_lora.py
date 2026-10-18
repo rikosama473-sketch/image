@@ -82,11 +82,16 @@ def make_caption_template(
     if not output.is_absolute():
         output = root / output
     output = output.resolve()
-    if output == labels_path.resolve():
+    labels_source = labels_path.resolve()
+    if output == labels_source or (
+        output.exists() and labels_source.exists() and output.samefile(labels_source)
+    ):
         raise ValueError("Caption template cannot overwrite the original training-labels CSV.")
     for row in rows:
         source = (root / row["path"]).resolve()
-        if output == source:
+        if output == source or (
+            output.exists() and source.exists() and output.samefile(source)
+        ):
             raise ValueError(f"Caption template cannot overwrite a source image: {source}")
     if output.exists() and not overwrite:
         raise FileExistsError(
