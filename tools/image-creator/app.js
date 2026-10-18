@@ -118,6 +118,37 @@
     }
   }
 
+  function fillOptions(listId, items) {
+    const list = $(listId);
+    list.replaceChildren();
+    for (const item of items) {
+      if (!item || typeof item.path !== "string" || !item.path.trim()) continue;
+      const option = document.createElement("option");
+      option.value = item.path;
+      option.label = typeof item.label === "string" ? item.label : item.path;
+      list.append(option);
+    }
+  }
+
+  async function refreshLocalAssets() {
+    const status = $("local-assets-status");
+    try {
+      const data = await api("/api/local-assets");
+      const models = Array.isArray(data.models) ? data.models : [];
+      const loras = Array.isArray(data.loras) ? data.loras : [];
+      fillOptions("local-model-options", models);
+      fillOptions("local-lora-options", loras);
+      if (models.length || loras.length) {
+        status.textContent = models.length + " modelo(s) compatible(s) y " +
+          loras.length + " LoRA(s) local(es) detectado(s). Podés elegir una sugerencia o ingresar otra ruta.";
+      } else {
+        status.textContent = "No se detectaron modelos/LoRAs en las carpetas del proyecto. Pegá una ruta local existente; no se descargará nada automáticamente.";
+      }
+    } catch (error) {
+      status.textContent = "No se pudo explorar los recursos locales (" + error.message + "). Podés ingresar las rutas manualmente.";
+    }
+  }
+
   function payloadFromForm() {
     return {
       model: value("model").trim(),
@@ -205,4 +236,5 @@
   $("lora-scale").disabled = !$("lora").value.trim();
 
   refreshGallery();
+  refreshLocalAssets();
 })();
