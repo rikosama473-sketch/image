@@ -113,6 +113,10 @@ def main(argv: list[str] | None = None) -> int:
     if not output.is_absolute():
         output = ROOT / output
     output = output.resolve()
+    if output == source or (
+        output.exists() and source.exists() and output.samefile(source)
+    ):
+        parser.error("Summary output cannot overwrite the full generation-metadata CSV.")
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Imágenes en el informe: {report['image_count']}")
