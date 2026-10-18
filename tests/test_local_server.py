@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import json
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -60,6 +62,67 @@ class LocalServerTests(unittest.TestCase):
         allowed = local_server._safe_output_path("session/image.png")
         self.assertIsNotNone(allowed)
         self.assertEqual(allowed.suffix, ".png")
+
+    def test_local_assets_lists_only_supported_model_families_and_loras(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            sd = root / "models" / "bases" / "sd"
+            sdxl = root / "models" / "bases" / "sdxl"
+            unsupported = root / "models" / "bases" / "other"
+            for model, class_name in (
+                (sd, "StableDiffusionPipeline"),
+                (sdxl, "StableDiffusionXLPipeline"),
+                (unsupported, "FluxPipeline"),
+            ):
+                model.mkdir(parents=True)
+                (model / "model_index.json").write_text(
+                    json.dumps({"_class_name": class_name}), encoding="utf-8"
+                )
+                (model / "diffusion_pytorch_model.safetensors").write_bytes(b"base weights should not be listed as a LoRA")
+
+            lora_dir = root / "models" / "loras"
+            lora_dir.mkdir(parents=True)
+            (lora_dir / "custom-style.safetensors").write_bytes(b"lora")
+            (lora_dir / "notes.txt").write_text("not a model", encoding="utf-8")
+
+            trained = root / "outputs" / "training-lora" / "run-1"
+            trained.mkdir(parents=True)
+            artifact = trained / "pytorch_lora_weights.safetensors"
+            artifact.write_bytes(b"trained lora")
+            (trained / "training-result.json").write_text(
+                json.dumps({"status": "completed", "artifact": str(artifact)}), encoding="utf-8"
+            )
+            failed = root / "outputs" / "training-lora" / "run-failed"
+            failed.mkdir(parents=True)
+            (failed / "pytorch_lora_weights.safetensors").write_bytes(b"partial artifact")
+            (failed / "training-result.json").write_text(
+                json.dumps({"status": "failed"}), encoding="utf-8"
+            )
+
+            assets = local_server._list_local_assets(root)
+            self.assertEqual(
+                {item["path"] for item in assets["models"]},
+                {"models/bases/sd", "models/bases/sdxl"},
+            )
+            families = {item["path"]: item["family"] for item in assets["models"]}
+            self.assertEqual(families["models/bases/sd"], "sd")
+            self.assertEqual(families["models/bases/sdxl"], "sdxl")
+            self.assertEqual(
+                {item["path"] for item in assets["loras"]},
+                {
+                    "models/loras/custom-style.safetensors",
+                    "outputs/training-lora/run-1/pytorch_lora_weights.safetensors",
+                },
+            )
+
+    def test_local_assets_ignore_malformed_model_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            model = root / "models" / "broken"
+            model.mkdir(parents=True)
+            (model / "model_index.json").write_text("{not json", encoding="utf-8")
+            assets = local_server._list_local_assets(root)
+            self.assertEqual(assets, {"models": [], "loras": []})
 
 
 if __name__ == "__main__":
