@@ -235,3 +235,6 @@ models/*.ckpt
 models/*.onnx
 models/*.safetensors
 *.tmp
+
+# Downloads and extracted third-party art awaiting per-file review (never commit by default)
+/data/asset-cache/
