@@ -14,6 +14,12 @@ La prioridad es adaptar un modelo generativo ya entrenado, no aprender toda la c
 - [Hugging Face Diffusers: LoRA training](https://huggingface.co/docs/diffusers/training/lora)
 - [Hugging Face Diffusers: SDXL training and memory notes](https://huggingface.co/docs/diffusers/training/sdxl)
 
+## Motor de inferencia inicial
+
+La primera CLI reutilizable está en `ml/generate_diffusion.py`. Acepta una carpeta/identificador de un modelo Diffusers y una LoRA opcional, genera las salidas de forma secuencial para no disparar el consumo por lotes, y guarda los parámetros al lado de cada PNG. De manera predeterminada opera con archivos/cache local y requiere `--allow-download` para autorizar descargas.
+
+Para instalar las dependencias opcionales, instala primero PyTorch adecuado al equipo y después usa `python -m pip install -r requirements-diffusion.txt`. La CLI aún no elige un checkpoint ni entrena la LoRA: esas decisiones dependen de recuperar los metadatos y revisar el hardware y los permisos.
+
 ## Primera decisión técnica: rastrear lo que ya generó las imágenes
 
 El inventario actual registra 759 imágenes, de las que 728 tienen un nombre que empieza por `from-PixAI-`. El nombre se conserva, pero no prueba qué modelo, LoRA o configuración se utilizó.
