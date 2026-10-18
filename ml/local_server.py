@@ -95,6 +95,42 @@ BASE_MODEL_WEIGHT_NAMES = {
 }
 MAX_ASSET_SCAN_DIRS = 600
 MAX_LOCAL_ASSETS = 120
+TOKENIZER_ARTIFACT_NAMES = {
+    "tokenizer.json",
+    "vocab.json",
+    "spiece.model",
+    "sentencepiece.bpe.model",
+}
+
+
+def _component_has_loadable_files(component_dir: Path, component_name: str) -> bool:
+    """Reject model folders with empty component directories or missing configs/weights."""
+    if not component_dir.is_dir() or component_dir.is_symlink():
+        return False
+    try:
+        if component_name == "scheduler":
+            config = component_dir / "scheduler_config.json"
+            return config.is_file() and not config.is_symlink()
+        if component_name.startswith("tokenizer"):
+            return any(
+                (component_dir / name).is_file() and not (component_dir / name).is_symlink()
+                for name in TOKENIZER_ARTIFACT_NAMES
+            )
+
+        config = component_dir / "config.json"
+        if not config.is_file() or config.is_symlink():
+            return False
+        return any(
+            entry.is_file()
+            and not entry.is_symlink()
+            and (
+                entry.name.endswith(".safetensors")
+                or entry.name.endswith(".safetensors.index.json")
+            )
+            for entry in component_dir.iterdir()
+        )
+    except OSError:
+        return False
 
 
 def _walk_local_dirs(root: Path, max_dirs: int = MAX_ASSET_SCAN_DIRS):
@@ -141,7 +177,10 @@ def _list_local_assets(root: Path = ROOT) -> dict[str, list[dict[str, str]]]:
         family = SUPPORTED_MODEL_PIPELINES.get(class_name)
         if family is None:
             continue
-        if any(not (directory / component).is_dir() for component in REQUIRED_MODEL_COMPONENTS[family]):
+        if any(
+            not _component_has_loadable_files(directory / component, component)
+            for component in REQUIRED_MODEL_COMPONENTS[family]
+        ):
             continue
         relative = directory.relative_to(root).as_posix()
         models.append({

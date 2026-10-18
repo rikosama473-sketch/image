@@ -84,7 +84,20 @@ class LocalServerTests(unittest.TestCase):
                 if class_name == "StableDiffusionXLPipeline":
                     components.extend(["tokenizer_2", "text_encoder_2"])
                 for component in components:
-                    (model / component).mkdir()
+                    component_dir = model / component
+                    component_dir.mkdir()
+                    if component == "scheduler":
+                        (component_dir / "scheduler_config.json").write_text("{}", encoding="utf-8")
+                    elif component.startswith("tokenizer"):
+                        (component_dir / "tokenizer.json").write_text("{}", encoding="utf-8")
+                    else:
+                        (component_dir / "config.json").write_text("{}", encoding="utf-8")
+                        weights_name = (
+                            "model.safetensors"
+                            if component.startswith("text_encoder")
+                            else "diffusion_pytorch_model.safetensors"
+                        )
+                        (component_dir / weights_name).write_bytes(b"fixture weights")
                 (model / "diffusion_pytorch_model.safetensors").write_bytes(b"base weights should not be listed as a LoRA")
 
             incomplete = root / "models" / "bases" / "incomplete"
@@ -92,6 +105,9 @@ class LocalServerTests(unittest.TestCase):
             (incomplete / "model_index.json").write_text(
                 json.dumps({"_class_name": "StableDiffusionPipeline"}), encoding="utf-8"
             )
+            # Required directories alone are not enough: configs/weights are absent.
+            for component in ("unet", "vae", "scheduler", "tokenizer", "text_encoder"):
+                (incomplete / component).mkdir()
 
             lora_dir = root / "models" / "loras"
             lora_dir.mkdir(parents=True)
