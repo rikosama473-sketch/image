@@ -38,3 +38,8 @@ Cada imagen debe tener:
 - No cambiar ni borrar originales automáticamente.
 - No incluir imágenes sin permiso verificado.
 - No declarar el modelo como entrenado o el objetivo de 2 GB como cumplido hasta medirlo.
+
+
+## Referencias de arquitectura investigadas
+- [rhedak/anime-character-creator](https://github.com/rhedak/anime-character-creator): técnica paramétrica de SVG con anclas de anatomía y prendas en capas. Solo referencia de código MIT; su arte de referencia se audita separadamente.
+- [RGS_Dev modular character pack](https://rgsdev.itch.io/free-cc0-modular-animated-vector-characters-2d): CC0 en la fuente original; candidato técnico para ensayo de partes/animación, pero estilo cartoon y no modelo de arte anime final.
