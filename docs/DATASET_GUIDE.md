@@ -1,7 +1,7 @@
 # Auditoría de las imágenes del repositorio
 
 ## Estado de entrada
-El inventario inicial contiene 516 PNG (478.6 MB en total). 485 nombres parecen venir de una exportación PixAI; eso es solo una pista de nombre. Los archivos numéricos requieren localizar su origen.
+El snapshot actual contiene 546 imágenes (506,492,103 bytes, unos 506,5 MB): 515 rutas cuyos nombres empiezan por `from-PixAI-` y 31 nombres numéricos. El nombre/código se conserva porque el usuario lo usa como pista para identificar el modelo/LoRA asociado; aun así, no se deben adivinar esos identificadores si no están confirmados.
 
 ## Ejecutar auditoría
 ```bash
@@ -25,3 +25,10 @@ No escoger solo las primeras 100 por nombre. Elegir variedad de poses, cuerpos, 
 ## Interfaz local de revisión
 
 Para revisar las imágenes con miniaturas, filtros y etiquetas, usa [tools/dataset-reviewer](../tools/dataset-reviewer/README.md). Selecciona la carpeta local del repositorio, importa este CSV y exporta un manifiesto actualizado. Toda la revisión ocurre en el navegador local; no se suben imágenes.
+
+
+## Rastrear el modelo base y las LoRA por imagen
+
+El CSV conserva la ruta/nombre original. Para cada archivo, completa por separado `base_model_identifier`, `lora_identifiers` y `lora_weights_or_settings` cuando se conozcan (si hubo varias LoRA, anótalas con sus pesos/ajustes). No renombres imágenes ni conviertas un ID opaco del nombre en el nombre de una LoRA. Esa información identifica la procedencia de generación, pero **no reemplaza** la revisión de derechos: los estados `visual_review`, `license_review` y `training_permission` siguen pendientes hasta comprobar el contenido, la procedencia y la autorización de uso.
+
+El revisor local permite buscar por nombre o por esos campos. Después de editar, exporta el CSV y copia manualmente el resultado revisado a `data/training-labels.csv`.
