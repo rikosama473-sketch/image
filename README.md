@@ -55,11 +55,26 @@ La auditoría reporta dimensiones, modo, transparencia, SHA-256 y un hash percep
 
 La guía detallada está en [docs/DATASET_GUIDE.md](docs/DATASET_GUIDE.md), y la arquitectura y hoja de ruta en [docs/IMAGE_MODEL_STRATEGY.md](docs/IMAGE_MODEL_STRATEGY.md).
 
-## Motor y creador de imágenes
+## Motor de generación local
 
-La aplicación final debe cargar un modelo base y la LoRA elegida, permitir escribir el prompt, ajustar intensidad de la LoRA, dimensiones y semilla, generar variantes y guardar PNG junto con los parámetros. Las funciones de cambio anatómico por piezas pueden incorporarse después como un subsistema opcional, pero ya no sustituyen la meta principal de generar imágenes nuevas desde el modelo.
+Ya existe una primera CLI de inferencia genérica en `ml/generate_diffusion.py`. Carga una carpeta de modelo compatible con Diffusers y, opcionalmente, una LoRA del mismo tipo de base. Está aislada de las herramientas ligeras de auditoría para no forzar la instalación de un stack de IA en todas las PCs.
 
-Todavía **no hay una LoRA propia entrenada ni un motor de difusión local validado**. El siguiente hito es ejecutar el análisis de metadatos sobre la colección real, confirmar qué información sobrevive en los PNG y elegir el camino de entrenamiento según esa evidencia y el hardware.
+Instala PyTorch con el selector oficial según tu sistema/GPU y después las dependencias adicionales:
+
+~~~bash
+python -m pip install -r requirements-diffusion.txt
+~~~
+
+Para un modelo y una LoRA que ya estén descargados localmente:
+
+~~~bash
+python ml/generate_diffusion.py --model models/base-compatible --lora models/image-style.safetensors --prompt "anime character, silver hair, detailed eyes" --width 512 --height 512 --steps 20 --lora-scale 0.8
+~~~
+
+Sustituye las rutas de ejemplo por los pesos reales y compatibles. El script funciona localmente por defecto: no descarga modelos desde internet ni llama a una API de generación. Para permitir explícitamente la descarga de un modelo público no cacheado, agrega `--allow-download` y usa su identificador correcto. La opción `--cpu-offload` solo se aplica a una máquina con CUDA; `--low-memory` activa los modos de ahorro admitidos por el pipeline.
+
+Cada ejecución guarda PNG y un archivo JSON con modelo, LoRA, escala, prompt, semilla y parámetros usados. El script es un primer motor reutilizable, **no significa que ya hayamos elegido la base definitiva o entrenado nuestra LoRA**. Para modelos SDXL u otras familias, ajusta resolución y parámetros según la documentación de ese checkpoint. CPU puede ser muy lenta y no hay una garantía de 2 GB.
+
 
 ## Investigación de recursos y licencias
 
