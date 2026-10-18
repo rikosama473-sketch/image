@@ -42,7 +42,7 @@ class ConditionalGenerator(nn.Module):
         sizes = _condition_sizes(vocab)
         self.embeddings = nn.ModuleList([nn.Embedding(size, embedding_dim) for size in sizes])
         condition_dim = len(ATTRIBUTES) * embedding_dim
-        self.project = nn.Linear(latent_dim + condition_dim, base_channels * 4 * 6)
+        self.project = nn.Linear(latent_dim + condition_dim, base_channels * 6 * 4)
         self.network = nn.Sequential(
             nn.Upsample(scale_factor=2, mode="nearest"),
             nn.Conv2d(base_channels, base_channels, 3, padding=1),
