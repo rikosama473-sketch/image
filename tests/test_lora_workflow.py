@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import json
+import os
 import sys
 import tempfile
 import unittest
@@ -253,6 +254,15 @@ class LoRATrainingGuardTests(unittest.TestCase):
                 train_lora.make_caption_template(labels_path, labels_path, root, overwrite=True)
             with self.assertRaisesRegex(ValueError, "cannot overwrite a source image"):
                 train_lora.make_caption_template(labels_path, image_path, root, overwrite=True)
+            alias = root / "hardlink-to-image.csv"
+            try:
+                os.link(image_path, alias)
+            except OSError:
+                alias = None
+            if alias is not None:
+                with self.assertRaisesRegex(ValueError, "cannot overwrite a source image"):
+                    train_lora.make_caption_template(labels_path, alias, root, overwrite=True)
+                self.assertEqual(image_path.read_bytes(), original_image)
 
             output = root / "captions.csv"
             output.write_text("user-edited captions must survive", encoding="utf-8")
