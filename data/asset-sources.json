@@ -124,6 +124,67 @@
       "license": "not-found-reference-only",
       "status": "method-reference-only",
       "notes": "64x64 RGBA paired-view pose completion task, not free-form character generation. Repository/data rights need review before any reuse."
+    },
+    {
+      "id": "oga-paper-doll-style-sprites",
+      "name": "Paper Doll Style Sprites — Andrew Friend",
+      "sourceUrl": "https://opengameart.org/content/paper-doll-style-sprites",
+      "secondarySourceUrl": "https://github.com/cmotc/lairart",
+      "kind": "modular-paper-doll-sprite-pack",
+      "license": "CC-BY-SA-3.0",
+      "status": "high-value-overlay-pack-needs-archive-inspection",
+      "testedInProject": false,
+      "notes": "OpenGameArt describes a sizable top-down overlay set with figures, pants, shoes and shirts as separate ZIPs. Requires attribution and ShareAlike for derivatives; generic RPG appearance rather than anime. Inspect the exact selected files and license before reuse or training."
+    },
+    {
+      "id": "oga-paperdoll-template-cc0",
+      "name": "Paperdoll Characters (template) — IllusionOfMana",
+      "sourceUrl": "https://opengameart.org/content/paperdoll-characters-template",
+      "kind": "paper-doll-template",
+      "license": "CC0",
+      "status": "technical-template-review-candidate",
+      "testedInProject": false,
+      "notes": "Basic male/female public-domain template. Very small mock-up asset, useful for layout or workflow reference rather than a complete character-part library. Inspect the download before integration."
+    },
+    {
+      "id": "oga-bone-based-sprites-cc0",
+      "name": "2D female and male bone-based sprites — buttons",
+      "sourceUrl": "https://opengameart.org/content/2d-female-and-male-bone-based-sprites",
+      "kind": "articulated-2d-sprites",
+      "license": "CC0",
+      "status": "priority-pivot-articulation-candidate",
+      "testedInProject": false,
+      "notes": "Page describes 2D bone-based sprites designed for rotation/scaling, PNG parts and pivots in filenames. Authors note the figures are lightly dressed/underwear only; additional outfits would need to be created. Useful to test attachment points and articulation, not the final anime style."
+    },
+    {
+      "id": "oga-80x64-character-template-cc0",
+      "name": "80x64 Male and Female Sprites Character Template — mixxit",
+      "sourceUrl": "https://opengameart.org/content/80x64-male-and-female-sprites-character-template",
+      "kind": "modular-animated-sprite-template",
+      "license": "CC0",
+      "status": "small-pixel-template-inspection-pending",
+      "testedInProject": false,
+      "notes": "Page describes an 80x64 template broken into components including clothing and hair, plus walk/shoot/idle animation. Contains male and female examples; the project should select appropriate assets only. Inspect ZIP and pivots before use."
+    },
+    {
+      "id": "universal-lpc-spritesheet-generator",
+      "name": "Universal LPC Spritesheet Generator",
+      "sourceUrl": "https://liberatedpixelcup.github.io/Universal-LPC-Spritesheet-Character-Generator/",
+      "kind": "web-asset-compositor",
+      "license": "mixed-per-asset",
+      "status": "component-selection-and-credit-export-reference",
+      "testedInProject": false,
+      "notes": "A browser-based sprite compositor with a per-asset licensing/credit approach. Many assets are not anime; useful for studying selection UI and provenance exports. Never treat the whole generator or spritesheets as one blanket license; retain the license/credit info for every chosen part."
+    },
+    {
+      "id": "overscore-proxy-modular-3d",
+      "name": "OverScore Proxy — modular low-poly female character set",
+      "sourceUrl": "https://opengameart.org/content/overscore-proxy-modular-low-poly-female-character-creation-set",
+      "kind": "modular-3d-art-pack",
+      "license": "CC0",
+      "status": "optional-3d-reference-not-2d-compatible",
+      "testedInProject": false,
+      "notes": "OpenGameArt describes a low-poly female base and hundreds of clothing/accessory models under CC0. It is 3D, not a ready-made 2D sprite kit. Consider only for an optional future render-to-sprite pipeline; archive, import format and source page terms still need review."
     }
   ]
 }
