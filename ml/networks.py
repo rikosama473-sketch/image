@@ -71,7 +71,7 @@ class ConditionalGenerator(nn.Module):
 
     def forward(self, noise: torch.Tensor, labels: torch.Tensor) -> torch.Tensor:
         conditioned = torch.cat([noise, self._embed(labels)], dim=1)
-        features = self.project(conditioned).view(-1, self.base_channels, 4, 6)
+        features = self.project(conditioned).view(-1, self.base_channels, 6, 4)
         return self.network(features)
 
 
