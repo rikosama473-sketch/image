@@ -20,3 +20,8 @@ Rellena `data/training-labels.csv`:
 
 ## Selección del piloto de 100
 No escoger solo las primeras 100 por nombre. Elegir variedad de poses, cuerpos, ropa, peinados y fondos; quitar duplicados; separar validación de entrenamiento; preferir imágenes de un mismo estilo y con cuerpo completo. Si todas pertenecen a una sola pose, el modelo no aprenderá poses nuevas por magia.
+
+
+## Interfaz local de revisión
+
+Para revisar las imágenes con miniaturas, filtros y etiquetas, usa [tools/dataset-reviewer](../tools/dataset-reviewer/README.md). Selecciona la carpeta local del repositorio, importa este CSV y exporta un manifiesto actualizado. Toda la revisión ocurre en el navegador local; no se suben imágenes.
