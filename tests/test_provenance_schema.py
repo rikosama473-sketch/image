@@ -14,7 +14,7 @@ class ModelLoraProvenanceSchemaTests(unittest.TestCase):
             reader = csv.DictReader(handle)
             self.assertTrue(PROVENANCE_FIELDS.issubset(set(reader.fieldnames or [])))
             rows = list(reader)
-        self.assertEqual(len(rows), 546)
+        self.assertEqual(len(rows), 759)
         self.assertTrue(all(row["training_permission"] == "unreviewed" for row in rows))
         self.assertTrue(all(not row["lora_identifiers"] for row in rows))
 
