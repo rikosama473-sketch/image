@@ -18,11 +18,18 @@
     "requireSeparateTrainingPermissionReview": true,
     "neverAssumeFilenameProvesOwnership": true,
     "noAutomaticDeletionOrImageModification": true,
-    "notes": "Metadata-only snapshot as of 2026-10-18: 546 image files (515 names beginning from-PixAI-, 31 numeric filenames), 506,492,103 bytes. Dimensions, visual content, duplicates, image ownership, model/source terms and training permission remain unreviewed per image. Filename hints are not proof of origin.",
+    "notes": "Metadata-only snapshot as of 2026-10-18: 546 image files (515 names beginning from-PixAI-, 31 numeric filenames), 506,492,103 bytes. Original filenames are intentionally preserved because the user uses them as provenance clues for mapping each image to the model/LoRA; the model and LoRA identifiers must be recorded separately and are never guessed from the filename. Dimensions, image content, ownership, terms and training permission remain unreviewed per image.",
     "initialCorpusBytesHuman": "506.5 MB",
     "pixaiFilenamePrefixCount": 515,
     "numericFilenameCount": 31,
-    "corpusSnapshotAt": "2026-10-18"
+    "corpusSnapshotAt": "2026-10-18",
+    "preserveOriginalImageNames": true,
+    "trackBaseModelAndLoRASeparately": true,
+    "modelOrLoraTrackingFields": [
+      "base_model_identifier",
+      "lora_identifiers",
+      "lora_weights_or_settings"
+    ]
   },
   "sources": [
     {
@@ -31,11 +38,18 @@
       "sourceUrl": "https://github.com/rikosama473-sketch/image",
       "kind": "existing-image-corpus",
       "license": "unknown-per-image",
-      "sourceHint": "485 filenames start with from-PixAI-; this is a filename clue, not proof of account ownership or rights.",
+      "sourceHint": "515 original filenames begin with from-PixAI-; 31 filenames are numeric. Preserve each exact path because the user uses names as clues for mapping images to model/LoRA. The actual base model and LoRA identifiers need explicit metadata; names do not prove ownership or training permission.",
       "status": "metadata-inventoried-pixel-and-rights-review-pending",
       "useInTraining": "only after checking each image's origin, model/source terms, any third-party character rights, and marking training_permission=approved",
-      "files": 516,
-      "bytes": 478609881
+      "files": 546,
+      "bytes": 506492103,
+      "filenamePrefixCount": 515,
+      "numericFilenameCount": 31,
+      "modelLoraTrackingFields": [
+        "base_model_identifier",
+        "lora_identifiers",
+        "lora_weights_or_settings"
+      ]
     },
     {
       "id": "pixai-terms-generated-content",
@@ -213,6 +227,57 @@
       "status": "architecture-reference-reviewed-not-imported",
       "testedInProject": false,
       "notes": "Repository describes procedural anime-style characters generated from skeleton anchors and independent SVG shapes for heads, faces, hair, arms, legs and layered garments. SVG composition avoids external pretrained weights and is aligned with low-memory rendering. Code is MIT; the README says some character designs began from AI-generated references and several were traced from those references, so do not copy ref/ref-out PNGs/SVGs into our dataset or redistribute them without a separate rights review. Study the skeleton-relative geometry approach; any code adoption must preserve MIT license and be adapted to our restricted female/androgynous target."
+    },
+    {
+      "id": "oga-anime-girl-boy-portraits-cc0",
+      "name": "Anime Girl and Boy Portraits — stevenburrow",
+      "sourceUrl": "https://opengameart.org/content/anime-girl-and-boy-portraits",
+      "kind": "layered-anime-portrait-parts",
+      "license": "CC0-as-listed-on-OpenGameArt",
+      "status": "priority-download-and-GIMP-layer-inspection-pending",
+      "testedInProject": false,
+      "notes": "The source page describes two female and two male anime portraits, GIMP XCF layers, and component-level recoloring of hair, eyes and mouths. Useful for face/hairstyle/expression experiments; not a full-body or leg/clothing library. Inspect the downloaded XCF and export layers individually before integration; no files have been downloaded or integrated by this catalog update."
+    },
+    {
+      "id": "open-peeps-cc0-assets",
+      "name": "Open Peeps — base asset library",
+      "sourceUrl": "https://www.openpeeps.com/",
+      "secondarySourceUrl": "https://github.com/Hantuhan/peepstudio",
+      "kind": "mix-and-match-svg-character-parts-and-compositor-reference",
+      "license": "Open-Peeps-art-CC0; community-tool-code-license-not-assumed",
+      "status": "technical-composition-reference-style-mismatch",
+      "testedInProject": false,
+      "notes": "The PeepStudio repository describes Open Peeps art as CC0 and exposes interchangeable hair/body/expression atoms with SVG/PNG export. Generic hand-drawn cartoon, not anime. Use as a reference for modular layers and UI; do not treat the entire community application code as CC0 or as our anime training target."
+    },
+    {
+      "id": "konard-anime-avatar-unlicense",
+      "name": "Anime Avatar — konard",
+      "sourceUrl": "https://github.com/konard/anime-avatar",
+      "kind": "procedural-anime-svg-and-3d-architecture-reference",
+      "license": "Unlicense-repository-code; reference-images-and-third-party-assets-review-separate",
+      "status": "code-reference-not-art-pack",
+      "testedInProject": false,
+      "notes": "Public repository advertises an Unlicense and a configurable anime avatar with modular SVG components for face, eyes, hair, body, legs and background, plus a procedural 3D route. Useful for architecture only; do not copy reference-images, model files or screenshots into the training dataset without separate origin and permission review. WebGL dependency stack is heavier than the first low-memory target."
+    },
+    {
+      "id": "vroid-studio-cc0-sample-models-oga",
+      "name": "VRoid Studio CC0 sample models (specific alpha releases)",
+      "sourceUrl": "https://opengameart.org/content/vroid-studio-cc0-models",
+      "kind": "3d-anime-sample-models-for-render-to-sprite-experiment",
+      "license": "CC0-only-for-the-specific-sample-models-identified-by-source",
+      "status": "optional-3d-rendering-path-not-separate-2d-parts",
+      "testedInProject": false,
+      "notes": "OpenGameArt states these are specific VRoid alpha sample models explicitly released under CC0 and warns some sample models with similar names had more restrictive terms. Verify each model is in the identified CC0 subset before use. They are 3D models, not aligned transparent PNG pieces; consider only for controlled 2D render/reference experiments."
+    },
+    {
+      "id": "oga-half-body-portrait-female-cloths-cc0",
+      "name": "Half Body Portrait — Female Cloths",
+      "sourceUrl": "https://opengameart.org/content/half-body-portrait-female-cloths",
+      "kind": "single-layered-clothing-example",
+      "license": "CC0-as-listed-on-page; page-also-asks-to-attribute-Xenodora",
+      "status": "low-priority-small-overlay-needs-base-template",
+      "testedInProject": false,
+      "notes": "The page lists a single small corset-and-strap PNG that works with a separate half-body portrait template. This is only one clothing example, not a broad wardrobe. Honor the page's Xenodora credit request despite CC0 listing; inspect compatibility before use."
     }
   ]
 }
