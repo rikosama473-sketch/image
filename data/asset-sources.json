@@ -497,8 +497,94 @@
       ],
       "useInTraining": "potentially reviewable due to CC0 listing, but pixel-style domain differs strongly from intended full-size anime art; do not merge into a coherent anime training set without an explicit style decision.",
       "notes": "Low-cost, clearly listed CC0 reference with multiple state variants, but these are finished tiny sprites rather than separate body parts. Useful for pose/state experiments and inventory testing, not as the primary modular source."
+    },
+    {
+      "id": "freegamesprites-anime-full-body-cc0",
+      "name": "Free Anime Character Sprites: Full-Body Portraits — FreeGameSprites",
+      "sourceUrl": "https://freegamesprites.com/en/packs/anime-portraits",
+      "kind": "full-body-static-anime-character-png-pack",
+      "license": "CC0-declared-per-member-by-source; README-and-LICENSE-in-archive; no-independent-rights-audit",
+      "status": "candidate-for-character-gallery-and-reference; not-modular; review-before-training",
+      "testedInProject": false,
+      "fileFormat": "PNG",
+      "dimensions": "384x512 each; 40 assets",
+      "sourcePageFacts": {
+        "count": 40,
+        "transparentPngs": 40,
+        "staticImages": true,
+        "animation": false,
+        "perMemberPages": true,
+        "archiveIncludes": "README.md and LICENSE.txt per source page"
+      },
+      "useInCompositor": "Usable as complete character portraits in a gallery/UI or as visual references; not separable into independently licensed body/hair/clothing parts by default.",
+      "useInTraining": "Not approved automatically. Verify the downloaded LICENSE/README, per-image records, source provenance and whether the style belongs in the target corpus; keep separate from modular layer sources.",
+      "redistribution": "Source declares CC0 for each member; preserve provenance and verify the actual downloaded archive before committing or redistributing.",
+      "notes": "40 complete full-body anime-style character PNGs with transparency and a consistent 384x512 canvas. Page explicitly states these are still illustrations without mouth/blink frames, clothing layers, animation rigs, or walk cycles; canvases do not guarantee matching baselines/body scale. Better as UI/gallery art or reference material than as a body-part kit."
+    },
+    {
+      "id": "vroid-studio-character-creation-tool",
+      "name": "VRoid Studio — editable 3D anime characters",
+      "sourceUrl": "https://vroid.com/en/studio",
+      "secondarySourceUrl": "https://vroid.com/en/studio/guidelines",
+      "kind": "free-3d-anime-character-editor-and-vrm-exporter",
+      "license": "software-free-to-use; preset-content-has-its-own-terms-and-is-not-CC0",
+      "status": "optional-tool-for-authored-reference-renders; not-a-2d-parts-library",
+      "testedInProject": false,
+      "outputFormats": [
+        "VRM"
+      ],
+      "useInCompositor": "Create original 3D anime characters, edit hair/clothes/accessories and render consistent poses/views as references. It does not provide ready-to-use transparent 2D layer packs by itself.",
+      "useInTraining": "Images rendered from a personally authored model may be considered only after reviewing the terms for the model and every preset/item used. Do not mark all exports approved by default.",
+      "redistribution": "VRoid's official guidelines say pixiv-provided preset content is not CC0 and can have special clauses. Follow each item/model's specific conditions.",
+      "notes": "The official site offers free Windows/macOS software, editable hairstyle and outfit parameters, texture layers, and VRM export. The official guidelines also restrict creating output-generating applications from combined/deformed pixiv-provided mesh/texture content; review those terms before using VRoid-provided assets as the foundation of a public character-generator app. Suitable for private reference renders, subject to terms."
+    },
+    {
+      "id": "gimp-xcf-layer-editor",
+      "name": "GIMP — layered XCF/PNG preparation",
+      "sourceUrl": "https://www.gimp.org/",
+      "kind": "free-open-source-raster-image-editor",
+      "license": "application-license-is-separate-from-each-image-or-asset-license",
+      "status": "recommended-tool-for-inspecting-existing-xcf-packs",
+      "useInCompositor": "Open XCF packs, inspect layer order and visibility, align components on a shared canvas, export authorized parts as transparent PNG and maintain a layered source.",
+      "useInTraining": "Not a training dataset source; a tool used to inspect and export files. Training eligibility remains tied to the underlying artwork and its permissions.",
+      "notes": "Practical first tool for the two XCF packages already recorded in the repository: Anime Girl and Boy Portraits and Customizable Character Pack 64x96. Export working copies only; do not overwrite originals."
+    },
+    {
+      "id": "krita-layered-art-editor",
+      "name": "Krita — layered illustration editor",
+      "sourceUrl": "https://krita.org/",
+      "secondarySourceUrl": "https://docs.krita.org/en/user_manual/animation.html",
+      "kind": "free-open-source-raster-painting-and-layer-editor",
+      "license": "application-license-is-separate-from-each-image-or-asset-license",
+      "status": "recommended-alternative-tool-for-layered-png-and-illustration-editing",
+      "useInCompositor": "Edit authorized art, keep hair/face/clothes/limbs as named layers and export transparent PNGs; useful for making and repairing original parts.",
+      "useInTraining": "Not a training dataset source. Artwork opened or created in Krita still needs its own provenance and rights record.",
+      "notes": "Use as an alternative if GIMP's XCF workflow is uncomfortable or original parts need to be drawn. For a Live2D PSD workflow, test the exported PSD: Live2D's current documentation says Photoshop and Clip Studio Paint are the applications confirmed to load PSDs correctly."
+    },
+    {
+      "id": "live2d-cubism-layer-import-workflow",
+      "name": "Live2D Cubism Editor — PSD part import and rigging",
+      "sourceUrl": "https://docs.live2d.com/en/cubism-editor-manual/psd-import/",
+      "secondarySourceUrl": "https://docs.live2d.com/en/cubism-editor-manual/precautions-for-psd-data/",
+      "kind": "layered-character-rigging-and-psd-import-tool",
+      "license": "tool-terms-apply; not-an-art-asset-license",
+      "status": "optional-for-rigging-and-validating-layered-character-files",
+      "useInCompositor": "Import organized PSD groups as model parts, check layer hierarchy and test how the separated illustration deforms as a rig. Useful when the project needs animated/rigged characters rather than only static PNG assembly.",
+      "useInTraining": "Not a training dataset source. Live2D importing a file does not confer rights to its artwork.",
+      "notes": "Official manual updated in 2026 explains that PSD groups can be imported as parts; the PSD preparation guide lists Photoshop and Clip Studio Paint as the two editors confirmed to load PSDs correctly. This is a rigging workflow, not a source of freely licensed character art."
+    },
+    {
+      "id": "inkscape-vector-part-editor",
+      "name": "Inkscape — SVG/vector part editing",
+      "sourceUrl": "https://inkscape.org/",
+      "kind": "free-open-source-vector-editor",
+      "license": "application-license-is-separate-from-the-vector-artwork-license",
+      "status": "recommended-for-svg-parts-and-recolorable-vector-assets",
+      "useInCompositor": "Inspect, edit and recolor authorized SVG elements, align vector shapes to anchors, and export transparent PNG at the target resolution.",
+      "useInTraining": "Not a training dataset source. The vector art's own origin and license determine whether exported renderings may be used for training.",
+      "notes": "Useful for vector packs such as the CC0 RGS_Dev modular animation set and for designing original low-memory parametric shapes. Do not assume the code or sample artwork in a separate repository uses the same license."
     }
   ],
   "researchUpdatedAt": "2026-10-18",
-  "researchUpdateNotes": "Added newly inspected modular anime candidates and separated compositor/runtime use from AI-training eligibility. Do not treat download, source listing, or a permissive game-art license as automatic approval for model training."
+  "researchUpdateNotes": "Expanded with a complete-body CC0-declared still portrait pack and official editing/rigging tools. Recordings distinguish a software tool's capability from rights to the art opened, imported, exported, or used for training."
 }
