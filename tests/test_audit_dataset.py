@@ -14,7 +14,8 @@ import audit_dataset  # noqa: E402
 
 class DatasetAuditTests(unittest.TestCase):
     def test_filename_origin_hint_is_conservative(self) -> None:
-        self.assertIn("verify account", audit_dataset.filename_origin_hint("from-PixAI-123-0.png"))
+        self.assertIn("verify account/origin", audit_dataset.filename_origin_hint("from-PixAI-123-0.png"))
+        self.assertIn("preserve exact name", audit_dataset.filename_origin_hint("from-PixAI-123-0.png"))
         self.assertIn("origin unknown", audit_dataset.filename_origin_hint("17.png"))
         self.assertIn("unknown", audit_dataset.filename_origin_hint("portrait.png"))
 
