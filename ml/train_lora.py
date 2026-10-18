@@ -74,8 +74,8 @@ def source_manifest_paths(labels_path: Path, root: Path) -> list[dict[str, str]]
     return result
 
 
-def make_caption_template(labels_path: Path, output: Path) -> int:
-    rows = source_manifest_paths(labels_path, ROOT)
+def make_caption_template(labels_path: Path, output: Path, root: Path = ROOT) -> int:
+    rows = source_manifest_paths(labels_path, root)
     output = output.expanduser()
     if not output.is_absolute():
         output = ROOT / output
@@ -409,6 +409,8 @@ def choose_output_dir(value: Path | None, seed: int, root: Path, resume: str | N
     if output.is_relative_to(root) and not output.is_relative_to(root / "outputs"):
         raise ValueError("Output inside the repository must be under outputs/ so weights are not accidentally tracked by Git.")
     if resume:
+        if resume != "latest" and (Path(resume).name != resume or not resume.startswith("checkpoint-")):
+            raise ValueError("--resume-from-checkpoint must be 'latest' or a checkpoint-N folder name, without path components.")
         if not output.is_dir():
             raise ValueError("--resume-from-checkpoint requires an existing --output-dir.")
         checkpoint = output / "checkpoint-latest" if resume == "latest" else output / resume
@@ -458,7 +460,7 @@ def main(argv: list[str] | None = None) -> int:
         if not output.is_absolute():
             output = root / output
         try:
-            count = make_caption_template(labels, output)
+            count = make_caption_template(labels, output, root)
         except (OSError, csv.Error, UnicodeError, ValueError) as exc:
             parser.error(str(exc))
         print(f"Created local caption template for {count} manifest paths: {output.resolve()}")
@@ -559,7 +561,7 @@ def main(argv: list[str] | None = None) -> int:
     except ValueError as exc:
         parser.error(str(exc))
     output_dir.parent.mkdir(parents=True, exist_ok=True)
-    output_dir.mkdir(parents=True, exist_ok=bool(args.resume_from_checkpoint))
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     staging_dir = STAGING_ROOT / f"run-{stamp}-{uuid.uuid4().hex[:8]}"
@@ -659,7 +661,7 @@ def main(argv: list[str] | None = None) -> int:
         "--rank", str(args.rank),
         "--seed", str(args.seed),
         "--dataloader_num_workers", "0",
-        "--report_to", "none",
+        "--report_to", "tensorboard",
         "--gradient_checkpointing",
         "--mixed_precision", precision,
     ]
