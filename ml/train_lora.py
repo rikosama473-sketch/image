@@ -678,8 +678,9 @@ def main(argv: list[str] | None = None) -> int:
             }, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
-    except OSError as exc:
-        parser.error(f"Could not write local training config: {exc}")
+    except (OSError, ValueError) as exc:
+        shutil.rmtree(staging_dir, ignore_errors=True)
+        parser.error(f"Could not safely prepare/resume local training config: {exc}")
 
     command = [
         shutil.which("accelerate") or "accelerate", "launch",
