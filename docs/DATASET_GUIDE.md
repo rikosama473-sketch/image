@@ -1,7 +1,7 @@
 # Auditoría de las imágenes del repositorio
 
 ## Estado de entrada
-El snapshot actual contiene 546 imágenes (506,492,103 bytes, unos 506,5 MB): 515 rutas cuyos nombres empiezan por `from-PixAI-` y 31 nombres numéricos. El nombre/código se conserva porque el usuario lo usa como pista para identificar el modelo/LoRA asociado; aun así, no se deben adivinar esos identificadores si no están confirmados.
+El árbol actual contiene 759 imágenes (706,409,784 bytes, unos 706,4 MB): 728 rutas cuyos nombres empiezan por `from-PixAI-` y 31 nombres numéricos. El manifiesto fue actualizado de 546 a 759 filas; se incorporaron 213 rutas nuevas preservando las anotaciones existentes y dejando los permisos como pendientes. El nombre/código se conserva porque el usuario lo usa como pista para identificar el modelo/LoRA asociado; aun así, no se deben adivinar esos identificadores si no están confirmados.
 
 ## Ejecutar auditoría
 ```bash
