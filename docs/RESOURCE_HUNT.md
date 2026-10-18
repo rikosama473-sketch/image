@@ -95,3 +95,32 @@ Estos candidatos todavía no están integrados en el repositorio: los registros 
 - [Feminine Humanoid Base Mesh — GoldenThumbs](https://opengameart.org/content/feminine-humanoid-base-mesh): ficha CC0 con archivo Blender de un cuerpo estilizado sin cabeza. Solo ruta opcional para renderizar una silueta 3D a una vista 2D controlada; no proporciona partes 2D ni estilo anime acabado.
 
 La selección sigue priorizando los activos **2D, de licencia clara y con componentes independientemente editables**. Las herramientas que separan imágenes existentes solo se usarán con material propio o cuyo permiso de adaptación esté comprobado; separar una imagen no cambia sus derechos.
+
+
+## Paquetes descargados y examinados (18-10-2026)
+
+Se descargaron ambos ZIP desde sus páginas originales, se comprobó la integridad del archivo y se inspeccionó el árbol extraído. **No se subieron los ZIP ni sus PNG al repositorio**: los enlaces originales siguen siendo la vía de descarga, y el catálogo registra el resultado del examen.
+
+### 1) [Anime Girl and Boy Portraits — CC0, stevenburrow](https://opengameart.org/content/anime-girl-and-boy-portraits)
+
+Descarga oficial directa: [allanime-11-28-2020.zip](https://opengameart.org/sites/default/files/allanime-11-28-2020.zip), **3.517.503 bytes**. El ZIP pasa la prueba de integridad e incluye:
+- `AllAnime/NewAnime.xcf`: GIMP XCF v003, 1000×1000.
+- `Sample1.png`–`Sample8.png`: PNG RGBA 1000×1000 cada uno.
+- `SampleAll.png`: PNG RGBA 2000×4000.
+- No trae archivo README, LICENSE, COPYING, NOTICE ni CREDITS; guardar la URL de la ficha como fuente de la declaración CC0.
+
+La ficha declara CC0 y describe componentes editables/coloreables para cabello, ojos y boca. **Sirve para el módulo facial/peinados; no es un cuerpo entero ni contiene piernas/vestuario modular completo.** Todavía no extraje capas del XCF ni hice ensamblaje dentro de IMAGE.
+
+### 2) [Customizable Character Pack — CC0, rubberduck](https://opengameart.org/content/customizable-character-pack)
+
+Descarga oficial directa: [customizable_characters_w_samples.zip](https://opengameart.org/sites/default/files/customizable_characters_w_samples.zip), **252.884 bytes**. El ZIP pasa la prueba de integridad e incluye:
+- `customizable_characters.xcf`: GIMP XCF v011, 64×96.
+- `sample_character_01.png`–`sample_character_16.png`: PNG RGBA 64×96 cada uno.
+- No trae archivo README, LICENSE, COPYING, NOTICE ni CREDITS; guardar la URL de la ficha como fuente de la declaración CC0.
+
+Este es el primer paquete para probar **capas de cuerpo/ropa/pelo alineadas exactamente con nuestra resolución inicial 64×96**. El estilo es pixel/cartoon, no anime acabado. Se debe inspeccionar el XCF en GIMP para confirmar orden de capas y preparar una composición de prueba antes de darlo por integrado o meterlo al conjunto de entrenamiento.
+
+### Resultado práctico y límite
+
+Prioridad de pruebas: (1) inspeccionar capas/anchors del Character Pack 64×96; (2) revisar el XCF anime para ojos/boca/pelo; (3) solo después evaluar si las piezas se pueden mezclar en un compositor. No mezclar directamente ambos estilos en un dataset de entrenamiento coherente. La licencia de la página se registra en el catálogo, pero la autorización para redistribuir un archivo, usarlo en el motor y entrenar un modelo sigue siendo un registro de decisión separado.
+
