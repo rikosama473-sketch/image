@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import os
 import sys
@@ -191,6 +192,12 @@ class LoRATrainingGuardTests(unittest.TestCase):
             self.assertEqual(skipped["not_fully_approved"], 1)
             self.assertEqual(models["model-a"], 9)
             self.assertEqual(unknown, 0)
+            example_by_path = {row["path"]: row for row in examples}
+            first_path = next(iter(original_bytes))
+            self.assertEqual(
+                example_by_path[first_path]["source_sha256"],
+                hashlib.sha256(original_bytes[first_path]).hexdigest(),
+            )
 
             train_dir, validation_dir, train_rows, validation_rows = train_lora.prepare_imagefolder(
                 examples, root / "staged-dataset", seed=42, validation_ratio=0.1
@@ -199,6 +206,7 @@ class LoRATrainingGuardTests(unittest.TestCase):
             self.assertEqual(len(validation_rows), 1)
             self.assertEqual(len((train_dir / "metadata.jsonl").read_text(encoding="utf-8").splitlines()), 8)
             self.assertEqual(len((validation_dir / "metadata.jsonl").read_text(encoding="utf-8").splitlines()), 1)
+            self.assertTrue(all(row["source_sha256"] for row in train_rows + validation_rows))
             train_record = json.loads((train_dir / "metadata.jsonl").read_text(encoding="utf-8").splitlines()[0])
             self.assertIn("file_name", train_record)
             self.assertTrue(train_record["text"].startswith("reviewed caption "))
