@@ -583,8 +583,154 @@
       "useInCompositor": "Inspect, edit and recolor authorized SVG elements, align vector shapes to anchors, and export transparent PNG at the target resolution.",
       "useInTraining": "Not a training dataset source. The vector art's own origin and license determine whether exported renderings may be used for training.",
       "notes": "Useful for vector packs such as the CC0 RGS_Dev modular animation set and for designing original low-memory parametric shapes. Do not assume the code or sample artwork in a separate repository uses the same license."
+    },
+    {
+      "id": "pepo-girl-sprites-cc0-layered-psd",
+      "name": "Girl Sprites for Visual Novels — Pepo Kukuru",
+      "sourceUrl": "https://cucurbitapepo.itch.io/girl-sprites-for-visual-novel",
+      "kind": "layered-anime-visual-novel-sprite-pack",
+      "license": "CC0-1.0-as-listed-on-itch-io; author-also-says-do-not-resell-directly-or-with-minor-modifications",
+      "status": "high-priority-free-psd-layer-pack-review-archive-before-use",
+      "testedInProject": false,
+      "sourcePageFacts": {
+        "currentPrice": "free; page says payments have been disabled",
+        "freePack": "12 MB ZIP",
+        "premiumPack": "12 MB ZIP",
+        "fullPack": "97 MB ZIP",
+        "formats": [
+          "PSD",
+          "CLIP in full version"
+        ],
+        "freePackContents": "4 front and 4 back hairstyles, reduced expressions, 4 clothing variants; shoes not included",
+        "premiumCanvas": "1821x2579",
+        "fullCanvas": "3035x4299",
+        "pageLicense": "Creative Commons Zero v1.0 Universal",
+        "pageStatesNoGenerativeAIUsed": true
+      },
+      "useInCompositor": "Strong candidate for testing layer editing and outfit/hair/expression swaps in a raster editor. Download includes a PSD; the full version also lists a Clip Studio format.",
+      "useInTraining": "CC0 is listed on the source page, but keep unapproved until the actual archive and source metadata are reviewed and its place in the target training style is decided.",
+      "redistribution": "Do not resell the pack as-is or with minor changes, per the author’s page. Review CC0 notice and bundled files before any redistribution.",
+      "notes": "Free high-resolution female anime sprite pack with transparent/layered workflow, outfits and hair choices. It is not a full anatomical part library: the free version has no shoes and does not provide a complete set of independent hands/arms/legs."
+    },
+    {
+      "id": "miu-sprites-layered-psd-paid",
+      "name": "Miu Sprites — Lia",
+      "sourceUrl": "https://liah0227.itch.io/miusprites",
+      "kind": "layered-anime-visual-novel-character-psd",
+      "license": "creator-license-for-game-use; commercial credit required; do-not-sell-the-sprite-or-claim-ownership; AI-training-permission-not-stated",
+      "status": "paid-runtime-composition-candidate-training-not-approved",
+      "testedInProject": false,
+      "sourcePageFacts": {
+        "minimumPriceUSD": 10,
+        "file": "Miu.psd",
+        "fileSize": "28 MB",
+        "outfits": [
+          "school",
+          "casual",
+          "swimsuit"
+        ],
+        "editableLayers": [
+          "body color",
+          "hair color",
+          "outfit color",
+          "eyes",
+          "eyebrows",
+          "mouths",
+          "blush"
+        ]
+      },
+      "useInCompositor": "Possible game/app character display and expression/color-layer testing after purchase; PSD needs a compatible layered editor.",
+      "useInTraining": "Not approved; the source page does not grant explicit AI-training permission. Ask the creator before training.",
+      "redistribution": "May be used in personal/commercial games under stated terms; credit Lia for commercial projects; may not sell the sprite or claim ownership.",
+      "notes": "Useful polished anime PSD for body/hair/outfit color layers and facial expression combinations, but the source page requires a purchase of at least USD 10. It is a character sprite/upper-body-style visual novel asset, not a reusable general full-body anatomy kit."
+    },
+    {
+      "id": "imagetolayers-anime-decomposition-web-tool",
+      "name": "ImageToLayers — Anime Character Layer Decomposition",
+      "sourceUrl": "https://imagetolayers.org/solutions/anime-layer-decomposition",
+      "kind": "web-based-character-layer-segmentation-tool",
+      "license": "service-terms-and-credit-usage-apply; not-an-art-license",
+      "status": "optional-segmentation-tool-for-owned-or-authorized-input-only",
+      "testedInProject": false,
+      "sourcePageFacts": {
+        "exportFormats": [
+          "transparent PNG layers",
+          "ZIP",
+          "PSD"
+        ],
+        "exampleLayerCount": 29,
+        "costModel": "20 credits per split",
+        "freeExport": "free-account exports include watermark"
+      },
+      "useInCompositor": "Potentially useful to prototype separation of a character into named layers such as front/back hair, eyes, face, clothes, accessories and shoes; inspect and manually repair each export.",
+      "useInTraining": "Not automatically approved. Only process inputs you own or are authorized to adapt, and independently review rights to every resulting layer before training.",
+      "redistribution": "The website/service terms, credit system and output conditions must be checked before relying on exports. Layer separation does not remove the original illustration's rights.",
+      "notes": "Browser alternative for interactively decomposing an authorized existing anime illustration. A displayed 29-layer example is a saved demonstration rather than a guarantee that every input will split cleanly; manual cleanup may be needed."
+    },
+    {
+      "id": "uglycygnet-character-creator-mit-compositor-reference",
+      "name": "character_creator — uglycygnet",
+      "sourceUrl": "https://github.com/uglycygnet/character_creator",
+      "secondarySourceUrl": "https://github.com/uglycygnet/character_creator/blob/main/LICENSE",
+      "kind": "open-source-2d-modular-skeleton-compositor-reference",
+      "license": "MIT-code; README says artwork is placeholder/no production art pack included",
+      "status": "architecture-reference-not-graphic-asset-source",
+      "testedInProject": false,
+      "sourcePageFacts": {
+        "framework": "LÖVE2D",
+        "features": [
+          "hierarchical skeleton and joints",
+          "idle/walk animation",
+          "separate character and animation data",
+          "debug rendering"
+        ],
+        "artwork": "placeholder modules; no usable art library included",
+        "recommendedWorkflow": "transparent PNG per body part and shared anchors/pivots"
+      },
+      "useInCompositor": "Study folder layout, skeleton attachments and pivot conventions as a small implementation reference. Do not expect the repository to supply hair, clothes, faces or body artwork.",
+      "useInTraining": "Not a training dataset source.",
+      "redistribution": "MIT code can be reused subject to its license; bundled code and any external art must still be checked separately.",
+      "notes": "The README gives concrete part directories for heads, hair, eyes, eyebrows, mouths, arms, hands, legs, feet, shirts, pants, shoes and accessories. Useful for designing IMAGE’s own modular compositor structure, but not itself a graphic pack."
+    },
+    {
+      "id": "meomeo-2d-character-parts-studio-license-unverified",
+      "name": "2D Character Parts Studio — meomeo-dev",
+      "sourceUrl": "https://github.com/meomeo-dev/2d-character-parts",
+      "kind": "API-backed-anime-part-generation-and-composition-tool-reference",
+      "license": "no-license-file-or-explicit-code-license-identified-on-repository-page-at-review",
+      "status": "study-only-license-unverified-external-model-and-api-dependency",
+      "testedInProject": false,
+      "sourcePageFacts": {
+        "independentParts": 19,
+        "partsInclude": [
+          "torso",
+          "upper/lower arms",
+          "hands",
+          "thighs",
+          "calves",
+          "feet",
+          "head",
+          "eye and mouth expressions"
+        ],
+        "pipeline": "global reference -> torso -> lower limbs -> upper limbs -> head -> expressions",
+        "features": [
+          "prompt templates",
+          "SVG parts-layout template",
+          "PNG composition",
+          "offline viewer",
+          "local studio UI"
+        ],
+        "externalDependencies": [
+          "provider API key",
+          "external image-generation models such as gpt-image or other configured provider"
+        ]
+      },
+      "useInCompositor": "Study its 19-part naming/layout and composition workflow as an architecture example only; its generated part files are not a pre-cleared reusable asset collection.",
+      "useInTraining": "Not approved. It uses external image-generation models/API by default, and repository/source rights and output terms need separate review. This is not a replacement for IMAGE's chosen model strategy.",
+      "redistribution": "Do not copy its code, templates, generated outputs or samples into IMAGE until a license is located and the relevant rights are verified.",
+      "notes": "Recent public repository shows a staged anatomical parts pipeline, prompt templates, a local web UI and PNG composition scripts. A license was not visible in the reviewed root listing, so it is a research lead, not an adopted dependency."
     }
   ],
   "researchUpdatedAt": "2026-10-18",
-  "researchUpdateNotes": "Expanded with a complete-body CC0-declared still portrait pack and official editing/rigging tools. Recordings distinguish a software tool's capability from rights to the art opened, imported, exported, or used for training."
+  "researchUpdateNotes": "Expanded with a free CC0-listed layered anime PSD, a paid layered sprite pack, a browser anime layer-splitting service, and two software architecture references. Items with unclear AI-training or code license remain explicitly unapproved."
 }
