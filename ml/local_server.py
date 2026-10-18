@@ -84,6 +84,10 @@ SUPPORTED_MODEL_PIPELINES = {
     "StableDiffusionPipeline": "sd",
     "StableDiffusionXLPipeline": "sdxl",
 }
+REQUIRED_MODEL_COMPONENTS = {
+    "sd": {"unet", "vae", "scheduler", "tokenizer", "text_encoder"},
+    "sdxl": {"unet", "vae", "scheduler", "tokenizer", "text_encoder", "tokenizer_2", "text_encoder_2"},
+}
 BASE_MODEL_WEIGHT_NAMES = {
     "model.safetensors",
     "diffusion_pytorch_model.safetensors",
@@ -136,6 +140,8 @@ def _list_local_assets(root: Path = ROOT) -> dict[str, list[dict[str, str]]]:
         class_name = str(index.get("_class_name", ""))
         family = SUPPORTED_MODEL_PIPELINES.get(class_name)
         if family is None:
+            continue
+        if any(not (directory / component).is_dir() for component in REQUIRED_MODEL_COMPONENTS[family]):
             continue
         relative = directory.relative_to(root).as_posix()
         models.append({
