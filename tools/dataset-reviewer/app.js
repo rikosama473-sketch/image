@@ -4,7 +4,7 @@
   const PAGE_SIZE = 24;
   const FIELDS = [
     "path","size_bytes","git_blob_sha","filename_origin_hint","source_url","author",
-    "visual_review","license_review","training_permission","hair","clothing","legs","pose","background","notes"
+    "base_model_identifier","lora_identifiers","lora_weights_or_settings","visual_review","license_review","training_permission","hair","clothing","legs","pose","background","notes"
   ];
   const ATTRIBUTES = ["hair","clothing","legs","pose","background"];
   const REVIEW_FIELDS = ["visual_review","license_review","training_permission"];
@@ -22,6 +22,9 @@
       filename_origin_hint: path.startsWith("from-PixAI-") ? "PixAI-like filename; verify account and origin" : /^\d+\.png$/i.test(path) ? "numeric filename; origin unknown" : "unknown; review source",
       source_url: "",
       author: "",
+      base_model_identifier: "",
+      lora_identifiers: "",
+      lora_weights_or_settings: "",
       visual_review: "unreviewed",
       license_review: "unreviewed",
       training_permission: "unreviewed",
@@ -131,6 +134,9 @@
     const provenance = [
       textField(path,"source_url","URL de origen",record.source_url),
       textField(path,"author","Autor/creador",record.author),
+      textField(path,"base_model_identifier","Modelo base usado",record.base_model_identifier),
+      textField(path,"lora_identifiers","LoRA(s) usada(s)",record.lora_identifiers),
+      textField(path,"lora_weights_or_settings","Pesos/ajustes de LoRA",record.lora_weights_or_settings),
       '<label class="field"><span>Notas</span><input type="text" data-path="' + escapeHtml(path) + '" data-field="notes" value="' + escapeHtml(record.notes) + '"></label>'
     ].join("");
     const labelSet = isReady(record) ? "Listo para entrenar" : isExcluded(record) ? "Excluido del conjunto" : "Revisión pendiente";
@@ -167,7 +173,8 @@
       return {path,file,record:records.get(path)};
     });
     items = items.filter(({path,record}) => {
-      if (search && !path.toLowerCase().includes(search)) return false;
+      const searchable = [path, record.base_model_identifier, record.lora_identifiers, record.lora_weights_or_settings].join(" ").toLowerCase();
+      if (search && !searchable.includes(search)) return false;
       if (filter === "ready" && !isReady(record)) return false;
       if (filter === "unreviewed" && (isReady(record) || isExcluded(record))) return false;
       if (filter === "excluded" && !isExcluded(record)) return false;
