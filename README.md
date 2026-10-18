@@ -80,6 +80,37 @@ El sistema no elige pesos al azar: todavía falta identificar el checkpoint más
 Los PNG y archivos JSON asociados se guardan en `outputs/generated/`, ignorados por Git. Este es el primer motor funcional para probar modelos y LoRAs compatibles, no una afirmación de que nuestra adaptación propia ya esté entrenada. CPU puede ser lenta y la meta antigua de 2 GB no está validada.
 
 
+## Entrenamiento local de la LoRA de estilo
+
+La CLI de inferencia ya existe; el lanzador de entrenamiento está en ml/train_lora.py. Antes de entrenar, revisa la procedencia y permisos de cada referencia y recupera lo que los archivos permitan demostrar:
+
+~~~bash
+python scripts/extract_generation_metadata.py --root .
+python scripts/summarize_generation_metadata.py
+python ml/train_lora.py --make-caption-template
+~~~
+
+El resumen JSON enumera cobertura e identificadores observados, pero no copia prompts positivos/negativos. El CSV de metadatos completo y la plantilla de captions se guardan localmente en data/cache/, excluida de Git. Rellena los captions manualmente y marca en data/training-labels.csv solo las filas cuyas columnas visual_review, license_review y training_permission tengan revisión aprobada. La plantilla no aprueba nada automáticamente.
+
+Instala primero el par de PyTorch y torchvision compatible con tu sistema/GPU usando el selector oficial de PyTorch (https://pytorch.org/get-started/locally/), y después las dependencias aisladas del entrenador:
+
+~~~bash
+python -m pip install -r requirements-training-lora.txt
+python ml/train_lora.py --fetch-official-trainers
+~~~
+
+El segundo comando descarga únicamente los dos scripts LoRA oficiales de Diffusers v0.35.1, verifica su hash Git y no descarga pesos. Para una carpeta base local con model_index.json, el lanzador detecta la familia leyendo _class_name. Para un identificador de Hub/caché hay que declarar --family sd o --family sdxl; los pesos remotos siguen deshabilitados salvo que se añada --allow-model-download.
+
+Haz primero la prevalidación, por ejemplo para una base Stable Diffusion:
+
+~~~bash
+python ml/train_lora.py --model models/base-diffusers --captions-csv data/cache/lora-captions-template.csv --metadata-csv data/cache/generation-metadata.csv --confirm-source-family sd --check-only
+~~~
+
+La familia de ese ejemplo es ilustrativa, no una selección recomendada para la colección. Sustitúyela por la que se pueda confirmar. Si quedan identificadores de checkpoint desconocidos o aparecen varios, el lanzador exige que se revisen y se autoricen explícitamente con --allow-unknown-source-models o --allow-multiple-source-models; no uses esos flags para saltarte una revisión real.
+
+Cuando la prevalidación sea satisfactoria, quita --check-only para iniciar el entrenamiento. La CLI conserva configuración, selección, checkpoints y resultados en outputs/training-lora/. No modifica las imágenes originales. Si termina con éxito, comprueba el archivo de pesos pytorch_lora_weights.safetensors y sus claves LoRA; después se puede pasar como --lora a ml/generate_diffusion.py con el mismo modelo compatible. La separación retenida queda registrada para comparación manual, pero la calidad sobre imágenes no vistas todavía requiere evaluación visual: ni la prevalidación ni CI cuentan como entrenamiento.
+
 ## Investigación de recursos y licencias
 
 `docs/RESOURCE_HUNT.md` conserva la búsqueda de recursos gráficos y motores de composición como vía complementaria. Los assets descargables no forman parte de nuestro dataset de entrenamiento por defecto: la licencia para usarlos en la aplicación, redistribuirlos y entrenar IA se revisa por separado.
