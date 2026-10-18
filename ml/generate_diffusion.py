@@ -129,7 +129,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         pipe = AutoPipelineForText2Image.from_pretrained(
             args.model,
-            dtype=dtype,
+            torch_dtype=dtype,
             use_safetensors=True,
             local_files_only=local_files_only,
         )
