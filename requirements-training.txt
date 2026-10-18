@@ -1,0 +1,5 @@
+# Optional environment for the from-scratch training prototype.
+# Install separately from requirements.txt to keep the dataset-audit tool lightweight.
+numpy>=1.26,<3
+Pillow>=10.0,<13
+torch>=2.2,<3
