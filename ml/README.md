@@ -42,3 +42,23 @@ Los nombres anteriores son ejemplos, no categorías predefinidas. Usa los valore
 - Las etiquetas permiten condicionamiento global, pero con 100 imágenes no se garantiza intercambio perfecto de cabello/ropa/piernas.
 - El objetivo de 2 GB todavía no está validado. Este prototipo usa PyTorch; una futura versión de inferencia compacta debe medirse y, si es necesario, exportarse a un runtime más ligero.
 - No subir checkpoints, salidas generadas ni datos privados al repositorio; están excluidos por `.gitignore`.
+
+## 4. Exportar para inferencia ligera
+
+Cuando exista un checkpoint propio:
+
+```bash
+python -m pip install -r requirements-training.txt
+python ml/export_onnx.py --checkpoint outputs/training/checkpoint-epoch-0200.pt
+```
+
+Para usar el generador sin importar PyTorch, instala el runtime de CPU:
+
+```bash
+python -m pip install -r requirements-inference.txt
+python ml/generate_onnx.py --hair long --clothing casual --legs tights --pose front-standing --background plain --count 4
+python ml/benchmark_onnx.py --count 24 --batch-size 1
+```
+
+El informe guardado en `outputs/onnx/memory-benchmark.json` mide RSS pico del proceso y latencia en ese equipo. Para aceptar el límite de 2 GB, repetir la prueba en la PC objetivo con el motor/interfaz abiertos; el RSS del proceso no equivale al consumo total del sistema.
+
