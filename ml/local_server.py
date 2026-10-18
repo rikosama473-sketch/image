@@ -136,14 +136,18 @@ def _validate_payload(data: Any) -> dict[str, Any]:
     low_memory = data.get("low_memory", True)
     if not all(isinstance(flag, bool) for flag in (allow_download, cpu_offload, low_memory)):
         raise ValueError("Las opciones de memoria/descarga deben ser booleanas.")
+    width = integer("width", 512, 64, 2048)
+    height = integer("height", 512, 64, 2048)
+    if width % 8 or height % 8:
+        raise ValueError("El ancho y el alto deben ser múltiplos de ocho.")
     return {
         "model": model.strip(),
         "lora": lora.strip(),
         "lora_weight_name": weight_name.strip(),
         "prompt": prompt.strip(),
         "negative_prompt": negative_prompt.strip(),
-        "width": integer("width", 512, 64, 2048),
-        "height": integer("height", 512, 64, 2048),
+        "width": width,
+        "height": height,
         "steps": integer("steps", 20, 1, 150),
         "guidance_scale": number("guidance_scale", 7.0, 0, 40),
         "seed": integer("seed", 7, 0, 2**32 - 1),
