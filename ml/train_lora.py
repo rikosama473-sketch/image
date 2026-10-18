@@ -142,6 +142,14 @@ def git_blob_sha(data: bytes) -> str:
     return hashlib.sha1(header + data).hexdigest()
 
 
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def detect_model_family(model: str, requested_family: str, allow_download: bool) -> tuple[str, str, bool]:
     candidate = Path(model).expanduser()
     if candidate.exists():
@@ -265,6 +273,7 @@ def load_approved_examples(
         examples.append({
             "path": relative,
             "absolute_path": str(source),
+            "source_sha256": sha256_file(source),
             "caption": caption,
             "source_model": source_model,
         })
@@ -651,7 +660,10 @@ def main(argv: list[str] | None = None) -> int:
             "validation_count": len(validation_rows),
             "skipped_manifest_rows": dict(skipped),
             "dataset_manifest_sha256": hashlib.sha256(
-                "\n".join(f"{r['path']}\t{r['caption']}" for r in sorted(examples, key=lambda x: x["path"])).encode("utf-8")
+                "\n".join(
+                    f"{r['path']}\t{r['source_sha256']}\t{r['caption']}"
+                    for r in sorted(examples, key=lambda x: x["path"])
+                ).encode("utf-8")
             ).hexdigest(),
             "staging_directory": str(staging_dir),
             "hardware": hardware,
@@ -678,8 +690,22 @@ def main(argv: list[str] | None = None) -> int:
         )
         (output_dir / "training-manifest.json").write_text(
             json.dumps({
-                "train": [{"path": row["path"], "caption_sha256": hashlib.sha256(row["caption"].encode("utf-8")).hexdigest()} for row in train_rows],
-                "validation": [{"path": row["path"], "caption_sha256": hashlib.sha256(row["caption"].encode("utf-8")).hexdigest()} for row in validation_rows],
+                "train": [
+                    {
+                        "path": row["path"],
+                        "source_sha256": row["source_sha256"],
+                        "caption_sha256": hashlib.sha256(row["caption"].encode("utf-8")).hexdigest(),
+                    }
+                    for row in train_rows
+                ],
+                "validation": [
+                    {
+                        "path": row["path"],
+                        "source_sha256": row["source_sha256"],
+                        "caption_sha256": hashlib.sha256(row["caption"].encode("utf-8")).hexdigest(),
+                    }
+                    for row in validation_rows
+                ],
             }, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
