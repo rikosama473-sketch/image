@@ -728,24 +728,56 @@ def main(argv: list[str] | None = None) -> int:
     (output_dir / "training-config.json").write_text(
         json.dumps(training_config, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
-    print("Starting real training with the pinned official Diffusers script. Training logs below are from the subprocess.")
+    training_log = output_dir / "training.log"
+    print("Starting real training with the pinned official Diffusers script.")
     print("Remote model downloads are " + ("explicitly enabled." if args.allow_model_download else "disabled (local model/cache only)."))
+    print(f"Local training log: {training_log}")
+    trainer_process: subprocess.Popen[str] | None = None
     try:
-        process = subprocess.run(command, cwd=root, env=environment, check=False)
+        with training_log.open("a", encoding="utf-8") as log_handle:
+            log_handle.write("\n=== Training attempt " + datetime.now(timezone.utc).isoformat() + " ===\n")
+            log_handle.flush()
+            trainer_process = subprocess.Popen(
+                command,
+                cwd=root,
+                env=environment,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                bufsize=1,
+            )
+            if trainer_process.stdout is None:
+                raise RuntimeError("The training subprocess did not expose a readable output stream.")
+            for line in trainer_process.stdout:
+                sys.stdout.write(line)
+                sys.stdout.flush()
+                log_handle.write(line)
+                log_handle.flush()
+            trainer_process.wait()
+        process = trainer_process
     except KeyboardInterrupt:
+        if trainer_process is not None and trainer_process.poll() is None:
+            trainer_process.terminate()
+            try:
+                trainer_process.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                trainer_process.kill()
+                trainer_process.wait()
         training_config["status"] = "interrupted"
         (output_dir / "training-config.json").write_text(
             json.dumps(training_config, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )
-        print(f"Training interrupted. Existing checkpoints/logs remain in {output_dir}.", file=sys.stderr)
+        print(f"Training interrupted. Existing checkpoints and training.log remain in {output_dir}.", file=sys.stderr)
         return 130
-    except OSError as exc:
+    except (OSError, RuntimeError) as exc:
         training_config["status"] = "failed_to_start"
         training_config["error"] = f"{type(exc).__name__}: {exc}"
         (output_dir / "training-config.json").write_text(
             json.dumps(training_config, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )
-        print(f"Could not start the trainer: {exc}", file=sys.stderr)
+        print(f"Could not start the trainer or save its logs: {exc}", file=sys.stderr)
         return 2
 
     result: dict[str, Any] = {
