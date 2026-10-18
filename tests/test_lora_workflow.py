@@ -142,6 +142,55 @@ class LoRATrainingGuardTests(unittest.TestCase):
         self.assertEqual(len(observed), 2)
         self.assertEqual(unknown, 0)
 
+    def test_recovered_checkpoint_hashes_are_part_of_source_identity(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            labels_path = root / "labels.csv"
+            metadata_path = root / "metadata.csv"
+            captions_path = root / "captions.csv"
+            label_fields = [
+                "path", "visual_review", "license_review", "training_permission",
+                "base_model_identifier",
+            ]
+            label_rows = []
+            metadata_rows = []
+            caption_rows = []
+            for index, model_hash in enumerate(("hash-one", "hash-two")):
+                name = f"approved-{index}.png"
+                Image.new("RGB", (8, 8), (index, 30, 60)).save(root / name)
+                label_rows.append({
+                    "path": name,
+                    "visual_review": "approved",
+                    "license_review": "approved",
+                    "training_permission": "approved",
+                    "base_model_identifier": "same-name",
+                })
+                metadata_rows.append({
+                    "path": name,
+                    "base_model_identifier": "same-name",
+                    "base_model_hash": model_hash,
+                })
+                caption_rows.append({"path": name, "caption": f"reviewed {index}"})
+            for path, fields, rows in (
+                (labels_path, label_fields, label_rows),
+                (metadata_path, ["path", "base_model_identifier", "base_model_hash"], metadata_rows),
+                (captions_path, ["path", "caption"], caption_rows),
+            ):
+                with path.open("w", encoding="utf-8", newline="") as handle:
+                    writer = csv.DictWriter(handle, fieldnames=fields)
+                    writer.writeheader()
+                    writer.writerows(rows)
+
+            examples, _, _ = train_lora.load_approved_examples(
+                labels_path, root, captions_path, metadata_path
+            )
+            self.assertEqual(
+                {example["source_model"] for example in examples},
+                {"same-name [hash:hash-one]", "same-name [hash:hash-two]"},
+            )
+            with self.assertRaisesRegex(ValueError, "2 distinct source checkpoint identifiers"):
+                train_lora.verify_source_models(examples, False, False)
+
     def test_training_dataset_uses_approved_images_and_keeps_original_bytes(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
