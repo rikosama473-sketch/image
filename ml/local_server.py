@@ -333,9 +333,12 @@ def _run_job(job_id: str, config: dict[str, Any], job_dir: Path) -> None:
         error = (result.stderr or "")[-12000:]
         images = []
         if job_dir.exists():
+            # The engine creates a timestamped run directory inside --output-dir.
+            # Search recursively so valid nested PNGs are not reported as failed jobs.
             images = [
                 "/generated/" + file.relative_to(OUTPUT_ROOT).as_posix()
-                for file in sorted(job_dir.glob("*.png"))
+                for file in sorted(job_dir.rglob("*.png"))
+                if file.is_file() and not file.is_symlink()
             ]
         with JOBS_LOCK:
             JOBS[job_id].update({
