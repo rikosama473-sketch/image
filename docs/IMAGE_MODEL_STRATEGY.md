@@ -31,6 +31,22 @@ Antes de escoger un checkpoint:
 4. Si hay varias familias de checkpoints, agrupar por compatibilidad/procedencia y comparar pilotos por grupo. No mezclar ciegamente imágenes de bases incompatibles para entrenar una sola LoRA.
 5. Si no hay metadatos, dejar los campos vacíos y etiquetar manualmente solo lo que se pueda confirmar.
 
+## Entrenador LoRA integrado (primer flujo local)
+
+El nuevo ml/train_lora.py usa los scripts oficiales de texto-a-imagen de Diffusers v0.35.1 para las familias StableDiffusionPipeline (SD 1.x/2.x) y StableDiffusionXLPipeline. Los scripts se descargan solo tras ejecutar el comando explícito --fetch-official-trainers y se verifican contra sus Git blob SHA conocidos. La descarga de pesos base queda separada; la inferencia y el entrenamiento siguen siendo locales por defecto.
+
+Pasos reproducibles:
+
+1. Ejecutar el extractor de metadatos y luego scripts/summarize_generation_metadata.py. El resumen informa cobertura e identificadores de modelo/LoRA y omite deliberadamente los textos de prompt.
+2. Crear la plantilla de captions con python ml/train_lora.py --make-caption-template; rellenar captions revisados y revisar visual_review, license_review y training_permission en el manifiesto.
+3. Instalar PyTorch y torchvision compatibles como pareja para el equipo, y luego requirements-training-lora.txt.
+4. Obtener los entrenadores fijados mediante python ml/train_lora.py --fetch-official-trainers.
+5. Ejecutar la prevalidación con --check-only. Se exige confirmar la familia del dataset y el modelo local se identifica por el campo _class_name de model_index.json. Los identificadores de origen desconocidos o múltiples bloquean el entrenamiento hasta que se revisen o se autoricen explícitamente.
+6. Quitar --check-only para iniciar el entrenamiento. Por defecto se utiliza batch size 1, acumulación de gradiente 4, gradient checkpointing, checkpoints locales y precisión elegida a partir de la disponibilidad CUDA. Sin CUDA se usa precisión completa y el proceso advierte que el entrenamiento en CPU puede ser muy lento.
+7. Revisar el estado y el artefacto final en outputs/training-lora/. El lanzador no declara éxito por el código de salida solamente: requiere el archivo pytorch_lora_weights.safetensors y comprueba que se puede leer y contiene claves LoRA.
+
+La preparación genera un ImageFolder temporal usando enlaces simbólicos o enlaces duros, con copia como último recurso. Los originales no se renombran ni alteran. El informe de entrenamiento conserva la lista de rutas seleccionadas y hashes de captions, mientras que los prompts y datos de trabajo permanecen locales. Los ejemplos de validación quedan excluidos del entrenamiento y registrados para una comparación posterior; no existe aún una puntuación automática de similitud ni una evaluación visual automática de ese conjunto.
+
 ## Piloto de estilo
 
 - Auditar tamaños, transparencia, errores, duplicados exactos y cercanos, contenido y procedencia.
