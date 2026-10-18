@@ -18,6 +18,9 @@ REVIEW_FIELDS = (
     "training_permission",
     "source_url",
     "author",
+    "base_model_identifier",
+    "lora_identifiers",
+    "lora_weights_or_settings",
     "notes",
 )
 
@@ -31,7 +34,7 @@ OUTPUT_FIELDS = [
 def filename_origin_hint(path: str) -> str:
     name = Path(path).name
     if name.startswith("from-PixAI-"):
-        return "PixAI-like filename; verify account and origin"
+        return "PixAI filename clue; preserve exact name; verify account/origin and record model/LoRA separately"
     if name.lower().endswith(".png") and name[:-4].isdigit():
         return "numeric filename; origin unknown"
     return "unknown; review source"
