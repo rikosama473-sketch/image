@@ -220,6 +220,22 @@
     }
   });
 
+  $("low-resource-preset").addEventListener("click", () => {
+    $("width").value = "512";
+    $("height").value = "512";
+    $("steps").value = "12";
+    $("count").value = "1";
+    $("device").value = "cpu";
+    $("precision").value = "auto";
+    $("low-memory").checked = true;
+    $("cpu-offload").checked = false;
+    setStatus(
+      "idle",
+      "Perfil de bajo consumo aplicado",
+      "El motor Diffusers incluido usará CPU en este perfil conservador. Los 2 GB reservados a gráficos integrados no equivalen a una GPU CUDA compatible. La aceleración AMD por Vulkan se evaluará como backend separado; no se descarga ni cambia ningún modelo automáticamente."
+    );
+  });
+
   refreshButton.addEventListener("click", refreshGallery);
   $("cpu-offload").addEventListener("change", (event) => {
     if (event.target.checked) {

@@ -60,10 +60,11 @@
 
             <details class="advanced">
               <summary>Ajustes de generación <span>Semilla · resolución · LoRA · memoria</span></summary>
+              <p class="quiet">Perfil local de bajo consumo: <strong>512×512 · 12 pasos · 1 imagen</strong>. <button id="low-resource-preset" class="text-button" type="button">Aplicar perfil</button></p>
               <div class="settings-grid">
                 <label class="field"><span>Ancho</span><input id="width" type="number" min="64" max="2048" step="8" value="512"></label>
                 <label class="field"><span>Alto</span><input id="height" type="number" min="64" max="2048" step="8" value="512"></label>
-                <label class="field"><span>Pasos</span><input id="steps" type="number" min="1" max="150" value="20"></label>
+                <label class="field"><span>Pasos</span><input id="steps" type="number" min="1" max="150" value="12"></label>
                 <label class="field"><span>Imágenes</span><input id="count" type="number" min="1" max="8" value="1"></label>
                 <label class="field"><span>Semilla</span><input id="seed" type="number" min="0" max="4294967295" value="7"></label>
                 <label class="field"><span>Guía</span><input id="guidance-scale" type="number" min="0" max="40" step="0.5" value="7"></label>

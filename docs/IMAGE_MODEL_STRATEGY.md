@@ -59,11 +59,27 @@ La preparación genera un ImageFolder temporal usando enlaces simbólicos o enla
 
 ## Recursos y honestidad sobre el hardware
 
-- El ahorro principal proviene de entrenar una LoRA, no un modelo base entero. Aun así, el modelo base sigue ocupando memoria y el coste cambia mucho según familia, resolución, precisión, optimizador, GPU/VRAM y uso de CPU offload.
-- No elegir SD 1.5, SDXL, Flux u otra familia por moda: primero buscar el checkpoint original en los metadatos y evaluar compatibilidad, calidad, licencia y memoria. Si no se puede recuperar o no encaja, comparar candidatos ligeros mediante pruebas.
-- El objetivo antiguo de 2 GB de RAM del sistema no es una garantía realista para un pipeline moderno de difusión. Medir por separado RAM, VRAM máxima, tiempo por imagen, tamaño descargado en disco y calidad. Hasta medirlo, el requisito es **perfil de bajo consumo medido**, sin promesa fija de 2 GB.
-- CPU-only, GPU local y ejecución remota son perfiles distintos. La app debe mostrar qué motor usa y no ocultar cargas o envíos a un servicio externo.
+- El ahorro principal proviene de adaptar una base preentrenada con LoRA, no de entrenar desde cero. Aun así, entrenar una LoRA y ejecutar inferencia son cargas diferentes: entrenar en CPU suele ser muchísimo más lento.
+- No elegir SD 1.5, SDXL, Flux u otra familia por moda: primero recuperar metadatos del checkpoint original. Si no se puede confirmar la familia, SD 1.5 queda como candidato de prueba de bajo consumo, no como decisión de procedencia.
+- La RAM reservada para una APU integrada no es una tarjeta de vídeo dedicada ni garantiza soporte del backend. En el motor Diffusers actual, la selección GPU implementada es CUDA/MPS; una Radeon integrada en Windows suele acabar en CPU, salvo que se configure un backend explícitamente compatible.
+- No prometer 2 GB de memoria total. Medir por separado RAM de sistema, memoria compartida/UMA, tiempo por imagen, tamaño de modelo en disco y calidad visual.
+- Mantener una generación a la vez, 512×512 como tamaño de prueba, 12 pasos como punto de partida, precisión automática y optimizaciones de memoria. Este perfil reduce el trabajo de la primera prueba; no garantiza que cualquier modelo quepa o sea rápido.
+- Antes de entrenar en esta PC, terminar inventario, metadatos y permisos. No iniciar un entrenamiento con las 759 imágenes por defecto ni gastar recursos en una LoRA antes de probar que la base puede generar una imagen aceptable.
+- Se evaluará como alternativa local `stable-diffusion.cpp`: sus fuentes oficiales documentan soporte de SD 1.x, LoRA, formatos SafeTensors/GGUF y backends CPU/Vulkan. Esto lo convierte en candidato para probar la Radeon integrada, no en un resultado ya validado para la APU concreta. Primero se debe obtener/compilar el binario explícitamente, identificar el modelo compatible y medir una salida 512×512 antes de integrarlo como backend.
+- Fuentes técnicas:
+  - [Diffusers: optimización de memoria](https://github.com/huggingface/diffusers/blob/main/docs/source/en/optimization/memory.md)
+  - [stable-diffusion.cpp: README, modelos y backends](https://github.com/leejet/stable-diffusion.cpp)
+  - [stable-diffusion.cpp: selección de backend y memoria](https://github.com/leejet/stable-diffusion.cpp/blob/master/docs/backend.md)
 - No comprometer checkpoints ni derivados pesados en Git. Mantenerlos en directorios locales ignorados y registrar instrucciones y versiones.
+
+## Perfil inicial para PCs con recursos limitados
+
+1. **Primer objetivo: inferencia, no entrenamiento.** Probar una sola imagen a 512×512 y 12 pasos, modelo compatible local ya disponible, sin LoRA al principio. Registrar el tiempo y observar el uso máximo de RAM. No descargar pesos automáticamente.
+2. **Motor Diffusers existente:** empezar con CPU y el perfil de bajo consumo de la interfaz; no activar FP16 manualmente en CPU sin comprobar compatibilidad. El modo automático de este motor no descubre Vulkan para AMD.
+3. **Candidato para aceleración AMD:** probar `stable-diffusion.cpp` por separado con CPU y Vulkan, si el driver y el binario lo permiten. El test solo cuenta como exitoso si se guarda un PNG real y se registran tiempo, modelo, backend y parámetros. No asumir que Vulkan será más rápido ni estable hasta medirlo.
+4. **Selección de base:** preferir la familia que demuestren los metadatos de la colección. Solo si no se recupera esa información, realizar un piloto comparativo con un checkpoint SD 1.5 ligero y con licencia compatible; no usar SDXL/Flux como primera prueba de bajo consumo sin una razón basada en datos.
+5. **LoRA:** primero curar un subconjunto pequeño autorizado, con captions y validación. No correr entrenamiento completo en CPU como siguiente acción automática. Evaluar tiempo, memoria y calidad antes de decidir si entrenar localmente o preparar un entorno de entrenamiento distinto.
+6. **Criterio de avance:** anotar RAM máxima, tiempo por imagen, tamaño en disco, calidad visual revisada y si hubo errores. Ninguna optimización queda aprobada por intuición o por CI.
 
 ## «Exacta» versus «similar»
 
@@ -77,10 +93,10 @@ La preparación genera un ImageFolder temporal usando enlaces simbólicos o enla
 |---|---|---|
 | A. Metadatos | CSV local con prompts, checkpoint, LoRA y semilla extraídos cuando existan | pruebas automáticas y revisión del informe local |
 | B. Curación | subconjunto de entrenamiento/validación y captions | contenido y permisos revisados; duplicados tratados |
-| C. Prueba de base | comparación de checkpoints compatibles y consumo | modelo elegido por evidencia y licencia |
+| C. Prueba de base | comparar el modelo compatible y un backend local CPU/Vulkan opcional | imagen real guardada, consumo/tiempo medidos y licencia revisada |
 | D. LoRA piloto | adaptación de estilo entrenada y ejemplos antes/después | evaluación en imágenes retenidas y prompts nuevos |
 | E. Motor local | interfaz con controles y guardado | generación repetible, manejo de errores y recursos medidos |
-| F. Optimización | preset para el hardware disponible | mediciones de RAM/VRAM/tiempo guardadas; sin cifras no probadas |
+| F. Optimización | perfil de bajo consumo y backend seleccionado por medición | mediciones de RAM/VRAM/tiempo guardadas; sin cifras no probadas |
 
 ## Salvaguardas del conjunto
 

@@ -77,7 +77,9 @@ Abre `http://127.0.0.1:8765` en el navegador. En “Modelo base”, indica la ca
 
 El sistema no elige pesos al azar: todavía falta identificar el checkpoint más compatible con tu colección y entrenar nuestra propia LoRA. La casilla de descargas remotas está desactivada por defecto; actívala solo si autorizas al motor a bajar el modelo/LoRA indicado. La generación se ejecuta localmente y la interfaz escucha únicamente en loopback.
 
-Los PNG y archivos JSON asociados se guardan en `outputs/generated/`, ignorados por Git. Este es el primer motor funcional para probar modelos y LoRAs compatibles, no una afirmación de que nuestra adaptación propia ya esté entrenada. CPU puede ser lenta y la meta antigua de 2 GB no está validada.
+Los PNG y archivos JSON asociados se guardan en `outputs/generated/`, ignorados por Git. Este motor es el camino de referencia para probar modelos Diffusers, no una afirmación de que la LoRA propia ya esté entrenada.
+
+Para PCs con RAM limitada, abre “Ajustes de generación” y pulsa “Aplicar perfil”: deja una imagen por trabajo, 512×512, 12 pasos, CPU y las optimizaciones de memoria activadas. En una APU Radeon, el motor Diffusers actual no utiliza automáticamente la iGPU mediante CUDA; el perfil CPU es la opción conservadora. La alternativa `stable-diffusion.cpp` con backend Vulkan se evaluará aparte y no se dará por compatible/rápida hasta generar y medir un PNG real. Consulta [el perfil de hardware de bajo consumo](docs/LOW_RESOURCE_HARDWARE_PROFILE.md).
 
 
 ## Entrenamiento local de la LoRA de estilo
