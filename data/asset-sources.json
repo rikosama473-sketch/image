@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "project": "image",
+  "purpose": "Find compatible character graphics, audit the existing private image corpus, and eventually train a tiny anime character generator from random initialization.",
+  "policy": {
+    "standaloneProject": true,
+    "notPartOfWordWaifu": true,
+    "notPartOfCharacterWord": true,
+    "ownModelStrategy": "train-from-random-initialization",
+    "allowPretrainedImageGenerationCheckpoints": false,
+    "allowLoraAsStandaloneGenerator": false,
+    "allowDmd2OrTeacherDistillationAsCoreStrategy": false,
+    "systemRamTargetMB": 2048,
+    "firstTrainingResolution": "64x96",
+    "initialCorpusCount": 516,
+    "initialCorpusBytes": 478609881,
+    "requirePerImageProvenance": true,
+    "requireSeparateTrainingPermissionReview": true,
+    "neverAssumeFilenameProvesOwnership": true,
+    "noAutomaticDeletionOrImageModification": true,
+    "notes": "The current root images are inventoried by filename, Git blob SHA, and byte count only. Image dimensions, visual quality, duplicate relationships, source ownership, and training permission are not yet verified."
+  },
+  "sources": [
+    {
+      "id": "user-repo-pixai-named-images",
+      "name": "Existing images in this private repository",
+      "sourceUrl": "https://github.com/rikosama473-sketch/image",
+      "kind": "existing-image-corpus",
+      "license": "unknown-per-image",
+      "sourceHint": "485 filenames start with from-PixAI-; this is a filename clue, not proof of account ownership or rights.",
+      "status": "metadata-inventoried-pixel-and-rights-review-pending",
+      "useInTraining": "only after checking each image's origin, model/source terms, any third-party character rights, and marking training_permission=approved",
+      "files": 516,
+      "bytes": 478609881
+    },
+    {
+      "id": "pixai-terms-generated-content",
+      "name": "PixAI Terms of Service — generated content",
+      "sourceUrl": "https://pixai.art/en/terms",
+      "kind": "source-terms",
+      "license": "terms-not-a-general-asset-license",
+      "status": "official-terms-reviewed-2026-10-18",
+      "notes": "The official terms last updated 2025-07-07 say PixAI does not claim ownership/copyright of AI-generated images and lets the user freely use content they created; users remain responsible for rights and non-infringement. Do not treat this as rights to other users' images, uploaded references, underlying characters, or third-party model files."
+    },
+    {
+      "id": "kenney-modular-characters",
+      "name": "Kenney Modular Characters",
+      "sourceUrl": "https://kenney.nl/assets/modular-characters",
+      "secondarySourceUrl": "https://opengameart.org/content/modular-character-pack",
+      "kind": "modular-art-pack",
+      "license": "CC0",
+      "status": "high-priority-modular-graphics-inspection-pending",
+      "notes": "Official/OpenGameArt listing describes 425 separate PNG sprites, 6 spritesheets, and 6 vector files; hundreds of combinations. Generic flat/cartoon style, not the target anime style. Excellent for learning layer alignment and clothing/accessory interchange; inspect archive before integration."
+    },
+    {
+      "id": "psrc-human-mk2",
+      "name": "PSRC Human Mk2 and Ultimate Devkit",
+      "sourceUrl": "https://opengameart.org/content/psrc-human-mk2-and-ultimate-devkit",
+      "secondarySourceUrl": "https://reactorcore.itch.io/psrc-human-mk2-and-ultimate-devkit",
+      "kind": "modular-art-pack",
+      "license": "CC0-listed-on-OpenGameArt;official-page-terms-to-confirm",
+      "status": "priority-modular-body-part-candidate-license-recheck-and-archive-inspection",
+      "notes": "OpenGameArt listing describes torso, limbs, heads, hands, feet, facial features, clothing templates, and a paper-doll rig system. Pixel-art, not anime. Because the linked commercial page has informal license wording, re-check package terms before any redistribution or training use."
+    },
+    {
+      "id": "oga-anime-female-base",
+      "name": "Anime-style female base sprite",
+      "sourceUrl": "https://opengameart.org/content/anime-style-female-base-sprite",
+      "kind": "anime-pixel-art-base-and-accessory-family",
+      "license": "multiple-listed-licenses-per-file-must-be-verified",
+      "status": "anime-style-candidate-specific-file-license-review-needed",
+      "notes": "OpenGameArt lists CC-BY 3.0, CC-BY-SA 3.0, and GPL versions on the page and links separate face/hair/armor accessory assets. Do not assume every related file carries the same license; verify the downloaded file and chosen license individually."
+    },
+    {
+      "id": "thin-girl-modular",
+      "name": "Modular Character Sprite, Thin Girl — ani mosity",
+      "sourceUrl": "https://queenofzan.itch.io/modular-character-sprite-thin-girl",
+      "kind": "modular-anime-art-pack",
+      "license": "CC-BY-4.0",
+      "status": "asset-use-terms-review-ai-training-excluded-unless-separate-permission",
+      "notes": "Page says PNGs are separate elements with identical canvases and PSDs; attribution is required. The creator explicitly does not authorize use in generative-AI datasets. Do not use these assets to train this model unless separate explicit permission is obtained."
+    },
+    {
+      "id": "monapdx-modular-pixel-kit",
+      "name": "Modular Pixel Character Kit — monapdx",
+      "sourceUrl": "https://monapdx.itch.io/modular-pixel-character-kit",
+      "kind": "modular-art-pack",
+      "license": "free-to-use-stated-on-page-no-standard-license-identified",
+      "status": "high-priority-candidate-license-readme-and-archive-inspection-needed",
+      "notes": "Page advertises aligned transparent PNGs, hairstyles, face/skin variants, GIMP XCF source and a 113 KB ZIP. The page reviewed does not state a standard SPDX/Creative Commons license. Confirm source terms before redistribution or training use."
+    },
+    {
+      "id": "monapdx-female-sprites",
+      "name": "Modular Pixel Character Creator (Female Sprites) — monapdx",
+      "sourceUrl": "https://monapdx.itch.io/modular-pixel-character-creator-female-sprites",
+      "kind": "modular-art-pack",
+      "license": "not-stated-clearly-on-page",
+      "status": "separate-pack-license-and-archive-review-pending",
+      "notes": "This is a separate pack from monapdx-modular-pixel-kit. Page describes consistent body/hair/face/clothing layers in an 86 KB ZIP, but license terms need checking."
+    },
+    {
+      "id": "hordana-anime-girl",
+      "name": "Anime Girl / Michona — Hordana",
+      "sourceUrl": "https://opengameart.org/content/anime-girl",
+      "kind": "animated-chibi-sprite",
+      "license": "CC0",
+      "status": "animation-strip-candidate-not-modular-parts",
+      "notes": "OpenGameArt lists CC0 animation strips for jump, walk and blink. Female chibi visual reference, but not separate limbs/clothing components. Verify frame alpha and strip layout before integration."
+    },
+    {
+      "id": "spritegan-method",
+      "name": "SpriteGAN — small character sprite generator",
+      "sourceUrl": "https://github.com/thomasg8/SpriteGAN",
+      "kind": "training-method-reference",
+      "license": "code-Apache-2.0-as-listed;dataset-rights-separate",
+      "status": "method-reference-only",
+      "notes": "Paper/repository describes 32x32 RGB sprite GAN trained on 4,272 curated sprites selected from 16,627 CC0 images. Teaches dataset curation and near-duplicate filtering. Do not treat repository code, weights or datasets as incorporated."
+    },
+    {
+      "id": "mdigan-pose-completion",
+      "name": "MDIGAN Characters — paired-view completion",
+      "sourceUrl": "https://github.com/fegemo/mdigan-characters",
+      "kind": "training-method-reference",
+      "license": "not-found-reference-only",
+      "status": "method-reference-only",
+      "notes": "64x64 RGBA paired-view pose completion task, not free-form character generation. Repository/data rights need review before any reuse."
+    }
+  ]
+}
