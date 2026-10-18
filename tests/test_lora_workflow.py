@@ -236,6 +236,88 @@ class LoRATrainingGuardTests(unittest.TestCase):
                 template = list(csv.DictReader(handle))
             self.assertEqual(template, [{"path": "image.png", "caption": ""}])
 
+    def test_caption_template_refuses_existing_destination_and_protected_sources(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            image_path = root / "image.png"
+            Image.new("RGB", (8, 8), (1, 2, 3)).save(image_path)
+            original_image = image_path.read_bytes()
+            labels_path = root / "labels.csv"
+            with labels_path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=["path"])
+                writer.writeheader()
+                writer.writerow({"path": "image.png"})
+            before_labels = labels_path.read_bytes()
+
+            with self.assertRaisesRegex(ValueError, "cannot overwrite the original"):
+                train_lora.make_caption_template(labels_path, labels_path, root, overwrite=True)
+            with self.assertRaisesRegex(ValueError, "cannot overwrite a source image"):
+                train_lora.make_caption_template(labels_path, image_path, root, overwrite=True)
+
+            output = root / "captions.csv"
+            output.write_text("user-edited captions must survive", encoding="utf-8")
+            with self.assertRaises(FileExistsError):
+                train_lora.make_caption_template(labels_path, output, root)
+            self.assertEqual(output.read_text(encoding="utf-8"), "user-edited captions must survive")
+
+            count = train_lora.make_caption_template(labels_path, output, root, overwrite=True)
+            self.assertEqual(count, 1)
+            self.assertEqual(labels_path.read_bytes(), before_labels)
+            self.assertEqual(image_path.read_bytes(), original_image)
+
+    def test_custom_root_is_used_for_relative_caption_template_output(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "custom-project"
+            root.mkdir()
+            labels_path = root / "labels.csv"
+            with labels_path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=["path"])
+                writer.writeheader()
+                writer.writerow({"path": "source.png"})
+            output = Path("cache/captions.csv")
+            train_lora.make_caption_template(labels_path, output, root)
+            self.assertTrue((root / output).is_file())
+            self.assertFalse((PROJECT_ROOT / output).exists())
+
+    def test_resume_requires_unchanged_data_model_and_training_parameters(self) -> None:
+        config = {
+            "model": "local/base",
+            "model_family": "sd",
+            "dataset_manifest_sha256": "dataset-hash",
+            "training_image_paths": ["a.png", "b.png"],
+            "validation_image_paths": ["c.png"],
+            "parameters": {
+                "resolution": 512,
+                "train_batch_size": 1,
+                "gradient_accumulation_steps": 4,
+                "max_train_steps": 500,
+                "learning_rate": 0.0001,
+                "rank": 8,
+                "seed": 42,
+                "precision": "no",
+                "checkpointing_steps": 250,
+                "validation_ratio": 0.1,
+            },
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            (output / "training-config.json").write_text(json.dumps(config), encoding="utf-8")
+            train_lora.validate_resume_compatibility(output, config)
+            changed = json.loads(json.dumps(config))
+            changed["dataset_manifest_sha256"] = "different-dataset"
+            with self.assertRaisesRegex(ValueError, "dataset_manifest_sha256 differs"):
+                train_lora.validate_resume_compatibility(output, changed)
+            changed = json.loads(json.dumps(config))
+            changed["parameters"]["resolution"] = 768
+            with self.assertRaisesRegex(ValueError, "parameter resolution differs"):
+                train_lora.validate_resume_compatibility(output, changed)
+
+    def test_resume_requires_a_prior_training_config(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaisesRegex(ValueError, "without training-config.json"):
+                train_lora.validate_resume_compatibility(Path(directory), {})
+
+
 
 if __name__ == "__main__":
     unittest.main()
