@@ -31,16 +31,23 @@ Buscar bases de cuerpo, cabezas, ojos, cabello delantero/trasero, torso, brazos,
 - `scripts/audit_dataset.py`: auditoría local de dimensiones, canal alfa, SHA-256 y hash perceptual básico.
 - `docs/`: definición del modelo, criterios de datos y búsqueda de recursos.
 
-## Primera ejecución de auditoría
+## Herramientas locales
+
+### Revisión visual y etiquetas
+
+Abre [tools/dataset-reviewer/index.html](tools/dataset-reviewer/index.html) en el navegador o consulta su [README](tools/dataset-reviewer/README.md). Selecciona la carpeta raíz del clon local y carga opcionalmente `data/training-labels.csv`. La interfaz muestra 24 imágenes por página, permite filtrar y editar etiquetas y exporta un CSV. No sube imágenes ni modifica originales.
+
+### Auditoría de dimensiones y duplicados
 
 Instala Python 3.10+ y las dependencias:
 
 ```bash
 python -m pip install -r requirements.txt
 python scripts/audit_dataset.py --root . --output data/image-audit.csv
+python scripts/sync_training_labels.py --root .
 ```
 
-El script no borra ni modifica imágenes; escribe únicamente un informe CSV. Para el entrenamiento, primero revisa las imágenes y completa los campos de licencia, autorización, cabello, ropa, piernas, pose y fondo. El entrenamiento debe excluir cualquier imagen sin autorización clara.
+La auditoría no borra ni modifica imágenes; escribe un informe CSV con dimensiones, modo, alfa, SHA-256 y hash perceptual básico. La sincronización incorpora nuevas rutas a `data/training-labels.csv` sin borrar etiquetas revisadas. Para entrenar, completa también los estados de licencia/autorización y las etiquetas de cabello, ropa, piernas, pose y fondo.
 
 ## Uso de PixAI
 
