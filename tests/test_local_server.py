@@ -80,6 +80,12 @@ class LocalServerTests(unittest.TestCase):
                 )
                 (model / "diffusion_pytorch_model.safetensors").write_bytes(b"base weights should not be listed as a LoRA")
 
+            incomplete = root / "models" / "bases" / "incomplete"
+            incomplete.mkdir(parents=True)
+            (incomplete / "model_index.json").write_text(
+                json.dumps({"_class_name": "StableDiffusionPipeline"}), encoding="utf-8"
+            )
+
             lora_dir = root / "models" / "loras"
             lora_dir.mkdir(parents=True)
             (lora_dir / "custom-style.safetensors").write_bytes(b"lora")
