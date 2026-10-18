@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "ml"))
@@ -135,6 +137,38 @@ class LocalServerTests(unittest.TestCase):
             assets = local_server._list_local_assets(root)
             self.assertEqual(assets, {"models": [], "loras": []})
 
+
+    def test_run_job_finds_images_in_nested_engine_run_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            output_root = Path(directory) / "outputs" / "generated"
+            job_id = "a" * 32
+            job_dir = output_root / f"ui-run-{job_id}"
+            nested_run = job_dir / "run-20261018T000000000000Z-seed-7"
+            generated_image = nested_run / "image-001-seed-7.png"
+            config = local_server._validate_payload(self.valid_payload())
+            local_server.JOBS[job_id] = {"id": job_id, "status": "queued"}
+
+            def fake_run(command, **kwargs):
+                generated_image.parent.mkdir(parents=True, exist_ok=True)
+                generated_image.write_bytes(b"test image")
+                return subprocess.CompletedProcess(
+                    command, 0, stdout=f"Saved {generated_image}\\n", stderr=""
+                )
+
+            try:
+                with (
+                    patch.object(local_server, "OUTPUT_ROOT", output_root),
+                    patch.object(local_server.subprocess, "run", side_effect=fake_run),
+                ):
+                    local_server._run_job(job_id, config, job_dir)
+                job = local_server.JOBS[job_id]
+                self.assertEqual(job["status"], "completed")
+                self.assertEqual(
+                    job["images"],
+                    ["/generated/" + generated_image.relative_to(output_root).as_posix()],
+                )
+            finally:
+                local_server.JOBS.pop(job_id, None)
 
 if __name__ == "__main__":
     unittest.main()
