@@ -189,6 +189,30 @@
       "status": "optional-3d-reference-not-2d-compatible",
       "testedInProject": false,
       "notes": "OpenGameArt describes a low-poly female base and hundreds of clothing/accessory models under CC0. It is 3D, not a ready-made 2D sprite kit. Consider only for an optional future render-to-sprite pipeline; archive, import format and source page terms still need review."
+    },
+    {
+      "id": "rgsdev-modular-animated-vector-characters-cc0",
+      "name": "Free CC0 Modular Animated Vector Characters 2D — RGS_Dev",
+      "sourceUrl": "https://rgsdev.itch.io/free-cc0-modular-animated-vector-characters-2d",
+      "secondarySourceUrl": "https://opengameart.org/content/free-cc0-modular-animated-vector-characters-2d",
+      "kind": "modular-animated-character-asset-pack",
+      "license": "CC0-1.0-at-original-itch-and-OpenGameArt-sources",
+      "status": "priority-technical-articulation-test-pending-download-and-inspection",
+      "testedInProject": false,
+      "fileSizeOnSource": "72.7 MB",
+      "notes": "Original itch.io/OpenGameArt listing explicitly states CC0, no credit required, and lists 3 heads, 3 hairs, 7 eyes, 8 mouths, a body, hand, foot, plus idle/walk/roll/jump/hit/death animations on a 2048x2048 canvas. White parts intended for recoloring; visual style is generic cartoon/top-down/side-scroller rather than anime. Use only the original itch/OGA distribution and inspect its package license. A GameDevMarket mirror applies a different Pro License and explicitly says AI training is not allowed there; do not confuse that mirror's terms with the original CC0 source or obtain the training copy from that mirror. Best used first for learning aligned part layering and animation, not as the primary anime-style dataset.",
+      "aiTrainingPermission": "CC0 on original source page; re-confirm exact downloaded package; style domain mismatch makes it a technical reference by default",
+      "redistributionPermission": "CC0-1.0 on original itch.io/OpenGameArt listing; retain source link for provenance"
+    },
+    {
+      "id": "rhedak-procedural-anime-svg-generator",
+      "name": "Anime Character Creator — parametric SVG character generator (rhedak)",
+      "sourceUrl": "https://github.com/rhedak/anime-character-creator",
+      "kind": "procedural-anime-generator-architecture-reference",
+      "license": "MIT-code; reference artwork has separate provenance",
+      "status": "architecture-reference-reviewed-not-imported",
+      "testedInProject": false,
+      "notes": "Repository describes procedural anime-style characters generated from skeleton anchors and independent SVG shapes for heads, faces, hair, arms, legs and layered garments. SVG composition avoids external pretrained weights and is aligned with low-memory rendering. Code is MIT; the README says some character designs began from AI-generated references and several were traced from those references, so do not copy ref/ref-out PNGs/SVGs into our dataset or redistribute them without a separate rights review. Study the skeleton-relative geometry approach; any code adoption must preserve MIT license and be adapted to our restricted female/androgynous target."
     }
   ]
 }
