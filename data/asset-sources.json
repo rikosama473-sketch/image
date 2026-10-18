@@ -390,6 +390,115 @@
       "archiveStorage": "data/asset-cache/downloads (git-ignored)",
       "extractionStorage": "data/asset-cache/extracted (git-ignored)",
       "trainingPermission": "not-approved-by-download; review purpose, per-file rights, and author/source terms before training"
+    },
+    {
+      "id": "hmlf001-layered-anime-boy-cc-by-sa-4",
+      "name": "Custom VN Character: HMLF001 Anime Boy 800px — LinXueLian",
+      "sourceUrl": "https://linxuelian.itch.io/customchar-hmlf001-malebust",
+      "kind": "layered-anime-visual-novel-character-parts",
+      "license": "CC-BY-SA-4.0-as-listed-by-itch.io",
+      "status": "runtime-compositor-candidate-license-attribution-sharealike-training-permission-unconfirmed",
+      "testedInProject": false,
+      "dimensions": "600x800 per source page",
+      "formats": [
+        "transparent PNG",
+        "numbered layer folders"
+      ],
+      "contents": [
+        "base body in multiple skin tones",
+        "warlock",
+        "shopkeeper",
+        "heavy scarf variants",
+        "hair variants",
+        "vampire configuration; exact contents vary by ZIP"
+      ],
+      "compatibility": "Layered-image composition in Ren'Py; also usable in image editors that preserve layer stacking. The source notes that clothing/hair/accessory packs can be mixed where they share the same base.",
+      "useInCompositor": "Candidate for local prototyping with required attribution and ShareAlike obligations observed.",
+      "useInTraining": "not-approved; source page does not explicitly settle generative-AI training permission. Obtain explicit author permission or a project-specific legal review before adding to training corpus.",
+      "redistribution": "CC BY-SA 4.0 terms apply; do not publish the raw pack without checking attribution and ShareAlike compliance for the exact redistribution form.",
+      "notes": "Strong anime-style modular candidate for testing part/layer composition. It is a bust/upper-body-oriented set, not a complete full-body wardrobe with independent legs. The page reports separate PNGs in numbered folders and recommends linking back to the source."
+    },
+    {
+      "id": "anime-zcharacter-modular-boy-paid-minimum",
+      "name": "ANime ZCharacter — Saeed Ahmed Tunio",
+      "sourceUrl": "https://saeedahmed126.itch.io/anime-zcharacter",
+      "kind": "modular-anime-male-character-parts",
+      "license": "personal-and-commercial-use-stated-on-page; no-redistribution-of-original-files; AI-training-permission-unresolved",
+      "status": "purchase-required-compositor-candidate-training-not-approved",
+      "testedInProject": false,
+      "sourcePrice": "itch.io page currently requires a purchase of at least USD 1 despite describing the pack as free",
+      "archiveFiles": [
+        {
+          "name": "main_hero.zip",
+          "sourceSize": "998 kB"
+        },
+        {
+          "name": "Anime_Facial_Animations.zip",
+          "sourceSize": "53 MB"
+        }
+      ],
+      "formats": [
+        "separate transparent PNG files"
+      ],
+      "contents": [
+        "bald base head",
+        "front/back hair",
+        "ears and neck",
+        "multiple eyes and eyebrows",
+        "nose and mouth expressions",
+        "torso/hoodie",
+        "shoulders/arms/hands",
+        "waist/pants/legs/shoes"
+      ],
+      "compatibility": "Designed for manual layering in image editors and character engines such as Unity, Godot and Unreal.",
+      "useInCompositor": "Possible private/local composition prototype after obtaining the pack and honoring its terms; do not republish original files.",
+      "useInTraining": "not-approved; source page does not explicitly grant generative-AI training rights. Ask the author before training.",
+      "redistribution": "source page explicitly prohibits redistributing original files.",
+      "notes": "Very relevant anatomically modular anime/cyberpunk-inspired male parts, including lower body and shoes. Although the page calls it free, the purchase section says a USD 1 minimum is required. The page says no generative AI was used to create the pack, which is not the same as authorizing AI training on it."
+    },
+    {
+      "id": "rose-charisma-modular-anime-male-no-ai-training",
+      "name": "The Rose Charisma — Modular Anime Male Sprite Pack — Trines Studio",
+      "sourceUrl": "https://trinesstudio.itch.io/rose-charisma-modular-anime-male-sprite-pack",
+      "kind": "layered-anime-character-runtime-assets",
+      "license": "creator-EULA-personal-and-commercial-project-use; no-original-file-redistribution; AI-training-prohibited",
+      "status": "runtime-composition-only-explicitly-excluded-from-training",
+      "testedInProject": false,
+      "sourcePrice": "USD 9.69 minimum shown on page at review time",
+      "dimensions": "768x1376 per page; 42 PNG files",
+      "contents": [
+        "8 outfit/pose combinations per pose family (24 PNGs)",
+        "10 facial expressions",
+        "8 hairstyles",
+        "PDF preview",
+        "EULA and readme"
+      ],
+      "compatibility": "Layer composition: outfit+pose, expression, and hairstyle are separate PNG layers; page lists Ren'Py, Unity, Godot and RPG Maker support.",
+      "useInCompositor": "May be used in a character-building app/project within the publisher's EULA, including modification/compositing.",
+      "useInTraining": "prohibited by the published asset terms; never add its images to the training corpus.",
+      "redistribution": "do not redistribute the original asset files or resell as a standalone pack.",
+      "notes": "Useful example of a polished reusable anime sprite layer system (1,920 stated combinations), but the creator explicitly forbids AI model training. Treat as app/runtime-only if purchased, not as dataset material."
+    },
+    {
+      "id": "oga-half-human-battle-sprite-cc0",
+      "name": "Half Human Battle Sprite — marionline",
+      "sourceUrl": "https://opengameart.org/content/half-human-battle-sprite",
+      "kind": "small-anime-inspired-pixel-character-sprites",
+      "license": "CC0-as-listed-on-OpenGameArt",
+      "status": "style-and-animation-reference-not-modular-limb-kit",
+      "testedInProject": false,
+      "formats": [
+        "PNG"
+      ],
+      "contents": [
+        "huntress and hunter variants",
+        "weak/scared variants",
+        "hair decoration variants"
+      ],
+      "useInTraining": "potentially reviewable due to CC0 listing, but pixel-style domain differs strongly from intended full-size anime art; do not merge into a coherent anime training set without an explicit style decision.",
+      "notes": "Low-cost, clearly listed CC0 reference with multiple state variants, but these are finished tiny sprites rather than separate body parts. Useful for pose/state experiments and inventory testing, not as the primary modular source."
     }
-  ]
+  ],
+  "researchUpdatedAt": "2026-10-18",
+  "researchUpdateNotes": "Added newly inspected modular anime candidates and separated compositor/runtime use from AI-training eligibility. Do not treat download, source listing, or a permissive game-art license as automatic approval for model training."
 }
