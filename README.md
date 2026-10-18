@@ -15,7 +15,7 @@ Proyecto privado e independiente para crear un generador de personajes anime de 
 
 ## Estado actual del repositorio
 
-La rama `main` ya contiene **516 PNG, 485 con nombres que empiezan por `from-PixAI-` y 0 con nombres numéricos**, con un total aproximado de 478.6 MB. Son datos de inventario tomados de la API de Git; todavía no se verificaron visualmente ni se aprobaron sus derechos de entrenamiento.
+La rama `main` ya contiene **546 imágenes: 515 nombres que empiezan por `from-PixAI-` y 31 nombres numéricos**, con un total aproximado de **506,5 MB**. Son datos de inventario tomados de la API de Git; todavía no se verificaron visualmente ni se aprobaron sus derechos de entrenamiento.
 
 No he movido ni sobrescrito las imágenes existentes. Se añadirá un inventario local de dimensiones, transparencia, hash y posibles duplicados antes de seleccionar las primeras 100.
 
