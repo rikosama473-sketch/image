@@ -141,3 +141,42 @@ python scripts/fetch_asset_packs.py --pack modular-64x96
 - `modular-64x96`: archivo `customizable_characters_w_samples.zip`, 252.884 bytes; capas GIMP y 16 PNG RGBA de 64×96 bajo CC0 declarado por su ficha.
 
 El script conserva descargas y extracción bajo `data/asset-cache/`, carpeta excluida de Git hasta la revisión. Verifica el tamaño esperado, ZIP/CRC, evita rutas ZIP traversal, enlaces simbólicos, miembros duplicados y expansiones excesivas, calcula SHA-256 y crea `acquisition-manifest.json` local. Si la URL cambia de contenido, se detiene en vez de extraer a ciegas. `--force` conserva copias anteriores como respaldo y nunca aprueba el uso para entrenamiento. El hash generado sirve para identificar el archivo descargado, pero no equivale a una firma criptográfica publicada por el autor.
+
+
+## Nuevos candidatos anime modulares revisados (18-10-2026)
+
+Esta ronda prioriza piezas que sirvan para montar personajes en la aplicación. **Compatibilidad para montaje y permiso para entrenar IA son dos decisiones distintas.** No se descargaron estos packs ni se copiaron sus imágenes al repositorio durante esta investigación; se registraron las fichas originales y sus condiciones visibles.
+
+### 1) [HMLF001 Anime Boy 800px — LinXueLian](https://linxuelian.itch.io/customchar-hmlf001-malebust)
+
+- La página declara **CC BY-SA 4.0** y ofrece varios ZIP: cuerpo base, Warlock, Shopkeeper, Heavy Scarf, Kawamuru Hair y Vampire Config.
+- Indica piezas PNG separadas en carpetas numeradas de capas, una base de 600×800 px, y uso de imágenes apiladas en Ren'Py o un editor; los elementos de ciertos paquetes pueden mezclarse si comparten la misma base.
+- **Uso propuesto:** primer candidato gratuito para probar composición anime por capas (cabello, expresiones, ropa y accesorios) con atribución y cumplimiento ShareAlike.
+- **Límite:** es un personaje masculino de busto/parte superior; no resuelve por sí solo el cuerpo entero ni una biblioteca de piernas y calzado independientes.
+- **Entrenamiento IA:** pendiente. La licencia de assets para juegos no se interpreta aquí como aprobación automática para entrenamiento generativo. Antes de incorporarlo al corpus, solicitar autorización expresa o revisar legalmente el uso exacto.
+
+### 2) [ANime ZCharacter — Saeed Ahmed Tunio](https://saeedahmed126.itch.io/anime-zcharacter)
+
+- La ficha describe PNG transparentes independientes: cabeza calva, cabello frontal/trasero, orejas, ojos/cejas/boca, torso y brazos, cintura, pantalones/piernas y zapatos. Es el candidato visualmente más cercano, entre los hallados en esta ronda, a un kit anatómico de cuerpo completo.
+- **Atención al precio:** aunque el texto lo llama gratuito, el apartado de compra indica que se debe pagar un mínimo de **USD 1** para descargarlo. La página lista `main_hero.zip` (998 kB) y `Anime_Facial_Animations.zip` (53 MB).
+- Los términos visibles permiten usos personales y comerciales y modificaciones, pero prohíben redistribuir los archivos originales. No se encontró una autorización explícita de entrenamiento IA.
+- **Uso propuesto:** compositor privado/local tras adquirirlo y respetar los términos. No subir sus PNG originales al repositorio ni entrenar con ellos sin permiso explícito del autor.
+
+### 3) [The Rose Charisma — Trines Studio](https://trinesstudio.itch.io/rose-charisma-modular-anime-male-sprite-pack)
+
+- La página muestra 42 PNG de 768×1376 (24 combinaciones de vestuario/pose, 10 expresiones y 8 peinados), organizados para superponer outfit+pose, expresión y peinado. Precio mínimo mostrado durante la revisión: USD 9,69.
+- La licencia de la ficha permite usar y modificar el recurso dentro de proyectos personales o comerciales, pero **prohíbe expresamente entrenar modelos de IA** y redistribuir los archivos originales.
+- **Decisión:** referencia válida para estudiar cómo funciona un compositor y, si se adquiere, para montaje dentro de la aplicación conforme a sus términos; exclusión absoluta del dataset de entrenamiento.
+
+### 4) [Half Human Battle Sprite — marionline / OpenGameArt](https://opengameart.org/content/half-human-battle-sprite)
+
+La ficha indica CC0 y ofrece pequeños sprites con variantes de cazadora/cazador y estados alternativos. Son personajes terminados de pixel art, no partes separadas. Se registra como referencia secundaria para estados y animación, no como fuente principal del estilo anime de mayor resolución.
+
+### Orden de prueba recomendado
+
+1. **Probar primero los paquetes CC0 ya registrados localmente por el proyecto**: el Character Pack de 64×96 para verificar alineación del cuerpo/cabello/ropa, y el XCF de retratos anime para las capas de ojos/boca/peinado. Estos dos siguen siendo la ruta inicial porque no requieren comprar archivos.
+2. Evaluar HMLF001 si necesitamos una prueba anime más detallada y aceptamos mantener la atribución y las obligaciones CC BY-SA.
+3. Considerar ANime ZCharacter solo si el montaje requiere partes de cuerpo completo y se acepta la compra mínima; antes, confirmar con el autor permiso para entrenamiento si ese uso se vuelve necesario.
+4. No incorporar The Rose Charisma al corpus generativo: sus términos prohíben ese uso.
+
+En todos los casos la primera prueba de integración debe ser un montaje de muestra en una carpeta temporal, verificando transparencia, tamaño del lienzo, pivotes, orden de capas y licencias. La presencia de una URL en el catálogo no significa que el archivo haya sido descargado, probado o aprobado.
