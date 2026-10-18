@@ -12,13 +12,17 @@
     "allowDmd2OrTeacherDistillationAsCoreStrategy": false,
     "systemRamTargetMB": 2048,
     "firstTrainingResolution": "64x96",
-    "initialCorpusCount": 516,
-    "initialCorpusBytes": 478609881,
+    "initialCorpusCount": 546,
+    "initialCorpusBytes": 506492103,
     "requirePerImageProvenance": true,
     "requireSeparateTrainingPermissionReview": true,
     "neverAssumeFilenameProvesOwnership": true,
     "noAutomaticDeletionOrImageModification": true,
-    "notes": "The current root images are inventoried by filename, Git blob SHA, and byte count only. Image dimensions, visual quality, duplicate relationships, source ownership, and training permission are not yet verified."
+    "notes": "Metadata-only inventory of 546 image files (515 named from-PixAI-, 31 numeric filenames), about 506.5 MB. Dimensions, image content, duplicate relationships, source ownership, and training permission are not yet visually/individually verified. Filenames are hints, not proof of origin.",
+    "initialCorpusBytesHuman": "506.5 MB",
+    "pixaiFilenamePrefixCount": 515,
+    "numericFilenameCount": 31,
+    "corpusSnapshotAt": "2026-10-18T16:xx-03:00"
   },
   "sources": [
     {
