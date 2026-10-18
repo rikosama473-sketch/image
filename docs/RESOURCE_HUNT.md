@@ -83,3 +83,15 @@ Estos candidatos todavía no están integrados en el repositorio: los registros 
 4. Registrar por pieza: URL/autor/licencia, permisos separados de uso en motor, redistribución y entrenamiento, formato, tamaño/lienzo, transparencia, pivote y prueba de ensamblaje.
 
 **Estado tras esta búsqueda:** añadí candidaturas y reglas de selección, no afirmo que los archivos descargables ya estén dentro del repo ni que se haya aprobado un solo activo para entrenamiento.
+
+
+## Aplicación opcional para extraer piezas de imágenes autorizadas
+
+- **[Anime Cutout Studio](https://github.com/gino07172002/anime-image-cutout-studio)** (código Apache-2.0) es una aplicación de escritorio con selección corregible por el usuario para separar personajes superpuestos, extraer partes como pelo/cabeza/torso/brazos/piernas y exportar PNG transparente, PSD por capas o árbol de esqueleto Spine. La propia documentación indica una descarga de aproximadamente **1,7 GB de modelos de terceros** y remite a `NOTICE` para sus licencias individuales. Es una herramienta para procesar entradas autorizadas, no una biblioteca de imágenes ni una autorización para cortar ilustraciones ajenas. La dejo como herramienta opcional, no como dependencia de la primera versión ligera.
+
+## Más bases editables y cuerpos 3D encontrados
+
+- [Face — marionline (OpenGameArt)](https://opengameart.org/content/face-4): ficha CC0 con un XCF de GIMP y varias variantes PNG de tono de piel. Puede ayudar con pruebas de recoloración y organización de capas, pero es un retrato/rostro, no un personaje completo ni una biblioteca de pelo y ropa.
+- [Feminine Humanoid Base Mesh — GoldenThumbs](https://opengameart.org/content/feminine-humanoid-base-mesh): ficha CC0 con archivo Blender de un cuerpo estilizado sin cabeza. Solo ruta opcional para renderizar una silueta 3D a una vista 2D controlada; no proporciona partes 2D ni estilo anime acabado.
+
+La selección sigue priorizando los activos **2D, de licencia clara y con componentes independientemente editables**. Las herramientas que separan imágenes existentes solo se usarán con material propio o cuyo permiso de adaptación esté comprobado; separar una imagen no cambia sus derechos.
