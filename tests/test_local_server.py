@@ -78,6 +78,11 @@ class LocalServerTests(unittest.TestCase):
                 (model / "model_index.json").write_text(
                     json.dumps({"_class_name": class_name}), encoding="utf-8"
                 )
+                components = ["unet", "vae", "scheduler", "tokenizer", "text_encoder"]
+                if class_name == "StableDiffusionXLPipeline":
+                    components.extend(["tokenizer_2", "text_encoder_2"])
+                for component in components:
+                    (model / component).mkdir()
                 (model / "diffusion_pytorch_model.safetensors").write_bytes(b"base weights should not be listed as a LoRA")
 
             incomplete = root / "models" / "bases" / "incomplete"
