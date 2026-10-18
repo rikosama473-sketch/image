@@ -1,0 +1,5 @@
+# CPU-only inference/benchmark after training and ONNX export. No model weights included here.
+numpy>=1.26,<3
+Pillow>=10.0,<13
+onnxruntime>=1.17,<2
+psutil>=5.9,<8
