@@ -266,7 +266,12 @@
         "dimensions": "NewAnime.xcf: 1000x1000; Sample1-Sample8: RGBA 1000x1000 each; SampleAll: RGBA 2000x4000",
         "bundledLicenseOrReadme": "No README/LICENSE/COPYING/NOTICE/CREDITS text file in ZIP; source page is the CC0 declaration",
         "repositoryIntegration": "not-uploaded"
-      }
+      },
+      "acquisitionScript": "scripts/fetch_asset_packs.py",
+      "acquisitionCommand": "python scripts/fetch_asset_packs.py --pack anime-portraits",
+      "archiveStorage": "data/asset-cache/downloads (git-ignored)",
+      "extractionStorage": "data/asset-cache/extracted (git-ignored)",
+      "trainingPermission": "not-approved-by-download; review purpose, per-file rights, and author/source terms before training"
     },
     {
       "id": "open-peeps-cc0-assets",
@@ -379,7 +384,12 @@
         "dimensions": "customizable_characters.xcf: 64x96; all 16 samples: RGBA 64x96 each",
         "bundledLicenseOrReadme": "No README/LICENSE/COPYING/NOTICE/CREDITS text file in ZIP; source page is the CC0 declaration",
         "repositoryIntegration": "not-uploaded"
-      }
+      },
+      "acquisitionScript": "scripts/fetch_asset_packs.py",
+      "acquisitionCommand": "python scripts/fetch_asset_packs.py --pack modular-64x96",
+      "archiveStorage": "data/asset-cache/downloads (git-ignored)",
+      "extractionStorage": "data/asset-cache/extracted (git-ignored)",
+      "trainingPermission": "not-approved-by-download; review purpose, per-file rights, and author/source terms before training"
     }
   ]
 }
