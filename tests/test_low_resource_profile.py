@@ -35,7 +35,7 @@ class LowResourceProfileTests(unittest.TestCase):
         self.assertIn("stable-diffusion.cpp", self.profile_doc)
         self.assertIn("no prueba", self.profile_doc.lower())
         self.assertIn("registrar", self.profile_doc.lower())
-        self.assertIn("no se descarga", self.profile_doc.lower())
+        self.assertIn("no descargar binarios o pesos automáticamente", self.profile_doc.lower())
 
 
 if __name__ == "__main__":
