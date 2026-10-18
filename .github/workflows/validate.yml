@@ -23,5 +23,7 @@ jobs:
           node-version: "22"
       - name: Check local reviewer JavaScript
         run: node --check tools/dataset-reviewer/app.js
+      - name: Check local image creator JavaScript
+        run: node --check tools/image-creator/app.js
       - name: Run audit-tool tests
         run: python -m unittest discover -s tests -v
