@@ -15,9 +15,9 @@ Proyecto privado e independiente para crear un generador de personajes anime de 
 
 ## Estado actual del repositorio
 
-La rama `main` contiene **546 imágenes: 515 nombres que empiezan por `from-PixAI-` y 31 nombres numéricos**, con un total aproximado de **506,5 MB**. Se conserva cada nombre original porque se usa como pista para rastrear la generación; el modelo base y la(s) LoRA se registran en columnas separadas, nunca se deducen automáticamente del nombre. Las imágenes todavía no están aprobadas para entrenamiento.
+El árbol actual de `main` contiene **759 imágenes: 728 nombres que empiezan por `from-PixAI-` y 31 nombres numéricos**, con un total de **706.409.784 bytes (aprox. 706,4 MB)**. El manifiesto se ha sincronizado con esas 759 rutas, conservando anotaciones anteriores y dejando las 213 filas nuevas pendientes. Se conserva cada nombre original porque se usa como pista para rastrear la generación; el modelo base y la(s) LoRA se registran en columnas separadas, nunca se deducen automáticamente del nombre. Las imágenes todavía no están aprobadas para entrenamiento.
 
-No he movido ni sobrescrito las imágenes existentes. Se añadirá un inventario local de dimensiones, transparencia, hash y posibles duplicados antes de seleccionar las primeras 100.
+No he movido ni sobrescrito las imágenes existentes. Aún falta ejecutar la auditoría local de dimensiones, transparencia, hashes y posibles duplicados antes de seleccionar las primeras 100.
 
 ## Prioridad inmediata: conseguir piezas gráficas compatibles
 
