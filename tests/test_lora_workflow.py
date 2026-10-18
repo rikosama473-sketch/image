@@ -226,6 +226,59 @@ class LoRATrainingGuardTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "no caption"):
                 train_lora.load_approved_examples(labels_path, root, None, None)
 
+    def test_cli_preflight_checks_approved_data_without_training_or_weights(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "image-project"
+            root.mkdir()
+            model = root / "local-base"
+            model.mkdir()
+            (model / "model_index.json").write_text(
+                json.dumps({"_class_name": "StableDiffusionPipeline"}),
+                encoding="utf-8",
+            )
+            labels_path = root / "labels.csv"
+            captions_path = root / "captions.csv"
+            label_fields = [
+                "path", "visual_review", "license_review", "training_permission",
+                "base_model_identifier",
+            ]
+            label_rows = []
+            caption_rows = []
+            for index in range(9):
+                name = f"approved-{index:02d}.png"
+                Image.new("RGB", (16, 16), (index, 20, 40)).save(root / name)
+                label_rows.append({
+                    "path": name,
+                    "visual_review": "approved",
+                    "license_review": "approved",
+                    "training_permission": "approved",
+                    "base_model_identifier": "source-model",
+                })
+                caption_rows.append({"path": name, "caption": f"reviewed caption {index}"})
+            with labels_path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=label_fields)
+                writer.writeheader()
+                writer.writerows(label_rows)
+            with captions_path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=["path", "caption"])
+                writer.writeheader()
+                writer.writerows(caption_rows)
+
+            output = root / "outputs" / "lora-run"
+            code = train_lora.main([
+                "--root", str(root),
+                "--labels", str(labels_path),
+                "--captions-csv", str(captions_path),
+                "--model", str(model),
+                "--confirm-source-family", "sd",
+                "--output-dir", str(output),
+                "--check-only",
+            ])
+            self.assertEqual(code, 0)
+            self.assertFalse(output.exists())
+            self.assertFalse((root / "data" / "cache" / "lora-training").exists())
+
+
     def test_caption_template_does_not_mark_permissions_approved(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
