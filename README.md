@@ -55,25 +55,29 @@ La auditoría reporta dimensiones, modo, transparencia, SHA-256 y un hash percep
 
 La guía detallada está en [docs/DATASET_GUIDE.md](docs/DATASET_GUIDE.md), y la arquitectura y hoja de ruta en [docs/IMAGE_MODEL_STRATEGY.md](docs/IMAGE_MODEL_STRATEGY.md).
 
-## Motor de generación local
+## Motor de generación local y creador visual
 
-Ya existe una primera CLI de inferencia genérica en `ml/generate_diffusion.py`. Carga una carpeta de modelo compatible con Diffusers y, opcionalmente, una LoRA del mismo tipo de base. Está aislada de las herramientas ligeras de auditoría para no forzar la instalación de un stack de IA en todas las PCs.
+IMAGE ya incluye una primera CLI de inferencia en `ml/generate_diffusion.py` y una pequeña interfaz web local en `tools/image-creator/`. La interfaz permite configurar el modelo base, una LoRA opcional, descripción, prompt negativo, resolución, pasos, semilla, escala y perfil de memoria; muestra los resultados y conserva los parámetros junto a los PNG.
 
-Instala PyTorch con el selector oficial según tu sistema/GPU y después las dependencias adicionales:
+### Ejecutar el creador
+
+Instala PyTorch usando el selector oficial según tu sistema/GPU y después las dependencias opcionales:
 
 ~~~bash
 python -m pip install -r requirements-diffusion.txt
 ~~~
 
-Para un modelo y una LoRA que ya estén descargados localmente:
+Inicia el servidor local:
 
 ~~~bash
-python ml/generate_diffusion.py --model models/base-compatible --lora models/image-style.safetensors --prompt "anime character, silver hair, detailed eyes" --width 512 --height 512 --steps 20 --lora-scale 0.8
+python ml/local_server.py
 ~~~
 
-Sustituye las rutas de ejemplo por los pesos reales y compatibles. El script funciona localmente por defecto: no descarga modelos desde internet ni llama a una API de generación. Para permitir explícitamente la descarga de un modelo público no cacheado, agrega `--allow-download` y usa su identificador correcto. La opción `--cpu-offload` solo se aplica a una máquina con CUDA; `--low-memory` activa los modos de ahorro admitidos por el pipeline.
+Abre `http://127.0.0.1:8765` en el navegador. En “Modelo base”, indica la carpeta local de un modelo compatible con Diffusers. En “LoRA de estilo”, puedes dejar el campo vacío o indicar una LoRA del mismo tipo de modelo.
 
-Cada ejecución guarda PNG y un archivo JSON con modelo, LoRA, escala, prompt, semilla y parámetros usados. El script es un primer motor reutilizable, **no significa que ya hayamos elegido la base definitiva o entrenado nuestra LoRA**. Para modelos SDXL u otras familias, ajusta resolución y parámetros según la documentación de ese checkpoint. CPU puede ser muy lenta y no hay una garantía de 2 GB.
+El sistema no elige pesos al azar: todavía falta identificar el checkpoint más compatible con tu colección y entrenar nuestra propia LoRA. La casilla de descargas remotas está desactivada por defecto; actívala solo si autorizas al motor a bajar el modelo/LoRA indicado. La generación se ejecuta localmente y la interfaz escucha únicamente en loopback.
+
+Los PNG y archivos JSON asociados se guardan en `outputs/generated/`, ignorados por Git. Este es el primer motor funcional para probar modelos y LoRAs compatibles, no una afirmación de que nuestra adaptación propia ya esté entrenada. CPU puede ser lenta y la meta antigua de 2 GB no está validada.
 
 
 ## Investigación de recursos y licencias
