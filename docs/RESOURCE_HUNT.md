@@ -124,3 +124,20 @@ Este es el primer paquete para probar **capas de cuerpo/ropa/pelo alineadas exac
 
 Prioridad de pruebas: (1) inspeccionar capas/anchors del Character Pack 64×96; (2) revisar el XCF anime para ojos/boca/pelo; (3) solo después evaluar si las piezas se pueden mezclar en un compositor. No mezclar directamente ambos estilos en un dataset de entrenamiento coherente. La licencia de la página se registra en el catálogo, pero la autorización para redistribuir un archivo, usarlo en el motor y entrenar un modelo sigue siendo un registro de decisión separado.
 
+
+
+## Descarga reproducible desde las fuentes originales
+
+El catálogo incluye [`scripts/fetch_asset_packs.py`](../scripts/fetch_asset_packs.py), que descarga únicamente desde las dos URL originales de OpenGameArt incluidas en una allowlist:
+
+```bash
+python scripts/fetch_asset_packs.py --pack all
+# o, por separado:
+python scripts/fetch_asset_packs.py --pack anime-portraits
+python scripts/fetch_asset_packs.py --pack modular-64x96
+```
+
+- `anime-portraits`: archivo `allanime-11-28-2020.zip`, 3.517.503 bytes según la inspección registrada; retratos/capas de pelo, ojos y boca bajo CC0 declarado por su ficha.
+- `modular-64x96`: archivo `customizable_characters_w_samples.zip`, 252.884 bytes; capas GIMP y 16 PNG RGBA de 64×96 bajo CC0 declarado por su ficha.
+
+El script conserva descargas y extracción bajo `data/asset-cache/`, carpeta excluida de Git hasta la revisión. Verifica el tamaño esperado, ZIP/CRC, evita rutas ZIP traversal, enlaces simbólicos, miembros duplicados y expansiones excesivas, calcula SHA-256 y crea `acquisition-manifest.json` local. Si la URL cambia de contenido, se detiene en vez de extraer a ciegas. `--force` conserva copias anteriores como respaldo y nunca aprueba el uso para entrenamiento. El hash generado sirve para identificar el archivo descargado, pero no equivale a una firma criptográfica publicada por el autor.
