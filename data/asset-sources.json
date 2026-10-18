@@ -18,7 +18,7 @@
     "requireSeparateTrainingPermissionReview": true,
     "neverAssumeFilenameProvesOwnership": true,
     "noAutomaticDeletionOrImageModification": true,
-    "notes": "Metadata-only snapshot as of 2026-10-18: 546 image files (515 names beginning from-PixAI-, 31 numeric filenames), 506,492,103 bytes. Original filenames are intentionally preserved because the user uses them as provenance clues for mapping each image to the model/LoRA; the model and LoRA identifiers must be recorded separately and are never guessed from the filename. Dimensions, image content, ownership, terms and training permission remain unreviewed per image.",
+    "notes": "Historical baseline was 546 files / 506,492,103 bytes (515 PixAI-prefixed and 31 numeric). Current Git tree snapshot 2026-10-18 has 759 raster images / 706,409,784 bytes (728 PixAI-prefixed names and 31 numeric), adding 213 images beyond that manifest baseline. Original paths/names are kept as provenance clues; base model and LoRA identifiers are explicitly recorded separately and never inferred. Visual content, ownership, terms and training permission remain unreviewed per image.",
     "initialCorpusBytesHuman": "506.5 MB",
     "pixaiFilenamePrefixCount": 515,
     "numericFilenameCount": 31,
@@ -29,7 +29,12 @@
       "base_model_identifier",
       "lora_identifiers",
       "lora_weights_or_settings"
-    ]
+    ],
+    "currentCorpusCount": 759,
+    "currentCorpusBytes": 706409784,
+    "currentCorpusBytesHuman": "706.4 MB",
+    "currentPixaiFilenamePrefixCount": 728,
+    "currentNumericFilenameCount": 31
   },
   "sources": [
     {
@@ -38,12 +43,12 @@
       "sourceUrl": "https://github.com/rikosama473-sketch/image",
       "kind": "existing-image-corpus",
       "license": "unknown-per-image",
-      "sourceHint": "515 original filenames begin with from-PixAI-; 31 filenames are numeric. Preserve each exact path because the user uses names as clues for mapping images to model/LoRA. The actual base model and LoRA identifiers need explicit metadata; names do not prove ownership or training permission.",
-      "status": "metadata-inventoried-pixel-and-rights-review-pending",
+      "sourceHint": "728 filenames begin with from-PixAI- and 31 names are numeric in the current tree. Preserve every exact original filename because the user uses names as clues to map images to generation models/LoRAs. Base model/LoRA identifiers must be recorded explicitly; filenames do not establish rights.",
+      "status": "current-759-image-tree-inventoried-visual-and-rights-review-pending",
       "useInTraining": "only after checking each image's origin, model/source terms, any third-party character rights, and marking training_permission=approved",
-      "files": 546,
-      "bytes": 506492103,
-      "filenamePrefixCount": 515,
+      "files": 759,
+      "bytes": 706409784,
+      "filenamePrefixCount": 728,
       "numericFilenameCount": 31,
       "modelLoraTrackingFields": [
         "base_model_identifier",
@@ -308,6 +313,16 @@
       "status": "optional-3d-body-silhouette-not-2d-parts",
       "testedInProject": false,
       "notes": "OpenGameArt lists a small Blender .blend base mesh described as a stylized feminine body with no head. Potentially useful for offline orthographic render experiments or proportions, but it is not an anime PNG kit and provides no head, hair or clothing layers. Verify exact download contents and license metadata before use."
+    },
+    {
+      "id": "oga-customizable-character-pack-cc0",
+      "name": "Customizable Character Pack — rubberduck",
+      "sourceUrl": "https://opengameart.org/content/customizable-character-pack",
+      "kind": "modular-pixel-character-parts-and-gimp-source",
+      "license": "CC0-as-listed-on-OpenGameArt",
+      "status": "priority-parts-and-layer-alignment-inspection-pending",
+      "testedInProject": false,
+      "notes": "OpenGameArt describes a small GIMP source file with base/skin, shoes, pants, upper clothing and hair, plus 16 sample characters. The page says it builds on Kenney's CC0 RPG Urban Pack and lists CC0. Pixel-art/cartoon, not anime; valuable for testing transparent layers, wardrobe overlay alignment and recoloring. ZIP: customizable_characters_w_samples.zip (about 253 KB). Not downloaded or integrated by this catalog update."
     }
   ]
 }
