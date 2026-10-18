@@ -73,3 +73,5 @@ footer { text-align: center; padding: 20px; color: #8795aa; border-top: 1px soli
   .export .primary { width: 100%; }
   .preview { min-height: 170px; }
 }
+
+[hidden] { display: none !important; }
