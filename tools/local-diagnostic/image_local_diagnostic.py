@@ -154,14 +154,14 @@ def _prompt_presence(text: str) -> tuple[int, bool]:
     if not text or len(text) > MAX_METADATA_CHARS:
         return 0, False
     negative_match = re.search(
-        r"Negative prompt:\\s*(.*?)(?=\\n\\s*(?:Steps|Sampler|CFG scale|CFG|Seed|Model|Model hash)\\s*:|$)",
+        r"Negative prompt:\s*(.*?)(?=\n\s*(?:Steps|Sampler|CFG scale|CFG|Seed|Model|Model hash)\s*:|$)",
         text, re.IGNORECASE | re.DOTALL,
     )
     if negative_match:
         positive = text[:negative_match.start()].strip()
         return len(positive), True
     config_match = re.search(
-        r"\\n\\s*(?:Steps|Sampler|CFG scale|CFG|Seed|Model|Model hash)\\s*:",
+        r"\n\s*(?:Steps|Sampler|CFG scale|CFG|Seed|Model|Model hash)\s*:",
         text, re.IGNORECASE,
     )
     positive = text[:config_match.start()].strip() if config_match else text.strip()
@@ -279,7 +279,7 @@ def _image_record(path: Path, root: Path, include_hash: bool = True) -> dict[str
     for key, value in flat:
         if len(value) <= 500:
             for match in LORA_TAG_RE.finditer(value):
-                item = f"{match.group(1).strip()}@{match.group(2).strip()}"
+                item = f"{_safe_identifier(match.group(1))}@{_safe_identifier(match.group(2))}"
                 if item not in loras:
                     loras.append(item)
         norm_key = _norm(key).rsplit("_", 1)[-1]
@@ -732,7 +732,7 @@ def self_test() -> int:
         meta = PngInfo()
         meta.add_text(
             "parameters",
-            "PRIVATE_PROMPT_SENTINEL\\nNegative prompt: PRIVATE_NEGATIVE_SENTINEL\\n"
+            "PRIVATE_PROMPT_SENTINEL\nNegative prompt: PRIVATE_NEGATIVE_SENTINEL\n"
             "Steps: 12, Sampler: Euler a, CFG scale: 7, Seed: 42, Model hash: abc123"
         )
         image_path = root / "sample.png"

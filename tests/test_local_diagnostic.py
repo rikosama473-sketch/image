@@ -22,7 +22,7 @@ class LocalDiagnosticTests(unittest.TestCase):
         info = PngInfo()
         info.add_text(
             "parameters",
-            "PRIVATE_PROMPT_SENTINEL\\nNegative prompt: PRIVATE_NEGATIVE_SENTINEL\\n"
+            "PRIVATE_PROMPT_SENTINEL\nNegative prompt: PRIVATE_NEGATIVE_SENTINEL\n"
             "Steps: 12, Sampler: Euler a, CFG scale: 7, Seed: 42, Model hash: abc123",
         )
         info.add_text("workflow", json.dumps({"checkpoint": "sd15-local-test", "lora_name": "style-test"}))
