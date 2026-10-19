@@ -11,6 +11,13 @@ API_URL = "https://api.openai.com/v1/images/edits"
 MODEL = "gpt-image-2.5-sunburst"
 ALLOWED_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
 STYLE_PACKS = {
+    "core-5": [
+        ("blunt-bob", "a neat blunt bob ending at the chin, smooth rounded silhouette, clearly defined ends"),
+        ("long-straight", "long straight hair falling below the shoulders, smooth strands and a clean silhouette"),
+        ("high-ponytail", "a high ponytail tied at the crown, flowing length and a few restrained framing strands"),
+        ("twin-tails", "balanced twin tails tied on both sides, matching volume and length"),
+        ("side-braid", "one substantial side braid resting over one shoulder, visible woven strands"),
+    ],
     "core-6": [
         ("blunt-bob", "a neat blunt bob ending at the chin, smooth rounded silhouette, clearly defined ends"),
         ("long-straight", "long straight hair falling below the shoulders, smooth strands and a clean silhouette"),
@@ -399,7 +406,7 @@ def main():
             "review_status": "needs_manual_review",
         })
     registry_path.write_text(json.dumps(registry, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print("Created six images, prompt records, manifest, contact sheet and updated character source-prompt history in " + str(out_dir.relative_to(root)))
+    print(f"Created {len(created)} hairstyle images, prompt records, manifest, contact sheet and updated character source-prompt history in {out_dir.relative_to(root)}")
 
 if __name__ == "__main__":
     main()
