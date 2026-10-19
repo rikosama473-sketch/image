@@ -5,7 +5,6 @@ import base64, hashlib, json, os, re, sys
 from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
 from urllib.parse import quote
-import requests
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 API_URL = "https://api.openai.com/v1/images/edits"
@@ -125,6 +124,7 @@ def render_contact_sheet(image_paths, target):
     sheet.save(target, format="JPEG", quality=90, optimize=True, progressive=True)
 
 def main():
+    import requests
     api_key = os.environ.get("OPENAI_API_KEY", "").strip()
     if not api_key:
         fail("Missing Actions secret OPENAI_API_KEY. Never put the API key in source code.")
