@@ -1,10 +1,43 @@
-# IMAGE — generador de imágenes anime con estilo propio
+# IMAGE — editor modular de personajes 2D
+
+IMAGE prioriza ahora un **editor local de personajes anime por capas**. Permite explorar una carpeta de imágenes propia, añadir imágenes al lienzo, mover y transformar capas, recortar piezas reutilizables, guardar proyectos y exportar PNG transparente. No necesita GPU, PyTorch, modelos generativos ni LoRA.
+
+El antiguo motor de difusión queda como experimento secundario, no como objetivo principal. La primera versión no pretende aislar automáticamente cada extremidad de cualquier ilustración: el recorte, el retoque de máscaras y los puntos de anclaje se desarrollarán por etapas. Los originales se leen sin modificarlos y la aplicación escucha solo en localhost.
+
+## Ejecutar el editor
+
+Con Python 3.10 o posterior, desde la raíz del repositorio:
+
+~~~powershell
+python ml/character_editor_server.py --assets-dir "D:\\Carpeta\\Con\\Mis\\Imagenes" --open-browser
+~~~
+
+En Windows también puedes abrir tools/character-editor/Start-Character-Editor.bat y seleccionar tu carpeta de imágenes. El manual está en docs/CHARACTER_EDITOR_GUIDE.md.
+
+## Capacidades actuales
+
+- Biblioteca local con búsqueda y paginación.
+- Capas que se pueden mover, redimensionar, girar, voltear, ocultar y reordenar.
+- Recorte rectangular para crear una nueva pieza; eliminación aproximada de un fondo uniforme como opción.
+- Guardado/carga de proyecto JSON y exportación PNG transparente.
+- No se modifican los originales ni se suben archivos a servicios remotos.
+
+Una colección grande ayuda a encontrar referencias y fragmentos, pero no convierte automáticamente ilustraciones completas en piezas anatómicas consistentes. El pelo puede cubrir la frente, las mangas pueden ocultar brazos y el torso puede tapar partes del cuerpo. Lo visible se puede recortar y ajustar; lo oculto requerirá retoque o dibujo. Para el detalle de uso y los límites, consulta docs/CHARACTER_EDITOR_GUIDE.md.
+
+## Referencias de diseño
+
+- CharacterManaJ: https://charactermanaj.sourceforge.io/ — editor abierto de piezas anime con cabello frontal/trasero y expresiones.
+- Universal LPC Character Generator: https://github.com/LiberatedPixelCup/Universal-LPC-Spritesheet-Character-Generator — composición abierta por capas para pixel art.
+
+Se usan como referencias, no como dependencias ni como origen automático de assets.
+
+---
 
 Proyecto privado e independiente para crear un **motor local de generación de imágenes** que aprenda el patrón visual de la colección del usuario. La ruta prioritaria es utilizar un modelo base generativo compatible y entrenar una LoRA propia con ejemplos seleccionados, buscando imágenes nuevas de estilo similar con bajo consumo de recursos.
 
 **No forma parte de WordWaifu ni de CharacterWord.**
 
-## Objetivo vigente
+## Archivo histórico: objetivo anterior del generador
 
 1. Aprovechar las imágenes propias para descubrir qué estilo, prompts, checkpoints y LoRAs se usaron.
 2. Curar un conjunto de entrenamiento consistente y revisar la procedencia/permisos.
@@ -55,11 +88,11 @@ La auditoría reporta dimensiones, modo, transparencia, SHA-256 y un hash percep
 
 La guía detallada está en [docs/DATASET_GUIDE.md](docs/DATASET_GUIDE.md), y la arquitectura y hoja de ruta en [docs/IMAGE_MODEL_STRATEGY.md](docs/IMAGE_MODEL_STRATEGY.md).
 
-## Motor de generación local y creador visual
+## Motor de generación anterior (secundario)
 
 IMAGE ya incluye una primera CLI de inferencia en `ml/generate_diffusion.py` y una pequeña interfaz web local en `tools/image-creator/`. La interfaz permite configurar el modelo base, una LoRA opcional, descripción, prompt negativo, resolución, pasos, semilla, escala y perfil de memoria; muestra los resultados y conserva los parámetros junto a los PNG.
 
-### Ejecutar el creador
+### Ejecutar el generador anterior
 
 Instala PyTorch usando el selector oficial según tu sistema/GPU y después las dependencias opcionales:
 

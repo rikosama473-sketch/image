@@ -23,7 +23,9 @@ jobs:
           node-version: "22"
       - name: Check local reviewer JavaScript
         run: node --check tools/dataset-reviewer/app.js
-      - name: Check local image creator JavaScript
+      - name: Check local image creator JavaScript (legacy)
         run: node --check tools/image-creator/app.js
+      - name: Check modular character editor JavaScript
+        run: node --check tools/character-editor/app.js
       - name: Run audit-tool tests
         run: python -m unittest discover -s tests -v

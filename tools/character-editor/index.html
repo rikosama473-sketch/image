@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>IMAGE — Editor modular de personajes</title>
+  <link rel="stylesheet" href="/app.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="IMAGE"><span class="brand-mark">I</span><span><strong>IMAGE</strong><small>CHARACTER WORKSHOP</small></span></a>
+    <span class="local-pill"><i></i> Archivos locales · sin IA</span>
+    <div class="toolbar">
+      <button id="new-project" class="button secondary">Nuevo</button>
+      <button id="load-project-button" class="button secondary">Abrir proyecto</button>
+      <input id="load-project" type="file" accept=".json,application/json" hidden>
+      <button id="save-project" class="button secondary">Guardar proyecto</button>
+      <button id="export-png" class="button primary">Exportar PNG</button>
+    </div>
+  </header>
+  <main class="layout">
+    <aside class="panel library-panel">
+      <div class="panel-title"><div><span class="eyebrow">01 / BIBLIOTECA</span><h1>Tus imágenes</h1></div><span id="library-total" class="counter">…</span></div>
+      <p id="root-label" class="muted small">Leyendo carpeta local…</p>
+      <label class="search-box"><span aria-hidden="true">⌕</span><input id="asset-search" type="search" placeholder="Buscar por nombre o carpeta" autocomplete="off"></label>
+      <div id="asset-grid" class="asset-grid" aria-live="polite"></div>
+      <div class="pager"><button id="previous-page" class="button secondary" disabled>← Anterior</button><span id="page-label" class="muted small">Página 1</span><button id="next-page" class="button secondary" disabled>Siguiente →</button></div>
+      <div class="hint">Selecciona una imagen para añadirla como capa. Puedes usar ilustraciones completas como referencia y recortar piezas para reutilizarlas.</div>
+    </aside>
+    <section class="workspace">
+      <div class="canvas-toolbar"><div><span class="eyebrow">02 / LIENZO</span><h2>Composición</h2></div>
+        <div class="canvas-size"><label>Ancho <input id="doc-width" type="number" min="128" max="2048" step="8" value="768"></label><label>Alto <input id="doc-height" type="number" min="128" max="2048" step="8" value="1024"></label><button id="apply-size" class="button secondary">Aplicar</button></div>
+      </div>
+      <div class="stage-wrap"><canvas id="stage" width="768" height="1024" aria-label="Lienzo de composición; arrastra una capa para moverla"></canvas></div>
+      <div class="stage-foot"><span id="stage-message" class="muted small">El lienzo exporta con fondo transparente.</span><span id="canvas-coordinates" class="muted small">768 × 1024 px</span></div>
+      <div id="notice" class="notice" role="status" aria-live="polite">Elige una imagen de la biblioteca para empezar. Arrastra las capas en el lienzo para colocarlas.</div>
+    </section>
+    <aside class="panel inspector">
+      <section>
+        <span class="eyebrow">03 / PERSONAJE</span><h2>Capas y piezas</h2>
+        <div id="empty-layers" class="empty-layers">Todavía no hay piezas. Añade una imagen desde la biblioteca.</div><div id="layer-list" class="layer-list"></div>
+        <div class="layer-actions"><button id="duplicate-layer" class="button secondary" disabled>Duplicar</button><button id="delete-layer" class="button danger" disabled>Eliminar</button></div>
+      </section>
+      <section class="properties">
+        <span class="eyebrow">AJUSTES DE CAPA</span><p id="selected-layer-name" class="selected-name">Selecciona una capa</p>
+        <label class="field">Tipo de pieza<select id="layer-category" disabled>
+          <option value="reference">Referencia completa</option><option value="hair">Cabello / peinado</option><option value="head">Cabeza / rostro</option><option value="eyes">Ojos / expresión</option><option value="body">Cuerpo / torso</option><option value="arms">Brazos / manos</option><option value="legs">Piernas / pies</option><option value="clothing">Ropa</option><option value="shoes">Calzado</option><option value="accessory">Accesorios</option><option value="other">Otro</option>
+        </select></label>
+        <div class="property-grid">
+          <label class="field">X <input id="layer-x" type="number" step="1" disabled></label><label class="field">Y <input id="layer-y" type="number" step="1" disabled></label>
+          <label class="field">Ancho <input id="layer-width" type="number" min="1" max="10000" step="1" disabled></label><label class="field">Alto <input id="layer-height" type="number" min="1" max="10000" step="1" disabled></label>
+          <label class="field">Rotación ° <input id="layer-rotation" type="number" min="-360" max="360" step="1" disabled></label><label class="field">Opacidad % <input id="layer-opacity" type="number" min="0" max="100" step="5" disabled></label>
+        </div>
+        <div class="button-row"><button id="flip-layer" class="button secondary" disabled>Voltear ↔</button><button id="crop-layer" class="button primary" disabled>Recortar pieza</button></div>
+        <div class="button-row"><button id="send-back" class="button secondary" disabled>Enviar atrás</button><button id="bring-front" class="button secondary" disabled>Traer delante</button></div>
+      </section>
+      <section class="warning"><strong>Sobre los recortes</strong><p>El recorte rectangular puede extraer un fragmento de una ilustración. Quitar un fondo uniforme es aproximado. Las partes ocultas por el pelo, la ropa o el torso no se recuperan mágicamente y pueden necesitar retoque manual.</p></section>
+    </aside>
+  </main>
+  <dialog id="crop-dialog" class="crop-dialog">
+    <form method="dialog" class="dialog-head"><div><span class="eyebrow">RECORTE LOCAL</span><h2>Extraer una pieza</h2></div><button class="icon-button" value="cancel" aria-label="Cerrar">×</button></form>
+    <p class="muted small">Arrastra un rectángulo alrededor de la pieza. Si el fondo de la imagen es uniforme, puedes intentar volver transparente el color de la esquina superior izquierda.</p>
+    <div class="crop-stage"><canvas id="crop-canvas" width="800" height="600"></canvas></div>
+    <div class="crop-controls">
+      <label class="check-label"><input id="remove-background" type="checkbox"> Quitar fondo uniforme (color de la esquina superior izquierda)</label>
+      <label class="field">Tolerancia <input id="background-tolerance" type="range" min="0" max="120" value="28"><span id="tolerance-value">28</span></label>
+      <label class="field">Guardar pieza como <input id="crop-name" maxlength="120" value="pieza-recortada"></label>
+      <label class="field">Categoría <select id="crop-category"><option value="hair">Cabello / peinado</option><option value="head">Cabeza / rostro</option><option value="eyes">Ojos / expresión</option><option value="body">Cuerpo / torso</option><option value="arms">Brazos / manos</option><option value="legs">Piernas / pies</option><option value="clothing">Ropa</option><option value="shoes">Calzado</option><option value="accessory">Accesorios</option><option value="other">Otro</option></select></label>
+    </div>
+    <div class="dialog-actions"><button id="cancel-crop" class="button secondary" type="button">Cancelar</button><button id="create-crop" class="button primary" type="button" disabled>Crear pieza como capa</button></div>
+  </dialog>
+</body>
+</html>
