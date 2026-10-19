@@ -49,7 +49,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add screenshots/IMAGE-app-cabello-01-captura.jpg screenshots/IMAGE-app-edicion-animeart-panel.jpg screenshots/IMAGE-app-edicion-animeart-completo.png
+          git add screenshots/IMAGE-app-cabello-01-captura.jpg screenshots/IMAGE-app-edicion-animeart-panel.jpg screenshots/IMAGE-app-edicion-animeart-completo.png screenshots/IMAGE-app-referencias-peinados.png
           if git diff --cached --quiet; then
             echo "The IMAGE screenshots are unchanged; no repository commit is needed."
           else
