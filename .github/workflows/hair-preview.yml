@@ -49,14 +49,14 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add screenshots/IMAGE-app-cabello-01-captura.jpg
+          git add screenshots/IMAGE-app-cabello-01-captura.jpg screenshots/IMAGE-app-edicion-animeart-panel.jpg screenshots/IMAGE-app-edicion-animeart-completo.png
           if git diff --cached --quiet; then
-            echo "The focused screenshot is unchanged; no repository commit is needed."
+            echo "The IMAGE screenshots are unchanged; no repository commit is needed."
           else
-            git commit -m "Save focused IMAGE hair preview screenshot"
+            git commit -m "Save IMAGE editor and AnimeArt editing-panel screenshots"
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
-      - name: Upload character preview and actual app screenshot
+      - name: Upload character, full app and advanced panel screenshots
         uses: actions/upload-artifact@v4
         with:
           name: IMAGE-Cabello-01-Preview
