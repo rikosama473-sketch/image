@@ -34,6 +34,7 @@ SKIP_DIRS = {
 }
 MAX_SCAN_DIRECTORIES = 2500
 MAX_FILE_BYTES = 100 * 1024 * 1024
+MAX_TOTAL_SCAN_BYTES = 2 * 1024 * 1024 * 1024
 MAX_IMAGE_PIXELS = 100_000_000
 MAX_METADATA_CHARS = 250_000
 MAX_FLAT_ITEMS = 1500
@@ -205,6 +206,9 @@ def _image_record(path: Path, root: Path, include_hash: bool = True) -> dict[str
         "base_model_family_hint": "unknown",
         "read_status": "ok",
     })
+    if size > MAX_FILE_BYTES:
+        row["read_status"] = "file_over_100mb_skipped_for_safety"
+        return row
     if include_hash and size <= MAX_FILE_BYTES:
         try:
             row["sha256"] = sha256_file(path)
@@ -295,10 +299,11 @@ def _skip_directory(name: str) -> bool:
     return name.startswith(".") or name.lower() in SKIP_DIRS
 
 
-def scan_images(root: Path, max_files: int = 1500) -> tuple[list[dict[str, str]], dict[str, Any]]:
+def scan_images(root: Path, max_files: int = 1500, include_hashes: bool = True) -> tuple[list[dict[str, str]], dict[str, Any]]:
     records: list[dict[str, str]] = []
     counters: Counter[str] = Counter()
     visited = 0
+    bytes_considered = 0
     limit_hit = False
     for current, directories, filenames in os.walk(root, topdown=True, followlinks=False):
         current_path = Path(current)
@@ -323,7 +328,15 @@ def scan_images(root: Path, max_files: int = 1500) -> tuple[list[dict[str, str]]
                 counters["images_skipped_after_file_limit"] += 1
                 continue
             try:
-                records.append(_image_record(path, root))
+                file_size = path.stat().st_size
+                if file_size <= MAX_FILE_BYTES and bytes_considered + file_size > MAX_TOTAL_SCAN_BYTES:
+                    counters["images_skipped_after_total_byte_limit"] += 1
+                    limit_hit = True
+                    continue
+                row = _image_record(path, root, include_hash=include_hashes)
+                records.append(row)
+                if file_size <= MAX_FILE_BYTES:
+                    bytes_considered += file_size
             except OSError:
                 counters["stat_errors"] += 1
             counters["images_scanned"] += 1
@@ -340,9 +353,11 @@ def scan_images(root: Path, max_files: int = 1500) -> tuple[list[dict[str, str]]
             "maximum_directories": MAX_SCAN_DIRECTORIES,
             "maximum_images": max_files,
             "maximum_hash_file_size_bytes": MAX_FILE_BYTES,
+            "maximum_total_image_bytes_read": MAX_TOTAL_SCAN_BYTES,
             "maximum_metadata_pixel_count": MAX_IMAGE_PIXELS,
         },
         "truncated_by_safety_limit": limit_hit,
+        "file_bytes_considered": bytes_considered,
         "counts": dict(sorted(counters.items())),
     }
 
@@ -652,7 +667,7 @@ def run_diagnostic(root: Path, output: Path, max_files: int = 1500,
     hardware = _windows_hardware_names()
     print("IMAGE Diagnostic: read-only mode; no network, no training, no model loading.", flush=True)
     print(f"Carpeta seleccionada: {root.name or 'raíz'}", flush=True)
-    records, scan = scan_images(root, max_files)
+    records, scan = scan_images(root, max_files, include_hashes=include_hashes)
     memory_after = get_memory_info()
     models_root = root / "models"
     models = scan_local_models(models_root if models_root.is_dir() else None)
