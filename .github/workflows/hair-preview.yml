@@ -1,0 +1,46 @@
+name: Render IMAGE hair asset preview
+
+on:
+  push:
+    branches: [work/modular-character-editor-2026-10]
+    paths:
+      - "12.png"
+      - "assets/parts/hair/cabello_01.svg"
+      - "scripts/render_hair_preview.py"
+      - ".github/workflows/hair-preview.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "12.png"
+      - "assets/parts/hair/cabello_01.svg"
+      - "scripts/render_hair_preview.py"
+      - ".github/workflows/hair-preview.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source character and hairstyle
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install SVG renderer and image library
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcairo2
+          python -m pip install "Pillow>=10,<13" "CairoSVG>=2.7,<3"
+      - name: Render composite preview without changing the original
+        run: python scripts/render_hair_preview.py
+      - name: Upload cropped character preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: IMAGE-Cabello-01-Preview
+          path: preview-output/cabello_01-personaje-preview.png
+          if-no-files-found: error
+          retention-days: 14
