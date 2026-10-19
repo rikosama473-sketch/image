@@ -6,6 +6,8 @@ import argparse
 import json
 import mimetypes
 import os
+import sys
+import tempfile
 import threading
 import webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -203,18 +205,64 @@ class CharacterEditorHTTPServer(ThreadingHTTPServer):
         self.catalog = catalog
 
 
+
+def run_self_test() -> int:
+    """Small smoke test used by the portable Windows build; no model or images are loaded."""
+    required = (EDITOR_ROOT / "index.html", EDITOR_ROOT / "app.js", EDITOR_ROOT / "app.css")
+    missing = [str(path) for path in required if not path.is_file()]
+    if missing:
+        print("Faltan archivos incluidos en el paquete: " + ", ".join(missing))
+        return 2
+    try:
+        with tempfile.TemporaryDirectory(prefix="image-editor-self-test-") as directory:
+            sample = Path(directory) / "sample.png"
+            sample.write_bytes(b"local editor smoke-test fixture")
+            catalog = AssetCatalog(Path(directory))
+            record = catalog.list_assets(limit=10)
+            if len(record["items"]) != 1 or catalog.safe_path("sample.png") != sample:
+                print("Falló la prueba de inventario local.")
+                return 2
+    except (OSError, ValueError) as exc:
+        print("Falló la prueba local: " + str(exc))
+        return 2
+    print("IMAGE Character Editor self-test: OK")
+    print("Interfaz incluida, inventario local y validación de rutas verificados.")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--assets-dir", type=Path, default=ROOT, help="Carpeta local de imágenes; se lee sin modificarla.")
+    parser.add_argument("--assets-dir", type=Path, default=None, help="Carpeta local de imágenes; se lee sin modificarla.")
     parser.add_argument("--port", type=int, default=8766)
     parser.add_argument("--open-browser", action="store_true", help="Abrir el editor en el navegador local.")
+    parser.add_argument("--self-test", action="store_true", help="Comprobar archivos del paquete y catálogo sin abrir el servidor.")
     args = parser.parse_args(argv)
+    if args.self_test:
+        return run_self_test()
     if not 1024 <= args.port <= 65535:
         parser.error("--port debe estar entre 1024 y 65535.")
     if not (EDITOR_ROOT / "index.html").is_file():
         parser.error("Faltan los archivos de tools/character-editor.")
+    asset_root = args.assets_dir
+    if asset_root is None and getattr(sys, "frozen", False):
+        try:
+            import tkinter as tk
+            from tkinter import filedialog
+            window = tk.Tk()
+            window.withdraw()
+            window.attributes("-topmost", True)
+            selected_folder = filedialog.askdirectory(title="Selecciona tu carpeta de imágenes")
+            window.destroy()
+        except Exception as exc:
+            parser.error("No se pudo abrir el selector de carpetas de Windows: " + str(exc))
+        if not selected_folder:
+            print("No seleccionaste una carpeta. El editor se cerrará sin modificar nada.")
+            return 1
+        asset_root = Path(selected_folder)
+    if asset_root is None:
+        asset_root = ROOT
     try:
-        catalog = AssetCatalog(args.assets_dir)
+        catalog = AssetCatalog(asset_root)
     except ValueError as exc:
         parser.error(str(exc))
     server = CharacterEditorHTTPServer(("127.0.0.1", args.port), catalog)
@@ -228,7 +276,7 @@ def main(argv: list[str] | None = None) -> int:
         print("Imágenes omitidas por superar 100 MB: " + str(catalog.skipped_large))
     print("No se entrena ni genera con IA, no se suben imágenes y no se alteran originales.")
     print("Pulsa Ctrl+C para cerrar.")
-    if args.open_browser:
+    if args.open_browser or getattr(sys, "frozen", False):
         threading.Timer(0.8, lambda: webbrowser.open(url)).start()
     try:
         server.serve_forever()

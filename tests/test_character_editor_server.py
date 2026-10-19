@@ -59,6 +59,9 @@ class AssetCatalogTests(unittest.TestCase):
             self.assertIsNone(catalog.safe_path("note.txt"))
             self.assertIsNotNone(catalog.safe_path("image.png"))
 
+    def test_packaged_smoke_test_passes_without_model_weights(self) -> None:
+        self.assertEqual(editor.run_self_test(), 0)
+
     def test_invalid_pagination_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             catalog = editor.AssetCatalog(Path(directory))

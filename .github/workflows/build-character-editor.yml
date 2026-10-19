@@ -1,0 +1,66 @@
+name: Build IMAGE Character Editor for Windows
+
+on:
+  push:
+    branches: [main, work/modular-character-editor-2026-10]
+    paths:
+      - "ml/character_editor_server.py"
+      - "tools/character-editor/**"
+      - "docs/CHARACTER_EDITOR_GUIDE.md"
+      - ".github/workflows/build-character-editor.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "ml/character_editor_server.py"
+      - "tools/character-editor/**"
+      - "docs/CHARACTER_EDITOR_GUIDE.md"
+      - ".github/workflows/build-character-editor.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows-portable:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Test the editor server
+        run: |
+          python -m py_compile ml/character_editor_server.py
+          python -m unittest discover -s tests -p "test_character_editor_server.py" -v
+      - name: Install PyInstaller
+        run: python -m pip install "pyinstaller>=6.10,<7"
+      - name: Build one-file Windows executable
+        shell: pwsh
+        run: |
+          python -m PyInstaller --noconfirm --clean --onefile --name IMAGE-Character-Editor --add-data "tools/character-editor;tools/character-editor" ml/character_editor_server.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Smoke test the packaged executable
+        shell: pwsh
+        run: |
+          & "dist/IMAGE-Character-Editor.exe" --self-test
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Prepare portable zip
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path package | Out-Null
+          Copy-Item "dist/IMAGE-Character-Editor.exe" "package/IMAGE-Character-Editor.exe"
+          Copy-Item "tools/character-editor/LEEME.txt" "package/LEEME.txt"
+          Copy-Item "docs/CHARACTER_EDITOR_GUIDE.md" "package/GUIA-EDITOR.md"
+          $hash = (Get-FileHash "package/IMAGE-Character-Editor.exe" -Algorithm SHA256).Hash.ToLower()
+          Set-Content -Path "package/SHA256SUM.txt" -Value "$hash  IMAGE-Character-Editor.exe" -Encoding ascii
+          Compress-Archive -Path "package/*" -DestinationPath "IMAGE-Character-Editor-Windows-x64.zip" -Force
+          Get-FileHash "IMAGE-Character-Editor-Windows-x64.zip" -Algorithm SHA256
+      - name: Upload portable editor
+        uses: actions/upload-artifact@v4
+        with:
+          name: IMAGE-Character-Editor-Windows-x64
+          path: IMAGE-Character-Editor-Windows-x64.zip
+          if-no-files-found: error
+          retention-days: 30
