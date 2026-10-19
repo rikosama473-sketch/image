@@ -94,3 +94,26 @@ Para probarla:
 4. Guarda tu proyecto JSON y exporta PNG solo si quieres una imagen compuesta. `12.png` permanece intacta.
 
 La pieza es un **overlay dibujado a mano en SVG**, no un recorte automático ni una edición generativa que haya preservado pixel por pixel al personaje. La vista final depende de la alineación y puede requerir retoques. SVG se sirve en la biblioteca local con una política CSP `sandbox`; no se aprueba para entrenamiento de IA sin revisión de los derechos del personaje de origen.
+
+
+## Motor local avanzado reutilizado de AnimeArt
+
+El inspector derecho tiene una sección **Edición avanzada — Motor local de AnimeArt**. Esta integración reutiliza algoritmos del editor propio `jonhararagi/animeart`, concretamente `background-removal.mjs`, `color-replacement.mjs` y `layer-adjustments.mjs`. No es un modelo de IA ni necesita descargar pesos; todo funciona localmente sobre copias raster de la capa seleccionada.
+
+### Preparar un cambio de peinado
+
+1. Añade tu imagen original y selecciona su capa.
+2. Pulsa **Crear copia editable para retocar cabello**. La copia aparece como una capa de dibujo con píxeles editables; la fuente original queda oculta, pero no se sobrescribe. Puedes volver a mostrarla con el icono de ojo.
+3. Selecciona la copia, cambia a **Borrador** y elimina cuidadosamente el pelo antiguo en la copia. El borrador usa transparencia alfa; no pinta blanco encima.
+4. Añade `cabello_01.svg` u otra pieza sobre la copia. Usa mover/escala/rotación y orden de capas para alinear el peinado. El nuevo mechón necesita tapar o reemplazar la silueta antigua; superponerlo sin borrar nada produce dos peinados visibles.
+5. Usa **Quitar fondo con protección de líneas** cuando el pelo o la prenda tenga un fondo uniforme conectado. Ajusta color, tolerancia, suavizado y protección de tinta; el algoritmo no entiende semánticamente “pelo” y no elimina partes aisladas que no estén conectadas al fondo.
+6. Usa **Recolorear sin perder luces ni sombras** para probar nuevos colores de cabello o ropa. Selecciona el color de origen con el selector, el color destino y la tolerancia; se genera una capa editable nueva.
+7. Los **Ajustes visuales por capa** usan filtros Canvas reversibles (brillo, contraste, saturación, tono, temperatura, matiz y desenfoque) y se guardan dentro del proyecto JSON.
+
+### Seguridad y límites
+
+- El archivo original en la carpeta de imágenes queda intacto. Las operaciones producen otra capa; el original se oculta como punto de recuperación.
+- Para cuidar equipos modestos, las operaciones de píxeles se limitan a imágenes de hasta **4 megapíxeles por operación** en la interfaz. Recorta o reduce una imagen mayor antes de editarla.
+- La eliminación de fondo depende de color y conectividad. Los ajustes de protección de tinta ayudan a conservar contornos, pero no sustituyen una máscara revisada manualmente ni recuperan píxeles ocultos detrás del pelo anterior.
+- No se descarga ni ejecuta un checkpoint generativo. El motor de edición es determinista y local. Si más adelante se desea una función de relleno generativo, se debe añadir como módulo opcional separado, tras revisar sus requisitos de memoria y compatibilidad con el hardware.
+- Los módulos adaptados y sus pruebas son `tools/character-editor/pro-editing.js` y `tests/test_pro_editing.mjs`; el original independiente de AnimeArt no se cambia.
