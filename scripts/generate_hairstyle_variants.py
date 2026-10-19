@@ -53,15 +53,13 @@ STYLE_PACKS = {
     ],
 }
 BASE_INSTRUCTIONS = (
-    "Edit the supplied image of the same character; do not create a different person. "
-    "Change ONLY the hairstyle and arrangement of the hair. Preserve the same face and identity, "
-    "eye shape and color, glasses, expression, apparent adult age, skin tone, head proportions, "
-    "hair color, accessories unless physically incompatible with the specific hairstyle, clothing, pose, "
-    "camera angle, framing, background, line art, shading, palette and rendering style. "
-    "Do not redesign the face, alter the outfit, change the body, add characters, text, logos or watermarks. "
-    "Keep the head and hair clearly visible; make the chosen hairstyle silhouette, parting, strand direction, "
-    "volume and ends the dominant variable. Use a clean, non-sexual, fully clothed presentation. "
-    "When anything conflicts, preserve the source and make the smallest possible change outside the hair."
+    "Create a hairstyle-study edit based on the supplied cropped head reference; preserve the same character identity. "
+    "Change ONLY the hairstyle and arrangement of the hair. Preserve the face, eye shape and color, glasses, expression, "
+    "adult appearance, skin tone, head proportions, hair color, accessories unless physically incompatible, line art, "
+    "shading, palette and rendering style. Do not redesign the face or add characters, text, logos or watermarks. "
+    "Present a centered head-and-hair portrait against a clean neutral background, with a simple fully covering high-neck "
+    "top visible only at the bottom if shoulders appear. No nudity, cleavage or torso detail. Make the hairstyle silhouette, "
+    "parting, strand direction, volume and ends the dominant variable. Preserve everything outside the hair as closely as possible."
 )
 
 def fail(message):
@@ -86,7 +84,23 @@ def safe_source_path(raw_path, root):
         fail("Reference image exceeds 20 MiB; choose a smaller source.")
     return path
 
-def extract_embedded_prompt(image_path):
+def extract_embedded_prompt(image_path, root):
+    # Reuse IMAGE's established metadata extractor first so nested JSON/PNG workflow
+    # metadata and common diffusion parameter blocks are parsed consistently.
+    try:
+        import importlib.util
+        extractor_path = root / "scripts" / "extract_generation_metadata.py"
+        spec = importlib.util.spec_from_file_location("image_source_metadata_extractor", extractor_path)
+        if spec is not None and spec.loader is not None:
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            row = module.extract_one(image_path, root)
+            prompt = str(row.get("prompt", "") or "").strip()[:30000]
+            keys = [item.strip() for item in str(row.get("metadata_keys", "")).split(";") if item.strip()]
+            return prompt, keys
+    except Exception:
+        pass
+    # Defensive fallback if the shared extractor cannot be loaded.
     try:
         with Image.open(image_path) as im:
             info = dict(im.info)
@@ -100,6 +114,99 @@ def extract_embedded_prompt(image_path):
         return "", keys
     except Exception:
         return "", []
+
+def prepare_head_reference(source_path, target_path):
+    """Crop the upper head zone and place it on a neutral canvas before calling the image API.
+
+    The full source image is never sent to the image-edit endpoint. The crop is designed for
+    upright anime illustrations whose head begins near the top edge; inspect the saved crop.
+    """
+    with Image.open(source_path) as source:
+        image = ImageOps.exif_transpose(source).convert("RGB")
+    width, height = image.size
+    left = int(round(width * 0.02))
+    right = int(round(width * 0.98))
+    bottom = min(int(round(width * 0.40)), int(round(height * 0.28)))
+    if right - left < 256 or bottom < 200:
+        fail("Could not prepare a useful head crop; choose a larger upright image.")
+    crop_box = [left, 0, right, bottom]
+    head = image.crop(tuple(crop_box))
+    max_w, max_h = 960, 920
+    scale = min(max_w / head.width, max_h / head.height)
+    resized = head.resize(
+        (max(1, int(round(head.width * scale))), max(1, int(round(head.height * scale)))),
+        Image.Resampling.LANCZOS,
+    )
+    canvas = Image.new("RGB", (1024, 1024), "white")
+    canvas.paste(resized, ((1024 - resized.width) // 2, 32))
+    target_path.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(target_path, format="PNG", optimize=True)
+    png_bytes = target_path.read_bytes()
+    data_url = "data:image/png;base64," + base64.b64encode(png_bytes).decode("ascii")
+    return data_url, {
+        "crop_box_pixels": crop_box,
+        "source_crop_dimensions": [right - left, bottom],
+        "api_input_dimensions": [1024, 1024],
+        "crop_method": "top head zone based on width/height; original pixels outside the crop are excluded",
+    }
+
+
+def infer_visual_base_prompt(head_data_url, requests):
+    """Infer a reusable identity prompt from the cropped reference, not the original generation prompt."""
+    payload = {
+        "model": "gpt-6-luna",
+        "messages": [
+            {
+                "role": "system",
+                "content": (
+                    "Describe an illustrated character for reusable image generation. Treat the image as a cropped "
+                    "identity reference. Do not name a character, franchise, LoRA, checkpoint, or claim this is the "
+                    "original generation prompt. Return only stable traits that should remain across hairstyle variants: "
+                    "visible facial features, eye color, glasses or head accessories, hair color (not haircut or length), "
+                    "color palette, line art and shading. Exclude hairstyle shape, length, fringe, parting, braids, ponytails "
+                    "and updos because these will be changed. Do not invent unseen details. Return a concise prompt in English "
+                    "as JSON with keys visual_base_prompt (string), stable_traits (array of strings), uncertainties (array of strings)."
+                ),
+            },
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": "Build a stable identity description from this cropped head reference. Exclude the hairstyle itself."},
+                    {"type": "image_url", "image_url": {"url": head_data_url, "detail": "high"}},
+                ],
+            },
+        ],
+        "response_format": {"type": "json_object"},
+        "max_completion_tokens": 900,
+    }
+    try:
+        response = requests.post(
+            "https://api.openai.com/v1/chat/completions",
+            headers={"Authorization": "Bearer " + os.environ["OPENAI_API_KEY"], "Content-Type": "application/json"},
+            json=payload,
+            timeout=(30, 180),
+        )
+    except requests.RequestException as exc:
+        fail("Visual prompt extraction request failed: " + str(exc))
+    if not response.ok:
+        fail("Vision API returned HTTP " + str(response.status_code) + ": " + response.text[:1400])
+    try:
+        raw = response.json()["choices"][0]["message"]["content"]
+        result = json.loads(raw)
+        base_prompt = str(result.get("visual_base_prompt", "")).strip()
+        if not base_prompt:
+            fail("Vision analysis returned an empty visual_base_prompt.")
+        return {
+            "model": "gpt-6-luna",
+            "visual_base_prompt": base_prompt[:8000],
+            "stable_traits": [str(item)[:300] for item in result.get("stable_traits", [])[:30]],
+            "uncertainties": [str(item)[:500] for item in result.get("uncertainties", [])[:20]],
+            "is_original_generation_prompt": False,
+            "review_status": "needs_manual_review",
+        }
+    except (ValueError, KeyError, IndexError, TypeError) as exc:
+        fail("Could not parse the visual prompt response as JSON: " + str(exc))
+
 
 def render_contact_sheet(image_paths, target):
     columns, cell_w, image_h, label_h, margin = 3, 400, 560, 48, 18
@@ -155,9 +262,14 @@ def main():
         fail("Reference image is too small; choose a clearer image of at least 256x256.")
     relative_source = PurePosixPath(raw_source).as_posix()
     source_url = "https://raw.githubusercontent.com/" + repo + "/" + commit_sha + "/" + quote(relative_source, safe="/")
-    embedded_prompt, metadata_keys = extract_embedded_prompt(source_path)
+    embedded_prompt, metadata_keys = extract_embedded_prompt(source_path, root)
     out_dir = root / "generated" / "hairstyles" / character_id / ("run-" + str(run_id))
     out_dir.mkdir(parents=True, exist_ok=True)
+    crop_path = out_dir / "reference-head-crop.png"
+    head_data_url, crop_metadata = prepare_head_reference(source_path, crop_path)
+    crop_sha = hashlib.sha256(crop_path.read_bytes()).hexdigest()
+    visual_analysis = infer_visual_base_prompt(head_data_url, requests)
+    visual_base_prompt = visual_analysis["visual_base_prompt"]
     headers = {"Authorization": "Bearer " + api_key, "Content-Type": "application/json"}
     created, manifest_variants = [], []
     prompt_sections = [
@@ -165,19 +277,23 @@ def main():
         "- Source: " + relative_source,
         "- Source SHA-256: " + source_sha,
         "- Source dimensions: " + str(width) + "x" + str(height),
+        "- API reference: cropped head-only canvas; full original body is not sent",
+        "- Head crop box (pixels): " + str(crop_metadata["crop_box_pixels"]),
+        "- Cropped reference SHA-256: " + crop_sha,
         "- Model: " + MODEL, "- Run: " + str(run_id), "",
         "The exact prompts used by this run are listed below. The source prompt is recorded only when present in image metadata; it is never guessed.", "",
     ]
     if embedded_prompt:
         prompt_sections += ["## Prompt recovered from embedded source metadata", "", "~~~text", embedded_prompt, "~~~", ""]
     else:
-        prompt_sections += ["## Source metadata", "", "No recognized embedded source prompt was found. No source prompt has been invented.", ""]
+        prompt_sections += ["## Source metadata", "", "No recognized embedded source prompt was found. No original prompt is claimed.", ""]
+    prompt_sections += ["## Candidate stable-character prompt inferred from the cropped image", "", "This is a visual reconstruction, not the original image-generation prompt; it needs human review.", "", "~~~text", visual_base_prompt, "~~~", ""]
     variants = STYLE_PACKS[style_pack]
     for index, (slug, hair_description) in enumerate(variants, start=1):
-        prompt = BASE_INSTRUCTIONS + " Specific hairstyle for this version: " + hair_description + ". Return one polished image."
+        prompt = BASE_INSTRUCTIONS + " Stable character identity prompt, inferred from the reference and excluding the hairstyle: " + visual_base_prompt + ". Specific hairstyle for this version: " + hair_description + ". Return one polished image."
         payload = {
-            "model": MODEL, "images": [{"image_url": source_url}], "prompt": prompt,
-            "size": "1024x1536", "quality": "medium", "output_format": "webp", "n": 1,
+            "model": MODEL, "images": [{"image_url": head_data_url}], "prompt": prompt,
+            "size": "1024x1024", "quality": "medium", "output_format": "webp", "n": 1,
         }
         print("[" + str(index) + "/" + str(len(variants)) + "] Generating " + slug + "...", flush=True)
         try:
@@ -220,6 +336,10 @@ def main():
         "source": {
             "repository": repo, "commit": commit_sha, "path": relative_source,
             "raw_url": source_url, "sha256": source_sha, "width": width, "height": height,
+            "head_crop_path": str(crop_path.relative_to(root)), "head_crop_sha256": crop_sha,
+            "head_crop": crop_metadata,
+            "visual_analysis": visual_analysis,
+            "api_input_note": "Only reference-head-crop.png is sent to the image edit API and vision analysis; the full original image is not sent.",
             "metadata_keys": metadata_keys, "embedded_prompt_found": bool(embedded_prompt),
             "embedded_prompt": embedded_prompt or None,
         },
@@ -228,7 +348,34 @@ def main():
     }
     (out_dir / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (out_dir / "PROMPTS.md").write_text("\n".join(prompt_sections), encoding="utf-8")
-    print("Created six images, prompt records, manifest and contact sheet in " + str(out_dir.relative_to(root)))
+
+    # Keep a verifiable per-character source-prompt history without guessing a canonical prompt.
+    registry_path = root / "data" / "character-prompt-registry.json"
+    try:
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+        character = next(item for item in registry["characters"] if item["id"] == character_id)
+    except Exception as exc:
+        fail("Could not safely update the character prompt registry: " + str(exc))
+    if relative_source not in character.setdefault("source_images", []):
+        character["source_images"].append(relative_source)
+    examples = character.setdefault("source_prompt_examples", [])
+    if not any(item.get("source_sha256") == source_sha for item in examples):
+        examples.append({
+            "source_path": relative_source,
+            "source_sha256": source_sha,
+            "source_prompt": embedded_prompt or None,
+            "prompt_status": "recovered_from_embedded_metadata" if embedded_prompt else "not_found_in_embedded_metadata",
+            "visual_base_prompt": visual_base_prompt,
+            "visual_prompt_model": visual_analysis["model"],
+            "visual_prompt_status": "inferred_from_cropped_image_not_original_prompt",
+            "stable_traits": visual_analysis["stable_traits"],
+            "uncertainties": visual_analysis["uncertainties"],
+            "run_id": str(run_id),
+            "head_crop_path": str(crop_path.relative_to(root)),
+            "review_status": "needs_manual_review",
+        })
+    registry_path.write_text(json.dumps(registry, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print("Created six images, prompt records, manifest, contact sheet and updated character source-prompt history in " + str(out_dir.relative_to(root)))
 
 if __name__ == "__main__":
     main()

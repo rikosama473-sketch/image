@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       reference_image:
-        description: "Repository-relative path to a clear, frontal, fully clothed character image"
+        description: "Repository-relative path to an upright image with one character and the head near the top; only a head crop is sent to the editor"
         required: true
         type: string
       character_id:
@@ -115,7 +115,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c "$branch"
-          git add "$path"
+          git add "$path" data/character-prompt-registry.json
           git commit -m "Add $STYLE_PACK hairstyle references for $CHARACTER_ID"
           git push origin "$branch"
           gh pr create \

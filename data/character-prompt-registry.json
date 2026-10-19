@@ -16,7 +16,8 @@
         "updo",
         "braid"
       ],
-      "notes": "Preserve identity traits in the canonical prompt; store haircut and hairstyle only as per-image variants."
+      "notes": "Preserve identity traits in the canonical prompt; store haircut and hairstyle only as per-image variants.",
+      "source_prompt_examples": []
     },
     {
       "id": "chie",
@@ -32,7 +33,8 @@
         "updo",
         "braid"
       ],
-      "notes": "Preserve identity traits in the canonical prompt; store haircut and hairstyle only as per-image variants."
+      "notes": "Preserve identity traits in the canonical prompt; store haircut and hairstyle only as per-image variants.",
+      "source_prompt_examples": []
     },
     {
       "id": "sunna",
@@ -48,7 +50,8 @@
         "updo",
         "braid"
       ],
-      "notes": "Preserve identity traits in the canonical prompt; store haircut and hairstyle only as per-image variants."
+      "notes": "Preserve identity traits in the canonical prompt; store haircut and hairstyle only as per-image variants.",
+      "source_prompt_examples": []
     },
     {
       "id": "personaje-4",
@@ -64,7 +67,8 @@
         "updo",
         "braid"
       ],
-      "notes": "Do not assign a name until a distinct character is verified."
+      "notes": "Do not assign a name until a distinct character is verified.",
+      "source_prompt_examples": []
     },
     {
       "id": "personaje-5",
@@ -80,7 +84,8 @@
         "updo",
         "braid"
       ],
-      "notes": "Do not assign a name until a distinct character is verified."
+      "notes": "Do not assign a name until a distinct character is verified.",
+      "source_prompt_examples": []
     }
   ]
 }
