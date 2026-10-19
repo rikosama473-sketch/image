@@ -27,7 +27,7 @@ ROOT = resolve_app_root(
     getattr(sys, "_MEIPASS", None) if getattr(sys, "frozen", False) else None,
 )
 EDITOR_ROOT = ROOT / "tools" / "character-editor"
-IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".bmp", ".gif"}
+IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".bmp", ".gif", ".svg"}
 IGNORED_DIRS = {
     ".git", ".venv", "venv", "env", "node_modules", "__pycache__",
     ".cache", ".pytest_cache", ".mypy_cache", "outputs", "checkpoints",
@@ -202,6 +202,14 @@ class CharacterEditorHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", mime)
         self.send_header("Content-Length", str(len(content)))
+        # SVGs are useful as scalable transparent character parts. Keep them sandboxed
+        # as both direct documents and <img> resources; scripts and external resources
+        # are not needed for our flat artwork and must not execute in this local editor.
+        if path.suffix.lower() == ".svg":
+            self.send_header(
+                "Content-Security-Policy",
+                "sandbox; default-src 'none'; img-src data:; style-src 'unsafe-inline'",
+            )
         self.end_headers()
         self.wfile.write(content)
 
