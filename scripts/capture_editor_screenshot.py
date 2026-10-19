@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import subprocess
 import sys
 import time
@@ -11,7 +12,10 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "preview-output" / "IMAGE-app-character-hair-screenshot.png"
+OUT_DIR = ROOT / "preview-output"
+OUT = OUT_DIR / "IMAGE-app-character-hair-full-page.png"
+FOCUSED = ROOT / "screenshots" / "IMAGE-app-cabello-01-captura.jpg"
+PREVIEW_COPY = OUT_DIR / "IMAGE-app-cabello-01-captura.jpg"
 PORT = 8766
 BASE = f"http://127.0.0.1:{PORT}"
 
@@ -36,7 +40,8 @@ def main() -> int:
     except ImportError as exc:
         raise SystemExit("Install Playwright before capturing the real app screenshot.") from exc
 
-    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    FOCUSED.parent.mkdir(parents=True, exist_ok=True)
     log_file = open(OUT.parent / "editor-server.log", "w", encoding="utf-8")
     server = subprocess.Popen(
         [
@@ -89,8 +94,29 @@ def main() -> int:
             )
             page.screenshot(path=str(OUT), full_page=True, animations="disabled")
             browser.close()
+
+        # The full-page UI is tall, so chat previews make the character unreadably small.
+        # Keep the raw capture for audit, and create a focused crop around the actual canvas.
+        from PIL import Image
+        with Image.open(OUT) as source:
+            source = source.convert("RGB")
+            width, height = source.size
+            crop_box = (
+                round(width * 0.274),
+                round(height * 0.403),
+                round(width * 0.735),
+                round(height * 0.978),
+            )
+            focused = source.crop(crop_box)
+            focused = focused.resize((1033, 1404), Image.Resampling.LANCZOS)
+            focused.save(FOCUSED, format="JPEG", quality=84, optimize=True, progressive=True)
+        shutil.copy2(FOCUSED, PREVIEW_COPY)
+
         print(json.dumps({
-            "screenshot": str(OUT.relative_to(ROOT)),
+            "full_screenshot": str(OUT.relative_to(ROOT)),
+            "focused_screenshot": str(FOCUSED.relative_to(ROOT)),
+            "artifact_copy": str(PREVIEW_COPY.relative_to(ROOT)),
+            "dimensions": [1033, 1404],
             "character_source": "12.png",
             "hair_overlay": "assets/parts/hair/cabello_01.svg",
             "layers": 2,
