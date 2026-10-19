@@ -142,7 +142,7 @@
     const layer = {
       id: crypto.randomUUID(),
       name: options.name || ("Diseño nuevo — " + (categories[category] || categories.other)),
-      path: "", dataUrl: "", category, editableDrawing: true, drawBuffer: canvas,
+      path: "", dataUrl: "", category, editableDrawing: true, isGarmentGuide: Boolean(options.isGarmentGuide), drawBuffer: canvas,
       x: state.width / 2, y: state.height / 2, width: state.width, height: state.height,
       rotation: 0, opacity: 1, visible: true, flipX: false, flipY: false
     };
@@ -152,16 +152,22 @@
   }
   function getOrCreateDrawingLayer() {
     const selected = selectedLayer();
-    if (isDrawingLayer(selected)) return selected;
-    const layer = createDrawingLayer();
-    setNotice("Creé una capa de diseño transparente para no modificar la imagen de referencia.");
+    if (isDrawingLayer(selected) && !selected.isGarmentGuide) return selected;
+    const guideName = selected && selected.isGarmentGuide ? selected.name : "";
+    const layer = createDrawingLayer({
+      category: selected && selected.category ? selected.category : "clothing",
+      name: guideName ? "Trazos encima — " + guideName.replace(/^Guía gris — /, "") : undefined
+    });
+    setNotice(guideName
+      ? "Creé una capa transparente encima de la guía. Las líneas grises permanecen intactas."
+      : "Creé una capa de diseño transparente para no modificar la imagen de referencia.");
     return layer;
   }
   function setDesignTool(tool) {
     state.designTool = tool;
     document.querySelectorAll("[data-tool]").forEach(button => button.classList.toggle("active",button.dataset.tool===tool));
     stage.style.cursor = tool === "move" ? "grab" : tool === "bucket" ? "copy" : "crosshair";
-    if (tool !== "move" && !isDrawingLayer(selectedLayer())) getOrCreateDrawingLayer();
+    if (tool !== "move" && (!isDrawingLayer(selectedLayer()) || selectedLayer().isGarmentGuide)) getOrCreateDrawingLayer();
     const labels = { move:"Modo mover.", pen:"Pincel: dibuja en la capa transparente.", eraser:"Borrador: solo elimina pintura de la capa de diseño.", line:"Línea: arrastra para trazarla.", rect:"Rectángulo: arrastra para dibujar.", ellipse:"Elipse: arrastra para dibujar.", bucket:"Relleno: haz clic dentro de una zona cerrada o de color uniforme." };
     setNotice(labels[tool] || "Herramienta seleccionada.");
   }
@@ -211,6 +217,7 @@
     const unit = Math.min(1, state.width / 768, state.height / 1024);
     const layer = createDrawingLayer({
       category: "clothing",
+      isGarmentGuide: isGuide,
       name: (isGuide ? "Guía gris — " : "Prenda editable — ") + item.name + " · " + String(variant).padStart(2, "0")
     });
     const canvas = layer.drawBuffer;
@@ -520,8 +527,10 @@
     renderLayers();
     renderInspector();
     drawStage();
-    setDesignTool("pen");
-    setNotice((isGuide ? "Guía gris " : "Prenda base ") + "añadida: " + item.name + ", variante " + variant + ". Selecciona Mover para colocarla y usa la capa para dibujar por encima.");
+    setDesignTool(isGuide ? "move" : "pen");
+    setNotice(isGuide
+      ? "Guía gris añadida: " + item.name + ", variante " + variant + ". Muévela ahora; al elegir el pincel se creará una capa transparente encima para conservar intacta la guía."
+      : "Prenda base con color añadida: " + item.name + ", variante " + variant + ". Puedes dibujar y añadir detalles sobre esta capa.");
   }
 
   function mapStagePointToLayer(layer,point){
@@ -879,7 +888,7 @@
         x: Math.max(-width * 4, Math.min(width * 5, Number(layer.x))), y: Math.max(-height * 4, Math.min(height * 5, Number(layer.y))),
         width: Number(layer.width), height: Number(layer.height), rotation: Math.max(-360, Math.min(360, Number(layer.rotation))),
         opacity: Math.max(0, Math.min(1, Number(layer.opacity))), visible: layer.visible !== false, flipX: Boolean(layer.flipX), flipY: Boolean(layer.flipY),
-        editableDrawing: Boolean(layer.editableDrawing), drawBuffer: null
+        editableDrawing: Boolean(layer.editableDrawing), isGarmentGuide: Boolean(layer.isGarmentGuide), drawBuffer: null
       };
     });
     if (layers.some(layer => !layer.path && !layer.dataUrl)) throw new Error("Hay una pieza sin archivo de origen ni datos incrustados.");
