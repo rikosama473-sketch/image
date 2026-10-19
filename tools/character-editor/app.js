@@ -12,7 +12,8 @@
   const state = {
     query: "", offset: 0, pageSize: 48, total: 0, assets: [],
     layers: [], selectedLayerId: null, width: 768, height: 1024,
-    imageCache: new Map(), crop: null, requestId: 0
+    imageCache: new Map(), crop: null, requestId: 0,
+    designTool: "move", drawStroke: null
   };
   const categories = {
     reference: "Referencia completa", hair: "Cabello / peinado", head: "Cabeza / rostro",
@@ -39,6 +40,12 @@
     return promise;
   }
   function layerSource(layer) { return layer.dataUrl || assetUrl(layer.path); }
+  function isDrawingLayer(layer) { return Boolean(layer && layer.editableDrawing && layer.drawBuffer); }
+  function syncDrawingLayer(layer) {
+    if (!isDrawingLayer(layer)) return;
+    try { layer.dataUrl = layer.drawBuffer.toDataURL("image/png"); }
+    catch { setNotice("No se pudo guardar la vista previa de la capa de diseño.", true); }
+  }
   function selectedLayer() { return state.layers.find(layer => layer.id === state.selectedLayerId) || null; }
 
   async function drawStage(showSelection = true) {
@@ -46,13 +53,17 @@
     for (const layer of state.layers) {
       if (!layer.visible) continue;
       try {
-        const image = await imageFor(layerSource(layer));
         ctx.save();
         ctx.globalAlpha = Math.max(0, Math.min(1, layer.opacity));
         ctx.translate(layer.x, layer.y);
         ctx.rotate(layer.rotation * Math.PI / 180);
         ctx.scale(layer.flipX ? -1 : 1, layer.flipY ? -1 : 1);
-        ctx.drawImage(image, -layer.width / 2, -layer.height / 2, layer.width, layer.height);
+        if (isDrawingLayer(layer)) {
+          ctx.drawImage(layer.drawBuffer, -layer.width / 2, -layer.height / 2, layer.width, layer.height);
+        } else {
+          const image = await imageFor(layerSource(layer));
+          ctx.drawImage(image, -layer.width / 2, -layer.height / 2, layer.width, layer.height);
+        }
         ctx.restore();
       } catch {
         setNotice("No se pudo cargar una capa. Comprueba que la carpeta de imágenes original sigue disponible.", true);
@@ -124,6 +135,101 @@
       assetGrid.replaceChildren(); setNotice(error.message, true);
     }
   }
+  function createDrawingLayer(options = {}) {
+    const category = options.category || $("design-category").value || "clothing";
+    const canvas = document.createElement("canvas");
+    canvas.width = state.width; canvas.height = state.height;
+    const layer = {
+      id: crypto.randomUUID(),
+      name: options.name || ("Diseño nuevo — " + (categories[category] || categories.other)),
+      path: "", dataUrl: "", category, editableDrawing: true, drawBuffer: canvas,
+      x: state.width / 2, y: state.height / 2, width: state.width, height: state.height,
+      rotation: 0, opacity: 1, visible: true, flipX: false, flipY: false
+    };
+    syncDrawingLayer(layer); state.layers.push(layer); state.selectedLayerId = layer.id;
+    renderLayers(); renderInspector(); drawStage();
+    return layer;
+  }
+  function getOrCreateDrawingLayer() {
+    const selected = selectedLayer();
+    if (isDrawingLayer(selected)) return selected;
+    const layer = createDrawingLayer();
+    setNotice("Creé una capa de diseño transparente para no modificar la imagen de referencia.");
+    return layer;
+  }
+  function setDesignTool(tool) {
+    state.designTool = tool;
+    document.querySelectorAll("[data-tool]").forEach(button => button.classList.toggle("active",button.dataset.tool===tool));
+    stage.style.cursor = tool === "move" ? "grab" : tool === "bucket" ? "copy" : "crosshair";
+    if (tool !== "move" && !isDrawingLayer(selectedLayer())) getOrCreateDrawingLayer();
+    const labels = { move:"Modo mover.", pen:"Pincel: dibuja en la capa transparente.", eraser:"Borrador: solo elimina pintura de la capa de diseño.", line:"Línea: arrastra para trazarla.", rect:"Rectángulo: arrastra para dibujar.", ellipse:"Elipse: arrastra para dibujar.", bucket:"Relleno: haz clic dentro de una zona cerrada o de color uniforme." };
+    setNotice(labels[tool] || "Herramienta seleccionada.");
+  }
+  function createGarmentTemplate(kind) {
+    const layer = createDrawingLayer({category:"clothing",name:"Prenda — "+({shirt:"Camiseta",jacket:"Chaqueta",skirt:"Falda",pants:"Pantalones",cape:"Capa / manto"}[kind]||"Diseño original")});
+    const c=layer.drawBuffer.getContext("2d"), sx=state.width/768, sy=state.height/1024, colour=$("design-color").value||"#d7a9e8";
+    c.save(); c.scale(sx,sy); c.fillStyle=colour; c.strokeStyle="#303541"; c.lineWidth=7; c.lineJoin="round"; c.lineCap="round"; c.beginPath();
+    if(kind==="shirt"){
+      c.moveTo(300,185);c.lineTo(245,207);c.lineTo(155,295);c.lineTo(220,365);c.lineTo(270,320);c.lineTo(270,545);c.lineTo(498,545);c.lineTo(498,320);c.lineTo(548,365);c.lineTo(613,295);c.lineTo(523,207);c.lineTo(468,185);c.quadraticCurveTo(384,255,300,185);c.closePath();
+    }else if(kind==="jacket"){
+      c.moveTo(300,178);c.lineTo(245,205);c.lineTo(150,298);c.lineTo(218,370);c.lineTo(268,318);c.lineTo(260,615);c.lineTo(508,615);c.lineTo(500,318);c.lineTo(550,370);c.lineTo(618,298);c.lineTo(523,205);c.lineTo(468,178);c.lineTo(414,220);c.lineTo(354,220);c.closePath();
+    }else if(kind==="skirt"){
+      c.moveTo(320,260);c.quadraticCurveTo(384,280,448,260);c.lineTo(540,570);c.quadraticCurveTo(384,610,228,570);c.closePath();
+    }else if(kind==="pants"){
+      c.moveTo(292,235);c.quadraticCurveTo(384,265,476,235);c.lineTo(458,425);c.lineTo(446,680);c.lineTo(386,680);c.lineTo(365,430);c.lineTo(344,680);c.lineTo(282,680);c.lineTo(310,425);c.closePath();
+    }else if(kind==="cape"){
+      c.moveTo(316,190);c.quadraticCurveTo(384,220,452,190);c.lineTo(500,242);c.lineTo(584,650);c.quadraticCurveTo(384,735,184,650);c.lineTo(268,242);c.closePath();
+    }
+    c.fill();c.stroke();c.strokeStyle="#454a56";c.lineWidth=4;
+    if(kind==="shirt"){c.beginPath();c.moveTo(270,500);c.lineTo(498,500);c.moveTo(320,208);c.quadraticCurveTo(384,244,448,208);c.stroke();}
+    else if(kind==="jacket"){c.beginPath();c.moveTo(384,221);c.lineTo(384,610);c.moveTo(268,318);c.lineTo(316,352);c.moveTo(500,318);c.lineTo(452,352);c.stroke();for(let y=300;y<=540;y+=60){c.beginPath();c.arc(399,y,4,0,Math.PI*2);c.fillStyle="#303541";c.fill();}}
+    else if(kind==="skirt"){c.beginPath();c.moveTo(320,286);c.lineTo(448,286);c.moveTo(325,312);c.lineTo(273,550);c.moveTo(443,312);c.lineTo(495,550);c.stroke();}
+    else if(kind==="pants"){c.beginPath();c.moveTo(310,275);c.lineTo(458,275);c.moveTo(384,275);c.lineTo(386,420);c.moveTo(294,646);c.lineTo(346,646);c.moveTo(390,646);c.lineTo(442,646);c.stroke();}
+    else if(kind==="cape"){c.beginPath();c.moveTo(316,190);c.lineTo(340,246);c.lineTo(384,275);c.lineTo(428,246);c.lineTo(452,190);c.stroke();c.beginPath();c.arc(384,250,13,0,Math.PI*2);c.fillStyle="#e7c56a";c.fill();c.stroke();}
+    c.restore();syncDrawingLayer(layer);renderLayers();renderInspector();drawStage();setDesignTool("pen");
+    setNotice("Plantilla de prenda creada. Puedes usar Pincel, Borrador, Línea, Formas o Relleno para personalizarla.");
+  }
+  function mapStagePointToLayer(layer,point){
+    const dx=point.x-layer.x,dy=point.y-layer.y,radians=-layer.rotation*Math.PI/180;
+    let rx=dx*Math.cos(radians)-dy*Math.sin(radians),ry=dx*Math.sin(radians)+dy*Math.cos(radians);
+    if(layer.flipX)rx=-rx;if(layer.flipY)ry=-ry;
+    return{x:Math.max(0,Math.min(layer.drawBuffer.width,(rx/layer.width+.5)*layer.drawBuffer.width)),y:Math.max(0,Math.min(layer.drawBuffer.height,(ry/layer.height+.5)*layer.drawBuffer.height))};
+  }
+  function traceStroke(context,stroke,mapped=false,layer=null,preview=false){
+    const points=mapped&&layer?stroke.points.map(point=>mapStagePointToLayer(layer,point)):stroke.points;if(!points.length)return;
+    context.save();context.globalCompositeOperation=!preview&&stroke.tool==="eraser"?"destination-out":"source-over";
+    context.strokeStyle=preview&&stroke.tool==="eraser"?"#ff6d7e":stroke.color;context.fillStyle=stroke.color;
+    context.lineWidth=Math.max(1,stroke.size*(mapped&&layer?(layer.drawBuffer.width/layer.width+layer.drawBuffer.height/layer.height)/2:1));context.lineCap="round";context.lineJoin="round";
+    if(stroke.tool==="pen"||stroke.tool==="eraser"){
+      context.beginPath();context.moveTo(points[0].x,points[0].y);for(let i=1;i<points.length;i++)context.lineTo(points[i].x,points[i].y);
+      if(points.length===1){context.arc(points[0].x,points[0].y,Math.max(.5,context.lineWidth/2),0,Math.PI*2);context.fill();}else context.stroke();
+    }else if(stroke.tool==="line"){context.beginPath();context.moveTo(points[0].x,points[0].y);context.lineTo(points[points.length-1].x,points[points.length-1].y);context.stroke();}
+    else if(stroke.tool==="rect"){
+      const a=points[0],b=points[points.length-1],x=Math.min(a.x,b.x),y=Math.min(a.y,b.y),w=Math.abs(b.x-a.x),h=Math.abs(b.y-a.y);
+      if(stroke.fillShape)context.fillRect(x,y,w,h);context.strokeRect(x,y,w,h);
+    }else if(stroke.tool==="ellipse"){
+      const a=points[0],b=points[points.length-1],x=(a.x+b.x)/2,y=(a.y+b.y)/2,rx=Math.abs(b.x-a.x)/2,ry=Math.abs(b.y-a.y)/2;
+      if(rx>0&&ry>0){context.beginPath();context.ellipse(x,y,rx,ry,0,0,Math.PI*2);if(stroke.fillShape)context.fill();context.stroke();}
+    }
+    context.restore();
+  }
+  function floodFill(layer,x,y,colour){
+    if(!isDrawingLayer(layer))return;
+    const canvas=layer.drawBuffer,width=canvas.width,height=canvas.height,total=width*height;
+    if(total>4200000){setNotice("El relleno se limita para proteger la memoria. Reduce el tamaño del lienzo.",true);return;}
+    x=Math.floor(x);y=Math.floor(y);if(x<0||y<0||x>=width||y>=height)return;
+    const context=canvas.getContext("2d",{willReadFrequently:true}),image=context.getImageData(0,0,width,height),data=image.data,start=(y*width+x)*4;
+    const target=[data[start],data[start+1],data[start+2],data[start+3]];
+    if(target[3]<12){setNotice("El relleno no funciona sobre la transparencia vacía; haz clic dentro de una forma cerrada.",true);return;}
+    const rgb=[parseInt(colour.slice(1,3),16),parseInt(colour.slice(3,5),16),parseInt(colour.slice(5,7),16)];
+    if(Math.abs(target[0]-rgb[0])+Math.abs(target[1]-rgb[1])+Math.abs(target[2]-rgb[2])<8)return;
+    const seen=new Uint8Array(total),queue=new Int32Array(total),tolerance=68;let head=0,tail=0;
+    const add=index=>{if(index<0||index>=total||seen[index])return;const p=index*4;if(data[p+3]<12)return;if(Math.abs(data[p]-target[0])+Math.abs(data[p+1]-target[1])+Math.abs(data[p+2]-target[2])>tolerance)return;seen[index]=1;queue[tail++]=index;};
+    add(y*width+x);
+    while(head<tail){const index=queue[head++],p=index*4;data[p]=rgb[0];data[p+1]=rgb[1];data[p+2]=rgb[2];const px=index%width,py=Math.floor(index/width);if(px>0)add(index-1);if(px<width-1)add(index+1);if(py>0)add(index-width);if(py<height-1)add(index+width);}
+    context.putImageData(image,0,0);syncDrawingLayer(layer);renderLayers();drawStage();setNotice("Relleno aplicado a "+tail.toLocaleString("es-AR")+" píxeles de la capa actual.");
+  }
+
   async function addAssetLayer(asset) {
     try {
       const image = await imageFor(assetUrl(asset.path));
@@ -192,24 +298,38 @@
     return null;
   }
   let drag = null;
-  stage.addEventListener("pointerdown", event => {
-    const rect = stage.getBoundingClientRect();
-    const x = (event.clientX - rect.left) * stage.width / rect.width, y = (event.clientY - rect.top) * stage.height / rect.height;
-    const hit = findLayerAt(x, y); if (!hit) return;
-    state.selectedLayerId = hit.id; drag = { x, y, layerX: hit.x, layerY: hit.y, id: hit.id };
-    stage.setPointerCapture(event.pointerId); renderLayers(); renderInspector(); drawStage();
+  stage.addEventListener("pointerdown",async event=>{
+    const rect=stage.getBoundingClientRect(),point={x:(event.clientX-rect.left)*stage.width/rect.width,y:(event.clientY-rect.top)*stage.height/rect.height};
+    if(state.designTool!=="move"){
+      const layer=getOrCreateDrawingLayer();stage.setPointerCapture(event.pointerId);await drawStage(false);
+      if(state.designTool==="bucket"){const mapped=mapStagePointToLayer(layer,point);floodFill(layer,mapped.x,mapped.y,$("design-color").value);return;}
+      state.drawStroke={layerId:layer.id,tool:state.designTool,start:point,points:[point],color:$("design-color").value,size:Number($("design-brush-size").value),fillShape:$("design-fill-shapes").checked,baseImage:ctx.getImageData(0,0,stage.width,stage.height)};
+      traceStroke(ctx,state.drawStroke,false,null,true);return;
+    }
+    const hit=findLayerAt(point.x,point.y);if(!hit)return;
+    state.selectedLayerId=hit.id;drag={x:point.x,y:point.y,layerX:hit.x,layerY:hit.y,id:hit.id};
+    stage.setPointerCapture(event.pointerId);renderLayers();renderInspector();drawStage();
   });
-  stage.addEventListener("pointermove", event => {
-    const rect = stage.getBoundingClientRect();
-    const x = (event.clientX - rect.left) * stage.width / rect.width, y = (event.clientY - rect.top) * stage.height / rect.height;
-    $("canvas-coordinates").textContent = Math.round(x) + " , " + Math.round(y) + " px · " + state.width + " × " + state.height;
-    if (!drag) return;
-    const layer = state.layers.find(item => item.id === drag.id); if (!layer) return;
-    layer.x = drag.layerX + x - drag.x; layer.y = drag.layerY + y - drag.y;
-    $("layer-x").value = Math.round(layer.x); $("layer-y").value = Math.round(layer.y); drawStage();
+  stage.addEventListener("pointermove",event=>{
+    const rect=stage.getBoundingClientRect(),point={x:(event.clientX-rect.left)*stage.width/rect.width,y:(event.clientY-rect.top)*stage.height/rect.height};
+    $("canvas-coordinates").textContent=Math.round(point.x)+" , "+Math.round(point.y)+" px · "+state.width+" × "+state.height;
+    if(state.drawStroke){const stroke=state.drawStroke;if(stroke.tool==="pen"||stroke.tool==="eraser")stroke.points.push(point);else stroke.points=[stroke.start,point];ctx.putImageData(stroke.baseImage,0,0);traceStroke(ctx,stroke,false,null,true);return;}
+    if(!drag)return;const layer=state.layers.find(item=>item.id===drag.id);if(!layer)return;
+    layer.x=drag.layerX+point.x-drag.x;layer.y=drag.layerY+point.y-drag.y;$("layer-x").value=Math.round(layer.x);$("layer-y").value=Math.round(layer.y);drawStage();
   });
-  stage.addEventListener("pointerup", () => { drag = null; });
-  stage.addEventListener("pointercancel", () => { drag = null; });
+  async function finishStagePointer(){
+    if(state.drawStroke){const stroke=state.drawStroke;state.drawStroke=null;const layer=state.layers.find(item=>item.id===stroke.layerId);
+      if(!isDrawingLayer(layer)){await drawStage();return;}
+      traceStroke(layer.drawBuffer.getContext("2d"),stroke,true,layer,false);syncDrawingLayer(layer);renderLayers();renderInspector();await drawStage(true);
+      setNotice((stroke.tool==="eraser"?"Borrado":"Trazo")+" aplicado a la capa editable «"+layer.name+"».");
+    }
+    drag=null;
+  }
+  stage.addEventListener("pointerup",finishStagePointer);stage.addEventListener("pointercancel",finishStagePointer);
+  $("design-tools").querySelectorAll("[data-tool]").forEach(button=>button.addEventListener("click",()=>setDesignTool(button.dataset.tool)));
+  $("design-brush-size").addEventListener("input",event=>$("brush-size-label").textContent=event.target.value+" px");
+  $("new-design-layer").addEventListener("click",()=>createDrawingLayer());
+  $("create-garment").addEventListener("click",()=>createGarmentTemplate($("garment-template").value));
 
   $("asset-search").addEventListener("input", event => { state.query = event.target.value; state.offset = 0; refreshAssets(); });
   $("previous-page").addEventListener("click", () => { state.offset = Math.max(0, state.offset - state.pageSize); refreshAssets(); });
@@ -394,7 +514,11 @@
     return {
       format: "IMAGE-CharacterProject", version: 1,
       canvas: { width: state.width, height: state.height, background: "transparent" },
-      layers: state.layers.map(layer => ({ ...layer })),
+      layers: state.layers.map(layer => ({
+        ...layer,
+        dataUrl: isDrawingLayer(layer) ? layer.drawBuffer.toDataURL("image/png") : layer.dataUrl,
+        drawBuffer: undefined
+      })),
       note: "Layers with path refer to the original local asset folder. Cropped dataUrl layers are embedded. Source images are not modified."
     };
   }
@@ -418,11 +542,19 @@
         path: layer.path, dataUrl: layer.dataUrl || "", category,
         x: Math.max(-width * 4, Math.min(width * 5, Number(layer.x))), y: Math.max(-height * 4, Math.min(height * 5, Number(layer.y))),
         width: Number(layer.width), height: Number(layer.height), rotation: Math.max(-360, Math.min(360, Number(layer.rotation))),
-        opacity: Math.max(0, Math.min(1, Number(layer.opacity))), visible: layer.visible !== false, flipX: Boolean(layer.flipX), flipY: Boolean(layer.flipY)
+        opacity: Math.max(0, Math.min(1, Number(layer.opacity))), visible: layer.visible !== false, flipX: Boolean(layer.flipX), flipY: Boolean(layer.flipY),
+        editableDrawing: Boolean(layer.editableDrawing), drawBuffer: null
       };
     });
     if (layers.some(layer => !layer.path && !layer.dataUrl)) throw new Error("Hay una pieza sin archivo de origen ni datos incrustados.");
     return { width, height, layers };
+  }
+  async function hydrateDrawingLayers() {
+    for (const layer of state.layers) {
+      if (!layer.editableDrawing || !layer.dataUrl) continue;
+      try { const image=await imageFor(layer.dataUrl); const buffer=document.createElement("canvas");buffer.width=image.naturalWidth;buffer.height=image.naturalHeight;buffer.getContext("2d").drawImage(image,0,0);layer.drawBuffer=buffer; }
+      catch { setNotice("No se pudo recuperar una capa de dibujo del proyecto.",true); }
+    }
   }
   $("load-project-button").addEventListener("click", () => $("load-project").click());
   $("load-project").addEventListener("change", async event => {
@@ -433,6 +565,7 @@
       state.width = loaded.width; state.height = loaded.height; state.layers = loaded.layers;
       state.selectedLayerId = state.layers.length ? state.layers[state.layers.length - 1].id : null;
       $("doc-width").value = state.width; $("doc-height").value = state.height;
+      await hydrateDrawingLayers();
       updateCanvasSize(); renderLayers(); renderInspector(); drawStage();
       setNotice("Proyecto cargado. Si alguna capa enlazada no aparece, selecciona la carpeta original al iniciar el editor.");
     } catch (error) { setNotice(error.message, true); }
@@ -449,9 +582,11 @@
   });
   $("new-project").addEventListener("click", () => {
     if (state.layers.length && !window.confirm("¿Empezar un proyecto nuevo? Guarda primero el proyecto actual si quieres conservarlo.")) return;
-    state.layers = []; state.selectedLayerId = null; state.width = 768; state.height = 1024;
-    $("doc-width").value = 768; $("doc-height").value = 1024; updateCanvasSize(); renderLayers(); renderInspector();
-    setNotice("Proyecto nuevo. Elige piezas de la biblioteca para componer un personaje.");
+    state.layers = []; state.selectedLayerId = null; state.width = 768; state.height = 1024; state.designTool = "move";
+    $("doc-width").value = 768; $("doc-height").value = 1024;
+    document.querySelectorAll("[data-tool]").forEach(button=>button.classList.toggle("active",button.dataset.tool==="move"));
+    updateCanvasSize(); renderLayers(); renderInspector();
+    setNotice("Proyecto nuevo. Puedes añadir referencias, crear prendas desde plantillas o dibujar una pieza desde cero.");
   });
   updateCanvasSize(); renderLayers(); renderInspector(); refreshAssets();
 })();

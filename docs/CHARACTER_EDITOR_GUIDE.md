@@ -39,3 +39,12 @@ Los originales son de solo lectura. Las piezas recortadas quedan incrustadas den
 ## Siguiente etapa
 
 Mejorar la preparación de piezas: guardado de piezas con etiquetas y puntos de anclaje (cabeza, cuello, hombros, codos, muñecas, cadera, rodillas y tobillos). Eso permitirá que las piezas se ensamblen con menos ajustes. La clasificación no debe alterar ni sobrescribir los originales.
+
+
+## Herramientas de diseño original
+
+- Capa de dibujo transparente separada de las referencias.
+- Pincel, borrador que solo afecta a la capa dibujable, línea, rectángulo, elipse con relleno opcional y cubo de pintura para regiones de color similares.
+- Plantillas editables para camiseta, chaqueta, falda, pantalones y capa/manto. Se pueden colorear con relleno y personalizar con costuras, mangas, cintas y adornos.
+- Las capas dibujables se guardan dentro del proyecto JSON; no se escribe en las imágenes originales.
+- El lienzo es raster 2D: estas funciones permiten dibujar y personalizar prendas y rasgos sencillos, pero no simulan un patrón de costura profesional ni inventan anatomía o detalles ocultos automáticamente.

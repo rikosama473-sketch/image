@@ -20,3 +20,19 @@
 @media(max-width:700px){.topbar{align-items:start;flex-wrap:wrap}.local-pill{display:none}.toolbar{width:100%}.toolbar .button{flex:1}.layout{display:flex;flex-direction:column}.library-panel{min-height:520px}.stage-wrap{min-height:400px}#stage{max-height:62vh}.inspector{display:flex}.crop-controls{grid-template-columns:1fr}}
 
 .mask-tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 0;color:var(--muted);font-size:11px}.mask-tools label{display:flex;align-items:center;gap:5px}.mask-tools .brush-size{min-width:120px}.mask-tools input[type=range]{width:100px}.mask-tools button{padding:7px 9px}
+
+.design-panel{border:1px solid var(--line);border-radius:10px;background:#101720;padding:12px;margin-bottom:12px;display:grid;gap:10px}
+.design-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.design-panel-head strong{display:block;font-size:13px;margin-top:4px}
+.design-panel-head .field{min-width:150px}.design-panel-head select{min-width:150px}
+.tool-row{display:flex;gap:6px;flex-wrap:wrap}
+.tool-button{background:#202938;border:1px solid #354256;color:var(--text);border-radius:8px;padding:8px 10px;font-size:11px}
+.tool-button.active{color:var(--accent-ink);background:var(--accent);border-color:var(--accent);font-weight:800}
+.design-options{display:flex;align-items:end;gap:12px;flex-wrap:wrap}
+.design-options .field{margin:0;min-width:90px}.design-options .color-field{width:76px}
+.design-options input[type=color]{width:64px;height:34px;padding:3px;border:1px solid var(--line);border-radius:7px;background:#0e131b}
+.design-options .brush-field{width:150px}.design-options .brush-field input{width:100%}
+.design-options .check-label{max-width:220px}
+.garment-row{border-top:1px solid var(--line);padding-top:10px;display:flex;align-items:end;gap:10px;flex-wrap:wrap}
+.garment-row .field{min-width:155px}.garment-row .muted{flex:1;min-width:160px}
+@media(max-width:700px){.design-options{align-items:stretch}.design-options .brush-field{width:100%}.garment-row{align-items:stretch}.garment-row .button{width:100%}}

@@ -33,7 +33,30 @@
       <div class="canvas-toolbar"><div><span class="eyebrow">02 / LIENZO</span><h2>Composición</h2></div>
         <div class="canvas-size"><label>Ancho <input id="doc-width" type="number" min="128" max="2048" step="8" value="768"></label><label>Alto <input id="doc-height" type="number" min="128" max="2048" step="8" value="1024"></label><button id="apply-size" class="button secondary">Aplicar</button></div>
       </div>
-      <div class="stage-wrap"><canvas id="stage" width="768" height="1024" aria-label="Lienzo de composición; arrastra una capa para moverla"></canvas></div>
+      <section class="design-panel" aria-label="Herramientas de diseño">
+        <div class="design-panel-head"><div><span class="eyebrow">DISEÑO ORIGINAL</span><strong>Crea ropa y detalles nuevos</strong></div><label class="field">Tipo de pieza <select id="design-category"><option value="clothing">Ropa</option><option value="hair">Cabello</option><option value="head">Cabeza / rostro</option><option value="eyes">Ojos / expresión</option><option value="arms">Brazos / manos</option><option value="legs">Piernas / pies</option><option value="shoes">Calzado</option><option value="accessory">Accesorio</option><option value="other">Otro</option></select></label></div>
+        <div class="tool-row" id="design-tools">
+          <button class="tool-button active" type="button" data-tool="move" title="Mover capas">↖ Mover</button>
+          <button class="tool-button" type="button" data-tool="pen" title="Dibujar a mano alzada">✎ Pincel</button>
+          <button class="tool-button" type="button" data-tool="eraser" title="Borrar solo en la capa de diseño">⌫ Borrador</button>
+          <button class="tool-button" type="button" data-tool="line" title="Dibujar una línea">╱ Línea</button>
+          <button class="tool-button" type="button" data-tool="rect" title="Dibujar un rectángulo">□ Rectángulo</button>
+          <button class="tool-button" type="button" data-tool="ellipse" title="Dibujar una elipse">◯ Elipse</button>
+          <button class="tool-button" type="button" data-tool="bucket" title="Rellenar una zona de color similar">▨ Relleno</button>
+        </div>
+        <div class="design-options">
+          <label class="field color-field">Color <input id="design-color" type="color" value="#d7a9e8"></label>
+          <label class="field brush-field">Grosor <span id="brush-size-label">8 px</span><input id="design-brush-size" type="range" min="1" max="80" value="8"></label>
+          <label class="check-label"><input id="design-fill-shapes" type="checkbox" checked> Rellenar rectángulos y elipses</label>
+          <button id="new-design-layer" class="button secondary" type="button">+ Capa transparente</button>
+        </div>
+        <div class="garment-row">
+          <label class="field">Plantilla de prenda <select id="garment-template"><option value="shirt">Camiseta</option><option value="jacket">Chaqueta</option><option value="skirt">Falda</option><option value="pants">Pantalones</option><option value="cape">Capa / manto</option></select></label>
+          <button id="create-garment" class="button primary" type="button">Crear prenda editable</button>
+          <span class="muted small">La prenda nace como una nueva capa: rellena su color, dibuja costuras, mangas, cintas y adornos encima.</span>
+        </div>
+      </section>
+      <div class="stage-wrap"><canvas id="stage" width="768" height="1024" aria-label="Lienzo de composición; dibuja con las herramientas o arrastra una capa para moverla"></canvas></div>
       <div class="stage-foot"><span id="stage-message" class="muted small">El lienzo exporta con fondo transparente.</span><span id="canvas-coordinates" class="muted small">768 × 1024 px</span></div>
       <div id="notice" class="notice" role="status" aria-live="polite">Elige una imagen de la biblioteca para empezar. Arrastra las capas en el lienzo para colocarlas.</div>
     </section>
