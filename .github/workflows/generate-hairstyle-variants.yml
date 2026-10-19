@@ -17,6 +17,23 @@ on:
           - sunna
           - personaje-4
           - personaje-5
+      mode:
+        description: "Preview crop first without API cost, or generate six variants"
+        required: true
+        type: choice
+        default: preview
+        options:
+          - preview
+          - generate
+      head_crop_height_ratio:
+        description: "Vertical crop height relative to source image width"
+        required: true
+        type: choice
+        default: "0.70"
+        options:
+          - "0.60"
+          - "0.70"
+          - "0.80"
       style_pack:
         description: "Set of six hairstyle variations"
         required: true
@@ -51,12 +68,14 @@ jobs:
       - name: Validate configuration and install image tools
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GENERATION_MODE: ${{ inputs.mode }}
           REFERENCE_IMAGE: ${{ inputs.reference_image }}
           CHARACTER_ID: ${{ inputs.character_id }}
+          HEAD_CROP_HEIGHT_RATIO: ${{ inputs.head_crop_height_ratio }}
           STYLE_PACK: ${{ inputs.style_pack }}
         run: |
           set -euo pipefail
-          if [ -z "$OPENAI_API_KEY" ]; then
+          if [ "$GENERATION_MODE" = "generate" ] && [ -z "$OPENAI_API_KEY" ]; then
             echo "::error::Missing repository Actions secret OPENAI_API_KEY. Add it in Settings > Secrets and variables > Actions."
             exit 1
           fi
@@ -77,12 +96,19 @@ jobs:
               raise SystemExit("Invalid character id.")
           if os.environ["STYLE_PACK"] not in {"core-6", "short-cuts", "updos", "bangs", "waves-braids"}:
               raise SystemExit("Invalid style pack.")
+          ratio = float(os.environ["HEAD_CROP_HEIGHT_RATIO"])
+          if not 0.55 <= ratio <= 0.90:
+              raise SystemExit("Crop ratio must be between 0.55 and 0.90.")
+          if os.environ["GENERATION_MODE"] not in {"preview", "generate"}:
+              raise SystemExit("Mode must be preview or generate.")
           print(f"Validated source path: {source}")
           PY
 
-      - name: Generate variants, preserve prompts, make contact sheet
+      - name: Prepare reference crop or generate hairstyle variants
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GENERATION_MODE: ${{ inputs.mode }}
+          HEAD_CROP_HEIGHT_RATIO: ${{ inputs.head_crop_height_ratio }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_SHA: ${{ github.sha }}
           GITHUB_RUN_ID: ${{ github.run_id }}
@@ -102,7 +128,7 @@ jobs:
           retention-days: 14
 
       - name: Create a reviewable branch and pull request containing the images
-        if: success()
+        if: success() && inputs.mode == 'generate'
         env:
           GH_TOKEN: ${{ github.token }}
           CHARACTER_ID: ${{ inputs.character_id }}
