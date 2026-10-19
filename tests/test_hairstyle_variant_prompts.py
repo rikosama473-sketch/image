@@ -11,11 +11,19 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class HairstyleVariantPromptTests(unittest.TestCase):
-    def test_every_style_pack_contains_six_distinct_variants(self):
+    def test_each_style_pack_has_its_declared_number_of_distinct_variants(self):
+        expected_counts = {"core-5": 5, "core-6": 6, "short-cuts": 6, "updos": 6, "bangs": 6, "waves-braids": 6}
+        self.assertEqual(set(STYLE_PACKS), set(expected_counts))
         for pack_name, variants in STYLE_PACKS.items():
             with self.subTest(pack=pack_name):
-                self.assertEqual(len(variants), 6)
-                self.assertEqual(len({slug for slug, _ in variants}), 6)
+                self.assertEqual(len(variants), expected_counts[pack_name])
+                self.assertEqual(len({slug for slug, _ in variants}), expected_counts[pack_name])
+
+    def test_core_five_pack_has_five_clear_distinct_hairstyles(self):
+        self.assertEqual(
+            [slug for slug, _ in STYLE_PACKS["core-5"]],
+            ["blunt-bob", "long-straight", "high-ponytail", "twin-tails", "side-braid"],
+        )
 
     def test_prompts_prioritize_hair_and_preserve_identity(self):
         prompt = BASE_INSTRUCTIONS.lower()
