@@ -110,8 +110,7 @@ def prepare_head_reference(source_path, target_path):
     width, height = image.size
     left = int(round(width * 0.02))
     right = int(round(width * 0.98))
-    bottom = max(256, min(int(round(width * 0.40)), int(round(height * 0.28))))
-    bottom = min(height, bottom)
+    bottom = min(int(round(width * 0.40)), int(round(height * 0.28)))
     if right - left < 256 or bottom < 200:
         fail("Could not prepare a useful head crop; choose a larger upright image.")
     crop_box = [left, 0, right, bottom]
