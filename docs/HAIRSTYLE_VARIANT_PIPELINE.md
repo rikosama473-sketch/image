@@ -6,7 +6,7 @@ Partir de una imagen del propio repositorio y generar seis variantes donde el pe
 
 **El editor no recibe la imagen original completa.** El runner de GitHub recorta una franja superior de la imagen y la coloca en un lienzo neutro cuadrado; la referencia recortada se guarda como reference-head-crop.png para poder revisarla. El recorte funciona mejor con ilustraciones verticales de un solo personaje, de frente o casi de frente, con la cabeza cerca del borde superior. Si el recorte no conserva toda la cara o incluye partes no deseadas, elige otra imagen antes de generar.
 
-El flujo usa la API de edición de imágenes de OpenAI (modelo gpt-image-2.5-sunburst) y envía al servicio únicamente la referencia recortada como data URL. La imagen original no se adjunta al chat ni se envía completa al editor; la región recortada sí se procesa mediante la API para crear las variantes.
+El flujo primero intenta recuperar el prompt original de los metadatos con el extractor ya existente en IMAGE. Después usa GPT-6 Luna para inferir un prompt estable a partir del recorte (rostro, ojos, accesorios, color de pelo y patrón de arte, excluyendo largo y forma del peinado). Esa descripción es una reconstrucción visual, **no** el prompt original, y se guarda como candidata pendiente de revisión. Luego usa la API de edición de imágenes GPT-Image-2.5 Sunburst para crear las variantes. Ambas llamadas reciben únicamente la referencia recortada como data URL; la imagen original completa no se envía a esos endpoints.
 
 ## Requisitos previos, una sola vez
 
@@ -22,10 +22,10 @@ Dentro de generated/hairstyles/<personaje>/run-<id>/:
 - reference-head-crop.png: recorte que realmente se envía al editor, sobre un lienzo blanco 1024×1024;
 - seis imágenes WebP individuales;
 - contact-sheet.jpg con las seis variantes;
-- PROMPTS.md con el prompt exacto de cada generación y, solo si existe, el prompt recuperado de los metadatos de la referencia;
+- PROMPTS.md con el prompt exacto de cada generación, el prompt original recuperado si existe y un prompt visual estable inferido (claramente etiquetado como reconstrucción);
 - manifest.json con ruta, commit y SHA-256 de la imagen original y del recorte, coordenadas del recorte, dimensiones, modelo y prompts.
 
-No se infiere la LoRA o el prompt de origen por el nombre de archivo. Si los metadatos no contienen un prompt, el documento dice que no se encontró en lugar de inventarlo.
+No se infiere la LoRA o el prompt de origen por el nombre de archivo. Si los metadatos no contienen un prompt original, el documento lo marca como no encontrado; la reconstrucción visual se guarda aparte como candidata revisable, nunca se presenta como prompt original. Cada ejecución agrega una referencia única al historial del personaje en data/character-prompt-registry.json, dejando canonical_prompt vacío hasta que se revise.
 
 ## Cómo se prepara la referencia
 
@@ -43,7 +43,7 @@ El script aplica orientación EXIF, toma el 96% central del ancho y recorta desd
 
 Los prompts insisten en conservar rostro, ojos, gafas, expresión, color de pelo, accesorios y estilo de dibujo. Aun así, un editor generativo puede cambiar algo fuera del pelo. **No se debe considerar una variante válida solo porque sea bonita:** rechazar las que alteren la identidad. Una mejora posterior sería aplicar una máscara específica del pelo y comparar píxeles fuera de esa región.
 
-Cada ejecución solicita seis imágenes a la API y puede generar costes. Empieza con una referencia y un solo paquete; no lances cientos de generaciones en lote.
+Cada ejecución solicita una interpretación visual y seis imágenes a las API, así que puede generar costes. Empieza con una referencia y un solo paquete; no lances cientos de generaciones en lote.
 
 ## Separación de personajes y prompts
 
