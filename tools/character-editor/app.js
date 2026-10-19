@@ -165,30 +165,365 @@
     const labels = { move:"Modo mover.", pen:"Pincel: dibuja en la capa transparente.", eraser:"Borrador: solo elimina pintura de la capa de diseño.", line:"Línea: arrastra para trazarla.", rect:"Rectángulo: arrastra para dibujar.", ellipse:"Elipse: arrastra para dibujar.", bucket:"Relleno: haz clic dentro de una zona cerrada o de color uniforme." };
     setNotice(labels[tool] || "Herramienta seleccionada.");
   }
-  function createGarmentTemplate(kind) {
-    const layer = createDrawingLayer({category:"clothing",name:"Prenda — "+({shirt:"Camiseta",jacket:"Chaqueta",skirt:"Falda",pants:"Pantalones",cape:"Capa / manto"}[kind]||"Diseño original")});
-    const c=layer.drawBuffer.getContext("2d"), sx=state.width/768, sy=state.height/1024, colour=$("design-color").value||"#d7a9e8";
-    c.save(); c.scale(sx,sy); c.fillStyle=colour; c.strokeStyle="#303541"; c.lineWidth=7; c.lineJoin="round"; c.lineCap="round"; c.beginPath();
-    if(kind==="shirt"){
-      c.moveTo(300,185);c.lineTo(245,207);c.lineTo(155,295);c.lineTo(220,365);c.lineTo(270,320);c.lineTo(270,545);c.lineTo(498,545);c.lineTo(498,320);c.lineTo(548,365);c.lineTo(613,295);c.lineTo(523,207);c.lineTo(468,185);c.quadraticCurveTo(384,255,300,185);c.closePath();
-    }else if(kind==="jacket"){
-      c.moveTo(300,178);c.lineTo(245,205);c.lineTo(150,298);c.lineTo(218,370);c.lineTo(268,318);c.lineTo(260,615);c.lineTo(508,615);c.lineTo(500,318);c.lineTo(550,370);c.lineTo(618,298);c.lineTo(523,205);c.lineTo(468,178);c.lineTo(414,220);c.lineTo(354,220);c.closePath();
-    }else if(kind==="skirt"){
-      c.moveTo(320,260);c.quadraticCurveTo(384,280,448,260);c.lineTo(540,570);c.quadraticCurveTo(384,610,228,570);c.closePath();
-    }else if(kind==="pants"){
-      c.moveTo(292,235);c.quadraticCurveTo(384,265,476,235);c.lineTo(458,425);c.lineTo(446,680);c.lineTo(386,680);c.lineTo(365,430);c.lineTo(344,680);c.lineTo(282,680);c.lineTo(310,425);c.closePath();
-    }else if(kind==="cape"){
-      c.moveTo(316,190);c.quadraticCurveTo(384,220,452,190);c.lineTo(500,242);c.lineTo(584,650);c.quadraticCurveTo(384,735,184,650);c.lineTo(268,242);c.closePath();
+
+  const garmentCatalog = {
+    "shirt": {name:"Remera clásica",zone:"top",type:"top"},
+    "fitted-shirt": {name:"Remera ajustada",zone:"top",type:"top"},
+    "oversized-shirt": {name:"Remera oversize",zone:"top",type:"top"},
+    "crop-top": {name:"Top corto",zone:"top",type:"top"},
+    "tank-top": {name:"Musculosa",zone:"top",type:"top"},
+    "blouse": {name:"Blusa",zone:"top",type:"top"},
+    "button-shirt": {name:"Camisa con botones",zone:"top",type:"top"},
+    "sweater": {name:"Suéter",zone:"top",type:"top"},
+    "hoodie": {name:"Buzo con capucha",zone:"top",type:"top"},
+    "jacket": {name:"Campera cerrada",zone:"top",type:"top"},
+    "open-jacket": {name:"Campera abierta",zone:"top",type:"top"},
+    "blazer": {name:"Blazer",zone:"top",type:"top"},
+    "long-coat": {name:"Abrigo largo",zone:"top",type:"top"},
+    "vest": {name:"Chaleco",zone:"top",type:"top"},
+    "corset": {name:"Corsé",zone:"top",type:"top"},
+    "bikini-top": {name:"Top de bikini",zone:"top",type:"top"},
+    "bodysuit": {name:"Body",zone:"top",type:"top"},
+    "school-shirt": {name:"Camisa de uniforme",zone:"top",type:"top"},
+    "apron": {name:"Delantal",zone:"top",type:"top"},
+    "mini-skirt": {name:"Minifalda",zone:"bottom",type:"skirt"},
+    "pleated-skirt": {name:"Falda plisada",zone:"bottom",type:"skirt"},
+    "long-skirt": {name:"Falda larga",zone:"bottom",type:"skirt"},
+    "shorts": {name:"Shorts",zone:"bottom",type:"pants"},
+    "pants": {name:"Pantalón recto",zone:"bottom",type:"pants"},
+    "wide-pants": {name:"Pantalón ancho",zone:"bottom",type:"pants"},
+    "cargo-pants": {name:"Pantalón cargo",zone:"bottom",type:"pants"},
+    "overalls": {name:"Jardinero / overol",zone:"bottom",type:"pants"},
+    "short-dress": {name:"Vestido corto",zone:"full",type:"dress"},
+    "long-dress": {name:"Vestido largo",zone:"full",type:"dress"},
+    "princess-dress": {name:"Vestido princesa",zone:"full",type:"dress"},
+    "gothic-dress": {name:"Vestido gótico",zone:"full",type:"dress"},
+    "school-dress": {name:"Vestido de uniforme",zone:"full",type:"dress"},
+    "kimono": {name:"Kimono",zone:"full",type:"robe"},
+    "cape": {name:"Capa / manto",zone:"full",type:"cape"},
+    "fantasy-robe": {name:"Túnica fantástica",zone:"full",type:"robe"},
+    "armor-top": {name:"Armadura de torso",zone:"top",type:"armor"}
+  };
+  function createGarmentTemplate(kind, mode = "guide") {
+    const item = garmentCatalog[kind] || garmentCatalog.shirt;
+    const variant = Math.max(1, Math.min(8, Number($("garment-variant").value) || 1));
+    const isGuide = mode === "guide";
+    const unit = Math.min(1, state.width / 768, state.height / 1024);
+    const layer = createDrawingLayer({
+      category: "clothing",
+      name: (isGuide ? "Guía gris — " : "Prenda editable — ") + item.name + " · " + String(variant).padStart(2, "0")
+    });
+    const canvas = layer.drawBuffer;
+    canvas.width = Math.max(1, Math.round(500 * unit));
+    canvas.height = Math.max(1, Math.round(600 * unit));
+    layer.width = canvas.width;
+    layer.height = canvas.height;
+    layer.x = state.width / 2;
+    layer.y = state.height * (item.zone === "top" ? 0.34 : item.zone === "bottom" ? 0.63 : 0.49);
+
+    const c = canvas.getContext("2d");
+    const widthFactors = [1, 0.86, 1.17, 0.98, 1.06, 1.12, 0.92, 1.04];
+    const heightFactors = [1, 0.98, 1.05, 0.76, 1.16, 1.02, 0.91, 1.08];
+    const widthFactor = widthFactors[variant - 1];
+    const heightFactor = heightFactors[variant - 1];
+    const cx = 250;
+    const color = $("design-color").value || "#d7a9e8";
+    c.save();
+    c.scale(unit, unit);
+    c.translate(cx, 300);
+    c.scale(widthFactor, heightFactor);
+    c.translate(-cx, -300);
+    c.lineJoin = "round";
+    c.lineCap = "round";
+    c.strokeStyle = isGuide ? "#aeb7c5" : "#363d49";
+    c.fillStyle = isGuide ? "rgba(174,183,197,0.055)" : color;
+    c.lineWidth = isGuide ? 2.6 : 3;
+    c.setLineDash([]);
+
+    function paintShape(drawPath) {
+      c.beginPath();
+      drawPath();
+      c.closePath();
+      c.fill();
+      c.stroke();
     }
-    c.fill();c.stroke();c.strokeStyle="#454a56";c.lineWidth=4;
-    if(kind==="shirt"){c.beginPath();c.moveTo(270,500);c.lineTo(498,500);c.moveTo(320,208);c.quadraticCurveTo(384,244,448,208);c.stroke();}
-    else if(kind==="jacket"){c.beginPath();c.moveTo(384,221);c.lineTo(384,610);c.moveTo(268,318);c.lineTo(316,352);c.moveTo(500,318);c.lineTo(452,352);c.stroke();for(let y=300;y<=540;y+=60){c.beginPath();c.arc(399,y,4,0,Math.PI*2);c.fillStyle="#303541";c.fill();}}
-    else if(kind==="skirt"){c.beginPath();c.moveTo(320,286);c.lineTo(448,286);c.moveTo(325,312);c.lineTo(273,550);c.moveTo(443,312);c.lineTo(495,550);c.stroke();}
-    else if(kind==="pants"){c.beginPath();c.moveTo(310,275);c.lineTo(458,275);c.moveTo(384,275);c.lineTo(386,420);c.moveTo(294,646);c.lineTo(346,646);c.moveTo(390,646);c.lineTo(442,646);c.stroke();}
-    else if(kind==="cape"){c.beginPath();c.moveTo(316,190);c.lineTo(340,246);c.lineTo(384,275);c.lineTo(428,246);c.lineTo(452,190);c.stroke();c.beginPath();c.arc(384,250,13,0,Math.PI*2);c.fillStyle="#e7c56a";c.fill();c.stroke();}
-    c.restore();syncDrawingLayer(layer);renderLayers();renderInspector();drawStage();setDesignTool("pen");
-    setNotice("Plantilla de prenda creada. Puedes usar Pincel, Borrador, Línea, Formas o Relleno para personalizarla.");
+    function seam(drawPath, dashed = false) {
+      c.save();
+      c.beginPath();
+      drawPath();
+      c.lineWidth = isGuide ? 1.55 : 1.8;
+      c.strokeStyle = isGuide ? "#818b9b" : "#6a536f";
+      c.setLineDash(dashed ? [6, 7] : []);
+      c.stroke();
+      c.restore();
+    }
+    function detailDot(x, y, radius = 3) {
+      c.beginPath();
+      c.arc(x, y, radius, 0, Math.PI * 2);
+      if (isGuide) { c.strokeStyle = "#818b9b"; c.stroke(); }
+      else { c.fillStyle = "#e8d4a1"; c.fill(); }
+    }
+
+    if (item.type === "top") {
+      const fitted = kind === "fitted-shirt" || kind === "corset" || kind === "bodysuit";
+      const oversized = kind === "oversized-shirt" || variant === 3;
+      const sleeveless = ["tank-top", "vest", "corset", "bikini-top", "bodysuit"].includes(kind);
+      const longSleeves = ["sweater", "hoodie", "jacket", "open-jacket", "blazer", "long-coat", "button-shirt", "school-shirt"].includes(kind);
+      const sleeveEnd = longSleeves ? (variant === 6 ? 285 : 255) : (variant === 5 ? 215 : 177);
+      const shoulder = oversized ? 112 : 91;
+      const torso = oversized ? 106 : fitted ? 67 : 80;
+      const hem = kind === "crop-top" || variant === 4 ? 267 :
+        kind === "long-coat" ? 485 :
+        kind === "apron" ? 450 :
+        kind === "bodysuit" ? 425 :
+        (kind === "hoodie" || kind === "jacket" || kind === "open-jacket" || kind === "blazer") ? 405 :
+        kind === "corset" ? 355 : 365;
+      const sleeveOuter = kind === "blouse" ? 218 : 205;
+      paintShape(() => {
+        c.moveTo(cx - 25, 65);
+        c.quadraticCurveTo(cx - 55, 68, cx - shoulder, 92);
+        if (sleeveless) {
+          c.lineTo(cx - torso - 12, 126);
+          c.quadraticCurveTo(cx - torso, 145, cx - torso, 166);
+        } else {
+          c.lineTo(cx - shoulder - 8, 103);
+          c.lineTo(cx - sleeveOuter, sleeveEnd - 18);
+          c.lineTo(cx - sleeveOuter + (kind === "blouse" ? 48 : 38), sleeveEnd + 3);
+          c.lineTo(cx - shoulder + 10, 137);
+          c.lineTo(cx - torso, 154);
+        }
+        c.lineTo(cx - torso, hem - 18);
+        c.quadraticCurveTo(cx, hem + (variant === 8 ? -12 : 5), cx + torso, hem - 18);
+        c.lineTo(cx + torso, 154);
+        if (sleeveless) {
+          c.quadraticCurveTo(cx + torso, 145, cx + torso + 12, 126);
+          c.lineTo(cx + shoulder, 92);
+        } else {
+          c.lineTo(cx + shoulder - 10, 137);
+          c.lineTo(cx + sleeveOuter - (kind === "blouse" ? 48 : 38), sleeveEnd + 3);
+          c.lineTo(cx + sleeveOuter, sleeveEnd - 18);
+          c.lineTo(cx + shoulder + 8, 103);
+        }
+        c.quadraticCurveTo(cx + 55, 68, cx + 25, 65);
+        if (variant === 2 || kind === "corset") {
+          c.quadraticCurveTo(cx, 111, cx - 25, 65);
+        } else {
+          c.quadraticCurveTo(cx, variant === 6 ? 84 : 102, cx + 25, 65);
+        }
+      });
+
+      if (kind === "tank-top" || kind === "vest" || kind === "corset" || kind === "bodysuit") {
+        seam(() => { c.moveTo(cx - 38, 78); c.lineTo(cx - 41, 137); });
+        seam(() => { c.moveTo(cx + 38, 78); c.lineTo(cx + 41, 137); });
+      }
+      if (kind === "hoodie") {
+        seam(() => { c.moveTo(cx - 42, 77); c.quadraticCurveTo(cx, 35, cx + 42, 77); c.quadraticCurveTo(cx + 32, 120, cx, 120); c.quadraticCurveTo(cx - 32, 120, cx - 42, 77); });
+        seam(() => { c.moveTo(cx - 55, 286); c.lineTo(cx - 35, 332); c.lineTo(cx + 35, 332); c.lineTo(cx + 55, 286); });
+      }
+      if (kind === "jacket" || kind === "open-jacket" || kind === "blazer" || kind === "long-coat" || kind === "vest" || kind === "armor-top") {
+        seam(() => { c.moveTo(cx - 20, 95); c.lineTo(cx - 42, kind === "blazer" ? 190 : hem - 18); });
+        seam(() => { c.moveTo(cx + 20, 95); c.lineTo(cx + 42, kind === "blazer" ? 190 : hem - 18); });
+        if (kind === "blazer" || kind === "long-coat") {
+          seam(() => { c.moveTo(cx - 22, 105); c.lineTo(cx + 5, 165); c.lineTo(cx - 17, 214); });
+          seam(() => { c.moveTo(cx + 22, 105); c.lineTo(cx - 5, 165); c.lineTo(cx + 17, 214); });
+        }
+        if (kind === "open-jacket") seam(() => { c.moveTo(cx, 115); c.lineTo(cx, hem - 12); }, true);
+      }
+      if (kind === "button-shirt" || kind === "school-shirt" || kind === "jacket" || kind === "open-jacket" || kind === "long-coat") {
+        seam(() => { c.moveTo(cx, 106); c.lineTo(cx, hem - 12); });
+        for (let y = 165; y < hem - 35; y += 37) detailDot(cx + (kind === "open-jacket" ? 0 : 4), y, 2.5);
+      }
+      if (kind === "blouse") {
+        seam(() => { c.moveTo(cx - 125, 150); c.quadraticCurveTo(cx - 154, 180, cx - 135, 209); });
+        seam(() => { c.moveTo(cx + 125, 150); c.quadraticCurveTo(cx + 154, 180, cx + 135, 209); });
+      }
+      if (kind === "corset") {
+        for (let x = cx - 42; x <= cx + 42; x += 28) seam(() => { c.moveTo(x, 145); c.lineTo(x, 338); });
+        seam(() => { c.moveTo(cx - 66, 215); c.quadraticCurveTo(cx, 236, cx + 66, 215); });
+      }
+      if (kind === "bikini-top") {
+        seam(() => { c.moveTo(cx - 25, 95); c.lineTo(cx - 49, 63); c.moveTo(cx + 25, 95); c.lineTo(cx + 49, 63); });
+        seam(() => { c.moveTo(cx - 66, 155); c.quadraticCurveTo(cx, 171, cx + 66, 155); });
+      }
+      if (kind === "armor-top") {
+        seam(() => { c.moveTo(cx - 100, 115); c.lineTo(cx - 125, 145); c.lineTo(cx - 100, 180); c.moveTo(cx + 100, 115); c.lineTo(cx + 125, 145); c.lineTo(cx + 100, 180); });
+        seam(() => { c.moveTo(cx - 57, 180); c.lineTo(cx, 222); c.lineTo(cx + 57, 180); });
+        seam(() => { c.moveTo(cx - 35, 250); c.lineTo(cx, 278); c.lineTo(cx + 35, 250); });
+      }
+      if (kind === "apron") {
+        seam(() => { c.moveTo(cx - 48, 145); c.lineTo(cx - 68, 220); c.lineTo(cx - 74, 450); c.lineTo(cx + 74, 450); c.lineTo(cx + 68, 220); c.lineTo(cx + 48, 145); });
+        seam(() => { c.moveTo(cx - 74, 280); c.lineTo(cx + 74, 280); });
+      }
+      if (kind === "tracksuit-top") {
+        seam(() => { c.moveTo(cx - 55, 130); c.lineTo(cx - 55, hem - 16); c.moveTo(cx + 55, 130); c.lineTo(cx + 55, hem - 16); });
+        seam(() => { c.moveTo(cx - 25, 110); c.lineTo(cx + 25, 110); });
+      }
+      seam(() => { c.moveTo(cx - torso + 7, hem - 29); c.quadraticCurveTo(cx, hem - 8, cx + torso - 7, hem - 29); });
+      if (isGuide) {
+        seam(() => { c.moveTo(cx, 132); c.lineTo(cx, hem - 34); }, true);
+        seam(() => { c.moveTo(cx - 76, 190); c.lineTo(cx + 76, 190); }, true);
+      }
+    } else if (item.type === "skirt") {
+      const waist = 82, hem = kind === "mini-skirt" ? 270 : kind === "long-skirt" ? 520 : 430;
+      const flare = kind === "pleated-skirt" ? 150 : kind === "long-skirt" ? 175 : 125;
+      paintShape(() => {
+        c.moveTo(cx - 75, waist); c.quadraticCurveTo(cx, waist + 22, cx + 75, waist);
+        c.lineTo(cx + flare, hem - 16);
+        c.quadraticCurveTo(cx, hem + (variant === 8 ? -8 : 10), cx - flare, hem - 16);
+      });
+      seam(() => { c.moveTo(cx - 76, waist + 18); c.quadraticCurveTo(cx, waist + 39, cx + 76, waist + 18); });
+      if (kind === "pleated-skirt") {
+        for (let x = cx - 105; x <= cx + 105; x += 35) seam(() => { c.moveTo(x, waist + 28); c.lineTo(cx + (x - cx) * 1.32, hem - 25); });
+      } else if (kind === "long-skirt") {
+        seam(() => { c.moveTo(cx - 48, waist + 25); c.lineTo(cx - 68, hem - 25); });
+        seam(() => { c.moveTo(cx + 48, waist + 25); c.lineTo(cx + 68, hem - 25); });
+      } else {
+        seam(() => { c.moveTo(cx - 45, waist + 25); c.lineTo(cx - 65, hem - 25); });
+        seam(() => { c.moveTo(cx + 45, waist + 25); c.lineTo(cx + 65, hem - 25); });
+      }
+      if (isGuide) seam(() => { c.moveTo(cx, waist + 12); c.lineTo(cx, hem - 20); }, true);
+      if (kind === "mini-skirt") {
+        seam(() => { c.moveTo(cx - flare + 15, hem - 34); c.quadraticCurveTo(cx, hem - 20, cx + flare - 15, hem - 34); });
+      }
+    } else if (item.type === "pants") {
+      const shorts = kind === "shorts";
+      const wide = kind === "wide-pants" || kind === "overalls";
+      const cargo = kind === "cargo-pants";
+      const crotch = shorts ? 255 : 300;
+      const hem = shorts ? 300 : 525;
+      const leg = wide ? 112 : 76;
+      paintShape(() => {
+        c.moveTo(cx - 86, 72);
+        c.quadraticCurveTo(cx, 95, cx + 86, 72);
+        c.lineTo(cx + 112, crotch);
+        c.lineTo(cx + leg, hem - 18);
+        c.lineTo(cx + 8, hem - 18);
+        c.lineTo(cx, crotch + 25);
+        c.lineTo(cx - 8, hem - 18);
+        c.lineTo(cx - leg, hem - 18);
+        c.lineTo(cx - 112, crotch);
+      });
+      seam(() => { c.moveTo(cx - 86, 94); c.quadraticCurveTo(cx, 115, cx + 86, 94); });
+      seam(() => { c.moveTo(cx, 98); c.lineTo(cx, crotch + 24); });
+      seam(() => { c.moveTo(cx - 105, crotch); c.lineTo(cx - leg + 7, hem - 31); });
+      seam(() => { c.moveTo(cx + 105, crotch); c.lineTo(cx + leg - 7, hem - 31); });
+      seam(() => { c.moveTo(cx - leg + 2, hem - 27); c.lineTo(cx - 10, hem - 27); c.moveTo(cx + 10, hem - 27); c.lineTo(cx + leg - 2, hem - 27); });
+      if (kind === "overalls") {
+        seam(() => { c.moveTo(cx - 54, 90); c.lineTo(cx - 48, 170); c.lineTo(cx + 48, 170); c.lineTo(cx + 54, 90); });
+        seam(() => { c.moveTo(cx - 48, 170); c.lineTo(cx - 42, 225); c.lineTo(cx + 42, 225); c.lineTo(cx + 48, 170); });
+      }
+      if (cargo) {
+        seam(() => { c.moveTo(cx - 103, 235); c.lineTo(cx - 48, 235); c.lineTo(cx - 48, 302); c.lineTo(cx - 103, 302); c.closePath(); });
+        seam(() => { c.moveTo(cx + 48, 235); c.lineTo(cx + 103, 235); c.lineTo(cx + 103, 302); c.lineTo(cx + 48, 302); c.closePath(); });
+      }
+      if (isGuide) seam(() => { c.moveTo(cx - 125, 195); c.lineTo(cx + 125, 195); }, true);
+    } else if (item.type === "dress") {
+      const hem = kind === "short-dress" || kind === "school-dress" ? 420 : kind === "princess-dress" || kind === "gothic-dress" ? 545 : 515;
+      const skirtWidth = kind === "princess-dress" || kind === "gothic-dress" ? 205 : kind === "school-dress" ? 145 : 170;
+      paintShape(() => {
+        c.moveTo(cx - 28, 42);
+        c.quadraticCurveTo(cx - 56, 46, cx - 90, 80);
+        c.lineTo(cx - 130, 128);
+        c.lineTo(cx - 84, 172);
+        c.lineTo(cx - 63, 145);
+        c.lineTo(cx - 66, 210);
+        c.quadraticCurveTo(cx - 90, 245, cx - skirtWidth, hem - 14);
+        c.quadraticCurveTo(cx, hem + (variant === 8 ? -12 : 12), cx + skirtWidth, hem - 14);
+        c.quadraticCurveTo(cx + 90, 245, cx + 66, 210);
+        c.lineTo(cx + 63, 145);
+        c.lineTo(cx + 84, 172);
+        c.lineTo(cx + 130, 128);
+        c.lineTo(cx + 90, 80);
+        c.quadraticCurveTo(cx + 56, 46, cx + 28, 42);
+        c.quadraticCurveTo(cx, 85, cx - 28, 42);
+      });
+      seam(() => { c.moveTo(cx - 62, 185); c.lineTo(cx - skirtWidth + 25, hem - 32); });
+      seam(() => { c.moveTo(cx + 62, 185); c.lineTo(cx + skirtWidth - 25, hem - 32); });
+      seam(() => { c.moveTo(cx - 65, 215); c.quadraticCurveTo(cx, 238, cx + 65, 215); });
+      if (kind === "princess-dress") {
+        seam(() => { c.moveTo(cx - 50, 245); c.quadraticCurveTo(cx, 275, cx + 50, 245); });
+        for (let x = cx - 120; x <= cx + 120; x += 48) seam(() => { c.moveTo(cx + (x - cx) * 0.48, 255); c.lineTo(x, hem - 24); });
+      }
+      if (kind === "gothic-dress") {
+        seam(() => { c.moveTo(cx - 25, 87); c.lineTo(cx, 115); c.lineTo(cx + 25, 87); });
+        seam(() => { c.moveTo(cx - 45, 300); c.lineTo(cx - 25, 370); c.lineTo(cx - 5, 300); });
+        seam(() => { c.moveTo(cx + 45, 300); c.lineTo(cx + 25, 370); c.lineTo(cx + 5, 300); });
+      }
+      if (kind === "school-dress") {
+        seam(() => { c.moveTo(cx - 60, 125); c.lineTo(cx, 175); c.lineTo(cx + 60, 125); });
+        seam(() => { c.moveTo(cx - 45, 248); c.lineTo(cx + 45, 248); });
+      }
+      if (isGuide) seam(() => { c.moveTo(cx, 125); c.lineTo(cx, hem - 22); }, true);
+    } else if (item.type === "robe") {
+      const hem = kind === "kimono" ? 540 : 520;
+      paintShape(() => {
+        c.moveTo(cx - 35, 42);
+        c.lineTo(cx - 92, 78);
+        c.lineTo(cx - 188, 180);
+        c.lineTo(cx - 132, 220);
+        c.lineTo(cx - 82, 175);
+        c.lineTo(cx - 118, hem - 18);
+        c.quadraticCurveTo(cx, hem + 8, cx + 118, hem - 18);
+        c.lineTo(cx + 82, 175);
+        c.lineTo(cx + 132, 220);
+        c.lineTo(cx + 188, 180);
+        c.lineTo(cx + 92, 78);
+        c.lineTo(cx + 35, 42);
+        c.lineTo(cx, 100);
+      });
+      seam(() => { c.moveTo(cx - 34, 42); c.lineTo(cx + 2, 137); c.lineTo(cx - 8, hem - 15); });
+      seam(() => { c.moveTo(cx + 34, 42); c.lineTo(cx - 2, 137); c.lineTo(cx + 8, hem - 15); });
+      seam(() => { c.moveTo(cx - 110, 270); c.quadraticCurveTo(cx, 295, cx + 110, 270); });
+      if (kind === "kimono") {
+        seam(() => { c.moveTo(cx - 72, 245); c.lineTo(cx + 72, 245); });
+        seam(() => { c.moveTo(cx - 35, 255); c.lineTo(cx - 48, 305); c.lineTo(cx + 48, 305); c.lineTo(cx + 35, 255); });
+      }
+      if (isGuide) seam(() => { c.moveTo(cx, 150); c.lineTo(cx, hem - 24); }, true);
+    } else if (item.type === "cape") {
+      paintShape(() => {
+        c.moveTo(cx - 48, 48); c.quadraticCurveTo(cx, 93, cx + 48, 48);
+        c.lineTo(cx + 100, 85); c.lineTo(cx + 190, 510);
+        c.quadraticCurveTo(cx, 560, cx - 190, 510);
+        c.lineTo(cx - 100, 85); c.closePath();
+      });
+      seam(() => { c.moveTo(cx - 48, 48); c.lineTo(cx - 27, 110); c.lineTo(cx, 140); c.lineTo(cx + 27, 110); c.lineTo(cx + 48, 48); });
+      seam(() => { c.moveTo(cx - 95, 170); c.quadraticCurveTo(cx, 205, cx + 95, 170); });
+      if (isGuide) seam(() => { c.moveTo(cx, 141); c.lineTo(cx, 530); }, true);
+    } else if (item.type === "armor") {
+      paintShape(() => {
+        c.moveTo(cx - 35, 54); c.lineTo(cx - 100, 70); c.lineTo(cx - 148, 112);
+        c.lineTo(cx - 114, 164); c.lineTo(cx - 78, 137); c.lineTo(cx - 70, 340);
+        c.quadraticCurveTo(cx, 374, cx + 70, 340); c.lineTo(cx + 78, 137);
+        c.lineTo(cx + 114, 164); c.lineTo(cx + 148, 112); c.lineTo(cx + 100, 70); c.lineTo(cx + 35, 54);
+        c.lineTo(cx, 98);
+      });
+      seam(() => { c.moveTo(cx - 95, 92); c.lineTo(cx - 35, 156); c.lineTo(cx, 190); c.lineTo(cx + 35, 156); c.lineTo(cx + 95, 92); });
+      seam(() => { c.moveTo(cx - 62, 215); c.lineTo(cx, 251); c.lineTo(cx + 62, 215); });
+      seam(() => { c.moveTo(cx - 55, 282); c.lineTo(cx, 315); c.lineTo(cx + 55, 282); });
+      if (isGuide) seam(() => { c.moveTo(cx, 190); c.lineTo(cx, 355); }, true);
+    }
+
+    if (isGuide) {
+      c.save();
+      c.strokeStyle = "#808a9a";
+      c.lineWidth = 1.2;
+      c.setLineDash([5, 7]);
+      if (item.zone === "top") {
+        c.beginPath(); c.moveTo(cx - 125, 190); c.lineTo(cx + 125, 190); c.stroke();
+        c.beginPath(); c.moveTo(cx - 100, 275); c.lineTo(cx + 100, 275); c.stroke();
+      }
+      c.setLineDash([]);
+      c.restore();
+    }
+    c.restore();
+    syncDrawingLayer(layer);
+    renderLayers();
+    renderInspector();
+    drawStage();
+    setDesignTool("pen");
+    setNotice((isGuide ? "Guía gris " : "Prenda base ") + "añadida: " + item.name + ", variante " + variant + ". Selecciona Mover para colocarla y usa la capa para dibujar por encima.");
   }
+
   function mapStagePointToLayer(layer,point){
     const dx=point.x-layer.x,dy=point.y-layer.y,radians=-layer.rotation*Math.PI/180;
     let rx=dx*Math.cos(radians)-dy*Math.sin(radians),ry=dx*Math.sin(radians)+dy*Math.cos(radians);
@@ -329,7 +664,8 @@
   $("design-tools").querySelectorAll("[data-tool]").forEach(button=>button.addEventListener("click",()=>setDesignTool(button.dataset.tool)));
   $("design-brush-size").addEventListener("input",event=>$("brush-size-label").textContent=event.target.value+" px");
   $("new-design-layer").addEventListener("click",()=>createDrawingLayer());
-  $("create-garment").addEventListener("click",()=>createGarmentTemplate($("garment-template").value));
+  $("create-garment-guide").addEventListener("click",()=>createGarmentTemplate($("garment-template").value,"guide"));
+  $("create-garment").addEventListener("click",()=>createGarmentTemplate($("garment-template").value,"filled"));
 
   $("asset-search").addEventListener("input", event => { state.query = event.target.value; state.offset = 0; refreshAssets(); });
   $("previous-page").addEventListener("click", () => { state.offset = Math.max(0, state.offset - state.pageSize); refreshAssets(); });
