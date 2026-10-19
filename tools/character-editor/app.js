@@ -635,12 +635,18 @@
     renderLayers(); drawStage();
   }
   function findLayerAt(x, y) {
-    for (const layer of [...state.layers].reverse()) {
-      if (!layer.visible) continue;
+    const containsPoint = layer => {
+      if (!layer || !layer.visible) return false;
       const dx = x - layer.x, dy = y - layer.y, radians = -layer.rotation * Math.PI / 180;
       const rx = dx * Math.cos(radians) - dy * Math.sin(radians);
       const ry = dx * Math.sin(radians) + dy * Math.cos(radians);
-      if (Math.abs(rx) <= layer.width / 2 && Math.abs(ry) <= layer.height / 2) return layer;
+      return Math.abs(rx) <= layer.width / 2 && Math.abs(ry) <= layer.height / 2;
+    };
+    const selected = selectedLayer();
+    if (containsPoint(selected)) return selected;
+    for (const layer of [...state.layers].reverse()) {
+      if (selected && layer.id === selected.id) continue;
+      if (containsPoint(layer)) return layer;
     }
     return null;
   }
