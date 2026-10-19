@@ -21,7 +21,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   render-preview:
@@ -43,6 +43,19 @@ jobs:
         run: python scripts/render_hair_preview.py
       - name: Capture actual IMAGE editor with the character and hair layer
         run: python scripts/capture_editor_screenshot.py
+      - name: Save the focused capture in the repository
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add screenshots/IMAGE-app-cabello-01-captura.jpg
+          if git diff --cached --quiet; then
+            echo "The focused screenshot is unchanged; no repository commit is needed."
+          else
+            git commit -m "Save focused IMAGE hair preview screenshot"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
       - name: Upload character preview and actual app screenshot
         uses: actions/upload-artifact@v4
         with:
