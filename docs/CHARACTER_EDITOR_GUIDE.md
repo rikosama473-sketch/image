@@ -48,3 +48,14 @@ Mejorar la preparación de piezas: guardado de piezas con etiquetas y puntos de 
 - Plantillas editables para camiseta, chaqueta, falda, pantalones y capa/manto. Se pueden colorear con relleno y personalizar con costuras, mangas, cintas y adornos.
 - Las capas dibujables se guardan dentro del proyecto JSON; no se escribe en las imágenes originales.
 - El lienzo es raster 2D: estas funciones permiten dibujar y personalizar prendas y rasgos sencillos, pero no simulan un patrón de costura profesional ni inventan anatomía o detalles ocultos automáticamente.
+
+
+## Biblioteca de 288 bosquejos de prendas
+
+La sección **Diseño original** incluye 36 tipos de ropa y 8 variaciones geométricas por tipo (288 combinaciones base): remeras clásicas, ajustadas y oversize; tops y musculosas; blusas y camisas; suéteres, buzos, camperas, blazer y abrigo; chaleco, corsé, bikini, body y uniforme; delantal; tres faldas; shorts y distintos pantalones; overol; vestidos cortos, largos, de princesa, góticos y de uniforme; kimono, capa, túnica fantástica y armadura de torso.
+
+- **Añadir guía gris** crea una capa independiente con contorno gris claro, líneas internas de costura y algunas líneas discontinuas de construcción. Está pensada para superponerla sobre el personaje y dibujar la ropa encima.
+- **Añadir prenda con color** crea una silueta coloreada editable como base. El color se toma del selector de color del panel.
+- Variantes: clásica, entallada, holgada, corta, larga, manga más larga, compacta y asimétrica. Son esqueletos visuales generados con geometría 2D, no 288 ilustraciones profesionales dibujadas a mano.
+- Después de añadir la capa, elige **Mover** para arrastrarla; puedes ajustar X/Y, ancho, alto, rotación y opacidad en el inspector. El pincel y las demás herramientas dibujan sobre la capa seleccionada. Duplica una plantilla para conservar una copia limpia.
+- La guía no modifica la imagen de referencia. Guarda el proyecto JSON si quieres conservar las capas editables; al exportar PNG, oculta o elimina antes las guías que no quieres incluir en la imagen final.
