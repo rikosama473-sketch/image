@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "description": "Canonical prompt registry. Do not assign images or fill prompts by guessing; review original image metadata and visual references first.",
+  "characters": [
+    {
+      "id": "pibara",
+      "display_name": "Pibara",
+      "status": "needs_reference_review",
+      "canonical_prompt": null,
+      "source_images": [],
+      "variable_hair_traits": [
+        "hairstyle",
+        "hair_length",
+        "fringe",
+        "parting",
+        "updo",
+        "braid"
+      ],
+      "notes": "Preserve identity traits in the canonical prompt; store haircut and hairstyle only as per-image variants."
+    },
+    {
+      "id": "chie",
+      "display_name": "Chie",
+      "status": "needs_reference_review",
+      "canonical_prompt": null,
+      "source_images": [],
+      "variable_hair_traits": [
+        "hairstyle",
+        "hair_length",
+        "fringe",
+        "parting",
+        "updo",
+        "braid"
+      ],
+      "notes": "Preserve identity traits in the canonical prompt; store haircut and hairstyle only as per-image variants."
+    },
+    {
+      "id": "sunna",
+      "display_name": "Sunna",
+      "status": "needs_reference_review",
+      "canonical_prompt": null,
+      "source_images": [],
+      "variable_hair_traits": [
+        "hairstyle",
+        "hair_length",
+        "fringe",
+        "parting",
+        "updo",
+        "braid"
+      ],
+      "notes": "Preserve identity traits in the canonical prompt; store haircut and hairstyle only as per-image variants."
+    },
+    {
+      "id": "personaje-4",
+      "display_name": null,
+      "status": "unassigned",
+      "canonical_prompt": null,
+      "source_images": [],
+      "variable_hair_traits": [
+        "hairstyle",
+        "hair_length",
+        "fringe",
+        "parting",
+        "updo",
+        "braid"
+      ],
+      "notes": "Do not assign a name until a distinct character is verified."
+    },
+    {
+      "id": "personaje-5",
+      "display_name": null,
+      "status": "unassigned",
+      "canonical_prompt": null,
+      "source_images": [],
+      "variable_hair_traits": [
+        "hairstyle",
+        "hair_length",
+        "fringe",
+        "parting",
+        "updo",
+        "braid"
+      ],
+      "notes": "Do not assign a name until a distinct character is verified."
+    }
+  ]
+}
