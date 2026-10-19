@@ -55,6 +55,7 @@
       try {
         ctx.save();
         ctx.globalAlpha = Math.max(0, Math.min(1, layer.opacity));
+        if ("filter" in ctx && window.ImageProEditing) ctx.filter = window.ImageProEditing.layerAdjustmentsToCanvasFilter(layer.adjustments || {});
         ctx.translate(layer.x, layer.y);
         ctx.rotate(layer.rotation * Math.PI / 180);
         ctx.scale(layer.flipX ? -1 : 1, layer.flipY ? -1 : 1);
@@ -981,6 +982,167 @@ function mapStagePointToLayer(layer,point){
       setNotice("Añadida como capa: " + asset.path + ". Puedes moverla, ajustar su tamaño o recortar una pieza.");
     } catch (error) { setNotice(error.message, true); }
   }
+  async function getLayerPixels(layer) {
+    if (!layer) throw new Error("Selecciona primero una capa con una imagen.");
+    const image = await imageFor(layerSource(layer));
+    const width = Number(image.naturalWidth || image.width), height = Number(image.naturalHeight || image.height);
+    if (!Number.isInteger(width) || !Number.isInteger(height) || width < 1 || height < 1 || width * height > 16_000_000) {
+      throw new Error("La edición local admite imágenes de hasta 16 megapíxeles por operación. Reduce el tamaño o recorta la imagen primero.");
+    }
+    const canvas = document.createElement("canvas");
+    canvas.width = width; canvas.height = height;
+    const context = canvas.getContext("2d", { willReadFrequently: true });
+    if (!context) throw new Error("No se pudo crear el lienzo de procesamiento.");
+    context.drawImage(image, 0, 0, width, height);
+    return { image, canvas, context, imageData: context.getImageData(0, 0, width, height) };
+  }
+
+  function addEditableRasterResult(sourceLayer, canvas, title) {
+    const layer = {
+      id: crypto.randomUUID(),
+      name: (title + " — " + sourceLayer.name).slice(0, 150),
+      path: "", dataUrl: "",
+      category: sourceLayer.category === "reference" ? ($("design-category").value || "other") : sourceLayer.category,
+      editableDrawing: true, isGarmentGuide: false, drawBuffer: canvas,
+      x: sourceLayer.x, y: sourceLayer.y, width: sourceLayer.width, height: sourceLayer.height,
+      rotation: sourceLayer.rotation, opacity: sourceLayer.opacity,
+      visible: true, flipX: sourceLayer.flipX, flipY: sourceLayer.flipY,
+      adjustments: sourceLayer.adjustments ? { ...sourceLayer.adjustments } : undefined
+    };
+    // Keep the source as a hidden baseline: this is reversible and never writes to the original file.
+    sourceLayer.visible = false;
+    state.layers.push(layer);
+    state.selectedLayerId = layer.id;
+    syncDrawingLayer(layer);
+    renderLayers(); renderInspector(); drawStage();
+    return layer;
+  }
+
+  async function rasterizeSelectedCopy() {
+    const source = selectedLayer();
+    if (!source) { setNotice("Selecciona el personaje o la capa de pelo que quieras retocar.", true); return; }
+    try {
+      const result = await getLayerPixels(source);
+      const copyCanvas = document.createElement("canvas");
+      copyCanvas.width = result.canvas.width; copyCanvas.height = result.canvas.height;
+      copyCanvas.getContext("2d").drawImage(result.canvas, 0, 0);
+      const layer = addEditableRasterResult(source, copyCanvas, "Copia editable");
+      setNotice("Copia editable creada: «" + layer.name + "». El original quedó oculto, no modificado. Usa Borrador solo sobre esta copia.");
+    } catch (error) { setNotice(error.message || "No se pudo crear una copia editable.", true); }
+  }
+
+  async function removeBackgroundFromSelected() {
+    const source = selectedLayer();
+    if (!source) { setNotice("Selecciona primero una capa de imagen.", true); return; }
+    try {
+      const result = await getLayerPixels(source);
+      const processed = window.ImageProEditing.removeConnectedBackground(result.imageData, {
+        targetColor: $("pro-bg-target").value,
+        tolerance: Number($("pro-bg-tolerance").value),
+        feather: Number($("pro-bg-feather").value),
+        edgeSensitivity: Number($("pro-bg-edge").value),
+        protectLineArt: $("pro-bg-protect-ink").checked,
+        decontaminate: true
+      });
+      if (!processed.changed) {
+        setNotice("No se detectó un fondo conectado con esos ajustes. Sube la tolerancia o elige otro color de fondo.", true);
+        return;
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = processed.width; canvas.height = processed.height;
+      canvas.getContext("2d").putImageData(new ImageData(processed.data, processed.width, processed.height), 0, 0);
+      const layer = addEditableRasterResult(source, canvas, "Fondo quitado");
+      setNotice("Fondo retirado en una capa editable: «" + layer.name + "». Comprueba los bordes; el original se conserva oculto debajo.");
+    } catch (error) { setNotice(error.message || "No se pudo quitar el fondo.", true); }
+  }
+
+  async function replaceColorOnSelected() {
+    const source = selectedLayer();
+    if (!source) { setNotice("Selecciona primero una capa de imagen.", true); return; }
+    try {
+      const result = await getLayerPixels(source);
+      const processed = window.ImageProEditing.replaceColorRange(result.imageData, {
+        sourceColor: $("pro-color-source").value,
+        targetColor: $("pro-color-target").value,
+        tolerance: Number($("pro-color-tolerance").value),
+        softness: Number($("pro-color-softness").value),
+        preserveShading: $("pro-color-preserve-shading").checked
+      });
+      const canvas = document.createElement("canvas");
+      canvas.width = processed.width; canvas.height = processed.height;
+      canvas.getContext("2d").putImageData(new ImageData(processed.data, processed.width, processed.height), 0, 0);
+      const layer = addEditableRasterResult(source, canvas, "Color recoloreado");
+      setNotice("Recoloración aplicada a una capa nueva: «" + layer.name + "». Ajusta el color de origen si afectó zonas que querías conservar.");
+    } catch (error) { setNotice(error.message || "No se pudo reemplazar el color.", true); }
+  }
+
+  function syncProAdjustmentControls(layer) {
+    if (!window.ImageProEditing) return;
+    const values = window.ImageProEditing.normalizeLayerAdjustments(layer && layer.adjustments ? layer.adjustments : {});
+    const controls = { brightness: "pro-brightness", contrast: "pro-contrast", saturation: "pro-saturation", hue: "pro-hue" };
+    const labels = { brightness: "pro-brightness-value", contrast: "pro-contrast-value", saturation: "pro-saturation-value", hue: "pro-hue-value" };
+    for (const [key, id] of Object.entries(controls)) {
+      const input = $(id); input.value = values[key]; input.disabled = !layer;
+      $(labels[key]).textContent = values[key] + (key === "hue" ? "°" : "");
+    }
+    const presets = window.ImageProEditing.LAYER_ADJUSTMENT_PRESETS;
+    const match = presets.find(preset => Object.keys(values).every(key => values[key] === preset.values[key]));
+    $("pro-adjustment-preset").value = match ? match.id : "custom";
+    $("pro-adjustment-preset").disabled = !layer;
+  }
+
+  function setProAdjustmentInputs(values) {
+    const normalized = window.ImageProEditing.normalizeLayerAdjustments(values);
+    const controls = { brightness: "pro-brightness", contrast: "pro-contrast", saturation: "pro-saturation", hue: "pro-hue" };
+    for (const [key, id] of Object.entries(controls)) $(id).value = normalized[key];
+    const labels = { brightness: "pro-brightness-value", contrast: "pro-contrast-value", saturation: "pro-saturation-value", hue: "pro-hue-value" };
+    for (const [key, id] of Object.entries(controls)) $(labels[key]).textContent = normalized[key] + (key === "hue" ? "°" : "");
+  }
+
+  function applyProAdjustments() {
+    const layer = selectedLayer();
+    if (!layer) { setNotice("Selecciona una capa antes de aplicar ajustes.", true); return; }
+    layer.adjustments = window.ImageProEditing.normalizeLayerAdjustments({
+      brightness: $("pro-brightness").value,
+      contrast: $("pro-contrast").value,
+      saturation: $("pro-saturation").value,
+      hue: $("pro-hue").value,
+      temperature: 0, tint: 0, blur: 0
+    });
+    renderLayers(); renderInspector(); drawStage();
+    setNotice("Ajustes visuales guardados en «" + layer.name + "». Son reversibles y se conservan en el proyecto JSON.");
+  }
+
+  function initProEditingTools() {
+    const sliders = [
+      ["pro-bg-tolerance", "pro-bg-tolerance-value"],
+      ["pro-bg-feather", "pro-bg-feather-value"],
+      ["pro-bg-edge", "pro-bg-edge-value"],
+      ["pro-color-tolerance", "pro-color-tolerance-value"],
+      ["pro-color-softness", "pro-color-softness-value"]
+    ];
+    for (const [inputId, valueId] of sliders) {
+      $(inputId).addEventListener("input", () => $(valueId).textContent = $(inputId).value);
+    }
+    for (const key of ["brightness", "contrast", "saturation", "hue"]) {
+      const input = $("pro-" + key);
+      input.addEventListener("input", () => $("pro-" + key + "-value").textContent = input.value + (key === "hue" ? "°" : ""));
+    }
+    $("pro-adjustment-preset").addEventListener("change", () => {
+      const preset = window.ImageProEditing.LAYER_ADJUSTMENT_PRESETS.find(item => item.id === $("pro-adjustment-preset").value);
+      if (preset) setProAdjustmentInputs(preset.values);
+    });
+    $("pro-rasterize-copy").addEventListener("click", rasterizeSelectedCopy);
+    $("pro-remove-background").addEventListener("click", removeBackgroundFromSelected);
+    $("pro-replace-color").addEventListener("click", replaceColorOnSelected);
+    $("pro-apply-adjustments").addEventListener("click", applyProAdjustments);
+    $("pro-reset-adjustments").addEventListener("click", () => {
+      const layer = selectedLayer(); if (!layer) return;
+      delete layer.adjustments; syncProAdjustmentControls(layer); drawStage(); renderLayers();
+      setNotice("Ajustes restaurados al aspecto original de «" + layer.name + "».");
+    });
+  }
+
   function renderLayers() {
     layerList.replaceChildren();
     $("empty-layers").hidden = state.layers.length > 0;
@@ -999,7 +1161,7 @@ function mapStagePointToLayer(layer,point){
       layerList.append(row);
     }
     const hasLayer = Boolean(selectedLayer());
-    ["duplicate-layer", "delete-layer", "crop-layer", "flip-layer", "send-back", "bring-front"].forEach(id => $(id).disabled = !hasLayer);
+    ["duplicate-layer", "delete-layer", "crop-layer", "flip-layer", "send-back", "bring-front", "pro-rasterize-copy", "pro-remove-background", "pro-replace-color", "pro-apply-adjustments", "pro-reset-adjustments"].forEach(id => { if ($(id)) $(id).disabled = !hasLayer; });
   }
   function renderInspector() {
     const layer = selectedLayer();
@@ -1009,6 +1171,7 @@ function mapStagePointToLayer(layer,point){
     $("layer-category").value = layer.category; $("layer-x").value = Math.round(layer.x); $("layer-y").value = Math.round(layer.y);
     $("layer-width").value = Math.round(layer.width); $("layer-height").value = Math.round(layer.height);
     $("layer-rotation").value = Math.round(layer.rotation); $("layer-opacity").value = Math.round(layer.opacity * 100);
+    syncProAdjustmentControls(layer);
   }
   function updateSelectedFromControls() {
     const layer = selectedLayer(); if (!layer) return;
@@ -1285,7 +1448,8 @@ function mapStagePointToLayer(layer,point){
         x: Math.max(-width * 4, Math.min(width * 5, Number(layer.x))), y: Math.max(-height * 4, Math.min(height * 5, Number(layer.y))),
         width: Number(layer.width), height: Number(layer.height), rotation: Math.max(-360, Math.min(360, Number(layer.rotation))),
         opacity: Math.max(0, Math.min(1, Number(layer.opacity))), visible: layer.visible !== false, flipX: Boolean(layer.flipX), flipY: Boolean(layer.flipY),
-        editableDrawing: Boolean(layer.editableDrawing), isGarmentGuide: Boolean(layer.isGarmentGuide), drawBuffer: null
+        editableDrawing: Boolean(layer.editableDrawing), isGarmentGuide: Boolean(layer.isGarmentGuide),
+        adjustments: layer.adjustments ? window.ImageProEditing.normalizeLayerAdjustments(layer.adjustments) : undefined, drawBuffer: null
       };
     });
     if (layers.some(layer => !layer.path && !layer.dataUrl)) throw new Error("Hay una pieza sin archivo de origen ni datos incrustados.");
@@ -1330,5 +1494,5 @@ function mapStagePointToLayer(layer,point){
     updateCanvasSize(); renderLayers(); renderInspector();
     setNotice("Proyecto nuevo. Puedes añadir referencias, crear prendas desde plantillas o dibujar una pieza desde cero.");
   });
-  updateCanvasSize(); renderLayers(); renderInspector(); initHistoricalFashionArchive(); refreshAssets();
+  updateCanvasSize(); renderLayers(); renderInspector(); initHistoricalFashionArchive(); initProEditingTools(); refreshAssets();
 })();
