@@ -41,7 +41,7 @@
   function layerSource(layer) { return layer.dataUrl || assetUrl(layer.path); }
   function selectedLayer() { return state.layers.find(layer => layer.id === state.selectedLayerId) || null; }
 
-  async function drawStage() {
+  async function drawStage(showSelection = true) {
     ctx.clearRect(0, 0, stage.width, stage.height);
     for (const layer of state.layers) {
       if (!layer.visible) continue;
@@ -59,7 +59,7 @@
       }
     }
     const selected = selectedLayer();
-    if (selected && selected.visible) drawSelection(selected);
+    if (showSelection && selected && selected.visible) drawSelection(selected);
   }
   function drawSelection(layer) {
     ctx.save();
@@ -440,8 +440,9 @@
   });
   $("export-png").addEventListener("click", async () => {
     if (!state.layers.length) { setNotice("Añade al menos una capa antes de exportar.", true); return; }
-    await drawStage();
+    await drawStage(false);
     stage.toBlob(blob => {
+      drawStage(true);
       if (!blob) { setNotice("No se pudo exportar el PNG.", true); return; }
       downloadBlob(blob, "IMAGE-character.png"); setNotice("PNG exportado con fondo transparente.");
     }, "image/png");
