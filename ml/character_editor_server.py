@@ -219,7 +219,8 @@ def run_self_test() -> int:
             sample.write_bytes(b"local editor smoke-test fixture")
             catalog = AssetCatalog(Path(directory))
             record = catalog.list_assets(limit=10)
-            if len(record["items"]) != 1 or catalog.safe_path("sample.png") != sample:
+            found = catalog.safe_path("sample.png")
+            if len(record["items"]) != 1 or found is None or found.read_bytes() != sample.read_bytes():
                 print("Falló la prueba de inventario local.")
                 return 2
     except (OSError, ValueError) as exc:
