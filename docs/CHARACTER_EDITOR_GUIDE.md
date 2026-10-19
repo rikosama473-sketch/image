@@ -117,3 +117,10 @@ El inspector derecho tiene una sección **Edición avanzada — Motor local de A
 - La eliminación de fondo depende de color y conectividad. Los ajustes de protección de tinta ayudan a conservar contornos, pero no sustituyen una máscara revisada manualmente ni recuperan píxeles ocultos detrás del pelo anterior.
 - No se descarga ni ejecuta un checkpoint generativo. El motor de edición es determinista y local. Si más adelante se desea una función de relleno generativo, se debe añadir como módulo opcional separado, tras revisar sus requisitos de memoria y compatibilidad con el hardware.
 - Los módulos adaptados y sus pruebas son `tools/character-editor/pro-editing.js` y `tests/test_pro_editing.mjs`; el original independiente de AnimeArt no se cambia.
+
+
+## Biblioteca web de referencias de peinados
+
+Abre **05 / Biblioteca web** debajo del lienzo y despliega **Referencias de peinados**. La galería reúne 46 miniaturas de PixAI, note.com, michill.jp y AnimeOutline, con búsqueda y filtro por fuente. Cada tarjeta enlaza a la imagen original y a su página de atribución. Para Pinterest se conserva el enlace directo al pin; las miniaturas asociadas proceden del artículo de michill enlazado desde ese pin porque Pinterest bloquea la extracción automática.
+
+La galería muestra imágenes remotas, por lo que necesita conexión a Internet. Si una web impide mostrar una miniatura, usa el enlace de la fuente. Estas imágenes no se descargan ni se copian al proyecto, y no se agregan automáticamente al lienzo. Para usar una referencia en la composición, descarga manualmente solo si tienes derecho a hacerlo y luego selecciónala desde tu biblioteca local. No trates el material como autorizado para entrenamiento de IA.
