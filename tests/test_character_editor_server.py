@@ -28,12 +28,12 @@ class AssetCatalogTests(unittest.TestCase):
     def test_index_and_search_are_paginated(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            for name in ("red-hair.png", "blue-hair.webp", "arm.jpg", "not-image.txt"):
+            for name in ("red-hair.png", "blue-hair.webp", "arm.jpg", "vector-hair.svg", "not-image.txt"):
                 (root / name).write_bytes(b"fixture")
             catalog = editor.AssetCatalog(root)
-            self.assertEqual(len(catalog.items), 3)
+            self.assertEqual(len(catalog.items), 4)
             page = catalog.list_assets("hair", offset=0, limit=1)
-            self.assertEqual(page["total"], 2)
+            self.assertEqual(page["total"], 3)
             self.assertEqual(len(page["items"]), 1)
             self.assertTrue(page["items"][0]["name"].endswith((".png", ".webp")))
 
@@ -115,6 +115,19 @@ class HTTPHandlerTests(unittest.TestCase):
         with self.assertRaises(urllib.error.HTTPError) as caught:
             self.get("/api/asset?path=../README.md")
         self.assertEqual(caught.exception.code, 404)
+
+    def test_svg_asset_is_sandboxed_and_served_for_modular_parts(self) -> None:
+        (self.root / "cabello_01.svg").write_text(
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8"><path d="M1 1 L7 1 L4 7Z"/></svg>',
+            encoding="utf-8",
+        )
+        catalog = editor.AssetCatalog(self.root)
+        self.server.catalog = catalog
+        status, headers, content = self.get("/api/asset?path=cabello_01.svg")
+        self.assertEqual(status, 200)
+        self.assertIn("image/svg+xml", headers.get("Content-Type", ""))
+        self.assertIn("sandbox", headers.get("Content-Security-Policy", ""))
+        self.assertIn(b"<svg", content)
 
     def test_upload_endpoints_are_disabled(self) -> None:
         request = urllib.request.Request(self.base + "/api/assets", data=b'{"file":"anything"}', headers={"Content-Type": "application/json"}, method="POST")
