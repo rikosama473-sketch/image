@@ -534,9 +534,397 @@
     setNotice(isGuide
       ? "Guía gris añadida: " + item.name + ", variante " + variant + ". Muévela ahora; al elegir el pincel se creará una capa transparente encima para conservar intacta la guía."
       : "Prenda base con color añadida: " + item.name + ", variante " + variant + ". Puedes dibujar y añadir detalles sobre esta capa.");
+    return layer;
   }
 
-  function mapStagePointToLayer(layer,point){
+  
+  // Original garment concepts informed by published runway season archives and fashion-history references.
+  // These are original 2D interpretations, not replicas of copyrighted runway illustrations.
+  const historicalFashionCatalog = {};
+  function fashionLook(name, template, variant, motif, color, accent, note) {
+    return { name, template, variant, motif, color, accent, note };
+  }
+  function addFashionSeason(year, season, looks) {
+    const spring = season === "spring";
+    const key = year + "-" + season;
+    historicalFashionCatalog[key] = {
+      key, year, season,
+      label: (spring ? "Primavera / Verano " : "Otoño / Invierno ") + year,
+      source: "https://www.vogue.com/fashion-shows/" + season + "-" + year + "-ready-to-wear",
+      looks
+    };
+  }
+  addFashionSeason(2000,"spring",[
+    fashionLook("Top satinado de tirantes finos","tank-top",2,"satin-drape","#b8a0a9","#f3d8e0","Escote suave, tirantes finos y pliegues diagonales de inspiración minimalista."),
+    fashionLook("Camiseta corta Y2K","crop-top",4,"y2k","#91a8cf","#f5e5a1","Largo corto, líneas limpias y detalles de costura inspirados en la transición al nuevo milenio."),
+    fashionLook("Chaqueta entallada de solapa estrecha","blazer",2,"tailored","#333744","#d4b58b","Hombro definido, solapa fina y bolsillos discretos.")
+  ]);
+  addFashionSeason(2000,"fall",[
+    fashionLook("Blusa de cuello drapeado","blouse",5,"satin-drape","#59505e","#d5c5cf","Cuello fluido, pinzas finas y pliegues que sugieren satén sin copiar una pieza concreta."),
+    fashionLook("Jersey fino de cuello alto","sweater",2,"rib-knit","#8b807b","#d8c7ab","Cuerpo ajustado y líneas de tejido verticales, pensado para capas."),
+    fashionLook("Abrigo lineal con cierre lateral","long-coat",5,"minimal","#37393d","#b3a08b","Silueta sobria con paneles largos y cierre desplazado.")
+  ]);
+  addFashionSeason(2001,"spring",[
+    fashionLook("Top halter con banda al cuello","bikini-top",2,"halter","#e0a6a5","#fff0dc","Escote halter reinterpretado con contorno gráfico y banda al cuello."),
+    fashionLook("Camiseta metálica de paneles","fitted-shirt",2,"metallic","#a5a9b4","#eef0fb","Paneles geométricos y líneas brillantes sugeridas con costuras."),
+    fashionLook("Blusa semitransparente en capas","blouse",5,"sheer","#d4b6b0","#f8e7df","Panel ligero con trama de puntos; funciona como guía para capas transparentes.")
+  ]);
+  addFashionSeason(2001,"fall",[
+    fashionLook("Chaqueta de cuero de corte recto","jacket",2,"leather","#795d4b","#e3c9a4","Cierre diagonal y paneles limpios inspirados en sastrería de cuero."),
+    fashionLook("Cárdigan corto de punto","sweater",4,"rib-knit","#736c81","#e5d5da","Largo corto, líneas de canalé y botonadura sencilla."),
+    fashionLook("Vestido lencero de caída recta","slip-dress",5,"slip","#463d50","#c1a9b9","Tirantes finos, escote cowl y caída vertical de inspiración lencera.")
+  ]);
+  addFashionSeason(2002,"spring",[
+    fashionLook("Blusa bohemia fruncida","blouse",5,"boho","#d6b987","#975f45","Escote fruncido, detalles florales pequeños y puños sugeridos."),
+    fashionLook("Top corto con lazo frontal","crop-top",4,"tie-front","#d9a6a2","#f2ddcc","Lazo central y bordes redondeados, reinterpretación original del top atado."),
+    fashionLook("Chaleco utilitario ligero","vest",3,"utility","#a0a789","#e0c99b","Bolsillos de parche y costuras prácticas con volumen relajado.")
+  ]);
+  addFashionSeason(2002,"fall",[
+    fashionLook("Chaqueta militar femenina","jacket",5,"military","#59614b","#d7bd86","Doble botonadura, hombreras y bolsillos de parche."),
+    fashionLook("Jersey de cuello chimenea","sweater",5,"minimal","#8d867f","#d6c9b9","Cuello alto sencillo y paneles verticales limpios."),
+    fashionLook("Vestido de costura diagonal","long-dress",5,"asym","#5e4a5d","#cfa9ad","Drapeado asimétrico y costuras diagonales, sin copiar un vestido de pasarela concreto.")
+  ]);
+  addFashionSeason(2003,"spring",[
+    fashionLook("Baby tee gráfico","fitted-shirt",4,"graphic","#a5c1dc","#f3b4cb","Cuerpo corto y un panel gráfico original para personalizar."),
+    fashionLook("Bolero corto con borde redondeado","jacket",4,"ruffle","#8a7f9a","#f1d5de","Chaqueta mini con hombro suave y remate curvo."),
+    fashionLook("Top denim con canesú","corset",2,"denim","#7497b9","#e4c9a0","Canesú, costuras dobles y bolsillos frontales sencillos.")
+  ]);
+  addFashionSeason(2003,"fall",[
+    fashionLook("Blazer corto de terciopelo","blazer",2,"tailored","#554153","#c5a3b0","Solapa fina, pinzas verticales y botones discretos."),
+    fashionLook("Suéter ajustado con cuello vuelto","sweater",5,"rib-knit","#6f7379","#d8d0c7","Tejido acanalado y puños marcados."),
+    fashionLook("Falda plisada con cinturilla","pleated-skirt",5,"pleats","#77716b","#c6b78e","Cinturilla ancha y pliegues repetidos para completar un conjunto de época.")
+  ]);
+  addFashionSeason(2004,"spring",[
+    fashionLook("Blusa campesina con manga globo","blouse",5,"boho","#d9c5ae","#bd7f72","Escote amplio, manga con volumen y motivos de bordado."),
+    fashionLook("Túnica ligera con caída","fantasy-robe",5,"boho","#8eaaa0","#f0d7b7","Línea alargada, bordado vertical y apertura suave."),
+    fashionLook("Camisola de encaje romántico","tank-top",5,"lace","#e7d9d2","#c59ba8","Borde festoneado y tirantes finos para una capa delicada.")
+  ]);
+  addFashionSeason(2004,"fall",[
+    fashionLook("Abrigo corto de inspiración militar","jacket",5,"military","#6b6451","#d4b67f","Solapas estructuradas, hombreras y doble botonadura."),
+    fashionLook("Cárdigan largo de punto fino","sweater",5,"rib-knit","#8f8a83","#d4c4b2","Líneas de canalé y cinturilla, pensado para combinar en capas."),
+    fashionLook("Blusa de terciopelo con lazada","blouse",5,"bow-collar","#573b4c","#c9a3b4","Lazada en el cuello y silueta ligeramente romántica.")
+  ]);
+  addFashionSeason(2005,"spring",[
+    fashionLook("Camisola con encaje y pinzas","tank-top",2,"lace","#d8bcb4","#f4e6df","Escote festoneado y pinzas verticales discretas."),
+    fashionLook("Bolero denim con costura doble","jacket",4,"denim","#668bb0","#edcaa0","Canesú corto, puños y líneas de pespunte."),
+    fashionLook("Blusa drapeada de un hombro","blouse",2,"asym","#c7a2a8","#f1dfe1","Escote irregular y pliegues laterales para una caída original.")
+  ]);
+  addFashionSeason(2005,"fall",[
+    fashionLook("Blusa imperio con costuras precisas","blouse",5,"empire","#b1a3a0","#d9c5b5","Costura bajo el busto, pinzas y superficie limpia."),
+    fashionLook("Abrigo arquitectónico de paneles","long-coat",5,"minimal","#30333a","#c2a88e","Paneles rectos y cuello alto de inspiración minimalista; referencia histórica general."),
+    fashionLook("Suéter de cuello alto satinado","sweater",5,"minimal","#625c61","#cbb5ad","Cuello alto y costuras verticales sobrias.")
+  ]);
+  addFashionSeason(2006,"spring",[
+    fashionLook("Blusa estampada de manga globo","blouse",5,"puff","#e0b0a5","#6c8b7a","Manga voluminosa y panel central para añadir estampado original."),
+    fashionLook("Túnica gráfica de panel ancho","fantasy-robe",5,"graphic","#6f8d9a","#e2bb78","Panel frontal amplio para gráfica o estampado propio."),
+    fashionLook("Blazer corto de hombro redondeado","blazer",4,"sculptural","#a5a0a5","#d6c4bb","Hombro curvo y solapas reducidas.")
+  ]);
+  addFashionSeason(2006,"fall",[
+    fashionLook("Abrigo cocoon con hombro redondo","long-coat",5,"sculptural","#746d6a","#c9b9a8","Volumen de abrigo ovalado y costuras de panel."),
+    fashionLook("Vestido túnica con medias capas","short-dress",5,"layered","#504653","#a9b6b5","Silueta de túnica con líneas de superposición."),
+    fashionLook("Jersey de punto con manga larga","sweater",5,"rib-knit","#9c7f76","#e5d2b9","Punto acanalado y puños acentuados.")
+  ]);
+  addFashionSeason(2007,"spring",[
+    fashionLook("Blusa babydoll de cintura elevada","blouse",4,"empire","#e6c6c5","#9e9ab1","Costura alta y vuelo inferior, en una interpretación original."),
+    fashionLook("Chaleco sastre entallado","vest",2,"tailored","#4c535e","#c4b29a","Pinzas y solapa pequeña para un conjunto sastre."),
+    fashionLook("Blusa drapeada de manga tres cuartos","blouse",5,"satin-drape","#c0b0a2","#e6d3c0","Escote fluido y líneas diagonales de caída.")
+  ]);
+  addFashionSeason(2007,"fall",[
+    fashionLook("Abrigo sastre con cintura marcada","long-coat",5,"tailored","#5b5b60","#b8a088","Solapas definidas, costuras de entalle y bolsillos."),
+    fashionLook("Top de cuello vuelto bajo chaqueta","sweater",5,"minimal","#333943","#c8c1b8","Base de punto ceñida pensada para vestir en capas."),
+    fashionLook("Chaqueta biker con cierre oblicuo","jacket",5,"leather","#33353b","#b4a09a","Solapas y cierre diagonal de lenguaje rock.")
+  ]);
+  addFashionSeason(2008,"spring",[
+    fashionLook("Top geométrico de bloques de color","fitted-shirt",4,"colorblock","#d6b45d","#6887a7","Paneles angulares pensados para colorear de manera independiente."),
+    fashionLook("Blusa asimétrica con pliegues laterales","blouse",5,"asym","#c4a4b5","#ebd9df","Escote desigual y pliegues concentrados hacia un costado."),
+    fashionLook("Camiseta deportiva con bandas","fitted-shirt",5,"sporty","#687e96","#e5c46f","Bandas de manga y paneles laterales sencillos.")
+  ]);
+  addFashionSeason(2008,"fall",[
+    fashionLook("Jersey oversize con cuello amplio","oversized-shirt",5,"rib-knit","#8a8589","#c9c0b7","Volumen relajado y líneas de tejido dibujadas como guía."),
+    fashionLook("Chaqueta biker con paneles","jacket",5,"leather","#373a3e","#b0a5a0","Cierre oblicuo, paneles y remaches geométricos."),
+    fashionLook("Túnica drapeada sobre pantalón","fantasy-robe",5,"layered","#615c6c","#c9acaa","Largo extendido y líneas de capas superpuestas.")
+  ]);
+  addFashionSeason(2009,"spring",[
+    fashionLook("Blusa romántica de encaje","blouse",5,"lace","#dfcfca","#ad8994","Bordes festoneados y líneas pequeñas de encaje."),
+    fashionLook("Top drapeado con escote suave","blouse",5,"satin-drape","#c8a2a1","#eedbd6","Escote cowl y pliegues diagonales."),
+    fashionLook("Chaqueta utilitaria ligera","jacket",5,"utility","#8a927b","#d5bd91","Bolsillos y costuras prácticas de una chaqueta ligera.")
+  ]);
+  addFashionSeason(2009,"fall",[
+    fashionLook("Camisa de cuadros punk","button-shirt",5,"plaid","#9b5e61","#e0c58b","Rejilla de cuadros original y botonadura frontal."),
+    fashionLook("Chaleco militar de capas","vest",5,"military","#6b7156","#d3bb83","Hombreras, bolsillos y botones en doble fila."),
+    fashionLook("Chaqueta rock de solapas","jacket",5,"leather","#3f4248","#b7a5a0","Solapas marcadas y cierre oblicuo.")
+  ]);
+  addFashionSeason(2010,"spring",[
+    fashionLook("Blusa de panel semitransparente","blouse",5,"sheer","#d7c0bd","#f6e5dd","Panel con malla de puntos para practicar transparencias."),
+    fashionLook("Top lencero con encaje","tank-top",2,"slip","#c7a6ad","#f2e2e0","Tirantes, escote drapeado y borde festoneado."),
+    fashionLook("Vestido floral de silueta suave","short-dress",5,"floral","#b5b7a0","#d58d91","Motivos florales pequeños repartidos en el cuerpo.")
+  ]);
+  addFashionSeason(2010,"fall",[
+    fashionLook("Abrigo militar de doble botonadura","long-coat",5,"military","#676650","#cfb681","Doble botonadura, solapas y hombreras."),
+    fashionLook("Blusa con lazo al cuello","blouse",5,"bow-collar","#b6a3a0","#e8d6c9","Lazo protagonista y pinzas de sastrería."),
+    fashionLook("Chaqueta camel de líneas limpias","jacket",5,"minimal","#b28e6b","#e4cfac","Paneles estructurados y detalles mínimos.")
+  ]);
+  addFashionSeason(2011,"spring",[
+    fashionLook("Top de bloques cromáticos","fitted-shirt",4,"colorblock","#e07e79","#6b93b4","Paneles en contraste para explorar combinaciones de color."),
+    fashionLook("Chaqueta deportiva estructurada","jacket",5,"sporty","#6d8194","#d8d9cc","Bandas, cuello funcional y mangas de corte recto."),
+    fashionLook("Blusa plisada con cuello pequeño","blouse",5,"pleats","#d8bba2","#8e9e8e","Pliegues frontales y cuello redondeado.")
+  ]);
+  addFashionSeason(2011,"fall",[
+    fashionLook("Blusa joya con detalle central","blouse",5,"baroque","#73506d","#d9ba75","Ornamento original en el delantero, sin copiar estampados de marca."),
+    fashionLook("Blusa romántica de lazada","blouse",5,"bow-collar","#7d5e6f","#d7b2bd","Lazo de cuello y puños marcados."),
+    fashionLook("Blazer entallado de hombro claro","blazer",5,"tailored","#514d53","#c6a17e","Solapa estructurada, pinzas y bolsillos.")
+  ]);
+  addFashionSeason(2012,"spring",[
+    fashionLook("Blusa péplum con cintura marcada","blouse",4,"peplum","#dcaaa4","#6d8598","Cintura ceñida y pequeño vuelo inferior característico del péplum."),
+    fashionLook("Top corto de líneas limpias","crop-top",4,"minimal","#e8d7cf","#b2a0bd","Silueta recortada con pinzas sencillas."),
+    fashionLook("Chaqueta geométrica de paneles","jacket",5,"geometric","#7c8b9c","#e1ba61","Paneles angulares y cuello definido.")
+  ]);
+  addFashionSeason(2012,"fall",[
+    fashionLook("Blazer brocado ornamental","blazer",5,"baroque","#44394a","#d4b66d","Paneles ornamentales dibujados como guía para un patrón propio."),
+    fashionLook("Blusa oscura con cuello romántico","blouse",5,"lace","#55404e","#c9a3ad","Cuello detallado y puños estrechos."),
+    fashionLook("Abrigo entallado con línea princesa","long-coat",5,"tailored","#5b555e","#b6a08a","Entalle vertical y paneles de sastrería.")
+  ]);
+  addFashionSeason(2013,"spring",[
+    fashionLook("Blusa monocromática de corte limpio","blouse",5,"minimal","#eeeeeb","#555965","Paneles sencillos y contraste en blanco y negro."),
+    fashionLook("Top con recortes geométricos","fitted-shirt",4,"geometric","#555b68","#e1e0d7","Líneas gráficas y paneles asimétricos."),
+    fashionLook("Falda plisada con cintura alta","pleated-skirt",5,"pleats","#b2b7b4","#565a63","Cintura alta y pliegues estructurados.")
+  ]);
+  addFashionSeason(2013,"fall",[
+    fashionLook("Camisa de cuadros grunge","button-shirt",5,"plaid","#7d5359","#d0b58b","Cuadros originales y botonadura delantera."),
+    fashionLook("Chaqueta punk con solapas","jacket",5,"leather","#35353b","#aa9c98","Cierre oblicuo y remaches sugeridos."),
+    fashionLook("Abrigo oversize de hombro caído","long-coat",5,"sculptural","#77777a","#c2b5aa","Hombro caído y volumen amplio.")
+  ]);
+  addFashionSeason(2014,"spring",[
+    fashionLook("Top de paneles ligeros y recortes","blouse",5,"sheer","#ded9d5","#7d9a9b","Panel central semitransparente y costuras visibles."),
+    fashionLook("Chaqueta sporty de bandas","jacket",5,"sporty","#b9b9b0","#e07f7c","Franjas de manga y líneas laterales."),
+    fashionLook("Camisa corta de corte cuadrado","button-shirt",4,"minimal","#9fb3c1","#f0e3cf","Cuerpo corto, cuello claro y botonadura geométrica.")
+  ]);
+  addFashionSeason(2014,"fall",[
+    fashionLook("Abrigo recto con cuello protagonista","long-coat",5,"sculptural","#9b9690","#d8c7b2","Cuello amplio y paneles rectangulares."),
+    fashionLook("Blusa de cuero con costuras limpias","blouse",5,"leather","#5a4e50","#bc9e92","Paneles curvos y cierre parcial."),
+    fashionLook("Vestido mod de línea A","short-dress",5,"mod","#b8b2a7","#5d6475","Corte A y cuello redondeado inspirados en formas sesenteras.")
+  ]);
+  addFashionSeason(2015,"spring",[
+    fashionLook("Blusa setentera de cuello lazo","blouse",5,"retro70","#d7b88b","#8d6e5d","Cuello alargado con lazada y líneas verticales."),
+    fashionLook("Chaqueta suede con paneles","jacket",5,"retro70","#9c7556","#e0c6a5","Paneles curvos y bolsillos inspirados en prendas setenteras."),
+    fashionLook("Blusa de manga acampanada","blouse",5,"flare-sleeve","#d2a39e","#ece0d4","Mangas acampanadas y costuras curvas.")
+  ]);
+  addFashionSeason(2015,"fall",[
+    fashionLook("Suéter de cuello alto estilizado","sweater",5,"rib-knit","#6a6566","#c5b8a5","Punto acanalado y proporción vertical."),
+    fashionLook("Blusa con lazada y puño acampanado","blouse",5,"retro70","#b0a0ad","#e3c9ba","Lazada al cuello y puños amplios."),
+    fashionLook("Abrigo A-line de inspiración retro","long-coat",5,"mod","#777a7f","#c2a77e","Hombro definido, cuello simple y forma A.")
+  ]);
+
+  function updateHistoricalFashionLooks() {
+    const seasonKey = $("fashion-season").value;
+    const season = historicalFashionCatalog[seasonKey];
+    const select = $("fashion-look");
+    select.replaceChildren();
+    if (!season) return;
+    season.looks.forEach((look, index) => {
+      const option = document.createElement("option");
+      option.value = String(index);
+      option.textContent = (index + 1) + ". " + look.name;
+      select.append(option);
+    });
+    updateHistoricalFashionInfo();
+  }
+  function updateHistoricalFashionInfo() {
+    const season = historicalFashionCatalog[$("fashion-season").value];
+    if (!season) return;
+    const look = season.looks[Number($("fashion-look").value) || 0];
+    if (!look) return;
+    $("fashion-look-title").textContent = look.name;
+    $("fashion-look-note").textContent = look.note;
+    $("fashion-source").href = season.source;
+    $("fashion-source").textContent = "Consultar archivo de pasarela de " + season.label;
+  }
+
+  function drawHistoricalMotif(layer, look, isGuide) {
+    if (!isDrawingLayer(layer)) return;
+    const c = layer.drawBuffer.getContext("2d");
+    const unit = Math.min(1, state.width / 768, state.height / 1024);
+    const variant = Math.max(1, Math.min(8, Number(look.variant) || 1));
+    const wf = [1,.86,1.17,.98,1.06,1.12,.92,1.04][variant-1];
+    const hf = [1,.98,1.05,.76,1.16,1.02,.91,1.08][variant-1];
+    const accent = isGuide ? "#8792a3" : look.accent;
+    c.save();
+    c.scale(unit,unit);
+    c.translate(250,300); c.scale(wf,hf); c.translate(-250,-300);
+    c.lineJoin="round"; c.lineCap="round"; c.strokeStyle=accent; c.fillStyle=accent;
+    c.lineWidth=isGuide?2.1:3.2;
+    c.setLineDash([]);
+    const line=(points,width)=>{c.save();if(width)c.lineWidth=width;c.beginPath();points(c);c.stroke();c.restore();};
+    const dot=(x,y,r=3)=>{c.beginPath();c.arc(x,y,r,0,Math.PI*2);if(isGuide)c.stroke();else c.fill();};
+    const rect=(x,y,w,h,fill=false)=>{if(fill)c.fillRect(x,y,w,h);else c.strokeRect(x,y,w,h);};
+    const flower=(x,y,r=6)=>{for(let n=0;n<5;n++){const a=n*Math.PI*2/5;c.beginPath();c.arc(x+Math.cos(a)*r*.9,y+Math.sin(a)*r*.9,r*.45,0,Math.PI*2);if(isGuide)c.stroke();else c.fill();}dot(x,y,r*.28);};
+    switch(look.motif){
+      case "satin-drape":
+        line(p=>{p.moveTo(190,112);p.quadraticCurveTo(250,155,308,118);p.moveTo(200,130);p.quadraticCurveTo(250,174,297,136);p.moveTo(211,148);p.quadraticCurveTo(250,183,286,153);});
+        break;
+      case "y2k":
+        line(p=>{p.moveTo(207,155);p.lineTo(220,170);p.lineTo(220,270);p.moveTo(293,155);p.lineTo(280,170);p.lineTo(280,270);});
+        for(let x=225;x<=275;x+=25)dot(x,250,2.5);
+        break;
+      case "halter":
+        line(p=>{p.moveTo(230,110);p.lineTo(238,68);p.moveTo(270,110);p.lineTo(262,68);p.moveTo(238,68);p.quadraticCurveTo(250,58,262,68);p.moveTo(225,128);p.quadraticCurveTo(250,145,275,128);});
+        break;
+      case "sheer":
+        c.save();c.globalAlpha=isGuide?1:.22;c.beginPath();c.moveTo(220,130);c.lineTo(280,130);c.lineTo(285,220);c.lineTo(215,220);c.closePath();if(!isGuide)c.fill();c.stroke();c.restore();
+        for(let x=222;x<280;x+=12)for(let y=140;y<215;y+=12)dot(x,y,1.7);
+        break;
+      case "slip":
+        line(p=>{p.moveTo(214,107);p.lineTo(219,67);p.moveTo(286,107);p.lineTo(281,67);p.moveTo(210,112);p.quadraticCurveTo(250,147,290,112);p.moveTo(220,150);p.quadraticCurveTo(248,174,280,151);});
+        break;
+      case "boho":
+        line(p=>{p.moveTo(212,118);p.quadraticCurveTo(250,136,288,118);p.moveTo(214,127);p.quadraticCurveTo(250,145,286,127);});
+        for(let y=155;y<220;y+=22){flower(230,y,4);flower(270,y,4);}
+        for(let x=155;x<=345;x+=25){dot(x,250,2);dot(x,258,1.5);}
+        break;
+      case "military":
+        line(p=>{p.moveTo(180,100);p.lineTo(220,108);p.lineTo(215,123);p.lineTo(180,115);p.closePath();p.moveTo(320,100);p.lineTo(280,108);p.lineTo(285,123);p.lineTo(320,115);p.closePath();p.moveTo(220,100);p.lineTo(235,145);p.moveTo(280,100);p.lineTo(265,145);});
+        for(let y=155;y<278;y+=29){dot(238,y,3);dot(262,y,3);}
+        rect(200,190,28,30);rect(272,190,28,30);
+        line(p=>{p.moveTo(197,198);p.lineTo(228,198);p.moveTo(269,198);p.lineTo(300,198);});
+        break;
+      case "tailored":
+        line(p=>{p.moveTo(218,90);p.lineTo(242,132);p.lineTo(230,158);p.moveTo(282,90);p.lineTo(258,132);p.lineTo(270,158);p.moveTo(226,160);p.lineTo(222,240);p.moveTo(274,160);p.lineTo(278,240);});
+        rect(194,205,28,24);rect(278,205,28,24);
+        break;
+      case "ruffle":
+      case "lace":
+        line(p=>{p.moveTo(205,112);for(let x=205;x<=295;x+=10)p.quadraticCurveTo(x+5,105,x+10,112);});
+        for(let x=210;x<=290;x+=12)dot(x,119,2);
+        line(p=>{p.moveTo(205,272);for(let x=205;x<=295;x+=10)p.quadraticCurveTo(x+5,265,x+10,272);});
+        if(look.motif==="ruffle")line(p=>{p.moveTo(160,135);p.quadraticCurveTo(180,155,160,175);p.moveTo(340,135);p.quadraticCurveTo(320,155,340,175);});
+        break;
+      case "tie-front":
+        line(p=>{p.moveTo(250,125);p.lineTo(230,150);p.lineTo(250,175);p.lineTo(270,150);p.closePath();p.moveTo(230,150);p.lineTo(210,137);p.lineTo(207,168);p.lineTo(230,150);p.moveTo(270,150);p.lineTo(290,137);p.lineTo(293,168);p.lineTo(270,150);});
+        break;
+      case "graphic":
+      case "geometric":
+        c.save();if(!isGuide){c.globalAlpha=.28;c.beginPath();c.moveTo(205,135);c.lineTo(250,135);c.lineTo(218,210);c.lineTo(205,210);c.closePath();c.fill();c.beginPath();c.moveTo(250,135);c.lineTo(295,135);c.lineTo(295,210);c.lineTo(282,210);c.closePath();c.fill();}c.restore();
+        line(p=>{p.moveTo(205,135);p.lineTo(250,210);p.lineTo(295,135);p.moveTo(215,218);p.lineTo(285,218);p.moveTo(250,135);p.lineTo(250,218);});
+        break;
+      case "denim":
+        line(p=>{p.moveTo(190,120);p.quadraticCurveTo(250,153,310,120);p.moveTo(205,128);p.lineTo(215,150);p.lineTo(285,150);p.lineTo(295,128);p.moveTo(212,165);p.lineTo(235,165);p.lineTo(235,195);p.lineTo(212,195);p.closePath();p.moveTo(265,165);p.lineTo(288,165);p.lineTo(288,195);p.lineTo(265,195);p.closePath();});
+        for(let y=165;y<235;y+=28)dot(250,y,2.4);
+        break;
+      case "utility":
+        rect(198,170,36,42);rect(266,170,36,42);
+        line(p=>{p.moveTo(198,180);p.lineTo(234,180);p.moveTo(266,180);p.lineTo(302,180);p.moveTo(207,147);p.lineTo(207,255);p.moveTo(293,147);p.lineTo(293,255);});
+        break;
+      case "leather":
+        line(p=>{p.moveTo(210,92);p.lineTo(240,130);p.lineTo(220,150);p.moveTo(290,92);p.lineTo(260,130);p.lineTo(280,150);p.moveTo(220,151);p.lineTo(280,265);});
+        for(let x=220;x<250;x+=12)dot(x,180,2.5);
+        break;
+      case "colorblock":
+        c.save();if(!isGuide){c.globalAlpha=.32;c.beginPath();c.moveTo(250,135);c.lineTo(295,135);c.lineTo(295,245);c.lineTo(250,220);c.closePath();c.fill();c.beginPath();c.moveTo(205,135);c.lineTo(250,135);c.lineTo(250,220);c.lineTo(205,245);c.closePath();c.fill();}c.restore();
+        line(p=>{p.moveTo(250,135);p.lineTo(250,240);p.moveTo(205,190);p.lineTo(295,190);});
+        break;
+      case "sporty":
+        for(let offset=0;offset<3;offset++)line(p=>{p.moveTo(135,132+offset*9);p.lineTo(177,148+offset*9);p.moveTo(323,148+offset*9);p.lineTo(365,132+offset*9);});
+        line(p=>{p.moveTo(206,180);p.lineTo(206,250);p.moveTo(294,180);p.lineTo(294,250);});
+        break;
+      case "asym":
+        line(p=>{p.moveTo(198,100);p.lineTo(296,112);p.lineTo(280,139);p.moveTo(280,139);p.quadraticCurveTo(255,160,220,145);p.moveTo(217,146);p.quadraticCurveTo(228,158,238,168);p.moveTo(226,153);p.quadraticCurveTo(240,166,252,175);});
+        break;
+      case "peplum":
+        line(p=>{p.moveTo(204,208);p.quadraticCurveTo(250,226,296,208);p.moveTo(204,212);p.quadraticCurveTo(180,232,175,254);p.quadraticCurveTo(250,279,325,254);p.quadraticCurveTo(320,232,296,212);});
+        break;
+      case "pleats":
+        line(p=>{p.moveTo(214,136);p.lineTo(214,255);p.moveTo(230,136);p.lineTo(230,255);p.moveTo(246,136);p.lineTo(246,255);p.moveTo(262,136);p.lineTo(262,255);p.moveTo(278,136);p.lineTo(278,255);p.moveTo(294,136);p.lineTo(294,255);});
+        break;
+      case "plaid":
+        c.save();c.beginPath();c.rect(200,145,100,105);c.clip();
+        for(let x=205;x<=300;x+=19)line(p=>{p.moveTo(x,140);p.lineTo(x,255);},isGuide?1.3:2.1);
+        for(let y=150;y<=255;y+=18)line(p=>{p.moveTo(195,y);p.lineTo(305,y);},isGuide?1.3:2.1);
+        c.restore();
+        break;
+      case "empire":
+        line(p=>{p.moveTo(205,183);p.quadraticCurveTo(250,202,295,183);p.moveTo(214,130);p.lineTo(225,182);p.moveTo(286,130);p.lineTo(275,182);});
+        for(let x=220;x<=280;x+=20)line(p=>{p.moveTo(x,205);p.quadraticCurveTo(x-5,226,x,244);});
+        break;
+      case "puff":
+        line(p=>{p.moveTo(170,120);p.quadraticCurveTo(150,135,165,160);p.moveTo(178,125);p.quadraticCurveTo(163,143,176,162);p.moveTo(330,120);p.quadraticCurveTo(350,135,335,160);p.moveTo(322,125);p.quadraticCurveTo(337,143,324,162);});
+        line(p=>{p.moveTo(205,115);p.quadraticCurveTo(250,145,295,115);});
+        break;
+      case "sculptural":
+        line(p=>{p.moveTo(175,100);p.lineTo(205,88);p.lineTo(223,115);p.lineTo(205,130);p.moveTo(325,100);p.lineTo(295,88);p.lineTo(277,115);p.lineTo(295,130);});
+        line(p=>{p.moveTo(216,147);p.lineTo(284,147);p.moveTo(224,155);p.lineTo(276,155);});
+        break;
+      case "layered":
+        line(p=>{p.moveTo(205,130);p.lineTo(250,160);p.lineTo(295,130);p.moveTo(205,145);p.lineTo(250,175);p.lineTo(295,145);p.moveTo(215,190);p.lineTo(285,190);});
+        break;
+      case "minimal":
+        line(p=>{p.moveTo(220,140);p.lineTo(230,260);p.moveTo(280,140);p.lineTo(270,260);p.moveTo(240,145);p.lineTo(240,245);p.moveTo(260,145);p.lineTo(260,245);});
+        break;
+      case "bow-collar":
+        line(p=>{p.moveTo(226,96);p.lineTo(250,122);p.lineTo(274,96);p.lineTo(269,127);p.lineTo(250,137);p.lineTo(231,127);p.closePath();p.moveTo(226,96);p.lineTo(205,83);p.lineTo(205,117);p.lineTo(226,96);p.moveTo(274,96);p.lineTo(295,83);p.lineTo(295,117);p.lineTo(274,96);});
+        for(let y=160;y<250;y+=30)dot(250,y,2.5);
+        break;
+      case "baroque":
+        line(p=>{p.moveTo(213,170);p.bezierCurveTo(190,145,232,135,238,160);p.bezierCurveTo(245,183,214,190,220,211);p.bezierCurveTo(226,231,256,225,259,204);p.bezierCurveTo(262,181,290,185,287,158);p.bezierCurveTo(284,137,260,146,268,166);});
+        flower(225,240,5);flower(275,240,5);
+        break;
+      case "retro70":
+        line(p=>{p.moveTo(215,96);p.lineTo(240,123);p.lineTo(232,145);p.lineTo(210,120);p.moveTo(285,96);p.lineTo(260,123);p.lineTo(268,145);p.lineTo(290,120);p.moveTo(250,127);p.lineTo(250,245);});
+        line(p=>{p.moveTo(240,127);p.lineTo(250,151);p.lineTo(260,127);});
+        break;
+      case "flare-sleeve":
+        line(p=>{p.moveTo(176,120);p.quadraticCurveTo(155,167,130,190);p.moveTo(184,125);p.quadraticCurveTo(170,170,147,200);p.moveTo(324,120);p.quadraticCurveTo(345,167,370,190);p.moveTo(316,125);p.quadraticCurveTo(330,170,353,200);});
+        break;
+      case "mod":
+        line(p=>{p.moveTo(220,102);p.quadraticCurveTo(250,135,280,102);p.moveTo(220,102);p.quadraticCurveTo(250,82,280,102);});
+        for(let y=156;y<255;y+=25){dot(250,y,3.2);}
+        break;
+      case "metallic":
+        line(p=>{p.moveTo(210,130);p.lineTo(250,150);p.lineTo(290,130);p.lineTo(280,178);p.lineTo(220,178);p.closePath();p.moveTo(220,190);p.lineTo(280,190);p.moveTo(230,205);p.lineTo(270,205);});
+        for(let x=222;x<280;x+=14)dot(x,224,2.5);
+        break;
+      case "crochet":
+        c.save();c.beginPath();c.rect(210,140,80,95);c.clip();
+        for(let y=140;y<240;y+=15)for(let x=210;x<295;x+=16)line(p=>{p.moveTo(x,y+7);p.lineTo(x+8,y);p.lineTo(x+16,y+7);p.lineTo(x+8,y+14);p.closePath();},isGuide?1.2:1.8);
+        c.restore();
+        break;
+      default:
+        line(p=>{p.moveTo(215,150);p.lineTo(215,245);p.moveTo(285,150);p.lineTo(285,245);p.moveTo(220,155);p.lineTo(280,155);});
+    }
+    c.restore();
+  }
+  function createHistoricalFashionPiece(mode) {
+    const season = historicalFashionCatalog[$("fashion-season").value];
+    if (!season) { setNotice("Selecciona una temporada del archivo.", true); return; }
+    const look = season.looks[Number($("fashion-look").value) || 0];
+    if (!look) { setNotice("Selecciona una propuesta de diseño.", true); return; }
+    $("garment-template").value = look.template;
+    $("garment-variant").value = String(look.variant);
+    if (mode !== "guide") $("design-color").value = look.color;
+    const layer = createGarmentTemplate(look.template, mode === "guide" ? "guide" : "filled");
+    if (!layer) return;
+    layer.name = (mode === "guide" ? "Guía histórica — " : "Diseño histórico — ") + season.label + " — " + look.name;
+    drawHistoricalMotif(layer, look, mode === "guide");
+    syncDrawingLayer(layer);
+    renderLayers(); renderInspector(); drawStage();
+    setNotice((mode === "guide" ? "Guía histórica gris" : "Diseño original con color") + " creada: " + look.name + ". Inspiración: " + season.label + ". Ajusta tamaño y posición para adaptarla a tu personaje.");
+  }
+  function initHistoricalFashionArchive() {
+    const select = $("fashion-season");
+    Object.values(historicalFashionCatalog).forEach(season => {
+      const option = document.createElement("option");
+      option.value = season.key;
+      option.textContent = season.label;
+      select.append(option);
+    });
+    select.value = "2015-spring";
+    updateHistoricalFashionLooks();
+    select.addEventListener("change", updateHistoricalFashionLooks);
+    $("fashion-look").addEventListener("change", updateHistoricalFashionInfo);
+    $("create-fashion-guide").addEventListener("click", () => createHistoricalFashionPiece("guide"));
+    $("create-fashion-color").addEventListener("click", () => createHistoricalFashionPiece("color"));
+  }
+
+function mapStagePointToLayer(layer,point){
     const dx=point.x-layer.x,dy=point.y-layer.y,radians=-layer.rotation*Math.PI/180;
     let rx=dx*Math.cos(radians)-dy*Math.sin(radians),ry=dx*Math.sin(radians)+dy*Math.cos(radians);
     if(layer.flipX)rx=-rx;if(layer.flipY)ry=-ry;
@@ -942,5 +1330,5 @@
     updateCanvasSize(); renderLayers(); renderInspector();
     setNotice("Proyecto nuevo. Puedes añadir referencias, crear prendas desde plantillas o dibujar una pieza desde cero.");
   });
-  updateCanvasSize(); renderLayers(); renderInspector(); refreshAssets();
+  updateCanvasSize(); renderLayers(); renderInspector(); initHistoricalFashionArchive(); refreshAssets();
 })();
