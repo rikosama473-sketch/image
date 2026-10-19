@@ -44,3 +44,17 @@
 .garment-row .button{white-space:normal;min-height:36px}
 .garment-row .muted{flex-basis:100%;line-height:1.5}
 @media(max-width:700px){.garment-row .field{width:100%}.garment-row .button{width:100%}}
+
+/* Curated historical women's fashion archive */
+.historical-fashion-panel{display:grid;gap:10px;padding:12px;border:1px solid #4b5364;border-radius:10px;background:linear-gradient(135deg,#171d28,#121720)}
+.historical-fashion-head{display:grid;gap:4px}
+.historical-fashion-head strong{font-size:13px;line-height:1.45}
+.historical-fashion-controls{display:grid;grid-template-columns:minmax(160px,1fr) minmax(180px,1.35fr);gap:9px;align-items:end}
+.historical-fashion-controls .field{min-width:0;margin:0}
+.historical-fashion-controls select{width:100%;min-width:0}
+.historical-fashion-controls .button{width:100%;min-height:38px}
+.historical-fashion-description{border-top:1px solid var(--line);padding-top:9px;display:grid;gap:5px}
+.historical-fashion-description strong{font-size:12px}
+.historical-fashion-description p{margin:0;line-height:1.5}
+.historical-fashion-description a{font-size:12px;color:#a8c7ff;text-decoration:underline;width:fit-content}
+@media(max-width:700px){.historical-fashion-controls{grid-template-columns:1fr}.historical-fashion-controls .button{width:100%}}
