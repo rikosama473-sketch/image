@@ -19,7 +19,7 @@ class HairstyleVariantPromptTests(unittest.TestCase):
 
     def test_prompts_prioritize_hair_and_preserve_identity(self):
         prompt = BASE_INSTRUCTIONS.lower()
-        for required_phrase in ("change only the hairstyle", "preserve the face", "hair color", "no nudity", "dominant variable"):
+        for required_phrase in ("change only the hairstyle", "preserve the exact recognizable face", "original line-art weight", "do not change clothing", "only intended change"):
             with self.subTest(phrase=required_phrase):
                 self.assertIn(required_phrase, prompt)
 
@@ -29,12 +29,13 @@ class HairstyleVariantPromptTests(unittest.TestCase):
             source = root / "source.png"
             crop = root / "reference-head-crop.png"
             Image.new("RGB", (600, 1200), "white").save(source)
-            data_url, metadata = prepare_head_reference(source, crop)
+            data_url, metadata = prepare_head_reference(source, crop, 0.70)
             self.assertTrue(data_url.startswith("data:image/png;base64,"))
             self.assertTrue(crop.is_file())
             with Image.open(crop) as output:
                 self.assertEqual(output.size, (1024, 1024))
-            self.assertEqual(metadata["crop_box_pixels"], [12, 0, 588, 240])
+            self.assertEqual(metadata["crop_box_pixels"], [12, 0, 588, 420])
+            self.assertEqual(metadata["height_ratio"], 0.70)
             self.assertEqual(metadata["api_input_dimensions"], [1024, 1024])
 
     def test_original_prompt_is_recovered_when_embedded_metadata_exists(self):
