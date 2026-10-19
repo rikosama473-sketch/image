@@ -1,28 +1,31 @@
 # IMAGE — editor modular de personajes 2D
 
-IMAGE prioriza ahora un **editor local de personajes anime por capas**. Permite explorar una carpeta de imágenes propia, añadir imágenes al lienzo, mover y transformar capas, recortar piezas reutilizables, guardar proyectos y exportar PNG transparente. No necesita GPU, PyTorch, modelos generativos ni LoRA.
+IMAGE prioriza un **taller local de diseño de personajes anime por capas**. Explora tus imágenes, compón referencias, crea piezas dibujadas desde cero y personaliza prendas sin modificar los archivos fuente. No necesita GPU, PyTorch ni LoRA.
 
-El antiguo motor de difusión queda como experimento secundario, no como objetivo principal. La primera versión no pretende aislar automáticamente cada extremidad de cualquier ilustración: el recorte, el retoque de máscaras y los puntos de anclaje se desarrollarán por etapas. Los originales se leen sin modificarlos y la aplicación escucha solo en localhost.
-
-## Ejecutar el editor
+## Ejecutar
 
 Con Python 3.10 o posterior, desde la raíz del repositorio:
 
 ~~~powershell
-python ml/character_editor_server.py --assets-dir "D:\\Carpeta\\Con\\Mis\\Imagenes" --open-browser
+python ml/character_editor_server.py --assets-dir "D:\Carpeta\Con\Mis\Imagenes" --open-browser
 ~~~
 
-En Windows también puedes abrir tools/character-editor/Start-Character-Editor.bat y seleccionar tu carpeta de imágenes. El manual está en docs/CHARACTER_EDITOR_GUIDE.md.
+En Windows también puedes abrir `tools/character-editor/Start-Character-Editor.bat` y seleccionar tu carpeta. Consulta [la guía del editor](docs/CHARACTER_EDITOR_GUIDE.md).
 
-## Capacidades actuales
+## Capacidades del taller
 
-- Biblioteca local con búsqueda y paginación.
-- Capas que se pueden mover, redimensionar, girar, voltear, ocultar y reordenar.
-- Recorte rectangular para crear una nueva pieza; eliminación aproximada de un fondo uniforme como opción.
-- Guardado/carga de proyecto JSON y exportación PNG transparente.
-- No se modifican los originales ni se suben archivos a servicios remotos.
+- Biblioteca local con búsqueda y paginación de imágenes.
+- Capas de referencia y piezas que puedes mover, escalar, girar, voltear, ocultar, duplicar y reordenar.
+- **Dibujo original:** pincel, borrador no destructivo respecto de los originales, líneas, rectángulos, elipses con relleno opcional y cubo de pintura.
+- **Plantillas de prendas:** camiseta, chaqueta, falda, pantalones y capa/manto en capas transparentes editables; recolorea zonas y dibuja costuras, cintas, mangas y adornos.
+- Recorte de piezas y limpieza manual de máscaras o de fondos uniformes.
+- Guardado/carga de proyectos JSON y exportación PNG con transparencia.
 
-Una colección grande ayuda a encontrar referencias y fragmentos, pero no convierte automáticamente ilustraciones completas en piezas anatómicas consistentes. El pelo puede cubrir la frente, las mangas pueden ocultar brazos y el torso puede tapar partes del cuerpo. Lo visible se puede recortar y ajustar; lo oculto requerirá retoque o dibujo. Para el detalle de uso y los límites, consulta docs/CHARACTER_EDITOR_GUIDE.md.
+Las capas dibujables y prendas se guardan dentro del proyecto. Las capas vinculadas a imágenes usan rutas relativas de la carpeta elegida; conserva esa carpeta para reabrirlas. La aplicación trabaja solo en localhost, no sube imágenes y mantiene los originales en solo lectura.
+
+## Límites conocidos
+
+Este es un editor raster 2D, no un ilustrador vectorial ni una herramienta profesional de patronaje. Puedes crear y personalizar diseños sencillos con dibujo y formas, pero el editor no genera automáticamente anatomía nueva ni reconstruye partes ocultas por pelo/ropa. La segmentación automática avanzada y los puntos de anclaje para ajustar piezas siguen pendientes.
 
 ## Referencias de diseño
 
