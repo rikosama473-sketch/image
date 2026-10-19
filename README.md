@@ -92,3 +92,7 @@ Los PNG y archivos JSON asociados se guardan en `outputs/generated/`, ignorados 
 - No guardar checkpoints pesados en Git; usar carpetas locales ignoradas.
 - No afirmar que una medida de memoria o una calidad se cumplen hasta medirlas.
 - Mantener el proyecto separado de WordWaifu y CharacterWord.
+
+## Variaciones de peinados desde GitHub
+
+El flujo manual de [referencias de peinados](docs/HAIRSTYLE_VARIANT_PIPELINE.md) genera seis variantes por ejecución, registra los prompts y metadatos de origen cuando existen, crea una lámina de contacto y propone las imágenes mediante un Pull Request. No borra ni sobrescribe originales. Requiere configurar el secreto `OPENAI_API_KEY` en GitHub Actions; el uso de la API puede generar costes.
