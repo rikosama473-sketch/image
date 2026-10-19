@@ -572,7 +572,7 @@
   addFashionSeason(2001,"fall",[
     fashionLook("Chaqueta de cuero de corte recto","jacket",2,"leather","#795d4b","#e3c9a4","Cierre diagonal y paneles limpios inspirados en sastrería de cuero."),
     fashionLook("Cárdigan corto de punto","sweater",4,"rib-knit","#736c81","#e5d5da","Largo corto, líneas de canalé y botonadura sencilla."),
-    fashionLook("Vestido lencero de caída recta","slip-dress",5,"slip","#463d50","#c1a9b9","Tirantes finos, escote cowl y caída vertical de inspiración lencera.")
+    fashionLook("Vestido lencero de caída recta","short-dress",5,"slip","#463d50","#c1a9b9","Tirantes finos, escote cowl y caída vertical de inspiración lencera.")
   ]);
   addFashionSeason(2002,"spring",[
     fashionLook("Blusa bohemia fruncida","blouse",5,"boho","#d6b987","#975f45","Escote fruncido, detalles florales pequeños y puños sugeridos."),
