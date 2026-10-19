@@ -1002,7 +1002,7 @@ function mapStagePointToLayer(layer,point){
       id: crypto.randomUUID(),
       name: (title + " — " + sourceLayer.name).slice(0, 150),
       path: "", dataUrl: "",
-      category: sourceLayer.category === "reference" ? ($("design-category").value || "other") : sourceLayer.category,
+      category: sourceLayer.category || "other",
       editableDrawing: true, isGarmentGuide: false, drawBuffer: canvas,
       x: sourceLayer.x, y: sourceLayer.y, width: sourceLayer.width, height: sourceLayer.height,
       rotation: sourceLayer.rotation, opacity: sourceLayer.opacity,
@@ -1167,11 +1167,11 @@ function mapStagePointToLayer(layer,point){
     const layer = selectedLayer();
     ["layer-category", "layer-x", "layer-y", "layer-width", "layer-height", "layer-rotation", "layer-opacity"].forEach(id => $(id).disabled = !layer);
     $("selected-layer-name").textContent = layer ? layer.name : "Selecciona una capa";
+    syncProAdjustmentControls(layer);
     if (!layer) return;
     $("layer-category").value = layer.category; $("layer-x").value = Math.round(layer.x); $("layer-y").value = Math.round(layer.y);
     $("layer-width").value = Math.round(layer.width); $("layer-height").value = Math.round(layer.height);
     $("layer-rotation").value = Math.round(layer.rotation); $("layer-opacity").value = Math.round(layer.opacity * 100);
-    syncProAdjustmentControls(layer);
   }
   function updateSelectedFromControls() {
     const layer = selectedLayer(); if (!layer) return;
