@@ -133,3 +133,15 @@ Los PNG y archivos JSON asociados se guardan en `outputs/generated/`, ignorados 
 ## Primera pieza modular de cabello
 
 `assets/parts/hair/cabello_01.svg` añade una coleta alta castaña como capa vectorial transparente alineada al lienzo de `12.png`. El SVG no altera la imagen original y se puede mover, escalar y ocultar en IMAGE. Su procedencia y los límites de alineación están documentados en `assets/parts/hair/cabello_01.json` y `assets/parts/README.md`. El servidor local indexa SVG con una política de sandbox; no se aprueba para entrenamiento sin revisión de derechos.
+
+
+## Motor local de edición de AnimeArt
+
+IMAGE reutiliza tres módulos del editor propio [AnimeArt](https://github.com/jonhararagi/animeart), sin instalar un modelo generativo pesado ni enviar imágenes a la red:
+
+- `tools/character-editor/pro-editing.js`: eliminación de fondo conectado con tolerancia, suavizado y protección de línea; recoloración en rango con preservación de luces/sombras; ajustes de brillo, contraste, saturación, tono, temperatura, matiz y desenfoque.
+- `Crear copia editable para retocar cabello`: rasteriza la capa seleccionada a una nueva capa editable y oculta la fuente. El archivo original no se sobrescribe. Usa el borrador alfa en esa copia para retirar partes del peinado antes de añadir mechones nuevos.
+- Las operaciones de fondo/color crean otra capa editable; puedes ocultarla o eliminarla y volver a mostrar el original. Los ajustes visuales quedan guardados en el proyecto JSON.
+- Por seguridad de memoria, la interfaz limita cada operación de píxeles a 4 megapíxeles. Recorta/reduce la imagen antes de operar sobre archivos mayores.
+- No es segmentación semántica por IA: los algoritmos funcionan mejor con fondos relativamente uniformes y una buena muestra del color. La protección de tinta reduce el riesgo, pero no garantiza bordes perfectos.
+- Pruebas automatizadas en `tests/test_pro_editing.mjs`; el archivo original de AnimeArt sigue siendo la fuente independiente y no se modifica por copiar estos módulos.
