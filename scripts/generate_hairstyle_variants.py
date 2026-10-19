@@ -151,6 +151,63 @@ def prepare_head_reference(source_path, target_path):
     }
 
 
+def infer_visual_base_prompt(head_data_url, requests):
+    """Infer a reusable identity prompt from the cropped reference, not the original generation prompt."""
+    payload = {
+        "model": "gpt-6-luna",
+        "messages": [
+            {
+                "role": "system",
+                "content": (
+                    "Describe an illustrated character for reusable image generation. Treat the image as a cropped "
+                    "identity reference. Do not name a character, franchise, LoRA, checkpoint, or claim this is the "
+                    "original generation prompt. Return only stable traits that should remain across hairstyle variants: "
+                    "visible facial features, eye color, glasses or head accessories, hair color (not haircut or length), "
+                    "color palette, line art and shading. Exclude hairstyle shape, length, fringe, parting, braids, ponytails "
+                    "and updos because these will be changed. Do not invent unseen details. Return a concise prompt in English "
+                    "as JSON with keys visual_base_prompt (string), stable_traits (array of strings), uncertainties (array of strings)."
+                ),
+            },
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": "Build a stable identity description from this cropped head reference. Exclude the hairstyle itself."},
+                    {"type": "image_url", "image_url": {"url": head_data_url, "detail": "high"}},
+                ],
+            },
+        ],
+        "response_format": {"type": "json_object"},
+        "max_completion_tokens": 900,
+    }
+    try:
+        response = requests.post(
+            "https://api.openai.com/v1/chat/completions",
+            headers={"Authorization": "Bearer " + os.environ["OPENAI_API_KEY"], "Content-Type": "application/json"},
+            json=payload,
+            timeout=(30, 180),
+        )
+    except requests.RequestException as exc:
+        fail("Visual prompt extraction request failed: " + str(exc))
+    if not response.ok:
+        fail("Vision API returned HTTP " + str(response.status_code) + ": " + response.text[:1400])
+    try:
+        raw = response.json()["choices"][0]["message"]["content"]
+        result = json.loads(raw)
+        base_prompt = str(result.get("visual_base_prompt", "")).strip()
+        if not base_prompt:
+            fail("Vision analysis returned an empty visual_base_prompt.")
+        return {
+            "model": "gpt-6-luna",
+            "visual_base_prompt": base_prompt[:8000],
+            "stable_traits": [str(item)[:300] for item in result.get("stable_traits", [])[:30]],
+            "uncertainties": [str(item)[:500] for item in result.get("uncertainties", [])[:20]],
+            "is_original_generation_prompt": False,
+            "review_status": "needs_manual_review",
+        }
+    except (ValueError, KeyError, IndexError, TypeError) as exc:
+        fail("Could not parse the visual prompt response as JSON: " + str(exc))
+
+
 def render_contact_sheet(image_paths, target):
     columns, cell_w, image_h, label_h, margin = 3, 400, 560, 48, 18
     rows = (len(image_paths) + columns - 1) // columns
@@ -211,6 +268,8 @@ def main():
     crop_path = out_dir / "reference-head-crop.png"
     head_data_url, crop_metadata = prepare_head_reference(source_path, crop_path)
     crop_sha = hashlib.sha256(crop_path.read_bytes()).hexdigest()
+    visual_analysis = infer_visual_base_prompt(head_data_url, requests)
+    visual_base_prompt = visual_analysis["visual_base_prompt"]
     headers = {"Authorization": "Bearer " + api_key, "Content-Type": "application/json"}
     created, manifest_variants = [], []
     prompt_sections = [
@@ -227,10 +286,11 @@ def main():
     if embedded_prompt:
         prompt_sections += ["## Prompt recovered from embedded source metadata", "", "~~~text", embedded_prompt, "~~~", ""]
     else:
-        prompt_sections += ["## Source metadata", "", "No recognized embedded source prompt was found. No source prompt has been invented.", ""]
+        prompt_sections += ["## Source metadata", "", "No recognized embedded source prompt was found. No original prompt is claimed.", ""]
+    prompt_sections += ["## Candidate stable-character prompt inferred from the cropped image", "", "This is a visual reconstruction, not the original image-generation prompt; it needs human review.", "", "~~~text", visual_base_prompt, "~~~", ""]
     variants = STYLE_PACKS[style_pack]
     for index, (slug, hair_description) in enumerate(variants, start=1):
-        prompt = BASE_INSTRUCTIONS + " Specific hairstyle for this version: " + hair_description + ". Return one polished image."
+        prompt = BASE_INSTRUCTIONS + " Stable character identity prompt, inferred from the reference and excluding the hairstyle: " + visual_base_prompt + ". Specific hairstyle for this version: " + hair_description + ". Return one polished image."
         payload = {
             "model": MODEL, "images": [{"image_url": head_data_url}], "prompt": prompt,
             "size": "1024x1024", "quality": "medium", "output_format": "webp", "n": 1,
@@ -278,7 +338,8 @@ def main():
             "raw_url": source_url, "sha256": source_sha, "width": width, "height": height,
             "head_crop_path": str(crop_path.relative_to(root)), "head_crop_sha256": crop_sha,
             "head_crop": crop_metadata,
-            "api_input_note": "Only reference-head-crop.png is sent to the image edit API; the full original image is not sent.",
+            "visual_analysis": visual_analysis,
+            "api_input_note": "Only reference-head-crop.png is sent to the image edit API and vision analysis; the full original image is not sent.",
             "metadata_keys": metadata_keys, "embedded_prompt_found": bool(embedded_prompt),
             "embedded_prompt": embedded_prompt or None,
         },
@@ -304,6 +365,11 @@ def main():
             "source_sha256": source_sha,
             "source_prompt": embedded_prompt or None,
             "prompt_status": "recovered_from_embedded_metadata" if embedded_prompt else "not_found_in_embedded_metadata",
+            "visual_base_prompt": visual_base_prompt,
+            "visual_prompt_model": visual_analysis["model"],
+            "visual_prompt_status": "inferred_from_cropped_image_not_original_prompt",
+            "stable_traits": visual_analysis["stable_traits"],
+            "uncertainties": visual_analysis["uncertainties"],
             "run_id": str(run_id),
             "head_crop_path": str(crop_path.relative_to(root)),
             "review_status": "needs_manual_review",
