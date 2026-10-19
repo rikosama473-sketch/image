@@ -21,7 +21,7 @@ class AppRootTests(unittest.TestCase):
             (bundle / "tools" / "character-editor").mkdir(parents=True)
             root = editor.resolve_app_root(Path("X:/ignored/ml/script.py"), frozen_root=bundle)
             self.assertEqual(root, bundle.resolve())
-            self.assertEqual(root / "tools" / "character-editor", bundle / "tools" / "character-editor")
+            self.assertEqual((root / "tools" / "character-editor").resolve(), (bundle / "tools" / "character-editor").resolve())
 
 
 class AssetCatalogTests(unittest.TestCase):
