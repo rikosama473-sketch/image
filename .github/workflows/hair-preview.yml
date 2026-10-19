@@ -54,6 +54,10 @@ jobs:
             echo "The IMAGE screenshots are unchanged; no repository commit is needed."
           else
             git commit -m "Save IMAGE editor and AnimeArt editing-panel screenshots"
+            # Another workflow or documentation commit may advance the branch while
+            # Chromium is running. Rebase this screenshot-only commit before pushing.
+            git fetch origin "${GITHUB_REF_NAME}"
+            git rebase "origin/${GITHUB_REF_NAME}"
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
       - name: Upload character, full app and advanced panel screenshots
