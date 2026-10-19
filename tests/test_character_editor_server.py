@@ -141,6 +141,14 @@ class HTTPHandlerTests(unittest.TestCase):
         self.assertIn("text/html", headers.get("Content-Type", ""))
         self.assertIn(b"Editor modular de personajes", content)
 
+    def test_pro_editing_engine_is_served(self) -> None:
+        status, headers, content = self.get("/pro-editing.js")
+        self.assertEqual(status, 200)
+        self.assertIn("javascript", headers.get("Content-Type", ""))
+        self.assertIn(b"removeConnectedBackground", content)
+        self.assertIn(b"replaceColorRange", content)
+        self.assertIn(b"layerAdjustmentsToCanvasFilter", content)
+
     def test_hair_preview_page_and_assets_are_served(self) -> None:
         status, headers, content = self.get("/hair-preview.html")
         self.assertEqual(status, 200)
