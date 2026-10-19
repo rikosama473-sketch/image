@@ -164,12 +164,15 @@
     return layer;
   }
   function setDesignTool(tool) {
+    const wasGarmentGuideSelected = Boolean(selectedLayer() && selectedLayer().isGarmentGuide);
     state.designTool = tool;
     document.querySelectorAll("[data-tool]").forEach(button => button.classList.toggle("active",button.dataset.tool===tool));
     stage.style.cursor = tool === "move" ? "grab" : tool === "bucket" ? "copy" : "crosshair";
     if (tool !== "move" && (!isDrawingLayer(selectedLayer()) || selectedLayer().isGarmentGuide)) getOrCreateDrawingLayer();
     const labels = { move:"Modo mover.", pen:"Pincel: dibuja en la capa transparente.", eraser:"Borrador: solo elimina pintura de la capa de diseño.", line:"Línea: arrastra para trazarla.", rect:"Rectángulo: arrastra para dibujar.", ellipse:"Elipse: arrastra para dibujar.", bucket:"Relleno: haz clic dentro de una zona cerrada o de color uniforme." };
-    setNotice(labels[tool] || "Herramienta seleccionada.");
+    setNotice(wasGarmentGuideSelected && tool !== "move"
+      ? "Creé una capa transparente encima de la guía gris. Dibuja en ella; el bosquejo original permanece intacto."
+      : labels[tool] || "Herramienta seleccionada.");
   }
 
   const garmentCatalog = {
