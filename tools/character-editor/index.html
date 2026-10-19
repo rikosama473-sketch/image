@@ -6,7 +6,8 @@
   <meta name="color-scheme" content="dark">
   <title>IMAGE — Editor modular de personajes</title>
   <link rel="stylesheet" href="/app.css">
-  <script src="/app.js" defer></script>
+  <script src="/pro-editing.js" defer></script>
+<script src="/app.js" defer></script>
 </head>
 <body>
   <header class="topbar">
@@ -102,6 +103,40 @@
         </div>
         <div class="button-row"><button id="flip-layer" class="button secondary" disabled>Voltear ↔</button><button id="crop-layer" class="button primary" disabled>Recortar pieza</button></div>
         <div class="button-row"><button id="send-back" class="button secondary" disabled>Enviar atrás</button><button id="bring-front" class="button secondary" disabled>Traer delante</button></div>
+      </section>
+      <section class="pro-edit-panel" id="pro-edit-panel" aria-label="Herramientas profesionales de edición local">
+        <span class="eyebrow">04 / EDICIÓN AVANZADA</span>
+        <h2>Motor local de AnimeArt</h2>
+        <p class="muted small">Reutiliza herramientas de tu otro editor: protección de líneas, tolerancia de color, suavizado de bordes y filtros por capa. No descarga modelos ni modifica archivos originales; crea una capa de edición reversible.</p>
+        <button id="pro-rasterize-copy" class="button secondary pro-full-button" type="button" disabled>Crear copia editable para retocar cabello</button>
+        <details class="pro-tool-group" open>
+          <summary>Quitar fondo con protección de líneas</summary>
+          <label class="field">Color del fondo <input id="pro-bg-target" type="color" value="#ffffff"></label>
+          <label class="field">Tolerancia <span id="pro-bg-tolerance-value">30</span><input id="pro-bg-tolerance" type="range" min="0" max="120" value="30"></label>
+          <label class="field">Suavizado de bordes <span id="pro-bg-feather-value">12</span><input id="pro-bg-feather" type="range" min="0" max="70" value="12"></label>
+          <label class="field">Protección de tinta <span id="pro-bg-edge-value">28</span><input id="pro-bg-edge" type="range" min="0" max="100" value="28"></label>
+          <label class="check-label"><input id="pro-bg-protect-ink" type="checkbox" checked> Conservar contornos y líneas</label>
+          <button id="pro-remove-background" class="button primary pro-full-button" type="button" disabled>Quitar fondo en una capa nueva</button>
+        </details>
+        <details class="pro-tool-group">
+          <summary>Recolorear sin perder luces ni sombras</summary>
+          <label class="field">Color que quiero cambiar <input id="pro-color-source" type="color" value="#806050"></label>
+          <label class="field">Nuevo color <input id="pro-color-target" type="color" value="#c76cf2"></label>
+          <label class="field">Tolerancia de color <span id="pro-color-tolerance-value">36</span><input id="pro-color-tolerance" type="range" min="0" max="160" value="36"></label>
+          <label class="field">Borde suave <span id="pro-color-softness-value">24</span><input id="pro-color-softness" type="range" min="0" max="100" value="24"></label>
+          <label class="check-label"><input id="pro-color-preserve-shading" type="checkbox" checked> Preservar sombreado</label>
+          <button id="pro-replace-color" class="button primary pro-full-button" type="button" disabled>Reemplazar color en una capa nueva</button>
+        </details>
+        <details class="pro-tool-group">
+          <summary>Ajustes visuales por capa</summary>
+          <label class="field">Preajuste <select id="pro-adjustment-preset"><option value="original">Original</option><option value="anime">Anime · color vivo</option><option value="cinematic">Cinemático</option><option value="manga">Manga · alto contraste</option><option value="dream">Sueño suave</option></select></label>
+          <label class="field">Brillo <span id="pro-brightness-value">100</span><input id="pro-brightness" type="range" min="0" max="200" value="100"></label>
+          <label class="field">Contraste <span id="pro-contrast-value">100</span><input id="pro-contrast" type="range" min="0" max="200" value="100"></label>
+          <label class="field">Saturación <span id="pro-saturation-value">100</span><input id="pro-saturation" type="range" min="0" max="200" value="100"></label>
+          <label class="field">Tono <span id="pro-hue-value">0°</span><input id="pro-hue" type="range" min="-180" max="180" value="0"></label>
+          <div class="button-row"><button id="pro-apply-adjustments" class="button primary" type="button" disabled>Aplicar a capa</button><button id="pro-reset-adjustments" class="button secondary" type="button" disabled>Restablecer</button></div>
+        </details>
+        <p class="muted small pro-footnote">Consejo para editar el peinado: selecciona la imagen del personaje, crea una copia editable, borra el pelo antiguo en esa copia y después coloca un mechón nuevo encima. Activa el ojo de la capa original para comparar o recuperarla.</p>
       </section>
       <section class="warning"><strong>Sobre los recortes</strong><p>El recorte rectangular puede extraer un fragmento de una ilustración. Quitar un fondo uniforme es aproximado. Las partes ocultas por el pelo, la ropa o el torso no se recuperan mágicamente y pueden necesitar retoque manual.</p></section>
     </aside>
