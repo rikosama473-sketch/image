@@ -149,6 +149,16 @@ class HTTPHandlerTests(unittest.TestCase):
         self.assertIn(b"replaceColorRange", content)
         self.assertIn(b"layerAdjustmentsToCanvasFilter", content)
 
+    def test_hairstyle_reference_gallery_is_served(self) -> None:
+        status, headers, content = self.get("/hair-reference-gallery.js")
+        self.assertEqual(status, 200)
+        self.assertIn("javascript", headers.get("Content-Type", ""))
+        for source in (b"images-ng.pixai.art", b"assets.st-note.com", b"cdn.michill.jp", b"www.animeoutline.com"):
+            self.assertIn(source, content)
+        policy = headers.get("Content-Security-Policy", "")
+        for host in ("https://images-ng.pixai.art", "https://assets.st-note.com", "https://cdn.michill.jp", "https://www.animeoutline.com"):
+            self.assertIn(host, policy)
+
     def test_hair_preview_page_and_assets_are_served(self) -> None:
         status, headers, content = self.get("/hair-preview.html")
         self.assertEqual(status, 200)
