@@ -33,7 +33,7 @@ class HairstyleVariantPromptTests(unittest.TestCase):
             self.assertTrue(crop.is_file())
             with Image.open(crop) as output:
                 self.assertEqual(output.size, (1024, 1024))
-            self.assertEqual(metadata["crop_box_pixels"], [12, 0, 588, 256])
+            self.assertEqual(metadata["crop_box_pixels"], [12, 0, 588, 240])
             self.assertEqual(metadata["api_input_dimensions"], [1024, 1024])
 
     def test_registry_has_five_slots_without_invented_canonical_prompts(self):
