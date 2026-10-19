@@ -27,7 +27,6 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 TRAINER_VERSION = "v0.35.1"
 TRAINER_CACHE = ROOT / "data" / "cache" / f"diffusers-{TRAINER_VERSION}"
-STAGING_ROOT = ROOT / "data" / "cache" / "lora-training"
 TRAINER_SOURCES = {
     "sd": {
         "filename": "train_text_to_image_lora.py",
@@ -150,6 +149,48 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def staging_root_for(root: Path) -> Path:
+    """Keep staged training copies/cache under the selected project root."""
+    return root.expanduser().resolve() / "data" / "cache" / "lora-training"
+
+
+def _nonempty_regular_file(path: Path) -> bool:
+    try:
+        return path.is_file() and not path.is_symlink() and path.stat().st_size > 0
+    except OSError:
+        return False
+
+
+def _component_has_loadable_files(component_dir: Path, component_name: str) -> bool:
+    """Check for the minimum files Diffusers expects without loading model weights."""
+    if not component_dir.is_dir() or component_dir.is_symlink():
+        return False
+    if component_name == "scheduler":
+        return _nonempty_regular_file(component_dir / "scheduler_config.json")
+    if component_name.startswith("tokenizer"):
+        tokenizer_json = _nonempty_regular_file(component_dir / "tokenizer.json")
+        sentencepiece = any(
+            _nonempty_regular_file(component_dir / name)
+            for name in ("spiece.model", "sentencepiece.bpe.model")
+        )
+        vocab_and_merges = (
+            _nonempty_regular_file(component_dir / "vocab.json")
+            and _nonempty_regular_file(component_dir / "merges.txt")
+        )
+        return tokenizer_json or sentencepiece or vocab_and_merges
+
+    if not _nonempty_regular_file(component_dir / "config.json"):
+        return False
+    try:
+        return any(
+            entry.suffix.lower() in {".safetensors", ".bin"}
+            and _nonempty_regular_file(entry)
+            for entry in component_dir.iterdir()
+        )
+    except OSError:
+        return False
+
+
 def detect_model_family(model: str, requested_family: str, allow_download: bool) -> tuple[str, str, bool]:
     candidate = Path(model).expanduser()
     if candidate.exists():
@@ -158,8 +199,8 @@ def detect_model_family(model: str, requested_family: str, allow_download: bool)
                 "Training expects a Diffusers model directory with model_index.json, not a single checkpoint file."
             )
         index_path = candidate / "model_index.json"
-        if not index_path.is_file():
-            raise ValueError(f"Missing model_index.json in local model directory: {candidate}")
+        if not _nonempty_regular_file(index_path):
+            raise ValueError(f"Missing or empty model_index.json in local model directory: {candidate}")
         try:
             index = json.loads(index_path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
@@ -186,6 +227,16 @@ def detect_model_family(model: str, requested_family: str, allow_download: bool)
             raise ValueError(
                 f"Local {detected} model folder is incomplete; missing component directories: "
                 f"{', '.join(missing_components)}. Place a complete Diffusers model directory here."
+            )
+        missing_artifacts = sorted(
+            component for component in required_components
+            if not _component_has_loadable_files(candidate / component, component)
+        )
+        if missing_artifacts:
+            raise ValueError(
+                f"Local {detected} model folder is missing required config, tokenizer, or weight files "
+                f"for components: {', '.join(missing_artifacts)}. The check verifies file presence only; "
+                "it does not prove that model weights can be loaded or generate an image."
             )
         if requested_family != "auto" and requested_family != detected:
             raise ValueError(
@@ -649,7 +700,7 @@ def main(argv: list[str] | None = None) -> int:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
-    staging_dir = STAGING_ROOT / f"run-{stamp}-{uuid.uuid4().hex[:8]}"
+    staging_dir = staging_root_for(root) / f"run-{stamp}-{uuid.uuid4().hex[:8]}"
     try:
         train_dir, validation_dir, train_rows, validation_rows = prepare_imagefolder(
             examples, staging_dir, args.seed, args.validation_ratio

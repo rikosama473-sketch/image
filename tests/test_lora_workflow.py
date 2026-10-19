@@ -20,7 +20,7 @@ import summarize_generation_metadata  # noqa: E402
 
 
 def write_minimal_model_index(path: Path, class_name: str) -> None:
-    """Create a structural test fixture only; it has no weights and cannot run inference."""
+    """Create structural fixtures with placeholder files; they are not real model weights."""
     path.mkdir(parents=True, exist_ok=True)
     (path / "model_index.json").write_text(
         json.dumps({"_class_name": class_name}), encoding="utf-8"
@@ -29,7 +29,16 @@ def write_minimal_model_index(path: Path, class_name: str) -> None:
     if class_name == "StableDiffusionXLPipeline":
         components.extend(["tokenizer_2", "text_encoder_2"])
     for component in components:
-        (path / component).mkdir(exist_ok=True)
+        directory = path / component
+        directory.mkdir(exist_ok=True)
+        if component == "scheduler":
+            (directory / "scheduler_config.json").write_text("{}", encoding="utf-8")
+        elif component.startswith("tokenizer"):
+            (directory / "tokenizer.json").write_text("{}", encoding="utf-8")
+        else:
+            (directory / "config.json").write_text("{}", encoding="utf-8")
+            weight_name = "model.safetensors" if component.startswith("text_encoder") else "diffusion_pytorch_model.safetensors"
+            (directory / weight_name).write_bytes(b"placeholder-not-loadable")
 
 
 class MetadataSummaryTests(unittest.TestCase):
@@ -143,6 +152,21 @@ class LoRATrainingGuardTests(unittest.TestCase):
             )
             with self.assertRaisesRegex(ValueError, "missing component directories"):
                 train_lora.detect_model_family(str(model), "auto", False)
+
+    def test_local_model_missing_component_weights_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            model = Path(directory)
+            write_minimal_model_index(model, "StableDiffusionPipeline")
+            (model / "unet" / "diffusion_pytorch_model.safetensors").unlink()
+            with self.assertRaisesRegex(ValueError, "components: unet"):
+                train_lora.detect_model_family(str(model), "auto", False)
+
+    def test_staging_root_follows_custom_project_root(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            custom_root = Path(directory) / "custom-image-project"
+            expected = custom_root.resolve() / "data" / "cache" / "lora-training"
+            self.assertEqual(train_lora.staging_root_for(custom_root), expected)
+            self.assertNotEqual(train_lora.staging_root_for(custom_root), train_lora.ROOT / "data" / "cache" / "lora-training")
 
     def test_sdxl_requires_the_second_text_encoder_and_tokenizer(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
