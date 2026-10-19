@@ -160,7 +160,7 @@ class CharacterEditorHandler(BaseHTTPRequestHandler):
         parsed = urlparse(self.path)
         if parsed.path in {"/", "/index.html"}:
             return self._serve_file(EDITOR_ROOT / "index.html")
-        if parsed.path in {"/app.js", "/app.css", "/hair-preview.html", "/hair-preview.js", "/hair-preview.css"}:
+        if parsed.path in {"/app.js", "/app.css", "/pro-editing.js", "/hair-preview.html", "/hair-preview.js", "/hair-preview.css"}:
             return self._serve_file(EDITOR_ROOT / parsed.path.lstrip("/"))
 
         if parsed.path == "/api/assets":
@@ -226,7 +226,7 @@ class CharacterEditorHTTPServer(ThreadingHTTPServer):
 
 def run_self_test() -> int:
     """Small smoke test used by the portable Windows build; no model or images are loaded."""
-    required = (EDITOR_ROOT / "index.html", EDITOR_ROOT / "app.js", EDITOR_ROOT / "app.css", EDITOR_ROOT / "hair-preview.html", EDITOR_ROOT / "hair-preview.js", EDITOR_ROOT / "hair-preview.css")
+    required = (EDITOR_ROOT / "index.html", EDITOR_ROOT / "app.js", EDITOR_ROOT / "app.css", EDITOR_ROOT / "pro-editing.js", EDITOR_ROOT / "hair-preview.html", EDITOR_ROOT / "hair-preview.js", EDITOR_ROOT / "hair-preview.css")
     missing = [str(path) for path in required if not path.is_file()]
     if missing:
         print("Faltan archivos incluidos en el paquete: " + ", ".join(missing))
