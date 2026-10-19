@@ -420,6 +420,8 @@ def _windows_hardware_names() -> dict[str, Any]:
                                 continue
                             found.add(pair)
                             info["gpu_adapters"].append({"name": name, "driver_version": driver or None})
+                    except OSError:
+                        continue
                 info["gpu_adapter_names_source"] = "Windows video-adapter registry; best effort"
         except OSError:
             info["gpu_adapter_names_source"] = "not available from registry"
