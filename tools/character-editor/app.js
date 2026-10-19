@@ -986,8 +986,8 @@ function mapStagePointToLayer(layer,point){
     if (!layer) throw new Error("Selecciona primero una capa con una imagen.");
     const image = await imageFor(layerSource(layer));
     const width = Number(image.naturalWidth || image.width), height = Number(image.naturalHeight || image.height);
-    if (!Number.isInteger(width) || !Number.isInteger(height) || width < 1 || height < 1 || width * height > 16_000_000) {
-      throw new Error("La edición local admite imágenes de hasta 16 megapíxeles por operación. Reduce el tamaño o recorta la imagen primero.");
+    if (!Number.isInteger(width) || !Number.isInteger(height) || width < 1 || height < 1 || width * height > 4_000_000) {
+      throw new Error("La edición local está limitada a 4 megapíxeles por operación para proteger la memoria. Recorta o reduce la imagen primero.");
     }
     const canvas = document.createElement("canvas");
     canvas.width = width; canvas.height = height;
@@ -1068,6 +1068,14 @@ function mapStagePointToLayer(layer,point){
         softness: Number($("pro-color-softness").value),
         preserveShading: $("pro-color-preserve-shading").checked
       });
+      let changed = false;
+      for (let i = 0; i < processed.data.length; i++) {
+        if (processed.data[i] !== result.imageData.data[i]) { changed = true; break; }
+      }
+      if (!changed) {
+        setNotice("No se encontró ese color en la capa. Usa el selector de origen o aumenta la tolerancia.", true);
+        return;
+      }
       const canvas = document.createElement("canvas");
       canvas.width = processed.width; canvas.height = processed.height;
       canvas.getContext("2d").putImageData(new ImageData(processed.data, processed.width, processed.height), 0, 0);
@@ -1079,11 +1087,18 @@ function mapStagePointToLayer(layer,point){
   function syncProAdjustmentControls(layer) {
     if (!window.ImageProEditing) return;
     const values = window.ImageProEditing.normalizeLayerAdjustments(layer && layer.adjustments ? layer.adjustments : {});
-    const controls = { brightness: "pro-brightness", contrast: "pro-contrast", saturation: "pro-saturation", hue: "pro-hue" };
-    const labels = { brightness: "pro-brightness-value", contrast: "pro-contrast-value", saturation: "pro-saturation-value", hue: "pro-hue-value" };
+    const controls = {
+      brightness: "pro-brightness", contrast: "pro-contrast", saturation: "pro-saturation",
+      hue: "pro-hue", temperature: "pro-temperature", tint: "pro-tint", blur: "pro-blur"
+    };
+    const labels = {
+      brightness: "pro-brightness-value", contrast: "pro-contrast-value", saturation: "pro-saturation-value",
+      hue: "pro-hue-value", temperature: "pro-temperature-value", tint: "pro-tint-value", blur: "pro-blur-value"
+    };
+    const labelValue = (key, value) => key === "hue" ? value + "°" : key === "blur" ? String(value) : String(value);
     for (const [key, id] of Object.entries(controls)) {
       const input = $(id); input.value = values[key]; input.disabled = !layer;
-      $(labels[key]).textContent = values[key] + (key === "hue" ? "°" : "");
+      $(labels[key]).textContent = labelValue(key, values[key]);
     }
     const presets = window.ImageProEditing.LAYER_ADJUSTMENT_PRESETS;
     const match = presets.find(preset => Object.keys(values).every(key => values[key] === preset.values[key]));
@@ -1093,10 +1108,18 @@ function mapStagePointToLayer(layer,point){
 
   function setProAdjustmentInputs(values) {
     const normalized = window.ImageProEditing.normalizeLayerAdjustments(values);
-    const controls = { brightness: "pro-brightness", contrast: "pro-contrast", saturation: "pro-saturation", hue: "pro-hue" };
-    for (const [key, id] of Object.entries(controls)) $(id).value = normalized[key];
-    const labels = { brightness: "pro-brightness-value", contrast: "pro-contrast-value", saturation: "pro-saturation-value", hue: "pro-hue-value" };
-    for (const [key, id] of Object.entries(controls)) $(labels[key]).textContent = normalized[key] + (key === "hue" ? "°" : "");
+    const controls = {
+      brightness: "pro-brightness", contrast: "pro-contrast", saturation: "pro-saturation",
+      hue: "pro-hue", temperature: "pro-temperature", tint: "pro-tint", blur: "pro-blur"
+    };
+    const labels = {
+      brightness: "pro-brightness-value", contrast: "pro-contrast-value", saturation: "pro-saturation-value",
+      hue: "pro-hue-value", temperature: "pro-temperature-value", tint: "pro-tint-value", blur: "pro-blur-value"
+    };
+    for (const [key, id] of Object.entries(controls)) {
+      $(id).value = normalized[key];
+      $(labels[key]).textContent = key === "hue" ? normalized[key] + "°" : String(normalized[key]);
+    }
   }
 
   function applyProAdjustments() {
@@ -1107,7 +1130,9 @@ function mapStagePointToLayer(layer,point){
       contrast: $("pro-contrast").value,
       saturation: $("pro-saturation").value,
       hue: $("pro-hue").value,
-      temperature: 0, tint: 0, blur: 0
+      temperature: $("pro-temperature").value,
+      tint: $("pro-tint").value,
+      blur: $("pro-blur").value
     });
     renderLayers(); renderInspector(); drawStage();
     setNotice("Ajustes visuales guardados en «" + layer.name + "». Son reversibles y se conservan en el proyecto JSON.");
@@ -1124,7 +1149,7 @@ function mapStagePointToLayer(layer,point){
     for (const [inputId, valueId] of sliders) {
       $(inputId).addEventListener("input", () => $(valueId).textContent = $(inputId).value);
     }
-    for (const key of ["brightness", "contrast", "saturation", "hue"]) {
+    for (const key of ["brightness", "contrast", "saturation", "hue", "temperature", "tint", "blur"]) {
       const input = $("pro-" + key);
       input.addEventListener("input", () => $("pro-" + key + "-value").textContent = input.value + (key === "hue" ? "°" : ""));
     }
