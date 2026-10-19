@@ -155,3 +155,10 @@ El flujo `.github/workflows/hair-preview.yml` captura la aplicación real y guar
 - [Vista completa de IMAGE con el motor de edición](screenshots/IMAGE-app-edicion-animeart-completo.png)
 
 Las capturas se guardan mediante un commit del bot de GitHub Actions; los artefactos temporales se conservan por separado para descargar el paquete de prueba.
+
+
+## Galería web de referencias de peinados
+
+La pestaña desplegable **Referencias de peinados** de IMAGE indexa 46 vistas previas enlazadas de cuatro fuentes: PixAI (5), note.com (19), el artículo de michill.jp localizado desde Pinterest (7) y AnimeOutline (15). Permite buscar y filtrar por fuente y abrir tanto la imagen directa como la página que la publica. Pinterest bloquea la extracción automática de su pin, por eso se enlaza el pin y se usan las imágenes de su artículo de origen.
+
+Las imágenes se visualizan desde sus alojamientos originales; no se copian al repositorio ni al paquete portátil. La galería requiere Internet y respeta la atribución a cada sitio/autor. Las referencias son inspiración visual: no son piezas recortadas listas para ensamblar, no se añaden al lienzo de forma automática y no se consideran autorizadas para entrenamiento de modelos.
