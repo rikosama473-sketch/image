@@ -81,3 +81,16 @@ El panel **Archivo histórico** incluye 32 temporadas de prêt-à-porter (primav
 - Vogue Runway, archivo de colecciones Spring 2015: https://www.vogue.com/fashion-shows/spring-2015-ready-to-wear
 - Vogue Runway, artículo de colección Prada Fall 2005 sobre minimalismo, corte y línea imperio: https://www.vogue.com/fashion-shows/fall-2005-ready-to-wear/prada
 - Vogue Runway, análisis de Céline Spring 2015 sobre prendas utilitarias, túnicas y recortes: https://www.vogue.com/fashion-shows/spring-2015-ready-to-wear/celine
+
+
+## Primera pieza modular de cabello
+
+`assets/parts/hair/cabello_01.svg` es una pieza vectorial transparente de 768 × 1280 px, con una coleta alta castaña, mechones y reflejos. Está diseñada para el mismo lienzo que `12.png` y usa la paleta de colores como referencia visual; no contiene los píxeles del personaje ni reemplaza su imagen.
+
+Para probarla:
+1. Actualiza o clona la rama de trabajo y abre IMAGE seleccionando como biblioteca la raíz del repositorio.
+2. Busca `cabello_01.svg` en la biblioteca y añádelo como una capa de tipo **Cabello / peinado**.
+3. Colócala encima de `12.png`. La pieza usa un lienzo completo con transparencia para mantener la alineación. Si la utilizas con otra pose, cabeza o peinado, cambia la escala/posición manualmente.
+4. Guarda tu proyecto JSON y exporta PNG solo si quieres una imagen compuesta. `12.png` permanece intacta.
+
+La pieza es un **overlay dibujado a mano en SVG**, no un recorte automático ni una edición generativa que haya preservado pixel por pixel al personaje. La vista final depende de la alineación y puede requerir retoques. SVG se sirve en la biblioteca local con una política CSP `sandbox`; no se aprueba para entrenamiento de IA sin revisión de los derechos del personaje de origen.
