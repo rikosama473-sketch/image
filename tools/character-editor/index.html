@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/app.css">
   <script src="/pro-editing.js" defer></script>
 <script src="/app.js" defer></script>
+<script src="/hair-reference-gallery.js" defer></script>
 </head>
 <body>
   <header class="topbar">
@@ -84,6 +85,21 @@
       <div class="stage-wrap"><canvas id="stage" width="768" height="1024" aria-label="Lienzo de composición; dibuja con las herramientas o arrastra una capa para moverla"></canvas></div>
       <div class="stage-foot"><span id="stage-message" class="muted small">El lienzo exporta con fondo transparente.</span><span id="canvas-coordinates" class="muted small">768 × 1024 px</span></div>
       <div id="notice" class="notice" role="status" aria-live="polite">Elige una imagen de la biblioteca para empezar. Arrastra las capas en el lienzo para colocarlas.</div>
+      <details id="hair-reference-library" class="hair-reference-library">
+        <summary>
+          <span class="eyebrow">05 / BIBLIOTECA WEB</span>
+          <strong>Referencias de peinados · 46 imágenes</strong>
+          <span class="muted small">Coletas, recogidos, bob y tutoriales de dibujo</span>
+        </summary>
+        <div class="hair-reference-tools">
+          <label class="field">Buscar estilo o palabra <input id="hair-reference-search" type="search" placeholder="coleta, bob, flequillo…" autocomplete="off"></label>
+          <label class="field">Filtrar por fuente <select id="hair-reference-source-filter"><option value="all">Todas las fuentes</option></select></label>
+          <a class="button secondary" href="https://www.pinterest.com/pin/958000151964070096/" target="_blank" rel="noopener noreferrer">Abrir pin de Pinterest</a>
+        </div>
+        <p id="hair-reference-status" class="muted small" aria-live="polite">Cargando catálogo de referencias…</p>
+        <div id="hair-reference-grid" class="hair-reference-grid" aria-live="polite"></div>
+        <p class="hair-reference-legal muted small">Estas miniaturas se muestran desde sus alojamientos originales y conservan sus enlaces de atribución. Necesitas conexión a Internet. No se copian al repositorio, no se añaden automáticamente al personaje y no se usan como material de entrenamiento. Si una web bloquea su miniatura, abre la fuente.</p>
+      </details>
     </section>
     <aside class="panel inspector">
       <section>
