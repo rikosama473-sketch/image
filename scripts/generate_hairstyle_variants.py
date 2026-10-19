@@ -289,7 +289,7 @@ def main():
             "head_crop": crop_metadata,
             "message": "Review reference-head-crop.png before running with GENERATION_MODE=generate.",
         }
-        (out_dir / "reference-preview.json").write_text(json.dumps(preview, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+        (out_dir / "reference-preview.json").write_text(json.dumps(preview, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print("Preview only: created the crop and provenance manifest. No external AI API was called.")
         return
     visual_analysis = infer_visual_base_prompt(head_data_url, requests)
