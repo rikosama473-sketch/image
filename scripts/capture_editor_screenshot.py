@@ -92,10 +92,18 @@ def main() -> int:
             # Ensure the browser finished drawing all image layers before the capture.
             page.evaluate(
                 """async () => {
-                    const images = Array.from(document.images);
-                    await Promise.all(images.map(image => image.complete ? Promise.resolve() :
-                      new Promise(resolve => { image.addEventListener('load', resolve, {once:true});
-                                               image.addEventListener('error', resolve, {once:true}); })));
+                    // Ignore lazy thumbnails off-screen: they are loaded on demand.
+                    const images = Array.from(document.images).filter(image =>
+                      image.loading !== "lazy" || image.getBoundingClientRect().top < window.innerHeight + 160
+                    );
+                    await Promise.race([
+                      Promise.all(images.map(image => image.complete ? Promise.resolve() :
+                        new Promise(resolve => {
+                          image.addEventListener("load", resolve, {once: true});
+                          image.addEventListener("error", resolve, {once: true});
+                        }))),
+                      new Promise(resolve => setTimeout(resolve, 6000))
+                    ]);
                     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
                 }"""
             )
