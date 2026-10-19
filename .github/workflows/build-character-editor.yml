@@ -48,7 +48,7 @@ jobs:
         run: |
           & "dist/IMAGE-Character-Editor.exe" --self-test
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-      - name: Prepare portable zip
+      - name: Prepare portable package
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path package | Out-Null
@@ -57,12 +57,12 @@ jobs:
           Copy-Item "docs/CHARACTER_EDITOR_GUIDE.md" "package/GUIA-EDITOR.md"
           $hash = (Get-FileHash "package/IMAGE-Character-Editor.exe" -Algorithm SHA256).Hash.ToLower()
           Set-Content -Path "package/SHA256SUM.txt" -Value "$hash  IMAGE-Character-Editor.exe" -Encoding ascii
-          Compress-Archive -Path "package/*" -DestinationPath "IMAGE-Character-Editor-Windows-x64.zip" -Force
-          Get-FileHash "IMAGE-Character-Editor-Windows-x64.zip" -Algorithm SHA256
-      - name: Upload portable editor
+          Get-ChildItem package | Select-Object Name, Length
+          Get-Content "package/SHA256SUM.txt"
+      - name: Upload portable editor files
         uses: actions/upload-artifact@v4
         with:
           name: IMAGE-Character-Editor-Windows-x64
-          path: IMAGE-Character-Editor-Windows-x64.zip
+          path: package/*
           if-no-files-found: error
           retention-days: 30
