@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       reference_image:
-        description: "Repository-relative path to a clear, frontal, fully clothed character image"
+        description: "Repository-relative path to an upright image with one character and the head near the top; only a head crop is sent to the editor"
         required: true
         type: string
       character_id:
