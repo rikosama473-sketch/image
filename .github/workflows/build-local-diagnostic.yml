@@ -1,0 +1,61 @@
+name: Build IMAGE Windows local diagnostic
+
+on:
+  push:
+    branches:
+      - work/style-lora-training-2026-10
+    paths:
+      - ".github/workflows/build-local-diagnostic.yml"
+      - "tools/local-diagnostic/**"
+      - "tests/test_local_diagnostic.py"
+      - "requirements.txt"
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows-portable:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out IMAGE
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install diagnostic dependency and packager
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt pyinstaller==6.22.3
+      - name: Run repository tests
+        shell: pwsh
+        run: python -m unittest discover -s tests -v
+      - name: Build Windows executable
+        shell: pwsh
+        run: |
+          python -m PyInstaller --noconfirm --clean --onefile --console --name IMAGE-Local-Diagnostic --collect-all PIL tools/local-diagnostic/image_local_diagnostic.py
+          if (-not (Test-Path "dist/IMAGE-Local-Diagnostic.exe")) { throw "Portable executable was not built." }
+      - name: Run bundled executable self-test
+        shell: pwsh
+        run: .\dist\IMAGE-Local-Diagnostic.exe --self-test
+      - name: Package guide and checksum
+        shell: pwsh
+        run: |
+          Copy-Item "tools/local-diagnostic/README_PORTABLE.txt" "dist/README_PORTABLE.txt"
+          $exe = Get-Item "dist/IMAGE-Local-Diagnostic.exe"
+          $hash = (Get-FileHash $exe.FullName -Algorithm SHA256).Hash.ToLower()
+          "$hash  IMAGE-Local-Diagnostic.exe" | Set-Content -Encoding ascii "dist/IMAGE-Local-Diagnostic.exe.sha256"
+          Compress-Archive -Force -Path "dist/IMAGE-Local-Diagnostic.exe","dist/README_PORTABLE.txt","dist/IMAGE-Local-Diagnostic.exe.sha256" -DestinationPath "dist/IMAGE-Diagnostic-Windows-x64.zip"
+      - name: Upload portable download
+        uses: actions/upload-artifact@v4
+        with:
+          name: IMAGE-Diagnostic-Windows-x64
+          path: |
+            dist/IMAGE-Diagnostic-Windows-x64.zip
+            dist/IMAGE-Local-Diagnostic.exe
+            dist/IMAGE-Local-Diagnostic.exe.sha256
+            dist/README_PORTABLE.txt
+          if-no-files-found: error
+          retention-days: 30
