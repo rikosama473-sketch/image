@@ -7,6 +7,9 @@ on:
       - "12.png"
       - "assets/parts/hair/cabello_01.svg"
       - "scripts/render_hair_preview.py"
+      - "scripts/capture_editor_screenshot.py"
+      - "ml/character_editor_server.py"
+      - "tools/character-editor/**"
       - ".github/workflows/hair-preview.yml"
   pull_request:
     branches: [main]
@@ -34,13 +37,16 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libcairo2
-          python -m pip install "Pillow>=10,<13" "CairoSVG>=2.7,<3"
+          python -m pip install "Pillow>=10,<13" "CairoSVG>=2.7,<3" "playwright>=1.48,<2"
+          python -m playwright install --with-deps chromium
       - name: Render composite preview without changing the original
         run: python scripts/render_hair_preview.py
-      - name: Upload cropped character preview
+      - name: Capture actual IMAGE editor with the character and hair layer
+        run: python scripts/capture_editor_screenshot.py
+      - name: Upload character preview and actual app screenshot
         uses: actions/upload-artifact@v4
         with:
           name: IMAGE-Cabello-01-Preview
-          path: preview-output/cabello_01-personaje-preview.png
+          path: preview-output/*
           if-no-files-found: error
           retention-days: 14
