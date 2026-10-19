@@ -14,6 +14,16 @@ sys.path.insert(0, str(ROOT / "ml"))
 import character_editor_server as editor  # noqa: E402
 
 
+class AppRootTests(unittest.TestCase):
+    def test_frozen_bundle_uses_pyinstaller_extraction_root(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            bundle = Path(directory)
+            (bundle / "tools" / "character-editor").mkdir(parents=True)
+            root = editor.resolve_app_root(Path("X:/ignored/ml/script.py"), frozen_root=bundle)
+            self.assertEqual(root, bundle.resolve())
+            self.assertEqual(root / "tools" / "character-editor", bundle / "tools" / "character-editor")
+
+
 class AssetCatalogTests(unittest.TestCase):
     def test_index_and_search_are_paginated(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

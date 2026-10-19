@@ -15,7 +15,17 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 from typing import Any
 
-ROOT = Path(__file__).resolve().parents[1]
+def resolve_app_root(script_path: Path, frozen_root: str | Path | None = None) -> Path:
+    """Resolve the checkout root or PyInstaller's temporary bundle directory."""
+    if frozen_root is not None:
+        return Path(frozen_root).expanduser().resolve()
+    return Path(script_path).resolve().parents[1]
+
+
+ROOT = resolve_app_root(
+    Path(__file__),
+    getattr(sys, "_MEIPASS", None) if getattr(sys, "frozen", False) else None,
+)
 EDITOR_ROOT = ROOT / "tools" / "character-editor"
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".bmp", ".gif"}
 IGNORED_DIRS = {
