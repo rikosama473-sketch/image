@@ -287,7 +287,29 @@ def main():
     }
     (out_dir / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (out_dir / "PROMPTS.md").write_text("\n".join(prompt_sections), encoding="utf-8")
-    print("Created six images, prompt records, manifest and contact sheet in " + str(out_dir.relative_to(root)))
+
+    # Keep a verifiable per-character source-prompt history without guessing a canonical prompt.
+    registry_path = root / "data" / "character-prompt-registry.json"
+    try:
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+        character = next(item for item in registry["characters"] if item["id"] == character_id)
+    except Exception as exc:
+        fail("Could not safely update the character prompt registry: " + str(exc))
+    if relative_source not in character.setdefault("source_images", []):
+        character["source_images"].append(relative_source)
+    examples = character.setdefault("source_prompt_examples", [])
+    if not any(item.get("source_sha256") == source_sha for item in examples):
+        examples.append({
+            "source_path": relative_source,
+            "source_sha256": source_sha,
+            "source_prompt": embedded_prompt or None,
+            "prompt_status": "recovered_from_embedded_metadata" if embedded_prompt else "not_found_in_embedded_metadata",
+            "run_id": str(run_id),
+            "head_crop_path": str(crop_path.relative_to(root)),
+            "review_status": "needs_manual_review",
+        })
+    registry_path.write_text(json.dumps(registry, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print("Created six images, prompt records, manifest, contact sheet and updated character source-prompt history in " + str(out_dir.relative_to(root)))
 
 if __name__ == "__main__":
     main()
