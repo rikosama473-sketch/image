@@ -18,9 +18,11 @@ SCREENSHOT_DIR = ROOT / "screenshots"
 FOCUSED = SCREENSHOT_DIR / "IMAGE-app-cabello-01-captura.jpg"
 PANEL_SHOT = SCREENSHOT_DIR / "IMAGE-app-edicion-animeart-panel.jpg"
 FULL_REPO_SHOT = SCREENSHOT_DIR / "IMAGE-app-edicion-animeart-completo.png"
+GALLERY_SHOT = SCREENSHOT_DIR / "IMAGE-app-referencias-peinados.png"
 PREVIEW_COPY = OUT_DIR / "IMAGE-app-cabello-01-captura.jpg"
 PANEL_COPY = OUT_DIR / "IMAGE-app-edicion-animeart-panel.jpg"
 FULL_COPY = OUT_DIR / "IMAGE-app-edicion-animeart-completo.png"
+GALLERY_COPY = OUT_DIR / "IMAGE-app-referencias-peinados.png"
 PORT = 8766
 BASE = f"http://127.0.0.1:{PORT}"
 
@@ -101,17 +103,46 @@ def main() -> int:
             page.screenshot(path=str(OUT), full_page=True, animations="disabled")
             page.locator("#stage").screenshot(path=str(FOCUSED), type="jpeg", quality=92, animations="disabled")
             page.locator("#pro-edit-panel").screenshot(path=str(PANEL_SHOT), type="jpeg", quality=92, animations="disabled")
+
+            # Capture a separate, app-generated reference-gallery screenshot with the
+            # 46 hairstyle thumbnails visible. Remote hosts may block individual
+            # previews; failed thumbnails remain clearly marked by the UI.
+            gallery = page.locator("#hair-reference-library")
+            gallery.locator("summary").click()
+            page.locator("#hair-reference-grid .hair-reference-card").first.wait_for(timeout=15000)
+            gallery.evaluate("(node) => { node.open = true; node.scrollIntoView({block: 'start'}); }")
+            page.locator("#hair-reference-grid img").evaluate_all(
+                "(images) => images.forEach(image => { image.loading = 'eager'; })"
+            )
+            page.evaluate(
+                """async () => {
+                    const images = Array.from(document.querySelectorAll("#hair-reference-grid img"));
+                    await Promise.race([
+                      Promise.all(images.map(image => new Promise(resolve => {
+                        if (image.complete) return resolve();
+                        const done = () => resolve();
+                        image.addEventListener("load", done, {once: true});
+                        image.addEventListener("error", done, {once: true});
+                      }))),
+                      new Promise(resolve => setTimeout(resolve, 9000))
+                    ]);
+                    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+                }"""
+            )
+            gallery.screenshot(path=str(GALLERY_SHOT), animations="disabled", timeout=30000)
             browser.close()
 
         shutil.copy2(OUT, FULL_REPO_SHOT)
         shutil.copy2(FOCUSED, PREVIEW_COPY)
         shutil.copy2(PANEL_SHOT, PANEL_COPY)
         shutil.copy2(FULL_REPO_SHOT, FULL_COPY)
+        shutil.copy2(GALLERY_SHOT, GALLERY_COPY)
 
         print(json.dumps({
             "full_app_screenshot": str(FULL_REPO_SHOT.relative_to(ROOT)),
             "canvas_screenshot": str(FOCUSED.relative_to(ROOT)),
             "advanced_editor_panel": str(PANEL_SHOT.relative_to(ROOT)),
+            "hairstyle_reference_gallery": str(GALLERY_SHOT.relative_to(ROOT)),
             "character_source": "12.png",
             "hair_overlay": "assets/parts/hair/cabello_01.svg",
             "layers": 2,
