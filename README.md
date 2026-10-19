@@ -17,7 +17,7 @@ En Windows también puedes abrir `tools/character-editor/Start-Character-Editor.
 - Biblioteca local con búsqueda y paginación de imágenes.
 - Capas de referencia y piezas que puedes mover, escalar, girar, voltear, ocultar, duplicar y reordenar.
 - **Dibujo original:** pincel, borrador no destructivo respecto de los originales, líneas, rectángulos, elipses con relleno opcional y cubo de pintura.
-- **Plantillas de prendas:** camiseta, chaqueta, falda, pantalones y capa/manto en capas transparentes editables; recolorea zonas y dibuja costuras, cintas, mangas y adornos.
+- **Plantillas de prendas:** 36 tipos × 8 variantes geométricas = 288 bosquejos base, más un **archivo histórico de moda femenina 2000–2015** con 32 temporadas y tres conceptos originales por temporada (96 ideas) en guía gris o color, inspirados en tendencias y archivos de pasarela.
 - Recorte de piezas y limpieza manual de máscaras o de fondos uniformes.
 - Guardado/carga de proyectos JSON y exportación PNG con transparencia.
 
