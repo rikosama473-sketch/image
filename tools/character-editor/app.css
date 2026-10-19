@@ -36,3 +36,11 @@
 .garment-row{border-top:1px solid var(--line);padding-top:10px;display:flex;align-items:end;gap:10px;flex-wrap:wrap}
 .garment-row .field{min-width:155px}.garment-row .muted{flex:1;min-width:160px}
 @media(max-width:700px){.design-options{align-items:stretch}.design-options .brush-field{width:100%}.garment-row{align-items:stretch}.garment-row .button{width:100%}}
+
+
+/* Biblioteca de prendas y guías fantasma */
+.garment-row .field{min-width:150px;flex:1}
+.garment-row .field select{width:100%;max-width:100%}
+.garment-row .button{white-space:normal;min-height:36px}
+.garment-row .muted{flex-basis:100%;line-height:1.5}
+@media(max-width:700px){.garment-row .field{width:100%}.garment-row .button{width:100%}}
