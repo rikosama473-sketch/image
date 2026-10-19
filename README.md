@@ -128,3 +128,8 @@ Los PNG y archivos JSON asociados se guardan en `outputs/generated/`, ignorados 
 - No guardar checkpoints pesados en Git; usar carpetas locales ignoradas.
 - No afirmar que una medida de memoria o una calidad se cumplen hasta medirlas.
 - Mantener el proyecto separado de WordWaifu y CharacterWord.
+
+
+## Primera pieza modular de cabello
+
+`assets/parts/hair/cabello_01.svg` añade una coleta alta castaña como capa vectorial transparente alineada al lienzo de `12.png`. El SVG no altera la imagen original y se puede mover, escalar y ocultar en IMAGE. Su procedencia y los límites de alineación están documentados en `assets/parts/hair/cabello_01.json` y `assets/parts/README.md`. El servidor local indexa SVG con una política de sandbox; no se aprueba para entrenamiento sin revisión de derechos.
