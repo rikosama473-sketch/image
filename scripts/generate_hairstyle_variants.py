@@ -84,7 +84,23 @@ def safe_source_path(raw_path, root):
         fail("Reference image exceeds 20 MiB; choose a smaller source.")
     return path
 
-def extract_embedded_prompt(image_path):
+def extract_embedded_prompt(image_path, root):
+    # Reuse IMAGE's established metadata extractor first so nested JSON/PNG workflow
+    # metadata and common diffusion parameter blocks are parsed consistently.
+    try:
+        import importlib.util
+        extractor_path = root / "scripts" / "extract_generation_metadata.py"
+        spec = importlib.util.spec_from_file_location("image_source_metadata_extractor", extractor_path)
+        if spec is not None and spec.loader is not None:
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            row = module.extract_one(image_path, root)
+            prompt = str(row.get("prompt", "") or "").strip()[:30000]
+            keys = [item.strip() for item in str(row.get("metadata_keys", "")).split(";") if item.strip()]
+            return prompt, keys
+    except Exception:
+        pass
+    # Defensive fallback if the shared extractor cannot be loaded.
     try:
         with Image.open(image_path) as im:
             info = dict(im.info)
@@ -189,7 +205,7 @@ def main():
         fail("Reference image is too small; choose a clearer image of at least 256x256.")
     relative_source = PurePosixPath(raw_source).as_posix()
     source_url = "https://raw.githubusercontent.com/" + repo + "/" + commit_sha + "/" + quote(relative_source, safe="/")
-    embedded_prompt, metadata_keys = extract_embedded_prompt(source_path)
+    embedded_prompt, metadata_keys = extract_embedded_prompt(source_path, root)
     out_dir = root / "generated" / "hairstyles" / character_id / ("run-" + str(run_id))
     out_dir.mkdir(parents=True, exist_ok=True)
     crop_path = out_dir / "reference-head-crop.png"
