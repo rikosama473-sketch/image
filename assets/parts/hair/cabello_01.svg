@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="1280" viewBox="0 0 768 1280" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Cabello 01 — coleta alta castaña</title>
+  <desc id="desc">Pieza vectorial transparente de una coleta larga y alta, dibujada como extensión del peinado castaño de la referencia 12.png. Sin rostro ni cuerpo.</desc>
+  <defs>
+    <linearGradient id="hair" x1="438" y1="52" x2="594" y2="260" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6b4545"/>
+      <stop offset=".35" stop-color="#513638"/>
+      <stop offset=".7" stop-color="#3e2c31"/>
+      <stop offset="1" stop-color="#6a4141"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="464" y1="62" x2="568" y2="234" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#bd827b"/>
+      <stop offset=".48" stop-color="#95605e"/>
+      <stop offset="1" stop-color="#734849" stop-opacity=".15"/>
+    </linearGradient>
+    <linearGradient id="bow" x1="408" y1="34" x2="474" y2="94" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#60404d"/>
+      <stop offset=".5" stop-color="#30242f"/>
+      <stop offset="1" stop-color="#211b27"/>
+    </linearGradient>
+  </defs>
+  <!-- Main ponytail mass, aligned to the crown of main/12.png -->
+  <path d="M426 76
+    C438 47 469 35 496 45
+    C526 56 544 82 560 109
+    C574 133 594 151 598 178
+    C603 205 587 231 574 251
+    C565 267 560 287 557 310
+    C542 294 536 275 543 251
+    C550 231 562 209 557 189
+    C552 169 534 151 516 137
+    C492 119 469 108 449 96
+    C437 88 430 82 426 76 Z"
+    fill="url(#hair)" stroke="#211b1d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Flowing outer lock and curled tip -->
+  <path d="M548 103
+    C570 127 590 148 593 175
+    C597 199 584 223 572 245
+    C563 262 558 278 561 295
+    C576 279 589 258 598 235
+    C611 204 606 174 592 149
+    C578 125 562 110 548 103 Z"
+    fill="#473035" stroke="#211b1d" stroke-width="4.5" stroke-linejoin="round"/>
+  <path d="M562 124
+    C579 150 587 169 583 192
+    C580 208 569 226 563 242"
+    stroke="#9c6765" stroke-width="5" stroke-linecap="round" opacity=".82"/>
+  <path d="M574 173
+    C584 194 573 221 562 238
+    C554 251 551 264 553 276"
+    stroke="#2f252b" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Broad reflected strand -->
+  <path d="M450 61
+    C473 48 494 57 510 75
+    C528 96 537 116 552 135
+    C539 119 522 104 508 91
+    C489 74 468 68 450 76"
+    fill="url(#shine)" opacity=".9"/>
+  <path d="M456 63 C476 60 492 75 505 89 C518 103 525 113 535 124"
+    stroke="#ce8f85" stroke-width="4.5" stroke-linecap="round" opacity=".8"/>
+  <path d="M472 82 C489 96 501 108 511 120"
+    stroke="#b77a75" stroke-width="3" stroke-linecap="round" opacity=".72"/>
+  <!-- Separated fine locks around the cascade -->
+  <path d="M532 142 C552 166 562 188 554 210 C549 225 542 237 541 252"
+    stroke="#231d22" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M540 155 C555 176 562 193 554 214"
+    stroke="#a56a66" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M529 169 C543 189 546 205 539 224"
+    stroke="#765052" stroke-width="3" stroke-linecap="round"/>
+  <path d="M554 246 C548 264 548 281 554 297"
+    stroke="#bf8179" stroke-width="3.8" stroke-linecap="round" opacity=".8"/>
+  <path d="M582 218 C575 237 567 251 565 268"
+    stroke="#211b20" stroke-width="3.2" stroke-linecap="round"/>
+  <!-- Hair tie and small dark ribbon sit at the high attachment point -->
+  <path d="M438 77
+    C420 58 408 43 399 50
+    C390 58 405 77 431 88
+    C417 88 403 96 405 105
+    C408 114 429 100 443 86 Z"
+    fill="url(#bow)" stroke="#201a25" stroke-width="4.5" stroke-linejoin="round"/>
+  <path d="M443 76
+    C457 56 475 50 480 60
+    C484 70 465 85 449 87
+    C465 90 474 101 468 108
+    C461 114 448 98 438 86 Z"
+    fill="url(#bow)" stroke="#201a25" stroke-width="4.5" stroke-linejoin="round"/>
+  <path d="M435 73 C430 64 427 59 420 58"
+    stroke="#947080" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M453 72 C461 64 466 62 472 63"
+    stroke="#7b6078" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M429 83
+    C436 72 448 71 455 81
+    C454 91 439 96 432 88 Z"
+    fill="#392b3a" stroke="#211a25" stroke-width="4"/>
+  <path d="M436 79 C441 76 446 77 449 81"
+    stroke="#9d7a91" stroke-width="2.8" stroke-linecap="round"/>
+</svg>
