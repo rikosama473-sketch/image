@@ -59,3 +59,25 @@ La sección **Diseño original** incluye 36 tipos de ropa y 8 variaciones geomé
 - Variantes: clásica, entallada, holgada, corta, larga, manga más larga, compacta y asimétrica. Son esqueletos visuales generados con geometría 2D, no 288 ilustraciones profesionales dibujadas a mano.
 - Después de añadir la capa, elige **Mover** para arrastrarla; puedes ajustar X/Y, ancho, alto, rotación y opacidad en el inspector. El pincel y las demás herramientas dibujan sobre la capa seleccionada. Duplica una plantilla para conservar una copia limpia.
 - La guía no modifica la imagen de referencia. Guarda el proyecto JSON si quieres conservar las capas editables; al exportar PNG, oculta o elimina antes las guías que no quieres incluir en la imagen final.
+
+
+## Archivo de inspiración de moda femenina 2000–2015
+
+El panel **Archivo histórico** incluye 32 temporadas de prêt-à-porter (primavera/verano y otoño/invierno entre 2000 y 2015), con tres propuestas originales por temporada: 96 combinaciones iniciales. Cada propuesta tiene una silueta base, una paleta sugerida y detalles gráficos como escote drapeado, tirantes halter, lazada, encaje esquemático, manga globo, bolsillo utilitario, doble botonadura, pespuntes denim, bloques geométricos, péplum, cuadros, bandas deportivas o solapa sastre.
+
+- Elige una temporada, selecciona una de sus tres prendas destacadas y pulsa **Crear guía histórica gris** o **Crear diseño con color**.
+- La guía se añade como capa móvil separada y puede usarse para dibujar en una capa transparente por encima.
+- El enlace **Consultar archivo de pasarela** abre el índice de colecciones de Vogue Runway de esa temporada, donde se puede contrastar el contexto histórico y consultar diseñadores.
+- El libro *Fashion: The Definitive History of Costume and Style* (DK / Smithsonian Institution, 2012) sirve como referencia general de historia y evolución del vestido; su cobertura es amplia y no documenta exhaustivamente cada microtendencia de cada estación.
+- Las propuestas de IMAGE son interpretaciones geométricas originales de tendencias y técnicas generales. No se presentan como un ranking estadístico del artículo más vendido ni reproducen directamente una ilustración, patrón o look completo con copyright de un diseñador.
+- En esta primera versión hay 96 conceptos curatoriales, no un registro exhaustivo de todas las prendas exhibidas en todas las capitales. La forma generada es una base dibujable, no un patrón de costura listo para confección.
+
+### Fuentes de investigación y archivo
+
+- Smithsonian Libraries and Archives, ficha bibliográfica de *Fashion: The Definitive History of Costume and Style*: https://www.si.edu/object/siris_sil_1000499
+- Vogue Runway, archivo de colecciones Spring 2000: https://www.vogue.com/fashion-shows/spring-2000-ready-to-wear
+- Vogue Runway, archivo de colecciones Spring 2010: https://www.vogue.com/fashion-shows/spring-2010-ready-to-wear
+- Vogue Runway, archivo de colecciones Fall 2010: https://www.vogue.com/fashion-shows/fall-2010-ready-to-wear
+- Vogue Runway, archivo de colecciones Spring 2015: https://www.vogue.com/fashion-shows/spring-2015-ready-to-wear
+- Vogue Runway, artículo de colección Prada Fall 2005 sobre minimalismo, corte y línea imperio: https://www.vogue.com/fashion-shows/fall-2005-ready-to-wear/prada
+- Vogue Runway, análisis de Céline Spring 2015 sobre prendas utilitarias, túnicas y recortes: https://www.vogue.com/fashion-shows/spring-2015-ready-to-wear/celine
