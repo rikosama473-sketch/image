@@ -145,3 +145,13 @@ IMAGE reutiliza tres módulos del editor propio [AnimeArt](https://github.com/jo
 - Por seguridad de memoria, la interfaz limita cada operación de píxeles a 4 megapíxeles. Recorta/reduce la imagen antes de operar sobre archivos mayores.
 - No es segmentación semántica por IA: los algoritmos funcionan mejor con fondos relativamente uniformes y una buena muestra del color. La protección de tinta reduce el riesgo, pero no garantiza bordes perfectos.
 - Pruebas automatizadas en `tests/test_pro_editing.mjs`; el archivo original de AnimeArt sigue siendo la fuente independiente y no se modifica por copiar estos módulos.
+
+
+## Capturas guardadas en el repositorio
+
+El flujo `.github/workflows/hair-preview.yml` captura la aplicación real y guarda imágenes en `screenshots/` en esta rama:
+- [Lienzo con el personaje y la pieza de cabello](screenshots/IMAGE-app-cabello-01-captura.jpg)
+- [Panel de edición avanzada reutilizado de AnimeArt](screenshots/IMAGE-app-edicion-animeart-panel.jpg)
+- [Vista completa de IMAGE con el motor de edición](screenshots/IMAGE-app-edicion-animeart-completo.png)
+
+Las capturas se guardan mediante un commit del bot de GitHub Actions; los artefactos temporales se conservan por separado para descargar el paquete de prueba.
