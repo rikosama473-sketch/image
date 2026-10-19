@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Partir de una imagen del propio repositorio y generar seis variantes donde el peinado sea la variable principal. La automatización recorta la zona superior de la cabeza, registra de qué archivo sale y su hash, conserva los prompts, crea una lámina de contacto y propone los resultados mediante un Pull Request. No sobrescribe ni elimina originales.
+Partir de una imagen del propio repositorio y generar cinco o seis variantes (según el paquete elegido) donde el peinado sea la variable principal. La automatización recorta la zona superior de la cabeza, registra de qué archivo sale y su hash, conserva los prompts, crea una lámina de contacto y propone los resultados mediante un Pull Request. No sobrescribe ni elimina originales.
 
 **El editor no recibe la imagen original completa.** El runner de GitHub recorta una franja superior de la imagen y la coloca en un lienzo neutro cuadrado; la referencia recortada se guarda como reference-head-crop.png para poder revisarla. El recorte funciona mejor con ilustraciones verticales de un solo personaje, de frente o casi de frente, con la cabeza cerca del borde superior. Si el recorte no conserva toda la cara o incluye partes no deseadas, elige otra imagen antes de generar.
 
@@ -14,15 +14,15 @@ El flujo primero intenta recuperar el prompt original de los metadatos con el ex
 2. Ir a **Actions → Generate hairstyle reference variants → Run workflow**.
 3. Elegir la ruta exacta de una imagen existente. Preferir una imagen vertical de un solo personaje, con la cara y el cabello completos. Seleccionar **mode = preview** primero: no llama a las API de IA ni genera cargos; crea un recorte cuadrado y un manifiesto descargables como artefacto de la ejecución.
 4. Revisar visualmente que el recorte contenga el rostro completo y la parte de cabello necesaria. Si corta la barbilla, el flequillo o las puntas, repetir el preview con otra altura o seleccionar otra imagen.
-5. Solo después, repetir con **mode = generate**, elegir el personaje (Pibara, Chie, Sunna o uno de los dos espacios sin identificar) y el paquete de seis estilos. Es necesario el secreto OPENAI_API_KEY.
+5. Solo después, repetir con **mode = generate**, elegir el personaje (Pibara, Chie, Sunna o uno de los dos espacios sin identificar) y el paquete de cinco estilos (`core-5`) o cualquiera de los paquetes de seis estilos. Es necesario el secreto OPENAI_API_KEY.
 6. Al terminar, abrir el Pull Request que genera la automatización y comprobar visualmente la identidad. El resultado no se integra en main automáticamente.
 
 ## Qué crea cada ejecución
 
 Dentro de generated/hairstyles/<personaje>/run-<id>/:
 - reference-head-crop.png: recorte que realmente se envía al editor, sobre un lienzo blanco 1024×1024;
-- seis imágenes WebP individuales;
-- contact-sheet.jpg con las seis variantes;
+- cinco imágenes WebP individuales para `core-5`, o seis para los demás paquetes actuales;
+- `contact-sheet.jpg` con todas las variantes del paquete seleccionado;
 - PROMPTS.md con el prompt exacto de cada generación, el prompt original recuperado si existe y un prompt visual estable inferido (claramente etiquetado como reconstrucción);
 - manifest.json con ruta, commit y SHA-256 de la imagen original y del recorte, coordenadas del recorte, dimensiones, modelo y prompts.
 
@@ -34,6 +34,7 @@ El script aplica orientación EXIF, toma el 96% central del ancho y recorta desd
 
 ## Paquetes de variaciones
 
+- core-5: bob recto, largo liso, coleta alta, dos coletas y trenza lateral (cinco estilos, pensado para la primera tanda de Pibara).
 - core-6: bob recto, largo liso, coleta alta, dos coletas, trenza lateral y ondas en capas.
 - short-cuts: pixie, bob a la barbilla, bob asimétrico, shag, wolf cut y pageboy.
 - updos: moño alto/bajo, semirecogido, dos moños, coleta y corona trenzada.
@@ -44,7 +45,7 @@ El script aplica orientación EXIF, toma el 96% central del ancho y recorta desd
 
 Los prompts insisten en conservar rostro, ojos, gafas, expresión, color de pelo, accesorios y estilo de dibujo. Aun así, un editor generativo puede cambiar algo fuera del pelo. **No se debe considerar una variante válida solo porque sea bonita:** rechazar las que alteren la identidad. Una mejora posterior sería aplicar una máscara específica del pelo y comparar píxeles fuera de esa región.
 
-Una ejecución en modo preview no llama a modelos ni genera cargos por inferencia. Una ejecución en modo generate solicita una interpretación visual y seis imágenes a las API, así que puede generar costes. Empieza con una referencia y un solo paquete; no lances cientos de generaciones en lote.
+Una ejecución en modo preview no llama a modelos ni genera cargos por inferencia. Una ejecución en modo generate solicita una interpretación visual y las imágenes del paquete elegido a las API, así que puede generar costes. Empieza con una referencia y un solo paquete; `core-5` genera cinco imágenes. No lances cientos de generaciones en lote.
 
 ## Separación de personajes y prompts
 
