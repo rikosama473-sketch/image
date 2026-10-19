@@ -57,6 +57,24 @@
           <button id="create-garment" class="button primary" type="button">Añadir prenda con color</button>
           <span class="muted small">36 tipos × 8 variaciones = 288 bosquejos base. La guía queda en una capa aparte y puedes moverla, cambiarle el tamaño y dibujar encima.</span>
         </div>
+        <section class="historical-fashion-panel" aria-label="Archivo histórico de moda femenina">
+          <div class="historical-fashion-head">
+            <span class="eyebrow">ARCHIVO HISTÓRICO · 2000–2015</span>
+            <strong>Diseños originales inspirados en las pasarelas de cada temporada</strong>
+            <span class="muted small">32 temporadas · 3 propuestas por temporada · 96 ideas base</span>
+          </div>
+          <div class="historical-fashion-controls">
+            <label class="field">Temporada <select id="fashion-season"></select></label>
+            <label class="field">Prenda destacada <select id="fashion-look"></select></label>
+            <button id="create-fashion-guide" class="button secondary" type="button">Crear guía histórica gris</button>
+            <button id="create-fashion-color" class="button primary" type="button">Crear diseño con color</button>
+          </div>
+          <div class="historical-fashion-description">
+            <strong id="fashion-look-title">Blusa setentera de cuello lazo</strong>
+            <p id="fashion-look-note" class="muted small">Elige una temporada para revisar tres propuestas originales de esa época.</p>
+            <a id="fashion-source" href="https://www.vogue.com/fashion-shows/spring-2015-ready-to-wear" target="_blank" rel="noopener noreferrer">Consultar archivo de pasarela</a>
+          </div>
+        </section>
       </section>
       <div class="stage-wrap"><canvas id="stage" width="768" height="1024" aria-label="Lienzo de composición; dibuja con las herramientas o arrastra una capa para moverla"></canvas></div>
       <div class="stage-foot"><span id="stage-message" class="muted small">El lienzo exporta con fondo transparente.</span><span id="canvas-coordinates" class="muted small">768 × 1024 px</span></div>
