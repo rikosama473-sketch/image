@@ -1,0 +1,80 @@
+name: Render IMAGE hair asset preview
+
+on:
+  push:
+    branches: [work/modular-character-editor-2026-10]
+    paths:
+      - "12.png"
+      - "assets/parts/hair/cabello_01.svg"
+      - "scripts/render_hair_preview.py"
+      - "scripts/capture_editor_screenshot.py"
+      - "ml/character_editor_server.py"
+      - "tools/character-editor/**"
+      - ".github/workflows/hair-preview.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "12.png"
+      - "assets/parts/hair/cabello_01.svg"
+      - "scripts/render_hair_preview.py"
+      - ".github/workflows/hair-preview.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source character and hairstyle
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install SVG renderer and image library
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcairo2
+          python -m pip install "Pillow>=10,<13" "CairoSVG>=2.7,<3" "playwright>=1.48,<2"
+          python -m playwright install --with-deps chromium
+      - name: Render composite preview without changing the original
+        run: python scripts/render_hair_preview.py
+      - name: Capture actual IMAGE editor with the character and hair layer
+        run: python scripts/capture_editor_screenshot.py
+      - name: Save the focused capture in the repository
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add screenshots/IMAGE-app-cabello-01-captura.jpg screenshots/IMAGE-app-edicion-animeart-panel.jpg screenshots/IMAGE-app-edicion-animeart-completo.png screenshots/IMAGE-app-referencias-peinados.png
+          if git diff --cached --quiet; then
+            echo "The IMAGE screenshots are unchanged; no repository commit is needed."
+          else
+            git commit -m "Save IMAGE editor and hairstyle reference gallery screenshots"
+            # Pull-request workflows use a virtual GITHUB_REF_NAME like "7/merge";
+            # commit to the actual same-repository source branch instead.
+            if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+              TARGET_REF="${{ github.event.pull_request.head.ref }}"
+              TARGET_REPO="${{ github.event.pull_request.head.repo.full_name }}"
+            else
+              TARGET_REF="$GITHUB_REF_NAME"
+              TARGET_REPO="$GITHUB_REPOSITORY"
+            fi
+            if [ "$TARGET_REPO" != "$GITHUB_REPOSITORY" ]; then
+              echo "Screenshot commit skipped: external fork pull requests are read-only."
+              exit 0
+            fi
+            git fetch origin "$TARGET_REF"
+            git rebase "origin/$TARGET_REF"
+            git push origin "HEAD:$TARGET_REF"
+          fi
+      - name: Upload character, full app and advanced panel screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: IMAGE-Cabello-01-Preview
+          path: preview-output/*
+          if-no-files-found: error
+          retention-days: 14

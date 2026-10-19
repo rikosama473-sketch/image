@@ -1,0 +1,47 @@
+{
+  "assetId": "hair-001",
+  "name": "Cabello 01 — coleta alta castaña",
+  "file": "cabello_01.svg",
+  "category": "hair",
+  "format": "SVG",
+  "transparentBackground": true,
+  "canvas": {
+    "width": 768,
+    "height": 1280,
+    "units": "px"
+  },
+  "alignment": {
+    "reference": "12.png",
+    "referenceBranch": "main",
+    "intendedUse": "Capa adicional sobre la imagen de personaje original; no reemplaza ni edita 12.png.",
+    "anchor": {
+      "x": 443,
+      "y": 78
+    },
+    "suggestedLayerOrder": "Encima de la capa 12.png; ajustar opacidad/posición si se usa con otra pose.",
+    "designedToMatchCanvas": true
+  },
+  "appearance": {
+    "hairstyle": "Coleta alta larga con mechones ondulados",
+    "hairPalette": [
+      "#6b4545",
+      "#513638",
+      "#3e2c31",
+      "#bd827b"
+    ],
+    "accessory": "Lazo oscuro integrado al peinado",
+    "style": "Pieza vectorial original, líneas y brillos inspirados en la paleta castaña de la referencia."
+  },
+  "provenance": {
+    "kind": "original-vector-overlay",
+    "createdForRepository": "rikosama473-sketch/image",
+    "basedOnRepositoryReference": "12.png",
+    "externalAssetsUsed": false,
+    "note": "Es una pieza de extensión de peinado; no es una edición destructiva del personaje ni una extracción automática de pelo de los píxeles originales."
+  },
+  "rights": {
+    "sourceCharacterRights": "Not independently reviewed; source image remains unchanged and its existing status applies.",
+    "trainingPermission": "not-reviewed",
+    "redistributionNote": "Review project policy for the source character before redistributing combined character renders."
+  }
+}

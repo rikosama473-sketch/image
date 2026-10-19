@@ -1,10 +1,46 @@
-# IMAGE — generador de imágenes anime con estilo propio
+# IMAGE — editor modular de personajes 2D
+
+IMAGE prioriza un **taller local de diseño de personajes anime por capas**. Explora tus imágenes, compón referencias, crea piezas dibujadas desde cero y personaliza prendas sin modificar los archivos fuente. No necesita GPU, PyTorch ni LoRA.
+
+## Ejecutar
+
+Con Python 3.10 o posterior, desde la raíz del repositorio:
+
+~~~powershell
+python ml/character_editor_server.py --assets-dir "D:\Carpeta\Con\Mis\Imagenes" --open-browser
+~~~
+
+En Windows también puedes abrir `tools/character-editor/Start-Character-Editor.bat` y seleccionar tu carpeta. Consulta [la guía del editor](docs/CHARACTER_EDITOR_GUIDE.md).
+
+## Capacidades del taller
+
+- Biblioteca local con búsqueda y paginación de imágenes.
+- Capas de referencia y piezas que puedes mover, escalar, girar, voltear, ocultar, duplicar y reordenar.
+- **Dibujo original:** pincel, borrador no destructivo respecto de los originales, líneas, rectángulos, elipses con relleno opcional y cubo de pintura.
+- **Plantillas de prendas:** 36 tipos × 8 variantes geométricas = 288 bosquejos base, más un **archivo histórico de moda femenina 2000–2015** con 32 temporadas y tres conceptos originales por temporada (96 ideas) en guía gris o color, inspirados en tendencias y archivos de pasarela.
+- Recorte de piezas y limpieza manual de máscaras o de fondos uniformes.
+- Guardado/carga de proyectos JSON y exportación PNG con transparencia.
+
+Las capas dibujables y prendas se guardan dentro del proyecto. Las capas vinculadas a imágenes usan rutas relativas de la carpeta elegida; conserva esa carpeta para reabrirlas. La aplicación trabaja solo en localhost, no sube imágenes y mantiene los originales en solo lectura.
+
+## Límites conocidos
+
+Este es un editor raster 2D, no un ilustrador vectorial ni una herramienta profesional de patronaje. Puedes crear y personalizar diseños sencillos con dibujo y formas, pero el editor no genera automáticamente anatomía nueva ni reconstruye partes ocultas por pelo/ropa. La segmentación automática avanzada y los puntos de anclaje para ajustar piezas siguen pendientes.
+
+## Referencias de diseño
+
+- CharacterManaJ: https://charactermanaj.sourceforge.io/ — editor abierto de piezas anime con cabello frontal/trasero y expresiones.
+- Universal LPC Character Generator: https://github.com/LiberatedPixelCup/Universal-LPC-Spritesheet-Character-Generator — composición abierta por capas para pixel art.
+
+Se usan como referencias, no como dependencias ni como origen automático de assets.
+
+---
 
 Proyecto privado e independiente para crear un **motor local de generación de imágenes** que aprenda el patrón visual de la colección del usuario. La ruta prioritaria es utilizar un modelo base generativo compatible y entrenar una LoRA propia con ejemplos seleccionados, buscando imágenes nuevas de estilo similar con bajo consumo de recursos.
 
 **No forma parte de WordWaifu ni de CharacterWord.**
 
-## Objetivo vigente
+## Archivo histórico: objetivo anterior del generador
 
 1. Aprovechar las imágenes propias para descubrir qué estilo, prompts, checkpoints y LoRAs se usaron.
 2. Curar un conjunto de entrenamiento consistente y revisar la procedencia/permisos.
@@ -55,11 +91,11 @@ La auditoría reporta dimensiones, modo, transparencia, SHA-256 y un hash percep
 
 La guía detallada está en [docs/DATASET_GUIDE.md](docs/DATASET_GUIDE.md), y la arquitectura y hoja de ruta en [docs/IMAGE_MODEL_STRATEGY.md](docs/IMAGE_MODEL_STRATEGY.md).
 
-## Motor de generación local y creador visual
+## Motor de generación anterior (secundario)
 
 IMAGE ya incluye una primera CLI de inferencia en `ml/generate_diffusion.py` y una pequeña interfaz web local en `tools/image-creator/`. La interfaz permite configurar el modelo base, una LoRA opcional, descripción, prompt negativo, resolución, pasos, semilla, escala y perfil de memoria; muestra los resultados y conserva los parámetros junto a los PNG.
 
-### Ejecutar el creador
+### Ejecutar el generador anterior
 
 Instala PyTorch usando el selector oficial según tu sistema/GPU y después las dependencias opcionales:
 
@@ -92,3 +128,37 @@ Los PNG y archivos JSON asociados se guardan en `outputs/generated/`, ignorados 
 - No guardar checkpoints pesados en Git; usar carpetas locales ignoradas.
 - No afirmar que una medida de memoria o una calidad se cumplen hasta medirlas.
 - Mantener el proyecto separado de WordWaifu y CharacterWord.
+
+
+## Primera pieza modular de cabello
+
+`assets/parts/hair/cabello_01.svg` añade una coleta alta castaña como capa vectorial transparente alineada al lienzo de `12.png`. El SVG no altera la imagen original y se puede mover, escalar y ocultar en IMAGE. Su procedencia y los límites de alineación están documentados en `assets/parts/hair/cabello_01.json` y `assets/parts/README.md`. El servidor local indexa SVG con una política de sandbox; no se aprueba para entrenamiento sin revisión de derechos.
+
+
+## Motor local de edición de AnimeArt
+
+IMAGE reutiliza tres módulos del editor propio [AnimeArt](https://github.com/jonhararagi/animeart), sin instalar un modelo generativo pesado ni enviar imágenes a la red:
+
+- `tools/character-editor/pro-editing.js`: eliminación de fondo conectado con tolerancia, suavizado y protección de línea; recoloración en rango con preservación de luces/sombras; ajustes de brillo, contraste, saturación, tono, temperatura, matiz y desenfoque.
+- `Crear copia editable para retocar cabello`: rasteriza la capa seleccionada a una nueva capa editable y oculta la fuente. El archivo original no se sobrescribe. Usa el borrador alfa en esa copia para retirar partes del peinado antes de añadir mechones nuevos.
+- Las operaciones de fondo/color crean otra capa editable; puedes ocultarla o eliminarla y volver a mostrar el original. Los ajustes visuales quedan guardados en el proyecto JSON.
+- Por seguridad de memoria, la interfaz limita cada operación de píxeles a 4 megapíxeles. Recorta/reduce la imagen antes de operar sobre archivos mayores.
+- No es segmentación semántica por IA: los algoritmos funcionan mejor con fondos relativamente uniformes y una buena muestra del color. La protección de tinta reduce el riesgo, pero no garantiza bordes perfectos.
+- Pruebas automatizadas en `tests/test_pro_editing.mjs`; el archivo original de AnimeArt sigue siendo la fuente independiente y no se modifica por copiar estos módulos.
+
+
+## Capturas guardadas en el repositorio
+
+El flujo `.github/workflows/hair-preview.yml` captura la aplicación real y guarda imágenes en `screenshots/` en esta rama:
+- [Lienzo con el personaje y la pieza de cabello](screenshots/IMAGE-app-cabello-01-captura.jpg)
+- [Panel de edición avanzada reutilizado de AnimeArt](screenshots/IMAGE-app-edicion-animeart-panel.jpg)
+- [Vista completa de IMAGE con el motor de edición](screenshots/IMAGE-app-edicion-animeart-completo.png)
+
+Las capturas se guardan mediante un commit del bot de GitHub Actions; los artefactos temporales se conservan por separado para descargar el paquete de prueba.
+
+
+## Galería web de referencias de peinados
+
+La pestaña desplegable **Referencias de peinados** de IMAGE indexa 46 vistas previas enlazadas de cuatro fuentes: PixAI (5), note.com (19), el artículo de michill.jp localizado desde Pinterest (7) y AnimeOutline (15). Permite buscar y filtrar por fuente y abrir tanto la imagen directa como la página que la publica. Pinterest bloquea la extracción automática de su pin, por eso se enlaza el pin y se usan las imágenes de su artículo de origen.
+
+Las imágenes se visualizan desde sus alojamientos originales; no se copian al repositorio ni al paquete portátil. La galería requiere Internet y respeta la atribución a cada sitio/autor. Las referencias son inspiración visual: no son piezas recortadas listas para ensamblar, no se añaden al lienzo de forma automática y no se consideran autorizadas para entrenamiento de modelos.

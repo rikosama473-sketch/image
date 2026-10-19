@@ -17,3 +17,14 @@ No pongas aquí imágenes de entrenamiento sin revisión ni copies un ZIP comple
 ## Paquetes externos pendientes de selección
 
 Para obtener los ZIP revisados sin meterlos todavía al historial, usa `python scripts/fetch_asset_packs.py --pack all`. La descarga y extracción quedan en `data/asset-cache/` (ignorada por Git). Inspecciona los XCF en GIMP y prueba el ensamble antes de copiar cualquier parte a esta carpeta. La licencia declarada CC0 de los dos recursos facilita reutilización, pero conserva su URL/ficha y no confundas la disponibilidad de archivos con la aprobación de todas las imágenes del dataset actual. Cada pieza copiada debe tener una entrada de fuente y permisos registrados.
+
+
+## Primera pieza propia: cabello_01
+
+- Archivo: `hair/cabello_01.svg`.
+- Tipo: overlay vectorial transparente, 768 × 1280 px.
+- Diseño: coleta alta castaña con mechones, brillos y un lazo oscuro.
+- Alineación inicial: `12.png` (referencia existente en la raíz de `main`). El SVG comparte el mismo lienzo completo para facilitar su superposición.
+- Uso: selecciona el directorio raíz del repositorio en IMAGE, busca `cabello_01.svg`, añádelo como capa y colócalo encima de `12.png`. Si lo usas con otra cabeza o pose, tendrás que reajustar escala y posición.
+- El archivo original `12.png` no se modifica. La pieza añade pelo por encima; no es un recorte automático ni una máscara exacta de cabello existente.
+- La procedencia queda documentada en `hair/cabello_01.json` y `data/asset-sources.json`. La autorización de entrenamiento continúa pendiente.

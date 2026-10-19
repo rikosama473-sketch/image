@@ -880,6 +880,22 @@
       "useInTraining": "Explicitly excluded by the source page. Do not use for AI training even though the page also mentions CC0.",
       "redistribution": "Review the direct no-AI condition alongside its CC0 summary; do not redistribute or train without resolving the applicable terms.",
       "notes": "Included to document an important license conflict: broad CC0 language on a listing does not mean the creator permits AI use. Keep it outside all model-training pools."
+    },
+    {
+      "id": "image-procedural-hair-001",
+      "name": "IMAGE original vector hair part — cabello_01",
+      "sourceUrl": "https://github.com/rikosama473-sketch/image/tree/work/modular-character-editor-2026-10/assets/parts/hair",
+      "kind": "original-project-vector-overlay",
+      "license": "original-vector-asset-created-for-this-repository; source-character-rights-remain-unreviewed",
+      "status": "created; placement-compatibility-review-pending",
+      "files": [
+        "assets/parts/hair/cabello_01.svg",
+        "assets/parts/hair/cabello_01.json"
+      ],
+      "sourceHint": "Original SVG addition designed as an overlay aligned to the existing main/12.png character image. Uses hand-authored paths and an approximate palette; contains no copied source-image pixels and uses no external asset.",
+      "useInEditor": "May be layered over 12.png or resized and repositioned for other compatible characters. Because it is an overlay rather than a segmented extraction, it will not automatically adapt to other head angles.",
+      "useInTraining": "not-approved-until-independent-rights-review; keep training_permission pending",
+      "externalAssetsUsed": false
     }
   ],
   "researchUpdatedAt": "2026-10-18",

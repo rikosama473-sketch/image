@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>IMAGE — Vista previa de cabello 01</title>
+  <link rel="stylesheet" href="/hair-preview.css">
+  <script src="/hair-preview.js" defer></script>
+</head>
+<body>
+  <main class="preview-shell">
+    <header class="preview-head">
+      <p class="eyebrow">IMAGE · PIEZA MODULAR DE CABELLO</p>
+      <h1>Cabello 01 — coleta alta castaña</h1>
+      <p>Prueba de montaje sobre la imagen real <code>12.png</code> del repositorio. El archivo original nunca se modifica.</p>
+    </header>
+    <section class="preview-card">
+      <div class="preview-actions">
+        <button id="toggle-hair" type="button" disabled>Ocultar coleta añadida</button>
+        <button id="download-preview" type="button" disabled>Exportar vista compuesta PNG</button>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="preview-canvas" width="768" height="1280" aria-label="Personaje original con la pieza de cabello superpuesta"></canvas>
+      </div>
+      <p id="preview-status" role="status" aria-live="polite">Cargando la referencia y el overlay…</p>
+    </section>
+    <footer>
+      <p><strong>Qué se añade:</strong> una capa vectorial transparente con coleta, mechones y brillos. No borra los píxeles del peinado base; por eso, según la forma original, quizá necesite un retoque manual.</p>
+      <p>Si aparece un error de archivo, inicia IMAGE seleccionando como biblioteca la carpeta raíz del repositorio, donde existen <code>12.png</code> y <code>assets/parts/hair/cabello_01.svg</code>.</p>
+      <p><a href="/">Volver al editor</a></p>
+    </footer>
+  </main>
+</body>
+</html>

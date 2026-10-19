@@ -1,0 +1,22 @@
+IMAGE — EDITOR MODULAR DE PERSONAJES (WINDOWS)
+
+USO
+1. Descomprime IMAGE-Character-Editor-Windows-x64.zip en una carpeta normal.
+2. Ejecuta IMAGE-Character-Editor.exe.
+3. Elige la carpeta que contiene tus imágenes en la ventana que aparece.
+4. Se abrirá el editor en tu navegador en http://127.0.0.1:8766.
+5. Mantén abierta la ventana negra mientras uses el editor. Cierra con Ctrl+C o cerrando la ventana.
+
+FUNCIONES
+- Buscar y navegar imágenes locales.
+- Añadir imágenes como capas y moverlas en el lienzo.
+- Ajustar tamaño, posición, rotación, opacidad y orden de capas.
+- Recortar una zona y borrar/restaurar a mano partes del recorte.
+- Intentar quitar fondos uniformes, guardar proyectos JSON y exportar PNG transparente.
+
+PRIVACIDAD Y LÍMITES
+- Funciona localmente, no necesita Python instalado ni modelos generativos.
+- No sube imágenes y no modifica los archivos de la carpeta seleccionada.
+- Las imágenes originales deben mantenerse en la carpeta elegida para que las capas vinculadas se puedan volver a abrir.
+- El recorte ayuda a preparar piezas, pero no revela automáticamente las partes ocultas detrás de ropa/cabello ni crea anatomía que no esté en la imagen.
+- Si Windows o el antivirus advierten de un ejecutable desconocido, no desactives la protección: puedes inspeccionar el código fuente y el hash incluidos.
