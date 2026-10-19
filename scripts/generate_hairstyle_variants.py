@@ -53,15 +53,13 @@ STYLE_PACKS = {
     ],
 }
 BASE_INSTRUCTIONS = (
-    "Edit the supplied image of the same character; do not create a different person. "
-    "Change ONLY the hairstyle and arrangement of the hair. Preserve the same face and identity, "
-    "eye shape and color, glasses, expression, apparent adult age, skin tone, head proportions, "
-    "hair color, accessories unless physically incompatible with the specific hairstyle, clothing, pose, "
-    "camera angle, framing, background, line art, shading, palette and rendering style. "
-    "Do not redesign the face, alter the outfit, change the body, add characters, text, logos or watermarks. "
-    "Keep the head and hair clearly visible; make the chosen hairstyle silhouette, parting, strand direction, "
-    "volume and ends the dominant variable. Use a clean, non-sexual, fully clothed presentation. "
-    "When anything conflicts, preserve the source and make the smallest possible change outside the hair."
+    "Create a hairstyle-study edit based on the supplied cropped head reference; preserve the same character identity. "
+    "Change ONLY the hairstyle and arrangement of the hair. Preserve the face, eye shape and color, glasses, expression, "
+    "adult appearance, skin tone, head proportions, hair color, accessories unless physically incompatible, line art, "
+    "shading, palette and rendering style. Do not redesign the face or add characters, text, logos or watermarks. "
+    "Present a centered head-and-hair portrait against a clean neutral background, with a simple fully covering high-neck "
+    "top visible only at the bottom if shoulders appear. No nudity, cleavage or torso detail. Make the hairstyle silhouette, "
+    "parting, strand direction, volume and ends the dominant variable. Preserve everything outside the hair as closely as possible."
 )
 
 def fail(message):
@@ -100,6 +98,43 @@ def extract_embedded_prompt(image_path):
         return "", keys
     except Exception:
         return "", []
+
+def prepare_head_reference(source_path, target_path):
+    """Crop the upper head zone and place it on a neutral canvas before calling the image API.
+
+    The full source image is never sent to the image-edit endpoint. The crop is designed for
+    upright anime illustrations whose head begins near the top edge; inspect the saved crop.
+    """
+    with Image.open(source_path) as source:
+        image = ImageOps.exif_transpose(source).convert("RGB")
+    width, height = image.size
+    left = int(round(width * 0.02))
+    right = int(round(width * 0.98))
+    bottom = max(256, min(int(round(width * 0.40)), int(round(height * 0.28))))
+    bottom = min(height, bottom)
+    if right - left < 256 or bottom < 200:
+        fail("Could not prepare a useful head crop; choose a larger upright image.")
+    crop_box = [left, 0, right, bottom]
+    head = image.crop(tuple(crop_box))
+    max_w, max_h = 960, 920
+    scale = min(max_w / head.width, max_h / head.height)
+    resized = head.resize(
+        (max(1, int(round(head.width * scale))), max(1, int(round(head.height * scale)))),
+        Image.Resampling.LANCZOS,
+    )
+    canvas = Image.new("RGB", (1024, 1024), "white")
+    canvas.paste(resized, ((1024 - resized.width) // 2, 32))
+    target_path.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(target_path, format="PNG", optimize=True)
+    png_bytes = target_path.read_bytes()
+    data_url = "data:image/png;base64," + base64.b64encode(png_bytes).decode("ascii")
+    return data_url, {
+        "crop_box_pixels": crop_box,
+        "source_crop_dimensions": [right - left, bottom],
+        "api_input_dimensions": [1024, 1024],
+        "crop_method": "top head zone based on width/height; original pixels outside the crop are excluded",
+    }
+
 
 def render_contact_sheet(image_paths, target):
     columns, cell_w, image_h, label_h, margin = 3, 400, 560, 48, 18
@@ -158,6 +193,9 @@ def main():
     embedded_prompt, metadata_keys = extract_embedded_prompt(source_path)
     out_dir = root / "generated" / "hairstyles" / character_id / ("run-" + str(run_id))
     out_dir.mkdir(parents=True, exist_ok=True)
+    crop_path = out_dir / "reference-head-crop.png"
+    head_data_url, crop_metadata = prepare_head_reference(source_path, crop_path)
+    crop_sha = hashlib.sha256(crop_path.read_bytes()).hexdigest()
     headers = {"Authorization": "Bearer " + api_key, "Content-Type": "application/json"}
     created, manifest_variants = [], []
     prompt_sections = [
@@ -165,6 +203,9 @@ def main():
         "- Source: " + relative_source,
         "- Source SHA-256: " + source_sha,
         "- Source dimensions: " + str(width) + "x" + str(height),
+        "- API reference: cropped head-only canvas; full original body is not sent",
+        "- Head crop box (pixels): " + str(crop_metadata["crop_box_pixels"]),
+        "- Cropped reference SHA-256: " + crop_sha,
         "- Model: " + MODEL, "- Run: " + str(run_id), "",
         "The exact prompts used by this run are listed below. The source prompt is recorded only when present in image metadata; it is never guessed.", "",
     ]
@@ -176,8 +217,8 @@ def main():
     for index, (slug, hair_description) in enumerate(variants, start=1):
         prompt = BASE_INSTRUCTIONS + " Specific hairstyle for this version: " + hair_description + ". Return one polished image."
         payload = {
-            "model": MODEL, "images": [{"image_url": source_url}], "prompt": prompt,
-            "size": "1024x1536", "quality": "medium", "output_format": "webp", "n": 1,
+            "model": MODEL, "images": [{"image_url": head_data_url}], "prompt": prompt,
+            "size": "1024x1024", "quality": "medium", "output_format": "webp", "n": 1,
         }
         print("[" + str(index) + "/" + str(len(variants)) + "] Generating " + slug + "...", flush=True)
         try:
@@ -220,6 +261,9 @@ def main():
         "source": {
             "repository": repo, "commit": commit_sha, "path": relative_source,
             "raw_url": source_url, "sha256": source_sha, "width": width, "height": height,
+            "head_crop_path": str(crop_path.relative_to(root)), "head_crop_sha256": crop_sha,
+            "head_crop": crop_metadata,
+            "api_input_note": "Only reference-head-crop.png is sent to the image edit API; the full original image is not sent.",
             "metadata_keys": metadata_keys, "embedded_prompt_found": bool(embedded_prompt),
             "embedded_prompt": embedded_prompt or None,
         },
