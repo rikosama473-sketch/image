@@ -141,6 +141,20 @@ class HTTPHandlerTests(unittest.TestCase):
         self.assertIn("text/html", headers.get("Content-Type", ""))
         self.assertIn(b"Editor modular de personajes", content)
 
+    def test_hair_preview_page_and_assets_are_served(self) -> None:
+        status, headers, content = self.get("/hair-preview.html")
+        self.assertEqual(status, 200)
+        self.assertIn("text/html", headers.get("Content-Type", ""))
+        self.assertIn(b"cabello_01.svg", content)
+        js_status, js_headers, js_content = self.get("/hair-preview.js")
+        self.assertEqual(js_status, 200)
+        self.assertIn("javascript", js_headers.get("Content-Type", ""))
+        self.assertIn(b"download-preview", js_content)
+        css_status, css_headers, css_content = self.get("/hair-preview.css")
+        self.assertEqual(css_status, 200)
+        self.assertIn("text/css", css_headers.get("Content-Type", ""))
+        self.assertIn(b"canvas", css_content)
+
 
 if __name__ == "__main__":
     unittest.main()
