@@ -58,3 +58,8 @@
 .historical-fashion-description p{margin:0;line-height:1.5}
 .historical-fashion-description a{font-size:12px;color:#a8c7ff;text-decoration:underline;width:fit-content}
 @media(max-width:700px){.historical-fashion-controls{grid-template-columns:1fr}.historical-fashion-controls .button{width:100%}}
+
+.hair-preview-link-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:10px}
+.hair-preview-link-row .button{white-space:normal;min-height:36px}
+.hair-preview-link-row .muted{flex:1;min-width:180px;line-height:1.5}
+@media(max-width:700px){.hair-preview-link-row{align-items:stretch}.hair-preview-link-row .button{width:100%}}
