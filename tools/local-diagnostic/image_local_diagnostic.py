@@ -149,6 +149,25 @@ def _parse_parameters(text: str) -> dict[str, str]:
     return found
 
 
+def _prompt_presence(text: str) -> tuple[int, bool]:
+    """Return character count/presence only; never return prompt text to the caller."""
+    if not text or len(text) > MAX_METADATA_CHARS:
+        return 0, False
+    negative_match = re.search(
+        r"Negative prompt:\\s*(.*?)(?=\\n\\s*(?:Steps|Sampler|CFG scale|CFG|Seed|Model|Model hash)\\s*:|$)",
+        text, re.IGNORECASE | re.DOTALL,
+    )
+    if negative_match:
+        positive = text[:negative_match.start()].strip()
+        return len(positive), True
+    config_match = re.search(
+        r"\\n\\s*(?:Steps|Sampler|CFG scale|CFG|Seed|Model|Model hash)\\s*:",
+        text, re.IGNORECASE,
+    )
+    positive = text[:config_match.start()].strip() if config_match else text.strip()
+    return len(positive), False
+
+
 def _family_hint(model: str) -> str:
     lower = (model or "").lower()
     if not lower:
@@ -224,9 +243,17 @@ def _image_record(path: Path, root: Path, include_hash: bool = True) -> dict[str
 
     positive = _pick(flat, PROMPT_ALIASES)
     negative = _pick(flat, NEGATIVE_ALIASES)
-    row["prompt_present"] = str(bool(positive)).lower()
-    row["prompt_char_count"] = str(len(positive)) if positive else "0"
-    row["negative_prompt_present"] = str(bool(negative)).lower()
+    prompt_length = len(positive)
+    negative_present = bool(negative)
+    for key, value in flat:
+        if "parameters" in _norm(key) or "negative prompt:" in value.lower() or "sampler:" in value.lower():
+            inferred_length, inferred_negative = _prompt_presence(value)
+            if inferred_length and not prompt_length:
+                prompt_length = inferred_length
+            negative_present = negative_present or inferred_negative
+    row["prompt_present"] = str(bool(prompt_length)).lower()
+    row["prompt_char_count"] = str(prompt_length)
+    row["negative_prompt_present"] = str(negative_present).lower()
 
     selected = {
         "base_model_identifier": _safe_identifier(_pick(flat, MODEL_ALIASES)),
