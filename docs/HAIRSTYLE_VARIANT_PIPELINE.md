@@ -12,9 +12,10 @@ El flujo primero intenta recuperar el prompt original de los metadatos con el ex
 
 1. Después de integrar este cambio en main, abrir **Settings → Secrets and variables → Actions → New repository secret** y crear OPENAI_API_KEY con una clave de API válida. No escribir la clave en código, YAML, commits, prompts ni logs. La generación por API puede tener costes.
 2. Ir a **Actions → Generate hairstyle reference variants → Run workflow**.
-3. Elegir una ruta de imagen existente en el repositorio. Preferir una imagen vertical de un solo personaje, con la cara visible y la cabeza próxima al borde superior. La automatización recorta la zona superior antes de llamar al editor, pero conviene revisar el recorte guardado en los resultados.
-4. Elegir el personaje (Pibara, Chie, Sunna o uno de los dos espacios sin identificar) y el paquete de seis estilos.
-5. Al terminar, abrir el Pull Request que genera la automatización y comprobar visualmente la identidad. El resultado no se integra en main automáticamente.
+3. Elegir la ruta exacta de una imagen existente. Preferir una imagen vertical de un solo personaje, con la cara y el cabello completos. Seleccionar **mode = preview** primero: no llama a las API de IA ni genera cargos; crea un recorte cuadrado y un manifiesto descargables como artefacto de la ejecución.
+4. Revisar visualmente que el recorte contenga el rostro completo y la parte de cabello necesaria. Si corta la barbilla, el flequillo o las puntas, repetir el preview con otra altura o seleccionar otra imagen.
+5. Solo después, repetir con **mode = generate**, elegir el personaje (Pibara, Chie, Sunna o uno de los dos espacios sin identificar) y el paquete de seis estilos. Es necesario el secreto OPENAI_API_KEY.
+6. Al terminar, abrir el Pull Request que genera la automatización y comprobar visualmente la identidad. El resultado no se integra en main automáticamente.
 
 ## Qué crea cada ejecución
 
@@ -29,7 +30,7 @@ No se infiere la LoRA o el prompt de origen por el nombre de archivo. Si los met
 
 ## Cómo se prepara la referencia
 
-El script aplica orientación EXIF, toma el 96% central del ancho y recorta desde la parte superior hasta el menor de 40% del ancho o 28% de la altura (con un mínimo de 256 píxeles cuando la imagen lo permite). Esa región se adapta a un lienzo blanco de 1024×1024. Es una heurística diseñada para ilustraciones verticales con la cabeza cerca de arriba; no detecta rostros automáticamente, así que la selección de la imagen original sigue importando.
+El script aplica orientación EXIF, toma el 96% central del ancho y recorta desde arriba una altura seleccionable de 0,60, 0,70 u 0,80 veces el ancho, con un límite del 75% de la altura original. La región se adapta a un lienzo blanco de 1024×1024. El límite anterior de 28% de la altura podía cortar la barbilla en retratos verticales; por eso el preview es ahora el primer paso y permite revisar el encuadre antes de generar.
 
 ## Paquetes de variaciones
 
@@ -43,7 +44,7 @@ El script aplica orientación EXIF, toma el 96% central del ancho y recorta desd
 
 Los prompts insisten en conservar rostro, ojos, gafas, expresión, color de pelo, accesorios y estilo de dibujo. Aun así, un editor generativo puede cambiar algo fuera del pelo. **No se debe considerar una variante válida solo porque sea bonita:** rechazar las que alteren la identidad. Una mejora posterior sería aplicar una máscara específica del pelo y comparar píxeles fuera de esa región.
 
-Cada ejecución solicita una interpretación visual y seis imágenes a las API, así que puede generar costes. Empieza con una referencia y un solo paquete; no lances cientos de generaciones en lote.
+Una ejecución en modo preview no llama a modelos ni genera cargos por inferencia. Una ejecución en modo generate solicita una interpretación visual y seis imágenes a las API, así que puede generar costes. Empieza con una referencia y un solo paquete; no lances cientos de generaciones en lote.
 
 ## Separación de personajes y prompts
 

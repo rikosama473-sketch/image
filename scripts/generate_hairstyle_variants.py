@@ -53,13 +53,13 @@ STYLE_PACKS = {
     ],
 }
 BASE_INSTRUCTIONS = (
-    "Create a hairstyle-study edit based on the supplied cropped head reference; preserve the same character identity. "
-    "Change ONLY the hairstyle and arrangement of the hair. Preserve the face, eye shape and color, glasses, expression, "
-    "adult appearance, skin tone, head proportions, hair color, accessories unless physically incompatible, line art, "
-    "shading, palette and rendering style. Do not redesign the face or add characters, text, logos or watermarks. "
-    "Present a centered head-and-hair portrait against a clean neutral background, with a simple fully covering high-neck "
-    "top visible only at the bottom if shoulders appear. No nudity, cleavage or torso detail. Make the hairstyle silhouette, "
-    "parting, strand direction, volume and ends the dominant variable. Preserve everything outside the hair as closely as possible."
+    "This is a precise edit of the existing supplied character image, not a new character design or an illustration inspired by it. "
+    "Change ONLY the hairstyle and arrangement of the hair as requested. Preserve the exact recognizable face, eye shape and color, "
+    "glasses, headband and other visible accessories, expression, skin tone, head proportions, hair color, original line-art weight, "
+    "shading, color palette, brush/finish, background, crop and all other visible details. Do not add, remove or redesign accessories. "
+    "Do not change clothing or invent clothing that is not visible. Do not change the pose or camera framing. Do not beautify, simplify, "
+    "redraw in another anime style, add characters, text, logos or watermarks. Do not recrop or resize the face. The requested hair shape, "
+    "parting, strand direction, volume and ends are the ONLY intended change. Preserve non-hair regions as closely as possible."
 )
 
 def fail(message):
@@ -115,18 +115,22 @@ def extract_embedded_prompt(image_path, root):
     except Exception:
         return "", []
 
-def prepare_head_reference(source_path, target_path):
-    """Crop the upper head zone and place it on a neutral canvas before calling the image API.
-
-    The full source image is never sent to the image-edit endpoint. The crop is designed for
-    upright anime illustrations whose head begins near the top edge; inspect the saved crop.
-    """
+def prepare_head_reference(source_path, target_path, height_ratio=0.70):
+    """Crop a user-reviewable upper-head region; do not guess that a narrow band contains the full face."""
+    try:
+        height_ratio = float(height_ratio)
+    except (TypeError, ValueError):
+        fail("HEAD_CROP_HEIGHT_RATIO must be numeric.")
+    if not 0.55 <= height_ratio <= 0.90:
+        fail("HEAD_CROP_HEIGHT_RATIO must be between 0.55 and 0.90.")
     with Image.open(source_path) as source:
         image = ImageOps.exif_transpose(source).convert("RGB")
     width, height = image.size
     left = int(round(width * 0.02))
     right = int(round(width * 0.98))
-    bottom = min(int(round(width * 0.40)), int(round(height * 0.28)))
+    # A crop height of only 28% of a full-length portrait often cuts the chin/face.
+    # This ratio deliberately keeps more head and hair, and can be previewed before paid generation.
+    bottom = min(int(round(width * height_ratio)), int(round(height * 0.75)))
     if right - left < 256 or bottom < 200:
         fail("Could not prepare a useful head crop; choose a larger upright image.")
     crop_box = [left, 0, right, bottom]
@@ -147,7 +151,8 @@ def prepare_head_reference(source_path, target_path):
         "crop_box_pixels": crop_box,
         "source_crop_dimensions": [right - left, bottom],
         "api_input_dimensions": [1024, 1024],
-        "crop_method": "top head zone based on width/height; original pixels outside the crop are excluded",
+        "height_ratio": height_ratio,
+        "crop_method": "top head zone with configurable height ratio; inspect the preview before paid generation",
     }
 
 
@@ -232,14 +237,18 @@ def render_contact_sheet(image_paths, target):
 
 def main():
     import requests
+    generation_mode = os.environ.get("GENERATION_MODE", "generate").strip().lower()
+    if generation_mode not in {"preview", "generate"}:
+        fail("GENERATION_MODE must be preview or generate.")
     api_key = os.environ.get("OPENAI_API_KEY", "").strip()
-    if not api_key:
+    if generation_mode == "generate" and not api_key:
         fail("Missing Actions secret OPENAI_API_KEY. Never put the API key in source code.")
     repo = os.environ.get("GITHUB_REPOSITORY", "").strip()
     commit_sha = os.environ.get("GITHUB_SHA", "").strip()
     run_id = os.environ.get("GITHUB_RUN_ID", datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"))
     character_id = os.environ.get("CHARACTER_ID", "").strip().lower()
     style_pack = os.environ.get("STYLE_PACK", "core-6").strip().lower()
+    head_crop_height_ratio = os.environ.get("HEAD_CROP_HEIGHT_RATIO", "0.70").strip()
     raw_source = os.environ.get("REFERENCE_IMAGE", "").strip()
     root = Path(os.environ.get("GITHUB_WORKSPACE", Path.cwd())).resolve()
     if not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,40}", character_id):
@@ -266,8 +275,23 @@ def main():
     out_dir = root / "generated" / "hairstyles" / character_id / ("run-" + str(run_id))
     out_dir.mkdir(parents=True, exist_ok=True)
     crop_path = out_dir / "reference-head-crop.png"
-    head_data_url, crop_metadata = prepare_head_reference(source_path, crop_path)
+    head_data_url, crop_metadata = prepare_head_reference(source_path, crop_path, head_crop_height_ratio)
     crop_sha = hashlib.sha256(crop_path.read_bytes()).hexdigest()
+    if generation_mode == "preview":
+        preview = {
+            "mode": "preview_only_no_paid_generation",
+            "character_id": character_id,
+            "source_path": relative_source,
+            "source_sha256": source_sha,
+            "source_dimensions": [width, height],
+            "head_crop_path": str(crop_path.relative_to(root)),
+            "head_crop_sha256": crop_sha,
+            "head_crop": crop_metadata,
+            "message": "Review reference-head-crop.png before running with GENERATION_MODE=generate.",
+        }
+        (out_dir / "reference-preview.json").write_text(json.dumps(preview, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        print("Preview only: created the crop and provenance manifest. No external AI API was called.")
+        return
     visual_analysis = infer_visual_base_prompt(head_data_url, requests)
     visual_base_prompt = visual_analysis["visual_base_prompt"]
     headers = {"Authorization": "Bearer " + api_key, "Content-Type": "application/json"}
