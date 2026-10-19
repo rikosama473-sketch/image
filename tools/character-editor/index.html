@@ -63,6 +63,7 @@
     <form method="dialog" class="dialog-head"><div><span class="eyebrow">RECORTE LOCAL</span><h2>Extraer una pieza</h2></div><button class="icon-button" value="cancel" aria-label="Cerrar">×</button></form>
     <p class="muted small">Arrastra un rectángulo alrededor de la pieza. Si el fondo de la imagen es uniforme, puedes intentar volver transparente el color de la esquina superior izquierda.</p>
     <div class="crop-stage"><canvas id="crop-canvas" width="800" height="600"></canvas></div>
+    <div class="mask-tools"><label><input type="radio" name="crop-tool" value="select" checked> Seleccionar recorte</label><label><input type="radio" name="crop-tool" value="erase"> Borrar fondo a mano</label><label><input type="radio" name="crop-tool" value="restore"> Restaurar zona</label><label class="brush-size">Pincel <input id="mask-brush-size" type="range" min="4" max="80" value="24"></label><button id="undo-mask-stroke" class="button secondary" type="button">Deshacer trazo</button></div>
     <div class="crop-controls">
       <label class="check-label"><input id="remove-background" type="checkbox"> Quitar fondo uniforme (color de la esquina superior izquierda)</label>
       <label class="field">Tolerancia <input id="background-tolerance" type="range" min="0" max="120" value="28"><span id="tolerance-value">28</span></label>

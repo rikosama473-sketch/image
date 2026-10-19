@@ -30,7 +30,7 @@ Los originales son de solo lectura. Las piezas recortadas quedan incrustadas den
 ## Límites importantes
 
 - Las miles de imágenes son una fuente de referencias, no un conjunto de piezas anatómicas ya limpias.
-- El recorte rectangular y la eliminación aproximada de un color de fondo ayudan a preparar piezas simples, pero no aíslan automáticamente pelo, brazos, manos o ropa de una ilustración completa.
+- El recorte rectangular, el pincel manual para borrar/restaurar y la eliminación aproximada de un color de fondo permiten preparar piezas simples, pero no aíslan automáticamente pelo, brazos, manos o ropa de una ilustración completa.
 - Lo que está oculto detrás del torso, cabello o vestimenta no existe en los píxeles visibles y necesita redibujarse o retocarse.
 - El editor no usa IA ni entrenamiento. No realiza cargas remotas ni escribe en la carpeta de imágenes.
 - Se indexan hasta 10.000 imágenes en hasta 5.000 directorios; se omiten archivos de más de 100 MB. Para una colección mayor, conviene escoger carpetas por personaje o tema.
@@ -38,4 +38,4 @@ Los originales son de solo lectura. Las piezas recortadas quedan incrustadas den
 
 ## Siguiente etapa
 
-Mejorar la preparación de piezas: vista de máscara, pincel manual para borrar/restaurar zonas, guardado de piezas con etiquetas y puntos de anclaje (cabeza, cuello, hombros, codos, muñecas, cadera, rodillas y tobillos). Eso permitirá que las piezas se ensamblen con menos ajustes. La clasificación no debe alterar ni sobrescribir los originales.
+Mejorar la preparación de piezas: guardado de piezas con etiquetas y puntos de anclaje (cabeza, cuello, hombros, codos, muñecas, cadera, rodillas y tobillos). Eso permitirá que las piezas se ensamblen con menos ajustes. La clasificación no debe alterar ni sobrescribir los originales.

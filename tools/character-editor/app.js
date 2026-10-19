@@ -30,10 +30,10 @@
   function imageFor(source) {
     if (state.imageCache.has(source)) return state.imageCache.get(source);
     const image = new Image();
-    image.src = source;
     const promise = new Promise((resolve, reject) => {
       image.onload = () => resolve(image);
       image.onerror = () => reject(new Error("No se pudo abrir la imagen."));
+      image.src = source;
     });
     state.imageCache.set(source, promise);
     return promise;
@@ -247,7 +247,7 @@
       const scale = Math.min(1, 1200 / image.naturalWidth, 1200 / image.naturalHeight);
       cropCanvas.width = Math.max(1, Math.round(image.naturalWidth * scale)); cropCanvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
       cropCtx.clearRect(0, 0, cropCanvas.width, cropCanvas.height); cropCtx.drawImage(image, 0, 0, cropCanvas.width, cropCanvas.height);
-      state.crop = { layerId: layer.id, image, scale, start: null, selection: null };
+      state.crop = { layerId: layer.id, image, scale, start: null, selection: null, strokes: [], activeStroke: null };
       $("crop-name").value = layer.name.replace(/\.[^.]+$/, "") + "-pieza";
       $("crop-category").value = layer.category === "reference" ? "other" : layer.category;
       $("create-crop").disabled = true; cropDialog.showModal();
@@ -259,25 +259,72 @@
   }
   function redrawCrop() {
     if (!state.crop) return;
-    const crop = state.crop; cropCtx.clearRect(0, 0, cropCanvas.width, cropCanvas.height); cropCtx.drawImage(crop.image, 0, 0, cropCanvas.width, cropCanvas.height);
+    const crop = state.crop;
+    cropCtx.clearRect(0, 0, cropCanvas.width, cropCanvas.height);
+    cropCtx.drawImage(crop.image, 0, 0, cropCanvas.width, cropCanvas.height);
     if (crop.selection) {
-      const r = crop.selection; cropCtx.fillStyle = "#7da7ff30"; cropCtx.fillRect(r.x, r.y, r.w, r.h);
-      cropCtx.strokeStyle = "#8eb4ff"; cropCtx.lineWidth = Math.max(2, cropCanvas.width / 500); cropCtx.setLineDash([8, 4]); cropCtx.strokeRect(r.x, r.y, r.w, r.h); cropCtx.setLineDash([]);
+      const r = crop.selection;
+      cropCtx.fillStyle = "#7da7ff24"; cropCtx.fillRect(r.x, r.y, r.w, r.h);
+      cropCtx.strokeStyle = "#8eb4ff"; cropCtx.lineWidth = Math.max(2, cropCanvas.width / 500);
+      cropCtx.setLineDash([8, 4]); cropCtx.strokeRect(r.x, r.y, r.w, r.h); cropCtx.setLineDash([]);
     }
+    crop.strokes.forEach(stroke => paintMaskStroke(cropCtx, stroke, Number($("mask-brush-size").value), 0, 0, 1, 1, true));
+    if (crop.activeStroke) paintMaskStroke(cropCtx, crop.activeStroke, Number($("mask-brush-size").value), 0, 0, 1, 1, true);
+  }
+  function currentCropTool() {
+    const input = document.querySelector('input[name="crop-tool"]:checked');
+    return input ? input.value : "select";
+  }
+  function paintMaskStroke(context, stroke, lineWidth, offsetX = 0, offsetY = 0, scaleX = 1, scaleY = 1, preview = false) {
+    if (!stroke || !stroke.points || !stroke.points.length) return;
+    context.save();
+    context.globalAlpha = preview ? 0.62 : 1;
+    context.globalCompositeOperation = "source-over";
+    context.strokeStyle = preview ? (stroke.mode === "erase" ? "#ff5b70" : "#51e5cd") : (stroke.mode === "erase" ? "#000000" : "#ffffff");
+    context.fillStyle = context.strokeStyle;
+    context.lineWidth = Math.max(1, lineWidth); context.lineCap = "round"; context.lineJoin = "round";
+    context.beginPath();
+    const first = stroke.points[0], x0 = (first.x - offsetX) * scaleX, y0 = (first.y - offsetY) * scaleY;
+    context.moveTo(x0, y0);
+    for (let i = 1; i < stroke.points.length; i++) {
+      const point = stroke.points[i]; context.lineTo((point.x - offsetX) * scaleX, (point.y - offsetY) * scaleY);
+    }
+    context.stroke();
+    if (stroke.points.length === 1) { context.beginPath(); context.arc(x0, y0, Math.max(1, lineWidth / 2), 0, Math.PI * 2); context.fill(); }
+    context.restore();
   }
   cropCanvas.addEventListener("pointerdown", event => {
     if (!state.crop) return;
-    const point = cropPoint(event); state.crop.start = point; state.crop.selection = { x: point.x, y: point.y, w: 0, h: 0 };
+    const point = cropPoint(event), tool = currentCropTool();
+    if (tool === "select") {
+      state.crop.start = point; state.crop.selection = { x: point.x, y: point.y, w: 0, h: 0 };
+    } else {
+      if (!state.crop.selection || state.crop.selection.w < 4 || state.crop.selection.h < 4) { setNotice("Primero selecciona el rectángulo de la pieza; después puedes borrar o restaurar zonas.", true); return; }
+      state.crop.activeStroke = { mode: tool, points: [point] };
+    }
     cropCanvas.setPointerCapture(event.pointerId); redrawCrop();
   });
   cropCanvas.addEventListener("pointermove", event => {
-    if (!state.crop || !state.crop.start) return;
-    const point = cropPoint(event), start = state.crop.start;
-    state.crop.selection = { x: Math.min(start.x, point.x), y: Math.min(start.y, point.y), w: Math.abs(point.x - start.x), h: Math.abs(point.y - start.y) }; redrawCrop();
+    if (!state.crop) return;
+    const point = cropPoint(event);
+    if (state.crop.start && currentCropTool() === "select") {
+      const start = state.crop.start;
+      state.crop.selection = { x: Math.min(start.x, point.x), y: Math.min(start.y, point.y), w: Math.abs(start.x - point.x), h: Math.abs(start.y - point.y) };
+      redrawCrop();
+    } else if (state.crop.activeStroke) { state.crop.activeStroke.points.push(point); redrawCrop(); }
   });
-  cropCanvas.addEventListener("pointerup", () => {
-    if (!state.crop) return; state.crop.start = null;
+  function finishCropPointer() {
+    if (!state.crop) return;
+    if (state.crop.activeStroke) { state.crop.strokes.push(state.crop.activeStroke); state.crop.activeStroke = null; }
+    state.crop.start = null;
     const rect = state.crop.selection; $("create-crop").disabled = !rect || rect.w < 4 || rect.h < 4;
+    redrawCrop();
+  }
+  cropCanvas.addEventListener("pointerup", finishCropPointer);
+  cropCanvas.addEventListener("pointercancel", finishCropPointer);
+  $("undo-mask-stroke").addEventListener("click", () => {
+    if (!state.crop || !state.crop.strokes.length) return;
+    state.crop.strokes.pop(); redrawCrop();
   });
   $("background-tolerance").addEventListener("input", event => { $("tolerance-value").textContent = event.target.value; });
 
@@ -311,8 +358,16 @@
     const sx = Math.round(rect.x / crop.scale), sy = Math.round(rect.y / crop.scale);
     const sw = Math.max(1, Math.min(crop.image.naturalWidth - sx, Math.round(rect.w / crop.scale)));
     const sh = Math.max(1, Math.min(crop.image.naturalHeight - sy, Math.round(rect.h / crop.scale)));
+    if (sw * sh > 4000000) { setNotice("Ese recorte es demasiado grande para el perfil de memoria conservador. Selecciona una zona de hasta 4 millones de píxeles.", true); return; }
     const out = document.createElement("canvas"); out.width = sw; out.height = sh;
     const outCtx = out.getContext("2d", { willReadFrequently: true }); outCtx.drawImage(crop.image, sx, sy, sw, sh, 0, 0, sw, sh);
+    if (crop.strokes.length) {
+      const mask = document.createElement("canvas"); mask.width = sw; mask.height = sh;
+      const maskCtx = mask.getContext("2d"); maskCtx.fillStyle = "#ffffff"; maskCtx.fillRect(0, 0, sw, sh);
+      const scaleX = sw / rect.w, scaleY = sh / rect.h, brush = Number($("mask-brush-size").value) / crop.scale;
+      crop.strokes.forEach(stroke => paintMaskStroke(maskCtx, stroke, brush, rect.x, rect.y, scaleX, scaleY, false));
+      outCtx.save(); outCtx.globalCompositeOperation = "destination-in"; outCtx.drawImage(mask, 0, 0); outCtx.restore();
+    }
     if ($("remove-background").checked) removeUniformBorderBackground(out, Number($("background-tolerance").value));
     let dataUrl;
     try { dataUrl = out.toDataURL("image/png"); } catch { setNotice("No se pudo preparar el recorte. Prueba con una zona más pequeña.", true); return; }
@@ -383,13 +438,13 @@
     } catch (error) { setNotice(error.message, true); }
     finally { event.target.value = ""; }
   });
-  $("export-png").addEventListener("click", () => {
+  $("export-png").addEventListener("click", async () => {
     if (!state.layers.length) { setNotice("Añade al menos una capa antes de exportar.", true); return; }
-    drawStage();
-    setTimeout(() => stage.toBlob(blob => {
+    await drawStage();
+    stage.toBlob(blob => {
       if (!blob) { setNotice("No se pudo exportar el PNG.", true); return; }
       downloadBlob(blob, "IMAGE-character.png"); setNotice("PNG exportado con fondo transparente.");
-    }, "image/png"), 80);
+    }, "image/png");
   });
   $("new-project").addEventListener("click", () => {
     if (state.layers.length && !window.confirm("¿Empezar un proyecto nuevo? Guarda primero el proyecto actual si quieres conservarlo.")) return;
