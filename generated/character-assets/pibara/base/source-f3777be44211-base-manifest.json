@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "character_id": "pibara",
+  "asset_kind": "whole_character_foreground_cutout",
+  "is_ai_generated": false,
+  "created_at_utc": "2026-10-20T13:06:55.813466+00:00",
+  "source": {
+    "path": "from-PixAI-2034984086876227343-0.png",
+    "url": "https://raw.githubusercontent.com/rikosama473-sketch/image/7e976e5d177c23ccf9156a7208cae08b5116064f/from-PixAI-2034984086876227343-0.png",
+    "sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+    "dimensions": [
+      768,
+      1280
+    ]
+  },
+  "assets": {
+    "character_cutout": {
+      "file": "generated/character-assets/pibara/base/source-f3777be44211-character-cutout.png",
+      "sha256": "93c8f55677949952c6514ac5ac4d8b48d56aa9c6eb64b82c49dc8a3fd5bc0f81",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "transparent_pixel_ratio": 0.30554,
+      "opaque_pixel_ratio": 0.011,
+      "quality_warning": "Very little fully opaque foreground; inspect the cutout."
+    },
+    "alpha_mask": {
+      "file": "generated/character-assets/pibara/base/source-f3777be44211-alpha-mask.png",
+      "sha256": "12663d7d01a6784d929c539b086ca12ac8b36f79fda7150aab70a4158c451bcf",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "mask_semantics": "White/opaque pixels represent the estimated foreground; black/transparent pixels represent the estimated background."
+    }
+  },
+  "method": {
+    "name": "rembg",
+    "model": "u2net",
+    "uses_generation_api": false,
+    "note": "This preserves the source character's pixels apart from automatic background-removal/alpha estimation. It is a full-character cutout, not separate hair, eyes or accessories."
+  },
+  "review_status": "needs_edge_review",
+  "quality_warning": "Very little fully opaque foreground; inspect the cutout."
+}
