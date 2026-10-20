@@ -47,6 +47,8 @@ class CharacterAssetFactoryTests(unittest.TestCase):
         self.assertIn("do not preserve the input crop", MODULE.ANATOMY_BASE)
         self.assertIn("hands, fingers and both feet visible", MODULE.ANATOMY_BASE)
         self.assertIn("later manual component separation", MODULE.ANATOMY_BASE)
+        self.assertIn("exact hairstyle and silhouette", MODULE.ANATOMY_BASE)
+        self.assertIn("Do not redesign the hairstyle", MODULE.ANATOMY_BASE)
 
     def test_reference_validation(self):
         self.assertEqual(MODULE.validate_path("ref/character.png"), "ref/character.png")
