@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Create identity-preserving visual variants from a real IMAGE repository reference."""
 from __future__ import annotations
-import argparse, hashlib, io, json, re, sys
+import argparse, hashlib, io, json, os, re, sys
 from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
 from urllib.parse import quote
@@ -9,6 +9,18 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 SPACE_ID = "conradlocke/krea2-identity-edit"
 SPACE_URL = "https://huggingface.co/spaces/conradlocke/krea2-identity-edit"
+
+
+def build_space_client(client_class, hf_token):
+    """Authenticate to the public Space when a repository secret is configured."""
+    token = str(hf_token or "").strip()
+    if token:
+        print("Public image Space authentication: HF_TOKEN configured.")
+        return client_class(SPACE_ID, hf_token=token, verbose=True)
+    print("Public image Space authentication: anonymous quota.")
+    return client_class(SPACE_ID, verbose=True)
+
+
 ALLOWED_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
 MAX_SOURCE_BYTES = 20 * 1024 * 1024
 CONFIRMED_PIBARA_REFERENCE = "from-PixAI-2034984086876227343-0.png"
@@ -504,7 +516,7 @@ def main():
     renders.mkdir(parents=True, exist_ok=True)
     try:
         from gradio_client import Client, handle_file
-        client = Client(SPACE_ID, verbose=True)
+        client = build_space_client(Client, os.environ.get("HF_TOKEN"))
         source_input = handle_file(url)
     except Exception as exc:
         fail("Could not connect to the public Gradio Space: " + str(exc))
