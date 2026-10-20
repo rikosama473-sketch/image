@@ -108,3 +108,16 @@ La ejecución automatizada para Pibara completó el paquete `anatomy-guide-1`. E
 - [Registro de la ejecución](https://github.com/rikosama473-sketch/image/actions/runs/39496066089)
 
 El manifiesto mantiene la guía pendiente de revisión visual. La figura sirve como borrador anatómico, pero el primer resultado cambió el pelo, los ojos y la ropa respecto a la referencia de Pibara; no se debe considerar una réplica aprobada.
+
+
+### Tres archivos anatómicos guardados en la rama
+
+La ejecución \`anatomy-sheet-4\` quedó **parcial (3 de 4)** por agotamiento de la cuota del Space público. Los seis PNG siguientes y la hoja de contacto fueron comprobados como existentes en el commit inmutable \`745404b7e5d5\`:
+
+- [Frontal — render original](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/renders/01-batch-front-a-pose.png) · [PNG transparente](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/01-batch-front-a-pose.png)
+- [Perfil lateral — render original](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/renders/02-batch-side-profile.png) · [PNG transparente](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/02-batch-side-profile.png)
+- [Vista trasera — render original](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/renders/03-batch-back-view.png) · [PNG transparente](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/03-batch-back-view.png)
+- [Hoja de contacto](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/contact-sheet.jpg) · [Manifiesto](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/manifest.json) · [Prompts](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/PROMPTS.md)
+- [Ejecución de Actions](https://github.com/rikosama473-sketch/image/actions/runs/39500149462)
+
+**Control de calidad:** el frontal no es cuerpo entero y no cumple la pose A. Perfil y espalda sí muestran cuerpo entero, pero no conservan fielmente el cabello rojo/negro, los ojos y la ropa de Pibara. Los archivos siguen marcados como pendientes de revisión visual; no se promocionan a modelos definitivos.
