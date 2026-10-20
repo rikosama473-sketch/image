@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "purpose": "one-time repository-side anatomy batch generation",
+  "character_id": "pibara",
+  "reference_image": "from-PixAI-2034984086876227343-0.png",
+  "asset_pack": "anatomy-sheet-4",
+  "background": "transparent",
+  "base_seed": 1201,
+  "scope": {
+    "branch_only": "work/easy-avatar-maker-2026-10",
+    "output_directory": "generated/character-assets/pibara/",
+    "never_write_to_main": true
+  },
+  "requested_views": [
+    "front A-pose",
+    "strict side profile",
+    "rear view",
+    "joint-landmark guide"
+  ],
+  "review_policy": "Every output requires visual identity review; generator success is not visual approval.",
+  "note": "The repository workflow watches this file only on the named work branch. Keep the marker as a record after the one-time push trigger."
+}
