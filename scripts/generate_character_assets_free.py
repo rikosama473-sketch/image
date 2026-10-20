@@ -25,7 +25,7 @@ ANATOMY_BASE = (
     "Identity-guided anime character model-sheet reconstruction from the supplied image. "
     "Unlike a normal local edit, do not preserve the input crop or bust framing: extend/recompose the composition into a complete full-body figure from the highest hair strand to both soles. "
     "Maintain the recognizable character face, hair identity, palette and costume motifs while making a modest opaque anatomy-study outfit if needed for legibility. "
-    "Show clear anime body construction with a symmetric neutral A-pose, arms slightly separated from torso, fingers and both feet visible, balanced proportions, clean 2D line art and cel shading. "
+    "Show clear anime body construction with a symmetric neutral A-pose, arms slightly separated from torso, hands, fingers and both feet visible, balanced proportions, clean 2D line art and cel shading. "
     "Subtle joint landmarks for shoulders, elbows, wrists, pelvis, knees and ankles are acceptable; avoid labels or writing. "
     "One figure only, front view, centered portrait canvas, no panels, no extra poses, no added character, no text, no watermark, no photorealism. "
     "The output is a reference guide for later manual component separation, not a claim that individual body parts are already segmented."
