@@ -164,3 +164,16 @@ El paquete \`anatomy-sheet-4\` guardó tres vistas en el repositorio antes de qu
 - [Ejecución de GitHub Actions](https://github.com/rikosama473-sketch/image/actions/runs/39500149462)
 
 La vista frontal **no cumple la pose A solicitada**: las piernas están recortadas y un brazo está levantado. Perfil y espalda son de cuerpo entero, pero las tres vistas se apartan de la identidad visual de Pibara (cabello, ojos o vestuario). El manifiesto y la biblioteca lo registran. Son borradores anatómicos, no modelos canónicos aprobados.
+
+
+### Reanudar la vista anatómica que falta
+
+El paquete \`anatomy-sheet-4\` produjo tres vistas y preservó los archivos cuando el Space público agotó la cuota. La cola diaria se ha ajustado para priorizar primero los paquetes anatómicos pendientes y la conexión opcional admite \`HF_TOKEN\` como secreto de GitHub Actions.
+
+Para dar más cuota al generador público sin poner credenciales en el código:
+1. Crea un token de Hugging Face con los permisos mínimos que requiera el Space.
+2. En GitHub abre **Settings → Secrets and variables → Actions → New repository secret**.
+3. Usa exactamente el nombre \`HF_TOKEN\` y guarda el valor directamente en GitHub. **No lo escribas en el código, en el JSON de cola ni en este chat.**
+4. Después de guardar el secreto, lanza la acción desde la rama \`work/easy-avatar-maker-2026-10\` con \`asset_pack=anatomy-sheet-4\`. El selector de la cola reconoce los tres archivos ya creados y solo debe intentar generar el cuarto que falta, si el servicio acepta la cuota.
+
+La autenticación opcional ya está cableada; no puedo afirmar que está activa hasta que el secreto exista en la configuración del repositorio. El flujo de generación parcial actual se puede consultar en [Actions #39500149462](https://github.com/rikosama473-sketch/image/actions/runs/39500149462).
