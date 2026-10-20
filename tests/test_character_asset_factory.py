@@ -1,6 +1,11 @@
+import hashlib
 import importlib.util
+import json
 from pathlib import Path
+import tempfile
 import unittest
+
+from PIL import Image
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "generate_character_assets_free.py"
 SPEC = importlib.util.spec_from_file_location("character_asset_factory", SCRIPT)
@@ -38,6 +43,66 @@ class CharacterAssetFactoryTests(unittest.TestCase):
             with self.subTest(path=path):
                 with self.assertRaises(SystemExit):
                     MODULE.validate_path(path)
+
+
+    def test_base_cutout_manifest_and_registry_are_valid(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            source = root / "original.png"
+            Image.new("RGBA", (8, 8), (80, 110, 150, 255)).save(source)
+            (root / "data").mkdir()
+            (root / "data" / "character-prompt-registry.json").write_text(
+                json.dumps({"characters": [{"id": "pibara", "source_images": []}]}),
+                encoding="utf-8",
+            )
+
+            original_make_cutout = MODULE.make_cutout
+
+            def fake_make_cutout(source_path, target_path, session):
+                with Image.open(source_path) as opened:
+                    rgba = opened.convert("RGBA")
+                alpha = Image.new("L", rgba.size, 255)
+                alpha.putpixel((0, 0), 0)
+                rgba.putalpha(alpha)
+                target_path.parent.mkdir(parents=True, exist_ok=True)
+                rgba.save(target_path, format="PNG")
+                return {
+                    "file": str(target_path),
+                    "sha256": hashlib.sha256(target_path.read_bytes()).hexdigest(),
+                    "dimensions": list(rgba.size),
+                    "transparent_pixel_ratio": 1 / 64,
+                    "opaque_pixel_ratio": 63 / 64,
+                    "quality_warning": None,
+                }
+
+            MODULE.make_cutout = fake_make_cutout
+            try:
+                result = MODULE.ensure_base_character_cutout(
+                    root,
+                    "pibara",
+                    source,
+                    "from-PixAI-reference.png",
+                    "https://raw.githubusercontent.com/owner/repo/main/from-PixAI-reference.png",
+                    "0123456789abcdef",
+                    (8, 8),
+                    object(),
+                )
+            finally:
+                MODULE.make_cutout = original_make_cutout
+
+            manifest_path = root / result["assets"]["alpha_mask"]["file"].replace(
+                "-alpha-mask.png", "-base-manifest.json"
+            )
+            self.assertTrue(manifest_path.is_file())
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            self.assertEqual(manifest["source"]["sha256"], "0123456789abcdef")
+            self.assertFalse(manifest["is_ai_generated"])
+            self.assertEqual(manifest["asset_kind"], "whole_character_foreground_cutout")
+            self.assertTrue((root / manifest["assets"]["alpha_mask"]["file"]).is_file())
+            registry = json.loads(
+                (root / "data" / "character-prompt-registry.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(registry["characters"][0]["base_assets"][0]["status"], "derived_not_ai_generated")
 
     def test_source_url_escapes_spaces(self):
         self.assertEqual(
