@@ -57,6 +57,14 @@ def validate_data_url(value: object, label: str) -> str:
     return value
 
 
+def validate_mask_data_url(value: object) -> str:
+    """GPT Image edit masks must be PNG and use transparent pixels for editable areas."""
+    mask_url = validate_data_url(value, "Máscara de edición")
+    if not mask_url.startswith("data:image/png;base64,"):
+        raise ValueError("La máscara de edición debe ser PNG con transparencia.")
+    return mask_url
+
+
 class Handler(SimpleHTTPRequestHandler):
     server_version = "IMAGE-LocalAI/1.0"
 
@@ -144,6 +152,9 @@ class Handler(SimpleHTTPRequestHandler):
             if len(images) > 2:
                 raise ValueError("El editor admite una imagen base y una referencia adicional.")
 
+            raw_mask = body.get("mask_data_url")
+            mask_payload = {"image_url": validate_mask_data_url(raw_mask)} if raw_mask else None
+
             # 768 x 1280 preserves the editor canvas exactly. The older 1.5 model
             # uses the standard portrait size and the browser scales it to canvas.
             output_size = "1024x1536" if model == "gpt-image-1.5" else "768x1280"
@@ -157,6 +168,8 @@ class Handler(SimpleHTTPRequestHandler):
                 "output_format": "png",
                 "n": 1,
             }
+            if mask_payload:
+                payload["mask"] = mask_payload
             req = Request(
                 API_URL,
                 data=json.dumps(payload).encode("utf-8"),
