@@ -30,7 +30,7 @@ class CharacterAssetQueueTests(unittest.TestCase):
     def mark_complete(self, root, pack, character="pibara", reference="from-PixAI-2034984086876227343-0.png"):
         source = root / reference
         sha = MODULE.source_sha256(source)
-        run_dir = root / "generated" / "character-assets" / character / "run-test"
+        run_dir = root / "generated" / "character-assets" / character / ("run-" + pack)
         render_dir = run_dir / "renders"
         render_dir.mkdir(parents=True, exist_ok=True)
         slug = {
@@ -85,11 +85,13 @@ class CharacterAssetQueueTests(unittest.TestCase):
     def test_never_reuses_pibara_reference_for_chie_or_sunna(self):
         with tempfile.TemporaryDirectory() as temp:
             root = self.make_root(temp)
+            for pack in MODULE.PACK_ORDER:
+                self.mark_complete(root, pack)
             registry_path = root / "data" / "character-prompt-registry.json"
             registry = json.loads(registry_path.read_text(encoding="utf-8"))
             registry["characters"][1]["source_images"] = ["from-PixAI-2034984086876227343-0.png"]
             registry_path.write_text(json.dumps(registry), encoding="utf-8")
-            self.assertEqual(MODULE.select_next_task(root)["character_id"], "pibara")
+            self.assertIsNone(MODULE.select_next_task(root))
 
     def test_returns_none_when_no_confirmed_references_remain(self):
         with tempfile.TemporaryDirectory() as temp:
