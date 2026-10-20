@@ -47,6 +47,19 @@ class AnatomyAssetLinkTests(unittest.TestCase):
         self.assertEqual(entry.get("visual_review"), "needs_visual_identity_review")
         self.assertTrue(entry.get("review_note"))
 
+    def test_queued_batch_trigger_is_scoped_to_the_work_branch(self):
+        workflow = (ROOT / ".github" / "workflows" / "generate-character-assets-free.yml").read_text(encoding="utf-8")
+        queue_path = ROOT / "data" / "anatomy-generation-queue.json"
+        self.assertTrue(queue_path.is_file(), "The one-time branch queue marker should exist.")
+        queue = json.loads(queue_path.read_text(encoding="utf-8"))
+        self.assertEqual(queue.get("character_id"), "pibara")
+        self.assertEqual(queue.get("asset_pack"), "anatomy-sheet-4")
+        self.assertEqual(queue.get("reference_image"), "from-PixAI-2034984086876227343-0.png")
+        self.assertIn("branches:\\n      - work/easy-avatar-maker-2026-10", workflow.replace("\\n", "\\n"))
+        self.assertIn("data/anatomy-generation-queue.json", workflow)
+        self.assertIn("asset_pack=anatomy-sheet-4", workflow)
+        self.assertNotIn("- main", workflow)
+
     def test_manifest_links_match_generated_files(self):
         manifest_path = ROOT / EXPECTED_ASSET_DIR / "manifest.json"
         self.assertTrue(manifest_path.is_file())
