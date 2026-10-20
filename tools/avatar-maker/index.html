@@ -80,13 +80,14 @@ function toast(m){$("toast").textContent=m;$("toast").classList.remove("hidden")
 function status(m,warn){$("stageNote").textContent=m;$("stageNote").classList.toggle("warn",!!warn);$("statusText").textContent=m;}
 function combos(){const imports=state.layers.filter(x=>x.kind==="import").length;const choices=looks.length*backgrounds.length*styles.length*6*3*2*2*Math.pow(2,Math.min(imports,40));$("comboCount").textContent=new Intl.NumberFormat("es-AR",{notation:choices>999999?"compact":"standard",maximumFractionDigits:1}).format(choices);$("layerCount").textContent=(1+state.layers.length)+" capa"+(state.layers.length===0?"":"s");}
 function contain(ctx,i){const sc=Math.min(W/i.naturalWidth,H/i.naturalHeight);ctx.drawImage(i,(W-i.naturalWidth*sc)/2,(H-i.naturalHeight*sc)/2,i.naturalWidth*sc,i.naturalHeight*sc);}
-async function render(){
+async function drawCanvas(){
  const can=$("canvas"),ctx=can.getContext("2d",{alpha:true});ctx.clearRect(0,0,W,H);if(!state.transparent){ctx.fillStyle=state.background;ctx.fillRect(0,0,W,H);}
  try{const base=await img(activeLook().src),sty=styles.find(x=>x.id===state.style);ctx.save();ctx.filter=(sty.filter==="none"?"":sty.filter+" ")+"brightness("+state.lighting+")";if(base.naturalWidth===W&&base.naturalHeight===H)ctx.drawImage(base,0,0);else contain(ctx,base);ctx.restore();status("Ilustración completa · "+activeLook().label,false);}
  catch(e){status("No se pudo cargar la imagen: abre mediante el lanzador local.",true);}
  for(const l of state.layers.slice().sort((a,b)=>(a.order||0)-(b.order||0))){if(!l.visible)continue;try{const i=l.dataUrl?await img(l.dataUrl):await img(l.src);ctx.save();ctx.globalAlpha=l.opacity===undefined?1:l.opacity;ctx.filter="hue-rotate("+(l.hue||0)+"deg)";ctx.drawImage(i,l.x||0,l.y||0,l.w||W,l.h||H);ctx.restore();}catch(e){}}
- $("stage").classList.toggle("checker",state.transparent||state.checker);$("checkerBtn").classList.toggle("active",state.checker);renderMini();renderLayers();combos();
+ $("stage").classList.toggle("checker",state.transparent||state.checker);$("checkerBtn").classList.toggle("active",state.checker);
 }
+async function render(){await drawCanvas();renderMini();renderLayers();combos();$("charName").textContent=state.name;}
 function renderMini(){$("miniLooks").innerHTML=looks.slice(0,5).map(l=>'<button class="minilook '+(l.id===state.look?"active":"")+'" data-mini="'+l.id+'" title="'+safe(l.label)+'"><img alt="" src="'+url(l.src)+'"></button>').join("");$("miniLooks").querySelectorAll("[data-mini]").forEach(b=>b.onclick=()=>chooseLook(b.dataset.mini));}
 function chooseLook(id){state.look=id;state.selected="base";render();gallery();}
 function renderNav(){$("nav").innerHTML=cats.map(c=>'<button class="navbtn '+(c.id===state.category?"active":"")+'" data-cat="'+c.id+'"><span class="ico">'+c.icon+'</span><span class="label">'+c.label+'</span><span class="chev">›</span></button>').join("");$("nav").querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{state.category=b.dataset.cat;state.pill="Todos";renderNav();gallery();});}
@@ -122,8 +123,8 @@ function renderLayers(){
 function adjust(){
  const root=$("content");let box=$("adjustBox");if(box)box.remove();const l=state.layers.find(x=>x.id===state.selected);if(!l)return;
  box=document.createElement("section");box.id="adjustBox";box.innerHTML='<div class="sectionhead"><b>Ajustes de capa</b><span>'+(l.kind==="candidate"?"Pendiente de revisión":"Editable")+'</span></div>'+field("Posición X","posX",-384,384,l.x||0,1)+field("Posición Y","posY",-640,640,l.y||0,1)+field("Tamaño","scale",.1,2.5,l.w/W,.01)+field("Opacidad","opacity",0,1,l.opacity,.01)+'<div class="actions"><button id="centerLayer" class="btn">Centrar</button><button id="frontLayer" class="btn">Traer adelante</button><button id="backLayer" class="btn">Enviar atrás</button><button id="deleteLayer" class="btn">Quitar</button></div>'+(l.kind==="candidate"?'<div class="notice" style="margin-top:8px"><b>Máscara no aprobada</b>Conservá el PNG original y revisá la silueta con y sin esta capa.</div>':'');root.prepend(box);
- [["posX","x"],["posY","y"],["opacity","opacity"]].forEach(([id,key])=>$(id).oninput=e=>{l[key]=Number(e.target.value);e.target.nextElementSibling.value=key==="opacity"?Math.round(l[key]*100)+"%":l[key];render();});
- $("scale").oninput=e=>{const s=Number(e.target.value),cx=l.x+l.w/2,cy=l.y+l.h/2;l.w=W*s;l.h=H*s;l.x=Math.round(cx-l.w/2);l.y=Math.round(cy-l.h/2);e.target.nextElementSibling.value=Math.round(s*100)+"%";render();};
+ [["posX","x"],["posY","y"],["opacity","opacity"]].forEach(([id,key])=>$(id).oninput=e=>{l[key]=Number(e.target.value);e.target.nextElementSibling.value=key==="opacity"?Math.round(l[key]*100)+"%":l[key];drawCanvas();});
+ $("scale").oninput=e=>{const s=Number(e.target.value),cx=l.x+l.w/2,cy=l.y+l.h/2;l.w=W*s;l.h=H*s;l.x=Math.round(cx-l.w/2);l.y=Math.round(cy-l.h/2);e.target.nextElementSibling.value=Math.round(s*100)+"%";drawCanvas();};
  $("centerLayer").onclick=()=>{l.x=0;l.y=0;l.w=W;l.h=H;render();};$("frontLayer").onclick=()=>{l.order=Math.max(-1,...state.layers.map(x=>x.order||0))+1;render();};$("backLayer").onclick=()=>{l.order=Math.min(0,...state.layers.map(x=>x.order||0))-1;render();};$("deleteLayer").onclick=()=>{state.layers=state.layers.filter(x=>x.id!==l.id);state.selected="base";render();gallery();};
 }
 function field(label,id,min,max,value,step){const show=id==="scale"?Math.round(value*100)+"%":id==="opacity"?Math.round(value*100)+"%":value;return '<div class="field"><label for="'+id+'">'+label+'</label><input id="'+id+'" type="range" min="'+min+'" max="'+max+'" step="'+step+'" value="'+value+'"><output>'+show+'</output></div>';}
@@ -137,15 +138,13 @@ function load(file){const r=new FileReader();r.onload=()=>{try{const d=JSON.pars
 function reset(){state={look:"ponytail",category:"hair",pill:"Todos",background:"#e8e4e5",transparent:false,checker:true,style:"trigger",name:"Pibara",layers:[],selected:"base",lighting:1};$("charName").textContent=state.name;all();toast("Diseño nuevo preparado.");}
 function XY(e){const r=$("canvas").getBoundingClientRect();return{x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height};}
 $("canvas").onpointerdown=e=>{const l=state.layers.find(x=>x.id===state.selected);if(!l)return;const p=XY(e);drag={id:l.id,x:p.x,y:p.y,sx:l.x,sy:l.y};$("canvas").setPointerCapture(e.pointerId);};
-$("canvas").onpointermove=e=>{if(!drag)return;const l=state.layers.find(x=>x.id===drag.id);if(!l)return;const p=XY(e);l.x=Math.round(drag.sx+p.x-drag.x);l.y=Math.round(drag.sy+p.y-drag.y);render();};$("canvas").onpointerup=()=>drag=null;$("canvas").onpointercancel=()=>drag=null;
+$("canvas").onpointermove=e=>{if(!drag)return;const l=state.layers.find(x=>x.id===drag.id);if(!l)return;const p=XY(e);l.x=Math.round(drag.sx+p.x-drag.x);l.y=Math.round(drag.sy+p.y-drag.y);drawCanvas();};$("canvas").onpointerup=()=>drag=null;$("canvas").onpointercancel=()=>drag=null;
 $("confirmCandidate").onclick=()=>{if(pending)addMask(pending);$("candidateDialog").close();pending=null;};$("cancelCandidate").onclick=()=>{$("candidateDialog").close();pending=null;};
 $("checkerBtn").onclick=()=>{state.checker=!state.checker;render();};$("centerBtn").onclick=()=>{const l=state.layers.find(x=>x.id===state.selected);if(l){l.x=0;l.y=0;l.w=W;l.h=H;render();}else toast("Seleccioná una capa para centrarla.");};$("fitBtn").onclick=()=>toast("La ilustración se ajusta al lienzo completo.");
 $("exportBtn").onclick=exportPng;$("saveBtn").onclick=save;$("loadBtn").onclick=()=>$("jsonFile").click();$("jsonFile").onchange=e=>{if(e.target.files[0])load(e.target.files[0]);e.target.value="";};$("imageFile").onchange=e=>{if(e.target.files.length)importFiles(e.target.files);e.target.value="";};$("newBtn").onclick=reset;
 document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>{if(b.dataset.view==="background"){state.category="background";renderNav();gallery();}else if(b.dataset.view==="lighting"){state.category="background";renderNav();gallery();}else if(b.dataset.view==="camera"){toast("Elegí una vista de la galería para cambiar el retrato.");}else{toast("Vista previa lista para exportar.");}});
 $("charName").ondblclick=()=>{const n=prompt("Nombre del personaje",state.name);if(n!==null){state.name=n.trim()||"Pibara";$("charName").textContent=state.name;}};
 $("stage").querySelector(".nameplate").title="Doble clic en el nombre para editarlo";
-const oldRender=render;
-render=async function(){await oldRender();$("charName").textContent=state.name;};
 all();
 })();
 </script>
