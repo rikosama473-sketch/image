@@ -71,13 +71,13 @@ El rectángulo local comienza a 40 px del borde izquierdo y 10 px del borde supe
 
 ## Publicar archivos de texto con PyGithub
 
-El publicador sincroniza archivos UTF-8 de un directorio local con una rama remota, creando archivos nuevos o actualizando los existentes. No elimina archivos remotos y omite binarios y secretos comunes.
+El publicador sincroniza archivos UTF-8 de un directorio local con una rama remota, creando archivos nuevos o actualizando los existentes. Usa `--remote-prefix` para conservar el directorio destino. No elimina archivos remotos y omite binarios y secretos comunes.
 
 Define el token fuera del código:
 
 ```powershell
 $env:GITHUB_TOKEN = "TU_TOKEN"
-python publish_with_pygithub.py --repo rikosama473-sketch/image --directory . --branch automation/sync-text-assets
+python publish_with_pygithub.py --repo rikosama473-sketch/image --directory . --remote-prefix tools/sprite-layer-cropper --branch automation/sync-text-assets
 ```
 
 En Linux/macOS usa `export GITHUB_TOKEN=...`. Otorga al token solo los permisos mínimos necesarios (Contents: read/write). Nunca publiques el token ni lo guardes en Git.
