@@ -8,8 +8,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 HTML_PATH = ROOT / "tools" / "avatar-maker" / "index.html"
 CATALOG_PATH = ROOT / "tools" / "avatar-maker" / "assets" / "catalog.json"
-REQUIRED_IDS = {"nav","canvas","stage","stageNote","miniLooks","layerTabs","layerList","layerCount","catIcon","catTitle","pills","content","styles","saveBtn","loadBtn","exportBtn","jsonFile","imageFile","comboCount","candidateDialog","cancelCandidate","confirmCandidate","toast"}
-REQUIRED_FEATURES = ("async function render(", "function gallery(", "function addMask(", "function importFiles(", "function save(", "function load(", "function exportPng(", "pending_visual_review", "character-layers/pibara", "image/png", "IMAGE Character Creator", "function aiWorkspace(root)", "function runAIEdit()", "/api/ai-edit", "OPENAI_API_KEY", "ai_result")
+REQUIRED_IDS = {"nav","canvas","maskOverlay","stage","stageNote","miniLooks","layerTabs","layerList","layerCount","catIcon","catTitle","pills","content","styles","saveBtn","loadBtn","exportBtn","jsonFile","imageFile","comboCount","candidateDialog","cancelCandidate","confirmCandidate","toast"}
+REQUIRED_FEATURES = ("async function render(", "function gallery(", "function addMask(", "function importFiles(", "function save(", "function load(", "function exportPng(", "pending_visual_review", "character-layers/pibara", "image/png", "IMAGE Character Creator", "function aiWorkspace(root)", "function runAIEdit()", "/api/ai-edit", "OPENAI_API_KEY", "ai_result", "function createAIMaskDataUrl()", "aiMaskStrokes", "mask_data_url", "validate_mask_data_url")
 class Inspector(HTMLParser):
     def __init__(self): super().__init__(convert_charrefs=True); self.ids=[]; self.inline=0
     def handle_starttag(self,tag,attrs):
