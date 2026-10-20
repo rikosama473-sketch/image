@@ -59,6 +59,48 @@ class AnatomyAssetLinkTests(unittest.TestCase):
         self.assertIn("asset_pack=anatomy-sheet-4", workflow)
         self.assertNotIn("- main", workflow)
 
+    def test_partial_anatomy_batch_files_and_links_exist(self):
+        run_dir = Path("generated/character-assets/pibara/2026-10-20/run-39500149462")
+        manifest_path = ROOT / run_dir / "manifest.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        self.assertEqual(manifest.get("pack"), "anatomy-sheet-4")
+        self.assertEqual(manifest.get("pack_status"), "partial")
+        self.assertEqual(len(manifest.get("completed_asset_ids", [])), 3)
+        self.assertEqual(len(manifest.get("required_asset_ids", [])), 4)
+        self.assertIn("ZeroGPU runs limit", manifest.get("last_error", ""))
+        self.assertIn("front view", manifest.get("warning", "").lower() or manifest.get("visual_review_notes", "").lower())
+
+        required = [
+            run_dir / "renders" / "01-batch-front-a-pose.png",
+            run_dir / "transparent" / "01-batch-front-a-pose.png",
+            run_dir / "renders" / "02-batch-side-profile.png",
+            run_dir / "transparent" / "02-batch-side-profile.png",
+            run_dir / "renders" / "03-batch-back-view.png",
+            run_dir / "transparent" / "03-batch-back-view.png",
+            run_dir / "contact-sheet.jpg",
+            run_dir / "PROMPTS.md",
+            run_dir / "manifest.json",
+        ]
+        for relative in required:
+            with self.subTest(path=str(relative)):
+                self.assertTrue((ROOT / relative).is_file(), f"Missing generated batch file: {relative}")
+
+        immutable_commit = "745404b7e5d516434ef9c5782cc1ba893631a828"
+        for markdown in README_FILES:
+            content = markdown.read_text(encoding="utf-8")
+            for relative in required:
+                with self.subTest(markdown=str(markdown), path=str(relative)):
+                    self.assertIn(
+                        f"https://github.com/rikosama473-sketch/image/blob/{immutable_commit}/{relative.as_posix()}",
+                        content,
+                        f"Missing working immutable link for {relative} in {markdown}",
+                    )
+
+        library = json.loads((ROOT / "tools" / "avatar-maker" / "assets" / "image-library.json").read_text(encoding="utf-8"))
+        entries = [a for a in library["assets"] if a.get("path", "").startswith(run_dir.as_posix() + "/transparent/")]
+        self.assertEqual(len(entries), 3)
+        self.assertTrue(all(a.get("visual_review") == "needs_visual_identity_review" and a.get("review_note") for a in entries))
+
     def test_manifest_links_match_generated_files(self):
         manifest_path = ROOT / EXPECTED_ASSET_DIR / "manifest.json"
         self.assertTrue(manifest_path.is_file())
