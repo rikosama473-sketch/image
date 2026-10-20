@@ -151,6 +151,7 @@ Ambos PNG conservan el lienzo de **768×1280**. La salida transparente registra 
 
 El paquete \`anatomy-sheet-4\` guardó tres vistas en el repositorio antes de que el servicio público agotara la cuota. Cada enlace siguiente apunta a un archivo verificado en el commit inmutable \`745404b7e5d5\`, por lo que no depende de la rama actual:
 
+- [Abrir galería con las tres vistas y PNG transparentes](https://github.com/rikosama473-sketch/image/blob/daac2bf07e295bb7aac1484618b277312e25861f/generated/character-assets/pibara/2026-10-20/run-39500149462/ANATOMY-GALLERY.md)
 - [Vista frontal generada (borrador recortado)](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/renders/01-batch-front-a-pose.png)
 - [Vista frontal PNG transparente](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/01-batch-front-a-pose.png)
 - [Vista lateral de cuerpo entero](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/renders/02-batch-side-profile.png)
