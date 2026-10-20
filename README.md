@@ -55,14 +55,15 @@ La auditoría reporta dimensiones, modo, transparencia, SHA-256 y un hash percep
 
 La guía detallada está en [docs/DATASET_GUIDE.md](docs/DATASET_GUIDE.md), y la arquitectura y hoja de ruta en [docs/IMAGE_MODEL_STRATEGY.md](docs/IMAGE_MODEL_STRATEGY.md).
 
-## Creador sencillo de avatares
+## Creador visual de avatares anime
 
-KIRA es un creador 2D inspirado en los avatar makers: [abrir el código](tools/avatar-maker/index.html) y [leer la guía](tools/avatar-maker/README.md). Descarga el repositorio y abrí `tools/avatar-maker/index.html` en un navegador. No requiere paquetes, instalación ni conexión para las piezas incluidas.
+IMAGE Character Creator es un editor basado en ilustraciones PNG reales con navegación lateral, retrato grande, galería de miniaturas, capas activas y exportación. [Abrir el editor](tools/avatar-maker/index.html) · [Guía](tools/avatar-maker/README.md) · [Catálogo y procedencia](tools/avatar-maker/assets/catalog.json).
 
-Permite cambiar peinados, flequillos, ojos, expresiones, ropa, colores, accesorios y fondos; crear combinaciones aleatorias; cargar PNG/WebP transparentes propios; mover y ordenar las piezas; y exportar como PNG/SVG o guardar el proyecto JSON.
+Incluye seis vistas base de Pibara (la original y cinco variantes completas generadas), composición de capas PNG/WebP, lienzo de 768×1280, fondo/transparencia, posición, escala, opacidad, orden, control de tono y exportación PNG/proyectos JSON. En Windows, ejecuta [start-avatar-maker.bat](tools/avatar-maker/start-avatar-maker.bat).
 
-Las 759 imágenes de la biblioteca son principalmente ilustraciones completas, no una colección de capas listas para intercambiar. KIRA no las asigna automáticamente a pelo/cuerpo sin revisión: las piezas recortadas pueden importarse desde el editor manual en `tools/manual-character-editor/`.
+El catálogo separa **ilustraciones completas** de **máscaras candidatas**. Elegir una variante completa cambia el retrato entero; no se etiqueta como recorte de cabello. Las máscaras automáticas de cabello/cara/cuerpo/ropa siguen pendientes de revisión visual. La meta es ampliar el catálogo de piezas ilustradas alineadas y corregidas.
 
+Se registran bibliotecas CC0 declaradas por sus páginas originales de OpenGameArt. La guía documenta cómo obtener archivos PSD con capas y exportarlos conservando las coordenadas del lienzo. Los recursos externos quedan en caché local mientras se revisan licencia, contenido y compatibilidad.
 ## Motor de generación local y creador visual
 
 IMAGE ya incluye una primera CLI de inferencia en `ml/generate_diffusion.py` y una pequeña interfaz web local en `tools/image-creator/`. La interfaz permite configurar el modelo base, una LoRA opcional, descripción, prompt negativo, resolución, pasos, semilla, escala y perfil de memoria; muestra los resultados y conserva los parámetros junto a los PNG.

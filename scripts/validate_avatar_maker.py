@@ -1,80 +1,53 @@
 #!/usr/bin/env python3
-"""Validate KIRA's standalone HTML controls and inline JavaScript syntax."""
+"""Validate the image-driven avatar maker, asset provenance, and inline JavaScript."""
 from __future__ import annotations
-
-import re
-import shutil
-import subprocess
-import sys
-import tempfile
+import json, re, shutil, subprocess, sys, tempfile
 from html.parser import HTMLParser
 from pathlib import Path
 
-HTML_PATH = Path(__file__).resolve().parents[1] / "tools" / "avatar-maker" / "index.html"
-REQUIRED_IDS = {
-    "randomBtn", "resetBtn", "saveBtn", "loadBtn", "projectFile", "partFile",
-    "avatarMount", "nameChip", "characterName", "panel", "pngBtn", "svgBtn",
-    "uploadPartBtn", "clearPartsBtn", "pieceList", "pieceEmpty",
-}
-REQUIRED_FEATURES = (
-    "function renderSvg(", "function renderPanel(", "function renderPieces(",
-    "function addPiece(", "function exportPng(", "function exportSvg(",
-    "function saveProject(", "function loadProject(",
-    "data-part-id", "KIRA Avatar Maker",
-)
-
-
+ROOT = Path(__file__).resolve().parents[1]
+HTML_PATH = ROOT / "tools" / "avatar-maker" / "index.html"
+CATALOG_PATH = ROOT / "tools" / "avatar-maker" / "assets" / "catalog.json"
+REQUIRED_IDS = {"nav","canvas","stage","stageNote","miniLooks","layerTabs","layerList","layerCount","catIcon","catTitle","pills","content","styles","saveBtn","loadBtn","exportBtn","jsonFile","imageFile","comboCount","candidateDialog","cancelCandidate","confirmCandidate","toast"}
+REQUIRED_FEATURES = ("async function render(", "function gallery(", "function addMask(", "function importFiles(", "function save(", "function load(", "function exportPng(", "pending_visual_review", "character-layers/pibara", "image/png", "IMAGE Character Creator")
 class Inspector(HTMLParser):
-    def __init__(self) -> None:
-        super().__init__(convert_charrefs=True)
-        self.ids: list[str] = []
-        self.inline_script_count = 0
+    def __init__(self): super().__init__(convert_charrefs=True); self.ids=[]; self.inline=0
+    def handle_starttag(self,tag,attrs):
+        a=dict(attrs)
+        if a.get("id"): self.ids.append(a["id"])
+        if tag.lower()=="script" and "src" not in a: self.inline+=1
 
-    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
-        attrs_map = dict(attrs)
-        if attrs_map.get("id"):
-            self.ids.append(attrs_map["id"])
-        if tag.lower() == "script" and "src" not in attrs_map:
-            self.inline_script_count += 1
-
-
-def main() -> int:
-    if not HTML_PATH.is_file():
-        print(f"Missing avatar maker HTML: {HTML_PATH}", file=sys.stderr)
+def main():
+    if not HTML_PATH.is_file() or not CATALOG_PATH.is_file():
+        print("Missing avatar maker HTML/catalog.",file=sys.stderr); return 1
+    html=HTML_PATH.read_text(encoding="utf-8"); parser=Inspector(); parser.feed(html)
+    dup=sorted({x for x in parser.ids if parser.ids.count(x)>1}); missing=sorted(REQUIRED_IDS-set(parser.ids))
+    absent=[x for x in REQUIRED_FEATURES if x not in html]
+    if re.search(r"<\s*svg\b|renderSvg\s*\(",html,re.I): absent.append("No geometrically drawn SVG avatar is allowed")
+    if dup or missing or absent:
+        if dup: print("Duplicate IDs: "+", ".join(dup),file=sys.stderr)
+        if missing: print("Missing IDs: "+", ".join(missing),file=sys.stderr)
+        if absent: print("Required image-driven features missing: "+", ".join(absent),file=sys.stderr)
         return 1
-    html = HTML_PATH.read_text(encoding="utf-8")
-    inspector = Inspector()
-    inspector.feed(html)
-    duplicates = sorted({element_id for element_id in inspector.ids if inspector.ids.count(element_id) > 1})
-    missing = sorted(REQUIRED_IDS - set(inspector.ids))
-    features_missing = [feature for feature in REQUIRED_FEATURES if feature not in html]
-    if duplicates or missing or features_missing:
-        if duplicates:
-            print("Duplicate HTML IDs: " + ", ".join(duplicates), file=sys.stderr)
-        if missing:
-            print("Required controls missing: " + ", ".join(missing), file=sys.stderr)
-        if features_missing:
-            print("Required features missing: " + ", ".join(features_missing), file=sys.stderr)
-        return 1
-    scripts = re.findall(r"<script(?:\s[^>]*)?>([\s\S]*?)</script\s*>", html, re.IGNORECASE)
-    inline_js = "\n".join(script for script in scripts if script.strip())
-    if not inline_js or inspector.inline_script_count == 0:
-        print("No inline app script found.", file=sys.stderr)
-        return 1
-    node = shutil.which("node")
-    if not node:
-        print("Node.js is required for the JavaScript syntax check.", file=sys.stderr)
-        return 2
-    with tempfile.TemporaryDirectory(prefix="kira-avatar-maker-") as temp:
-        js = Path(temp) / "avatar-maker.js"
-        js.write_text(inline_js, encoding="utf-8")
-        proc = subprocess.run([node, "--check", str(js)], text=True, capture_output=True, check=False)
-    if proc.returncode:
-        print(proc.stdout + proc.stderr, file=sys.stderr)
-        return proc.returncode
-    print(f"PASS: {HTML_PATH.name}: {len(inspector.ids)} IDs, required features present, JavaScript syntax valid.")
+    try: catalog=json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc: print(f"Invalid catalog JSON: {exc}",file=sys.stderr); return 1
+    if catalog.get("schema_version")!=2: print("Unsupported catalog schema.",file=sys.stderr); return 1
+    for asset in catalog.get("base_illustrations",[])+catalog.get("candidate_layers",[]):
+        path=asset.get("repo_path")
+        if not path or not (ROOT/path).is_file(): print(f"Missing catalog asset: {path}",file=sys.stderr); return 1
+        if asset.get("kind")=="semantic_mask_candidate" and asset.get("status")!="pending_visual_review": print(f"Unreviewed mask incorrectly marked approved: {asset.get('id')}",file=sys.stderr); return 1
+    for source in catalog.get("external_libraries",[]):
+        if "CC0" not in source.get("license",""): print(f"License note absent: {source.get('id')}",file=sys.stderr); return 1
+        for key in ("source_page","download_url"):
+            value=source.get(key,"")
+            if not value.startswith("https://") or value.split("/",3)[2]!="opengameart.org": print(f"Unexpected source link: {source.get('id')}",file=sys.stderr); return 1
+    scripts=re.findall(r"<script(?:\s[^>]*)?>([\s\S]*?)</script\s*>",html,re.I); js="\n".join(x for x in scripts if x.strip())
+    node=shutil.which("node")
+    if not js or not parser.inline: print("Inline JavaScript missing.",file=sys.stderr); return 1
+    if not node: print("Node.js required for syntax validation.",file=sys.stderr); return 2
+    with tempfile.TemporaryDirectory(prefix="image-avatar-maker-") as temp:
+        f=Path(temp)/"app.js"; f.write_text(js,encoding="utf-8"); p=subprocess.run([node,"--check",str(f)],capture_output=True,text=True)
+    if p.returncode: print(p.stdout+p.stderr,file=sys.stderr); return p.returncode
+    print(f"PASS: image-based avatar maker; {len(parser.ids)} IDs; {len(catalog['base_illustrations'])} base illustrations; {len(catalog['candidate_layers'])} pending masks; JS syntax valid.")
     return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+if __name__=="__main__": raise SystemExit(main())

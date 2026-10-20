@@ -1,25 +1,23 @@
-name: Validate KIRA Avatar Maker
-
+name: Validate IMAGE Character Creator
 on:
   push:
-    branches:
-      - work/easy-avatar-maker-2026-10
-      - main
+    branches: [work/easy-avatar-maker-2026-10, main]
     paths:
       - "tools/avatar-maker/**"
       - "scripts/validate_avatar_maker.py"
+      - "scripts/extract_avatar_psd_layers.py"
+      - "requirements-avatar-assets.txt"
       - ".github/workflows/validate-avatar-maker.yml"
   pull_request:
-    branches:
-      - main
+    branches: [main]
     paths:
       - "tools/avatar-maker/**"
       - "scripts/validate_avatar_maker.py"
+      - "scripts/extract_avatar_psd_layers.py"
+      - "requirements-avatar-assets.txt"
       - ".github/workflows/validate-avatar-maker.yml"
-
 permissions:
   contents: read
-
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -31,5 +29,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Check controls and JavaScript
+      - name: Validate illustration assets and inline JavaScript
         run: python scripts/validate_avatar_maker.py
+      - name: Check PSD extraction script syntax
+        run: python -m py_compile scripts/extract_avatar_psd_layers.py
