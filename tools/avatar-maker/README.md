@@ -122,3 +122,12 @@ La ejecución \`anatomy-sheet-4\` quedó **parcial (3 de 4)** por agotamiento de
 - [Ejecución de Actions](https://github.com/rikosama473-sketch/image/actions/runs/39500149462)
 
 **Control de calidad:** el frontal no es cuerpo entero y no cumple la pose A. Perfil y espalda sí muestran cuerpo entero, pero no conservan fielmente el cabello rojo/negro, los ojos y la ropa de Pibara. Los archivos siguen marcados como pendientes de revisión visual; no se promocionan a modelos definitivos.
+
+
+### Reanudar la cuarta vista anatómica
+
+El Space público permitió crear el frontal (con pose/recorte incorrectos), el perfil y la espalda; el estudio de articulaciones quedó sin generar cuando se agotó la cuota ZeroGPU. El selector diario ahora da prioridad a \`anatomy-sheet-4\` incompleto y el generador acepta un token opcional.
+
+**Activar autenticación en GitHub:** abre **Settings → Secrets and variables → Actions → New repository secret**, ponle el nombre \`HF_TOKEN\` y guarda allí el token de Hugging Face con los permisos mínimos necesarios. El workflow recibe el valor mediante \`secrets.HF_TOKEN\`; no se imprime, no se añade a ningún archivo y no debe pegarse en conversaciones. Una vez guardado, ejecuta el workflow en la rama \`work/easy-avatar-maker-2026-10\` con el paquete \`anatomy-sheet-4\`. El generador reutiliza las vistas que ya existen y solicita solo el slug que falta.
+
+No se marca la cuarta vista como completada hasta que su PNG aparezca en la rama y en el manifiesto. Si el Space rechaza también una llamada autenticada, el manifiesto debe conservar el estado parcial y el motivo real.
