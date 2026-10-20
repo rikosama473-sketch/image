@@ -28,7 +28,7 @@ ANATOMY_BASE = (
     "Keep the recognizable source outfit, palette and color blocking; extend only hidden lower-body clothing consistently with the design. If coverage must change, retain the source silhouette and signature details rather than inventing a generic unrelated outfit. "
     "Show clear anime body construction with a symmetric neutral A-pose, arms slightly separated from torso, hands, fingers and both feet visible, balanced proportions, clean 2D line art and cel shading. "
     "Subtle joint landmarks for shoulders, elbows, wrists, pelvis, knees and ankles are acceptable; avoid labels or writing. "
-    "One figure only, front view, centered portrait canvas, no panels, no extra poses, no added character, no text, no watermark, no photorealism. "
+    "One figure only, use the orientation and pose specified by the requested anatomy view, centered portrait canvas, no panels, no extra poses, no added character, no text, no watermark, no photorealism. "
     "The output is a reference guide for later manual component separation, not a claim that individual body parts are already segmented."
 )
 PACKS = {
@@ -60,6 +60,18 @@ PACKS = {
     ],
     "anatomy-guide-1": [
         ("full-body-anatomy-a-pose", "Reconstruct this exact anime character as a full-body model sheet in a neutral, symmetrical A-pose. Show the entire figure from hair top to soles, with visible hands, fingers, knees, ankles and feet. Preserve recognizable face, signature hairstyle, palette and clothing identity, but adapt clothing into an opaque fitted design suitable for an anatomy reference. Add subtle construction lines for shoulder line, ribcage, pelvis, elbows, wrists, knees and ankles. Clean anime line art and cel shading, single centered figure, no text, no labels, no watermark, no collage."),
+    ],
+    "anatomy-front-v2-1": [
+        ("full-body-front-a-pose-v2", "Front-view full-body anime model sheet in a neutral A-pose, centered and uncropped from the top of the hair to the soles, with both hands and all fingers visible. Treat the source image as the character identity reference, not a loose inspiration. Preserve the exact distinctive hairstyle silhouette, red/black hair pattern if present, eye and iris colors, facial features, accessories, and recognizable outfit details. Fill in only parts hidden by the original crop, using consistent anatomy and the same costume design. Plain light background, clean cel shading, no text, no labels, no watermark."),
+    ],
+    "anatomy-side-1": [
+        ("full-body-side-profile", "Show this same anime character in a strict 90-degree side profile facing left, full body from hair top to both soles, neutral balanced standing A-pose adapted naturally for a side view. Preserve the character's exact hair silhouette, hair color/highlights, face profile, accessories and outfit identity. Keep the torso, pelvis, knees, ankles, hands and feet readable in profile. Single character, plain light background, clean production anime line art and cel shading, no text, no labels, no watermark, no extra views."),
+    ],
+    "anatomy-back-1": [
+        ("full-body-back-view", "Show the same anime character from directly behind, full body from the top of the hair to the soles, standing in a neutral symmetrical A-pose with both arms slightly away from the torso. Prioritize the exact back silhouette of the hairstyle, tied sections and loose strands, hair color/highlights, outfit seams, jacket shape, belt and accessory placement from the source. Use consistent anatomy and matching costume design; do not invent a different character. Plain light background, clean anime model-sheet line art and cel shading, no text, no labels, no watermark, no extra views."),
+    ],
+    "anatomy-joint-guide-1": [
+        ("full-body-joint-guide", "Make a full-body front-view character anatomy study of this same anime character in a neutral A-pose, hair top to soles, hands and feet visible. Preserve her identity and signature design. Add very faint clean construction marks indicating shoulders, ribcage, spine centerline, pelvis, elbows, wrists, knees and ankles, without drawing bones over the face or obscuring costume details. It must remain polished anime production art rather than a medical skeleton. Plain light background, no words, no labels, no watermark."),
     ],
     "face-details-4": [
         ("freckles", "Add a very light cluster of tiny freckles across the upper cheeks only. Do not alter face shape, skin tone, expression, eye color, hairstyle or accessories."),
@@ -353,7 +365,7 @@ def update_image_library(root, character_id, source_path, source_sha, pack, run_
         relative = raster.relative_to(root).as_posix()
         if relative in existing_paths:
             continue
-        anatomy = pack == "anatomy-guide-1"
+        anatomy = pack.startswith("anatomy-")
         asset_id = "generated-" + character_id + "-" + pack + "-" + str(record.get("asset_id") or "asset") + "-" + source_sha[:8]
         display_name = "Guía anatómica completa" if anatomy else ("Variante " + str(record.get("asset_id") or "anime"))
         if character_id:
@@ -521,7 +533,7 @@ def main():
 
     generation_error = None
     for i, slug, change in missing:
-        prompt = (ANATOMY_BASE + " Requested anatomy model-sheet result: " + change) if args.pack == "anatomy-guide-1" else (BASE + " Requested single change: " + change)
+        prompt = (ANATOMY_BASE + " Requested anatomy model-sheet result: " + change) if args.pack.startswith("anatomy-") else (BASE + " Requested single change: " + change)
         seed = max(0, min(2147483647, args.seed + i - 1))
         flat = renders / f"{i:02d}-{slug}.png"
         print(f"Generating {args.character}/{slug} ({len(created)+1}/{len(all_slugs)})", flush=True)
