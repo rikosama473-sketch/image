@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -119,11 +120,11 @@ def main() -> int:
             message += " Missing confirmed source image(s) for: " + ", ".join(missing) + "."
         print("run=false")
         print("reason=" + message)
-        print(message)
+        print(message, file=sys.stderr)
         return 0
     for key in ("run", "character_id", "reference_image", "asset_pack", "reason"):
         print(f"{key}={task[key]}")
-    print(f"Scheduled next: {task['character_id']} / {task['asset_pack']} / {task['reference_image']}")
+    print(f"Scheduled next: {task['character_id']} / {task['asset_pack']} / {task['reference_image']}", file=sys.stderr)
     return 0
 
 
