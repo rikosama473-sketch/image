@@ -11,6 +11,7 @@ SPACE_ID = "conradlocke/krea2-identity-edit"
 SPACE_URL = "https://huggingface.co/spaces/conradlocke/krea2-identity-edit"
 ALLOWED_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
 MAX_SOURCE_BYTES = 20 * 1024 * 1024
+CONFIRMED_PIBARA_REFERENCE = "from-PixAI-2034984086876227343-0.png"
 
 BASE = (
     "Precise image-to-image edit of the supplied original anime character illustration, not a new character. "
@@ -65,6 +66,12 @@ def validate_path(raw):
     if not raw or p.is_absolute() or ".." in p.parts or "\\" in raw or p.suffix.lower() not in ALLOWED_EXTENSIONS:
         fail("Reference must be a safe repository-relative PNG, JPG/JPEG or WebP path.")
     return p.as_posix()
+
+def validate_character_reference(character_id, raw):
+    path = validate_path(raw)
+    if character_id in {"sunna", "chie"} and path == CONFIRMED_PIBARA_REFERENCE:
+        fail("The selected reference is confirmed as Pibara; refusing to mislabel it as " + character_id + ". Choose a verified reference for that character.")
+    return path
 
 def source_url(repo, ref, path):
     if not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repo):
@@ -383,7 +390,7 @@ def main():
     ap.add_argument("--keep-background", action="store_true")
     args = ap.parse_args()
     root = args.root.resolve()
-    path = validate_path(args.reference)
+    path = validate_character_reference(args.character, args.reference)
     url = source_url(args.repository, args.ref, path)
     now = datetime.now(timezone.utc)
     day = now.strftime("%Y-%m-%d")
