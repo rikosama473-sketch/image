@@ -93,6 +93,17 @@ Los PNG y archivos JSON asociados se guardan en `outputs/generated/`, ignorados 
 - No afirmar que una medida de memoria o una calidad se cumplen hasta medirlas.
 - Mantener el proyecto separado de WordWaifu y CharacterWord.
 
-## Variaciones de peinados desde GitHub
+## Generación automática de assets sin OpenAI API key
 
-El flujo manual de [referencias de peinados](docs/HAIRSTYLE_VARIANT_PIPELINE.md) genera seis variantes por ejecución, registra los prompts y metadatos de origen cuando existen, crea una lámina de contacto y propone las imágenes mediante un Pull Request. No borra ni sobrescribe originales. Requiere configurar el secreto `OPENAI_API_KEY` en GitHub Actions; el uso de la API puede generar costes.
+El workflow [Generate character assets without an API key](.github/workflows/generate-character-assets-free.yml) llama la API pública de Gradio del [editor Krea 2 Identity Edit](https://huggingface.co/spaces/conradlocke/krea2-identity-edit). No requiere `OPENAI_API_KEY`. La ejecución programada diaria selecciona el primer paquete incompleto de cada referencia confirmada, guarda el avance aunque el servicio agote su cuota gratuita y continúa en una ejecución posterior. Los límites del servicio público siguen aplicándose; no hay garantía de completar un paquete en una sola ejecución.
+
+Los paquetes actuales cubren cinco peinados, cinco expresiones, cuatro variantes de ojos, cuatro accesorios y cuatro detalles faciales. La ejecución manual acepta una ruta de referencia existente en el repositorio. El único enlace de origen confirmado actualmente es Pibara: `from-PixAI-2034984086876227343-0.png`. El generador rechaza reutilizar ese archivo para Chie o Sunna. La auditoría automática de prompts/metadatos no encontró referencias con sus nombres, así que sus imágenes de origen deben identificarse correctamente antes de ponerlas en cola.
+
+Los assets quedan en `generated/character-assets/<personaje>/...`:
+
+- `base/*-character-cutout.png` y `base/*-alpha-mask.png`: recorte automático del personaje original, sin generación nueva.
+- `renders/*.png`: variantes generadas de la ilustración completa.
+- `transparent/*.png`: recortes del personaje completo con fondo transparente, no capas aisladas de solo cabello, ojos o accesorios.
+- `manifest.json`, `PROMPTS.md` y `contact-sheet.jpg`: procedencia, prompts, parámetros y vista conjunta de las variantes.
+
+Las salidas transparentes aún requieren revisión visual de identidad y bordes. Para un diseñador de personajes verdaderamente por capas todavía hay que aislar y comprobar las regiones individuales (cabello, ojos, accesorios y expresiones); el recorte completo no debe confundirse con una capa independiente de cabello. El flujo anterior de [referencias de peinados](docs/HAIRSTYLE_VARIANT_PIPELINE.md), basado en OpenAI API, permanece como una ruta alternativa opcional y sí requiere `OPENAI_API_KEY`.
