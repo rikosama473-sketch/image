@@ -167,6 +167,7 @@ jobs:
         env:
           REPOSITORY: ${{ github.repository }}
           SOURCE_REF: ${{ github.sha }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
           CHARACTER_ID: ${{ steps.task.outputs.character_id }}
           REFERENCE_IMAGE: ${{ steps.task.outputs.reference_image }}
           ASSET_PACK: ${{ steps.task.outputs.asset_pack }}
