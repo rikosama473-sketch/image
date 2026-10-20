@@ -233,7 +233,25 @@ def ensure_base_character_cutout(root, character_id, source_path, source_path_in
         "review_status": "needs_edge_review",
         "quality_warning": cutout_details.get("quality_warning"),
     }
-    if not manifest_path.exists():
+    if manifest_path.exists():
+        # Refresh historical alpha metrics without rewriting the original creation timestamp.
+        try:
+            previous_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            previous_cutout = previous_manifest.setdefault("assets", {}).setdefault("character_cutout", {})
+            changed = False
+            for key in ("file", "sha256", "dimensions", "transparent_pixel_ratio", "opaque_pixel_ratio", "quality_warning"):
+                value = cutout_details.get(key)
+                if previous_cutout.get(key) != value:
+                    previous_cutout[key] = value
+                    changed = True
+            if changed:
+                previous_manifest["alpha_metric_definition"] = "opaque_pixel_ratio counts alpha >= 250; this avoids treating rembg alpha 254 as transparent."
+                manifest_path.write_text(json.dumps(previous_manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                manifest = previous_manifest
+        except Exception as exc:
+            fail("Could not refresh base cutout manifest metrics: " + str(exc))
+    else:
+        manifest["alpha_metric_definition"] = "opaque_pixel_ratio counts alpha >= 250."
         manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     registry_path = root / "data" / "character-prompt-registry.json"
@@ -326,6 +344,29 @@ def find_prior_variants(root, character_id, source_sha, pack):
                     im.verify()
             except Exception:
                 continue
+            # Refresh transparent-mask statistics from actual file bytes before reusing a prior run.
+            transparent = record.get("transparent_layer") or {}
+            transparent_relative = transparent.get("file")
+            transparent_path = root / transparent_relative if transparent_relative else None
+            if transparent_path and transparent_path.is_file():
+                try:
+                    with Image.open(transparent_path) as cutout:
+                        alpha = cutout.convert("RGBA").getchannel("A")
+                        hist = alpha.histogram()
+                        total = max(1, alpha.width * alpha.height)
+                    near_opaque = sum(hist[250:]) / total
+                    transparent_ratio = hist[0] / total
+                    warning = None
+                    if near_opaque < 0.05:
+                        warning = "Very little near-opaque foreground (alpha >= 250); inspect the cutout."
+                    elif transparent_ratio < 0.01:
+                        warning = "Very little transparency was created; inspect background edges."
+                    transparent["opaque_pixel_ratio"] = round(near_opaque, 5)
+                    transparent["transparent_pixel_ratio"] = round(transparent_ratio, 5)
+                    transparent["quality_warning"] = warning
+                    record["transparent_layer"] = transparent
+                except Exception:
+                    pass
             found[slug] = record
     return found
 
