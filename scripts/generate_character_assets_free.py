@@ -73,6 +73,12 @@ PACKS = {
     "anatomy-joint-guide-1": [
         ("full-body-joint-guide", "Make a full-body front-view character anatomy study of this same anime character in a neutral A-pose, hair top to soles, hands and feet visible. Preserve her identity and signature design. Add very faint clean construction marks indicating shoulders, ribcage, spine centerline, pelvis, elbows, wrists, knees and ankles, without drawing bones over the face or obscuring costume details. It must remain polished anime production art rather than a medical skeleton. Plain light background, no words, no labels, no watermark."),
     ],
+    "anatomy-sheet-4": [
+        ("full-body-front-a-pose-v2", "Front view: full body from hair top to soles, neutral symmetric A-pose, hands and feet visible. Preserve exact hairstyle silhouette, bangs, tied sections, loose strands, hair/highlight pattern, iris color, face, accessories and costume color blocking. Extend only hidden parts consistently. Single figure, plain light background, clean anime line art, no labels."),
+        ("full-body-side-profile", "Strict 90-degree left-facing side profile of this same character, full body from hair top to soles, neutral standing pose adapted to profile. Preserve exact hair silhouette, hair color/highlights, face profile, accessories and outfit motifs from the reference. Show torso, pelvis, arms, hands, legs and feet clearly in profile. Single figure, plain light background, no labels or text."),
+        ("full-body-back-view", "Direct rear view of this same character, full body from hair top to soles, neutral symmetric A-pose, arms slightly away from torso. Preserve the source's rear hair silhouette, tied sections, loose strands, hair colors/highlights, jacket/back seams, belt and accessories. Do not redesign the character. Single figure, plain light background, no labels or text."),
+        ("full-body-joint-guide", "Front-view full-body anime character study in a neutral A-pose, hair top to soles, hands and feet visible. Preserve identity and costume. Add very faint construction marks for shoulders, ribcage, spine centerline, pelvis, elbows, wrists, knees and ankles without obscuring the art. Polished anime production illustration, not a medical skeleton. Plain light background, no labels or words."),
+    ],
     "face-details-4": [
         ("freckles", "Add a very light cluster of tiny freckles across the upper cheeks only. Do not alter face shape, skin tone, expression, eye color, hairstyle or accessories."),
         ("beauty-mark", "Add one tiny, subtle beauty mark beneath one eye. Do not alter face structure, skin tone, expression, eye color, hairstyle or accessories."),
@@ -367,7 +373,7 @@ def update_image_library(root, character_id, source_path, source_sha, pack, run_
             continue
         anatomy = pack.startswith("anatomy-")
         asset_id = "generated-" + character_id + "-" + pack + "-" + str(record.get("asset_id") or "asset") + "-" + source_sha[:8]
-        display_name = "Guía anatómica completa" if anatomy else ("Variante " + str(record.get("asset_id") or "anime"))
+        display_name = ("Guía anatómica — " + str(record.get("asset_id") or "vista")) if anatomy else ("Variante " + str(record.get("asset_id") or "anime"))
         if character_id:
             display_name += " — " + character_id.capitalize()
         if not anatomy:
