@@ -32,6 +32,7 @@ on:
           - eyes-4
           - accessories-4
           - face-details-4
+          - anatomy-guide-1
       background:
         description: Also produce transparent PNG cutouts
         type: choice
@@ -71,6 +72,7 @@ jobs:
             tests
             data
             docs
+            tools/avatar-maker/assets
             generated/character-assets
           sparse-checkout-cone-mode: true
 
@@ -122,7 +124,7 @@ jobs:
               raise SystemExit(f"Reference image does not exist in this revision: {source}")
           if cid in {"sunna", "chie"} and source == "from-PixAI-2034984086876227343-0.png":
               raise SystemExit("This file is confirmed as Pibara. Refusing to mix character identities; select a verified reference for Sunna/Chie.")
-          if os.environ["ASSET_PACK"] not in {"hair-core-5", "expressions-core-5", "eyes-4", "accessories-4", "face-details-4"}:
+          if os.environ["ASSET_PACK"] not in {"hair-core-5", "expressions-core-5", "eyes-4", "accessories-4", "face-details-4", "anatomy-guide-1"}:
               raise SystemExit("Unsupported asset pack.")
           if os.environ["BACKGROUND"] not in {"transparent", "keep"}:
               raise SystemExit("Unsupported background mode.")
@@ -177,8 +179,8 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
-      - name: Commit generated assets and resumable progress to main
-        if: always() && steps.generate_assets.outcome != 'skipped' && github.ref == 'refs/heads/main' && steps.task.outputs.run == 'true'
+      - name: Commit generated anatomy/assets and library to the triggering branch
+        if: always() && steps.generate_assets.outcome != 'skipped' && steps.task.outputs.run == 'true'
         env:
           CHARACTER_ID: ${{ steps.task.outputs.character_id }}
           ASSET_PACK: ${{ steps.task.outputs.asset_pack }}
@@ -191,9 +193,12 @@ jobs:
           if [ -d generated/character-assets ]; then
             git add -A -- generated/character-assets
           fi
+          if [ -f tools/avatar-maker/assets/image-library.json ]; then
+            git add -A -- tools/avatar-maker/assets/image-library.json
+          fi
           if git diff --cached --quiet; then
             echo "No generated files or registry changes to commit."
             exit 0
           fi
           git commit -m "Save ${CHARACTER_ID} ${ASSET_PACK} asset progress (run ${GITHUB_RUN_ID})"
-          git push origin HEAD:main
+          git push origin "HEAD:${GITHUB_REF_NAME}"
