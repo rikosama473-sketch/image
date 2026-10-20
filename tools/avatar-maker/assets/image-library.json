@@ -3,7 +3,7 @@
   "project": "IMAGE Character Creator",
   "title": "Biblioteca local de ilustraciones",
   "generated_from": "data/training-labels.csv and files present in the repository tree",
-  "asset_count": 760,
+  "asset_count": 761,
   "notice": "This library indexes existing raster files in this repository for personal browsing. Filename hints do not prove authorship, franchise identity, license, or permission to redistribute/train. Items remain unreviewed until their source and rights are confirmed.",
   "filters": [
     "Todos",
@@ -11420,7 +11420,30 @@
       "pack": "anatomy-guide-1",
       "manifest_status": "needs_visual_identity_review",
       "review_note": "Full-body A-pose is usable as a provisional anatomy reference, but the generated hair, eyes and clothing drift from Pibara's reference. Not approved as a faithful character sheet."
+    },
+    {
+      "id": "generated-pibara-anatomy-front-v2-1-full-body-front-a-pose-v2-f3777be4",
+      "catalog_id": "GEN-F3777BE4-FULL-BODY-FRONT-A-POSE-V2",
+      "label": "Guía anatómica completa — Pibara",
+      "path": "generated/character-assets/pibara/2026-10-20/run-39498867766/transparent/01-full-body-front-a-pose-v2.png",
+      "src": "../../generated/character-assets/pibara/2026-10-20/run-39498867766/transparent/01-full-body-front-a-pose-v2.png",
+      "kind": "anatomy_guide",
+      "origin_hint": "Generated in repository workflow via the public image-edit Space; source: from-PixAI-2034984086876227343-0.png; run: 39498867766",
+      "visual_review": "needs_visual_identity_review",
+      "license_review": "unreviewed",
+      "training_permission": "unreviewed",
+      "tags": [
+        "Anatomía",
+        "Cuerpo completo"
+      ],
+      "size_bytes": 743270,
+      "sha256_git_blob": "",
+      "sha256": "70bf4673ab4bf4a475baddac4878225707db21c67a04d3a642df8bb382fa0e01",
+      "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+      "character_id": "pibara",
+      "pack": "anatomy-front-v2-1",
+      "manifest_status": "needs_visual_identity_review"
     }
   ],
-  "updated_at_utc": "2026-10-20T20:57:16.091338+00:00"
+  "updated_at_utc": "2026-10-20T21:17:36.484546+00:00"
 }

@@ -79,6 +79,19 @@
           "pack_completed_count": 1,
           "pack_total": 1,
           "status": "complete_pending_visual_review"
+        },
+        {
+          "run_id": "39498867766",
+          "date": "2026-10-20",
+          "pack": "anatomy-front-v2-1",
+          "source_path": "from-PixAI-2034984086876227343-0.png",
+          "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+          "manifest_path": "generated/character-assets/pibara/2026-10-20/run-39498867766/manifest.json",
+          "contact_sheet_path": "generated/character-assets/pibara/2026-10-20/run-39498867766/contact-sheet.jpg",
+          "assets_added_this_run": 1,
+          "pack_completed_count": 1,
+          "pack_total": 1,
+          "status": "complete_pending_visual_review"
         }
       ]
     },
