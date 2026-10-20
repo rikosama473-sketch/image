@@ -2,6 +2,8 @@ name: Generate character assets without an API key
 
 on:
   schedule:
+    # Resume the oldest incomplete asset pack once per day. The free public
+    # ZeroGPU Space currently permits only a small anonymous inference quota.
     - cron: "15 8 * * *"
   workflow_dispatch:
     inputs:
@@ -72,26 +74,54 @@ jobs:
             generated/character-assets
           sparse-checkout-cone-mode: true
 
-      - name: Validate request
+      - name: Select next task for scheduled runs or use manual request
+        id: task
         env:
-          CHARACTER_ID: ${{ inputs.character_id || 'pibara' }}
-          REFERENCE_IMAGE: ${{ inputs.reference_image || 'from-PixAI-2034984086876227343-0.png' }}
-          ASSET_PACK: ${{ inputs.asset_pack || 'hair-core-5' }}
+          EVENT_NAME: ${{ github.event_name }}
+          MANUAL_CHARACTER_ID: ${{ inputs.character_id || 'pibara' }}
+          MANUAL_REFERENCE_IMAGE: ${{ inputs.reference_image || 'from-PixAI-2034984086876227343-0.png' }}
+          MANUAL_ASSET_PACK: ${{ inputs.asset_pack || 'hair-core-5' }}
+          MANUAL_BASE_SEED: ${{ inputs.base_seed || '1201' }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT_NAME" = "schedule" ]; then
+            python scripts/select_next_character_asset_task.py --root "$GITHUB_WORKSPACE" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          {
+            printf 'run=true\n'
+            printf 'character_id=%s\n' "$MANUAL_CHARACTER_ID"
+            printf 'reference_image=%s\n' "$MANUAL_REFERENCE_IMAGE"
+            printf 'asset_pack=%s\n' "$MANUAL_ASSET_PACK"
+            printf 'reason=manual workflow_dispatch\n'
+          } >> "$GITHUB_OUTPUT"
+          echo "Manual asset task selected for $MANUAL_CHARACTER_ID."
+
+      - name: Validate request
+        if: steps.task.outputs.run == 'true'
+        env:
+          CHARACTER_ID: ${{ steps.task.outputs.character_id }}
+          REFERENCE_IMAGE: ${{ steps.task.outputs.reference_image }}
+          ASSET_PACK: ${{ steps.task.outputs.asset_pack }}
           BACKGROUND: ${{ inputs.background || 'transparent' }}
         run: |
           set -euo pipefail
           python - <<'PY'
           import os
-          from pathlib import PurePosixPath
+          from pathlib import Path, PurePosixPath
           cid = os.environ["CHARACTER_ID"]
           source = os.environ["REFERENCE_IMAGE"].strip()
           p = PurePosixPath(source)
           if cid not in {"pibara", "sunna", "chie"}:
               raise SystemExit("Unknown character id.")
-          if not source or p.is_absolute() or ".." in p.parts or "\\" in source:
+          if not source or p.is_absolute() or ".." in p.parts or "\\" in source or "\n" in source or "\r" in source:
               raise SystemExit("Reference must be a safe repository-relative path.")
           if p.suffix.lower() not in {".png", ".jpg", ".jpeg", ".webp"}:
               raise SystemExit("Reference must be PNG, JPG/JPEG or WebP.")
+          if not Path(*p.parts).is_file():
+              raise SystemExit(f"Reference image does not exist in this revision: {source}")
+          if cid in {"sunna", "chie"} and source == "from-PixAI-2034984086876227343-0.png":
+              raise SystemExit("This file is confirmed as Pibara. Refusing to mix character identities; select a verified reference for Sunna/Chie.")
           if os.environ["ASSET_PACK"] not in {"hair-core-5", "expressions-core-5", "eyes-4", "accessories-4", "face-details-4"}:
               raise SystemExit("Unsupported asset pack.")
           if os.environ["BACKGROUND"] not in {"transparent", "keep"}:
@@ -100,23 +130,27 @@ jobs:
           PY
 
       - name: Install public-Space client and transparent-cutout processor
+        if: steps.task.outputs.run == 'true'
         run: |
           python -m pip install --disable-pip-version-check --upgrade "gradio_client>=1.12,<2" "Pillow>=10" "requests>=2.31" "rembg[cpu]>=2.0.60,<3"
 
-      - name: Run the generator configuration tests
-        run: python -m unittest discover -s tests -p "test_character_asset_factory.py"
+      - name: Run generator and queue tests
+        if: steps.task.outputs.run == 'true'
+        run: python -m unittest discover -s tests -p "test_character_asset_*.py"
 
       - name: Generate assets from the immutable GitHub reference
+        if: steps.task.outputs.run == 'true'
         id: generate_assets
         env:
           REPOSITORY: ${{ github.repository }}
           SOURCE_REF: ${{ github.sha }}
-          CHARACTER_ID: ${{ inputs.character_id || 'pibara' }}
-          REFERENCE_IMAGE: ${{ inputs.reference_image || 'from-PixAI-2034984086876227343-0.png' }}
-          ASSET_PACK: ${{ inputs.asset_pack || 'hair-core-5' }}
+          CHARACTER_ID: ${{ steps.task.outputs.character_id }}
+          REFERENCE_IMAGE: ${{ steps.task.outputs.reference_image }}
+          ASSET_PACK: ${{ steps.task.outputs.asset_pack }}
           RUN_ID: ${{ github.run_id }}
           BASE_SEED: ${{ inputs.base_seed || '1201' }}
           BACKGROUND: ${{ inputs.background || 'transparent' }}
+          MANUAL_BASE_SEED: ${{ inputs.base_seed || '1201' }}
         run: |
           set -euo pipefail
           args=(
@@ -135,19 +169,19 @@ jobs:
           python scripts/generate_character_assets_free.py "${args[@]}"
 
       - name: Preserve generated assets even when the public Space hits its quota
-        if: always() && steps.generate_assets.outcome != 'skipped'
+        if: always() && steps.generate_assets.outcome != 'skipped' && steps.task.outputs.run == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: character-assets-${{ inputs.character_id || 'pibara' }}-${{ github.run_id }}
-          path: generated/character-assets/${{ inputs.character_id || 'pibara' }}/**/run-${{ github.run_id }}/**
+          name: character-assets-${{ steps.task.outputs.character_id }}-${{ github.run_id }}
+          path: generated/character-assets/${{ steps.task.outputs.character_id }}/**/run-${{ github.run_id }}/**
           if-no-files-found: ignore
           retention-days: 14
 
       - name: Commit generated assets and resumable progress to main
-        if: always() && steps.generate_assets.outcome != 'skipped' && github.ref == 'refs/heads/main'
+        if: always() && steps.generate_assets.outcome != 'skipped' && github.ref == 'refs/heads/main' && steps.task.outputs.run == 'true'
         env:
-          CHARACTER_ID: ${{ inputs.character_id || 'pibara' }}
-          ASSET_PACK: ${{ inputs.asset_pack || 'hair-core-5' }}
+          CHARACTER_ID: ${{ steps.task.outputs.character_id }}
+          ASSET_PACK: ${{ steps.task.outputs.asset_pack }}
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
           set -euo pipefail
