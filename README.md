@@ -128,6 +128,7 @@ The splitter is deterministic: it does not generate alternate hairstyles and can
 ## IMAGE Character Creator: anatomy and image library
 
 The avatar maker now includes an **Anatomía** workspace for generating a full-body anime anatomy guide from the selected canvas reference, manually painting regions, creating transparent full-canvas PNG layers, and exporting each selected layer while preserving its original coordinates. The **Biblioteca** workspace starts from the 759-image repository inventory and appends generated outputs to the searchable catalog, with provenance/license/training-review status kept separate.
+The workflow now offers **`anatomy-sheet-4`**, one repository run for four separate full-body references: front A-pose, side profile, back view, and joint landmarks. Each generated output is stored separately with a manifest and transparent cutout where the service succeeds.
 
 The index is a local repository inventory, **not every anime character worldwide and not blanket permission to reuse those images**. Many image sources and rights are still unreviewed. Check provenance before sharing or training on assets. A generated anatomy sheet is a reference layer, not a guaranteed segmentation of the original artwork. See [the avatar maker setup and anatomy guide](tools/avatar-maker/README.md).
 
