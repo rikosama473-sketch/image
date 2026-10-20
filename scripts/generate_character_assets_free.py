@@ -162,6 +162,103 @@ def make_cutout(flat_path, cutout_path, session):
         "quality_warning": warning,
     }
 
+
+def ensure_base_character_cutout(root, character_id, source_path, source_path_in_repo, source_url_value, source_sha, source_dimensions, session):
+    """Create a stable, non-generative full-character cutout and alpha mask from the exact source."""
+    base_dir = root / "generated" / "character-assets" / character_id / "base"
+    stem = "source-" + source_sha[:12]
+    cutout_path = base_dir / (stem + "-character-cutout.png")
+    mask_path = base_dir / (stem + "-alpha-mask.png")
+    manifest_path = base_dir / (stem + "-base-manifest.json")
+    base_dir.mkdir(parents=True, exist_ok=True)
+
+    if not cutout_path.exists():
+        cutout_details = make_cutout(source_path, cutout_path, session)
+    else:
+        with Image.open(cutout_path) as existing:
+            existing.verify()
+        with Image.open(cutout_path) as existing:
+            rgba = existing.convert("RGBA")
+            hist = rgba.getchannel("A").histogram()
+            total = max(1, rgba.width * rgba.height)
+            cutout_details = {
+                "file": cutout_path.relative_to(root).as_posix(),
+                "sha256": hashlib.sha256(cutout_path.read_bytes()).hexdigest(),
+                "dimensions": list(rgba.size),
+                "transparent_pixel_ratio": round(hist[0] / total, 5),
+                "opaque_pixel_ratio": round(hist[255] / total, 5),
+                "quality_warning": None,
+            }
+
+    with Image.open(cutout_path) as cutout:
+        rgba = cutout.convert("RGBA")
+        alpha = rgba.getchannel("A")
+        if not mask_path.exists():
+            mask_path.parent.mkdir(parents=True, exist_ok=True)
+            alpha.save(mask_path, format="PNG", optimize=True)
+        else:
+            with Image.open(mask_path) as existing_mask:
+                existing_mask.verify()
+
+    cutout_details["file"] = cutout_path.relative_to(root).as_posix()
+    manifest = {
+        "schema_version": 1,
+        "character_id": character_id,
+        "asset_kind": "whole_character_foreground_cutout",
+        "is_ai_generated": False,
+        "created_at_utc": datetime.now(timezone.utc).isoformat(),
+        "source": {
+            "path": source_path_in_repo,
+            "url": source_url_value,
+            "sha256": source_sha,
+            "dimensions": list(source_dimensions),
+        },
+        "assets": {
+            "character_cutout": cutout_details,
+            "alpha_mask": {
+                "file": mask_path.relative_to(root).as_posix(),
+                "sha256": hashlib.sha256(mask_path.read_bytes()).hexdigest(),
+                "dimensions": list(Image.open(mask_path).size),
+                "mask_semantics": "White/opaque pixels represent the estimated foreground; black/transparent pixels represent the estimated background.",
+            },
+        },
+        "method": {
+            "name": "rembg",
+            "model": "u2net",
+            "uses_generation_api": False,
+            "note": "This preserves the source character's pixels apart from automatic background-removal/alpha estimation. It is a full-character cutout, not separate hair, eyes or accessories.",
+        },
+        "review_status": "needs_edge_review",
+        "quality_warning": cutout_details.get("quality_warning"),
+    }
+    if not manifest_path.exists():
+        manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+
+    registry_path = root / "data" / "character-prompt-registry.json"
+    try:
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+        character = next(item for item in registry["characters"] if item["id"] == character_id)
+    except Exception as exc:
+        fail("Could not safely register base character cutout: " + str(exc))
+    base_assets = character.setdefault("base_assets", [])
+    if not any(item.get("source_sha256") == source_sha for item in base_assets):
+        base_assets.append({
+            "source_path": source_path_in_repo,
+            "source_sha256": source_sha,
+            "asset_kind": "whole_character_foreground_cutout",
+            "character_cutout_path": cutout_path.relative_to(root).as_posix(),
+            "alpha_mask_path": mask_path.relative_to(root).as_posix(),
+            "manifest_path": manifest_path.relative_to(root).as_posix(),
+            "status": "derived_not_ai_generated",
+            "review_status": "needs_edge_review",
+        })
+    if not character.get("asset_generation_status"):
+        character["asset_generation_status"] = "base_cutout_created_variants_waiting_for_free_inference"
+    registry_path.write_text(json.dumps(registry, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    print("Created/verified base cutout and alpha mask: " + cutout_path.relative_to(root).as_posix(), flush=True)
+    return manifest
+
+
 def make_contact_sheet(items, target):
     cols, cell_w, cell_h, label_h, margin = 3, 360, 420, 40, 16
     rows = (len(items) + cols - 1) // cols
@@ -275,6 +372,14 @@ def main():
             cutout_session = new_session("u2net")
         except Exception as exc:
             print("WARNING: transparent cutouts unavailable: " + str(exc), file=sys.stderr)
+
+    if cutout_session is not None:
+        try:
+            ensure_base_character_cutout(
+                root, args.character, cache, path, url, source_sha, source_dims, cutout_session
+            )
+        except Exception as exc:
+            print("WARNING: base character cutout could not be created: " + str(exc), file=sys.stderr)
 
     created = {}
     contact_items = []
