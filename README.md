@@ -59,7 +59,7 @@ La guía detallada está en [docs/DATASET_GUIDE.md](docs/DATASET_GUIDE.md), y la
 
 IMAGE Character Creator es un editor basado en ilustraciones PNG reales con navegación lateral, retrato grande, galería de miniaturas, capas activas y exportación. [Abrir el editor](tools/avatar-maker/index.html) · [Guía](tools/avatar-maker/README.md) · [Catálogo y procedencia](tools/avatar-maker/assets/catalog.json).
 
-Incluye seis vistas base de Pibara (la original y cinco variantes completas generadas), composición de capas PNG/WebP, lienzo de 768×1280, fondo/transparencia, posición, escala, opacidad, orden, control de tono y exportación PNG/proyectos JSON. En Windows, ejecuta [start-avatar-maker.bat](tools/avatar-maker/start-avatar-maker.bat).
+Incluye seis vistas base de Pibara (la original y cinco variantes completas generadas), composición de capas PNG/WebP, lienzo de 768×1280, fondo/transparencia, posición, escala, opacidad, orden, control de tono y exportación PNG/proyectos JSON. La pestaña IA Studio añade edición por instrucciones, referencias opcionales y resultados revisables como capas, mediante un puente local que mantiene la clave API en una variable de entorno. En Windows, ejecuta [start-avatar-maker.bat](tools/avatar-maker/start-avatar-maker.bat) y consulta la [guía de edición IA](tools/avatar-maker/README.md#edición-profesional-asistida-por-ia).
 
 El catálogo separa **ilustraciones completas** de **máscaras candidatas**. Elegir una variante completa cambia el retrato entero; no se etiqueta como recorte de cabello. Las máscaras automáticas de cabello/cara/cuerpo/ropa siguen pendientes de revisión visual. La meta es ampliar el catálogo de piezas ilustradas alineadas y corregidas.
 
