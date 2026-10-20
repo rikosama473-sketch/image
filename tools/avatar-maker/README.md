@@ -94,13 +94,13 @@ Los nombres GPT Image 2.5 Sunburst y Flare, GPT Image 2 y GPT Image 1.5 se manti
 
 ### Resultado anatómico generado en el repositorio
 
-La primera ejecución automatizada para Pibara completó el paquete \`anatomy-guide-1\` en GitHub Actions. Consulta los archivos en la carpeta [run-39496066089](../../generated/character-assets/pibara/2026-10-20/run-39496066089/):
+La ejecución automatizada para Pibara completó el paquete `anatomy-guide-1`. Estos enlaces apuntan a archivos verificados en un commit inmutable:
 
-- \`renders/01-full-body-anatomy-a-pose.png\` — render de referencia.
-- \`transparent/01-full-body-anatomy-a-pose.png\` — versión con fondo quitado para el editor.
-- \`manifest.json\` — prompt, modelo público, dimensiones, hashes y estado de revisión.
+- [Render PNG de referencia](https://github.com/rikosama473-sketch/image/blob/0efede21e292909395d617df0bf6acb861e2cdb8/generated/character-assets/pibara/2026-10-20/run-39496066089/renders/01-full-body-anatomy-a-pose.png)
+- [PNG transparente para cargar en el editor](https://github.com/rikosama473-sketch/image/blob/0efede21e292909395d617df0bf6acb861e2cdb8/generated/character-assets/pibara/2026-10-20/run-39496066089/transparent/01-full-body-anatomy-a-pose.png)
+- [Hoja de contacto](https://github.com/rikosama473-sketch/image/blob/0efede21e292909395d617df0bf6acb861e2cdb8/generated/character-assets/pibara/2026-10-20/run-39496066089/contact-sheet.jpg)
+- [Manifiesto con prompt, modelo, dimensiones y hashes](https://github.com/rikosama473-sketch/image/blob/0efede21e292909395d617df0bf6acb861e2cdb8/generated/character-assets/pibara/2026-10-20/run-39496066089/manifest.json)
+- [Prompts de generación](https://github.com/rikosama473-sketch/image/blob/0efede21e292909395d617df0bf6acb861e2cdb8/generated/character-assets/pibara/2026-10-20/run-39496066089/PROMPTS.md)
+- [Registro de la ejecución](https://github.com/rikosama473-sketch/image/actions/runs/39496066089)
 
-El manifiesto marca la guía como pendiente de revisión visual. La máscara alfa se generó correctamente por métricas, pero revisa contorno, rostro, manos, pies y proporciones antes de usarla como referencia definitiva.
-
-
-**Visual-review finding for the first Pibara run:** the pose is a useful full-body draft, but the model changed the source hairstyle/hair color, eye color and outfit. The manifest and library now record this explicitly. Keep the file as a provisional anatomy reference; it is not an approved likeness of Pibara. The generator prompt was tightened to preserve exact hair silhouette, highlights, irises and costume motifs on future runs.
+El manifiesto mantiene la guía pendiente de revisión visual. La figura sirve como borrador anatómico, pero el primer resultado cambió el pelo, los ojos y la ropa respecto a la referencia de Pibara; no se debe considerar una réplica aprobada.
