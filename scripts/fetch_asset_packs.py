@@ -142,7 +142,7 @@ def download_pack(pack_id: str, output_root: Path, force: bool = False) -> dict[
 
     if archive_path.exists():
         if not force:
-            if pack.get("expected_bytes") is not None and archive_path.stat().st_size != pack["expected_bytes"]
+            if pack.get("expected_bytes") is not None and archive_path.stat().st_size != pack["expected_bytes"]:
                 raise ValueError(
                     f"{archive_path} exists but size differs from the reviewed archive. "
                     "Inspect it manually or rerun with --force."
@@ -169,7 +169,7 @@ def download_pack(pack_id: str, output_root: Path, force: bool = False) -> dict[
                     if downloaded > MAX_ARCHIVE_BYTES:
                         raise ValueError(f"Download exceeded {MAX_ARCHIVE_BYTES} bytes.")
                     output.write(block)
-            if pack.get("expected_bytes") is not None and downloaded != pack["expected_bytes"]
+            if pack.get("expected_bytes") is not None and downloaded != pack["expected_bytes"]:
                 raise ValueError(
                     f"Downloaded {downloaded} bytes, expected {pack['expected_bytes']}. "
                     "The publisher may have changed the archive; do not extract until reviewed."
@@ -184,7 +184,7 @@ def download_pack(pack_id: str, output_root: Path, force: bool = False) -> dict[
 
     if not zipfile.is_zipfile(archive_path):
         raise ValueError(f"{archive_path} is not a valid ZIP archive.")
-    if pack.get("expected_bytes") is not None and archive_path.stat().st_size != pack["expected_bytes"]
+    if pack.get("expected_bytes") is not None and archive_path.stat().st_size != pack["expected_bytes"]:
         raise ValueError("Archive size differs from the recorded source snapshot.")
 
     if extract_path.exists():
