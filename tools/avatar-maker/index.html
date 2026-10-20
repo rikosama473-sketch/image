@@ -11,7 +11,7 @@
 @media(max-width:520px){.app{grid-template-columns:45px minmax(0,1fr);grid-template-rows:minmax(520px,64dvh) minmax(520px,auto)}.mark{font-size:27px}.navbtn{padding:10px 1px}.navbtn .ico{font-size:17px}.work{grid-template-rows:minmax(0,1fr) 140px}.stage-layout{grid-template-columns:30px minmax(0,1fr)}.tool{width:25px;height:29px;font-size:13px}.badge{top:5px;left:5px;font-size:7px}.stage-note{top:37px;left:5px;font-size:8px;max-width:62%}.stage-mini{top:5px;right:4px}.minilook{width:30px;height:42px}.nameplate{left:4px;bottom:4px;width:95px;padding:5px}.nameplate strong{font-size:12px}.nameplate p{display:none}.layers{padding:7px}.layerbar{gap:6px}.layerbar strong{font-size:9px}.layertabs{gap:7px}.layertab{font-size:8px}.layercard{flex-basis:58px;width:58px;height:100px;padding:3px}.layercard img{height:68px}.righthead{padding:10px 9px 0}.heading{font-size:15px;margin-bottom:10px}.pill{padding:8px;font-size:9px}.content,.rightfoot{padding:10px}.assetgrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.thumb{height:100px}.asset b{font-size:8px}.asset small{font-size:7px}.stylecard img{height:52px}.status{padding:8px 10px;flex-direction:column}}
 
 
-.stage #maskOverlay{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2}
+.stage #maskOverlay{display:none;pointer-events:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2}
 .stage #maskOverlay.visible{display:block}
 .stage #maskOverlay.painting{pointer-events:auto;cursor:crosshair;touch-action:none}
 .ai-mask-panel{display:flex;flex-direction:column;gap:9px;border:1px solid #72516d;background:#171b30;border-radius:9px;padding:11px}
@@ -370,8 +370,12 @@ function redrawMaskOverlay(){
  ctx.restore();refreshMaskUi();
 }
 function refreshMaskUi(){
- const count=$("aiMaskCount");if(count)count.textContent=aiMaskStrokes.length+" trazo"+(aiMaskStrokes.length===1?"":"s");
+ const label=aiMaskStrokes.length+" trazo"+(aiMaskStrokes.length===1?"":"s");
+ const count=$("aiMaskCount");if(count)count.textContent=label;
+ const anatomyCount=$("anatomyMaskCount");if(anatomyCount)anatomyCount.textContent=label;
  const button=$("aiMaskToggle");if(button){button.textContent=aiMaskMode?"✓ Terminar pincel":"✎ Pintar zona";button.classList.toggle("primary",aiMaskMode);}
+ const anatomyButton=$("anatomyMaskToggle");if(anatomyButton){anatomyButton.textContent=aiMaskMode?"✓ Terminar pincel":"✎ Pintar pieza";anatomyButton.classList.toggle("primary",aiMaskMode);}
+ const anatomyMode=$("anatomyMaskMode");if(anatomyMode)anatomyMode.textContent=aiMaskMode?"Pincel activo":"Pincel apagado";
  const overlay=$("maskOverlay");if(overlay){overlay.classList.toggle("visible",state.category==="ai"||state.category==="anatomy");overlay.classList.toggle("painting",aiMaskMode&&(state.category==="ai"||state.category==="anatomy"));}
 }
 function setAIMaskMode(enabled){
@@ -415,7 +419,7 @@ $("maskOverlay").onpointercancel=()=>{aiMaskDrawing=null;redrawMaskOverlay();};
 
 function aiWorkspace(root){
  const presetHtml=aiPresets.map(p=>'<button type="button" class="btn ai-preset" data-ai-preset="'+safe(p.prompt)+'">'+safe(p.label)+'</button>').join("");
- const resultHtml=aiResult?'<section class="ai-result"><div class="ai-result-title"><span>✦ Resultado candidato</span><span>Sin aplicar</span></div><img src="'+safe(aiResult)+'" alt="Vista previa del resultado generado por IA"><small>El original sigue detrás. Aplicá esta salida como una capa superior editable; podrás ocultarla, moverla, ajustar su opacidad o eliminarla.</small><div class="ai-actions"><button type="button" id="aiApply" class="btn primary">Usar como capa</button><button type="button" id="aiDiscard" class="btn">Descartar</button></div></section>':'';
+ const resultHtml=aiResult?'<section class="ai-result"><div class="ai-result-title"><span>✦ '+safe(aiResultMeta.name||"Resultado candidato")+'</span><span>Sin aplicar</span></div><img src="'+safe(aiResult)+'" alt="Vista previa del resultado generado por IA"><small>El original sigue detrás. Aplicá esta salida como una capa superior editable; podrás ocultarla, moverla, ajustar su opacidad o eliminarla.</small><div class="ai-actions"><button type="button" id="aiApply" class="btn primary">Usar como capa</button><button type="button" id="aiDiscard" class="btn">Descartar</button></div></section>':'';
  root.innerHTML=
   '<div class="ai-intro"><strong>✧ AI ART DIRECTOR</strong><p>Edita la ilustración del lienzo mediante instrucciones en lenguaje natural. Cada resultado se revisa antes de aplicarse y se agrega como capa nueva para preservar el diseño anterior.</p></div>'+
   '<div><label class="ai-label" for="aiPrompt">¿Qué querés cambiar?</label><textarea id="aiPrompt" class="ai-prompt" maxlength="3000" placeholder="Ej.: Conserva el rostro y la identidad; cambia únicamente el cabello a una coleta alta con mechones sueltos.">'+safe(aiSettings.prompt)+'</textarea><div class="tiny" style="margin-top:5px">Una instrucción concreta da más control. No se prometen recortes perfectos de una sola pasada.</div></div>'+
