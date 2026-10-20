@@ -59,6 +59,14 @@ jobs:
             --output "$OUTPUT_DIR"
           echo "OUTPUT_DIR=$OUTPUT_DIR" >> "$GITHUB_ENV"
 
+      - name: Upload generated candidates even if repository push is rejected
+        uses: actions/upload-artifact@v4
+        with:
+          name: pibara-character-layers-${{ github.run_id }}
+          path: generated/character-layers/pibara/${{ github.run_id }}/
+          if-no-files-found: error
+          retention-days: 30
+
       - name: Commit generated candidates to this work branch
         env:
           GH_TOKEN: ${{ github.token }}
@@ -71,4 +79,17 @@ jobs:
             exit 0
           fi
           git commit -m "Generate Pibara layer candidates (run $GITHUB_RUN_ID)"
-          git push origin "HEAD:$GITHUB_REF_NAME"
+          # Other validations/docs updates can advance this branch while the heavy
+          # segmentation model is running. Rebase the generated commit on the latest
+          # branch tip before pushing so the real PNGs are not lost to a non-FF reject.
+          for attempt in 1 2 3; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then
+              exit 0
+            fi
+            echo "Push attempt $attempt was rejected; retrying after synchronizing branch."
+            sleep 2
+          done
+          echo "Could not push generated layers after three synchronized attempts." >&2
+          exit 1
