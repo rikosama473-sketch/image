@@ -1,0 +1,35 @@
+name: Validate manual character editor
+
+on:
+  push:
+    branches:
+      - work/manual-character-editor-2026-10
+      - main
+    paths:
+      - "tools/manual-character-editor/**"
+      - "scripts/validate_manual_character_editor.py"
+      - ".github/workflows/validate-manual-character-editor.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "tools/manual-character-editor/**"
+      - "scripts/validate_manual_character_editor.py"
+      - ".github/workflows/validate-manual-character-editor.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate editor controls and inline JavaScript
+        run: python scripts/validate_manual_character_editor.py
