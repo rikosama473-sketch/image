@@ -36,7 +36,7 @@ El contador de combinaciones es teórico: incluye fondos, retratos base, filtros
 
 ## Edición profesional asistida por IA
 
-La pestaña **IA Studio** permite describir una edición en español, elegir un modelo de imagen y calidad, indicar la dirección artística, adjuntar una imagen de referencia opcional y revisar la salida antes de aplicarla. El resultado entra como una capa PNG sobre el diseño anterior: se puede ocultar, mover, reducir su opacidad o eliminar sin destruir la composición que ya tenías. Guardar el proyecto JSON conserva la imagen generada como dato de capa.
+La pestaña **IA Studio** permite describir una edición en español, elegir un modelo de imagen y calidad, indicar la dirección artística, adjuntar una imagen de referencia opcional y revisar la salida antes de aplicarla. Incluye un **pincel de máscara** para pintar en rosa la región editable (por ejemplo, solo el pelo); los píxeles fuera de la máscara se protegen según las capacidades del modelo. La máscara se conserva en el proyecto JSON. El resultado entra como una capa PNG sobre el diseño anterior: se puede ocultar, mover, reducir su opacidad o eliminar sin destruir la composición que ya tenías. Guardar el proyecto JSON conserva la imagen generada como dato de capa.
 
 ### Requisitos y arranque en Windows
 
