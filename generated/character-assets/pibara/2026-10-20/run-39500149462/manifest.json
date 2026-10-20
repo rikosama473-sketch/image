@@ -21,11 +21,11 @@
     "api_name": "/edit",
     "openai_api_key_used": false,
     "inference_api_paid_by_openai": false,
-    "ref_boost": 4.0,
+    "ref_boost": 4,
     "grounding_px": 768,
-    "lora_scale": 1.0,
+    "lora_scale": 1,
     "steps": 12,
-    "guidance_scale": 0.0,
+    "guidance_scale": 0,
     "background_removed": true
   },
   "required_asset_ids": [
@@ -65,7 +65,9 @@
         "transparent_pixel_ratio": 0.2956,
         "opaque_pixel_ratio": 0.59853,
         "quality_warning": null
-      }
+      },
+      "visual_review_status": "rejected_for_pose_and_crop",
+      "visual_review_note": "Cropped at thighs with a raised arm; not a full-body A-pose."
     },
     {
       "index": 2,
@@ -92,7 +94,9 @@
         "transparent_pixel_ratio": 0.75384,
         "opaque_pixel_ratio": 0.1956,
         "quality_warning": null
-      }
+      },
+      "visual_review_status": "provisional_reference_only",
+      "visual_review_note": "Full-body side view, but hair/iris colors and outfit drift from Pibara."
     },
     {
       "index": 3,
@@ -119,10 +123,13 @@
         "transparent_pixel_ratio": 0.63681,
         "opaque_pixel_ratio": 0.29971,
         "quality_warning": null
-      }
+      },
+      "visual_review_status": "provisional_reference_only",
+      "visual_review_note": "Full-body rear view, but hair and outfit drift from Pibara."
     }
   ],
   "last_error": "You have exceeded your ZeroGPU runs limit. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens",
   "review_status": "needs_visual_identity_review",
-  "warning": "Generated renders and automated transparent cutouts require review of likeness and hair/accessory edges."
+  "warning": "Partial batch: 3 of 4 views produced. Visual inspection found identity drift; the front view is also cropped/in the wrong pose. None is approved as an identity-faithful Pibara model sheet.",
+  "visual_review_notes": "batch-front-a-pose: not a valid full-body A-pose; the generated image is cropped at the thighs and has one arm raised. Do not use as the canonical anatomy front view. batch-side-profile: full body and side orientation are readable, but the hairstyle color, iris color and outfit differ from Pibara's red/black reference. Provisional proportion reference only. batch-back-view: full body and rear orientation are readable, but the hairstyle color, jacket and outfit differ from Pibara's red/black reference. Provisional rear-view reference only. The fourth batch-joint-guide output was not generated because the public Hugging Face ZeroGPU quota was exhausted. The run preserves the three completed renders and transparent cutouts."
 }
