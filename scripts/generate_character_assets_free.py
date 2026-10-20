@@ -149,9 +149,11 @@ def make_cutout(flat_path, cutout_path, session):
     hist = rgba.getchannel("A").histogram()
     total = max(1, rgba.width * rgba.height)
     transparent = hist[0] / total
-    opaque = hist[255] / total
+    # rembg frequently leaves foreground pixels at alpha 254 instead of 255.
+    # Count alpha >= 250 as near-opaque to avoid false cutout-quality warnings.
+    opaque = sum(hist[250:]) / total
     warning = None
-    if opaque < .05: warning = "Very little fully opaque foreground; inspect the cutout."
+    if opaque < .05: warning = "Very little near-opaque foreground (alpha >= 250); inspect the cutout."
     elif transparent < .01: warning = "Very little transparency was created; inspect background edges."
     return {
         "file": cutout_path.as_posix(),
@@ -186,7 +188,7 @@ def ensure_base_character_cutout(root, character_id, source_path, source_path_in
                 "sha256": hashlib.sha256(cutout_path.read_bytes()).hexdigest(),
                 "dimensions": list(rgba.size),
                 "transparent_pixel_ratio": round(hist[0] / total, 5),
-                "opaque_pixel_ratio": round(hist[255] / total, 5),
+                "opaque_pixel_ratio": round(sum(hist[250:]) / total, 5),
                 "quality_warning": None,
             }
 
