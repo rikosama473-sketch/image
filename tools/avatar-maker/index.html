@@ -73,6 +73,15 @@
 .btn:disabled{opacity:.55;cursor:wait}
 @media(max-width:520px){.ai-control-grid{grid-template-columns:1fr}.ai-prompt{min-height:115px}.ai-result img{max-height:320px}}
 
+
+.ai-variant-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0}
+.ai-variant{min-width:0;padding:4px;border:1px solid #314967;border-radius:7px;background:#10223a;color:var(--text);text-align:center;cursor:pointer}
+.ai-variant:hover{border-color:#ff8cbd}
+.ai-variant.active{border:2px solid var(--pink);padding:3px;box-shadow:0 0 0 1px #f13e8b40}
+.ai-variant img{display:block;width:100%;aspect-ratio:3/4;object-fit:contain;background:#09172a;border-radius:4px}
+.ai-variant span{display:block;padding:5px 0 2px;font-size:10px;font-weight:800}
+.ai-control-grid .tiny{display:block;margin-top:4px;line-height:1.4}
+@media(max-width:520px){.ai-variant-strip{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.ai-variant{padding:3px}.ai-variant span{font-size:8px}}
 </style>
 </head>
 <body>
@@ -135,8 +144,8 @@ const backgrounds=[["Noche","#071426"],["Grafito","#263346"],["Pizarra","#526178
 const styles=[{id:"trigger",label:"Trigger",filter:"none"},{id:"madhouse",label:"Madhouse",filter:"saturate(.94) contrast(1.04)"},{id:"classic",label:"Clásico",filter:"saturate(.78)"},{id:"chibi",label:"Chibi",filter:"saturate(1.1) brightness(1.04)"}];
 let state={look:"ponytail",category:"hair",pill:"Todos",background:"#e8e4e5",transparent:false,checker:true,style:"trigger",name:"Pibara",layers:[],selected:"base",lighting:1};
 let pending=null,to=null,drag=null;
-let aiResult=null,aiBusy=false,aiReferenceDataUrl="",aiReferenceName="";
-let aiSettings={prompt:"",model:"gpt-image-2.5-sunburst",quality:"medium",background:"auto",direction:"preserve"};
+let aiResult=null,aiResults=[],aiSelectedIndex=0,aiBusy=false,aiReferenceDataUrl="",aiReferenceName="";
+let aiSettings={prompt:"",model:"gpt-image-2.5-sunburst",quality:"medium",variants:1,background:"auto",direction:"preserve"};
 let aiMaskStrokes=[],aiMaskMode=false,aiMaskDrawing=null,aiBrushSize=64;
 let aiNextResultMeta=null,aiResultMeta={kind:"ai_result",name:"Edición IA"};
 let imageLibraryCache=null,imageLibraryPromise=null,libraryPageSize=48;
@@ -424,7 +433,8 @@ $("maskOverlay").onpointercancel=()=>{aiMaskDrawing=null;redrawMaskOverlay();};
 
 function aiWorkspace(root){
  const presetHtml=aiPresets.map(p=>'<button type="button" class="btn ai-preset" data-ai-preset="'+safe(p.prompt)+'">'+safe(p.label)+'</button>').join("");
- const resultHtml=aiResult?'<section class="ai-result"><div class="ai-result-title"><span>✦ '+safe(aiResultMeta.name||"Resultado candidato")+'</span><span>Sin aplicar</span></div><img src="'+safe(aiResult)+'" alt="Vista previa del resultado generado por IA"><small>El original sigue detrás. Aplicá esta salida como una capa superior editable; podrás ocultarla, moverla, ajustar su opacidad o eliminarla.</small><div class="ai-actions"><button type="button" id="aiApply" class="btn primary">Usar como capa</button><button type="button" id="aiDiscard" class="btn">Descartar</button></div></section>':'';
+ const variantsHtml=aiResults.length>1?'<div class="ai-variant-strip" aria-label="Variantes generadas">'+aiResults.map((data,index)=>'<button type="button" class="ai-variant '+(index===aiSelectedIndex?"active":"")+'" data-ai-result-index="'+index+'" aria-pressed="'+(index===aiSelectedIndex)+'"><img src="'+safe(data)+'" alt="Vista previa variante '+(index+1)+'"><span>Variante '+(index+1)+'</span></button>').join("")+'</div>':'';
+ const resultHtml=aiResult?'<section class="ai-result"><div class="ai-result-title"><span>✦ '+safe(aiResultMeta.name||"Resultado candidato")+'</span><span>'+(aiResults.length>1?aiResults.length+" variantes · sin aplicar":"Sin aplicar")+'</span></div><img src="'+safe(aiResult)+'" alt="Vista previa del resultado generado por IA"><small>El original sigue detrás. Revisá el detalle y elegí una variante antes de aplicarla como capa independiente y reversible.</small>'+variantsHtml+'<div class="ai-actions"><button type="button" id="aiApply" class="btn primary">Usar como capa</button><button type="button" id="aiDiscard" class="btn">Descartar</button></div></section>':'';
  root.innerHTML=
   '<div class="ai-intro"><strong>✧ AI ART DIRECTOR</strong><p>Edita la ilustración del lienzo mediante instrucciones en lenguaje natural. Cada resultado se revisa antes de aplicarse y se agrega como capa nueva para preservar el diseño anterior.</p></div>'+
   '<div><label class="ai-label" for="aiPrompt">¿Qué querés cambiar?</label><textarea id="aiPrompt" class="ai-prompt" maxlength="3000" placeholder="Ej.: Conserva el rostro y la identidad; cambia únicamente el cabello a una coleta alta con mechones sueltos.">'+safe(aiSettings.prompt)+'</textarea><div class="tiny" style="margin-top:5px">Una instrucción concreta da más control. No se prometen recortes perfectos de una sola pasada.</div></div>'+
@@ -441,7 +451,15 @@ function aiWorkspace(root){
     '<option value="low" '+(aiSettings.quality==="low"?"selected":"")+'>Baja · prueba rápida</option>'+
     '<option value="medium" '+(aiSettings.quality==="medium"?"selected":"")+'>Media · equilibrada</option>'+
     '<option value="high" '+(aiSettings.quality==="high"?"selected":"")+'>Alta · más detalle</option>'+
+    '<option value="xhigh" '+(aiSettings.quality==="xhigh"?"selected":"")+' >Muy alta · GPT Image 2.5</option>'+
+    '<option value="max" '+(aiSettings.quality==="max"?"selected":"")+' >Máxima · GPT Image 2.5</option>'+
    '</select></label>'+
+   '<label>Variantes por solicitud<select id="aiVariants" class="ai-select">'+
+    '<option value="1" '+(aiSettings.variants===1?"selected":"")+' >1 · una salida</option>'+
+    '<option value="2" '+(aiSettings.variants===2?"selected":"")+' >2 · comparar</option>'+
+    '<option value="3" '+(aiSettings.variants===3?"selected":"")+' >3 · explorar</option>'+
+    '<option value="4" '+(aiSettings.variants===4?"selected":"")+' >4 · máxima variedad</option>'+
+   '</select><span class="tiny">Más variantes pueden aumentar el costo.</span></label>'+
    '<label>Dirección artística<select id="aiDirection" class="ai-select">'+
     '<option value="preserve" '+(aiSettings.direction==="preserve"?"selected":"")+'>Respetar el estilo actual</option>'+
     '<option value="madhouse" '+(aiSettings.direction==="madhouse"?"selected":"")+'>Anime cinematográfico detallado</option>'+
@@ -459,11 +477,14 @@ function aiWorkspace(root){
   '<button type="button" id="aiRun" class="btn primary" '+(aiBusy?"disabled":"")+'>'+ (aiBusy?"Generando edición…":"✦ Generar edición")+'</button>'+
   resultHtml;
  $("aiPrompt").oninput=e=>aiSettings.prompt=e.target.value;
- $("aiModel").onchange=e=>aiSettings.model=e.target.value;
+ $("aiModel").onchange=e=>{aiSettings.model=e.target.value;syncAIQuality();};
  $("aiQuality").onchange=e=>aiSettings.quality=e.target.value;
+ $("aiVariants").onchange=e=>aiSettings.variants=Number(e.target.value);
+ syncAIQuality();
  $("aiDirection").onchange=e=>aiSettings.direction=e.target.value;
  $("aiBackground").onchange=e=>aiSettings.background=e.target.value;
  $("aiRun").onclick=runAIEdit;
+ root.querySelectorAll("[data-ai-result-index]").forEach(b=>b.onclick=()=>{aiSelectedIndex=Number(b.dataset.aiResultIndex);aiResult=aiResults[aiSelectedIndex];const baseName=aiResultMeta.baseName||aiResultMeta.name||"Edición IA";aiResultMeta={...aiResultMeta,baseName,name:aiResults.length>1?baseName+" · variante "+(aiSelectedIndex+1):baseName};aiWorkspace(root);});
  $("aiMaskToggle").onclick=()=>setAIMaskMode(!aiMaskMode);
  $("aiMaskClear").onclick=()=>{aiMaskStrokes=[];aiMaskDrawing=null;redrawMaskOverlay();refreshMaskUi();toast("Máscara borrada; la próxima edición podrá afectar todo el lienzo.");};
  $("aiBrushSize").oninput=e=>{aiBrushSize=Number(e.target.value);$("aiBrushValue").value=aiBrushSize+" px";};
@@ -478,8 +499,14 @@ function aiWorkspace(root){
  };
  if($("aiClearRef"))$("aiClearRef").onclick=()=>{aiReferenceDataUrl="";aiReferenceName="";aiWorkspace($("content"));};
  if($("aiApply"))$("aiApply").onclick=applyAIResult;
- if($("aiDiscard"))$("aiDiscard").onclick=()=>{aiResult=null;aiWorkspace($("content"));toast("Resultado descartado; el original no cambió.");};
+ if($("aiDiscard"))$("aiDiscard").onclick=()=>{aiResult=null;aiResults=[];aiSelectedIndex=0;aiWorkspace($("content"));toast("Resultado descartado; el original no cambió.");};
  refreshAIStatus();
+}
+function syncAIQuality(){
+ const premium=aiSettings.model==="gpt-image-2.5-sunburst"||aiSettings.model==="gpt-image-2.5-flare";
+ const quality=$("aiQuality");if(!quality)return;
+ for(const value of ["xhigh","max"]){const option=quality.querySelector('option[value="'+value+'"]');if(option)option.disabled=!premium;}
+ if(!premium&&(aiSettings.quality==="xhigh"||aiSettings.quality==="max")){aiSettings.quality="high";quality.value="high";}
 }
 function refreshAIStatus(){
  const el=$("aiServiceStatus");if(!el)return;
@@ -518,14 +545,18 @@ async function runAIEdit(){
    prompt:requestMeta&&requestMeta.kind==="anatomy_guide"?anatomyPromptForUser(prompt,aiSettings.direction):aiPromptForUser(prompt,aiSettings.direction),
    model:aiSettings.model,
    quality:aiSettings.quality,
+   variants:aiSettings.variants,
    background:aiSettings.background
   })});
   const result=await response.json().catch(()=>({error:"El servicio devolvió una respuesta que no es JSON."}));
   if(!response.ok)throw Error(result.error||"La edición con IA falló.");
-  if(!result.image_base64)throw Error("El proveedor no devolvió una imagen utilizable.");
-  aiResult="data:image/png;base64,"+result.image_base64;
-  aiResultMeta=requestMeta||{kind:"ai_result",name:"Edición IA"};
-  cache.set(aiResult,img(aiResult));
+  const generated=Array.isArray(result.images_base64)?result.images_base64:(result.image_base64?[result.image_base64]:[]);
+  if(!generated.length)throw Error("El proveedor no devolvió una imagen utilizable.");
+  aiResults=generated.map(value=>"data:image/png;base64,"+value);aiSelectedIndex=0;aiResult=aiResults[0];
+  const sourceMeta=requestMeta||{kind:"ai_result",name:"Edición IA"};
+  const baseName=sourceMeta.name||"Edición IA";
+  aiResultMeta={...sourceMeta,baseName,name:generated.length>1?baseName+" · variante 1":baseName};
+  aiResults.forEach(data=>cache.set(data,img(data)));
   aiWorkspace($("content"));
   status("Edición IA preparada como candidato. Revisala antes de aplicarla.",false);
   toast("Resultado listo. El diseño original sigue intacto.");
@@ -542,7 +573,7 @@ async function runAIEdit(){
 function applyAIResult(){
  if(!aiResult){toast("No hay un resultado para aplicar.");return;}
  const l={id:"ai-"+Date.now(),name:aiResultMeta.name||"Edición IA",category:aiResultMeta.kind==="anatomy_guide"?"anatomy":"ai",group:null,dataUrl:aiResult,kind:aiResultMeta.kind||"ai_result",x:0,y:0,w:W,h:H,opacity:1,hue:0,visible:true,order:Math.max(-1,...state.layers.map(x=>Number.isFinite(x.order)?x.order:-1))+1,status:"unreviewed_ai_result"};
- state.layers.push(l);cache.set(aiResult,img(aiResult));state.selected=l.id;aiResult=null;aiResultMeta={kind:"ai_result",name:"Edición IA"};
+ state.layers.push(l);cache.set(aiResult,img(aiResult));state.selected=l.id;aiResult=null;aiResults=[];aiSelectedIndex=0;aiResultMeta={kind:"ai_result",name:"Edición IA"};
  gallery();render();toast("Edición añadida como capa superior. Ocúltala para volver a ver el original.");
 }
 
