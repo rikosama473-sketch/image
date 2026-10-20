@@ -33,6 +33,10 @@ on:
           - accessories-4
           - face-details-4
           - anatomy-guide-1
+          - anatomy-front-v2-1
+          - anatomy-side-1
+          - anatomy-back-1
+          - anatomy-joint-guide-1
       background:
         description: Also produce transparent PNG cutouts
         type: choice
@@ -124,7 +128,7 @@ jobs:
               raise SystemExit(f"Reference image does not exist in this revision: {source}")
           if cid in {"sunna", "chie"} and source == "from-PixAI-2034984086876227343-0.png":
               raise SystemExit("This file is confirmed as Pibara. Refusing to mix character identities; select a verified reference for Sunna/Chie.")
-          if os.environ["ASSET_PACK"] not in {"hair-core-5", "expressions-core-5", "eyes-4", "accessories-4", "face-details-4", "anatomy-guide-1"}:
+          if os.environ["ASSET_PACK"] not in {"hair-core-5", "expressions-core-5", "eyes-4", "accessories-4", "face-details-4", "anatomy-guide-1", "anatomy-front-v2-1", "anatomy-side-1", "anatomy-back-1", "anatomy-joint-guide-1"}:
               raise SystemExit("Unsupported asset pack.")
           if os.environ["BACKGROUND"] not in {"transparent", "keep"}:
               raise SystemExit("Unsupported background mode.")
