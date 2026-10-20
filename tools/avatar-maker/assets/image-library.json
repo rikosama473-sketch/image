@@ -11447,7 +11447,7 @@
     {
       "id": "generated-pibara-anatomy-sheet-4-batch-front-a-pose-f3777be4",
       "catalog_id": "GEN-F3777BE4-BATCH-FRONT-A-POSE",
-      "label": "Guía anatómica — batch-front-a-pose — Pibara",
+      "label": "Borrador frontal incompleto — Pibara",
       "path": "generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/01-batch-front-a-pose.png",
       "src": "../../generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/01-batch-front-a-pose.png",
       "kind": "anatomy_guide",
@@ -11465,12 +11465,13 @@
       "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
       "character_id": "pibara",
       "pack": "anatomy-sheet-4",
-      "manifest_status": "needs_visual_identity_review"
+      "manifest_status": "needs_visual_identity_review",
+      "review_note": "No es una pose A completa: el modelo recortó las piernas y levantó un brazo. Además cambió el color del pelo, los ojos y la ropa. No usar como modelo anatómico frontal definitivo."
     },
     {
       "id": "generated-pibara-anatomy-sheet-4-batch-side-profile-f3777be4",
       "catalog_id": "GEN-F3777BE4-BATCH-SIDE-PROFILE",
-      "label": "Guía anatómica — batch-side-profile — Pibara",
+      "label": "Borrador anatómico lateral — identidad pendiente — Pibara",
       "path": "generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/02-batch-side-profile.png",
       "src": "../../generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/02-batch-side-profile.png",
       "kind": "anatomy_guide",
@@ -11488,12 +11489,13 @@
       "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
       "character_id": "pibara",
       "pack": "anatomy-sheet-4",
-      "manifest_status": "needs_visual_identity_review"
+      "manifest_status": "needs_visual_identity_review",
+      "review_note": "Vista lateral de cuerpo entero útil solo como referencia provisional de proporciones; deriva en color de pelo, ojos y vestuario respecto a Pibara."
     },
     {
       "id": "generated-pibara-anatomy-sheet-4-batch-back-view-f3777be4",
       "catalog_id": "GEN-F3777BE4-BATCH-BACK-VIEW",
-      "label": "Guía anatómica — batch-back-view — Pibara",
+      "label": "Borrador anatómico trasero — identidad pendiente — Pibara",
       "path": "generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/03-batch-back-view.png",
       "src": "../../generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/03-batch-back-view.png",
       "kind": "anatomy_guide",
@@ -11511,8 +11513,9 @@
       "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
       "character_id": "pibara",
       "pack": "anatomy-sheet-4",
-      "manifest_status": "needs_visual_identity_review"
+      "manifest_status": "needs_visual_identity_review",
+      "review_note": "Vista trasera de cuerpo entero útil solo como referencia provisional; deriva en peinado/colores y vestuario respecto a Pibara."
     }
   ],
-  "updated_at_utc": "2026-10-20T21:28:09.163142+00:00"
+  "updated_at_utc": "2026-10-20T21:29:30.532Z"
 }
