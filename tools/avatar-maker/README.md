@@ -31,4 +31,4 @@ La descarga se mantiene fuera del repositorio en \`data/asset-cache/\` hasta rev
 
 Para exactitud geométrica, usá la fuente con capas PSD/XCF y exportá cada pieza en un lienzo del tamaño original manteniendo su offset. Cuando solo existe una imagen aplanada, segmentación automática no recupera píxeles ocultos detrás del pelo/ropa ni garantiza bordes impecables. Las máscaras del proyecto siguen marcadas \`pending_visual_review\`; abrí el [editor manual de recortes](../manual-character-editor/index.html) para corregir el borde y reconstruir lo que falta.
 
-El contador de combinaciones es teórico y aumenta con cada opción y pieza independiente cargada. No significa que una máscara beta sea ya una pieza aprobada.
+El contador de combinaciones es teórico: incluye fondos, retratos base, filtros, opciones de capa y los 361 estados del control de tono (0–360°) en cuatro grupos de capa. Las capas importadas agregan opciones adicionales. No mide cuántas salidas visuales distintas serán buenas; no significa que una máscara beta esté aprobada.
