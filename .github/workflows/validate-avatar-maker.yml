@@ -1,0 +1,35 @@
+name: Validate KIRA Avatar Maker
+
+on:
+  push:
+    branches:
+      - work/easy-avatar-maker-2026-10
+      - main
+    paths:
+      - "tools/avatar-maker/**"
+      - "scripts/validate_avatar_maker.py"
+      - ".github/workflows/validate-avatar-maker.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "tools/avatar-maker/**"
+      - "scripts/validate_avatar_maker.py"
+      - ".github/workflows/validate-avatar-maker.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check controls and JavaScript
+        run: python scripts/validate_avatar_maker.py
