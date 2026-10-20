@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 
 CHARACTER_ORDER = ("pibara", "sunna", "chie")
-PACK_ORDER = ("hair-core-5", "expressions-core-5", "eyes-4", "accessories-4", "face-details-4")
+PACK_ORDER = ("anatomy-sheet-4", "anatomy-guide-1", "anatomy-front-v2-1", "anatomy-side-1", "anatomy-back-1", "anatomy-joint-guide-1", "hair-core-5", "expressions-core-5", "eyes-4", "accessories-4", "face-details-4")
 CONFIRMED_PIBARA_REFERENCE = "from-PixAI-2034984086876227343-0.png"
 
 
