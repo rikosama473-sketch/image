@@ -199,6 +199,37 @@ def update_registry(path, cid, source, sha, run_record):
     char["asset_generation_status"] = "generated_pending_visual_review"
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
+def find_prior_variants(root, character_id, source_sha, pack):
+    """Reuse only verified images from earlier runs of the same pack and exact source hash."""
+    found = {}
+    base = root / "generated" / "character-assets" / character_id
+    if not base.exists():
+        return found
+    for manifest_path in sorted(base.glob("**/manifest.json")):
+        try:
+            data = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        source = data.get("source") or {}
+        if data.get("character_id") != character_id or data.get("pack") != pack or source.get("sha256") != source_sha:
+            continue
+        for record in data.get("variants", []):
+            slug = record.get("asset_id")
+            render = record.get("render") or {}
+            relative = render.get("file")
+            if not slug or not relative:
+                continue
+            render_path = root / relative
+            if not render_path.is_file():
+                continue
+            try:
+                with Image.open(render_path) as im:
+                    im.verify()
+            except Exception:
+                continue
+            found[slug] = record
+    return found
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--repository", required=True)
@@ -218,15 +249,21 @@ def main():
     day = now.strftime("%Y-%m-%d")
     run_id = re.sub(r"[^A-Za-z0-9_.-]", "-", str(args.run_id))
     out = root / "generated" / "character-assets" / args.character / day / ("run-" + run_id)
-    cache = root / ".cache" / "character-assets" / (Path(path).name)
+    cache = root / ".cache" / "character-assets" / Path(path).name
     source_sha, source_dims = load_source(url, cache)
+
+    prior = find_prior_variants(root, args.character, source_sha, args.pack)
+    all_slugs = [slug for slug, _ in PACKS[args.pack]]
+    missing = [(i, slug, change) for i, (slug, change) in enumerate(PACKS[args.pack], start=1) if slug not in prior]
+    if not missing:
+        print(f"All {len(all_slugs)} assets in {args.pack} already exist for this exact source hash; nothing to generate.")
+        return
+
     renders, cutouts = out / "renders", out / "transparent"
     renders.mkdir(parents=True, exist_ok=True)
-
     try:
         from gradio_client import Client, handle_file
         client = Client(SPACE_ID, verbose=True)
-        # Krea2's public ImageData schema supports an image supplied by URL; no file upload or token is needed.
         source_input = handle_file(url)
     except Exception as exc:
         fail("Could not connect to the public Gradio Space: " + str(exc))
@@ -239,12 +276,24 @@ def main():
         except Exception as exc:
             print("WARNING: transparent cutouts unavailable: " + str(exc), file=sys.stderr)
 
-    variants, contact_items, prompt_sections = [], [], []
-    for i, (slug, change) in enumerate(PACKS[args.pack], start=1):
+    created = {}
+    contact_items = []
+    for slug in all_slugs:
+        rec = prior.get(slug)
+        if not rec:
+            continue
+        cut = rec.get("transparent_layer") or {}
+        cut_path = root / cut.get("file", "") if cut.get("file") else None
+        render_path = root / rec["render"]["file"]
+        contact_items.append((slug, cut_path if cut_path and cut_path.is_file() else render_path))
+        created[slug] = rec
+
+    generation_error = None
+    for i, slug, change in missing:
         prompt = BASE + " Requested single change: " + change
         seed = max(0, min(2147483647, args.seed + i - 1))
         flat = renders / f"{i:02d}-{slug}.png"
-        print(f"[{i}/{len(PACKS[args.pack])}] Generating {args.character}/{slug}", flush=True)
+        print(f"Generating {args.character}/{slug} ({len(created)+1}/{len(all_slugs)})", flush=True)
         try:
             result = client.predict(
                 source_image=source_input,
@@ -258,59 +307,102 @@ def main():
                 randomize_seed=False,
                 api_name="/edit",
             )
-        except Exception as exc:
-            fail("Public image edit failed for " + slug + ": " + str(exc))
-        flat_sha, returned_seed, dims = normalize_output(result, flat)
+            flat_sha, returned_seed, dims = normalize_output(result, flat)
+        except (Exception, SystemExit) as exc:
+            generation_error = str(exc) or exc.__class__.__name__
+            print("GENERATION STOPPED: " + generation_error, file=sys.stderr)
+            break
+
         rec = {
-            "index": i, "asset_id": slug, "change": change, "prompt": prompt,
-            "requested_seed": seed, "returned_seed": returned_seed,
+            "index": i,
+            "asset_id": slug,
+            "change": change,
+            "prompt": prompt,
+            "requested_seed": seed,
+            "returned_seed": returned_seed,
             "render": {"file": flat.relative_to(root).as_posix(), "sha256": flat_sha, "dimensions": list(dims)},
             "transparent_layer": None,
         }
-        contact_path = flat
+        display_path = flat
         if cutout_session is not None:
-            cutout = cutouts / f"{i:02d}-{slug}.png"
+            cut = cutouts / f"{i:02d}-{slug}.png"
             try:
-                cut = make_cutout(flat, cutout, cutout_session)
-                cut["file"] = cutout.relative_to(root).as_posix()
-                rec["transparent_layer"] = cut
-                contact_path = cutout
+                details = make_cutout(flat, cut, cutout_session)
+                details["file"] = cut.relative_to(root).as_posix()
+                rec["transparent_layer"] = details
+                display_path = cut
             except Exception as exc:
                 rec["transparent_layer"] = {"error": str(exc), "status": "not_created"}
                 print("WARNING: cutout failed for " + slug + ": " + str(exc), file=sys.stderr)
-        contact_items.append((slug, contact_path))
-        variants.append(rec)
-        prompt_sections.append(f"## {slug}\n\nRequested seed: {seed}\n\n~~~text\n{prompt}\n~~~")
+        created[slug] = rec
+        contact_items.append((slug, display_path))
 
+    if not created:
+        fail("No reusable or newly generated images are available. " + (generation_error or ""))
+
+    complete_records = [created[slug] for slug in all_slugs if slug in created]
+    complete_count = len(complete_records)
+    pack_status = "complete" if complete_count == len(all_slugs) else "partial"
+    out.mkdir(parents=True, exist_ok=True)
     contact_path = out / "contact-sheet.jpg"
     make_contact_sheet(contact_items, contact_path)
+
     manifest = {
-        "schema_version": 1, "character_id": args.character, "pack": args.pack,
+        "schema_version": 1,
+        "character_id": args.character,
+        "pack": args.pack,
+        "pack_status": pack_status,
         "created_at_utc": now.isoformat(),
-        "source": {"repository": args.repository, "ref": args.ref, "path": path, "url": url, "sha256": source_sha, "dimensions": list(source_dims)},
+        "source": {
+            "repository": args.repository, "ref": args.ref, "path": path, "url": url,
+            "sha256": source_sha, "dimensions": list(source_dims),
+        },
         "generator": {
             "space_id": SPACE_ID, "space_url": SPACE_URL, "api_name": "/edit",
             "openai_api_key_used": False, "inference_api_paid_by_openai": False,
             "ref_boost": 4.0, "grounding_px": 768, "lora_scale": 1.0, "steps": 12,
             "guidance_scale": 0.0, "background_removed": cutout_session is not None,
         },
-        "variants": variants,
+        "required_asset_ids": all_slugs,
+        "completed_asset_ids": [record["asset_id"] for record in complete_records],
+        "variants": complete_records,
+        "last_error": generation_error,
         "review_status": "needs_visual_identity_review",
-        "warning": "Generated renders and automatic cutouts require visual review of character likeness and hair/accessory edges.",
+        "warning": "Generated renders and automated transparent cutouts require review of likeness and hair/accessory edges.",
     }
-    out.mkdir(parents=True, exist_ok=True)
     (out / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    prompts_text = "# Generated prompts\n\nCharacter: " + args.character + "\n\nSource: " + path + "\n\nSource SHA-256: " + source_sha + "\n\nGenerator: " + SPACE_URL + "\n\n" + "\n\n".join(prompt_sections) + "\n"
+    prompt_sections = []
+    for record in complete_records:
+        prompt_sections.append(
+            "## " + record["asset_id"] + "\n\nRequested seed: " + str(record.get("requested_seed")) +
+            "\n\n~~~text\n" + record.get("prompt", "Prompt not found in the prior manifest.") + "\n~~~"
+        )
+    prompts_text = (
+        "# Generated prompts\n\nCharacter: " + args.character + "\n\nSource: " + path +
+        "\n\nSource SHA-256: " + source_sha + "\n\nGenerator: " + SPACE_URL +
+        "\n\nPack status: " + pack_status + "\n\n" + "\n\n".join(prompt_sections) + "\n"
+    )
     (out / "PROMPTS.md").write_text(prompts_text, encoding="utf-8")
-    record = {
-        "run_id": run_id, "date": day, "pack": args.pack, "source_path": path,
-        "source_sha256": source_sha, "manifest_path": (out/"manifest.json").relative_to(root).as_posix(),
+
+    run_record = {
+        "run_id": run_id,
+        "date": day,
+        "pack": args.pack,
+        "source_path": path,
+        "source_sha256": source_sha,
+        "manifest_path": (out / "manifest.json").relative_to(root).as_posix(),
         "contact_sheet_path": contact_path.relative_to(root).as_posix(),
-        "variant_count": len(variants), "review_status": "needs_visual_identity_review",
+        "assets_added_this_run": len(created) - len(prior),
+        "pack_completed_count": complete_count,
+        "pack_total": len(all_slugs),
+        "status": "complete_pending_visual_review" if pack_status == "complete" else "partial_generation_pending_visual_review",
     }
-    update_registry(root / "data" / "character-prompt-registry.json", args.character, path, source_sha, record)
-    print(f"SUCCESS: created {len(variants)} variants under {out.relative_to(root)}")
+    update_registry(root / "data" / "character-prompt-registry.json", args.character, path, source_sha, run_record)
+    print(f"Saved {complete_count}/{len(all_slugs)} assets for {args.character}/{args.pack} in {out.relative_to(root)}.")
     print("The original reference was not modified.")
+    if generation_error:
+        print("::error::Partial batch saved. Remaining variants will be skipped until the public Space permits more inference.", file=sys.stderr)
+        raise SystemExit(1)
 
 if __name__ == "__main__":
     main()
