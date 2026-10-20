@@ -187,7 +187,7 @@ function normalizeAIMaskStrokes(value){
  if(!Array.isArray(value))return [];
  return value.slice(0,300).map(stroke=>{
   if(!stroke||!Array.isArray(stroke.points))return null;
-  const points=stroke.points.slice(0,2000).map(p=>({x:Math.max(0,Math.min(W,Number(p.x)||0)),y:Math.max(0,Math.min(H,Number(p.y)||0))}));
+  const points=stroke.points.slice(0,2000).filter(p=>p&&typeof p==="object").map(p=>({x:Math.max(0,Math.min(W,Number(p.x)||0)),y:Math.max(0,Math.min(H,Number(p.y)||0))}));
   if(!points.length)return null;
   return {size:Math.max(4,Math.min(220,Number(stroke.size)||aiBrushSize)),points};
  }).filter(Boolean);
@@ -198,14 +198,14 @@ function redrawMaskOverlay(){
  overlay.classList.toggle("painting",aiMaskMode&&state.category==="ai");
  const ctx=overlay.getContext("2d");ctx.clearRect(0,0,W,H);
  ctx.save();ctx.strokeStyle="rgba(250,62,139,.62)";ctx.fillStyle="rgba(250,62,139,.62)";ctx.lineCap="round";ctx.lineJoin="round";
- for(const stroke of aiMaskStrokes){
+ const visibleStrokes=aiMaskDrawing?aiMaskStrokes.concat([aiMaskDrawing]):aiMaskStrokes;
+ for(const stroke of visibleStrokes){
   if(!stroke.points||!stroke.points.length)continue;
   ctx.lineWidth=stroke.size;ctx.beginPath();ctx.moveTo(stroke.points[0].x,stroke.points[0].y);
   if(stroke.points.length===1){ctx.arc(stroke.points[0].x,stroke.points[0].y,stroke.size/2,0,Math.PI*2);ctx.fill();continue;}
   for(let i=1;i<stroke.points.length;i++)ctx.lineTo(stroke.points[i].x,stroke.points[i].y);
   ctx.stroke();
  }
- if(aiMaskDrawing&&aiMaskDrawing.points.length===1){const p=aiMaskDrawing.points[0];ctx.beginPath();ctx.arc(p.x,p.y,aiMaskDrawing.size/2,0,Math.PI*2);ctx.fill();}
  ctx.restore();refreshMaskUi();
 }
 function refreshMaskUi(){
