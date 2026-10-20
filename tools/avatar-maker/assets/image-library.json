@@ -3,7 +3,7 @@
   "project": "IMAGE Character Creator",
   "title": "Biblioteca local de ilustraciones",
   "generated_from": "data/training-labels.csv and files present in the repository tree",
-  "asset_count": 761,
+  "asset_count": 764,
   "notice": "This library indexes existing raster files in this repository for personal browsing. Filename hints do not prove authorship, franchise identity, license, or permission to redistribute/train. Items remain unreviewed until their source and rights are confirmed.",
   "filters": [
     "Todos",
@@ -11443,7 +11443,76 @@
       "character_id": "pibara",
       "pack": "anatomy-front-v2-1",
       "manifest_status": "needs_visual_identity_review"
+    },
+    {
+      "id": "generated-pibara-anatomy-sheet-4-batch-front-a-pose-f3777be4",
+      "catalog_id": "GEN-F3777BE4-BATCH-FRONT-A-POSE",
+      "label": "Guía anatómica — batch-front-a-pose — Pibara",
+      "path": "generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/01-batch-front-a-pose.png",
+      "src": "../../generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/01-batch-front-a-pose.png",
+      "kind": "anatomy_guide",
+      "origin_hint": "Generated in repository workflow via the public image-edit Space; source: from-PixAI-2034984086876227343-0.png; run: 39500149462",
+      "visual_review": "needs_visual_identity_review",
+      "license_review": "unreviewed",
+      "training_permission": "unreviewed",
+      "tags": [
+        "Anatomía",
+        "Cuerpo completo"
+      ],
+      "size_bytes": 745690,
+      "sha256_git_blob": "",
+      "sha256": "37846f3f750031a1d6682fda472d4a298593be21f38557a419e48b8d7e14b060",
+      "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+      "character_id": "pibara",
+      "pack": "anatomy-sheet-4",
+      "manifest_status": "needs_visual_identity_review"
+    },
+    {
+      "id": "generated-pibara-anatomy-sheet-4-batch-side-profile-f3777be4",
+      "catalog_id": "GEN-F3777BE4-BATCH-SIDE-PROFILE",
+      "label": "Guía anatómica — batch-side-profile — Pibara",
+      "path": "generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/02-batch-side-profile.png",
+      "src": "../../generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/02-batch-side-profile.png",
+      "kind": "anatomy_guide",
+      "origin_hint": "Generated in repository workflow via the public image-edit Space; source: from-PixAI-2034984086876227343-0.png; run: 39500149462",
+      "visual_review": "needs_visual_identity_review",
+      "license_review": "unreviewed",
+      "training_permission": "unreviewed",
+      "tags": [
+        "Anatomía",
+        "Cuerpo completo"
+      ],
+      "size_bytes": 359807,
+      "sha256_git_blob": "",
+      "sha256": "8566d9c2aeadf6e483f44e44a758edc56770f1670fa13bd3bb2622453554ea09",
+      "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+      "character_id": "pibara",
+      "pack": "anatomy-sheet-4",
+      "manifest_status": "needs_visual_identity_review"
+    },
+    {
+      "id": "generated-pibara-anatomy-sheet-4-batch-back-view-f3777be4",
+      "catalog_id": "GEN-F3777BE4-BATCH-BACK-VIEW",
+      "label": "Guía anatómica — batch-back-view — Pibara",
+      "path": "generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/03-batch-back-view.png",
+      "src": "../../generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/03-batch-back-view.png",
+      "kind": "anatomy_guide",
+      "origin_hint": "Generated in repository workflow via the public image-edit Space; source: from-PixAI-2034984086876227343-0.png; run: 39500149462",
+      "visual_review": "needs_visual_identity_review",
+      "license_review": "unreviewed",
+      "training_permission": "unreviewed",
+      "tags": [
+        "Anatomía",
+        "Cuerpo completo"
+      ],
+      "size_bytes": 524858,
+      "sha256_git_blob": "",
+      "sha256": "562bbce399d3e7b32536c3e3e7a740822a9c820b9dcaac70f4f4a7e363b2183d",
+      "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+      "character_id": "pibara",
+      "pack": "anatomy-sheet-4",
+      "manifest_status": "needs_visual_identity_review"
     }
   ],
-  "updated_at_utc": "2026-10-20T21:17:36.484546+00:00"
+  "updated_at_utc": "2026-10-20T21:28:09.163142+00:00"
 }
