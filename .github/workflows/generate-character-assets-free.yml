@@ -1,6 +1,8 @@
 name: Generate character assets without an API key
 
 on:
+  schedule:
+    - cron: "15 8 * * *"
   workflow_dispatch:
     inputs:
       character_id:
@@ -72,10 +74,10 @@ jobs:
 
       - name: Validate request
         env:
-          CHARACTER_ID: ${{ inputs.character_id }}
-          REFERENCE_IMAGE: ${{ inputs.reference_image }}
-          ASSET_PACK: ${{ inputs.asset_pack }}
-          BACKGROUND: ${{ inputs.background }}
+          CHARACTER_ID: ${{ inputs.character_id || 'pibara' }}
+          REFERENCE_IMAGE: ${{ inputs.reference_image || 'from-PixAI-2034984086876227343-0.png' }}
+          ASSET_PACK: ${{ inputs.asset_pack || 'hair-core-5' }}
+          BACKGROUND: ${{ inputs.background || 'transparent' }}
         run: |
           set -euo pipefail
           python - <<'PY'
@@ -105,15 +107,16 @@ jobs:
         run: python -m unittest discover -s tests -p "test_character_asset_factory.py"
 
       - name: Generate assets from the immutable GitHub reference
+        id: generate_assets
         env:
           REPOSITORY: ${{ github.repository }}
           SOURCE_REF: ${{ github.sha }}
-          CHARACTER_ID: ${{ inputs.character_id }}
-          REFERENCE_IMAGE: ${{ inputs.reference_image }}
-          ASSET_PACK: ${{ inputs.asset_pack }}
+          CHARACTER_ID: ${{ inputs.character_id || 'pibara' }}
+          REFERENCE_IMAGE: ${{ inputs.reference_image || 'from-PixAI-2034984086876227343-0.png' }}
+          ASSET_PACK: ${{ inputs.asset_pack || 'hair-core-5' }}
           RUN_ID: ${{ github.run_id }}
-          BASE_SEED: ${{ inputs.base_seed }}
-          BACKGROUND: ${{ inputs.background }}
+          BASE_SEED: ${{ inputs.base_seed || '1201' }}
+          BACKGROUND: ${{ inputs.background || 'transparent' }}
         run: |
           set -euo pipefail
           args=(
@@ -131,26 +134,36 @@ jobs:
           fi
           python scripts/generate_character_assets_free.py "${args[@]}"
 
+      - name: Preserve generated assets even when the public Space hits its quota
+        if: always() && steps.generate_assets.outcome != 'skipped'
+        uses: actions/upload-artifact@v4
+        with:
+          name: character-assets-${{ inputs.character_id || 'pibara' }}-${{ github.run_id }}
+          path: generated/character-assets/${{ inputs.character_id || 'pibara' }}/**/run-${{ github.run_id }}/**
+          if-no-files-found: ignore
+          retention-days: 14
+
       - name: Open a pull request with generated assets
+        if: always() && steps.generate_assets.outcome != 'skipped'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: main
-          branch: generated/character-assets-${{ inputs.character_id }}-${{ github.run_id }}
+          branch: generated/character-assets-${{ inputs.character_id || 'pibara' }}-${{ github.run_id }}
           delete-branch: true
-          commit-message: "Add generated character assets for ${{ inputs.character_id }}"
-          title: "Add generated character assets: ${{ inputs.character_id }} / ${{ inputs.asset_pack }}"
+          commit-message: "Add generated character assets for ${{ inputs.character_id || 'pibara' }}"
+          title: "Add generated character assets: ${{ inputs.character_id || 'pibara' }} / ${{ inputs.asset_pack || 'hair-core-5' }}"
           body: |
             ## Generated character assets
 
-            - Character: ${{ inputs.character_id }}
-            - Source image: ${{ inputs.reference_image }}
-            - Pack: ${{ inputs.asset_pack }}
+            - Character: ${{ inputs.character_id || 'pibara' }}
+            - Source image: ${{ inputs.reference_image || 'from-PixAI-2034984086876227343-0.png' }}
+            - Pack: ${{ inputs.asset_pack || 'hair-core-5' }}
             - Generator: public Hugging Face Space conradlocke/krea2-identity-edit
             - OpenAI API key: not used
             - Original image files: not modified
 
-            Includes a source-provenance manifest, exact prompts, contact sheet, normal PNG renders and (unless disabled) automatically segmented transparent cutouts. Character likeness and cutout edges remain marked for visual review.
+            Includes source provenance, exact prompts, a contact sheet, full PNG renders and (unless disabled) transparent cutouts. Partial batches are preserved as artifacts and pull requests; a later daily run resumes missing variants. Identity and cutout edges still need visual review.
           add-paths: |
             generated/character-assets/
             data/character-prompt-registry.json
