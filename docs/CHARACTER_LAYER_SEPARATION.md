@@ -30,9 +30,9 @@ python scripts/build_character_layers.py \
   --root . \
   --character pibara \
   --source from-PixAI-2034984086876227343-0.png \
-  --variant blunt-bob=generated/character-assets/pibara/2026-10-20/run-39445227631/renders/01-blunt-bob.png \
-  --variant long-straight=generated/character-assets/pibara/2026-10-20/run-39445227631/renders/02-long-straight.png \
-  --variant high-ponytail=generated/character-assets/pibara/2026-10-20/run-39445227631/renders/03-high-ponytail.png \
+  --variant blunt-bob=generated/character-assets/pibara/2026-10-20/run-39427500253/renders/01-blunt-bob.png \
+  --variant long-straight=generated/character-assets/pibara/2026-10-20/run-39427500253/renders/02-long-straight.png \
+  --variant high-ponytail=generated/character-assets/pibara/2026-10-20/run-39427500253/renders/03-high-ponytail.png \
   --variant twin-tails=generated/character-assets/pibara/2026-10-20/run-39445227631/renders/04-twin-tails.png \
   --variant side-braid=generated/character-assets/pibara/2026-10-20/run-39445227631/renders/05-side-braid.png \
   --output generated/character-layers/pibara/local-run
