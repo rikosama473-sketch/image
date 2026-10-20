@@ -26,6 +26,7 @@ class CharacterAssetFactoryTests(unittest.TestCase):
             "anatomy-side-1": 1,
             "anatomy-back-1": 1,
             "anatomy-joint-guide-1": 1,
+            "anatomy-sheet-4": 4,
         }
         self.assertEqual(set(MODULE.PACKS), set(expected))
         for name, count in expected.items():
@@ -68,6 +69,22 @@ class CharacterAssetFactoryTests(unittest.TestCase):
                 self.assertEqual(MODULE.PACKS[pack][0][0], slug)
                 self.assertIn(phrase.lower(), MODULE.PACKS[pack][0][1].lower())
                 self.assertIn("exact hairstyle and silhouette", MODULE.ANATOMY_BASE)
+
+    def test_anatomy_sheet_batch_contains_four_distinct_views(self):
+        expected = {
+            "full-body-front-a-pose-v2",
+            "full-body-side-profile",
+            "full-body-back-view",
+            "full-body-joint-guide",
+        }
+        actual = {slug for slug, _ in MODULE.PACKS["anatomy-sheet-4"]}
+        self.assertEqual(actual, expected)
+        self.assertIn("exact hairstyle and silhouette", MODULE.ANATOMY_BASE)
+        self.assertIn("orientation and pose specified", MODULE.ANATOMY_BASE)
+        for slug, prompt in MODULE.PACKS["anatomy-sheet-4"]:
+            with self.subTest(slug=slug):
+                self.assertTrue(prompt.strip())
+                self.assertIn("plain light background", prompt.lower())
 
     def test_reference_validation(self):
         self.assertEqual(MODULE.validate_path("ref/character.png"), "ref/character.png")
