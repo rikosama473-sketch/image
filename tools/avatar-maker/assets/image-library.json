@@ -3,7 +3,7 @@
   "project": "IMAGE Character Creator",
   "title": "Biblioteca local de ilustraciones",
   "generated_from": "data/training-labels.csv and files present in the repository tree",
-  "asset_count": 759,
+  "asset_count": 760,
   "notice": "This library indexes existing raster files in this repository for personal browsing. Filename hints do not prove authorship, franchise identity, license, or permission to redistribute/train. Items remain unreviewed until their source and rights are confirmed.",
   "filters": [
     "Todos",
@@ -11396,6 +11396,30 @@
       "tags": [],
       "size_bytes": 970396,
       "sha256_git_blob": "b047fdbc8014fa2e793c448400294835a73a704c"
+    },
+    {
+      "id": "generated-pibara-anatomy-guide-1-full-body-anatomy-a-pose-f3777be4",
+      "catalog_id": "GEN-F3777BE4-FULL-BODY-ANATOMY-A-POSE",
+      "label": "Guía anatómica completa — Pibara",
+      "path": "generated/character-assets/pibara/2026-10-20/run-39496066089/transparent/01-full-body-anatomy-a-pose.png",
+      "src": "../../generated/character-assets/pibara/2026-10-20/run-39496066089/transparent/01-full-body-anatomy-a-pose.png",
+      "kind": "anatomy_guide",
+      "origin_hint": "Generated in repository workflow via the public image-edit Space; source: from-PixAI-2034984086876227343-0.png; run: 39496066089",
+      "visual_review": "needs_visual_identity_review",
+      "license_review": "unreviewed",
+      "training_permission": "unreviewed",
+      "tags": [
+        "Anatomía",
+        "Cuerpo completo"
+      ],
+      "size_bytes": 471374,
+      "sha256_git_blob": "",
+      "sha256": "fb86da7896f13dfbffcb0efcb24ce463b9b5e6367791cddfbf7eddc817d7136b",
+      "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+      "character_id": "pibara",
+      "pack": "anatomy-guide-1",
+      "manifest_status": "needs_visual_identity_review"
     }
-  ]
+  ],
+  "updated_at_utc": "2026-10-20T20:57:16.091338+00:00"
 }
