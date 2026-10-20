@@ -27,6 +27,28 @@
 .ai-mask-legend{display:flex;gap:7px;align-items:center;font-size:9px;line-height:1.5;color:#aebed6}
 .ai-mask-dot{width:11px;height:11px;border-radius:50%;background:#fa4f9c;border:1px solid #ffc7e1;flex:none}
 
+
+.library-hero,.anatomy-hero{border:1px solid #425575;background:linear-gradient(145deg,#10233d,#15192e);border-radius:10px;padding:13px;line-height:1.55}
+.library-hero strong,.anatomy-hero strong{display:block;font-size:14px;color:#ffd1e5;margin-bottom:4px}
+.library-hero p,.anatomy-hero p{margin:0;color:#c2cde0;font-size:10px}
+.library-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.library-card{min-width:0;background:#10223b;border:1px solid #304765;border-radius:7px;padding:4px;text-align:left;overflow:hidden}
+.library-card:hover{border-color:#ff8cbd}
+.library-card img{width:100%;height:114px;display:block;object-fit:contain;object-position:center;background:#0a192d;border-radius:4px}
+.library-card b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:9px;margin:5px 1px 2px}
+.library-card small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:8px;color:#b5c5dc}
+.library-status{display:inline-block;border-radius:4px;background:#4a391f;border:1px solid #7c6237;color:#f4dca8;padding:2px 4px;font-size:7px;font-weight:800;margin:3px 0}
+.library-status.reviewed{background:#164239;border-color:#327866;color:#b8f3dd}
+.library-actions{display:flex;justify-content:space-between;gap:7px;align-items:center;flex-wrap:wrap}
+.anatomy-step{display:grid;grid-template-columns:28px minmax(0,1fr);gap:9px;border:1px solid #2e4563;background:#0e2038;border-radius:8px;padding:10px}
+.anatomy-num{display:grid;place-items:center;width:27px;height:27px;border-radius:7px;background:#f13e8b;font-weight:900;font-size:12px}
+.anatomy-step b{font-size:10px;display:block;margin:1px 0 4px}
+.anatomy-step p{font-size:9px;line-height:1.5;color:#b8c8dd;margin:0}
+.anatomy-tip{border:1px solid #665431;background:#2c261a;border-radius:7px;padding:9px;color:#ead7aa;font-size:9px;line-height:1.55}
+.anatomy-tip b{color:#ffe6aa}
+@media(max-width:1120px){.library-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.library-card img{height:105px}}
+@media(max-width:520px){.library-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.library-card img{height:95px}}
+
 .ai-intro{border:1px solid #594263;background:linear-gradient(145deg,#21192f,#10233d);border-radius:10px;padding:13px;line-height:1.55}
 .ai-intro strong{display:block;font-size:15px;color:#ffd0e4;margin-bottom:5px}
 .ai-intro p{margin:0;color:#c3cfe1;font-size:10px}
@@ -89,7 +111,7 @@ const cats=[
 {id:"clothes",label:"Ropa",icon:"♜",pills:["Todos","Casual","Uniformes","Fantasía"]},
 {id:"accessories",label:"Accesorios",icon:"◇",pills:["Todos","Cabeza","Joyas","Otros"]},
 {id:"color",label:"Color",icon:"◉",pills:["Todos","Cabello","Piel","Ojos","Ropa"]},
-{id:"background",label:"Fondo",icon:"◌",pills:["Todos","Color","Transparencia"]},{id:"ai",label:"IA Studio",icon:"✧",pills:[]}];
+{id:"background",label:"Fondo",icon:"◌",pills:["Todos","Color","Transparencia"]},{id:"anatomy",label:"Anatomía",icon:"♙",pills:["Crear guía","Separar piezas"]},{id:"library",label:"Biblioteca",icon:"▦",pills:["Todos","Procedencia pendiente","Licencia revisada"]},{id:"ai",label:"IA Studio",icon:"✧",pills:[]}];
 const looks=[
 {id:"bob",label:"Bob recto",src:"../../generated/character-assets/pibara/2026-10-20/run-39427500253/transparent/01-blunt-bob.png",render:"../../generated/character-assets/pibara/2026-10-20/run-39427500253/renders/01-blunt-bob.png",tags:["Cortos"]},
 {id:"long",label:"Largo liso",src:"../../generated/character-assets/pibara/2026-10-20/run-39427500253/transparent/02-long-straight.png",render:"../../generated/character-assets/pibara/2026-10-20/run-39427500253/renders/02-long-straight.png",tags:["Largos"]},
@@ -116,6 +138,8 @@ let pending=null,to=null,drag=null;
 let aiResult=null,aiBusy=false,aiReferenceDataUrl="",aiReferenceName="";
 let aiSettings={prompt:"",model:"gpt-image-2.5-sunburst",quality:"medium",background:"auto",direction:"preserve"};
 let aiMaskStrokes=[],aiMaskMode=false,aiMaskDrawing=null,aiBrushSize=64;
+let aiNextResultMeta=null,aiResultMeta={kind:"ai_result",name:"Edición IA"};
+let imageLibraryCache=null,imageLibraryPromise=null,libraryPageSize=48;
 const cache=new Map();
 const url=path=>new URL(path,document.baseURI).href;
 function img(path){if(cache.has(path))return cache.get(path);const p=new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=()=>no(Error(path));if(/^https?:/i.test(url(path))&&!String(path).startsWith('data:'))i.crossOrigin='anonymous';i.src=url(path);});cache.set(path,p);return p;}
@@ -133,14 +157,16 @@ async function drawCanvas(){
  $("stage").classList.toggle("checker",state.transparent||state.checker);$("checkerBtn").classList.toggle("active",state.checker);
 }
 async function render(){await drawCanvas();renderMini();renderLayers();combos();redrawMaskOverlay();$("charName").textContent=state.name;}
-function renderMini(){$("miniLooks").innerHTML=looks.slice(0,5).map(l=>'<button class="minilook '+(l.id===state.look?"active":"")+'" data-mini="'+l.id+'" title="'+safe(l.label)+'"><img alt="" src="'+url(l.src)+'"></button>').join("");$("miniLooks").querySelectorAll("[data-mini]").forEach(b=>b.onclick=()=>chooseLook(b.dataset.mini));}
+function renderMini(){const mini=[activeLook(),...looks.filter(x=>x.id!==activeLook().id)].slice(0,5);$("miniLooks").innerHTML=mini.map(l=>'<button class="minilook '+(l.id===state.look?"active":"")+'" data-mini="'+l.id+'" title="'+safe(l.label)+'"><img alt="" src="'+url(l.src)+'"></button>').join("");$("miniLooks").querySelectorAll("[data-mini]").forEach(b=>b.onclick=()=>chooseLook(b.dataset.mini));}
 function chooseLook(id){state.look=id;state.selected="base";render();gallery();}
-function renderNav(){$("nav").innerHTML=cats.map(c=>'<button class="navbtn '+(c.id===state.category?"active":"")+'" data-cat="'+c.id+'"><span class="ico">'+c.icon+'</span><span class="label">'+c.label+'</span><span class="chev">›</span></button>').join("");$("nav").querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{state.category=b.dataset.cat;state.pill="Todos";if(state.category!=="ai")setAIMaskMode(false);renderNav();gallery();redrawMaskOverlay();});}
+function renderNav(){$("nav").innerHTML=cats.map(c=>'<button class="navbtn '+(c.id===state.category?"active":"")+'" data-cat="'+c.id+'"><span class="ico">'+c.icon+'</span><span class="label">'+c.label+'</span><span class="chev">›</span></button>').join("");$("nav").querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{state.category=b.dataset.cat;state.pill="Todos";if(state.category!=="ai"&&state.category!=="anatomy")setAIMaskMode(false);renderNav();gallery();redrawMaskOverlay();});}
 function header(){const c=cats.find(x=>x.id===state.category)||cats[0];$("catTitle").textContent=c.label;$("catIcon").textContent=c.icon;$("pills").innerHTML=c.pills.map(p=>'<button class="pill '+(p===state.pill?"active":"")+'" data-pill="'+safe(p)+'">'+safe(p)+'</button>').join("");$("pills").querySelectorAll("[data-pill]").forEach(b=>b.onclick=()=>{state.pill=b.dataset.pill;header();gallery();});}
 function card(a,kind){const full=kind==="look",sel=full?state.look===a.id:state.layers.some(x=>x.assetId===a.id&&x.visible);return '<button class="asset '+(sel?"selected":"")+'" data-'+kind+'="'+a.id+'"><span class="tag '+(full?"":"candidate")+'">'+(full?"RETRATO":"CANDIDATA")+'</span><div class="thumb '+(full?"":"checker")+'"><img loading="lazy" alt="" src="'+url(a.src)+'"></div><b>'+safe(a.label)+'</b><small>'+safe(full?"Ilustración completa":a.detail)+'</small></button>';}
 function gallery(){
  header();const root=$("content");root.innerHTML="";
  if(state.category==="ai"){aiWorkspace(root);return;}
+ if(state.category==="anatomy"){anatomyWorkspace(root);return;}
+ if(state.category==="library"){libraryWorkspace(root);return;}
   if(state.category==="color"||state.category==="background"){colors(root);if(state.category==="background")root.insertAdjacentHTML("beforeend",'<div class="field"><label for="lightRange">Iluminación</label><input id="lightRange" type="range" min=".65" max="1.3" step=".01" value="'+state.lighting+'"><output>'+Math.round(state.lighting*100)+'%</output></div>');if($("lightRange"))$("lightRange").oninput=e=>{state.lighting=Number(e.target.value);e.target.nextElementSibling.value=Math.round(state.lighting*100)+"%";render();};return;}
  if(state.category==="hair"){
   const L=state.pill==="Todos"?looks:looks.filter(x=>x.tags.includes(state.pill)),M=masks.filter(x=>x.category==="hair"&&(state.pill==="Todos"||x.tags.includes(state.pill)));
@@ -159,7 +185,7 @@ function colors(root){root.insertAdjacentHTML("beforeend",'<div class="sectionhe
  root.querySelectorAll("[data-bg]").forEach(b=>b.onclick=()=>{state.background=b.dataset.bg;state.transparent=b.dataset.bg==="transparent";gallery();render();});$("tintRange").oninput=e=>{const l=state.layers.find(x=>x.id===state.selected);if(!l){toast("Seleccioná una capa independiente para cambiar su tono.");return;}l.hue=Number(e.target.value);e.target.nextElementSibling.value=l.hue+"°";render();};
 }
 function renderLayers(){
- const all=[{id:"base",name:activeLook().label,src:activeLook().src,kind:"base",visible:true},...state.layers];$("layerList").innerHTML=all.map(l=>'<button class="layercard '+(l.id===state.selected?"active":"")+'" data-layer="'+l.id+'"><img alt="" src="'+url(l.dataUrl||l.src)+'"><b>'+safe(l.name)+'</b><small>'+safe(l.kind==="base"?"Retrato completo":l.kind==="candidate"?"Máscara beta":l.kind==="ai_result"?"Resultado de IA":"Pieza importada")+'</small>'+(l.kind==="base"?'':'<span class="visibility" data-visible="'+l.id+'">'+(l.visible?"◉":"○")+'</span>')+'</button>').join("");
+ const all=[{id:"base",name:activeLook().label,src:activeLook().src,kind:"base",visible:true},...state.layers];$("layerList").innerHTML=all.map(l=>'<button class="layercard '+(l.id===state.selected?"active":"")+'" data-layer="'+l.id+'"><img alt="" src="'+url(l.dataUrl||l.src)+'"><b>'+safe(l.name)+'</b><small>'+safe(l.kind==="base"?"Retrato completo":l.kind==="candidate"?"Máscara beta":l.kind==="ai_result"?"Resultado de IA":l.kind==="anatomy_guide"?"Guía anatómica":l.kind==="manual_mask_layer"?"Pieza separada":"Pieza importada")+'</small>'+(l.kind==="base"?'':'<span class="visibility" data-visible="'+l.id+'">'+(l.visible?"◉":"○")+'</span>')+'</button>').join("");
  $("layerTabs").innerHTML='<button class="layertab '+(state.selected==="base"?"active":"")+'" data-base>Retrato</button>'+state.layers.map(l=>'<button class="layertab '+(l.id===state.selected?"active":"")+'" data-tab="'+l.id+'">'+safe(l.name)+'</button>').join("");
  $("layerList").querySelectorAll("[data-layer]").forEach(b=>b.onclick=e=>{if(e.target.closest("[data-visible]"))return;state.selected=b.dataset.layer;renderLayers();adjust();});
  $("layerList").querySelectorAll("[data-visible]").forEach(b=>b.onclick=e=>{e.stopPropagation();const l=state.layers.find(x=>x.id===b.dataset.visible);if(l)l.visible=!l.visible;render();});
@@ -174,6 +200,141 @@ function adjust(){
  $("centerLayer").onclick=()=>{l.x=0;l.y=0;l.w=W;l.h=H;render();};$("frontLayer").onclick=()=>{l.order=Math.max(-1,...state.layers.map(x=>x.order||0))+1;render();};$("backLayer").onclick=()=>{l.order=Math.min(0,...state.layers.map(x=>x.order||0))-1;render();};$("deleteLayer").onclick=()=>{state.layers=state.layers.filter(x=>x.id!==l.id);state.selected="base";render();gallery();};
 }
 function field(label,id,min,max,value,step){const show=id==="scale"?Math.round(value*100)+"%":id==="opacity"?Math.round(value*100)+"%":value;return '<div class="field"><label for="'+id+'">'+label+'</label><input id="'+id+'" type="range" min="'+min+'" max="'+max+'" step="'+step+'" value="'+value+'"><output>'+show+'</output></div>';}
+
+
+async function loadImageLibrary(){
+ if(imageLibraryCache)return imageLibraryCache;
+ if(!imageLibraryPromise)imageLibraryPromise=fetch("assets/image-library.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("No se pudo abrir assets/image-library.json");return r.json();}).then(d=>{
+  if(!d||!Array.isArray(d.assets))throw Error("El catálogo de imágenes no tiene un formato válido.");
+  imageLibraryCache=d;return d;
+ });
+ return imageLibraryPromise;
+}
+function libraryWorkspace(root){
+ root.innerHTML=
+  '<div class="library-hero"><strong>▦ Biblioteca local de ilustraciones</strong><p>Catálogo de 759 imágenes rasterizadas presentes en el repositorio. Buscá por nombre o ruta y cargá una imagen como retrato base. La procedencia y los permisos se muestran por separado: un archivo local no implica licencia confirmada.</p></div>'+
+  '<div class="filterrow"><input id="librarySearch" class="search" placeholder="Buscar nombre, archivo o procedencia…" aria-label="Buscar en biblioteca"><select id="libraryReview" class="select"><option value="all">Todas</option><option value="origin">Procedencia pendiente</option><option value="license">Licencia revisada</option><option value="training">Permiso de entrenamiento</option></select></div>'+
+  '<div class="library-actions"><span id="libraryCount" class="tiny">Cargando biblioteca…</span><button id="libraryReload" class="btn">Actualizar catálogo</button></div>'+
+  '<div id="libraryGrid" class="library-grid"></div><div class="library-actions"><span id="libraryPage" class="tiny"></span><button id="libraryMore" class="btn primary">Cargar más imágenes</button></div>'+
+  '<div class="anatomy-tip"><b>Importante:</b> la biblioteca registra 759 archivos, pero las pistas de nombres no certifican a qué anime pertenecen ni sus derechos. No se usa nada como capa independiente ni como material de entrenamiento sin una revisión propia.</div>';
+ const grid=$("libraryGrid");
+ let allAssets=[],filtered=[],page=1;
+ const search=$("librarySearch"),review=$("libraryReview");
+ const renderCards=()=>{
+  const q=search.value.trim().toLocaleLowerCase("es");
+  const mode=review.value;
+  filtered=allAssets.filter(a=>{
+   const text=[a.label,a.path,a.origin_hint,(a.tags||[]).join(" ")].join(" ").toLocaleLowerCase("es");
+   if(q&&!text.includes(q))return false;
+   if(mode==="origin"&&String(a.origin_hint||"").toLowerCase().includes("unknown")===false&&!String(a.origin_hint||"").toLowerCase().includes("not individually verified")&&!String(a.visual_review||"").includes("unreviewed"))return false;
+   if(mode==="license"&&!["reviewed","approved","verified"].includes(String(a.license_review||"").toLowerCase()))return false;
+   if(mode==="training"&&!["allowed","approved","yes"].includes(String(a.training_permission||"").toLowerCase()))return false;
+   if(state.pill==="Procedencia pendiente"&&!(String(a.origin_hint||"").toLowerCase().includes("unknown")||String(a.visual_review||"").includes("unreviewed")||String(a.origin_hint||"").toLowerCase().includes("not individually verified")))return false;
+   if(state.pill==="Licencia revisada"&&!["reviewed","approved","verified"].includes(String(a.license_review||"").toLowerCase()))return false;
+   return true;
+  });
+  const shown=filtered.slice(0,page*libraryPageSize);
+  grid.innerHTML=shown.map(a=>{
+   const reviewed=["reviewed","approved","verified"].includes(String(a.license_review||"").toLowerCase());
+   const badge=reviewed?'<span class="library-status reviewed">LICENCIA REVISADA</span>':'<span class="library-status">DERECHOS PENDIENTES</span>';
+   return '<button type="button" class="library-card" data-library-asset="'+safe(a.id)+'"><img loading="lazy" alt="" src="'+safe(url(a.src))+'"><b>'+safe(a.label)+'</b><small>'+safe(a.path)+'</small>'+badge+'<small>'+safe(a.origin_hint||"Origen sin identificar")+'</small></button>';
+  }).join("");
+  $("libraryCount").textContent=filtered.length.toLocaleString("es-AR")+" imágenes coinciden · "+Math.min(shown.length,filtered.length).toLocaleString("es-AR")+" visibles";
+  $("libraryPage").textContent="Mostrando "+shown.length+" de "+filtered.length;
+  $("libraryMore").classList.toggle("hidden",shown.length>=filtered.length);
+  grid.querySelectorAll("[data-library-asset]").forEach(b=>b.onclick=()=>useLibraryAsset(b.dataset.libraryAsset));
+ };
+ const load=async()=>{
+  grid.innerHTML='<div class="plain">Leyendo el catálogo local…</div>';
+  try{const data=await loadImageLibrary();allAssets=data.assets;renderCards();}
+  catch(e){grid.innerHTML='<div class="plain">No se pudo cargar la biblioteca. Abrí el programa con start-avatar-maker.bat para que las imágenes locales puedan leerse.</div>';$("libraryCount").textContent=String(e.message||e);}
+ };
+ search.oninput=()=>{page=1;if(allAssets.length)renderCards();};
+ review.onchange=()=>{page=1;if(allAssets.length)renderCards();};
+ $("libraryMore").onclick=()=>{page++;renderCards();};
+ $("libraryReload").onclick=()=>{imageLibraryCache=null;imageLibraryPromise=null;load();};
+ load();
+}
+function useLibraryAsset(id){
+ if(!imageLibraryCache)return;
+ const asset=imageLibraryCache.assets.find(x=>x.id===id);if(!asset)return;
+ let look=looks.find(x=>x.id===asset.id);
+ if(!look){look={id:asset.id,label:asset.label,src:asset.src,render:asset.src,tags:["Todos"],libraryPath:asset.path,sourceReview:asset.license_review};looks.push(look);}
+ state.look=look.id;state.selected="base";state.category="hair";state.pill="Todos";
+ renderNav();render();gallery();
+ toast("Imagen cargada como retrato base. No se ha certificado su procedencia ni licencia.");
+}
+function anatomyWorkspace(root){
+ root.innerHTML=
+  '<div class="anatomy-hero"><strong>♙ Taller anatómico · '+safe(state.name)+'</strong><p>Usá tus propios diseños como referencia para obtener una guía de cuerpo completo. Después separá pelo, cara, torso, brazos, piernas o accesorios pintando cada región y exportándola como PNG transparente con el mismo lienzo y coordenadas.</p></div>'+
+  '<div class="anatomy-step"><span class="anatomy-num">1</span><div><b>Crear guía anatómica con IA</b><p>Genera una referencia de cuerpo completo, pose neutra tipo A, proporciones anime y articulaciones legibles. Se guardará como capa aparte y podrás ocultarla.</p><div class="actions" style="margin-top:8px"><button id="anatomyGenerate" class="btn primary">✦ Generar guía anatómica</button><button id="anatomyPose" class="btn">Crear maniquí de proporciones</button></div></div></div>'+
+  '<div class="anatomy-step"><span class="anatomy-num">2</span><div><b>Separar una región del dibujo</b><p>Activá el pincel y pintá el interior de la pieza que querés extraer. Usa trazos pequeños cerca del contorno y evita pintar el fondo. La pieza se crea como PNG transparente alineado al lienzo.</p><div class="actions" style="margin-top:8px"><button id="anatomyMaskToggle" class="btn">✎ Pintar pieza</button><button id="anatomyMaskClear" class="btn">Limpiar selección</button><button id="anatomyCut" class="btn primary">Crear capa separada</button></div><label class="ai-mask-brush" for="anatomyBrushSize">Tamaño del pincel<input id="anatomyBrushSize" type="range" min="8" max="150" step="2" value="'+aiBrushSize+'"><output id="anatomyBrushValue">'+aiBrushSize+' px</output></label><span id="anatomyMaskCount" class="tiny">0 trazos</span></div></div>'+
+  '<div class="anatomy-step"><span class="anatomy-num">3</span><div><b>Exportar cada pieza</b><p>Seleccioná una capa separada y exportala como PNG individual. El archivo mantiene las coordenadas del lienzo para volver a montarlo sin desplazamientos.</p><div class="actions" style="margin-top:8px"><button id="anatomyExport" class="btn">↓ Exportar capa seleccionada</button><button id="anatomySaveProject" class="btn">Guardar proyecto JSON</button></div></div></div>'+
+  '<div class="anatomy-tip"><b>Clave para una extracción limpia:</b> para separar una pieza del arte original, ocultá primero las guías y las capas generadas que tapen el dibujo. La guía anatómica sirve para estudiar la pose y proporciones; no sustituye las capas dibujadas originales ni garantiza que la IA reconstruya partes ocultas.</div>'+
+  '<section class="ai-mask-panel"><div class="ai-mask-head"><strong>Selección sobre el lienzo central</strong><span id="anatomyMaskMode">'+(aiMaskMode?"Pincel activo":"Pincel apagado")+'</span></div><p>La pintura rosa es solo una superposición de selección: no se imprime en el PNG original ni en la pieza exportada.</p></section>';
+ $("anatomyGenerate").onclick=()=>requestAnatomyGuide("character");
+ $("anatomyPose").onclick=()=>requestAnatomyGuide("mannequin");
+ $("anatomyMaskToggle").onclick=()=>setAIMaskMode(!aiMaskMode);
+ $("anatomyMaskClear").onclick=()=>{aiMaskStrokes=[];aiMaskDrawing=null;redrawMaskOverlay();refreshMaskUi();toast("Selección anatómica borrada.");};
+ $("anatomyBrushSize").oninput=e=>{aiBrushSize=Number(e.target.value);$("anatomyBrushValue").value=aiBrushSize+" px";};
+ $("anatomyCut").onclick=createCutoutLayer;
+ $("anatomyExport").onclick=exportSelectedLayerPng;
+ $("anatomySaveProject").onclick=save;
+ refreshMaskUi();
+}
+function requestAnatomyGuide(type){
+ aiMaskStrokes=[];aiMaskDrawing=null;setAIMaskMode(false);
+ aiSettings.background="transparent";aiSettings.quality="high";aiSettings.direction="preserve";
+ aiSettings.prompt=type==="mannequin"
+  ?"Crea una lámina de construcción anatómica anime de cuerpo entero basada en el personaje de referencia. Cuerpo completo visible de cabeza a pies, vista frontal, pose A neutra y simétrica, proporciones claras de cabeza, cuello, caja torácica, pelvis, brazos, codos, muñecas, manos, muslos, rodillas, pantorrillas y pies. Traje de estudio entallado, opaco y no revelador en una paleta parecida a la del personaje. Añade pequeñas marcas de articulaciones y líneas guía limpias sin palabras ni números. Fondo transparente, una sola figura centrada, sin paneles ni vistas múltiples. La imagen sirve como guía de proporciones, no como ilustración final."
+  :"Crea una ficha de modelo anime de cuerpo entero basada en la identidad y el diseño del personaje de referencia. Reconstruye una vista frontal de cabeza a pies aunque la imagen original sea un retrato recortado. Pose A neutra y simétrica, silueta clara, proporciones anatómicas anime coherentes, manos y pies visibles, rostro y peinado reconocibles, paleta característica y ropa de estudio entallada, opaca y no reveladora. Señala sutilmente hombros, codos, muñecas, pelvis, rodillas y tobillos mediante marcas de construcción discretas; nada de texto. Fondo transparente, una figura centrada, sin paneles ni personajes extra. Es una referencia de model sheet para separar las piezas después, no reemplaces la ilustración original.";
+ aiNextResultMeta={kind:"anatomy_guide",name:(type==="mannequin"?"Maniquí de proporciones — ":"Guía anatómica — ")+state.name};
+ state.category="ai";state.pill="Todos";renderNav();gallery();
+ setTimeout(()=>runAIEdit(),0);
+}
+function anatomyPromptForUser(text,direction){
+ const style=direction==="madhouse"?"anime 2D cinematográfico, lineart fino y sombreado por planos":direction==="trigger"?"anime 2D gráfico, silueta dinámica y contorno limpio":"anime 2D coherente con la ilustración de referencia";
+ return "Usa la imagen de entrada solo como referencia de identidad y diseño, no copies su recorte ni su pose. "+style+". "+text.trim()+" Debe verse el cuerpo completo entero, desde la parte superior del cabello hasta la suela de ambos pies, sin recortar manos ni pies. Pose A simétrica, plano frontal, una sola figura, anatomía consistente, fondo PNG transparente si se admite. Traje de estudio opaco y no revelador. Sin letras, marcas de agua, marcos, paneles, vistas adicionales ni accesorios flotantes. Conserva los rasgos identificativos y la paleta del personaje cuando sea posible.";
+}
+function createCutoutMaskDataUrl(){
+ const mask=document.createElement("canvas");mask.width=W;mask.height=H;
+ const ctx=mask.getContext("2d",{alpha:true});ctx.clearRect(0,0,W,H);ctx.strokeStyle="#fff";ctx.fillStyle="#fff";ctx.lineCap="round";ctx.lineJoin="round";
+ for(const stroke of aiMaskStrokes){
+  if(!stroke.points||!stroke.points.length)continue;
+  ctx.lineWidth=stroke.size;ctx.beginPath();ctx.moveTo(stroke.points[0].x,stroke.points[0].y);
+  if(stroke.points.length===1){ctx.arc(stroke.points[0].x,stroke.points[0].y,stroke.size/2,0,Math.PI*2);ctx.fill();continue;}
+  for(let i=1;i<stroke.points.length;i++)ctx.lineTo(stroke.points[i].x,stroke.points[i].y);
+  ctx.stroke();
+ }
+ return mask;
+}
+async function createCutoutLayer(){
+ if(!aiMaskStrokes.length){toast("Primero pintá la región que querés separar.");return;}
+ try{
+  await drawCanvas();
+  const mask=createCutoutMaskDataUrl();
+  const out=document.createElement("canvas");out.width=W;out.height=H;
+  const ctx=out.getContext("2d",{alpha:true});ctx.drawImage($("canvas"),0,0);ctx.globalCompositeOperation="destination-in";ctx.drawImage(mask,0,0);
+  const data=out.toDataURL("image/png");
+  const count=state.layers.filter(l=>l.kind==="manual_mask_layer").length+1;
+  const layer={id:"piece-"+Date.now(),name:"Pieza separada "+count,category:"anatomy",group:null,dataUrl:data,src:"",kind:"manual_mask_layer",x:0,y:0,w:W,h:H,opacity:1,hue:0,visible:true,order:Math.max(-1,...state.layers.map(x=>Number.isFinite(x.order)?x.order:-1))+1,status:"manual_mask_selection"};
+  state.layers.push(layer);cache.set(data,img(data));state.selected=layer.id;aiMaskStrokes=[];aiMaskDrawing=null;setAIMaskMode(false);render();gallery();
+  toast("Pieza PNG transparente creada. Exportala individualmente para conservar sus coordenadas.");
+ }catch(e){toast("No se pudo separar la pieza: "+String(e.message||e));}
+}
+async function exportSelectedLayerPng(){
+ const layer=state.layers.find(x=>x.id===state.selected);
+ if(!layer){toast("Seleccioná primero una capa independiente, no el retrato base.");return;}
+ try{
+  const out=document.createElement("canvas");out.width=W;out.height=H;
+  const ctx=out.getContext("2d",{alpha:true});ctx.clearRect(0,0,W,H);
+  const source=await img(layer.dataUrl||layer.src);
+  ctx.drawImage(source,layer.x||0,layer.y||0,layer.w||W,layer.h||H);
+  const blob=await new Promise((resolve,reject)=>out.toBlob(b=>b?resolve(b):reject(Error("El navegador no devolvió el PNG.")),"image/png"));
+  download(blob,(layer.name||"pieza").replace(/[^\w-]+/g,"-").toLowerCase()+"-aligned.png");
+  toast("PNG de la capa exportado con lienzo "+W+"×"+H+".");
+ }catch(e){toast("No se pudo exportar la capa: "+String(e.message||e));}
+}
 
 const aiPresets=[
  {label:"Nuevo peinado",prompt:"Cambia únicamente el peinado por uno largo, fluido y anime, con mechones y silueta limpios. Conserva el rostro, ojos, expresión, ropa, pose y encuadre."},
@@ -194,8 +355,8 @@ function normalizeAIMaskStrokes(value){
 }
 function redrawMaskOverlay(){
  const overlay=$("maskOverlay");if(!overlay)return;
- overlay.classList.toggle("visible",state.category==="ai");
- overlay.classList.toggle("painting",aiMaskMode&&state.category==="ai");
+ overlay.classList.toggle("visible",state.category==="ai"||state.category==="anatomy");
+ overlay.classList.toggle("painting",aiMaskMode&&(state.category==="ai"||state.category==="anatomy"));
  const ctx=overlay.getContext("2d");ctx.clearRect(0,0,W,H);
  ctx.save();ctx.strokeStyle="rgba(250,62,139,.62)";ctx.fillStyle="rgba(250,62,139,.62)";ctx.lineCap="round";ctx.lineJoin="round";
  const visibleStrokes=aiMaskDrawing?aiMaskStrokes.concat([aiMaskDrawing]):aiMaskStrokes;
@@ -211,10 +372,10 @@ function redrawMaskOverlay(){
 function refreshMaskUi(){
  const count=$("aiMaskCount");if(count)count.textContent=aiMaskStrokes.length+" trazo"+(aiMaskStrokes.length===1?"":"s");
  const button=$("aiMaskToggle");if(button){button.textContent=aiMaskMode?"✓ Terminar pincel":"✎ Pintar zona";button.classList.toggle("primary",aiMaskMode);}
- const overlay=$("maskOverlay");if(overlay){overlay.classList.toggle("visible",state.category==="ai");overlay.classList.toggle("painting",aiMaskMode&&state.category==="ai");}
+ const overlay=$("maskOverlay");if(overlay){overlay.classList.toggle("visible",state.category==="ai"||state.category==="anatomy");overlay.classList.toggle("painting",aiMaskMode&&(state.category==="ai"||state.category==="anatomy"));}
 }
 function setAIMaskMode(enabled){
- aiMaskMode=!!enabled&&state.category==="ai";
+ aiMaskMode=!!enabled&&(state.category==="ai"||state.category==="anatomy");
  if(!aiMaskMode)aiMaskDrawing=null;
  refreshMaskUi();
  if(aiMaskMode)status("Pincel de máscara activo: pintá la zona del lienzo que querés editar.",false);
@@ -237,7 +398,7 @@ function createAIMaskDataUrl(){
  return mask.toDataURL("image/png");
 }
 $("maskOverlay").onpointerdown=e=>{
- if(!aiMaskMode||state.category!=="ai")return;
+ if(!aiMaskMode||!(state.category==="ai"||state.category==="anatomy"))return;
  e.preventDefault();$("maskOverlay").setPointerCapture(e.pointerId);
  aiMaskDrawing={size:aiBrushSize,points:[maskPoint(e)]};redrawMaskOverlay();
 };
@@ -344,7 +505,7 @@ async function runAIEdit(){
    image_data_url:imageDataUrl,
    mask_data_url:maskDataUrl,
    reference_data_url:aiReferenceDataUrl||null,
-   prompt:aiPromptForUser(prompt,aiSettings.direction),
+   prompt:aiNextResultMeta&&aiNextResultMeta.kind==="anatomy_guide"?anatomyPromptForUser(prompt,aiSettings.direction):aiPromptForUser(prompt,aiSettings.direction),
    model:aiSettings.model,
    quality:aiSettings.quality,
    background:aiSettings.background
@@ -353,6 +514,7 @@ async function runAIEdit(){
   if(!response.ok)throw Error(result.error||"La edición con IA falló.");
   if(!result.image_base64)throw Error("El proveedor no devolvió una imagen utilizable.");
   aiResult="data:image/png;base64,"+result.image_base64;
+  aiResultMeta=aiNextResultMeta||{kind:"ai_result",name:"Edición IA"};aiNextResultMeta=null;
   cache.set(aiResult,img(aiResult));
   aiWorkspace($("content"));
   status("Edición IA preparada como candidato. Revisala antes de aplicarla.",false);
@@ -369,8 +531,8 @@ async function runAIEdit(){
 }
 function applyAIResult(){
  if(!aiResult){toast("No hay un resultado para aplicar.");return;}
- const l={id:"ai-"+Date.now(),name:"Edición IA "+new Date().toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"}),category:"ai",group:null,dataUrl:aiResult,kind:"ai_result",x:0,y:0,w:W,h:H,opacity:1,hue:0,visible:true,order:Math.max(-1,...state.layers.map(x=>Number.isFinite(x.order)?x.order:-1))+1,status:"unreviewed_ai_result"};
- state.layers.push(l);cache.set(aiResult,img(aiResult));state.selected=l.id;aiResult=null;
+ const l={id:"ai-"+Date.now(),name:aiResultMeta.name||"Edición IA",category:aiResultMeta.kind==="anatomy_guide"?"anatomy":"ai",group:null,dataUrl:aiResult,kind:aiResultMeta.kind||"ai_result",x:0,y:0,w:W,h:H,opacity:1,hue:0,visible:true,order:Math.max(-1,...state.layers.map(x=>Number.isFinite(x.order)?x.order:-1))+1,status:"unreviewed_ai_result"};
+ state.layers.push(l);cache.set(aiResult,img(aiResult));state.selected=l.id;aiResult=null;aiResultMeta={kind:"ai_result",name:"Edición IA"};
  gallery();render();toast("Edición añadida como capa superior. Ocúltala para volver a ver el original.");
 }
 
