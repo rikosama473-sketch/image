@@ -32,3 +32,39 @@ La descarga se mantiene fuera del repositorio en \`data/asset-cache/\` hasta rev
 Para exactitud geométrica, usá la fuente con capas PSD/XCF y exportá cada pieza en un lienzo del tamaño original manteniendo su offset. Cuando solo existe una imagen aplanada, segmentación automática no recupera píxeles ocultos detrás del pelo/ropa ni garantiza bordes impecables. Las máscaras del proyecto siguen marcadas \`pending_visual_review\`; abrí el [editor manual de recortes](../manual-character-editor/index.html) para corregir el borde y reconstruir lo que falta.
 
 El contador de combinaciones es teórico: incluye fondos, retratos base, filtros, opciones de capa y los 361 estados del control de tono (0–360°) en cuatro grupos de capa. Las capas importadas agregan opciones adicionales. No mide cuántas salidas visuales distintas serán buenas; no significa que una máscara beta esté aprobada.
+
+
+## Edición profesional asistida por IA
+
+La pestaña **IA Studio** permite describir una edición en español, elegir un modelo de imagen y calidad, indicar la dirección artística, adjuntar una imagen de referencia opcional y revisar la salida antes de aplicarla. El resultado entra como una capa PNG sobre el diseño anterior: se puede ocultar, mover, reducir su opacidad o eliminar sin destruir la composición que ya tenías. Guardar el proyecto JSON conserva la imagen generada como dato de capa.
+
+### Requisitos y arranque en Windows
+
+1. Instala Python 3.10 o superior.
+2. Crea una clave API en tu cuenta del proveedor si todavía no tienes una; el uso de la API puede generar cargos. ChatGPT Plus/Free no incluye automáticamente saldo para la API.
+3. Abre PowerShell desde la carpeta raíz del repositorio y configura la clave solo para esa sesión:
+
+~~~powershell
+$env:OPENAI_API_KEY = "TU_CLAVE_API"
+.\tools\avatar-maker\start-avatar-maker.bat
+~~~
+
+Si no quieres habilitar IA, inicia el lanzador sin configurar esa variable: el creador manual, las capas y la exportación local siguen disponibles. No escribas la clave en HTML, JavaScript, JSON, GitHub, ni en una captura de pantalla. Para quitarla de la sesión actual, ejecuta:
+
+~~~powershell
+Remove-Item Env:OPENAI_API_KEY
+~~~
+
+El puente se vincula únicamente a 127.0.0.1, lee la clave desde el entorno del proceso y la envía desde Python al endpoint oficial de edición de imágenes. El navegador nunca recibe la clave. Se permiten modelos GPT Image conocidos por la integración y se valida tipo/tamaño de las imágenes antes de enviarlas. La imagen del lienzo y la referencia opcional se envían al proveedor externo elegido; no las envíes si no deseas procesarlas en dicho servicio.
+
+La salida del modelo es una **candidata de edición, no una máscara de cabello garantizada**. La IA puede alterar otros detalles o no recuperar partes ocultas por una imagen aplanada. Revisa cada resultado antes de usarlo y conserva los proyectos JSON originales. La opción de transparencia depende de las capacidades/modelo de imagen disponible.
+
+### Solución de problemas
+
+- **“Falta OPENAI_API_KEY”**: inicia el archivo BAT desde la misma sesión de PowerShell donde configuraste la variable.
+- **“Puente de IA no detectado”**: usa el lanzador local, no la vista previa web estática.
+- **401/403 del proveedor**: revisa el estado de la clave, permisos, disponibilidad del modelo y cuota de API.
+- **Tiempo de espera**: prueba calidad media o baja, y comprueba la conexión.
+- **Exportación PNG bloqueada**: usa el lanzador local; las imágenes que el navegador no pueda leer por CORS pueden contaminar el lienzo e impedir la exportación.
+
+Referencia de la integración: [guía oficial de edición de imágenes de OpenAI](https://developers.openai.com/api/reference/resources/images/methods/edit).
