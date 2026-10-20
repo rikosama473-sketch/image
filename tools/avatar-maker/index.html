@@ -275,7 +275,7 @@ function applyAIResult(){
  if(!aiResult){toast("No hay un resultado para aplicar.");return;}
  const l={id:"ai-"+Date.now(),name:"Edición IA "+new Date().toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"}),category:"ai",group:null,dataUrl:aiResult,kind:"ai_result",x:0,y:0,w:W,h:H,opacity:1,hue:0,visible:true,order:Math.max(-1,...state.layers.map(x=>Number.isFinite(x.order)?x.order:-1))+1,status:"unreviewed_ai_result"};
  state.layers.push(l);cache.set(aiResult,img(aiResult));state.selected=l.id;aiResult=null;
- render();gallery();toast("Edición añadida como capa superior. Ocúltala para volver a ver el original.");
+ gallery();render();toast("Edición añadida como capa superior. Ocúltala para volver a ver el original.");
 }
 
 function renderStyles(){$("styles").innerHTML=styles.map(s=>'<button class="stylecard '+(s.id===state.style?"active":"")+'" data-style="'+s.id+'" title="Filtro de color, no cambia el dibujo"><img src="'+url(activeLook().src)+'" alt=""><span>'+s.label+'</span></button>').join("");$("styles").querySelectorAll("[data-style]").forEach(b=>b.onclick=()=>{state.style=b.dataset.style;renderStyles();render();});}
