@@ -8,8 +8,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 HTML_PATH = ROOT / "tools" / "avatar-maker" / "index.html"
 CATALOG_PATH = ROOT / "tools" / "avatar-maker" / "assets" / "catalog.json"
+SERVER_PATH = ROOT / "tools" / "avatar-maker" / "ai_edit_server.py"
 REQUIRED_IDS = {"nav","canvas","maskOverlay","stage","stageNote","miniLooks","layerTabs","layerList","layerCount","catIcon","catTitle","pills","content","styles","saveBtn","loadBtn","exportBtn","jsonFile","imageFile","comboCount","candidateDialog","cancelCandidate","confirmCandidate","toast"}
-REQUIRED_FEATURES = ("async function render(", "function gallery(", "function addMask(", "function importFiles(", "function save(", "function load(", "function exportPng(", "pending_visual_review", "character-layers/pibara", "image/png", "IMAGE Character Creator", "function aiWorkspace(root)", "function runAIEdit()", "/api/ai-edit", "OPENAI_API_KEY", "ai_result", "function createAIMaskDataUrl()", "aiMaskStrokes", "mask_data_url", "validate_mask_data_url")
+REQUIRED_FEATURES = ("async function render(", "function gallery(", "function addMask(", "function importFiles(", "function save(", "function load(", "function exportPng(", "pending_visual_review", "character-layers/pibara", "image/png", "IMAGE Character Creator", "function aiWorkspace(root)", "function runAIEdit()", "/api/ai-edit", "OPENAI_API_KEY", "ai_result", "function createAIMaskDataUrl()", "aiMaskStrokes", "mask_data_url")
 class Inspector(HTMLParser):
     def __init__(self): super().__init__(convert_charrefs=True); self.ids=[]; self.inline=0
     def handle_starttag(self,tag,attrs):
@@ -18,11 +19,14 @@ class Inspector(HTMLParser):
         if tag.lower()=="script" and "src" not in a: self.inline+=1
 
 def main():
-    if not HTML_PATH.is_file() or not CATALOG_PATH.is_file() or not (ROOT / "tools" / "avatar-maker" / "ai_edit_server.py").is_file():
+    if not HTML_PATH.is_file() or not CATALOG_PATH.is_file() or not SERVER_PATH.is_file():
         print("Missing avatar maker HTML/catalog/AI bridge.",file=sys.stderr); return 1
     html=HTML_PATH.read_text(encoding="utf-8"); parser=Inspector(); parser.feed(html)
     dup=sorted({x for x in parser.ids if parser.ids.count(x)>1}); missing=sorted(REQUIRED_IDS-set(parser.ids))
     absent=[x for x in REQUIRED_FEATURES if x not in html]
+    server=SERVER_PATH.read_text(encoding="utf-8")
+    server_required=("def validate_mask_data_url(", 'payload["mask"] = mask_payload', "OPENAI_API_KEY")
+    absent.extend("server: "+x for x in server_required if x not in server)
     if re.search(r"<\s*svg\b|renderSvg\s*\(",html,re.I): absent.append("No geometrically drawn SVG avatar is allowed")
     if dup or missing or absent:
         if dup: print("Duplicate IDs: "+", ".join(dup),file=sys.stderr)
