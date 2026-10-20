@@ -21,6 +21,8 @@ REQUIRED_IDS = {
 REQUIRED_FUNCTIONS = (
     "function extractLayer(", "function removeEdgeBackground(", "function floodMaskFromPixel(",
     "function cropCanvas(", "function saveProject(", "function exportLayer(",
+    'requestedName!==source.name?requestedName:"Recorte "+(doc.layers.length)',
+    'const name=requestedName&&(!current||requestedName!==current.name)?requestedName:"Capa nueva "+(doc.layers.length+1)',
 )
 
 
