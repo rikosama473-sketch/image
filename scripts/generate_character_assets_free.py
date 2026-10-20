@@ -5,7 +5,6 @@ import argparse, hashlib, io, json, re, sys
 from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
 from urllib.parse import quote
-import requests
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 SPACE_ID = "conradlocke/krea2-identity-edit"
@@ -75,6 +74,7 @@ def source_url(repo, ref, path):
     return f"https://raw.githubusercontent.com/{repo}/{quote(ref, safe='/')}/{quote(path, safe='/')}"
 
 def load_source(url, dest):
+    import requests
     try:
         response = requests.get(url, timeout=(20, 120))
         response.raise_for_status()
@@ -131,6 +131,7 @@ def normalize_output(value, dest):
     return hashlib.sha256(dest.read_bytes()).hexdigest(), used_seed, image.size
 
 def fetch_image(url):
+    import requests
     try:
         response = requests.get(url, timeout=(20, 180))
         response.raise_for_status()
