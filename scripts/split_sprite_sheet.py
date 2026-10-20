@@ -20,7 +20,10 @@ def sha256_bytes(data: bytes) -> str:
 
 
 def safe_slug(value: str, field: str = "identifier") -> str:
-    result = re.sub(r"[^a-zA-Z0-9_-]+", "-", str(value).strip()).strip("-_").lower()
+    raw = str(value).strip()
+    if not raw or "/" in raw or "\\" in raw or "\n" in raw or "\r" in raw:
+        raise ValueError(f"Invalid {field}: paths and line breaks are not allowed.")
+    result = re.sub(r"[^a-zA-Z0-9_-]+", "-", raw).strip("-_").lower()
     if not result or result in {".", ".."}:
         raise ValueError(f"Invalid {field}: use letters, numbers, '-' or '_'.")
     return result
@@ -307,7 +310,7 @@ def main() -> int:
         assets = grid_boxes(size, int(match.group(1)), int(match.group(2)), prefix, category) if match else load_explicit_boxes(args.boxes_json)
         manifest = run(args.input, args.output, assets, canvas, args.key_color, args.key_tolerance,
                        args.trim_alpha, args.source_url, args.source_license, args.credit, args.overwrite)
-    except (OSError, ValueError, Image.DecompressionBombError) as exc:
+    except (OSError, ValueError, argparse.ArgumentTypeError, Image.DecompressionBombError) as exc:
         parser.error(str(exc))
     print(f"Created {len(assets)} assets plus contact sheet and manifest: {manifest}")
     return 0
