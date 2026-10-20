@@ -8,9 +8,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 HTML_PATH = ROOT / "tools" / "avatar-maker" / "index.html"
 CATALOG_PATH = ROOT / "tools" / "avatar-maker" / "assets" / "catalog.json"
+LIBRARY_PATH = ROOT / "tools" / "avatar-maker" / "assets" / "image-library.json"
 SERVER_PATH = ROOT / "tools" / "avatar-maker" / "ai_edit_server.py"
 REQUIRED_IDS = {"nav","canvas","maskOverlay","stage","stageNote","miniLooks","layerTabs","layerList","layerCount","catIcon","catTitle","pills","content","styles","saveBtn","loadBtn","exportBtn","jsonFile","imageFile","comboCount","candidateDialog","cancelCandidate","confirmCandidate","toast"}
-REQUIRED_FEATURES = ("async function render(", "function gallery(", "function addMask(", "function importFiles(", "function save(", "function load(", "function exportPng(", "pending_visual_review", "character-layers/pibara", "image/png", "IMAGE Character Creator", "function aiWorkspace(root)", "function runAIEdit()", "/api/ai-edit", "OPENAI_API_KEY", "ai_result", "function createAIMaskDataUrl()", "aiMaskStrokes", "mask_data_url")
+REQUIRED_FEATURES = ("async function render(", "function gallery(", "function addMask(", "function importFiles(", "function save(", "function load(", "function exportPng(", "pending_visual_review", "character-layers/pibara", "image/png", "IMAGE Character Creator", "function aiWorkspace(root)", "function runAIEdit()", "/api/ai-edit", "OPENAI_API_KEY", "ai_result", "function createAIMaskDataUrl()", "aiMaskStrokes", "mask_data_url", "function anatomyWorkspace(root)", "function requestAnatomyGuide(type)", "function createCutoutLayer()", "function exportSelectedLayerPng()", "function libraryWorkspace(root)", "function useLibraryAsset(id)", "image-library.json")
 class Inspector(HTMLParser):
     def __init__(self): super().__init__(convert_charrefs=True); self.ids=[]; self.inline=0
     def handle_starttag(self,tag,attrs):
@@ -19,8 +20,8 @@ class Inspector(HTMLParser):
         if tag.lower()=="script" and "src" not in a: self.inline+=1
 
 def main():
-    if not HTML_PATH.is_file() or not CATALOG_PATH.is_file() or not SERVER_PATH.is_file():
-        print("Missing avatar maker HTML/catalog/AI bridge.",file=sys.stderr); return 1
+    if not HTML_PATH.is_file() or not CATALOG_PATH.is_file() or not LIBRARY_PATH.is_file() or not SERVER_PATH.is_file():
+        print("Missing avatar maker HTML/catalog/library/AI bridge.",file=sys.stderr); return 1
     html=HTML_PATH.read_text(encoding="utf-8"); parser=Inspector(); parser.feed(html)
     dup=sorted({x for x in parser.ids if parser.ids.count(x)>1}); missing=sorted(REQUIRED_IDS-set(parser.ids))
     absent=[x for x in REQUIRED_FEATURES if x not in html]
@@ -40,6 +41,20 @@ def main():
         path=asset.get("repo_path")
         if not path or not (ROOT/path).is_file(): print(f"Missing catalog asset: {path}",file=sys.stderr); return 1
         if asset.get("kind")=="semantic_mask_candidate" and asset.get("status")!="pending_visual_review": print(f"Unreviewed mask incorrectly marked approved: {asset.get('id')}",file=sys.stderr); return 1
+    try: library=json.loads(LIBRARY_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc: print(f"Invalid image library JSON: {exc}",file=sys.stderr); return 1
+    assets=library.get("assets",[]) if isinstance(library,dict) else []
+    if library.get("schema_version")!=1 or not isinstance(assets,list):
+        print("Unsupported or invalid image library schema.",file=sys.stderr); return 1
+    if library.get("asset_count")!=len(assets) or len(assets)<1:
+        print("Image library asset_count does not match its assets array.",file=sys.stderr); return 1
+    for asset in assets:
+        relative=asset.get("path","") if isinstance(asset,dict) else ""
+        path=Path(relative)
+        if not relative or path.is_absolute() or ".." in path.parts or not (ROOT/path).is_file():
+            print(f"Unsafe or missing image-library path: {relative}",file=sys.stderr); return 1
+        if not str(asset.get("src","")).startswith("../../"):
+            print(f"Invalid local thumbnail source: {relative}",file=sys.stderr); return 1
     for source in catalog.get("external_libraries",[]):
         if "CC0" not in source.get("license",""): print(f"License note absent: {source.get('id')}",file=sys.stderr); return 1
         for key in ("source_page","download_url"):
@@ -52,6 +67,6 @@ def main():
     with tempfile.TemporaryDirectory(prefix="image-avatar-maker-") as temp:
         f=Path(temp)/"app.js"; f.write_text(js,encoding="utf-8"); p=subprocess.run([node,"--check",str(f)],capture_output=True,text=True)
     if p.returncode: print(p.stdout+p.stderr,file=sys.stderr); return p.returncode
-    print(f"PASS: image-based avatar maker; {len(parser.ids)} IDs; {len(catalog['base_illustrations'])} base illustrations; {len(catalog['candidate_layers'])} pending masks; JS syntax valid.")
+    print(f"PASS: image-based avatar maker; {len(parser.ids)} IDs; {len(catalog['base_illustrations'])} base illustrations; {len(catalog['candidate_layers'])} pending masks; {len(assets)} indexed library images; JS syntax valid.")
     return 0
 if __name__=="__main__": raise SystemExit(main())
