@@ -24,7 +24,8 @@ BASE = (
 ANATOMY_BASE = (
     "Identity-guided anime character model-sheet reconstruction from the supplied image. "
     "Unlike a normal local edit, do not preserve the input crop or bust framing: extend/recompose the composition into a complete full-body figure from the highest hair strand to both soles. "
-    "Maintain the recognizable character face, hair identity, palette and costume motifs while making a modest opaque anatomy-study outfit if needed for legibility. "
+    "Preserve the source face, exact hairstyle and silhouette, bangs, tied sections, loose strands, hair color/highlight pattern, iris color, signature accessories and visible costume details. Do not redesign the hairstyle or change the hair/iris colors. " 
+    "Keep the recognizable source outfit, palette and color blocking; extend only hidden lower-body clothing consistently with the design. If coverage must change, retain the source silhouette and signature details rather than inventing a generic unrelated outfit. "
     "Show clear anime body construction with a symmetric neutral A-pose, arms slightly separated from torso, hands, fingers and both feet visible, balanced proportions, clean 2D line art and cel shading. "
     "Subtle joint landmarks for shoulders, elbows, wrists, pelvis, knees and ankles are acceptable; avoid labels or writing. "
     "One figure only, front view, centered portrait canvas, no panels, no extra poses, no added character, no text, no watermark, no photorealism. "
