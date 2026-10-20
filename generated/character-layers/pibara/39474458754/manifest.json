@@ -1,0 +1,323 @@
+{
+  "schema_version": 1,
+  "character_id": "pibara",
+  "created_at_utc": "2026-10-20T18:27:11.157510+00:00",
+  "source": {
+    "path": "from-PixAI-2034984086876227343-0.png",
+    "sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+    "dimensions": [
+      768,
+      1280
+    ]
+  },
+  "models": {
+    "foreground_removal": "u2net",
+    "semantic_segmenter": "mattmdjaga/segformer_b2_clothes",
+    "semantic_segmenter_labels": {
+      "0": "Background",
+      "1": "Hat",
+      "2": "Hair",
+      "3": "Sunglasses",
+      "4": "Upper-clothes",
+      "5": "Skirt",
+      "6": "Pants",
+      "7": "Dress",
+      "8": "Belt",
+      "9": "Left-shoe",
+      "10": "Right-shoe",
+      "11": "Face",
+      "12": "Left-leg",
+      "13": "Right-leg",
+      "14": "Left-arm",
+      "15": "Right-arm",
+      "16": "Bag",
+      "17": "Scarf"
+    },
+    "class_ids_used": {
+      "hair": [
+        2
+      ],
+      "face": [
+        11
+      ],
+      "headwear": [
+        1,
+        3
+      ],
+      "clothing": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "body_parts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    }
+  },
+  "alignment": "Every layer preserves the source image canvas size and coordinates.",
+  "status": "generated_candidates_pending_visual_review",
+  "quality_note": "The semantic model was trained on human clothing imagery, not guaranteed anime artwork. No asset in this pack is marked production-approved.",
+  "variants": [
+    {
+      "id": "blunt-bob",
+      "source_path": "generated/character-assets/pibara/2026-10-20/run-39427500253/renders/01-blunt-bob.png",
+      "source_sha256": "cfad8ca17bcb5b52640b70a0a51db0ec6a4cffa15110f32ce1e92de3e71608ab"
+    },
+    {
+      "id": "long-straight",
+      "source_path": "generated/character-assets/pibara/2026-10-20/run-39427500253/renders/02-long-straight.png",
+      "source_sha256": "bf64a51389d23444c10d6aec47bd24c65733ba6be00ecca7db2fe59b1d273c13"
+    },
+    {
+      "id": "high-ponytail",
+      "source_path": "generated/character-assets/pibara/2026-10-20/run-39427500253/renders/03-high-ponytail.png",
+      "source_sha256": "6185218c54b909dcfdfd0ed14d8b2e7d9223ffeaa52da3054d2ace28bf15d621"
+    },
+    {
+      "id": "twin-tails",
+      "source_path": "generated/character-assets/pibara/2026-10-20/run-39445227631/renders/04-twin-tails.png",
+      "source_sha256": "9940c4c51929b34b55dbeeb07d47ec437bc7ba67c9b5a1f5c28c79a833202931"
+    },
+    {
+      "id": "side-braid",
+      "source_path": "generated/character-assets/pibara/2026-10-20/run-39445227631/renders/05-side-braid.png",
+      "source_sha256": "0eca9c08245234579c2d23d7b8b0ec3b1d1a1746dc887e96c40eacaf21670424"
+    }
+  ],
+  "assets": [
+    {
+      "path": "model/whole-character.png",
+      "role": "whole_character",
+      "method": "rembg u2net foreground cutout",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "sha256": "93c8f55677949952c6514ac5ac4d8b48d56aa9c6eb64b82c49dc8a3fd5bc0f81",
+      "visible_pixel_ratio": 0.69446,
+      "status": "candidate_requires_visual_review",
+      "warning": null
+    },
+    {
+      "path": "model/head-face-candidate.png",
+      "role": "head_face_candidate",
+      "method": "SegFormer hair+face+headwear masks, dilated and clipped to foreground",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "sha256": "9998b2d99eaab80e32a8942dae67f85412c25236756b83bdb7cc11705b9583a3",
+      "visible_pixel_ratio": 0.31128,
+      "status": "candidate_requires_visual_review",
+      "warning": "Candidate head mask: anime-domain accuracy is unvalidated; inspect hairline, ears, neck and accessories."
+    },
+    {
+      "path": "model/body-without-head-candidate.png",
+      "role": "body_without_head_candidate",
+      "method": "whole-character alpha minus dilated semantic head mask",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "sha256": "9def81caec5bfb81a6fd70437fe9089f14d7a0db36ac92b1c2b6af0d351ef793",
+      "visible_pixel_ratio": 0.36195,
+      "status": "candidate_requires_visual_review",
+      "warning": "Candidate body layer may retain missed head pixels or remove neck/hair strands; inspect the join before compositing."
+    },
+    {
+      "path": "model/face-candidate.png",
+      "role": "face_candidate",
+      "method": "SegFormer face class",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "sha256": "0e390ca2f3a2e12c725d40a1f7a231cb229ac1676871bc0cecfd9d325242ec2d",
+      "visible_pixel_ratio": 0.0872,
+      "status": "candidate_requires_visual_review",
+      "warning": "Face parsing may omit eyes, eyebrows, ears, neck and stylized anime details."
+    },
+    {
+      "path": "model/outfit-candidate.png",
+      "role": "outfit_candidate",
+      "method": "SegFormer clothing/body accessory classes",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "sha256": "3dcc828fa61b9bc580f158403e82b6f728ce1a5c8e8f03c19b48bf63a0572812",
+      "visible_pixel_ratio": 0.37806,
+      "status": "candidate_requires_visual_review",
+      "warning": "Class mask is designed for human photos and may omit anime line art, folds, jewelry or clothing pixels."
+    },
+    {
+      "path": "hair/base-hair-candidate.png",
+      "role": "base_hair_candidate",
+      "method": "SegFormer Hair class",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "sha256": "a72ce46db55458e4e49637a6967181af76291d980f1fbb03372587a91f95b5d9",
+      "visible_pixel_ratio": 0.19173,
+      "status": "candidate_requires_visual_review",
+      "warning": "Hair mask is a draft semantic extraction; compare against the source and repair edges by hand."
+    },
+    {
+      "path": "hair/variants/blunt-bob.png",
+      "role": "hair_variant_blunt-bob",
+      "method": "SegFormer Hair class clipped to rembg foreground",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "sha256": "b3db335dafbc87ffd1e5d1e4cef6d3be6ab052c2b8b981d555dfe6fb660652f4",
+      "visible_pixel_ratio": 0.10985,
+      "status": "candidate_requires_visual_review",
+      "warning": "Review this isolated candidate; segmentation may miss wisps, ties, ribbons, and hair that overlaps the face."
+    },
+    {
+      "path": "hair/edit-delta/blunt-bob-delta-candidate.png",
+      "role": "edit_delta_blunt-bob",
+      "method": "pixel difference restricted to upper 48% of canvas",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "sha256": "f8b0f0cc806c8a0097d95faf62ef36a5b9f271ed887101f085c080c45bed1467",
+      "visible_pixel_ratio": 0.23651,
+      "status": "candidate_requires_visual_review",
+      "warning": "This is a diagnostic patch, not the full hairstyle; it can include unintended face/background changes."
+    },
+    {
+      "path": "hair/variants/long-straight.png",
+      "role": "hair_variant_long-straight",
+      "method": "SegFormer Hair class clipped to rembg foreground",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "sha256": "357bed552488e38059795907a163c2acafc382430800f32699b38ae2429084d7",
+      "visible_pixel_ratio": 0.17405,
+      "status": "candidate_requires_visual_review",
+      "warning": "Review this isolated candidate; segmentation may miss wisps, ties, ribbons, and hair that overlaps the face."
+    },
+    {
+      "path": "hair/edit-delta/long-straight-delta-candidate.png",
+      "role": "edit_delta_long-straight",
+      "method": "pixel difference restricted to upper 48% of canvas",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "sha256": "dcd8ebf07ae0450ff6ff177afe15b9b564be120d220f64e2e70d49651f52f028",
+      "visible_pixel_ratio": 0.26791,
+      "status": "candidate_requires_visual_review",
+      "warning": "This is a diagnostic patch, not the full hairstyle; it can include unintended face/background changes."
+    },
+    {
+      "path": "hair/variants/high-ponytail.png",
+      "role": "hair_variant_high-ponytail",
+      "method": "SegFormer Hair class clipped to rembg foreground",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "sha256": "6b01cb6381cf35a7d26eeb4359dea42c8dfa8250e30cec24eb7e8f942cd7eb8c",
+      "visible_pixel_ratio": 0.19031,
+      "status": "candidate_requires_visual_review",
+      "warning": "Review this isolated candidate; segmentation may miss wisps, ties, ribbons, and hair that overlaps the face."
+    },
+    {
+      "path": "hair/edit-delta/high-ponytail-delta-candidate.png",
+      "role": "edit_delta_high-ponytail",
+      "method": "pixel difference restricted to upper 48% of canvas",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "sha256": "8b2ad04cdfbeb45280e940a52a7f8d85a1ed9eb7f5d6417cbadc34710c984b9d",
+      "visible_pixel_ratio": 0.30317,
+      "status": "candidate_requires_visual_review",
+      "warning": "This is a diagnostic patch, not the full hairstyle; it can include unintended face/background changes."
+    },
+    {
+      "path": "hair/variants/twin-tails.png",
+      "role": "hair_variant_twin-tails",
+      "method": "SegFormer Hair class clipped to rembg foreground",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "sha256": "1edbda3d5ddf7fd7a45be716b67a4ff54b3138e597f91d4948d6cf3b839b8dd7",
+      "visible_pixel_ratio": 0.19498,
+      "status": "candidate_requires_visual_review",
+      "warning": "Review this isolated candidate; segmentation may miss wisps, ties, ribbons, and hair that overlaps the face."
+    },
+    {
+      "path": "hair/edit-delta/twin-tails-delta-candidate.png",
+      "role": "edit_delta_twin-tails",
+      "method": "pixel difference restricted to upper 48% of canvas",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "sha256": "015f863ebff81676b977bfb09aa916fe9e764414829feb1588ee666c81928553",
+      "visible_pixel_ratio": 0.33165,
+      "status": "candidate_requires_visual_review",
+      "warning": "This is a diagnostic patch, not the full hairstyle; it can include unintended face/background changes."
+    },
+    {
+      "path": "hair/variants/side-braid.png",
+      "role": "hair_variant_side-braid",
+      "method": "SegFormer Hair class clipped to rembg foreground",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "sha256": "d6f8843b47296772e223f24a8249f7c917e9a3ae15718a09812334f2c40c8471",
+      "visible_pixel_ratio": 0.1774,
+      "status": "candidate_requires_visual_review",
+      "warning": "Review this isolated candidate; segmentation may miss wisps, ties, ribbons, and hair that overlaps the face."
+    },
+    {
+      "path": "hair/edit-delta/side-braid-delta-candidate.png",
+      "role": "edit_delta_side-braid",
+      "method": "pixel difference restricted to upper 48% of canvas",
+      "dimensions": [
+        768,
+        1280
+      ],
+      "sha256": "db23ffb1f87fd94dfe6a6768123f83b1f5144f30e1092662ce740f124164b738",
+      "visible_pixel_ratio": 0.27713,
+      "status": "candidate_requires_visual_review",
+      "warning": "This is a diagnostic patch, not the full hairstyle; it can include unintended face/background changes."
+    }
+  ]
+}
