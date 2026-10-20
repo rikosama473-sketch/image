@@ -57,6 +57,8 @@ Remove-Item Env:OPENAI_API_KEY
 
 El puente se vincula únicamente a 127.0.0.1, lee la clave desde el entorno del proceso y la envía desde Python al endpoint oficial de edición de imágenes. El navegador nunca recibe la clave. Se permiten modelos GPT Image conocidos por la integración y se valida tipo/tamaño de las imágenes antes de enviarlas. La imagen del lienzo y la referencia opcional se envían al proveedor externo elegido; no las envíes si no deseas procesarlas en dicho servicio.
 
+El control **Variantes por solicitud** genera entre 1 y 4 salidas comparables para elegir la que mejor conserve la identidad y el diseño. Cada alternativa se muestra en miniatura; seleccionar una cambia la previsualización, y **Usar como capa** aplica solo la elegida. En GPT Image 2.5 Sunburst y Flare se habilitan también las calidades **xhigh** y **max**; los otros modelos se limitan a baja, media y alta. Generar más variantes o usar calidades superiores puede aumentar el consumo y el coste de API.
+
 La salida del modelo es una **candidata de edición, no una máscara de cabello garantizada**. La IA puede alterar otros detalles o no recuperar partes ocultas por una imagen aplanada. Revisa cada resultado antes de usarlo y conserva los proyectos JSON originales. La opción de transparencia depende de las capacidades/modelo de imagen disponible.
 
 ### Solución de problemas
