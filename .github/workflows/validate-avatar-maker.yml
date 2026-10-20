@@ -33,3 +33,5 @@ jobs:
         run: python scripts/validate_avatar_maker.py
       - name: Check PSD extraction and local AI bridge syntax
         run: python -m py_compile scripts/extract_avatar_psd_layers.py tools/avatar-maker/ai_edit_server.py
+      - name: Test local AI bridge validation and credential handling
+        run: python -m unittest discover -s tests -p 'test_avatar_ai_bridge.py'
