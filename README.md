@@ -134,11 +134,13 @@ The index is a local repository inventory, **not every anime character worldwide
 
 ### Primera guía anatómica generada dentro del repositorio
 
-La ejecución gratuita de GitHub Actions **39496066089** terminó correctamente para Pibara, con el resultado pendiente de revisión visual:
+La ejecución gratuita de GitHub Actions **39496066089** terminó correctamente para Pibara. Los enlaces siguientes fueron verificados contra archivos existentes en un commit inmutable; no dependen de cómo GitHub resuelva el nombre de una rama.
 
-- [Ver PNG generado (fondo original)](generated/character-assets/pibara/2026-10-20/run-39496066089/renders/01-full-body-anatomy-a-pose.png)
-- [Ver PNG transparente para el editor](generated/character-assets/pibara/2026-10-20/run-39496066089/transparent/01-full-body-anatomy-a-pose.png)
-- [Manifiesto, dimensiones, hashes y procedencia](generated/character-assets/pibara/2026-10-20/run-39496066089/manifest.json)
-- [Registro de la ejecución en GitHub Actions](https://github.com/rikosama473-sketch/image/actions/runs/39496066089)
+- [Ver PNG generado (fondo original)](https://github.com/rikosama473-sketch/image/blob/0efede21e292909395d617df0bf6acb861e2cdb8/generated/character-assets/pibara/2026-10-20/run-39496066089/renders/01-full-body-anatomy-a-pose.png)
+- [Ver PNG transparente para el editor](https://github.com/rikosama473-sketch/image/blob/0efede21e292909395d617df0bf6acb861e2cdb8/generated/character-assets/pibara/2026-10-20/run-39496066089/transparent/01-full-body-anatomy-a-pose.png)
+- [Ver hoja de contacto](https://github.com/rikosama473-sketch/image/blob/0efede21e292909395d617df0bf6acb861e2cdb8/generated/character-assets/pibara/2026-10-20/run-39496066089/contact-sheet.jpg)
+- [Manifiesto, dimensiones, hashes y procedencia](https://github.com/rikosama473-sketch/image/blob/0efede21e292909395d617df0bf6acb861e2cdb8/generated/character-assets/pibara/2026-10-20/run-39496066089/manifest.json)
+- [Prompts usados](https://github.com/rikosama473-sketch/image/blob/0efede21e292909395d617df0bf6acb861e2cdb8/generated/character-assets/pibara/2026-10-20/run-39496066089/PROMPTS.md)
+- [Ver ejecución de GitHub Actions](https://github.com/rikosama473-sketch/image/actions/runs/39496066089)
 
-Los dos PNG conservan el lienzo de **768×1280**. La salida transparente registra aproximadamente un 67 % de píxeles transparentes y no tiene advertencia automática de calidad del recorte. Esto solo valida las métricas alfa, no la fidelidad anatómica ni el parecido: su manifiesto mantiene \`needs_visual_identity_review\` hasta comprobar la imagen.
+Ambos PNG conservan el lienzo de **768×1280**. La salida transparente registra aproximadamente un 67 % de píxeles transparentes y no tiene advertencia automática de calidad del recorte. Eso valida las métricas alfa, no la fidelidad anatómica ni el parecido. La identidad sigue marcada como pendiente de revisión visual.
