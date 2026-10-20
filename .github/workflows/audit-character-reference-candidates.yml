@@ -1,0 +1,85 @@
+name: Audit source metadata for character references
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out image inventory and audit tools
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            .github
+            scripts
+            data
+            docs
+          sparse-checkout-cone-mode: true
+
+      - name: Install metadata reader
+        run: python -m pip install --disable-pip-version-check "Pillow>=10"
+
+      - name: Extract embedded prompts and model metadata
+        run: python scripts/extract_generation_metadata.py --root . --output data/cache/generation-metadata.csv
+
+      - name: Locate possible named character references without guessing
+        run: |
+          python - <<'PY'
+          import csv, json, re
+          from pathlib import Path
+          root = Path(".")
+          source_names = {"pibara", "pibra", "chie", "sunna"}
+          token_re = re.compile(r"(?<![A-Za-z0-9])(?:pibara|pibra|chie|sunna)(?![A-Za-z0-9])", re.I)
+          rows = []
+          with (root / "data/cache/generation-metadata.csv").open(encoding="utf-8-sig", newline="") as handle:
+              for row in csv.DictReader(handle):
+                  path = row.get("path", "")
+                  if path.startswith(("generated/", "data/cache/")):
+                      continue
+                  source_text = " ".join([
+                      path,
+                      row.get("prompt", ""),
+                      row.get("negative_prompt", ""),
+                      row.get("base_model_identifier", ""),
+                      row.get("lora_identifiers", ""),
+                  ])
+                  matches = sorted({match.group(0).lower() for match in token_re.finditer(source_text)})
+                  if matches:
+                      rows.append({
+                          "path": path,
+                          "matches": matches,
+                          "metadata_present": row.get("metadata_present") == "true",
+                          "prompt_excerpt": (row.get("prompt") or "")[:500],
+                          "base_model_identifier": row.get("base_model_identifier") or None,
+                          "lora_identifiers": row.get("lora_identifiers") or None,
+                      })
+          report = {
+              "policy": "Candidate discovery only. A filename or prompt keyword does not prove character identity; visual review remains required.",
+              "source_images_scanned": sum(1 for line in (root / "data/cache/generation-metadata.csv").read_text(encoding="utf-8-sig").splitlines()[1:] if line.strip()),
+              "candidate_count": len(rows),
+              "matches": rows,
+          }
+          out = root / "data/cache/character-reference-candidates.json"
+          out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          print(f"Candidate references found: {len(rows)}")
+          for row in rows[:100]:
+              print(json.dumps(row, ensure_ascii=False))
+          PY
+
+      - name: Upload audit report for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: character-reference-metadata-audit-${{ github.run_id }}
+          path: |
+            data/cache/generation-metadata.csv
+            data/cache/character-reference-candidates.json
+          if-no-files-found: error
+          retention-days: 14
