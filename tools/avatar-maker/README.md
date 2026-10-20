@@ -14,7 +14,7 @@ KIRA es un creador 2D sencillo, de un solo archivo HTML, para construir un avata
 
 El repositorio contiene muchas ilustraciones completas, pero eso no significa que cada archivo sea una pieza aislada y alineada. KIRA no las convierte automáticamente en cabello o ropa: así se evita cortar píxeles incorrectos sin avisar.
 
-Para incorporar piezas propias, primero extraé cabello, ropa o accesorios como PNG/WebP con fondo transparente usando el editor manual en `tools/manual-character-editor/`. En KIRA elegí **Cargar pieza PNG**. Después seleccioná el orden de la capa (detrás, sobre ropa, sobre cabello o por encima de todo), y movela con el mouse o ajustá X/Y, tamaño y opacidad.
+Para incorporar piezas propias, primero extraé cabello, ropa o accesorios como PNG/WebP con fondo transparente usando el editor manual en `tools/manual-character-editor/`. En KIRA elegí **Cargar pieza PNG**. Después seleccioná el orden de la capa (cabello trasero, sobre ropa, sobre cabello o por encima de todo), y movela con el mouse o ajustá X/Y, tamaño y opacidad.
 
 Los diseños exportados conservan los archivos importados dentro de su JSON de proyecto. Las ilustraciones originales del repositorio no se modifican. Los archivos elegidos en tu computadora se procesan localmente en el navegador.
 
