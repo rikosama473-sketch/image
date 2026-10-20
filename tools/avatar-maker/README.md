@@ -72,7 +72,7 @@ Referencia de la integración: [guía oficial de edición de imágenes de OpenAI
 
 ## Biblioteca visual del repositorio
 
-La pestaña **Biblioteca** carga \`assets/image-library.json\`, un índice de **759 imágenes rasterizadas que ya existen en el repositorio**. Permite buscar por nombre/ruta, paginar resultados y filtrar por los campos de procedencia, licencia y permiso de entrenamiento. Al elegir una imagen se utiliza como retrato base completo, nunca como cabello u otra capa semántica por defecto.
+La pestaña **Biblioteca** carga \`assets/image-library.json\`, un índice inicial de **759 imágenes rasterizadas preexistentes**; las nuevas generaciones se agregan automáticamente al catálogo. Permite buscar por nombre/ruta, paginar resultados y filtrar por los campos de procedencia, licencia y permiso de entrenamiento. Al elegir una imagen se utiliza como retrato base completo, nunca como cabello u otra capa semántica por defecto.
 
 **Límite de procedencia:** el índice no es una enciclopedia de todo el anime ni prueba que cada imagen esté licenciada. Gran parte de las imágenes tiene procedencia/licencia/permiso sin revisar. Un nombre PixAI o numérico es solo una pista. Antes de publicar, redistribuir o usar para entrenar, revisa el origen real y sus condiciones. Los nuevos packs deben incorporarse con fuente, autor, licencia, hash, estado de revisión y categoría; prioriza bibliotecas con permiso claro y referencias propias.
 
@@ -85,8 +85,19 @@ La pestaña **Anatomía** tiene dos flujos:
 
 Para sacar piezas del arte original, oculta primero la guía anatómica y cualquier otra capa superpuesta. Pinta dentro de la silueta con un pincel pequeño en los bordes. Este es un flujo de selección manual asistida; no es un segmentador semántico automático. Si el fondo del retrato es opaco, los píxeles incluidos en la zona pintada también se conservan: revisa el PNG exportado y elimina los restos antes de aprobar la pieza.
 
-La exportación individual conserva coordenadas, por lo que las piezas pueden recomponerse en el editor. No existe todavía garantía de segmentación perfecta de cabello/ojos/ropa en las 759 imágenes; cada pieza extraída queda pendiente de revisión.
+La exportación individual conserva coordenadas, por lo que las piezas pueden recomponerse en el editor. No existe todavía garantía de segmentación perfecta de cabello/ojos/ropa en el inventario ni en las nuevas imágenes; cada pieza extraída queda pendiente de revisión.
 
 ## Modelos y controles API
 
 Los nombres GPT Image 2.5 Sunburst y Flare, GPT Image 2 y GPT Image 1.5 se mantienen en el selector. La llamada utiliza el endpoint oficial de edición, una entrada por imagen base y una imagen de referencia opcional. La máscara transparente solo se envía cuando hay trazos. Consulta la documentación oficial de [edición de imágenes](https://developers.openai.com/api/reference/resources/images/methods/edit) para disponibilidad, límites y compatibilidad de los modelos.
+
+
+### Resultado anatómico generado en el repositorio
+
+La primera ejecución automatizada para Pibara completó el paquete \`anatomy-guide-1\` en GitHub Actions. Consulta los archivos en la carpeta [run-39496066089](../../generated/character-assets/pibara/2026-10-20/run-39496066089/):
+
+- \`renders/01-full-body-anatomy-a-pose.png\` — render de referencia.
+- \`transparent/01-full-body-anatomy-a-pose.png\` — versión con fondo quitado para el editor.
+- \`manifest.json\` — prompt, modelo público, dimensiones, hashes y estado de revisión.
+
+El manifiesto marca la guía como pendiente de revisión visual. La máscara alfa se generó correctamente por métricas, pero revisa contorno, rostro, manos, pies y proporciones antes de usarla como referencia definitiva.
