@@ -4,7 +4,7 @@ on:
   schedule:
     # Resume the oldest incomplete asset pack once per day. The free public
     # ZeroGPU Space currently permits only a small anonymous inference quota.
-    - cron: "15 8 * * *"
+    - cron: "30 14 * * *"
   workflow_dispatch:
     inputs:
       character_id:
