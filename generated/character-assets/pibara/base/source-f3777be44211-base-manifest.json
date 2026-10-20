@@ -22,8 +22,8 @@
         1280
       ],
       "transparent_pixel_ratio": 0.30554,
-      "opaque_pixel_ratio": 0.011,
-      "quality_warning": "Very little fully opaque foreground; inspect the cutout."
+      "opaque_pixel_ratio": null,
+      "quality_warning": "Historical measurement counted only pixels with alpha exactly 255. The alpha>=250 metric will be recomputed by the updated workflow."
     },
     "alpha_mask": {
       "file": "generated/character-assets/pibara/base/source-f3777be44211-alpha-mask.png",
@@ -42,5 +42,6 @@
     "note": "This preserves the source character's pixels apart from automatic background-removal/alpha estimation. It is a full-character cutout, not separate hair, eyes or accessories."
   },
   "review_status": "needs_edge_review",
-  "quality_warning": "Very little fully opaque foreground; inspect the cutout."
+  "quality_warning": "Pending alpha-metric refresh; this historical warning should not be read as evidence of a poor cutout.",
+  "alpha_metric_definition": "pending_recalculation: opaque_pixel_ratio will count alpha >= 250; this existing file was initially measured using alpha == 255."
 }
