@@ -34,6 +34,12 @@ class CharacterAssetQueueTests(unittest.TestCase):
         render_dir = run_dir / "renders"
         render_dir.mkdir(parents=True, exist_ok=True)
         slug = {
+            "anatomy-sheet-4": "batch-front-a-pose",
+            "anatomy-guide-1": "full-body-anatomy-a-pose",
+            "anatomy-front-v2-1": "full-body-front-a-pose-v2",
+            "anatomy-side-1": "full-body-side-profile",
+            "anatomy-back-1": "full-body-back-view",
+            "anatomy-joint-guide-1": "full-body-joint-guide",
             "hair-core-5": "blunt-bob",
             "expressions-core-5": "happy",
             "eyes-4": "eye-catchlights",
@@ -58,15 +64,15 @@ class CharacterAssetQueueTests(unittest.TestCase):
             root = self.make_root(temp)
             task = MODULE.select_next_task(root)
             self.assertEqual(task["character_id"], "pibara")
-            self.assertEqual(task["asset_pack"], "hair-core-5")
+            self.assertEqual(task["asset_pack"], "anatomy-sheet-4")
             self.assertEqual(task["reference_image"], "from-PixAI-2034984086876227343-0.png")
 
-    def test_moves_to_next_pack_when_hair_pack_is_complete(self):
+    def test_moves_to_next_pack_when_anatomy_batch_is_complete(self):
         with tempfile.TemporaryDirectory() as temp:
             root = self.make_root(temp)
-            self.mark_complete(root, "hair-core-5")
+            self.mark_complete(root, "anatomy-sheet-4")
             task = MODULE.select_next_task(root)
-            self.assertEqual(task["asset_pack"], "expressions-core-5")
+            self.assertEqual(task["asset_pack"], "anatomy-guide-1")
 
     def test_moves_to_sunna_only_when_a_reference_is_registered(self):
         with tempfile.TemporaryDirectory() as temp:
