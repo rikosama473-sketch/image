@@ -272,12 +272,20 @@ function paintMaskSegment(a,b,subtract){
   mctx.beginPath();mctx.moveTo(a.x,a.y);mctx.lineTo(b.x,b.y);mctx.stroke();mctx.beginPath();mctx.arc(b.x,b.y,brush/2,0,Math.PI*2);mctx.fill();mctx.restore();
 }
 function paintLayerSegment(layer,a,b,restore){
+  const w=doc.width,h=doc.height;
+  const mask=makeCanvas(w,h),mc=mask.getContext("2d");
+  mc.lineCap="round";mc.lineJoin="round";mc.lineWidth=brush;mc.strokeStyle="#fff";mc.fillStyle="#fff";
+  mc.beginPath();mc.moveTo(a.x,a.y);mc.lineTo(b.x,b.y);mc.stroke();
+  mc.beginPath();mc.arc(b.x,b.y,brush/2,0,Math.PI*2);mc.fill();
   const ctx=layer.canvas.getContext("2d");
-  ctx.save();ctx.beginPath();ctx.lineCap="round";ctx.lineJoin="round";ctx.lineWidth=brush;ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
-  ctx.beginPath();ctx.arc(b.x,b.y,brush/2,0,Math.PI*2);ctx.clip();
-  if(restore){ctx.globalCompositeOperation="source-over";ctx.drawImage(layer.backup,0,0);}
-  else{ctx.globalCompositeOperation="destination-out";ctx.beginPath();ctx.arc(b.x,b.y,brush/2,0,Math.PI*2);ctx.fillStyle="#000";ctx.fill();}
-  ctx.restore();
+  if(!restore){
+    ctx.save();ctx.globalCompositeOperation="destination-out";ctx.drawImage(mask,0,0);ctx.restore();
+    return;
+  }
+  // Restore only pixels under the painted stroke from the original layer backup.
+  const patch=cloneCanvas(layer.backup),pc=patch.getContext("2d");
+  pc.globalCompositeOperation="destination-in";pc.drawImage(mask,0,0);
+  ctx.save();ctx.globalCompositeOperation="destination-out";ctx.drawImage(mask,0,0);ctx.globalCompositeOperation="source-over";ctx.drawImage(patch,0,0);ctx.restore();
 }
 function polygonApply(){
   if(polygonPoints.length<3){polygonPoints=[];redraw();return;}
@@ -399,7 +407,7 @@ function pointerDownHandler(evt){
   saveHistory();pointerDown=true;lastPoint=p;dragStart=p;view.setPointerCapture(evt.pointerId);
   if(tool==="rect"){rectangle=null;redraw();}
   else if(tool==="selectBrush"){paintMaskSegment(p,p,$("subtractSelection").checked);redraw();}
-  else if(tool==="erase"||tool==="restore"){const l=activeLayer();if(l){const ctx=l.canvas.getContext("2d");ctx.beginPath();ctx.arc(p.x,p.y,brush/2,0,Math.PI*2);if(tool==="erase"){ctx.globalCompositeOperation="destination-out";ctx.fillStyle="#000";ctx.fill();}else{ctx.save();ctx.clip();ctx.drawImage(l.backup,0,0);ctx.restore();}redraw();}}
+  else if(tool==="erase"||tool==="restore"){const l=activeLayer();if(l){const ctx=l.canvas.getContext("2d");ctx.beginPath();ctx.arc(p.x,p.y,brush/2,0,Math.PI*2);if(tool==="erase"){ctx.globalCompositeOperation="destination-out";ctx.fillStyle="#000";ctx.fill();}else{ctx.globalCompositeOperation="source-over";const mask=makeCanvas(doc.width,doc.height),mc=mask.getContext("2d");mc.beginPath();mc.arc(p.x,p.y,brush/2,0,Math.PI*2);mc.fillStyle="#fff";mc.fill();const patch=cloneCanvas(l.backup);patch.getContext("2d").globalCompositeOperation="destination-in";patch.getContext("2d").drawImage(mask,0,0);ctx.globalCompositeOperation="destination-out";ctx.drawImage(mask,0,0);ctx.globalCompositeOperation="source-over";ctx.drawImage(patch,0,0);}redraw();}}
   else if(tool==="wand"){pointerDown=false;floodMaskFromPixel(p.x,p.y,$("addWand").checked);updateHistoryButtons();}
 }
 function pointerMoveHandler(evt){
