@@ -11400,7 +11400,7 @@
     {
       "id": "generated-pibara-anatomy-guide-1-full-body-anatomy-a-pose-f3777be4",
       "catalog_id": "GEN-F3777BE4-FULL-BODY-ANATOMY-A-POSE",
-      "label": "Guía anatómica completa — Pibara",
+      "label": "Guía anatómica — identidad pendiente — Pibara",
       "path": "generated/character-assets/pibara/2026-10-20/run-39496066089/transparent/01-full-body-anatomy-a-pose.png",
       "src": "../../generated/character-assets/pibara/2026-10-20/run-39496066089/transparent/01-full-body-anatomy-a-pose.png",
       "kind": "anatomy_guide",
@@ -11418,7 +11418,8 @@
       "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
       "character_id": "pibara",
       "pack": "anatomy-guide-1",
-      "manifest_status": "needs_visual_identity_review"
+      "manifest_status": "needs_visual_identity_review",
+      "review_note": "Full-body A-pose is usable as a provisional anatomy reference, but the generated hair, eyes and clothing drift from Pibara's reference. Not approved as a faithful character sheet."
     }
   ],
   "updated_at_utc": "2026-10-20T20:57:16.091338+00:00"
