@@ -127,6 +127,18 @@ The splitter is deterministic: it does not generate alternate hairstyles and can
 
 ## IMAGE Character Creator: anatomy and image library
 
-The avatar maker now includes an **Anatomía** workspace for generating a full-body anime anatomy guide from the selected canvas reference, manually painting regions, creating transparent full-canvas PNG layers, and exporting each selected layer while preserving its original coordinates. The **Biblioteca** workspace indexes 759 raster images already present in the repository and records per-image provenance/license/training-review status.
+The avatar maker now includes an **Anatomía** workspace for generating a full-body anime anatomy guide from the selected canvas reference, manually painting regions, creating transparent full-canvas PNG layers, and exporting each selected layer while preserving its original coordinates. The **Biblioteca** workspace starts from the 759-image repository inventory and appends generated outputs to the searchable catalog, with provenance/license/training-review status kept separate.
 
 The index is a local repository inventory, **not every anime character worldwide and not blanket permission to reuse those images**. Many image sources and rights are still unreviewed. Check provenance before sharing or training on assets. A generated anatomy sheet is a reference layer, not a guaranteed segmentation of the original artwork. See [the avatar maker setup and anatomy guide](tools/avatar-maker/README.md).
+
+
+### Primera guía anatómica generada dentro del repositorio
+
+La ejecución gratuita de GitHub Actions **39496066089** terminó correctamente para Pibara, con el resultado pendiente de revisión visual:
+
+- [Ver PNG generado (fondo original)](generated/character-assets/pibara/2026-10-20/run-39496066089/renders/01-full-body-anatomy-a-pose.png)
+- [Ver PNG transparente para el editor](generated/character-assets/pibara/2026-10-20/run-39496066089/transparent/01-full-body-anatomy-a-pose.png)
+- [Manifiesto, dimensiones, hashes y procedencia](generated/character-assets/pibara/2026-10-20/run-39496066089/manifest.json)
+- [Registro de la ejecución en GitHub Actions](https://github.com/rikosama473-sketch/image/actions/runs/39496066089)
+
+Los dos PNG conservan el lienzo de **768×1280**. La salida transparente registra aproximadamente un 67 % de píxeles transparentes y no tiene advertencia automática de calidad del recorte. Esto solo valida las métricas alfa, no la fidelidad anatómica ni el parecido: su manifiesto mantiene \`needs_visual_identity_review\` hasta comprobar la imagen.
