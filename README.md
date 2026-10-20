@@ -55,6 +55,14 @@ La auditoría reporta dimensiones, modo, transparencia, SHA-256 y un hash percep
 
 La guía detallada está en [docs/DATASET_GUIDE.md](docs/DATASET_GUIDE.md), y la arquitectura y hoja de ruta en [docs/IMAGE_MODEL_STRATEGY.md](docs/IMAGE_MODEL_STRATEGY.md).
 
+## Creador sencillo de avatares
+
+KIRA es un creador 2D inspirado en los avatar makers: [abrir el código](tools/avatar-maker/index.html) y [leer la guía](tools/avatar-maker/README.md). Descarga el repositorio y abrí `tools/avatar-maker/index.html` en un navegador. No requiere paquetes, instalación ni conexión para las piezas incluidas.
+
+Permite cambiar peinados, flequillos, ojos, expresiones, ropa, colores, accesorios y fondos; crear combinaciones aleatorias; cargar PNG/WebP transparentes propios; mover y ordenar las piezas; y exportar como PNG/SVG o guardar el proyecto JSON.
+
+Las 759 imágenes de la biblioteca son principalmente ilustraciones completas, no una colección de capas listas para intercambiar. KIRA no las asigna automáticamente a pelo/cuerpo sin revisión: las piezas recortadas pueden importarse desde el editor manual en `tools/manual-character-editor/`.
+
 ## Motor de generación local y creador visual
 
 IMAGE ya incluye una primera CLI de inferencia en `ml/generate_diffusion.py` y una pequeña interfaz web local en `tools/image-creator/`. La interfaz permite configurar el modelo base, una LoRA opcional, descripción, prompt negativo, resolución, pasos, semilla, escala y perfil de memoria; muestra los resultados y conserva los parámetros junto a los PNG.
