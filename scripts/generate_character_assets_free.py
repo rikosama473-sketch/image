@@ -232,7 +232,7 @@ def ensure_base_character_cutout(root, character_id, source_path, source_path_in
         "quality_warning": cutout_details.get("quality_warning"),
     }
     if not manifest_path.exists():
-        manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+        manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     registry_path = root / "data" / "character-prompt-registry.json"
     try:
@@ -254,7 +254,7 @@ def ensure_base_character_cutout(root, character_id, source_path, source_path_in
         })
     if not character.get("asset_generation_status"):
         character["asset_generation_status"] = "base_cutout_created_variants_waiting_for_free_inference"
-    registry_path.write_text(json.dumps(registry, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    registry_path.write_text(json.dumps(registry, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("Created/verified base cutout and alpha mask: " + cutout_path.relative_to(root).as_posix(), flush=True)
     return manifest
 
