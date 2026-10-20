@@ -80,6 +80,8 @@ La pestaña **Biblioteca** carga \`assets/image-library.json\`, un índice inici
 
 ## Taller anatómico y separación de piezas
 
+El generador de GitHub Actions también incluye el paquete **`anatomy-sheet-4`**, que intenta producir cuatro archivos separados en una única ejecución: vista frontal A, perfil lateral, vista trasera y guía de articulaciones. Las salidas exitosas se indexan en la biblioteca; si el proveedor gratuito limita la generación a mitad de la tarea, se conservan los PNG ya producidos y el manifiesto registra el estado parcial.
+
 La pestaña **Anatomía** tiene dos flujos:
 
 1. **Generar guía anatómica.** Usa la ilustración que está en el lienzo como referencia y solicita una ficha de cuerpo entero en pose A, con proporciones y articulaciones legibles. Hay una variante tipo maniquí de estudio. La salida se revisa en IA Studio y se agrega como capa separada; no sustituye la ilustración original. Requiere la clave API local y puede generar cargos.
