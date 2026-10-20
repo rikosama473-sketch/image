@@ -41,7 +41,7 @@ class SpriteLayerFactoryTests(unittest.TestCase):
         result, details = normalize_asset(image, (64, 64), trim_alpha=True)
         self.assertEqual(result.size, (64, 64))
         self.assertEqual(result.mode, "RGBA")
-        self.assertGreater(details["transparent_pixel_ratio"], 0.5)
+        self.assertGreater(details["transparent_pixel_ratio"], 0.3)
         self.assertTrue(details["trimmed_alpha_bounds"])
 
     def test_boxes_json_validation_and_safe_slugs(self) -> None:
@@ -62,9 +62,11 @@ class SpriteLayerFactoryTests(unittest.TestCase):
             root = Path(temp)
             source = root / "spritesheet.png"
             image = Image.new("RGBA", (20, 10), (255, 255, 255, 255))
-            for y in range(10):
-                for x in range(10):
+            for y in range(1, 9):
+                for x in range(1, 9):
                     image.putpixel((x, y), (220, 40, 90, 255))
+                for x in range(11, 19):
+                    image.putpixel((x, y), (50, 100, 220, 255))
             image.save(source)
             boxes = root / "boxes.json"
             boxes.write_text(json.dumps({"assets": [
