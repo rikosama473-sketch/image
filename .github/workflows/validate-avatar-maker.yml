@@ -31,5 +31,5 @@ jobs:
           node-version: "22"
       - name: Validate illustration assets and inline JavaScript
         run: python scripts/validate_avatar_maker.py
-      - name: Check PSD extraction script syntax
-        run: python -m py_compile scripts/extract_avatar_psd_layers.py
+      - name: Check PSD extraction and local AI bridge syntax
+        run: python -m py_compile scripts/extract_avatar_psd_layers.py tools/avatar-maker/ai_edit_server.py
