@@ -21,12 +21,14 @@
     "api_name": "/edit",
     "openai_api_key_used": false,
     "inference_api_paid_by_openai": false,
-    "ref_boost": 4.0,
+    "ref_boost": 4,
     "grounding_px": 768,
-    "lora_scale": 1.0,
+    "lora_scale": 1,
     "steps": 12,
-    "guidance_scale": 0.0,
-    "background_removed": true
+    "guidance_scale": 0,
+    "background_removed": true,
+    "cutout_metric_definition": "opaque_pixel_ratio counts pixels with alpha >= 250, not only alpha == 255.",
+    "cutout_metric_corrected_after_run": true
   },
   "required_asset_ids": [
     "blunt-bob",
@@ -64,8 +66,8 @@
           1280
         ],
         "transparent_pixel_ratio": 0.39927,
-        "opaque_pixel_ratio": 0.01428,
-        "quality_warning": "Very little fully opaque foreground; inspect the cutout."
+        "opaque_pixel_ratio": 0.55432,
+        "quality_warning": null
       }
     },
     {
@@ -91,8 +93,8 @@
           1280
         ],
         "transparent_pixel_ratio": 0.35092,
-        "opaque_pixel_ratio": 0.00459,
-        "quality_warning": "Very little fully opaque foreground; inspect the cutout."
+        "opaque_pixel_ratio": 0.58185,
+        "quality_warning": null
       }
     },
     {
@@ -118,8 +120,8 @@
           1280
         ],
         "transparent_pixel_ratio": 0.3094,
-        "opaque_pixel_ratio": 0.02246,
-        "quality_warning": "Very little fully opaque foreground; inspect the cutout."
+        "opaque_pixel_ratio": 0.6352,
+        "quality_warning": null
       }
     }
   ],
