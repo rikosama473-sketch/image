@@ -27,7 +27,8 @@ ALLOWED_MODELS = {
     "gpt-image-2",
     "gpt-image-1.5",
 }
-ALLOWED_QUALITIES = {"low", "medium", "high"}
+ALLOWED_QUALITIES = {"low", "medium", "high", "xhigh", "max"}
+PREMIUM_QUALITY_MODELS = {"gpt-image-2.5-sunburst", "gpt-image-2.5-flare"}
 ALLOWED_BACKGROUNDS = {"auto", "opaque", "transparent"}
 MAX_BODY_BYTES = 42 * 1024 * 1024
 MAX_DATA_URL_CHARS = 20_000_000
@@ -63,6 +64,20 @@ def validate_mask_data_url(value: object) -> str:
     if not mask_url.startswith("data:image/png;base64,"):
         raise ValueError("La máscara de edición debe ser PNG con transparencia.")
     return mask_url
+
+
+def validate_quality(model: object, quality: object) -> str:
+    if not isinstance(quality, str) or quality not in ALLOWED_QUALITIES:
+        raise ValueError("La calidad debe ser low, medium, high, xhigh o max.")
+    if quality in {"xhigh", "max"} and model not in PREMIUM_QUALITY_MODELS:
+        raise ValueError("La calidad xhigh/max solo está disponible para GPT Image 2.5 Sunburst y Flare.")
+    return quality
+
+
+def validate_variants(value: object) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or not 1 <= value <= 4:
+        raise ValueError("Elegí entre 1 y 4 variantes por solicitud.")
+    return value
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -136,9 +151,8 @@ class Handler(SimpleHTTPRequestHandler):
             model = body.get("model", "gpt-image-2.5-sunburst")
             if model not in ALLOWED_MODELS:
                 raise ValueError("Modelo no permitido por el editor.")
-            quality = body.get("quality", "medium")
-            if quality not in ALLOWED_QUALITIES:
-                raise ValueError("La calidad debe ser low, medium o high.")
+            quality = validate_quality(model, body.get("quality", "medium"))
+            variants = validate_variants(body.get("variants", 1))
             background = body.get("background", "auto")
             if background not in ALLOWED_BACKGROUNDS:
                 raise ValueError("El fondo debe ser auto, opaque o transparent.")
@@ -166,7 +180,7 @@ class Handler(SimpleHTTPRequestHandler):
                 "quality": quality,
                 "background": background,
                 "output_format": "png",
-                "n": 1,
+                "n": variants,
             }
             if mask_payload:
                 payload["mask"] = mask_payload
@@ -200,14 +214,21 @@ class Handler(SimpleHTTPRequestHandler):
                 return
 
             data = api_result.get("data") or []
-            image_base64 = data[0].get("b64_json") if data and isinstance(data[0], dict) else None
-            if not isinstance(image_base64, str) or not image_base64:
+            images_base64 = [
+                item.get("b64_json")
+                for item in data
+                if isinstance(item, dict) and isinstance(item.get("b64_json"), str) and item.get("b64_json")
+            ]
+            if not images_base64:
                 self.send_json(502, {"error": "El proveedor terminó la solicitud, pero no devolvió una imagen PNG."})
                 return
             self.send_json(200, {
-                "image_base64": image_base64,
+                "image_base64": images_base64[0],
+                "images_base64": images_base64,
                 "model": model,
                 "quality": quality,
+                "variants_requested": variants,
+                "variants_returned": len(images_base64),
                 "size_requested": output_size,
                 "background": background,
                 "usage": api_result.get("usage"),
