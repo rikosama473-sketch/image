@@ -21,6 +21,15 @@ BASE = (
     "as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. "
     "Do not turn the anime illustration photorealistic."
 )
+ANATOMY_BASE = (
+    "Identity-guided anime character model-sheet reconstruction from the supplied image. "
+    "Unlike a normal local edit, do not preserve the input crop or bust framing: extend/recompose the composition into a complete full-body figure from the highest hair strand to both soles. "
+    "Maintain the recognizable character face, hair identity, palette and costume motifs while making a modest opaque anatomy-study outfit if needed for legibility. "
+    "Show clear anime body construction with a symmetric neutral A-pose, arms slightly separated from torso, fingers and both feet visible, balanced proportions, clean 2D line art and cel shading. "
+    "Subtle joint landmarks for shoulders, elbows, wrists, pelvis, knees and ankles are acceptable; avoid labels or writing. "
+    "One figure only, front view, centered portrait canvas, no panels, no extra poses, no added character, no text, no watermark, no photorealism. "
+    "The output is a reference guide for later manual component separation, not a claim that individual body parts are already segmented."
+)
 PACKS = {
     "hair-core-5": [
         ("blunt-bob", "Change only the hairstyle to a neat blunt bob ending at the chin, smooth rounded silhouette, clear blunt ends. Keep the original hair color."),
@@ -47,6 +56,9 @@ PACKS = {
         ("hair-clip", "Add one small simple hair clip near the temple, coordinated with the existing palette. Preserve existing accessories; change nothing else."),
         ("star-pin", "Add one tiny star-shaped hair pin near the temple. Preserve existing accessories; change nothing else."),
         ("headband", "Add one slim, simple headband that fits the existing palette without covering the eyes. Preserve existing accessories; change nothing else."),
+    ],
+    "anatomy-guide-1": [
+        ("full-body-anatomy-a-pose", "Reconstruct this exact anime character as a full-body model sheet in a neutral, symmetrical A-pose. Show the entire figure from hair top to soles, with visible hands, fingers, knees, ankles and feet. Preserve recognizable face, signature hairstyle, palette and clothing identity, but adapt clothing into an opaque fitted design suitable for an anatomy reference. Add subtle construction lines for shoulder line, ribcage, pelvis, elbows, wrists, knees and ankles. Clean anime line art and cel shading, single centered figure, no text, no labels, no watermark, no collage."),
     ],
     "face-details-4": [
         ("freckles", "Add a very light cluster of tiny freckles across the upper cheeks only. Do not alter face shape, skin tone, expression, eye color, hairstyle or accessories."),
@@ -311,6 +323,66 @@ def make_contact_sheet(items, target):
     target.parent.mkdir(parents=True, exist_ok=True)
     sheet.save(target, format="JPEG", quality=88, optimize=True)
 
+def update_image_library(root, character_id, source_path, source_sha, pack, run_id, records):
+    """Index generated PNG outputs without upgrading their review/license status."""
+    library_path = root / "tools" / "avatar-maker" / "assets" / "image-library.json"
+    if not library_path.is_file():
+        print("WARNING: image-library.json is absent from the workflow checkout; generated PNGs remain in the output manifest.")
+        return
+    try:
+        library = json.loads(library_path.read_text(encoding="utf-8"))
+        assets = library.get("assets")
+        if not isinstance(assets, list):
+            raise ValueError("assets must be a list")
+    except Exception as exc:
+        fail("Could not update the image library safely: " + str(exc))
+
+    existing_paths = {item.get("path") for item in assets if isinstance(item, dict)}
+    for record in records:
+        layer = record.get("transparent_layer") or {}
+        rel = layer.get("file") or (record.get("render") or {}).get("file")
+        if not rel:
+            continue
+        raster = root / str(rel)
+        if not raster.is_file():
+            continue
+        relative = raster.relative_to(root).as_posix()
+        if relative in existing_paths:
+            continue
+        anatomy = pack == "anatomy-guide-1"
+        asset_id = "generated-" + character_id + "-" + pack + "-" + str(record.get("asset_id") or "asset") + "-" + source_sha[:8]
+        display_name = "Guía anatómica completa" if anatomy else ("Variante " + str(record.get("asset_id") or "anime"))
+        if character_id:
+            display_name += " — " + character_id.capitalize()
+        if not anatomy:
+            display_name += " — " + pack
+        assets.append({
+            "id": asset_id,
+            "catalog_id": "GEN-" + source_sha[:8].upper() + "-" + str(record.get("asset_id") or "asset").upper(),
+            "label": display_name,
+            "path": relative,
+            "src": "../../" + relative,
+            "kind": "anatomy_guide" if anatomy else "generated_full_illustration",
+            "origin_hint": "Generated in repository workflow via the public image-edit Space; source: " + source_path + "; run: " + str(run_id),
+            "visual_review": "needs_visual_identity_review",
+            "license_review": "unreviewed",
+            "training_permission": "unreviewed",
+            "tags": ["Anatomía", "Cuerpo completo"] if anatomy else ["Generado", pack],
+            "size_bytes": raster.stat().st_size,
+            "sha256_git_blob": "",
+            "sha256": layer.get("sha256") or (record.get("render") or {}).get("sha256"),
+            "source_sha256": source_sha,
+            "character_id": character_id,
+            "pack": pack,
+            "manifest_status": "needs_visual_identity_review",
+        })
+        existing_paths.add(relative)
+    library["assets"] = assets
+    library["asset_count"] = len(assets)
+    library["updated_at_utc"] = datetime.now(timezone.utc).isoformat()
+    library_path.write_text(json.dumps(library, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
 def update_registry(path, cid, source, sha, run_record):
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
@@ -445,7 +517,7 @@ def main():
 
     generation_error = None
     for i, slug, change in missing:
-        prompt = BASE + " Requested single change: " + change
+        prompt = (ANATOMY_BASE + " Requested anatomy model-sheet result: " + change) if args.pack == "anatomy-guide-1" else (BASE + " Requested single change: " + change)
         seed = max(0, min(2147483647, args.seed + i - 1))
         flat = renders / f"{i:02d}-{slug}.png"
         print(f"Generating {args.character}/{slug} ({len(created)+1}/{len(all_slugs)})", flush=True)
@@ -559,6 +631,7 @@ def main():
         "status": "complete_pending_visual_review" if pack_status == "complete" else "partial_generation_pending_visual_review",
     }
     update_registry(root / "data" / "character-prompt-registry.json", args.character, path, source_sha, run_record)
+    update_image_library(root, args.character, path, source_sha, args.pack, run_id, complete_records)
     print(f"Saved {complete_count}/{len(all_slugs)} assets for {args.character}/{args.pack} in {out.relative_to(root)}.")
     print("The original reference was not modified.")
     if generation_error:
