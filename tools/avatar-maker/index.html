@@ -275,7 +275,7 @@ function anatomyWorkspace(root){
   '<section class="ai-mask-panel"><div class="ai-mask-head"><strong>Selección sobre el lienzo central</strong><span id="anatomyMaskMode">'+(aiMaskMode?"Pincel activo":"Pincel apagado")+'</span></div><p>La pintura rosa es solo una superposición de selección: no se imprime en el PNG original ni en la pieza exportada.</p></section>';
  $("anatomyOpenLibrary").onclick=()=>{
   state.category="library";state.pill="Todos";renderNav();gallery();
-  setTimeout(()=>{const search=$("librarySearch");if(search){search.value="Guía anatómica completa";search.dispatchEvent(new Event("input"));}},250);
+  setTimeout(()=>{const search=$("librarySearch");if(search){search.value="Guía anatómica";search.dispatchEvent(new Event("input"));}},250);
  };
  $("anatomyGenerate").onclick=()=>requestAnatomyGuide("character");
  $("anatomyPose").onclick=()=>requestAnatomyGuide("mannequin");
