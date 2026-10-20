@@ -101,6 +101,29 @@ class AnatomyAssetLinkTests(unittest.TestCase):
         self.assertEqual(len(entries), 3)
         self.assertTrue(all(a.get("visual_review") == "needs_visual_identity_review" and a.get("review_note") for a in entries))
 
+    def test_anatomy_gallery_embeds_existing_relative_images(self):
+        gallery = ROOT / "generated" / "character-assets" / "pibara" / "2026-10-20" / "run-39500149462" / "ANATOMY-GALLERY.md"
+        self.assertTrue(gallery.is_file())
+        content = gallery.read_text(encoding="utf-8")
+        for relative in (
+            "contact-sheet.jpg",
+            "renders/01-batch-front-a-pose.png",
+            "transparent/01-batch-front-a-pose.png",
+            "renders/02-batch-side-profile.png",
+            "transparent/02-batch-side-profile.png",
+            "renders/03-batch-back-view.png",
+            "transparent/03-batch-back-view.png",
+            "manifest.json",
+            "PROMPTS.md",
+        ):
+            with self.subTest(path=relative):
+                self.assertTrue((gallery.parent / relative).is_file())
+                self.assertIn(f"]({relative})", content)
+        gallery_url = "https://github.com/rikosama473-sketch/image/blob/daac2bf07e295bb7aac1484618b277312e25861f/generated/character-assets/pibara/2026-10-20/run-39500149462/ANATOMY-GALLERY.md"
+        for markdown in README_FILES:
+            with self.subTest(markdown=str(markdown)):
+                self.assertIn(gallery_url, markdown.read_text(encoding="utf-8"))
+
     def test_manifest_links_match_generated_files(self):
         manifest_path = ROOT / EXPECTED_ASSET_DIR / "manifest.json"
         self.assertTrue(manifest_path.is_file())
