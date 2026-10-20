@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IMAGE — Editor manual de capas</title>
+<style>
+:root{color-scheme:dark;--bg:#111318;--panel:#191c23;--panel2:#20242d;--line:#343946;--text:#f2f3f7;--muted:#a7adba;--accent:#88b8ff;--accent2:#b9d5ff;--danger:#ff8e8e;--good:#9fddb5}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.4 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+button,input,select{font:inherit}button{color:var(--text);border:1px solid var(--line);background:#282d37;border-radius:8px;padding:8px 10px;cursor:pointer;transition:background .12s,border-color .12s}button:hover{background:#343b49;border-color:#68758d}button:disabled{opacity:.38;cursor:not-allowed}.primary{background:#31598d;border-color:#5f90d2}.primary:hover{background:#3c6ba7}.danger{color:#ffc0c0}.small{padding:5px 8px;font-size:12px}.active-tool{background:#d5e6ff;color:#111c2a;border-color:#fff}.muted{color:var(--muted)}.tiny{font-size:12px}.mono{font-variant-numeric:tabular-nums}
+header{display:flex;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid var(--line);background:#171a20;flex-wrap:wrap;position:sticky;top:0;z-index:5}
+.brand{font-weight:800;letter-spacing:.04em;font-size:15px}.brand em{color:var(--accent);font-style:normal}.header-sub{color:var(--muted);font-size:12px}.header-spacer{flex:1}.header-actions{display:flex;gap:7px;flex-wrap:wrap}
+main{display:grid;grid-template-columns:230px minmax(0,1fr) 250px;min-height:calc(100vh - 58px)}
+aside{background:var(--panel);padding:14px;border-right:1px solid var(--line);min-width:0}aside.right{border-right:0;border-left:1px solid var(--line)}.section{padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--line)}.section:last-child{border-bottom:0}.section h2{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin:0 0 10px;font-weight:800}
+.tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.tool-grid button{min-height:48px;text-align:left;font-size:12px;display:flex;flex-direction:column;gap:3px}.tool-grid strong{font-size:17px;line-height:1}
+.field{display:flex;flex-direction:column;gap:5px;margin:9px 0}.field>label,.field-label{font-size:12px;color:var(--muted)}input[type=range]{width:100%;accent-color:#8cbaff}input[type=text],select{width:100%;padding:8px;border:1px solid var(--line);border-radius:7px;background:#101319;color:var(--text)}input[type=checkbox]{accent-color:#8cbaff}input[type=file]{display:none}
+.row{display:flex;gap:7px;align-items:center}.row>*{min-width:0}.row button{flex:1}.stack{display:flex;flex-direction:column;gap:7px}.checkrow{display:flex;gap:8px;align-items:flex-start;font-size:12px;color:#d0d4dd;margin:9px 0}.checkrow input{margin-top:3px}.help{font-size:11px;color:var(--muted);margin:8px 0 0;line-height:1.5}
+#workspace{min-width:0;display:flex;flex-direction:column;overflow:hidden}.workspace-bar{display:flex;align-items:center;gap:9px;min-height:42px;padding:8px 12px;background:#161920;border-bottom:1px solid var(--line);flex-wrap:wrap}.workspace-bar .spacer{flex:1}.workspace-bar output{font-size:12px;color:var(--muted);min-width:48px;text-align:right}
+#canvasArea{flex:1;min-height:480px;max-height:calc(100vh - 122px);overflow:auto;position:relative;background-color:#2b2e36;background-image:linear-gradient(45deg,#353943 25%,transparent 25%),linear-gradient(-45deg,#353943 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#353943 75%),linear-gradient(-45deg,transparent 75%,#353943 75%);background-size:24px 24px;background-position:0 0,0 12px,12px -12px,-12px 0}
+.canvas-wrap{min-width:100%;min-height:100%;width:max-content;display:flex;align-items:flex-start;justify-content:flex-start;padding:24px}.canvas-stack{position:relative;line-height:0;box-shadow:0 5px 28px #0007;flex:none}.canvas-stack canvas{position:absolute;top:0;left:0;display:block;image-rendering:auto}.canvas-stack canvas:first-child{position:relative}
+#viewCanvas{touch-action:none;cursor:crosshair}#overlayCanvas{pointer-events:none}
+.statusbar{border-top:1px solid var(--line);background:#171a20;padding:8px 12px;font-size:12px;display:flex;gap:10px;align-items:center;min-height:35px}.statusbar #status{color:#d2d8e3;flex:1}.statusbar .status-count{color:var(--muted)}
+.layer-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}.layer-item{display:grid;grid-template-columns:28px minmax(0,1fr) 28px;align-items:center;gap:6px;padding:7px;background:#12151b;border:1px solid var(--line);border-radius:8px}.layer-item.selected{border-color:var(--accent);background:#243247}.layer-item .eye{padding:4px 0;background:transparent;border:0}.layer-item .layer-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}.layer-item .layer-name:hover{text-decoration:underline}.layer-item .order{font-size:10px;color:var(--muted);text-align:center}
+.tag{border:1px solid #485164;background:#252b36;padding:2px 5px;border-radius:5px;font-size:10px;color:#cdd5e4;display:inline-block}.warning{color:#ffd7a1;font-size:11px;line-height:1.5;background:#322a20;border:1px solid #5a4834;border-radius:8px;padding:9px}.ok{color:var(--good)}.danger-note{color:#ffbbbb}
+@media(max-width:1050px){main{grid-template-columns:190px minmax(0,1fr)}aside.right{grid-column:1/-1;border-left:0;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:14px}#canvasArea{max-height:none}}
+@media(max-width:650px){main{display:flex;flex-direction:column}aside{border-right:0;border-bottom:1px solid var(--line)}.tool-grid{grid-template-columns:repeat(3,1fr)}#canvasArea{min-height:55vh}.header-sub{display:none}aside.right{display:block}.canvas-wrap{padding:12px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><em>IMAGE</em> / EDITOR MANUAL</div>
+  <div class="header-sub">Recortes precisos, máscaras manuales y PNG con transparencia</div>
+  <div class="header-spacer"></div>
+  <div class="header-actions">
+    <button id="openImageBtn" class="primary">Abrir imagen</button>
+    <button id="sampleBtn">Ejemplo Pibara</button>
+    <button id="openProjectBtn">Abrir proyecto</button>
+    <button id="saveProjectBtn">Guardar proyecto</button>
+    <button id="exportCompositeBtn">Exportar composición PNG</button>
+  </div>
+  <input id="imageFile" type="file" accept="image/png,image/jpeg,image/webp">
+  <input id="projectFile" type="file" accept=".json,application/json">
+</header>
+<main>
+  <aside>
+    <section class="section">
+      <h2>Herramientas</h2>
+      <div class="tool-grid">
+        <button data-tool="rect" class="active-tool"><strong>▧</strong>Rectángulo / crop</button>
+        <button data-tool="polygon"><strong>◇</strong>Polígono / lazo</button>
+        <button data-tool="selectBrush"><strong>✎</strong>Pincel de selección</button>
+        <button data-tool="erase"><strong>⌫</strong>Borrar píxeles</button>
+        <button data-tool="restore"><strong>↶</strong>Restaurar original</button>
+        <button data-tool="wand"><strong>✣</strong>Varita mágica</button>
+      </div>
+      <p class="help">Polígono: clic en cada punto y doble clic para cerrar. Pincel: pintá directamente sobre el área que querés aislar. El borde se hace manual; ninguna IA decide por vos.</p>
+    </section>
+    <section class="section">
+      <h2>Precisión</h2>
+      <div class="field">
+        <label for="brushSize">Tamaño pincel: <output id="brushLabel">18 px</output></label>
+        <input id="brushSize" type="range" min="1" max="100" value="18">
+      </div>
+      <div class="field">
+        <label for="tolerance">Tolerancia de color: <output id="tolLabel">22</output></label>
+        <input id="tolerance" type="range" min="0" max="120" value="22">
+      </div>
+      <label class="checkrow"><input id="subtractSelection" type="checkbox"> Restar de la selección al pintar / dibujar</label>
+      <label class="checkrow"><input id="addWand" type="checkbox"> Sumar varita a la selección existente</label>
+      <div class="row">
+        <button id="undoBtn" title="Ctrl+Z">↶ Deshacer</button>
+        <button id="redoBtn" title="Ctrl+Y">↷ Rehacer</button>
+      </div>
+    </section>
+    <section class="section">
+      <h2>Selección actual</h2>
+      <div class="stack">
+        <button id="invertSelectionBtn">Invertir selección</button>
+        <button id="clearSelectionBtn">Limpiar selección</button>
+        <button id="exportSelectionBtn" class="primary">Exportar selección a PNG</button>
+        <button id="deleteSelectionBtn" class="danger">Hacer transparente el área</button>
+      </div>
+      <label class="checkrow"><input id="trimExport" type="checkbox" checked> Recortar el PNG al borde del contenido</label>
+      <p class="help">La selección es una máscara editable. Exportar crea un PNG transparente; no modifica el original salvo que uses borrar, extraer o recortar.</p>
+    </section>
+    <section class="section">
+      <h2>Fondo</h2>
+      <button id="removeBgBtn" class="primary" style="width:100%">Quitar fondo conectado a bordes</button>
+      <p class="help">Elimina colores parecidos al píxel de la esquina superior izquierda, solo si están conectados al borde. Mirá el resultado y usá Deshacer o Restaurar si toca el personaje.</p>
+    </section>
+  </aside>
+  <section id="workspace">
+    <div class="workspace-bar">
+      <span id="docInfo" class="muted">Abrí una imagen para empezar.</span>
+      <div class="spacer"></div>
+      <button id="fitBtn" class="small">Ajustar a pantalla</button>
+      <label class="tiny muted" for="zoomRange">Zoom</label>
+      <input id="zoomRange" type="range" min="10" max="400" value="100" style="width:110px">
+      <output id="zoomLabel">100%</output>
+    </div>
+    <div id="canvasArea">
+      <div class="canvas-wrap" id="canvasWrap">
+        <div class="canvas-stack" id="canvasStack">
+          <canvas id="viewCanvas" width="1" height="1" aria-label="Lienzo de edición"></canvas>
+          <canvas id="overlayCanvas" width="1" height="1"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="statusbar"><span id="status">Esperando una imagen. Todo el procesamiento de píxeles ocurre en tu navegador.</span><span id="statusCount" class="status-count"></span></div>
+  </section>
+  <aside class="right">
+    <section class="section">
+      <h2>Capas</h2>
+      <div class="row">
+        <button id="newLayerBtn">+ Capa vacía</button>
+        <button id="extractLayerBtn" class="primary">Extraer selección</button>
+      </div>
+      <label class="checkrow"><input id="clearSourceAfterExtract" type="checkbox" checked> Quitar del original después de extraer (recomendado para separar cabello/ropa)</label>
+      <div id="layers" class="layer-list"></div>
+      <div class="field">
+        <label for="layerNameInput">Nombre de capa activa</label>
+        <input id="layerNameInput" type="text" placeholder="Ej. cabello delantero">
+      </div>
+      <div class="row">
+        <button id="renameLayerBtn">Renombrar</button>
+        <button id="deleteLayerBtn" class="danger">Eliminar capa</button>
+      </div>
+      <div class="field">
+        <label for="layerOpacity">Opacidad de la capa: <output id="opacityLabel">100%</output></label>
+        <input id="layerOpacity" type="range" min="0" max="100" value="100">
+      </div>
+      <div class="row">
+        <button id="exportLayerBtn" class="primary">Exportar capa PNG</button>
+      </div>
+      <p class="help">Las capas conservan las coordenadas del lienzo para que puedas superponer cabello, cabeza y cuerpo sin que cambien de sitio.</p>
+    </section>
+    <section class="section">
+      <h2>Recortar lienzo</h2>
+      <button id="cropCanvasBtn" class="primary" style="width:100%">Recortar todo al rectángulo</button>
+      <p class="help">Usá la herramienta Rectángulo y marcá el encuadre. Esto recorta todas las capas a la misma zona y mantiene el alineado.</p>
+      <div class="warning">El editor no inventa los píxeles ocultos detrás del cabello o la cabeza. Para un cambio de peinado limpio, separá las piezas con el pincel/lazo y luego retocá el cuello o la zona tapada.</div>
+    </section>
+    <section class="section">
+      <h2>Flujo recomendado</h2>
+      <p class="help">1. Abrí la imagen original.<br>2. Elegí Polígono o Pincel y marcá el cabello.<br>3. Pulsá “Extraer selección” y dejá activada la opción de quitarlo del original.<br>4. Repetí para flequillo, cabello trasero, cara, ropa o accesorios.<br>5. Ocultá/mostrá capas para comprobar cortes y exportá cada PNG.<br>6. Guardá el proyecto JSON para continuar después.</p>
+    </section>
+  </aside>
+</main>
+<script>
+(function(){
+"use strict";
+const $ = function(id){return document.getElementById(id);};
+const view = $("viewCanvas"), overlay = $("overlayCanvas");
+const vctx = view.getContext("2d",{willReadFrequently:true});
+const octx = overlay.getContext("2d");
+const maskCanvas = document.createElement("canvas");
+let mctx = maskCanvas.getContext("2d",{willReadFrequently:true});
+let doc = {width:1,height:1,layers:[]};
+let activeId = null, tool = "rect", brush = 18, tolerance = 22, zoom = 1;
+let rectangle = null, polygonPoints = [], pointerDown = false, lastPoint = null, dragStart = null;
+let undoStack = [], redoStack = [], strokeSnapshot = null;
+let nextLayerId = 1;
+const MAX_HISTORY = 5;
+const RAW_SAMPLE = "https://raw.githubusercontent.com/rikosama473-sketch/image/main/from-PixAI-2034984086876227343-0.png";
+const canEdit = function(){return doc.layers.length>0;};
+const activeLayer = function(){return doc.layers.find(function(l){return l.id===activeId;})||null;};
+const makeCanvas = function(w,h){const c=document.createElement("canvas");c.width=w;c.height=h;return c;};
+const cloneCanvas = function(source){const c=makeCanvas(source.width,source.height);c.getContext("2d").drawImage(source,0,0);return c;};
+const blankCanvas = function(w,h){return makeCanvas(w,h);};
+function setStatus(message, tone){$("status").textContent=message;$("status").className=tone||"";$("statusCount").textContent=canEdit()?doc.width+" × "+doc.height+" · "+doc.layers.length+" capas":"";}
+function newLayer(name, sourceCanvas){
+  const id="layer-"+(nextLayerId++);
+  const c=sourceCanvas?cloneCanvas(sourceCanvas):makeCanvas(doc.width,doc.height);
+  const backup=cloneCanvas(c);
+  const layer={id:id,name:name||("Capa "+nextLayerId),canvas:c,backup:backup,visible:true,opacity:1};
+  doc.layers.push(layer);activeId=id;return layer;
+}
+function resizeMask(w,h){maskCanvas.width=w;maskCanvas.height=h;mctx=maskCanvas.getContext("2d",{willReadFrequently:true});}
+function setupCanvasSize(w,h){
+  doc.width=w;doc.height=h;view.width=w;view.height=h;overlay.width=w;overlay.height=h;resizeMask(w,h);
+  view.style.width=(w*zoom)+"px";view.style.height=(h*zoom)+"px";overlay.style.width=(w*zoom)+"px";overlay.style.height=(h*zoom)+"px";
+  $("docInfo").textContent=w+" × "+h+" px";redraw();
+}
+function getPoint(evt){
+  const r=view.getBoundingClientRect();
+  return {x:Math.max(0,Math.min(doc.width-1,Math.floor((evt.clientX-r.left)*(doc.width/r.width)))),y:Math.max(0,Math.min(doc.height-1,Math.floor((evt.clientY-r.top)*(doc.height/r.height))))};
+}
+function snapshot(){
+  if(!canEdit())return null;
+  return {
+    width:doc.width,height:doc.height,activeId:activeId,nextLayerId:nextLayerId,
+    layers:doc.layers.map(function(l){return {id:l.id,name:l.name,visible:l.visible,opacity:l.opacity,png:l.canvas.toDataURL("image/png"),backup:l.backup.toDataURL("image/png")};}),
+    selection:maskCanvas.toDataURL("image/png"),rectangle:rectangle?Object.assign({},rectangle):null,tool:tool
+  };
+}
+function saveHistory(){
+  if(!canEdit())return;
+  undoStack.push(snapshot());if(undoStack.length>MAX_HISTORY)undoStack.shift();redoStack=[];
+  updateHistoryButtons();
+}
+function loadCanvasUrl(url){
+  return new Promise(function(resolve,reject){
+    const img=new Image();img.onload=function(){const c=makeCanvas(img.naturalWidth,img.naturalHeight);c.getContext("2d").drawImage(img,0,0);resolve(c);};img.onerror=function(){reject(new Error("No se pudo leer una imagen guardada en el proyecto."));};img.src=url;
+  });
+}
+async function restoreSnapshot(snap){
+  doc={width:snap.width,height:snap.height,layers:[]};nextLayerId=snap.nextLayerId||1;
+  for(const l of snap.layers){doc.layers.push({id:l.id,name:l.name,visible:l.visible,opacity:l.opacity,canvas:await loadCanvasUrl(l.png),backup:await loadCanvasUrl(l.backup)});}
+  activeId=snap.activeId;rectangle=snap.rectangle;tool=snap.tool||"rect";polygonPoints=[];
+  const mask=await loadCanvasUrl(snap.selection);resizeMask(snap.width,snap.height);mctx.drawImage(mask,0,0);
+  setupCanvasSize(snap.width,snap.height);setTool(tool);renderLayers();redraw();
+}
+async function undo(){if(!undoStack.length)return;const current=snapshot();redoStack.push(current);const prior=undoStack.pop();await restoreSnapshot(prior);updateHistoryButtons();setStatus("Cambio deshecho.");}
+async function redo(){if(!redoStack.length)return;const current=snapshot();undoStack.push(current);const next=redoStack.pop();await restoreSnapshot(next);updateHistoryButtons();setStatus("Cambio rehecho.");}
+function updateHistoryButtons(){$("undoBtn").disabled=!undoStack.length;$("redoBtn").disabled=!redoStack.length;}
+function renderLayers(){
+  const holder=$("layers");holder.innerHTML="";
+  doc.layers.slice().reverse().forEach(function(l){
+    const item=document.createElement("div");item.className="layer-item"+(l.id===activeId?" selected":"");
+    const eye=document.createElement("button");eye.className="eye";eye.textContent=l.visible?"◉":"○";eye.title=l.visible?"Ocultar capa":"Mostrar capa";
+    eye.addEventListener("click",function(e){e.stopPropagation();saveHistory();l.visible=!l.visible;renderLayers();redraw();});
+    const name=document.createElement("button");name.className="layer-name";name.textContent=l.name;name.title="Seleccionar "+l.name;name.addEventListener("click",function(){activeId=l.id;renderLayers();syncLayerControls();redraw();});
+    const order=document.createElement("span");order.className="order";order.textContent=String(doc.layers.indexOf(l)+1);
+    item.append(eye,name,order);holder.appendChild(item);
+  });
+  syncLayerControls();
+}
+function syncLayerControls(){
+  const l=activeLayer();$("layerNameInput").value=l?l.name:"";$("layerOpacity").value=l?Math.round(l.opacity*100):100;$("opacityLabel").textContent=(l?Math.round(l.opacity*100):100)+"%";
+  $("layerNameInput").disabled=!l;$("layerOpacity").disabled=!l;$("renameLayerBtn").disabled=!l;$("deleteLayerBtn").disabled=!l;$("exportLayerBtn").disabled=!l;
+  $("extractLayerBtn").disabled=!canEdit()||selectionEmpty();$("deleteSelectionBtn").disabled=!l||selectionEmpty();$("exportSelectionBtn").disabled=!l||selectionEmpty();$("cropCanvasBtn").disabled=!rectangle;
+}
+function selectionEmpty(){
+  if(!canEdit())return true;
+  const d=mctx.getImageData(0,0,maskCanvas.width,maskCanvas.height).data;
+  for(let i=3;i<d.length;i+=4)if(d[i])return false;
+  return true;
+}
+function redraw(){
+  if(!canEdit()){vctx.clearRect(0,0,view.width,view.height);octx.clearRect(0,0,overlay.width,overlay.height);return;}
+  vctx.clearRect(0,0,doc.width,doc.height);
+  doc.layers.forEach(function(l){if(!l.visible)return;vctx.save();vctx.globalAlpha=l.opacity;vctx.drawImage(l.canvas,0,0);vctx.restore();});
+  octx.clearRect(0,0,doc.width,doc.height);
+  if(!selectionEmpty()){
+    const tinted=makeCanvas(doc.width,doc.height),tc=tinted.getContext("2d");
+    tc.drawImage(maskCanvas,0,0);tc.globalCompositeOperation="source-in";tc.fillStyle="#55caff";tc.fillRect(0,0,doc.width,doc.height);octx.save();octx.globalAlpha=.32;octx.drawImage(tinted,0,0);octx.restore();
+  }
+  if(rectangle){octx.save();octx.strokeStyle="#ffe28c";octx.lineWidth=Math.max(1,2/zoom);octx.setLineDash([7/zoom,4/zoom]);octx.strokeRect(rectangle.x+.5,rectangle.y+.5,rectangle.w,rectangle.h);octx.restore();}
+  if(polygonPoints.length){octx.save();octx.beginPath();polygonPoints.forEach(function(p,i){if(i)octx.lineTo(p.x,p.y);else octx.moveTo(p.x,p.y);});octx.strokeStyle="#ffe28c";octx.lineWidth=Math.max(1,2/zoom);octx.setLineDash([4/zoom,3/zoom]);octx.stroke();octx.restore();}
+  syncLayerControls();
+}
+function setZoom(value){
+  zoom=Math.max(.1,Math.min(4,value));view.style.width=(doc.width*zoom)+"px";view.style.height=(doc.height*zoom)+"px";overlay.style.width=(doc.width*zoom)+"px";overlay.style.height=(doc.height*zoom)+"px";
+  $("zoomRange").value=Math.round(zoom*100);$("zoomLabel").textContent=Math.round(zoom*100)+"%";
+}
+function fitView(){
+  if(!canEdit())return;
+  const area=$("canvasArea"),pad=40;
+  zoom=Math.max(.1,Math.min(1,(area.clientWidth-pad)/doc.width,(area.clientHeight-pad)/doc.height));
+  setZoom(zoom);redraw();
+}
+function setTool(name){
+  tool=name;polygonPoints=[];
+  document.querySelectorAll("[data-tool]").forEach(function(b){b.classList.toggle("active-tool",b.dataset.tool===name);});
+  const cursors={rect:"crosshair",polygon:"crosshair",selectBrush:"crosshair",erase:"cell",restore:"copy",wand:"crosshair"};
+  view.style.cursor=cursors[name]||"crosshair";
+  setStatus(({rect:"Arrastrá un rectángulo para seleccionar o recortar.",polygon:"Marcá puntos; doble clic para cerrar el polígono.",selectBrush:"Pintá la región que querés aislar.",erase:"Pintá para borrar píxeles de la capa activa.",restore:"Pintá para restaurar píxeles de la copia original.",wand:"Clic en un color para seleccionar el área conectada."})[name]||"Herramienta lista.");
+  redraw();
+}
+function paintMaskSegment(a,b,subtract){
+  mctx.save();mctx.lineCap="round";mctx.lineJoin="round";mctx.lineWidth=brush;mctx.globalCompositeOperation=subtract?"destination-out":"source-over";mctx.strokeStyle="#ffffff";mctx.fillStyle="#ffffff";
+  mctx.beginPath();mctx.moveTo(a.x,a.y);mctx.lineTo(b.x,b.y);mctx.stroke();mctx.beginPath();mctx.arc(b.x,b.y,brush/2,0,Math.PI*2);mctx.fill();mctx.restore();
+}
+function paintLayerSegment(layer,a,b,restore){
+  const radius=Math.ceil(brush/2)+1;
+  const left=Math.max(0,Math.floor(Math.min(a.x,b.x)-radius));
+  const top=Math.max(0,Math.floor(Math.min(a.y,b.y)-radius));
+  const right=Math.min(doc.width,Math.ceil(Math.max(a.x,b.x)+radius+1));
+  const bottom=Math.min(doc.height,Math.ceil(Math.max(a.y,b.y)+radius+1));
+  const w=Math.max(1,right-left),h=Math.max(1,bottom-top);
+  const mask=makeCanvas(w,h),mc=mask.getContext("2d");
+  mc.lineCap="round";mc.lineJoin="round";mc.lineWidth=brush;mc.strokeStyle="#fff";mc.fillStyle="#fff";
+  mc.beginPath();mc.moveTo(a.x-left,a.y-top);mc.lineTo(b.x-left,b.y-top);mc.stroke();
+  mc.beginPath();mc.arc(b.x-left,b.y-top,brush/2,0,Math.PI*2);mc.fill();
+  const ctx=layer.canvas.getContext("2d");
+  if(!restore){ctx.save();ctx.globalCompositeOperation="destination-out";ctx.drawImage(mask,left,top);ctx.restore();return;}
+  // Work only within the brush bounds; restore source pixels from this layer's backup.
+  const patch=makeCanvas(w,h),pc=patch.getContext("2d");
+  pc.drawImage(layer.backup,left,top,w,h,0,0,w,h);
+  pc.globalCompositeOperation="destination-in";pc.drawImage(mask,0,0);
+  ctx.save();ctx.globalCompositeOperation="destination-out";ctx.drawImage(mask,left,top);ctx.globalCompositeOperation="source-over";ctx.drawImage(patch,left,top);ctx.restore();
+}
+function polygonApply(){
+  if(polygonPoints.length<3){polygonPoints=[];redraw();return;}
+  saveHistory();
+  mctx.save();mctx.globalCompositeOperation=$("subtractSelection").checked?"destination-out":"source-over";mctx.fillStyle="#fff";mctx.beginPath();polygonPoints.forEach(function(p,i){if(i)mctx.lineTo(p.x,p.y);else mctx.moveTo(p.x,p.y);});mctx.closePath();mctx.fill();mctx.restore();
+  polygonPoints=[];rectangle=null;redraw();setStatus("Polígono añadido a la máscara de selección.");
+}
+function rectangleApply(a,b){
+  const x=Math.min(a.x,b.x),y=Math.min(a.y,b.y),w=Math.max(1,Math.abs(b.x-a.x)),h=Math.max(1,Math.abs(b.y-a.y));
+  rectangle={x:x,y:y,w:w,h:h};
+  mctx.clearRect(0,0,doc.width,doc.height);mctx.fillStyle="#fff";mctx.fillRect(x,y,w,h);
+}
+function floodMaskFromPixel(x,y,add){
+  const l=activeLayer();if(!l)return;
+  const ctx=l.canvas.getContext("2d",{willReadFrequently:true}),w=doc.width,h=doc.height;
+  const pixels=ctx.getImageData(0,0,w,h).data,idx=y*w+x,seedR=pixels[idx*4],seedG=pixels[idx*4+1],seedB=pixels[idx*4+2],seedA=pixels[idx*4+3];
+  if(seedA<8){setStatus("Ese píxel es transparente; elegí un punto opaco.");return;}
+  if(!add)mctx.clearRect(0,0,w,h);
+  const visited=new Uint8Array(w*h),queue=new Int32Array(w*h);let head=0,tail=0;
+  queue[tail++]=idx;visited[idx]=1;const mask=mctx.getImageData(0,0,w,h);
+  while(head<tail){
+    const p=queue[head++],q=p*4;
+    mask.data[q]=255;mask.data[q+1]=255;mask.data[q+2]=255;mask.data[q+3]=255;
+    const px=p%w,py=(p/w)|0;
+    const neighbors=[px>0?p-1:-1,px+1<w?p+1:-1,py>0?p-w:-1,py+1<h?p+w:-1];
+    for(let n=0;n<4;n++){const ni=neighbors[n];if(ni<0||visited[ni])continue;visited[ni]=1;const j=ni*4;if(pixels[j+3]<8)continue;
+      if(Math.max(Math.abs(pixels[j]-seedR),Math.abs(pixels[j+1]-seedG),Math.abs(pixels[j+2]-seedB))<=tolerance)queue[tail++]=ni;
+    }
+  }
+  mctx.putImageData(mask,0,0);rectangle=null;redraw();setStatus("Selección por color creada. Revisá sus bordes y sumá/restá con el pincel si hace falta.");
+}
+function removeEdgeBackground(){
+  const l=activeLayer();if(!l)return;
+  const ctx=l.canvas.getContext("2d",{willReadFrequently:true}),w=doc.width,h=doc.height;
+  const image=ctx.getImageData(0,0,w,h),d=image.data;
+  let seed=-1;
+  for(let x=0;x<w&&seed<0;x++){let i=x*4;if(d[i+3]>10)seed=x;if(seed<0){i=((h-1)*w+x)*4;if(d[i+3]>10)seed=(h-1)*w+x;}}
+  for(let y=0;y<h&&seed<0;y++){let i=(y*w)*4;if(d[i+3]>10)seed=y*w;if(seed<0){i=(y*w+w-1)*4;if(d[i+3]>10)seed=y*w+w-1;}}
+  if(seed<0){setStatus("No se encontró un fondo opaco en los bordes.");return;}
+  const sr=d[seed*4],sg=d[seed*4+1],sb=d[seed*4+2],visited=new Uint8Array(w*h),queue=new Int32Array(w*h);let head=0,tail=0,removed=0;
+  function add(p){if(p<0||p>=w*h||visited[p])return;visited[p]=1;const i=p*4;if(d[i+3]<8)return;if(Math.max(Math.abs(d[i]-sr),Math.abs(d[i+1]-sg),Math.abs(d[i+2]-sb))>tolerance)return;queue[tail++]=p;}
+  saveHistory();
+  for(let x=0;x<w;x++){add(x);add((h-1)*w+x);}for(let y=0;y<h;y++){add(y*w);add(y*w+w-1);}
+  while(head<tail){const p=queue[head++],i=p*4;d[i+3]=0;removed++;const x=p%w,y=(p/w)|0;if(x>0)add(p-1);if(x+1<w)add(p+1);if(y>0)add(p-w);if(y+1<h)add(p+w);}
+  ctx.putImageData(image,0,0);redraw();setStatus("Fondo conectado eliminado ("+removed.toLocaleString("es-AR")+" píxeles). Si tocó el personaje, usá Deshacer y bajá la tolerancia.","ok");
+}
+function boundsOfAlpha(canvas){
+  const c=canvas.getContext("2d",{willReadFrequently:true}),w=canvas.width,h=canvas.height,d=c.getImageData(0,0,w,h).data;let minX=w,minY=h,maxX=-1,maxY=-1;
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++)if(d[(y*w+x)*4+3]>0){if(x<minX)minX=x;if(y<minY)minY=y;if(x>maxX)maxX=x;if(y>maxY)maxY=y;}
+  if(maxX<minX)return null;return{x:minX,y:minY,w:maxX-minX+1,h:maxY-minY+1};
+}
+function clippedLayerFromSelection(layer){
+  const cut=makeCanvas(doc.width,doc.height),ctx=cut.getContext("2d");ctx.drawImage(layer.canvas,0,0);ctx.globalCompositeOperation="destination-in";ctx.drawImage(maskCanvas,0,0);return cut;
+}
+function extractLayer(){
+  const source=activeLayer();if(!source||selectionEmpty()){setStatus("Primero seleccioná los píxeles que querés separar.");return;}
+  saveHistory();const cut=clippedLayerFromSelection(source);const name=$("layerNameInput").value.trim()||"Recorte "+(doc.layers.length);
+  if($("clearSourceAfterExtract").checked){const ctx=source.canvas.getContext("2d");ctx.save();ctx.globalCompositeOperation="destination-out";ctx.drawImage(maskCanvas,0,0);ctx.restore();}
+  const created=newLayer(name,cut);created.backup=cloneCanvas(cut);rectangle=null;mctx.clearRect(0,0,doc.width,doc.height);renderLayers();redraw();setStatus("Recorte separado en la capa “"+created.name+"”. Podés ocultarlo o exportarlo como PNG.");
+}
+function deleteSelection(){
+  const l=activeLayer();if(!l||selectionEmpty())return;saveHistory();const c=l.canvas.getContext("2d");c.save();c.globalCompositeOperation="destination-out";c.drawImage(maskCanvas,0,0);c.restore();redraw();setStatus("Los píxeles seleccionados ahora son transparentes en la capa activa.");
+}
+function exportCanvas(canvas,name,trim){
+  let output=canvas;
+  if(trim){const b=boundsOfAlpha(canvas);if(!b){setStatus("La capa no tiene píxeles visibles para exportar.");return;}output=makeCanvas(b.w,b.h);output.getContext("2d").drawImage(canvas,b.x,b.y,b.w,b.h,0,0,b.w,b.h);}
+  output.toBlob(function(blob){if(!blob){setStatus("No se pudo crear el PNG.");return;}const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name.endsWith(".png")?name:name+".png";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},1500);setStatus("PNG exportado: "+a.download,"ok");},"image/png");
+}
+function exportSelection(){
+  const l=activeLayer();if(!l||selectionEmpty())return;const cut=clippedLayerFromSelection(l);exportCanvas(cut,(l.name||"seleccion").replace(/[^a-z0-9_-]+/gi,"-")+"-recorte.png",$("trimExport").checked);
+}
+function exportLayer(){
+  const l=activeLayer();if(!l)return;exportCanvas(l.canvas,(l.name||"capa").replace(/[^a-z0-9_-]+/gi,"-")+".png",$("trimExport").checked);
+}
+function cropCanvas(){
+  if(!rectangle)return;
+  const r={x:Math.max(0,rectangle.x),y:Math.max(0,rectangle.y),w:Math.min(doc.width-rectangle.x,rectangle.w),h:Math.min(doc.height-rectangle.y,rectangle.h)};
+  if(r.w<1||r.h<1)return;saveHistory();
+  doc.layers.forEach(function(l){[l.canvas,l.backup].forEach(function(old){const c=makeCanvas(r.w,r.h);c.getContext("2d").drawImage(old,r.x,r.y,r.w,r.h,0,0,r.w,r.h);if(old===l.canvas)l.canvas=c;else l.backup=c;});});
+  setupCanvasSize(r.w,r.h);rectangle=null;polygonPoints=[];renderLayers();redraw();setStatus("Lienzo recortado a "+r.w+" × "+r.h+" px.");
+}
+function makeComposite(){const c=makeCanvas(doc.width,doc.height),ctx=c.getContext("2d");doc.layers.forEach(function(l){if(l.visible){ctx.save();ctx.globalAlpha=l.opacity;ctx.drawImage(l.canvas,0,0);ctx.restore();}});return c;}
+function renameActive(){const l=activeLayer();if(!l)return;const n=$("layerNameInput").value.trim();if(!n)return;l.name=n;renderLayers();setStatus("Capa renombrada.");}
+function deleteActive(){const l=activeLayer();if(!l)return;if(!confirm("¿Eliminar la capa «"+l.name+"»? Esta acción se puede deshacer."))return;saveHistory();doc.layers=doc.layers.filter(function(x){return x.id!==l.id;});activeId=doc.layers.length?doc.layers[doc.layers.length-1].id:null;renderLayers();redraw();setStatus("Capa eliminada.");}
+function newEmptyLayer(){if(!canEdit())return;saveHistory();const l=newLayer($("layerNameInput").value.trim()||"Capa nueva");renderLayers();redraw();setStatus("Capa vacía creada.");}
+function invertMask(){if(!canEdit())return;saveHistory();const image=mctx.getImageData(0,0,doc.width,doc.height);for(let i=3;i<image.data.length;i+=4)image.data[i]=255-image.data[i];mctx.putImageData(image,0,0);rectangle=null;redraw();setStatus("Selección invertida.");}
+function clearMask(){if(!canEdit())return;saveHistory();mctx.clearRect(0,0,doc.width,doc.height);rectangle=null;polygonPoints=[];redraw();setStatus("Selección limpiada.");}
+async function loadImageFromFile(file){
+  if(!file)return;const url=URL.createObjectURL(file),img=new Image();
+  img.onload=function(){doc={width:img.naturalWidth,height:img.naturalHeight,layers:[]};setupCanvasSize(doc.width,doc.height);const c=makeCanvas(doc.width,doc.height);c.getContext("2d").drawImage(img,0,0);const l=newLayer(file.name.replace(/\.[^.]+$/,""),c);l.backup=cloneCanvas(c);activeId=l.id;undoStack=[];redoStack=[];rectangle=null;polygonPoints=[];renderLayers();fitView();redraw();URL.revokeObjectURL(url);setStatus("Imagen cargada. Original intacto; trabajá en la copia editable.","ok");};
+  img.onerror=function(){URL.revokeObjectURL(url);setStatus("No se pudo abrir el archivo de imagen.","danger-note");};img.src=url;
+}
+async function loadSample(){
+  const img=new Image();img.crossOrigin="anonymous";img.onload=function(){
+    setupCanvasSize(img.naturalWidth,img.naturalHeight);const c=makeCanvas(img.naturalWidth,img.naturalHeight);c.getContext("2d").drawImage(img,0,0);doc.layers=[];const l=newLayer("Pibara — referencia");l.canvas=c;l.backup=cloneCanvas(c);activeId=l.id;undoStack=[];redoStack=[];rectangle=null;polygonPoints=[];renderLayers();fitView();redraw();setStatus("Referencia de Pibara cargada desde el repositorio. Trabajá de forma no destructiva.","ok");
+  };img.onerror=function(){setStatus("No se pudo cargar la referencia de ejemplo. Usá Abrir imagen y elegí el PNG de tu equipo.","danger-note");};img.src=RAW_SAMPLE;
+}
+async function saveProject(){
+  if(!canEdit())return;
+  const data={app:"IMAGE Manual Character Editor",version:1,width:doc.width,height:doc.height,activeId:activeId,nextLayerId:nextLayerId,rectangle:rectangle,layers:doc.layers.map(function(l){return{id:l.id,name:l.name,visible:l.visible,opacity:l.opacity,png:l.canvas.toDataURL("image/png"),backup:l.backup.toDataURL("image/png")};}),selection:maskCanvas.toDataURL("image/png")};
+  const blob=new Blob([JSON.stringify(data)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="image-character-edit-project.json";a.click();URL.revokeObjectURL(url);setStatus("Proyecto guardado. Abrí el JSON más adelante para continuar editando.","ok");
+}
+async function openProject(file){
+  if(!file)return;
+  try{
+    const data=JSON.parse(await file.text());if(data.app!=="IMAGE Manual Character Editor"||!Array.isArray(data.layers)||!data.width||!data.height)throw new Error("Ese archivo no parece un proyecto válido de IMAGE Editor.");
+    doc={width:data.width,height:data.height,layers:[]};nextLayerId=data.nextLayerId||1;
+    for(const l of data.layers){doc.layers.push({id:l.id,name:l.name,visible:l.visible!==false,opacity:typeof l.opacity==="number"?l.opacity:1,canvas:await loadCanvasUrl(l.png),backup:await loadCanvasUrl(l.backup||l.png)});}
+    activeId=data.activeId|| (doc.layers[0]&&doc.layers[0].id);setupCanvasSize(doc.width,doc.height);
+    if(data.selection){const mask=await loadCanvasUrl(data.selection);mctx.drawImage(mask,0,0);}
+    rectangle=data.rectangle||null;undoStack=[];redoStack=[];polygonPoints=[];renderLayers();fitView();redraw();setStatus("Proyecto cargado. Las capas y la selección se recuperaron.","ok");
+  }catch(err){setStatus("No se pudo abrir el proyecto: "+err.message,"danger-note");}
+}
+function pointerDownHandler(evt){
+  if(!canEdit())return;const p=getPoint(evt);
+  if(tool==="polygon"){
+    polygonPoints.push(p);redraw();setStatus("Polígono: "+polygonPoints.length+" puntos. Doble clic para cerrar.");return;
+  }
+  saveHistory();pointerDown=true;lastPoint=p;dragStart=p;view.setPointerCapture(evt.pointerId);
+  if(tool==="rect"){rectangle=null;redraw();}
+  else if(tool==="selectBrush"){paintMaskSegment(p,p,$("subtractSelection").checked);redraw();}
+  else if(tool==="erase"||tool==="restore"){const l=activeLayer();if(l){paintLayerSegment(l,p,p,tool==="restore");redraw();}}
+  else if(tool==="wand"){pointerDown=false;floodMaskFromPixel(p.x,p.y,$("addWand").checked);updateHistoryButtons();}
+}
+function pointerMoveHandler(evt){
+  if(!pointerDown||!canEdit())return;const p=getPoint(evt);
+  if(tool==="rect"){rectangle={x:Math.min(dragStart.x,p.x),y:Math.min(dragStart.y,p.y),w:Math.max(1,Math.abs(p.x-dragStart.x)),h:Math.max(1,Math.abs(p.y-dragStart.y))};redraw();}
+  else if(tool==="selectBrush"){paintMaskSegment(lastPoint,p,$("subtractSelection").checked);lastPoint=p;redraw();}
+  else if(tool==="erase"||tool==="restore"){const l=activeLayer();if(l){paintLayerSegment(l,lastPoint,p,tool==="restore");lastPoint=p;redraw();}}
+}
+function pointerUpHandler(evt){
+  if(!pointerDown)return;pointerDown=false;
+  if(tool==="rect"&&dragStart){const p=getPoint(evt);rectangleApply(dragStart,p);redraw();setStatus("Rectángulo seleccionado. Podés exportarlo, extraerlo o recortar todo el lienzo.");}
+  dragStart=null;lastPoint=null;updateHistoryButtons();
+}
+document.querySelectorAll("[data-tool]").forEach(function(b){b.addEventListener("click",function(){setTool(b.dataset.tool);});});
+view.addEventListener("pointerdown",pointerDownHandler);view.addEventListener("pointermove",pointerMoveHandler);view.addEventListener("pointerup",pointerUpHandler);view.addEventListener("pointercancel",pointerUpHandler);
+view.addEventListener("dblclick",function(evt){if(tool==="polygon"){evt.preventDefault();polygonApply();}});
+$("openImageBtn").addEventListener("click",function(){$("imageFile").click();});
+$("imageFile").addEventListener("change",function(e){loadImageFromFile(e.target.files[0]);e.target.value="";});
+$("sampleBtn").addEventListener("click",loadSample);
+$("openProjectBtn").addEventListener("click",function(){$("projectFile").click();});
+$("projectFile").addEventListener("change",function(e){openProject(e.target.files[0]);e.target.value="";});
+$("saveProjectBtn").addEventListener("click",saveProject);
+$("exportCompositeBtn").addEventListener("click",function(){if(canEdit())exportCanvas(makeComposite(),"composicion-image.png",false);});
+$("brushSize").addEventListener("input",function(){brush=Number(this.value);$("brushLabel").textContent=brush+" px";});
+$("tolerance").addEventListener("input",function(){tolerance=Number(this.value);$("tolLabel").textContent=tolerance;});
+$("undoBtn").addEventListener("click",undo);$("redoBtn").addEventListener("click",redo);
+$("invertSelectionBtn").addEventListener("click",invertMask);$("clearSelectionBtn").addEventListener("click",clearMask);
+$("exportSelectionBtn").addEventListener("click",exportSelection);$("deleteSelectionBtn").addEventListener("click",deleteSelection);
+$("removeBgBtn").addEventListener("click",removeEdgeBackground);
+$("extractLayerBtn").addEventListener("click",extractLayer);$("newLayerBtn").addEventListener("click",newEmptyLayer);
+$("renameLayerBtn").addEventListener("click",renameActive);$("deleteLayerBtn").addEventListener("click",deleteActive);
+$("exportLayerBtn").addEventListener("click",exportLayer);
+$("layerOpacity").addEventListener("input",function(){const l=activeLayer();if(l){l.opacity=Number(this.value)/100;$("opacityLabel").textContent=this.value+"%";redraw();}});
+$("cropCanvasBtn").addEventListener("click",cropCanvas);
+$("fitBtn").addEventListener("click",fitView);$("zoomRange").addEventListener("input",function(){setZoom(Number(this.value)/100);});
+window.addEventListener("keydown",function(e){
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="z"){e.preventDefault();if(e.shiftKey)redo();else undo();}
+  else if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="y"){e.preventDefault();redo();}
+  else if(e.key==="Escape"&&polygonPoints.length){polygonPoints=[];redraw();setStatus("Polígono cancelado.");}
+});
+window.addEventListener("resize",function(){if(canEdit())fitView();});
+setTool("rect");updateHistoryButtons();
+})();
+</script>
+</body>
+</html>
