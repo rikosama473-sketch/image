@@ -1,0 +1,6 @@
+# Install CPU-only PyTorch separately before these packages:
+# python -m pip install --index-url https://download.pytorch.org/whl/cpu torch
+Pillow>=10,<13
+rembg[cpu]>=2.0.60,<3
+transformers>=4.44,<5
+pytest>=8,<9
