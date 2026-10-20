@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "character_id": "pibara",
+  "pack": "hair-core-5",
+  "pack_status": "complete",
+  "created_at_utc": "2026-10-20T15:06:24.105491+00:00",
+  "source": {
+    "repository": "rikosama473-sketch/image",
+    "ref": "40c8919936418ede8368cdf3308cb89896a92407",
+    "path": "from-PixAI-2034984086876227343-0.png",
+    "url": "https://raw.githubusercontent.com/rikosama473-sketch/image/40c8919936418ede8368cdf3308cb89896a92407/from-PixAI-2034984086876227343-0.png",
+    "sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+    "dimensions": [
+      768,
+      1280
+    ]
+  },
+  "generator": {
+    "space_id": "conradlocke/krea2-identity-edit",
+    "space_url": "https://huggingface.co/spaces/conradlocke/krea2-identity-edit",
+    "api_name": "/edit",
+    "openai_api_key_used": false,
+    "inference_api_paid_by_openai": false,
+    "ref_boost": 4.0,
+    "grounding_px": 768,
+    "lora_scale": 1.0,
+    "steps": 12,
+    "guidance_scale": 0.0,
+    "background_removed": true
+  },
+  "required_asset_ids": [
+    "blunt-bob",
+    "long-straight",
+    "high-ponytail",
+    "twin-tails",
+    "side-braid"
+  ],
+  "completed_asset_ids": [
+    "blunt-bob",
+    "long-straight",
+    "high-ponytail",
+    "twin-tails",
+    "side-braid"
+  ],
+  "variants": [
+    {
+      "index": 1,
+      "asset_id": "blunt-bob",
+      "change": "Change only the hairstyle to a neat blunt bob ending at the chin, smooth rounded silhouette, clear blunt ends. Keep the original hair color.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Change only the hairstyle to a neat blunt bob ending at the chin, smooth rounded silhouette, clear blunt ends. Keep the original hair color.",
+      "requested_seed": 1201,
+      "returned_seed": 1201,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39427500253/renders/01-blunt-bob.png",
+        "sha256": "cfad8ca17bcb5b52640b70a0a51db0ec6a4cffa15110f32ce1e92de3e71608ab",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39427500253/transparent/01-blunt-bob.png",
+        "sha256": "1ea997c8f0da300e61044793a10b8322a45a2dbe3f6cd18308106a419a4c00b4",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.39927,
+        "opaque_pixel_ratio": 0.55432,
+        "quality_warning": null
+      }
+    },
+    {
+      "index": 2,
+      "asset_id": "long-straight",
+      "change": "Change only the hairstyle to long straight hair falling below the shoulders, smooth strands and a clean silhouette. Keep the original hair color.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Change only the hairstyle to long straight hair falling below the shoulders, smooth strands and a clean silhouette. Keep the original hair color.",
+      "requested_seed": 1202,
+      "returned_seed": 1202,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39427500253/renders/02-long-straight.png",
+        "sha256": "bf64a51389d23444c10d6aec47bd24c65733ba6be00ecca7db2fe59b1d273c13",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39427500253/transparent/02-long-straight.png",
+        "sha256": "ad4c5e2ae5be7286824ebc36da904b80ce1d85b03ef41a7ef56a9545d7adfb3d",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.35092,
+        "opaque_pixel_ratio": 0.58185,
+        "quality_warning": null
+      }
+    },
+    {
+      "index": 3,
+      "asset_id": "high-ponytail",
+      "change": "Change only the hairstyle to a high ponytail tied at the crown, flowing length and restrained framing strands. Keep the original hair color.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Change only the hairstyle to a high ponytail tied at the crown, flowing length and restrained framing strands. Keep the original hair color.",
+      "requested_seed": 1203,
+      "returned_seed": 1203,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39427500253/renders/03-high-ponytail.png",
+        "sha256": "6185218c54b909dcfdfd0ed14d8b2e7d9223ffeaa52da3054d2ace28bf15d621",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39427500253/transparent/03-high-ponytail.png",
+        "sha256": "de705418af87e67a34535e1a49e1bfd0cd6a8cf9e511d51a8d6c7d8346e56878",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.3094,
+        "opaque_pixel_ratio": 0.6352,
+        "quality_warning": null
+      }
+    },
+    {
+      "index": 4,
+      "asset_id": "twin-tails",
+      "change": "Change only the hairstyle to balanced twin tails tied on both sides, matching volume and length. Keep the original hair color.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Change only the hairstyle to balanced twin tails tied on both sides, matching volume and length. Keep the original hair color.",
+      "requested_seed": 1204,
+      "returned_seed": 1204,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39445227631/renders/04-twin-tails.png",
+        "sha256": "9940c4c51929b34b55dbeeb07d47ec437bc7ba67c9b5a1f5c28c79a833202931",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39445227631/transparent/04-twin-tails.png",
+        "sha256": "2ab6d2a3649ebc8ab5478779975576a2e0bfd0c57d6c1c9ebfb26ef8cc6e05e6",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.29881,
+        "opaque_pixel_ratio": 0.5648,
+        "quality_warning": null
+      }
+    },
+    {
+      "index": 5,
+      "asset_id": "side-braid",
+      "change": "Change only the hairstyle to one substantial side braid resting over one shoulder, with clearly visible woven strands. Keep the original hair color.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Change only the hairstyle to one substantial side braid resting over one shoulder, with clearly visible woven strands. Keep the original hair color.",
+      "requested_seed": 1205,
+      "returned_seed": 1205,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39445227631/renders/05-side-braid.png",
+        "sha256": "0eca9c08245234579c2d23d7b8b0ec3b1d1a1746dc887e96c40eacaf21670424",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39445227631/transparent/05-side-braid.png",
+        "sha256": "6459ca8282a9e9e605efc39dfb91e4c010ae868ce0896b2128776e29b5154ccc",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.33977,
+        "opaque_pixel_ratio": 0.58971,
+        "quality_warning": null
+      }
+    }
+  ],
+  "last_error": null,
+  "review_status": "needs_visual_identity_review",
+  "warning": "Generated renders and automated transparent cutouts require review of likeness and hair/accessory edges."
+}

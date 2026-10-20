@@ -22,8 +22,8 @@
         1280
       ],
       "transparent_pixel_ratio": 0.30554,
-      "opaque_pixel_ratio": null,
-      "quality_warning": "Historical measurement counted only pixels with alpha exactly 255. The alpha>=250 metric will be recomputed by the updated workflow."
+      "opaque_pixel_ratio": 0.6215,
+      "quality_warning": null
     },
     "alpha_mask": {
       "file": "generated/character-assets/pibara/base/source-f3777be44211-alpha-mask.png",
@@ -43,5 +43,5 @@
   },
   "review_status": "needs_edge_review",
   "quality_warning": "Pending alpha-metric refresh; this historical warning should not be read as evidence of a poor cutout.",
-  "alpha_metric_definition": "pending_recalculation: opaque_pixel_ratio will count alpha >= 250; this existing file was initially measured using alpha == 255."
+  "alpha_metric_definition": "opaque_pixel_ratio counts alpha >= 250; this avoids treating rembg alpha 254 as transparent."
 }

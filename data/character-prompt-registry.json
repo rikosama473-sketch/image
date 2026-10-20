@@ -53,6 +53,19 @@
           "pack_completed_count": 3,
           "pack_total": 5,
           "status": "partial_generation_pending_visual_review"
+        },
+        {
+          "run_id": "39445227631",
+          "date": "2026-10-20",
+          "pack": "hair-core-5",
+          "source_path": "from-PixAI-2034984086876227343-0.png",
+          "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+          "manifest_path": "generated/character-assets/pibara/2026-10-20/run-39445227631/manifest.json",
+          "contact_sheet_path": "generated/character-assets/pibara/2026-10-20/run-39445227631/contact-sheet.jpg",
+          "assets_added_this_run": 2,
+          "pack_completed_count": 5,
+          "pack_total": 5,
+          "status": "complete_pending_visual_review"
         }
       ]
     },
