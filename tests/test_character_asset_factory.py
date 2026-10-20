@@ -21,6 +21,7 @@ class CharacterAssetFactoryTests(unittest.TestCase):
             "eyes-4": 4,
             "accessories-4": 4,
             "face-details-4": 4,
+            "anatomy-guide-1": 1,
         }
         self.assertEqual(set(MODULE.PACKS), set(expected))
         for name, count in expected.items():
@@ -36,6 +37,16 @@ class CharacterAssetFactoryTests(unittest.TestCase):
             for slug, instruction in variants:
                 self.assertTrue(slug.strip())
                 self.assertTrue(instruction.strip())
+
+    def test_anatomy_pack_uses_full_body_reconstruction_prompt(self):
+        self.assertEqual(len(MODULE.PACKS["anatomy-guide-1"]), 1)
+        slug, instruction = MODULE.PACKS["anatomy-guide-1"][0]
+        self.assertEqual(slug, "full-body-anatomy-a-pose")
+        self.assertIn("full-body", instruction)
+        self.assertIn("ANATOMY_BASE", MODULE.__dict__)
+        self.assertIn("do not preserve the input crop", MODULE.ANATOMY_BASE)
+        self.assertIn("hands and both feet visible", MODULE.ANATOMY_BASE)
+        self.assertIn("later manual component separation", MODULE.ANATOMY_BASE)
 
     def test_reference_validation(self):
         self.assertEqual(MODULE.validate_path("ref/character.png"), "ref/character.png")
