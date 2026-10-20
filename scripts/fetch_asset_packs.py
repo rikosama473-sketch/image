@@ -44,7 +44,7 @@ PACKS: dict[str, dict[str, Any]] = {
         "archive_name": "customizable_characters_w_samples.zip",
         "expected_bytes": 252884,
         "purpose": "Modular GIMP source and 16 sample characters at 64x96; pixel/cartoon style, useful for alignment tests.",
-    },,
+    },
     "visual-novel-characters": {
         "title": "Visual Novel Style Characters — madameberry",
         "url": "https://opengameart.org/sites/default/files/VisualNovel_Set1_MadameBerry.zip",
