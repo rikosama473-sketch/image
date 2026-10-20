@@ -72,10 +72,10 @@ class CharacterAssetFactoryTests(unittest.TestCase):
 
     def test_anatomy_sheet_batch_contains_four_distinct_views(self):
         expected = {
-            "full-body-front-a-pose-v2",
-            "full-body-side-profile",
-            "full-body-back-view",
-            "full-body-joint-guide",
+            "batch-front-a-pose",
+            "batch-side-profile",
+            "batch-back-view",
+            "batch-joint-guide",
         }
         actual = {slug for slug, _ in MODULE.PACKS["anatomy-sheet-4"]}
         self.assertEqual(actual, expected)
