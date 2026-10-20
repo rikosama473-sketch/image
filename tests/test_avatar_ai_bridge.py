@@ -53,6 +53,38 @@ class DataUrlValidationTests(unittest.TestCase):
             bridge.validate_mask_data_url(jpeg)
 
 
+class AIParameterValidationTests(unittest.TestCase):
+    def test_variants_accept_only_one_to_four_integers(self):
+        for value in (1, 2, 3, 4):
+            with self.subTest(value=value):
+                self.assertEqual(bridge.validate_variants(value), value)
+        for value in (0, 5, -1, True, False, "2", 2.0, None):
+            with self.subTest(value=value):
+                with self.assertRaises(ValueError):
+                    bridge.validate_variants(value)
+
+    def test_standard_quality_levels_for_supported_models(self):
+        for model in ("gpt-image-2", "gpt-image-1.5"):
+            for quality in ("low", "medium", "high"):
+                with self.subTest(model=model, quality=quality):
+                    self.assertEqual(bridge.validate_quality(model, quality), quality)
+
+    def test_xhigh_and_max_are_limited_to_image_25_models(self):
+        for model in ("gpt-image-2.5-sunburst", "gpt-image-2.5-flare"):
+            for quality in ("xhigh", "max"):
+                with self.subTest(model=model, quality=quality):
+                    self.assertEqual(bridge.validate_quality(model, quality), quality)
+        for model in ("gpt-image-2", "gpt-image-1.5"):
+            for quality in ("xhigh", "max"):
+                with self.subTest(model=model, quality=quality):
+                    with self.assertRaisesRegex(ValueError, "solo está disponible"):
+                        bridge.validate_quality(model, quality)
+
+    def test_unknown_quality_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, "calidad"):
+            bridge.validate_quality("gpt-image-2.5-sunburst", "ultra")
+
+
 class LocalBridgeHttpTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
