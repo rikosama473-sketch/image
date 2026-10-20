@@ -488,6 +488,12 @@ def main():
     if not created:
         fail("No reusable or newly generated images are available. " + (generation_error or ""))
 
+    if generation_error and len(created) <= len(prior):
+        # Preserve existing assets and any base-manifest refresh, but do not make
+        # a new duplicate run folder when quota prevented every new variant.
+        print("No new hairstyle variants were generated. Existing assets remain intact; no duplicate run folder will be created.", file=sys.stderr)
+        raise SystemExit(1)
+
     complete_records = [created[slug] for slug in all_slugs if slug in created]
     complete_count = len(complete_records)
     pack_status = "complete" if complete_count == len(all_slugs) else "partial"
