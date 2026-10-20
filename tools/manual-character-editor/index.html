@@ -272,20 +272,23 @@ function paintMaskSegment(a,b,subtract){
   mctx.beginPath();mctx.moveTo(a.x,a.y);mctx.lineTo(b.x,b.y);mctx.stroke();mctx.beginPath();mctx.arc(b.x,b.y,brush/2,0,Math.PI*2);mctx.fill();mctx.restore();
 }
 function paintLayerSegment(layer,a,b,restore){
-  const w=doc.width,h=doc.height;
+  const radius=Math.ceil(brush/2)+1;
+  const left=Math.max(0,Math.floor(Math.min(a.x,b.x)-radius));
+  const top=Math.max(0,Math.floor(Math.min(a.y,b.y)-radius));
+  const right=Math.min(doc.width,Math.ceil(Math.max(a.x,b.x)+radius+1));
+  const bottom=Math.min(doc.height,Math.ceil(Math.max(a.y,b.y)+radius+1));
+  const w=Math.max(1,right-left),h=Math.max(1,bottom-top);
   const mask=makeCanvas(w,h),mc=mask.getContext("2d");
   mc.lineCap="round";mc.lineJoin="round";mc.lineWidth=brush;mc.strokeStyle="#fff";mc.fillStyle="#fff";
-  mc.beginPath();mc.moveTo(a.x,a.y);mc.lineTo(b.x,b.y);mc.stroke();
-  mc.beginPath();mc.arc(b.x,b.y,brush/2,0,Math.PI*2);mc.fill();
+  mc.beginPath();mc.moveTo(a.x-left,a.y-top);mc.lineTo(b.x-left,b.y-top);mc.stroke();
+  mc.beginPath();mc.arc(b.x-left,b.y-top,brush/2,0,Math.PI*2);mc.fill();
   const ctx=layer.canvas.getContext("2d");
-  if(!restore){
-    ctx.save();ctx.globalCompositeOperation="destination-out";ctx.drawImage(mask,0,0);ctx.restore();
-    return;
-  }
-  // Restore only pixels under the painted stroke from the original layer backup.
-  const patch=cloneCanvas(layer.backup),pc=patch.getContext("2d");
+  if(!restore){ctx.save();ctx.globalCompositeOperation="destination-out";ctx.drawImage(mask,left,top);ctx.restore();return;}
+  // Work only within the brush bounds; restore source pixels from this layer's backup.
+  const patch=makeCanvas(w,h),pc=patch.getContext("2d");
+  pc.drawImage(layer.backup,left,top,w,h,0,0,w,h);
   pc.globalCompositeOperation="destination-in";pc.drawImage(mask,0,0);
-  ctx.save();ctx.globalCompositeOperation="destination-out";ctx.drawImage(mask,0,0);ctx.globalCompositeOperation="source-over";ctx.drawImage(patch,0,0);ctx.restore();
+  ctx.save();ctx.globalCompositeOperation="destination-out";ctx.drawImage(mask,left,top);ctx.globalCompositeOperation="source-over";ctx.drawImage(patch,left,top);ctx.restore();
 }
 function polygonApply(){
   if(polygonPoints.length<3){polygonPoints=[];redraw();return;}
@@ -407,7 +410,7 @@ function pointerDownHandler(evt){
   saveHistory();pointerDown=true;lastPoint=p;dragStart=p;view.setPointerCapture(evt.pointerId);
   if(tool==="rect"){rectangle=null;redraw();}
   else if(tool==="selectBrush"){paintMaskSegment(p,p,$("subtractSelection").checked);redraw();}
-  else if(tool==="erase"||tool==="restore"){const l=activeLayer();if(l){const ctx=l.canvas.getContext("2d");ctx.save();ctx.beginPath();ctx.arc(p.x,p.y,brush/2,0,Math.PI*2);if(tool==="erase"){ctx.globalCompositeOperation="destination-out";ctx.fillStyle="#000";ctx.fill();}else{ctx.globalCompositeOperation="source-over";const mask=makeCanvas(doc.width,doc.height),mc=mask.getContext("2d");mc.beginPath();mc.arc(p.x,p.y,brush/2,0,Math.PI*2);mc.fillStyle="#fff";mc.fill();const patch=cloneCanvas(l.backup);const pc=patch.getContext("2d");pc.globalCompositeOperation="destination-in";pc.drawImage(mask,0,0);ctx.globalCompositeOperation="destination-out";ctx.drawImage(mask,0,0);ctx.globalCompositeOperation="source-over";ctx.drawImage(patch,0,0);}ctx.restore();redraw();}}
+  else if(tool==="erase"||tool==="restore"){const l=activeLayer();if(l){paintLayerSegment(l,p,p,tool==="restore");redraw();}}
   else if(tool==="wand"){pointerDown=false;floodMaskFromPixel(p.x,p.y,$("addWand").checked);updateHistoryButtons();}
 }
 function pointerMoveHandler(evt){
