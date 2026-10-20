@@ -68,3 +68,25 @@ La salida del modelo es una **candidata de edición, no una máscara de cabello 
 - **Exportación PNG bloqueada**: usa el lanzador local; las imágenes que el navegador no pueda leer por CORS pueden contaminar el lienzo e impedir la exportación.
 
 Referencia de la integración: [guía oficial de edición de imágenes de OpenAI](https://developers.openai.com/api/reference/resources/images/methods/edit).
+
+
+## Biblioteca visual del repositorio
+
+La pestaña **Biblioteca** carga \`assets/image-library.json\`, un índice de **759 imágenes rasterizadas que ya existen en el repositorio**. Permite buscar por nombre/ruta, paginar resultados y filtrar por los campos de procedencia, licencia y permiso de entrenamiento. Al elegir una imagen se utiliza como retrato base completo, nunca como cabello u otra capa semántica por defecto.
+
+**Límite de procedencia:** el índice no es una enciclopedia de todo el anime ni prueba que cada imagen esté licenciada. Gran parte de las imágenes tiene procedencia/licencia/permiso sin revisar. Un nombre PixAI o numérico es solo una pista. Antes de publicar, redistribuir o usar para entrenar, revisa el origen real y sus condiciones. Los nuevos packs deben incorporarse con fuente, autor, licencia, hash, estado de revisión y categoría; prioriza bibliotecas con permiso claro y referencias propias.
+
+## Taller anatómico y separación de piezas
+
+La pestaña **Anatomía** tiene dos flujos:
+
+1. **Generar guía anatómica.** Usa la ilustración que está en el lienzo como referencia y solicita una ficha de cuerpo entero en pose A, con proporciones y articulaciones legibles. Hay una variante tipo maniquí de estudio. La salida se revisa en IA Studio y se agrega como capa separada; no sustituye la ilustración original. Requiere la clave API local y puede generar cargos.
+2. **Separar regiones manualmente.** Activa el pincel rosa, pinta dentro de la región que quieras extraer y pulsa **Crear capa separada**. El programa recorta mediante una máscara alfa y conserva el lienzo completo de 768×1280, incluido el origen superior izquierdo. Selecciona la nueva capa y pulsa **Exportar capa seleccionada** para guardar su PNG transparente alineado.
+
+Para sacar piezas del arte original, oculta primero la guía anatómica y cualquier otra capa superpuesta. Pinta dentro de la silueta con un pincel pequeño en los bordes. Este es un flujo de selección manual asistida; no es un segmentador semántico automático. Si el fondo del retrato es opaco, los píxeles incluidos en la zona pintada también se conservan: revisa el PNG exportado y elimina los restos antes de aprobar la pieza.
+
+La exportación individual conserva coordenadas, por lo que las piezas pueden recomponerse en el editor. No existe todavía garantía de segmentación perfecta de cabello/ojos/ropa en las 759 imágenes; cada pieza extraída queda pendiente de revisión.
+
+## Modelos y controles API
+
+Los nombres GPT Image 2.5 Sunburst y Flare, GPT Image 2 y GPT Image 1.5 se mantienen en el selector. La llamada utiliza el endpoint oficial de edición, una entrada por imagen base y una imagen de referencia opcional. La máscara transparente solo se envía cuando hay trazos. Consulta la documentación oficial de [edición de imágenes](https://developers.openai.com/api/reference/resources/images/methods/edit) para disponibilidad, límites y compatibilidad de los modelos.
