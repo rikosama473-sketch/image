@@ -9,6 +9,31 @@
 @media(max-width:1120px){.app{grid-template-columns:200px minmax(310px,1fr) minmax(345px,390px)}.sidebar{padding:12px 8px}.assetgrid{grid-template-columns:repeat(3,minmax(0,1fr))}.righthead,.content,.rightfoot{padding-left:12px;padding-right:12px}.thumb{height:112px}}
 @media(max-width:830px){.app{height:auto;min-height:100dvh;grid-template-columns:58px minmax(0,1fr);grid-template-rows:minmax(590px,68dvh) minmax(500px,auto)}.sidebar{grid-row:1/3;padding:8px 4px}.brand{justify-content:center;padding:0 0 9px}.brandcopy,.navbtn .label,.navbtn .chev,.nav-sep,.sidebar-footer{display:none}.navbtn{justify-content:center;padding:11px 2px}.navbtn .ico{width:auto}.work{grid-column:2;grid-row:1;grid-template-rows:minmax(0,1fr) 155px}.right{grid-column:2;grid-row:2;border-left:0;border-top:1px solid var(--line)}.stage-layout{grid-template-columns:36px minmax(0,1fr);padding-right:0}.tools{padding:10px 2px}.tool{width:29px;height:31px}.layercard{flex-basis:69px;width:69px;height:112px}.layercard img{height:77px}.assetgrid{grid-template-columns:repeat(4,minmax(0,1fr))}.thumb{height:125px}}
 @media(max-width:520px){.app{grid-template-columns:45px minmax(0,1fr);grid-template-rows:minmax(520px,64dvh) minmax(520px,auto)}.mark{font-size:27px}.navbtn{padding:10px 1px}.navbtn .ico{font-size:17px}.work{grid-template-rows:minmax(0,1fr) 140px}.stage-layout{grid-template-columns:30px minmax(0,1fr)}.tool{width:25px;height:29px;font-size:13px}.badge{top:5px;left:5px;font-size:7px}.stage-note{top:37px;left:5px;font-size:8px;max-width:62%}.stage-mini{top:5px;right:4px}.minilook{width:30px;height:42px}.nameplate{left:4px;bottom:4px;width:95px;padding:5px}.nameplate strong{font-size:12px}.nameplate p{display:none}.layers{padding:7px}.layerbar{gap:6px}.layerbar strong{font-size:9px}.layertabs{gap:7px}.layertab{font-size:8px}.layercard{flex-basis:58px;width:58px;height:100px;padding:3px}.layercard img{height:68px}.righthead{padding:10px 9px 0}.heading{font-size:15px;margin-bottom:10px}.pill{padding:8px;font-size:9px}.content,.rightfoot{padding:10px}.assetgrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.thumb{height:100px}.asset b{font-size:8px}.asset small{font-size:7px}.stylecard img{height:52px}.status{padding:8px 10px;flex-direction:column}}
+
+.ai-intro{border:1px solid #594263;background:linear-gradient(145deg,#21192f,#10233d);border-radius:10px;padding:13px;line-height:1.55}
+.ai-intro strong{display:block;font-size:15px;color:#ffd0e4;margin-bottom:5px}
+.ai-intro p{margin:0;color:#c3cfe1;font-size:10px}
+.ai-label{display:block;color:#e7edf8;font-size:11px;font-weight:800;margin-bottom:6px}
+.ai-prompt{width:100%;min-height:130px;resize:vertical;background:#07172b;color:#f3f6ff;border:1px solid #405779;border-radius:8px;padding:11px;font:12px/1.55 inherit;outline-offset:2px}
+.ai-prompt:focus,.ai-select:focus{border-color:#ff8cbd;outline:2px solid #ff8cbd44}
+.ai-select{width:100%;max-width:none;background:#0d2039;color:#f1f5ff;border:1px solid #304968;border-radius:7px;padding:9px;font-size:11px}
+.ai-control-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.ai-control-grid label{display:flex;flex-direction:column;gap:5px;color:#b6c7de;font-size:10px}
+.ai-presets{gap:6px}
+.ai-preset{font-size:9px;padding:7px}
+.ai-note{background:#171f31;border:1px solid #364967;border-radius:7px;color:#bac8dd;font-size:10px;line-height:1.55;padding:10px}
+.ai-note strong{color:#f9d3e5}
+.ai-status{font-size:10px;color:#b4c6df;line-height:1.55;border-left:3px solid #9a78b9;padding:7px 9px;background:#101d32}
+.ai-ref{display:flex;align-items:center;flex-wrap:wrap;gap:7px}
+.ai-result{border:1px solid #a85c87;background:#171b31;border-radius:9px;padding:10px;display:flex;flex-direction:column;gap:9px}
+.ai-result img{width:100%;max-height:420px;object-fit:contain;background-color:#25364b;background-image:linear-gradient(45deg,#35465a 25%,transparent 25%),linear-gradient(-45deg,#35465a 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#35465a 75%),linear-gradient(-45deg,transparent 75%,#35465a 75%);background-size:18px 18px;background-position:0 0,0 9px,9px -9px,-9px 0;border-radius:6px}
+.ai-result-title{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11px;font-weight:800;color:#ffcbe3}
+.ai-result small{font-size:9px;color:#bac7db;line-height:1.5}
+.ai-actions{display:flex;gap:6px;flex-wrap:wrap}
+.ai-actions button{flex:1}
+.btn:disabled{opacity:.55;cursor:wait}
+@media(max-width:520px){.ai-control-grid{grid-template-columns:1fr}.ai-prompt{min-height:115px}.ai-result img{max-height:320px}}
+
 </style>
 </head>
 <body>
@@ -47,7 +72,7 @@ const cats=[
 {id:"clothes",label:"Ropa",icon:"♜",pills:["Todos","Casual","Uniformes","Fantasía"]},
 {id:"accessories",label:"Accesorios",icon:"◇",pills:["Todos","Cabeza","Joyas","Otros"]},
 {id:"color",label:"Color",icon:"◉",pills:["Todos","Cabello","Piel","Ojos","Ropa"]},
-{id:"background",label:"Fondo",icon:"◌",pills:["Todos","Color","Transparencia"]}];
+{id:"background",label:"Fondo",icon:"◌",pills:["Todos","Color","Transparencia"]},{id:"ai",label:"IA Studio",icon:"✧",pills:["Editar","Variaciones","Estilo"]}];
 const looks=[
 {id:"bob",label:"Bob recto",src:"../../generated/character-assets/pibara/2026-10-20/run-39427500253/transparent/01-blunt-bob.png",render:"../../generated/character-assets/pibara/2026-10-20/run-39427500253/renders/01-blunt-bob.png",tags:["Cortos"]},
 {id:"long",label:"Largo liso",src:"../../generated/character-assets/pibara/2026-10-20/run-39427500253/transparent/02-long-straight.png",render:"../../generated/character-assets/pibara/2026-10-20/run-39427500253/renders/02-long-straight.png",tags:["Largos"]},
@@ -71,6 +96,8 @@ const backgrounds=[["Noche","#071426"],["Grafito","#263346"],["Pizarra","#526178
 const styles=[{id:"trigger",label:"Trigger",filter:"none"},{id:"madhouse",label:"Madhouse",filter:"saturate(.94) contrast(1.04)"},{id:"classic",label:"Clásico",filter:"saturate(.78)"},{id:"chibi",label:"Chibi",filter:"saturate(1.1) brightness(1.04)"}];
 let state={look:"ponytail",category:"hair",pill:"Todos",background:"#e8e4e5",transparent:false,checker:true,style:"trigger",name:"Pibara",layers:[],selected:"base",lighting:1};
 let pending=null,to=null,drag=null;
+let aiResult=null,aiBusy=false,aiReferenceDataUrl="",aiReferenceName="";
+let aiSettings={prompt:"",model:"gpt-image-2.5-sunburst",quality:"medium",background:"auto",direction:"preserve"};
 const cache=new Map();
 const url=path=>new URL(path,document.baseURI).href;
 function img(path){if(cache.has(path))return cache.get(path);const p=new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=()=>no(Error(path));if(/^https?:/i.test(url(path))&&!String(path).startsWith('data:'))i.crossOrigin='anonymous';i.src=url(path);});cache.set(path,p);return p;}
@@ -95,7 +122,8 @@ function header(){const c=cats.find(x=>x.id===state.category)||cats[0];$("catTit
 function card(a,kind){const full=kind==="look",sel=full?state.look===a.id:state.layers.some(x=>x.assetId===a.id&&x.visible);return '<button class="asset '+(sel?"selected":"")+'" data-'+kind+'="'+a.id+'"><span class="tag '+(full?"":"candidate")+'">'+(full?"RETRATO":"CANDIDATA")+'</span><div class="thumb '+(full?"":"checker")+'"><img loading="lazy" alt="" src="'+url(a.src)+'"></div><b>'+safe(a.label)+'</b><small>'+safe(full?"Ilustración completa":a.detail)+'</small></button>';}
 function gallery(){
  header();const root=$("content");root.innerHTML="";
- if(state.category==="color"||state.category==="background"){colors(root);if(state.category==="background")root.insertAdjacentHTML("beforeend",'<div class="field"><label for="lightRange">Iluminación</label><input id="lightRange" type="range" min=".65" max="1.3" step=".01" value="'+state.lighting+'"><output>'+Math.round(state.lighting*100)+'%</output></div>');if($("lightRange"))$("lightRange").oninput=e=>{state.lighting=Number(e.target.value);e.target.nextElementSibling.value=Math.round(state.lighting*100)+"%";render();};return;}
+ if(state.category==="ai"){aiWorkspace(root);return;}
+  if(state.category==="color"||state.category==="background"){colors(root);if(state.category==="background")root.insertAdjacentHTML("beforeend",'<div class="field"><label for="lightRange">Iluminación</label><input id="lightRange" type="range" min=".65" max="1.3" step=".01" value="'+state.lighting+'"><output>'+Math.round(state.lighting*100)+'%</output></div>');if($("lightRange"))$("lightRange").oninput=e=>{state.lighting=Number(e.target.value);e.target.nextElementSibling.value=Math.round(state.lighting*100)+"%";render();};return;}
  if(state.category==="hair"){
   const L=state.pill==="Todos"?looks:looks.filter(x=>x.tags.includes(state.pill)),M=masks.filter(x=>x.category==="hair"&&(state.pill==="Todos"||x.tags.includes(state.pill)));
   root.innerHTML='<div class="filterrow"><input id="search" class="search" placeholder="Buscar peinado..." aria-label="Buscar peinado"><select id="mode" class="select"><option value="all">Todo</option><option value="full">Retratos</option><option value="parts">Capas beta</option></select></div><section id="fullSection"><div class="sectionhead"><b>Peinados ilustrados</b><span>'+L.length+' variantes completas</span></div><div class="assetgrid">'+L.map(x=>card(x,"look")).join("")+'</div></section><div class="notice"><b>Estas son ilustraciones completas</b>Elegir una cambia el retrato base entero. No se presenta como un recorte independiente del pelo.</div><section id="maskSection"><div class="sectionhead"><b>Capas de cabello extraídas</b><span>'+M.length+' candidatas · lienzo alineado</span></div><div class="assetgrid">'+M.map(x=>card(x,"mask")).join("")+'</div></section><div class="notice"><b>Máscaras pendientes de revisión</b>Se pueden probar, mover, escalar, ocultar y corregir. Antes de marcarlas definitivas hay que limpiar restos del peinado anterior y revisar el borde anime.</div><div class="plain"><b>Bibliotecas de la web con capas fuente y licencia CC0 declarada:</b><div class="links"><a class="linkbtn" href="https://opengameart.org/content/anime-girl-and-boy-portraits" target="_blank" rel="noopener">Retratos anime CC0</a><a class="linkbtn" href="https://opengameart.org/node/54368" target="_blank" rel="noopener">Personajes novela visual CC0</a></div><p>Descargá el pack de PSD y exportá sus capas conservando el lienzo y las coordenadas de origen. El catálogo registra autor, licencia y archivo fuente.</p></div>';
@@ -113,7 +141,7 @@ function colors(root){root.insertAdjacentHTML("beforeend",'<div class="sectionhe
  root.querySelectorAll("[data-bg]").forEach(b=>b.onclick=()=>{state.background=b.dataset.bg;state.transparent=b.dataset.bg==="transparent";gallery();render();});$("tintRange").oninput=e=>{const l=state.layers.find(x=>x.id===state.selected);if(!l){toast("Seleccioná una capa independiente para cambiar su tono.");return;}l.hue=Number(e.target.value);e.target.nextElementSibling.value=l.hue+"°";render();};
 }
 function renderLayers(){
- const all=[{id:"base",name:activeLook().label,src:activeLook().src,kind:"base",visible:true},...state.layers];$("layerList").innerHTML=all.map(l=>'<button class="layercard '+(l.id===state.selected?"active":"")+'" data-layer="'+l.id+'"><img alt="" src="'+url(l.dataUrl||l.src)+'"><b>'+safe(l.name)+'</b><small>'+safe(l.kind==="base"?"Retrato completo":l.kind==="candidate"?"Máscara beta":"Pieza importada")+'</small>'+(l.kind==="base"?'':'<span class="visibility" data-visible="'+l.id+'">'+(l.visible?"◉":"○")+'</span>')+'</button>').join("");
+ const all=[{id:"base",name:activeLook().label,src:activeLook().src,kind:"base",visible:true},...state.layers];$("layerList").innerHTML=all.map(l=>'<button class="layercard '+(l.id===state.selected?"active":"")+'" data-layer="'+l.id+'"><img alt="" src="'+url(l.dataUrl||l.src)+'"><b>'+safe(l.name)+'</b><small>'+safe(l.kind==="base"?"Retrato completo":l.kind==="candidate"?"Máscara beta":l.kind==="ai_result"?"Resultado de IA":"Pieza importada")+'</small>'+(l.kind==="base"?'':'<span class="visibility" data-visible="'+l.id+'">'+(l.visible?"◉":"○")+'</span>')+'</button>').join("");
  $("layerTabs").innerHTML='<button class="layertab '+(state.selected==="base"?"active":"")+'" data-base>Retrato</button>'+state.layers.map(l=>'<button class="layertab '+(l.id===state.selected?"active":"")+'" data-tab="'+l.id+'">'+safe(l.name)+'</button>').join("");
  $("layerList").querySelectorAll("[data-layer]").forEach(b=>b.onclick=e=>{if(e.target.closest("[data-visible]"))return;state.selected=b.dataset.layer;renderLayers();adjust();});
  $("layerList").querySelectorAll("[data-visible]").forEach(b=>b.onclick=e=>{e.stopPropagation();const l=state.layers.find(x=>x.id===b.dataset.visible);if(l)l.visible=!l.visible;render();});
@@ -128,6 +156,128 @@ function adjust(){
  $("centerLayer").onclick=()=>{l.x=0;l.y=0;l.w=W;l.h=H;render();};$("frontLayer").onclick=()=>{l.order=Math.max(-1,...state.layers.map(x=>x.order||0))+1;render();};$("backLayer").onclick=()=>{l.order=Math.min(0,...state.layers.map(x=>x.order||0))-1;render();};$("deleteLayer").onclick=()=>{state.layers=state.layers.filter(x=>x.id!==l.id);state.selected="base";render();gallery();};
 }
 function field(label,id,min,max,value,step){const show=id==="scale"?Math.round(value*100)+"%":id==="opacity"?Math.round(value*100)+"%":value;return '<div class="field"><label for="'+id+'">'+label+'</label><input id="'+id+'" type="range" min="'+min+'" max="'+max+'" step="'+step+'" value="'+value+'"><output>'+show+'</output></div>';}
+
+const aiPresets=[
+ {label:"Nuevo peinado",prompt:"Cambia únicamente el peinado por uno largo, fluido y anime, con mechones y silueta limpios. Conserva el rostro, ojos, expresión, ropa, pose y encuadre."},
+ {label:"Ropa de fantasía",prompt:"Cambia únicamente la ropa por un conjunto de fantasía anime elegante con detalles bien definidos. Conserva rostro, cabello, cuerpo, pose y encuadre."},
+ {label:"Expresión",prompt:"Cambia únicamente la expresión facial a una sonrisa confiada y amable. Conserva identidad, forma del rostro, color de ojos, peinado, ropa y encuadre."},
+ {label:"Fondo",prompt:"Sustituye únicamente el fondo por un escenario anime nocturno con luces suaves. Mantén al personaje intacto y claramente separado del fondo."},
+ {label:"Limpiar dibujo",prompt:"Limpia los bordes, el lineart y el sombreado de la ilustración de forma profesional. No cambies el diseño, la pose, la paleta ni los rasgos del personaje."}
+];
+function aiWorkspace(root){
+ const presetHtml=aiPresets.map(p=>'<button type="button" class="btn ai-preset" data-ai-preset="'+safe(p.prompt)+'">'+safe(p.label)+'</button>').join("");
+ const resultHtml=aiResult?'<section class="ai-result"><div class="ai-result-title"><span>✦ Resultado candidato</span><span>Sin aplicar</span></div><img src="'+safe(aiResult)+'" alt="Vista previa del resultado generado por IA"><small>El original sigue detrás. Aplicá esta salida como una capa superior editable; podrás ocultarla, moverla, ajustar su opacidad o eliminarla.</small><div class="ai-actions"><button type="button" id="aiApply" class="btn primary">Usar como capa</button><button type="button" id="aiDiscard" class="btn">Descartar</button></div></section>':'';
+ root.innerHTML=
+  '<div class="ai-intro"><strong>✧ AI ART DIRECTOR</strong><p>Edita la ilustración del lienzo mediante instrucciones en lenguaje natural. Cada resultado se revisa antes de aplicarse y se agrega como capa nueva para preservar el diseño anterior.</p></div>'+
+  '<div><label class="ai-label" for="aiPrompt">¿Qué querés cambiar?</label><textarea id="aiPrompt" class="ai-prompt" maxlength="3000" placeholder="Ej.: Conserva el rostro y la identidad; cambia únicamente el cabello a una coleta alta con mechones sueltos.">'+safe(aiSettings.prompt)+'</textarea><div class="tiny" style="margin-top:5px">Una instrucción concreta da más control. No se prometen recortes perfectos de una sola pasada.</div></div>'+
+  '<div><div class="sectionhead"><b>Ediciones rápidas</b><span>Completá o reemplazá la instrucción</span></div><div class="actions ai-presets">'+presetHtml+'</div></div>'+
+  '<div class="ai-control-grid">'+
+   '<label>Modelo de imagen<select id="aiModel" class="ai-select">'+
+    '<option value="gpt-image-2.5-sunburst" '+(aiSettings.model==="gpt-image-2.5-sunburst"?"selected":"")+'>GPT Image 2.5 · Sunburst</option>'+
+    '<option value="gpt-image-2.5-flare" '+(aiSettings.model==="gpt-image-2.5-flare"?"selected":"")+'>GPT Image 2.5 · Flare</option>'+
+    '<option value="gpt-image-2" '+(aiSettings.model==="gpt-image-2"?"selected":"")+'>GPT Image 2</option>'+
+    '<option value="gpt-image-1.5" '+(aiSettings.model==="gpt-image-1.5"?"selected":"")+'>GPT Image 1.5</option>'+
+   '</select></label>'+
+   '<label>Calidad de salida<select id="aiQuality" class="ai-select">'+
+    '<option value="low" '+(aiSettings.quality==="low"?"selected":"")+'>Baja · prueba rápida</option>'+
+    '<option value="medium" '+(aiSettings.quality==="medium"?"selected":"")+'>Media · equilibrada</option>'+
+    '<option value="high" '+(aiSettings.quality==="high"?"selected":"")+'>Alta · más detalle</option>'+
+   '</select></label>'+
+   '<label>Dirección artística<select id="aiDirection" class="ai-select">'+
+    '<option value="preserve" '+(aiSettings.direction==="preserve"?"selected":"")+'>Respetar el estilo actual</option>'+
+    '<option value="madhouse" '+(aiSettings.direction==="madhouse"?"selected":"")+'>Anime cinematográfico detallado</option>'+
+    '<option value="trigger" '+(aiSettings.direction==="trigger"?"selected":"")+'>Anime gráfico y dinámico</option>'+
+   '</select></label>'+
+   '<label>Fondo de salida<select id="aiBackground" class="ai-select">'+
+    '<option value="auto" '+(aiSettings.background==="auto"?"selected":"")+'>Automático</option>'+
+    '<option value="opaque" '+(aiSettings.background==="opaque"?"selected":"")+'>Opaco</option>'+
+    '<option value="transparent" '+(aiSettings.background==="transparent"?"selected":"")+'>Transparente · PNG</option>'+
+   '</select></label>'+
+  '</div>'+
+  '<div class="ai-ref"><button type="button" id="aiRefBtn" class="btn">＋ Añadir imagen de referencia</button><input id="aiReference" type="file" accept="image/png,image/jpeg,image/webp" hidden><span id="aiRefName" class="tiny">'+(aiReferenceName?safe(aiReferenceName):"Sin referencia adicional")+'</span>'+(aiReferenceDataUrl?'<button type="button" id="aiClearRef" class="btn">Quitar referencia</button>':'')+'</div>'+
+  '<div id="aiServiceStatus" class="ai-status">Comprobando servicio local de IA…</div>'+
+  '<div class="ai-note"><strong>Control profesional y privacidad</strong><br>El lienzo actual se envía al proveedor elegido para editarse. La solicitud puede generar cargos en la cuenta API. La clave se lee desde una variable de entorno local; no se introduce en esta página ni se guarda en el proyecto. Usa una imagen de referencia solo si tienes derecho a utilizarla.</div>'+
+  '<button type="button" id="aiRun" class="btn primary" '+(aiBusy?"disabled":"")+'>'+ (aiBusy?"Generando edición…":"✦ Generar edición")+'</button>'+
+  resultHtml;
+ $("aiPrompt").oninput=e=>aiSettings.prompt=e.target.value;
+ $("aiModel").onchange=e=>aiSettings.model=e.target.value;
+ $("aiQuality").onchange=e=>aiSettings.quality=e.target.value;
+ $("aiDirection").onchange=e=>aiSettings.direction=e.target.value;
+ $("aiBackground").onchange=e=>aiSettings.background=e.target.value;
+ $("aiRun").onclick=runAIEdit;
+ root.querySelectorAll("[data-ai-preset]").forEach(b=>b.onclick=()=>{aiSettings.prompt=b.dataset.aiPreset;$("aiPrompt").value=aiSettings.prompt;$("aiPrompt").focus();});
+ $("aiRefBtn").onclick=()=>$("aiReference").click();
+ $("aiReference").onchange=e=>{
+  const f=e.target.files&&e.target.files[0];if(!f)return;
+  if(!/^image\/(png|jpeg|webp)$/.test(f.type)){toast("La referencia debe ser PNG, JPEG o WebP.");e.target.value="";return;}
+  if(f.size>12*1024*1024){toast("La referencia supera 12 MiB. Elegí una imagen más pequeña.");e.target.value="";return;}
+  const reader=new FileReader();reader.onload=()=>{aiReferenceDataUrl=String(reader.result);aiReferenceName=f.name;aiWorkspace($("content"));};reader.onerror=()=>toast("No se pudo leer la referencia.");reader.readAsDataURL(f);
+ };
+ if($("aiClearRef"))$("aiClearRef").onclick=()=>{aiReferenceDataUrl="";aiReferenceName="";aiWorkspace($("content"));};
+ if($("aiApply"))$("aiApply").onclick=applyAIResult;
+ if($("aiDiscard"))$("aiDiscard").onclick=()=>{aiResult=null;aiWorkspace($("content"));toast("Resultado descartado; el original no cambió.");};
+ refreshAIStatus();
+}
+function refreshAIStatus(){
+ const el=$("aiServiceStatus");if(!el)return;
+ fetch("/api/status",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Servicio local no disponible");return r.json();}).then(d=>{
+  const current=$("aiServiceStatus");if(!current)return;
+  current.textContent=d.api_key_configured?"Servicio local disponible. La clave se encuentra solo en el entorno; elegí el modelo y generá una edición.":"Servicio local disponible, pero falta OPENAI_API_KEY. Configurala en la terminal siguiendo AI_EDITING.md; el editor manual seguirá funcionando.";
+ }).catch(()=>{const current=$("aiServiceStatus");if(current)current.textContent="Puente de IA no detectado. Abrí el editor con start-avatar-maker.bat y revisá AI_EDITING.md. No pegues tu clave API en la página.";});
+}
+function aiPromptForUser(text,direction){
+ const directions={
+  preserve:"Dirección artística: conserva el lenguaje visual de la imagen original, el diseño anime 2D, el lineart y el sombreado existentes.",
+  madhouse:"Dirección artística: anime 2D cinematográfico, composición cuidada, sombreado por planos, iluminación dramática controlada y líneas limpias; mantén una ilustración dibujada, no fotorealista.",
+  trigger:"Dirección artística: anime 2D gráfico y enérgico, siluetas legibles, líneas expresivas, color decidido y sensación dinámica; mantén el resultado como ilustración dibujada, no fotorealista."
+ };
+ return "Actúa como editor profesional de ilustración anime. "+directions[direction]+" Edita la imagen de referencia de forma precisa. " +
+  "Instrucción del usuario: "+text.trim()+"\nReglas: cambia únicamente lo que pide la instrucción. Preserva la identidad, la edad aparente, los rasgos faciales, los colores y la pose que no deban cambiar. Respeta anatomía, manos, contorno, lineart, silueta y coherencia de iluminación. No añadas texto, marcas de agua, paneles, marcos ni personajes nuevos salvo que se soliciten. Entrega una sola ilustración final, centrada, a cuerpo/encuadre equivalente al original.";
+}
+async function runAIEdit(){
+ const prompt=$("aiPrompt")?$("aiPrompt").value.trim():aiSettings.prompt.trim();
+ aiSettings.prompt=prompt;
+ if(!prompt){toast("Escribí qué querés editar antes de generar.");$("aiPrompt")?.focus();return;}
+ if(aiBusy)return;
+ aiBusy=true;
+ if($("aiRun")){$("aiRun").disabled=true;$("aiRun").textContent="Generando edición…";}
+ status("Preparando el lienzo para la edición con IA…",false);
+ try{
+  await drawCanvas();
+  const imageDataUrl=$("canvas").toDataURL("image/png");
+  const response=await fetch("/api/ai-edit",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+   image_data_url:imageDataUrl,
+   reference_data_url:aiReferenceDataUrl||null,
+   prompt:aiPromptForUser(prompt,aiSettings.direction),
+   model:aiSettings.model,
+   quality:aiSettings.quality,
+   background:aiSettings.background
+  })});
+  const result=await response.json().catch(()=>({error:"El servicio devolvió una respuesta que no es JSON."}));
+  if(!response.ok)throw Error(result.error||"La edición con IA falló.");
+  if(!result.image_base64)throw Error("El proveedor no devolvió una imagen utilizable.");
+  aiResult="data:image/png;base64,"+result.image_base64;
+  cache.set(aiResult,img(aiResult));
+  aiWorkspace($("content"));
+  status("Edición IA preparada como candidato. Revisala antes de aplicarla.",false);
+  toast("Resultado listo. El diseño original sigue intacto.");
+ }catch(e){
+  const message=String(e&&e.message||e);
+  status("Edición IA no completada: "+message,true);
+  toast("No se generó la edición: "+message.slice(0,180));
+  const el=$("aiServiceStatus");if(el)el.textContent=message;
+ }finally{
+  aiBusy=false;
+  if($("aiRun")){$("aiRun").disabled=false;$("aiRun").textContent="✦ Generar edición";}
+ }
+}
+function applyAIResult(){
+ if(!aiResult){toast("No hay un resultado para aplicar.");return;}
+ const l={id:"ai-"+Date.now(),name:"Edición IA "+new Date().toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"}),category:"ai",group:null,dataUrl:aiResult,kind:"ai_result",x:0,y:0,w:W,h:H,opacity:1,hue:0,visible:true,order:Math.max(-1,...state.layers.map(x=>Number.isFinite(x.order)?x.order:-1))+1,status:"unreviewed_ai_result"};
+ state.layers.push(l);cache.set(aiResult,img(aiResult));state.selected=l.id;aiResult=null;
+ render();gallery();toast("Edición añadida como capa superior. Ocúltala para volver a ver el original.");
+}
+
 function renderStyles(){$("styles").innerHTML=styles.map(s=>'<button class="stylecard '+(s.id===state.style?"active":"")+'" data-style="'+s.id+'" title="Filtro de color, no cambia el dibujo"><img src="'+url(activeLook().src)+'" alt=""><span>'+s.label+'</span></button>').join("");$("styles").querySelectorAll("[data-style]").forEach(b=>b.onclick=()=>{state.style=b.dataset.style;renderStyles();render();});}
 function all(){renderNav();header();gallery();renderStyles();render();}
 function importFiles(files){Array.from(files).forEach(f=>{if(!/^image\/(png|webp)$/.test(f.type)){toast("Solo se aceptan PNG o WebP.");return;}const reader=new FileReader();reader.onload=()=>{const data=String(reader.result),i=new Image();i.onload=()=>{let w=W,h=H,x=0,y=0;if(i.naturalWidth!==W||i.naturalHeight!==H){const s=Math.min(W*.65/i.naturalWidth,H*.55/i.naturalHeight,1);w=i.naturalWidth*s;h=i.naturalHeight*s;x=(W-w)/2;y=H*.16;}const l={id:"import-"+Date.now()+"-"+Math.random().toString(36).slice(2,6),name:f.name.replace(/\.(png|webp)$/i,""),src:"",dataUrl:data,kind:"import",category:state.category,group:null,x,y,w,h,opacity:1,hue:0,visible:true,order:state.layers.length};state.layers.push(l);state.selected=l.id;cache.set(data,Promise.resolve(i));render();gallery();toast("Pieza agregada. Arrastrala para ajustar la ubicación.");};i.onerror=()=>toast("No se pudo abrir "+f.name);i.src=data;};reader.readAsDataURL(f);});}
