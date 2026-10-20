@@ -101,3 +101,6 @@ La primera ejecución automatizada para Pibara completó el paquete \`anatomy-gu
 - \`manifest.json\` — prompt, modelo público, dimensiones, hashes y estado de revisión.
 
 El manifiesto marca la guía como pendiente de revisión visual. La máscara alfa se generó correctamente por métricas, pero revisa contorno, rostro, manos, pies y proporciones antes de usarla como referencia definitiva.
+
+
+**Visual-review finding for the first Pibara run:** the pose is a useful full-body draft, but the model changed the source hairstyle/hair color, eye color and outfit. The manifest and library now record this explicitly. Keep the file as a provisional anatomy reference; it is not an approved likeness of Pibara. The generator prompt was tightened to preserve exact hair silhouette, highlights, irises and costume motifs on future runs.
