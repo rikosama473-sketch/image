@@ -48,8 +48,8 @@ def validate_data_url(value: object, label: str) -> str:
         raise ValueError(f"{label}: la imagen está vacía.")
     image_type = match.group(1)
     signatures = {
-        "png": decoded.startswith(b"\\x89PNG\\r\\n\\x1a\\n"),
-        "jpeg": decoded.startswith(b"\\xff\\xd8\\xff"),
+        "png": decoded.startswith(b"\x89PNG\r\n\x1a\n"),
+        "jpeg": decoded.startswith(b"\xff\xd8\xff"),
         "webp": len(decoded) >= 12 and decoded[:4] == b"RIFF" and decoded[8:12] == b"WEBP",
     }
     if not signatures.get(image_type, False):
