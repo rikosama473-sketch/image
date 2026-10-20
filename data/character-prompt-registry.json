@@ -5,9 +5,11 @@
     {
       "id": "pibara",
       "display_name": "Pibara",
-      "status": "needs_reference_review",
+      "status": "reference_confirmed",
       "canonical_prompt": null,
-      "source_images": [],
+      "source_images": [
+        "from-PixAI-2034984086876227343-0.png"
+      ],
       "variable_hair_traits": [
         "hairstyle",
         "hair_length",
@@ -16,8 +18,15 @@
         "updo",
         "braid"
       ],
-      "notes": "Preserve identity traits in the canonical prompt; store haircut and hairstyle only as per-image variants.",
-      "source_prompt_examples": []
+      "notes": "Confirmed reference: from-PixAI-2034984086876227343-0.png. Preserve identity traits from this source; store hairstyle and other deliberate alternatives as individual variants. No original prompt is inferred from the filename.",
+      "source_prompt_examples": [],
+      "reference_confirmation": {
+        "source_path": "from-PixAI-2034984086876227343-0.png",
+        "confirmed_by_user": true,
+        "confirmation_basis": "The user confirmed this repo image as Pibara during the image-reference workflow.",
+        "generation_status": "waiting_for_public_free_inference_quota",
+        "updated_at_utc": "2026-10-20"
+      }
     },
     {
       "id": "chie",
