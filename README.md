@@ -145,3 +145,21 @@ La ejecución gratuita de GitHub Actions **39496066089** terminó correctamente 
 - [Ver ejecución de GitHub Actions](https://github.com/rikosama473-sketch/image/actions/runs/39496066089)
 
 Ambos PNG conservan el lienzo de **768×1280**. La salida transparente registra aproximadamente un 67 % de píxeles transparentes y no tiene advertencia automática de calidad del recorte. Eso valida las métricas alfa, no la fidelidad anatómica ni el parecido. La identidad sigue marcada como pendiente de revisión visual.
+
+
+### Lote anatómico de cuatro vistas — ejecución parcial
+
+El paquete \`anatomy-sheet-4\` guardó tres vistas en el repositorio antes de que el servicio público agotara la cuota. Cada enlace siguiente apunta a un archivo verificado en el commit inmutable \`745404b7e5d5\`, por lo que no depende de la rama actual:
+
+- [Vista frontal generada (borrador recortado)](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/renders/01-batch-front-a-pose.png)
+- [Vista frontal PNG transparente](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/01-batch-front-a-pose.png)
+- [Vista lateral de cuerpo entero](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/renders/02-batch-side-profile.png)
+- [Vista lateral PNG transparente](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/02-batch-side-profile.png)
+- [Vista trasera de cuerpo entero](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/renders/03-batch-back-view.png)
+- [Vista trasera PNG transparente](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/03-batch-back-view.png)
+- [Hoja de contacto con las tres vistas](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/contact-sheet.jpg)
+- [Manifiesto: 3/4 vistas, cuota y revisión](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/manifest.json)
+- [Prompts usados](https://github.com/rikosama473-sketch/image/blob/745404b7e5d516434ef9c5782cc1ba893631a828/generated/character-assets/pibara/2026-10-20/run-39500149462/PROMPTS.md)
+- [Ejecución de GitHub Actions](https://github.com/rikosama473-sketch/image/actions/runs/39500149462)
+
+La vista frontal **no cumple la pose A solicitada**: las piernas están recortadas y un brazo está levantado. Perfil y espalda son de cuerpo entero, pero las tres vistas se apartan de la identidad visual de Pibara (cabello, ojos o vestuario). El manifiesto y la biblioteca lo registran. Son borradores anatómicos, no modelos canónicos aprobados.
