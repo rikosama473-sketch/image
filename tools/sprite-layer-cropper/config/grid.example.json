@@ -1,0 +1,47 @@
+{
+  "grid": {
+    "rows": 2,
+    "columns": 3,
+    "margin_x": 0,
+    "margin_y": 0,
+    "gap_x": 0,
+    "gap_y": 0
+  },
+  "output": {
+    "width": 512,
+    "height": 512,
+    "resample": "lanczos"
+  },
+  "cells": [
+    {
+      "row": 1,
+      "column": 1,
+      "layer": "body"
+    },
+    {
+      "row": 1,
+      "column": 2,
+      "layer": "hair"
+    },
+    {
+      "row": 1,
+      "column": 3,
+      "layer": "eyes"
+    },
+    {
+      "row": 2,
+      "column": 1,
+      "layer": "clothing"
+    },
+    {
+      "row": 2,
+      "column": 2,
+      "layer": "accessories"
+    },
+    {
+      "row": 2,
+      "column": 3,
+      "layer": "expressions"
+    }
+  ]
+}
