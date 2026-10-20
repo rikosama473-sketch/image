@@ -222,6 +222,9 @@ def ensure_base_character_cutout(root, character_id, source_path, source_path_in
                 existing_mask.verify()
 
     cutout_details["file"] = cutout_path.relative_to(root).as_posix()
+    with Image.open(mask_path) as mask_image:
+        mask_dimensions = list(mask_image.size)
+
     manifest = {
         "schema_version": 1,
         "character_id": character_id,
@@ -239,7 +242,7 @@ def ensure_base_character_cutout(root, character_id, source_path, source_path_in
             "alpha_mask": {
                 "file": mask_path.relative_to(root).as_posix(),
                 "sha256": hashlib.sha256(mask_path.read_bytes()).hexdigest(),
-                "dimensions": list(Image.open(mask_path).size),
+                "dimensions": list(mask_image.size),
                 "mask_semantics": "White/opaque pixels represent the estimated foreground; black/transparent pixels represent the estimated background.",
             },
         },
