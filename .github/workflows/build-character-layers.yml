@@ -1,0 +1,74 @@
+name: Build character layers (Pibara pilot)
+
+on:
+  push:
+    branches:
+      - work/character-layer-separation-2026-10
+    paths:
+      - "scripts/build_character_layers.py"
+      - "requirements-character-layers.txt"
+      - "tests/test_build_character_layers.py"
+      - ".github/workflows/build-character-layers.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: character-layer-separation-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements-character-layers.txt
+
+      - name: Install CPU inference dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch
+          python -m pip install -r requirements-character-layers.txt
+
+      - name: Test layer mask operations
+        run: python -m pytest -q tests/test_build_character_layers.py
+
+      - name: Build aligned transparent layer candidates
+        env:
+          OUTPUT_DIR: generated/character-layers/pibara/${{ github.run_id }}
+        run: |
+          python scripts/build_character_layers.py \
+            --root . \
+            --character pibara \
+            --source from-PixAI-2034984086876227343-0.png \
+            --variant blunt-bob=generated/character-assets/pibara/2026-10-20/run-39445227631/renders/01-blunt-bob.png \
+            --variant long-straight=generated/character-assets/pibara/2026-10-20/run-39445227631/renders/02-long-straight.png \
+            --variant high-ponytail=generated/character-assets/pibara/2026-10-20/run-39445227631/renders/03-high-ponytail.png \
+            --variant twin-tails=generated/character-assets/pibara/2026-10-20/run-39445227631/renders/04-twin-tails.png \
+            --variant side-braid=generated/character-assets/pibara/2026-10-20/run-39445227631/renders/05-side-braid.png \
+            --output "$OUTPUT_DIR"
+          echo "OUTPUT_DIR=$OUTPUT_DIR" >> "$GITHUB_ENV"
+
+      - name: Commit generated candidates to this work branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$OUTPUT_DIR"
+          if git diff --cached --quiet; then
+            echo "No layer outputs changed; nothing to commit."
+            exit 0
+          fi
+          git commit -m "Generate Pibara layer candidates (run $GITHUB_RUN_ID)"
+          git push origin "HEAD:$GITHUB_REF_NAME"
