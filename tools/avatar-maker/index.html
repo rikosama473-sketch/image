@@ -497,6 +497,7 @@ async function runAIEdit(){
  aiSettings.prompt=prompt;
  if(!prompt){toast("Escribí qué querés editar antes de generar.");$("aiPrompt")?.focus();return;}
  if(aiBusy)return;
+ const requestMeta=aiNextResultMeta;aiNextResultMeta=null;
  aiBusy=true;
  if($("aiRun")){$("aiRun").disabled=true;$("aiRun").textContent="Generando edición…";}
  status("Preparando el lienzo para la edición con IA…",false);
@@ -509,7 +510,7 @@ async function runAIEdit(){
    image_data_url:imageDataUrl,
    mask_data_url:maskDataUrl,
    reference_data_url:aiReferenceDataUrl||null,
-   prompt:aiNextResultMeta&&aiNextResultMeta.kind==="anatomy_guide"?anatomyPromptForUser(prompt,aiSettings.direction):aiPromptForUser(prompt,aiSettings.direction),
+   prompt:requestMeta&&requestMeta.kind==="anatomy_guide"?anatomyPromptForUser(prompt,aiSettings.direction):aiPromptForUser(prompt,aiSettings.direction),
    model:aiSettings.model,
    quality:aiSettings.quality,
    background:aiSettings.background
@@ -518,7 +519,7 @@ async function runAIEdit(){
   if(!response.ok)throw Error(result.error||"La edición con IA falló.");
   if(!result.image_base64)throw Error("El proveedor no devolvió una imagen utilizable.");
   aiResult="data:image/png;base64,"+result.image_base64;
-  aiResultMeta=aiNextResultMeta||{kind:"ai_result",name:"Edición IA"};aiNextResultMeta=null;
+  aiResultMeta=requestMeta||{kind:"ai_result",name:"Edición IA"};
   cache.set(aiResult,img(aiResult));
   aiWorkspace($("content"));
   status("Edición IA preparada como candidato. Revisala antes de aplicarla.",false);
