@@ -107,3 +107,10 @@ Los assets quedan en `generated/character-assets/<personaje>/...`:
 - `manifest.json`, `PROMPTS.md` y `contact-sheet.jpg`: procedencia, prompts, parámetros y vista conjunta de las variantes.
 
 Las salidas transparentes aún requieren revisión visual de identidad y bordes. Para un diseñador de personajes verdaderamente por capas todavía hay que aislar y comprobar las regiones individuales (cabello, ojos, accesorios y expresiones); el recorte completo no debe confundirse con una capa independiente de cabello. El flujo anterior de [referencias de peinados](docs/HAIRSTYLE_VARIANT_PIPELINE.md), basado en OpenAI API, permanece como una ruta alternativa opcional y sí requiere `OPENAI_API_KEY`.
+
+
+## Split source sheets into layered assets
+
+For existing spritesheets, use `scripts/split_sprite_sheet.py` to export individual grid cells or exact pixel-coordinate crops as uniform RGBA PNGs. It writes a contact sheet and a manifest with the source SHA-256, optional license/credit, crop coordinates, output hashes, and alpha statistics. Background removal is optional and only removes a key color connected to the crop border.
+
+The splitter is deterministic: it does not generate alternate hairstyles and cannot separate pixels that overlap in the source. Use boxes that genuinely isolate each hair, eye, expression, or accessory; a full-character cutout is not a semantic layer. See [docs/SPRITE_LAYER_FACTORY.md](docs/SPRITE_LAYER_FACTORY.md) for examples and the optional PyGithub publisher for reviewed output on a feature branch.
