@@ -65,7 +65,12 @@ class HairstyleVariantPromptTests(unittest.TestCase):
         for item in registry["characters"]:
             with self.subTest(character=item["id"]):
                 self.assertIsNone(item["canonical_prompt"])
-                self.assertEqual(item["source_images"], [])
+                expected_sources = (
+                    ["from-PixAI-2034984086876227343-0.png"]
+                    if item["id"] == "pibara"
+                    else []
+                )
+                self.assertEqual(item["source_images"], expected_sources)
                 self.assertEqual(item["source_prompt_examples"], [])
 
 
