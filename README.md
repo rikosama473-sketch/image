@@ -123,3 +123,10 @@ Las salidas transparentes aún requieren revisión visual de identidad y bordes.
 For existing spritesheets, use `scripts/split_sprite_sheet.py` to export individual grid cells or exact pixel-coordinate crops as uniform RGBA PNGs. It writes a contact sheet and a manifest with the source SHA-256, optional license/credit, crop coordinates, output hashes, and alpha statistics. Background removal is optional and only removes a key color connected to the crop border.
 
 The splitter is deterministic: it does not generate alternate hairstyles and cannot separate pixels that overlap in the source. Use boxes that genuinely isolate each hair, eye, expression, or accessory; a full-character cutout is not a semantic layer. See [docs/SPRITE_LAYER_FACTORY.md](docs/SPRITE_LAYER_FACTORY.md) for examples and the optional PyGithub publisher for reviewed output on a feature branch.
+
+
+## IMAGE Character Creator: anatomy and image library
+
+The avatar maker now includes an **Anatomía** workspace for generating a full-body anime anatomy guide from the selected canvas reference, manually painting regions, creating transparent full-canvas PNG layers, and exporting each selected layer while preserving its original coordinates. The **Biblioteca** workspace indexes 759 raster images already present in the repository and records per-image provenance/license/training-review status.
+
+The index is a local repository inventory, **not every anime character worldwide and not blanket permission to reuse those images**. Many image sources and rights are still unreviewed. Check provenance before sharing or training on assets. A generated anatomy sheet is a reference layer, not a guaranteed segmentation of the original artwork. See [the avatar maker setup and anatomy guide](tools/avatar-maker/README.md).
