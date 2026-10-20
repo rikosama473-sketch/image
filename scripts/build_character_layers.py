@@ -225,7 +225,7 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
     if not source_path.is_file() or root not in source_path.parents:
         raise ValueError(f"Source image not found beneath repository root: {args.source}")
     variants: list[tuple[str, Path]] = []
-    for asset_id, raw_path in args.variants:
+    for asset_id, raw_path in args.variant:
         variant_path = (root / raw_path).resolve()
         if not variant_path.is_file() or root not in variant_path.parents:
             raise ValueError(f"Variant image not found beneath repository root: {raw_path}")
