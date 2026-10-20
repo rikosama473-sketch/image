@@ -11,7 +11,7 @@ CATALOG_PATH = ROOT / "tools" / "avatar-maker" / "assets" / "catalog.json"
 LIBRARY_PATH = ROOT / "tools" / "avatar-maker" / "assets" / "image-library.json"
 SERVER_PATH = ROOT / "tools" / "avatar-maker" / "ai_edit_server.py"
 REQUIRED_IDS = {"nav","canvas","maskOverlay","stage","stageNote","miniLooks","layerTabs","layerList","layerCount","catIcon","catTitle","pills","content","styles","saveBtn","loadBtn","exportBtn","jsonFile","imageFile","comboCount","candidateDialog","cancelCandidate","confirmCandidate","toast"}
-REQUIRED_FEATURES = ("async function render(", "function gallery(", "function addMask(", "function importFiles(", "function save(", "function load(", "function exportPng(", "pending_visual_review", "character-layers/pibara", "image/png", "IMAGE Character Creator", "function aiWorkspace(root)", "function runAIEdit()", "/api/ai-edit", "OPENAI_API_KEY", "ai_result", "function createAIMaskDataUrl()", "aiMaskStrokes", "mask_data_url", "function anatomyWorkspace(root)", "function requestAnatomyGuide(type)", "function createCutoutLayer()", "function exportSelectedLayerPng()", "function libraryWorkspace(root)", "function useLibraryAsset(id)", "image-library.json")
+REQUIRED_FEATURES = ("async function render(", "function gallery(", "function addMask(", "function importFiles(", "function save(", "function load(", "function exportPng(", "pending_visual_review", "character-layers/pibara", "image/png", "IMAGE Character Creator", "function aiWorkspace(root)", "function runAIEdit()", "function syncAIQuality()", "ai-variant-strip", "data-ai-result-index", "id=\\"aiVariants\\"", "variants:aiSettings.variants", "/api/ai-edit", "OPENAI_API_KEY", "ai_result", "function createAIMaskDataUrl()", "aiMaskStrokes", "mask_data_url", "function anatomyWorkspace(root)", "function requestAnatomyGuide(type)", "function createCutoutLayer()", "function exportSelectedLayerPng()", "function libraryWorkspace(root)", "function useLibraryAsset(id)", "image-library.json")
 class Inspector(HTMLParser):
     def __init__(self): super().__init__(convert_charrefs=True); self.ids=[]; self.inline=0
     def handle_starttag(self,tag,attrs):
@@ -26,7 +26,7 @@ def main():
     dup=sorted({x for x in parser.ids if parser.ids.count(x)>1}); missing=sorted(REQUIRED_IDS-set(parser.ids))
     absent=[x for x in REQUIRED_FEATURES if x not in html]
     server=SERVER_PATH.read_text(encoding="utf-8")
-    server_required=("def validate_mask_data_url(", 'payload["mask"] = mask_payload', "OPENAI_API_KEY")
+    server_required=("def validate_mask_data_url(", "def validate_quality(", "def validate_variants(", 'payload["mask"] = mask_payload', '"n": variants', "OPENAI_API_KEY")
     absent.extend("server: "+x for x in server_required if x not in server)
     if re.search(r"<\s*svg\b|renderSvg\s*\(",html,re.I): absent.append("No geometrically drawn SVG avatar is allowed")
     if dup or missing or absent:
