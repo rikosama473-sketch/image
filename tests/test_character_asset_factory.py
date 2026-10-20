@@ -1,9 +1,12 @@
 import hashlib
 import importlib.util
+import io
 import json
 from pathlib import Path
 import tempfile
 import unittest
+from contextlib import redirect_stdout
+from unittest.mock import Mock
 
 from PIL import Image
 
@@ -85,6 +88,21 @@ class CharacterAssetFactoryTests(unittest.TestCase):
             with self.subTest(slug=slug):
                 self.assertTrue(prompt.strip())
                 self.assertIn("plain light background", prompt.lower())
+
+    def test_optional_huggingface_token_is_not_logged_or_passed_when_absent(self):
+        client_class = Mock(return_value=object())
+        out = io.StringIO()
+        with redirect_stdout(out):
+            MODULE.build_space_client(client_class, " hf_test_secret_value ")
+        client_class.assert_called_once_with(MODULE.SPACE_ID, hf_token="hf_test_secret_value", verbose=True)
+        self.assertNotIn("hf_test_secret_value", out.getvalue())
+
+        client_class.reset_mock()
+        out = io.StringIO()
+        with redirect_stdout(out):
+            MODULE.build_space_client(client_class, "")
+        client_class.assert_called_once_with(MODULE.SPACE_ID, verbose=True)
+        self.assertNotIn("hf_test_secret_value", out.getvalue())
 
     def test_reference_validation(self):
         self.assertEqual(MODULE.validate_path("ref/character.png"), "ref/character.png")
