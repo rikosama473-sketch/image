@@ -55,8 +55,7 @@ class AnatomyAssetLinkTests(unittest.TestCase):
         self.assertEqual(queue.get("character_id"), "pibara")
         self.assertEqual(queue.get("asset_pack"), "anatomy-sheet-4")
         self.assertEqual(queue.get("reference_image"), "from-PixAI-2034984086876227343-0.png")
-        self.assertIn("branches:\\n      - work/easy-avatar-maker-2026-10", workflow.replace("\\n", "\\n"))
-        self.assertIn("data/anatomy-generation-queue.json", workflow)
+        self.assertRegex(workflow, r"(?s)on:\s+push:\s+branches:\s+- work/easy-avatar-maker-2026-10\s+paths:\s+- data/anatomy-generation-queue\.json")
         self.assertIn("asset_pack=anatomy-sheet-4", workflow)
         self.assertNotIn("- main", workflow)
 
