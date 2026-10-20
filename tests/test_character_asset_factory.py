@@ -104,6 +104,14 @@ class CharacterAssetFactoryTests(unittest.TestCase):
             )
             self.assertEqual(registry["characters"][0]["base_assets"][0]["status"], "derived_not_ai_generated")
 
+    def test_confirmed_pibara_reference_cannot_be_reused_for_other_characters(self):
+        reference = "from-PixAI-2034984086876227343-0.png"
+        self.assertEqual(MODULE.validate_character_reference("pibara", reference), reference)
+        for character_id in ("sunna", "chie"):
+            with self.subTest(character_id=character_id):
+                with self.assertRaises(SystemExit):
+                    MODULE.validate_character_reference(character_id, reference)
+
     def test_source_url_escapes_spaces(self):
         self.assertEqual(
             MODULE.source_url("owner/repo", "main", "folder/my character.png"),
