@@ -45,6 +45,13 @@ class DataUrlValidationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             bridge.validate_data_url("data:image/png;base64,%%%not-base64%%%", "test")
 
+    def test_mask_accepts_png_and_rejects_other_formats(self):
+        png = data_url("image/png", b"\x89PNG\r\n\x1a\nmask")
+        self.assertEqual(bridge.validate_mask_data_url(png), png)
+        jpeg = data_url("image/jpeg", b"\xff\xd8\xffmask")
+        with self.assertRaisesRegex(ValueError, "debe ser PNG"):
+            bridge.validate_mask_data_url(jpeg)
+
 
 class LocalBridgeHttpTests(unittest.TestCase):
     @classmethod
