@@ -22,6 +22,10 @@ class CharacterAssetFactoryTests(unittest.TestCase):
             "accessories-4": 4,
             "face-details-4": 4,
             "anatomy-guide-1": 1,
+            "anatomy-front-v2-1": 1,
+            "anatomy-side-1": 1,
+            "anatomy-back-1": 1,
+            "anatomy-joint-guide-1": 1,
         }
         self.assertEqual(set(MODULE.PACKS), set(expected))
         for name, count in expected.items():
@@ -49,6 +53,21 @@ class CharacterAssetFactoryTests(unittest.TestCase):
         self.assertIn("later manual component separation", MODULE.ANATOMY_BASE)
         self.assertIn("exact hairstyle and silhouette", MODULE.ANATOMY_BASE)
         self.assertIn("Do not redesign the hairstyle", MODULE.ANATOMY_BASE)
+
+    def test_multiple_anatomy_views_have_specific_instructions(self):
+        self.assertIn("orientation and pose specified", MODULE.ANATOMY_BASE)
+        cases = {
+            "anatomy-front-v2-1": ("full-body-front-a-pose-v2", "Front-view full-body"),
+            "anatomy-side-1": ("full-body-side-profile", "strict 90-degree side profile"),
+            "anatomy-back-1": ("full-body-back-view", "directly behind"),
+            "anatomy-joint-guide-1": ("full-body-joint-guide", "construction marks"),
+        }
+        for pack, (slug, phrase) in cases.items():
+            with self.subTest(pack=pack):
+                self.assertEqual(len(MODULE.PACKS[pack]), 1)
+                self.assertEqual(MODULE.PACKS[pack][0][0], slug)
+                self.assertIn(phrase.lower(), MODULE.PACKS[pack][0][1].lower())
+                self.assertIn("exact hairstyle and silhouette", MODULE.ANATOMY_BASE)
 
     def test_reference_validation(self):
         self.assertEqual(MODULE.validate_path("ref/character.png"), "ref/character.png")
