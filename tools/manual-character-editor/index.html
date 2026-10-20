@@ -345,7 +345,7 @@ function clippedLayerFromSelection(layer){
 }
 function extractLayer(){
   const source=activeLayer();if(!source||selectionEmpty()){setStatus("Primero seleccioná los píxeles que querés separar.");return;}
-  saveHistory();const cut=clippedLayerFromSelection(source);const name=$("layerNameInput").value.trim()||"Recorte "+(doc.layers.length);
+  saveHistory();const cut=clippedLayerFromSelection(source);const requestedName=$("layerNameInput").value.trim();const name=requestedName&&requestedName!==source.name?requestedName:"Recorte "+(doc.layers.length);
   if($("clearSourceAfterExtract").checked){const ctx=source.canvas.getContext("2d");ctx.save();ctx.globalCompositeOperation="destination-out";ctx.drawImage(maskCanvas,0,0);ctx.restore();}
   const created=newLayer(name,cut);created.backup=cloneCanvas(cut);rectangle=null;mctx.clearRect(0,0,doc.width,doc.height);renderLayers();redraw();setStatus("Recorte separado en la capa “"+created.name+"”. Podés ocultarlo o exportarlo como PNG.");
 }
@@ -373,7 +373,7 @@ function cropCanvas(){
 function makeComposite(){const c=makeCanvas(doc.width,doc.height),ctx=c.getContext("2d");doc.layers.forEach(function(l){if(l.visible){ctx.save();ctx.globalAlpha=l.opacity;ctx.drawImage(l.canvas,0,0);ctx.restore();}});return c;}
 function renameActive(){const l=activeLayer();if(!l)return;const n=$("layerNameInput").value.trim();if(!n)return;l.name=n;renderLayers();setStatus("Capa renombrada.");}
 function deleteActive(){const l=activeLayer();if(!l)return;if(!confirm("¿Eliminar la capa «"+l.name+"»? Esta acción se puede deshacer."))return;saveHistory();doc.layers=doc.layers.filter(function(x){return x.id!==l.id;});activeId=doc.layers.length?doc.layers[doc.layers.length-1].id:null;renderLayers();redraw();setStatus("Capa eliminada.");}
-function newEmptyLayer(){if(!canEdit())return;saveHistory();const l=newLayer($("layerNameInput").value.trim()||"Capa nueva");renderLayers();redraw();setStatus("Capa vacía creada.");}
+function newEmptyLayer(){if(!canEdit())return;const current=activeLayer();const requestedName=$("layerNameInput").value.trim();const name=requestedName&&(!current||requestedName!==current.name)?requestedName:"Capa nueva "+(doc.layers.length+1);saveHistory();const l=newLayer(name);renderLayers();redraw();setStatus("Capa vacía creada como “"+l.name+"”.");}
 function invertMask(){if(!canEdit())return;saveHistory();const image=mctx.getImageData(0,0,doc.width,doc.height);for(let i=3;i<image.data.length;i+=4)image.data[i]=255-image.data[i];mctx.putImageData(image,0,0);rectangle=null;redraw();setStatus("Selección invertida.");}
 function clearMask(){if(!canEdit())return;saveHistory();mctx.clearRect(0,0,doc.width,doc.height);rectangle=null;polygonPoints=[];redraw();setStatus("Selección limpiada.");}
 async function loadImageFromFile(file){
