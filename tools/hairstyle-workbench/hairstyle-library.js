@@ -118,15 +118,20 @@ function componentScore(layer,comp){
 function tryRecipe(id){
  const r=library&&library.recipes.find(x=>x.id===id),a=api();if(!r||!a)return;
  const layers=a.getLayers();a.setActiveRecipe(r);
+ const previousHaircuts=layers.filter(l=>l.category==="haircut"&&l.visible!==false).map(l=>l.id);
  layers.filter(l=>HAIR_CATEGORIES.includes(l.category)).forEach(l=>l.visible=false);
- const used=new Set(),missing=[],approx=[];
+ const used=new Set(),missing=[],approx=[];let baseMatched=false;
  r.components.forEach(comp=>{
   const cand=layers.filter(l=>l.category===comp.slot&&!used.has(l.id)).map(l=>({layer:l,...componentScore(l,comp)})).filter(x=>x.score>0).sort((x,y)=>y.specific-x.specific||y.score-x.score);
   const hit=cand[0];
   if(!hit){if(["haircut","bangs","sidelocks","tie","ahoge","accessory"].includes(comp.slot))missing.push(comp.description+" ["+comp.tags.join(", ")+"]");return;}
   hit.layer.visible=true;used.add(hit.layer.id);
-  if(comp.slot==="haircut"&&!hit.exact)approx.push(hit.layer.name+" (silueta aproximada; no es "+r.name+")");
+  if(comp.slot==="haircut"){baseMatched=true;if(!hit.exact)approx.push(hit.layer.name+" (silueta aproximada; no es "+r.name+")");}
  });
+ if(!baseMatched){
+  layers.filter(l=>l.category==="haircut"&&previousHaircuts.includes(l.id)).forEach(l=>l.visible=true);
+  if(previousHaircuts.length)approx.push("se conserva el corte base que ya estaba seleccionado porque no hay una silueta PNG para "+r.name);
+ }
  a.setStyleName(r.name);a.render();closeLibrary();
  const note=[];
  if(approx.length)note.push("La base disponible es aproximada: "+approx.join("; ")+".");
