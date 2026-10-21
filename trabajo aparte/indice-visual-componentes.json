@@ -9107,13 +9107,13 @@
         "M-02"
       ],
       "ordinal": 221,
-      "source_url": "https://itch.io/event/40772864",
-      "title": "Anime Character Asset: Nana Androgynous — studentspub",
+      "source_url": "https://studentspub.itch.io/anime-character-asset-char-0080",
+      "title": "Anime Character Asset: Nana Androgynous by studentspub",
       "creator": "studentspub",
       "source_platform": "Itch.io",
       "source_language": "Itch.io / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://img.itch.zone/aW1nLzMxMDE2MjU2LmdpZg==/original/oPRM%2Ba.gif",
+      "thumbnail_kind": "official_itch_asset_page_cover",
       "category": "itch_io_assets",
       "categories": [
         "itch_io_assets"
@@ -9144,7 +9144,11 @@
           "license_evidence_status": "unverified_or_pending",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "source_event_url": "https://itch.io/event/40772864",
+      "thumbnail_page_title": "Anime Character Asset: Nana Androgynous by studentspub",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "direct cover image URL extracted from canonical product page metadata; visual load not yet verified in end-user browser"
     },
     {
       "id": "CENSUS-M-03",
@@ -9152,13 +9156,13 @@
         "M-03"
       ],
       "ordinal": 222,
-      "source_url": "https://itch.io/e/46016938/studentspub-published-anime-character-asset-char-183",
-      "title": "Anime Character Asset: Char_183 — studentspub",
+      "source_url": "https://studentspub.itch.io/anime-character-asset-char-183",
+      "title": "Anime Character Asset: Char_183 by studentspub",
       "creator": "studentspub",
       "source_platform": "Itch.io",
       "source_language": "Itch.io / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://img.itch.zone/aW1nLzI2ODcwMTk1LmpwZw==/original/Ah1ywO.jpg",
+      "thumbnail_kind": "official_itch_asset_page_cover",
       "category": "itch_io_assets",
       "categories": [
         "itch_io_assets"
@@ -9189,7 +9193,11 @@
           "license_evidence_status": "unverified_or_pending",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "source_event_url": "https://itch.io/e/46016938/studentspub-published-anime-character-asset-char-183",
+      "thumbnail_page_title": "Anime Character Asset: Char_183 by studentspub",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "direct cover image URL extracted from canonical product page metadata; visual load not yet verified in end-user browser"
     },
     {
       "id": "CENSUS-M-04",
@@ -9197,13 +9205,13 @@
         "M-04"
       ],
       "ordinal": 223,
-      "source_url": "https://itch.io/e/46016953/studentspub-published-anime-character-asset-char-185",
-      "title": "Anime Character Asset: Char_185 — studentspub",
+      "source_url": "https://studentspub.itch.io/anime-character-asset-char-185",
+      "title": "Anime Character Asset: Char_185 by studentspub",
       "creator": "studentspub",
       "source_platform": "Itch.io",
       "source_language": "Itch.io / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://img.itch.zone/aW1nLzI2ODcwMTQyLmpwZw==/original/4CZ%2Foq.jpg",
+      "thumbnail_kind": "official_itch_asset_page_cover",
       "category": "itch_io_assets",
       "categories": [
         "itch_io_assets"
@@ -9234,7 +9242,11 @@
           "license_evidence_status": "unverified_or_pending",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "source_event_url": "https://itch.io/e/46016953/studentspub-published-anime-character-asset-char-185",
+      "thumbnail_page_title": "Anime Character Asset: Char_185 by studentspub",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "direct cover image URL extracted from canonical product page metadata; visual load not yet verified in end-user browser"
     },
     {
       "id": "CENSUS-M-05",
@@ -9242,13 +9254,13 @@
         "M-05"
       ],
       "ordinal": 224,
-      "source_url": "https://itch.io/e/46016932/studentspub-published-anime-character-asset-char-182",
-      "title": "Anime Character Asset: Char_182 — studentspub",
+      "source_url": "https://studentspub.itch.io/anime-character-asset-char-182",
+      "title": "Anime Character Asset: Char_182 by studentspub",
       "creator": "studentspub",
       "source_platform": "Itch.io",
       "source_language": "Itch.io / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://img.itch.zone/aW1nLzI2ODcwMjE2LmpwZw==/original/WS%2BpSB.jpg",
+      "thumbnail_kind": "official_itch_asset_page_cover",
       "category": "itch_io_assets",
       "categories": [
         "itch_io_assets"
@@ -9279,7 +9291,11 @@
           "license_evidence_status": "unverified_or_pending",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "source_event_url": "https://itch.io/e/46016932/studentspub-published-anime-character-asset-char-182",
+      "thumbnail_page_title": "Anime Character Asset: Char_182 by studentspub",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "direct cover image URL extracted from canonical product page metadata; visual load not yet verified in end-user browser"
     },
     {
       "id": "CENSUS-M-06",
@@ -9381,7 +9397,7 @@
   "statistics": {
     "canonical_url_records": 226,
     "structured_entries": 226,
-    "index_entries_with_thumbnail": 222,
+    "index_entries_with_thumbnail": 226,
     "pixai_source_entries": 39,
     "research_report_categorized_records": 160,
     "research_records_with_source_url": 154,
@@ -9423,10 +9439,12 @@
     "pixai_tag_browsers": 8,
     "verified_clean_square_plates": 0,
     "index_note": "The census metadata was merged without inventing preview URLs. For new records, thumbnail_url=null until a direct official preview is captured and visually checked. URL canonicalization is basic and does not detect same image posted at different URLs. The long-form research report has 160 categorized records, 154 with a URL, and 153 normalized unique URLs; 6 records in category N/K are cross-reference aliases with no repeated URL.",
-    "deduplication_note": "URL-level duplicates are grouped where normalized URLs match. No perceptual image hashing or manual duplicate image comparison has been run.",
-    "license_note": "License claims from the long-form report are stored as claims with an evidence-status field; original terms must be revisited before importing or redistributing assets. Free-to-view does not mean reusable.",
+    "deduplication_note": "URL-level canonicalization only. The same artwork at different URLs can still occur; visual/perceptual image hashing has not been run.",
+    "license_note": "Preview thumbnail is a source-identification convenience and does not grant permission to crop, download, redistribute or reuse the art asset. Check the original creator/license before importing.",
     "thumbnail_retrieval_batches": 16,
-    "thumbnail_status_note": "New preview URLs were extracted from official source-page metadata or visible image links. They are still candidates until visual load is checked in the actual atlas; previews are for identification only, not reusable assets."
+    "thumbnail_status_note": "226 index records now contain a preview URL extracted from original page metadata or image links; the URLs have not all been individually loaded/visually checked inside the final browser UI and may change. For four itch.io entries, event URLs were replaced with canonical product pages and the old event URLs retained as aliases.",
+    "records_without_thumbnail": 0,
+    "canonical_itch_pages_corrected": 4
   },
   "pixai_tag_browsers": [
     {
