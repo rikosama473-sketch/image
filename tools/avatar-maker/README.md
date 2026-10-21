@@ -8,6 +8,18 @@ Editor visual guiado por la referencia compartida: navegación lateral, ilustrac
 - También podés servir la raíz del repositorio con Python y abrir \`tools/avatar-maker/index.html\`.
 - [Catálogo de imágenes, fuentes y licencias](assets/catalog.json).
 
+## Prueba inicial con imágenes internas
+
+Al abrir el creador, la sección **Prueba inicial** muestra hasta 12 ilustraciones internas con nombre de archivo PixAI para comenzar las pruebas. Si no existen esas rutas en el índice, usa las primeras ilustraciones completas disponibles. Las muestras se presentan explícitamente como retratos completos: no se clasifican como cabello, ojos ni ropa aislados. La licencia y la procedencia siguen pendientes de revisión individual.
+
+En la tarjeta de cada muestra:
+
+- **Usar como base** cambia el retrato del lienzo al archivo seleccionado.
+- **Probar PNG** verifica la decodificación de la imagen, su renderizado en el lienzo y la conversión del lienzo a un blob PNG no vacío, sin iniciar una descarga automática.
+- **Añadir capa de prueba** agrega una ilustración completa como superposición semitransparente para probar selección, posición, escala, opacidad, orden, visibilidad y eliminación.
+
+Después de escoger una muestra, probá también **Exportar PNG**, **Guardar proyecto JSON** y volver a cargar ese JSON. Los proyectos guardan el ID de la imagen base; al reabrirlos, el editor vuelve a resolver el ID en el catálogo interno para recuperar el retrato seleccionado. Las imágenes de prueba son para comprobar la integración y no se marcan como recursos aprobados para redistribución o entrenamiento.
+
 ## Implementado
 
 - Seis vistas ilustradas de Pibara: imagen original y cinco variantes completas generadas.
@@ -74,7 +86,7 @@ Referencia de la integración: [guía oficial de edición de imágenes de OpenAI
 
 ## Biblioteca visual del repositorio
 
-La pestaña **Biblioteca** carga \`assets/image-library.json\`, un índice inicial de **759 imágenes rasterizadas preexistentes**; las nuevas generaciones se agregan automáticamente al catálogo. Permite buscar por nombre/ruta, paginar resultados y filtrar por los campos de procedencia, licencia y permiso de entrenamiento. Al elegir una imagen se utiliza como retrato base completo, nunca como cabello u otra capa semántica por defecto.
+La pestaña **Biblioteca** carga \`assets/image-library.json\`, un índice de **764 imágenes rasterizadas preexistentes en la versión actual del catálogo**; las nuevas generaciones se agregan automáticamente al catálogo. Permite buscar por nombre/ruta, paginar resultados y filtrar por los campos de procedencia, licencia y permiso de entrenamiento. Al elegir una imagen se utiliza como retrato base completo, nunca como cabello u otra capa semántica por defecto.
 
 **Límite de procedencia:** el índice no es una enciclopedia de todo el anime ni prueba que cada imagen esté licenciada. Gran parte de las imágenes tiene procedencia/licencia/permiso sin revisar. Un nombre PixAI o numérico es solo una pista. Antes de publicar, redistribuir o usar para entrenar, revisa el origen real y sus condiciones. Los nuevos packs deben incorporarse con fuente, autor, licencia, hash, estado de revisión y categoría; prioriza bibliotecas con permiso claro y referencias propias.
 
