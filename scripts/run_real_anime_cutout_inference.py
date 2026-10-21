@@ -84,6 +84,21 @@ def alpha_metrics(image: Image.Image) -> dict:
     }
 
 
+def checkerboard(image: Image.Image, cell: int = 24) -> Image.Image:
+    """Flatten the alpha over a predictable checkerboard for edge inspection."""
+    rgba = image.convert("RGBA")
+    board = Image.new("RGBA", rgba.size, (232, 232, 232, 255))
+    draw = ImageDraw.Draw(board)
+    for y in range(0, rgba.height, cell):
+        for x in range(0, rgba.width, cell):
+            if ((x // cell) + (y // cell)) % 2:
+                draw.rectangle(
+                    (x, y, min(x + cell - 1, rgba.width - 1), min(y + cell - 1, rgba.height - 1)),
+                    fill=(190, 190, 190, 255),
+                )
+    return Image.alpha_composite(board, rgba).convert("RGB")
+
+
 def composite_on(image: Image.Image, color: tuple[int, int, int]) -> Image.Image:
     rgba = image.convert("RGBA")
     background = Image.new("RGBA", rgba.size, (*color, 255))
