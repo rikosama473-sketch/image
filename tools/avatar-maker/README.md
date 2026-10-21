@@ -4,7 +4,7 @@
 
 Abrí la [Biblioteca visual](../visual-reference-library/index.html) después de iniciar el servidor local. Reúne referencias web de ojos y cabello, las 764 ilustraciones indexadas del repositorio y las capas candidatas existentes. Podés clasificar fichas, añadir etiquetas/notas, crear recetas visuales y exportar anotaciones JSON. Las recetas describen diseños; no son imágenes generadas. Las referencias web siguen enlazadas a sus fuentes y no se convierten en assets libres por estar catalogadas.
 
-Para crear hojas de contacto de todas las imágenes locales y detectar duplicados exactos por contenido: `python scripts/build_visual_contact_sheets.py`. El informe y las hojas se guardan en `generated/visual-reference-contact-sheets/`. También existe el workflow manual **Build IMAGE visual contact sheets** en GitHub Actions.
+Para crear hojas de contacto de todas las imágenes locales y detectar duplicados exactos por contenido: `python scripts/build_visual_contact_sheets.py`. El informe y las hojas se guardan en `generated/visual-reference-contact-sheets/`. También existe el workflow manual **Build IMAGE visual contact sheets** en GitHub Actions. La primera ejecución real procesó 764/764 imágenes legibles, creó 16 hojas de contacto y detectó un grupo de duplicados exactos. Consulta el [informe visual](../visual-reference-library/LOCAL_ASSET_REVIEW_2026-10.md) y descarga el [artefacto de hojas de contacto](https://github.com/rikosama473-sketch/image/actions/runs/39604889219/artifacts/12347792216). Es una revisión general de las hojas, no una clasificación individual de cada ojo o peinado.
 
 ## Taller manual de peinados sin IA
 
