@@ -7,15 +7,18 @@
 
 ## Estado de la investigación ampliada — 21 de octubre de 2026
 
-El informe de investigación multi-fuente está disponible aquí:
+La investigación ampliada y las referencias verificadas están enlazadas aquí:
 
-- [Informe ampliado: 70 fuentes citadas, estilos de cabello, ropa, ojos, accesorios, etiquetas PixAI y permisos](./informe-investigacion-ampliada-waifu.md).
-- [Índice JSON de referencias visuales](./indice-visual-componentes.json): 40 registros indexados, con 16 obras de PixAI y 24 recursos externos/candidatos. Las fichas guardan miniatura, fuente, componente objetivo, elementos ajenos que deben marcarse en rojo, estado de referencia monocroma y situación de licencia.
-- [Atlas HTML interactivo](./atlas-peinados-interactivo.html): miniaturas pequeñas junto al nombre, avisos rojos, filtros interactivos por componente y enlaces de búsqueda para referencias cuadradas en blanco y negro.
+- [Informe ampliado y suplemento de auditoría](./informe-investigacion-ampliada-waifu.md): vocabulario de 117 estilos (30 cabello, 30 ropa, 30 ojos y 27 accesorios), fuente base de 70 URLs citadas, evidencia adicional de PixAI/Pixiv/BOOTH/ArtStation, precios y condiciones de uso comprobadas.
+- [Índice JSON de referencias visuales](./indice-visual-componentes.json): **66 registros de URL** (26 obras individuales de PixAI y 40 recursos/páginas externos), con 66 miniaturas, URL de origen, componente objetivo, extras rojos, tipo de recurso, estado de placa monocroma y situación de licencia.
+- [Atlas HTML interactivo](./atlas-peinados-interactivo.html): 26 fichas PixAI con miniaturas y avisos rojos, filtros de componente, vistas previas de colecciones de cabello y 9 tarjetas de productos modulares/de referencia con precio y licencia verificados.
 
-**Cómo leer las cifras:** el informe ampliado incluye 70 fuentes citadas y un vocabulario/atlas de 117 estilos de cuatro componentes (30 cabello, 30 ropa, 30 ojos y 27 accesorios). El índice visual del editor es un conjunto menor de 40 registros seleccionados para navegación con miniaturas. Ninguna de estas cifras equivale a 40, 117 o 140 assets con licencia libre ya descargados. También hay páginas de etiquetas y duplicados; por ejemplo, un mismo tablero espejado por distintos sitios no se cuenta como dos láminas únicas.
+**Cómo leer las cifras:** 66 significa registros de origen en el índice; no son 66 PNG únicos, 66 cortes aislados ni 66 assets libres. Incluye obras individuales, páginas de colección, tutoriales y anuncios de packs. Se quitaron duplicados por URL canónica dentro del índice, pero **todavía no se ejecutó comparación de hashes ni deduplicación perceptual de las imágenes**; una lámina espejo podría representar la misma obra que otra página.
 
-**Estado de las referencias monocromas cuadradas:** las miniaturas oficiales de PixAI se verificaron como vistas previas y están al lado del título; son imágenes originales a color y muestran otros componentes. Para esos casos, el índice guarda búsquedas precisas de placas cuadradas en blanco y negro y los mantiene como pendientes hasta verificar una hoja limpia que se pueda usar según sus condiciones. El atlas no presenta las imágenes completas de PixAI como recortes limpios ni como assets con licencia.
+**Estado de miniaturas:** las vistas previas oficiales de PixAI se muestran junto al nombre. Son miniaturas para reconocer y abrir la obra original, no capturas de página completa ni placas separadas. Las imágenes de Pinterest/BOOTH/ArtStation/Pixivision proceden de la vista previa vinculada a cada página.
+
+**Estado de la referencia cuadrada monocroma:** la cifra de placas cuadradas monocromas con licencia de reutilización confirmada sigue siendo **0**. El atlas propone consultas de búsqueda por componente, pero no marca como terminado un recorte que no se haya encontrado, inspeccionado y validado legalmente. De los packs modulares se registran expresamente las condiciones que prohíben redistribuir los archivos originales.
+
 
 ## Criterio de selección
 
