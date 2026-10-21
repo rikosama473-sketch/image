@@ -943,7 +943,17 @@ El atlas HTML tiene miniaturas pequeñas al lado de los nombres de referencia, 2
 
 ### State after this supplement
 
-- The structured JSON index has **71 source records**: 29 PixAI artwork pages and 42 external sources/product or editorial pages. All 71 records have a verified source-page preview URL; this does not mean the full image file has been downloaded or verified as licensed for redistribution.
-- The HTML atlas contains **29 individual PixAI cards** with official source thumbnails and red extra-element warnings, an additional external-reference gallery, and 9 detailed product/asset comparison cards. The VRoid listing is recorded for research but is not in the 2D asset cards because the file type is not directly compatible.
+- The structured JSON index now has **226 URL-normalized records** after merging the deep-research source census with the prior curated list. It contains **226 source-preview URLs extracted from source metadata or visible image links**. This means preview URLs were found, not that every thumbnail was visually loaded in the final UI or that any source artwork is licensed for redistribution.
+- The original hairstyle atlas has 32 PixAI cards and an external-reference gallery. The new standalone visual census contains **226 searchable cards** with small preview images, filters, red warnings for unrelated elements, source-page links, and license/monochrome status fields. The VRoid listing is recorded for research but is not in the 2D asset cards because the file type is not directly compatible.
 - The UI's current clean square monochrome plate count remains **zero verified with a reuse license**. Each relevant card links to a tailored image search; those result pages remain candidates until their source, visual cleanliness, squareness, and license are checked.
 - The research now covers more direct source pages, but canonical URL deduplication alone does not prove distinct underlying pictures. No image-hash/perceptual deduplication pass has been completed, and no full third-party archive has been downloaded or dissected.
+
+
+## Current UI and index paths — 21 Oct 2026
+
+- [Censo visual interactivo (226 cards with preview URLs)](./censo-visual-interactivo.html)
+- [Censo exhaustivo (153 unique canonical source URLs)](./censo-exhaustivo-fuentes-waifu-2026-10-21.md)
+- [Bibliography source URL audit](./auditoria-bibliografia-censo-waifu-2026-10-21.md)
+- [Expanded JSON source index (226 normalized URL records)](./indice-visual-componentes.json)
+
+The preview images are remote URLs extracted from page metadata and image links. They are identification thumbnails, not cached/owned assets, and not every URL has been visually validated inside the final HTML. Four Itch.io event records were resolved to canonical product pages while retaining their event page as an alias.
