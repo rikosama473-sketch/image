@@ -85,6 +85,7 @@ Los resultados de X son puertas de búsqueda, no referencias que ya se hayan ver
 
 ## E. Paquetes voluminosos
 
+- [ArtStation — 180 Women's Hairstyles Reference Images and Guide Sheets](https://www.artstation.com/marketplace/p/ovY22/180-women-s-hairstyles-reference-images-and-guide-sheets): **14 láminas y 180 imágenes de peinados femeninos con el nombre exacto indicado**, según la ficha; USD 4,99, ZIP de 300 MB. La ficha aclara que las imágenes fueron generadas con IA. Por sus rótulos puede ser más útil que una colección grande sin nombres, aunque conviene revisar todas las muestras antes de comprar y no describirla como una colección de arte humano dibujado.
 - [ArtStation — 300 Female Anime Hairstyle Sketches 4K v.01](https://www.artstation.com/marketplace/p/BBOL5/300-female-anime-hairstyle-sketches-4k-v-01): el listado consultado muestra 300 PNG de 4096×6144, ZIP de 1,7 GB, licencia estándar de USD 5,99 y licencia comercial ampliada de USD 12. Es una opción comercial real de mayor volumen, no gratuita.
 - [Etsy — 100+ Anime Hair Clip Stamps para Photoshop/Clip Studio](https://www.etsy.com/listing/1770766275/100-anime-hair-clip-stamps-photoshopclip): más de 100 sellos/brush stamps de cabello y accesorios, formato ABR; el precio mostrado durante la consulta era AU$9,34. Permite uso personal/comercial, pero prohíbe redistribuir o compartir los sellos como producto en sí. Es una herramienta para dibujar en el software compatible, no un pack que podamos incorporar directamente a IMAGE.
 - [Etsy — 100+ Anime Hair and Clip Stamps para Procreate](https://www.etsy.com/listing/1267272241/100-anime-hair-and-clip-procreate-stamps): alternativa equivalente para Procreate; la ficha anuncia más de 100 sellos y uso personal/comercial con prohibición de redistribución de los sellos originales.
@@ -101,6 +102,11 @@ Los resultados de X son puertas de búsqueda, no referencias que ya se hayan ver
 - [X: 髪型資料 女の子 イラスト](https://x.com/search?q=%E9%AB%AA%E5%9E%8B%E8%B3%87%E6%96%99%20%E5%A5%B3%E3%81%AE%E5%AD%90%20%E3%82%A4%E3%83%A9%E3%82%B9%E3%83%88&src=typed_query).
 
 X y algunas páginas de Pixiv no devolvieron resultados suficientemente verificables en el índice web público de esta pasada; esos enlaces son consultas de búsqueda, no obras ya aprobadas.
+
+- [Pinterest — guía de variaciones de twintails](https://jp.pinterest.com/pin/617274692708948689/): diagrama de nueve variaciones combinando altura de atado y largo de coletas; muy útil para descomponer una familia en rasgos variables.
+- [Pinterest — guía visual de 9 familias femeninas](https://www.pinterest.com/ideas/anime-female-ponytail-hairstyles/944451166577/): normal, coleta, coletas dobles, moños, trenzas, ondas/rizos, frente despejada, largo/corto y accesorios.
+- [Pinterest — 20 retratos femeninos con peinados elaborados](https://www.pinterest.com/pin/131448882864204019/): referencia para adornos, flores, cintas, coronas y trenzas; menos adecuada como base modular por incluir rostro y accesorios.
+- [Guía ilustrada de 30 peinados por arquetipo](https://hairstyles6f.netlify.app/post/hairstyles-and-names-with-pictures/): mezcla etiquetas de silueta y arquetipo de personaje, por ejemplo hime cut y twintails. El origen de la imagen debe verificarse antes de reutilizarla.
 
 ## Siguiente fase recomendada
 
