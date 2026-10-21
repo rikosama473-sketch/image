@@ -944,17 +944,17 @@ El atlas HTML tiene miniaturas pequeñas al lado de los nombres de referencia, 2
 ### State after this supplement
 
 - The structured JSON index now has **234 URL-normalized records** after merging the deep-research source census with the prior curated list. It contains **234 source-preview URLs extracted from source metadata or visible image links**. This means preview URLs were found, not that every thumbnail was visually loaded in the final UI or that any source artwork is licensed for redistribution.
-- The original hairstyle atlas has 32 PixAI cards and an external-reference gallery. The new standalone visual census contains **234 searchable cards** with small preview images, filters, red warnings for unrelated elements, source-page links, and license/monochrome status fields. The VRoid listing is recorded for research but is not in the 2D asset cards because the file type is not directly compatible.
+- The original hairstyle atlas has 32 PixAI cards and an external-reference gallery. The new standalone visual census contains **237 searchable cards** with small preview images, filters, red warnings for unrelated elements, source-page links, and license/monochrome status fields. The VRoid listing is recorded for research but is not in the 2D asset cards because the file type is not directly compatible.
 - The UI's current clean square monochrome plate count remains **zero verified with a reuse license**. Each relevant card links to a tailored image search; those result pages remain candidates until their source, visual cleanliness, squareness, and license are checked.
 - The research now covers more direct source pages, but canonical URL deduplication alone does not prove distinct underlying pictures. No image-hash/perceptual deduplication pass has been completed, and no full third-party archive has been downloaded or dissected.
 
 
 ## Current UI and index paths — 21 Oct 2026
 
-- [Censo visual interactivo (234 cards with preview URLs)](./censo-visual-interactivo.html)
+- [Censo visual interactivo (237 cards with preview URLs)](./censo-visual-interactivo.html)
 - [Censo exhaustivo (153 unique canonical source URLs)](./censo-exhaustivo-fuentes-waifu-2026-10-21.md)
 - [Bibliography source URL audit](./auditoria-bibliografia-censo-waifu-2026-10-21.md)
-- [Expanded JSON source index (234 normalized URL records)](./indice-visual-componentes.json)
+- [Expanded JSON source index (237 normalized URL records)](./indice-visual-componentes.json)
 
 The preview images are remote URLs extracted from page metadata and image links. They are identification thumbnails, not cached/owned assets, and not every URL has been visually validated inside the final HTML. Four Itch.io event records were resolved to canonical product pages while retaining their event page as an alias.
 
@@ -988,3 +988,14 @@ The goal here is not only inspiration: these pages show how real layer-based cha
 
 **Important distinction:** the first four products are modular/color assets or full-character sprites. They are not monochrome square reference plates, and “commercial use allowed” does not automatically permit redistributing the component images as a downloadable library. The current index has **234 source records and 234 preview URLs**; the 229 direct-image candidates plus five Pixiv embed endpoints have not all been visually checked in the final browser. The count of **licensed clean square monochrome component plates remains 0**.
 
+
+
+## Layered-expression asset reference supplement — BOOTH
+
+These three listings were checked specifically because they expose facial-part counts in their item descriptions. They are **not marked as free components to redistribute**.
+
+- [RA-STUDIO — Miko-san](https://booth.pm/en/items/2430742): free PNG package; paid PSD with 6 eye, 4 mouth and 3 brow variants plus sweat, blush and shadow effects. Listing permits personal/doujin projects but prohibits raw asset redistribution/resale, disallows R18/R18G and asks corporate users to contact the creator. The sprite is a full miko character, not an isolated component sheet.
+- [けものしゅがー — Dragon Girl](https://booth.pm/ja/items/3668928): free bust-up PNG; paid versions include a full character and a PSD with 13 eyes, 10 mouths, 4 brows and 4 effects. Commercial/noncommercial use and limited crop/resize/silhouette changes are allowed; redistribution/resale is prohibited.
+- [ねぎま💐 — Usuhoso Sister](https://booth.pm/ja/items/8826602): PNG expression pack ¥300, PSD ¥500, set ¥800. The PSD includes 10 mouths, 11 eyes, 3 brows and blush/sweat effects. Commercial use requires credit; crop/resize/recolor/additions are allowed; raw redistribution/resale and AI training are prohibited.
+
+Current combined index count: **237 source URL/store records**, all with a preview URL. 232 are direct image/preview candidates and 5 are Pixiv embed endpoints. The viewer can render 237 card strings in-memory and the JavaScript parses, but no successful external browser rendering was observed; individual thumbnail loading remains pending.
