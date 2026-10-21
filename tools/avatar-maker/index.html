@@ -253,7 +253,7 @@ function starterWorkspace(root){
    grid.querySelectorAll("[data-starter-test]").forEach(b=>b.onclick=()=>runStarterSmokeTest(b.dataset.starterTest));
    grid.querySelectorAll("[data-starter-overlay]").forEach(b=>b.onclick=()=>addLibraryAssetAsTestLayer(b.dataset.starterOverlay));
   }catch(e){
-   if(rootElement!==$("content"))return;
+   if(state.category!=="starter")return;
    grid.innerHTML='<div class="plain">No se pudo cargar el catálogo interno. Abrí el editor con start-avatar-maker.bat y volvé a intentarlo.</div>';
    $("starterCount").textContent=String(e&&e.message||e);
   }
