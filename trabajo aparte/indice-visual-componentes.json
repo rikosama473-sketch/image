@@ -1822,18 +1822,165 @@
       "monochrome_plate_status": "colored layered PSD, not monochrome square plate",
       "license_status": "paid listing/license verified; redistribution prohibited",
       "ordinal": 66
+    },
+    {
+      "id": "PX-ACC-003",
+      "category": "accessories",
+      "title": "Conjunto de accesorios de pirata: pendientes, collares, diadema y parche",
+      "source_url": "https://pixai.art/artwork/2059352409018766871",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/f475e9ef-102a-4e77-9c55-eabce2f34284",
+      "creator": "Test 1682",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public detailed prompt; explicitly says mature female",
+      "target_traits": [
+        "gold hoop earrings",
+        "layered gold necklaces",
+        "wide-brim pirate hat",
+        "large feather",
+        "skull belt buckle",
+        "fingerless gloves",
+        "choker with charm pendant",
+        "eyepatch",
+        "black bun hair stick and forehead jewelry"
+      ],
+      "extras_red": [
+        "long black hair and bun",
+        "eye color and makeup",
+        "off-shoulder blouse",
+        "corset",
+        "shorts",
+        "thigh-high boots/stockings",
+        "garter straps",
+        "sword/pistol props",
+        "ship deck and treasure scenery"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+pirate+accessories+earrings+necklace+hat+feather+choker+eyepatch+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "ordinal": 67
+    },
+    {
+      "id": "PX-ACC-004",
+      "category": "accessories_clothing",
+      "title": "Diadema roja, corsé de cuero, blusa de encaje y botas de pirata",
+      "source_url": "https://pixai.art/artwork/1988983784843677962",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/3788ec6b-6513-4696-8536-5f298659e3bb",
+      "creator": "BALTAZAR",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public; concise prompt",
+      "target_traits": [
+        "red bandana headband",
+        "brown leather corset",
+        "white lace blouse",
+        "thigh-high stockings",
+        "garter straps",
+        "pirate boots"
+      ],
+      "extras_red": [
+        "blue hair",
+        "brown eyes",
+        "face and pose",
+        "cutlass prop",
+        "ship deck and ropes",
+        "golden sunset light"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+pirate+outfit+bandana+headband+leather+corset+lace+blouse+boots+lineart+sheet",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "ordinal": 68
+    },
+    {
+      "id": "PX-CLT-014",
+      "category": "clothing_accessories",
+      "title": "Kimono gótico con volantes y geta de plataforma",
+      "source_url": "https://pixai.art/artwork/2054448432647548872",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/78e742ff-c962-4240-b575-03567fbe8ccf",
+      "creator": "セリュゥ",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public",
+      "target_traits": [
+        "gothic kimono",
+        "ruffled kimono layers",
+        "dark textile patterns",
+        "white socks",
+        "platform geta sandals",
+        "gothic Japanese-style hair ornaments"
+      ],
+      "extras_red": [
+        "large curled pigtails",
+        "blunt bangs",
+        "dark eye makeup and lipstick",
+        "face/pose",
+        "tatami, shoji doors and teaware"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=gothic+kimono+ruffles+platform+geta+female+outfit+black+white+design+sheet+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "ordinal": 69
+    },
+    {
+      "id": "EXT-PXV-008",
+      "category": "hair_accessories",
+      "title": "Pixivision — Characters Wearing Headbands",
+      "source_url": "https://pixivision.net/en/a/7373",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/7373/ogimage.jpg",
+      "creator": "Pixivision curation, multiple artists",
+      "source_platform": "Pixivision",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_traits": [
+        "wide headbands",
+        "fabric headbands",
+        "hair accessories around forehead",
+        "sporty and fantasy variants"
+      ],
+      "extras_red": [
+        "each image contains a complete character and possibly outfit/face",
+        "editorial page may include male as well as female-presenting characters; select relevant entries individually"
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "curated color collection, not clean plate",
+      "license_status": "reference_only_follow_each_original_work",
+      "ordinal": 70
+    },
+    {
+      "id": "EXT-BOOTH-006",
+      "category": "clothing",
+      "title": "VRoid Female Anime Outfit #1 — modular tops, bottoms, shoes and accessories",
+      "source_url": "https://booth.pm/en/items/4494132",
+      "thumbnail_url": "https://booth.pximg.net/c/620x620/6e40c88d-f428-4223-bbc3-8d590eb6222b/i/4494132/cceca1bb-5c6a-4104-8eac-d62d28911db9_base_resized.jpg",
+      "creator": "jonathan-yuri",
+      "source_platform": "BOOTH",
+      "thumbnail_kind": "official_store_preview",
+      "asset_type": "VRoid 3D clothing item set, not 2D sprite assets",
+      "price_current": "¥300 per color / ¥1,000 all colors",
+      "file_format": "VRoid custom items + textures",
+      "claimed_content": "tops, bottoms, shoes, arm accessories, socks, extra textures",
+      "license_summary": "Listing says personal/commercial use allowed, modifications allowed, but reselling/re-distribution of the item/materials is not allowed. VRoid format is not a drop-in 2D layer.",
+      "extras_red": [
+        "3D model/body and textures rather than isolated 2D PNG line art"
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "not a monochrome lineart plate; 3D-compatible reference only",
+      "license_status": "store license claim verified; use format not directly compatible with current 2D target",
+      "ordinal": 71
     }
   ],
   "statistics": {
-    "pixai_entries": 26,
-    "external_reference_entries": 40,
-    "combined_index_entries": 66,
-    "pixai_entries_with_thumbnail": 26,
-    "external_entries_with_thumbnail": 40,
+    "pixai_entries": 29,
+    "external_reference_entries": 42,
+    "combined_index_entries": 71,
+    "pixai_entries_with_thumbnail": 29,
+    "external_entries_with_thumbnail": 42,
     "verified_clean_square_plates": 0,
     "pixai_tag_browsers": 8,
-    "source_status_note": "Counts describe index records/candidates, not unique isolated PNGs. Pixivision collections, Pinterest mirrors, PixAI artwork and product previews are different record types; only canonical individual source pages are deduplicated by source_url. Full visual perceptual/hashing deduplication remains unperformed.",
-    "monochrome_status_note": "Search links are queries, not confirmed plates. None of the PixAI examples has been proven to be a reusable square monochrome component plate. Layered PSD products are assets with their own terms, not automatically redistributable editor content."
+    "source_status_note": "Counts are canonical URL records, not perceptually unique designs or licensed/reusable PNG assets. Mirrors/reposts may still represent the same underlying drawing; hash/perceptual deduplication remains a separate unfinished audit.",
+    "monochrome_status_note": "Search links are queries, not confirmed plates. No PixAI source has been verified as a reusable square monochrome component plate. Product file use remains governed by the explicit source listing terms."
   },
   "pixai_tag_browsers": [
     {
