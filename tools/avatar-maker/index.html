@@ -767,7 +767,7 @@ $("charName").ondblclick=()=>{const n=prompt("Nombre del personaje",state.name);
 $("stage").querySelector(".nameplate").title="Doble clic en el nombre para editarlo";
 const visualParams=new URLSearchParams(window.location.search);
 const visualPrompt=visualParams.get("visualPrompt");
-if(visualPrompt){aiSettings.prompt=visualPrompt.slice(0,3000);const requestedBackground=visualParams.get("visualBackground");if(["auto","opaque","transparent"].includes(requestedBackground))aiSettings.background=requestedBackground;state.category="ai";state.pill="Todos";}
+if(visualPrompt){aiSettings.prompt=visualPrompt.slice(0,3000);const requestedBackground=visualParams.get("visualBackground");if(["auto","opaque","transparent"].includes(requestedBackground))aiSettings.background=requestedBackground;const visualName=visualParams.get("visualName");if(visualName)aiNextResultMeta={kind:"ai_result",name:"Variante visual · "+visualName.slice(0,100)};state.category="ai";state.pill="Todos";}
 all();
 })();
 </script>
