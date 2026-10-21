@@ -2,7 +2,7 @@
 "use strict";
 const $=id=>document.getElementById(id);
 const HAIR_CATEGORIES=["haircut","bangs","sidelocks","tie","ahoge","accessory"];
-let library=null;
+let library=null,webReferences=null,activeViewerTab="recipes";
 const css=[
 ".library-btn{border-color:#8a5572!important;background:#392638!important;font-weight:800}",
 ".combo-note{font-size:10px;line-height:1.5;color:#9eacc3;margin:7px 0}",
@@ -19,6 +19,17 @@ const css=[
 ".recipe-body{padding:9px;display:flex;flex:1;flex-direction:column;gap:6px}.recipe-body b{font-size:12px;line-height:1.35;min-height:31px}.recipe-body p{font-size:10px;color:#9eacc3;line-height:1.45;margin:0;min-height:43px}",
 ".recipe-tags{display:flex;gap:4px;flex-wrap:wrap}.recipe-tags span{font-size:9px;border:1px solid #47536a;color:#ccd7eb;border-radius:5px;padding:2px 5px}.recipe-meta{font-size:9px;color:#f3c4dc}.recipe-body button{margin-top:auto;width:100%;font-size:11px}",
 ".library-empty{padding:35px;text-align:center;color:#9eacc3;font-size:13px}",
+".viewer-tabs{display:flex;gap:8px;padding:10px 16px 0;background:#121722}",
+".viewer-tabs button{font-size:11px;border-radius:8px 8px 0 0}.viewer-tabs button.active{background:#3a2535;border-color:#ee5d9d;color:#fff}",
+".reference-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}",
+".reference-card{min-width:0;border:1px solid #394358;border-radius:11px;overflow:hidden;background:#10151f;display:flex;flex-direction:column}",
+".reference-image{width:100%;height:205px;object-fit:contain;background:#252b36;display:block}",
+".reference-placeholder{height:160px;display:flex;align-items:center;justify-content:center;text-align:center;background:#202838;color:#c8d4e8;padding:18px;font-size:12px}",
+".reference-body{padding:10px;display:flex;flex:1;flex-direction:column;gap:7px}.reference-body b{font-size:12px;line-height:1.4}.reference-body p{margin:0;color:#aab6c9;font-size:10px;line-height:1.55}",
+".reference-meta{font-size:9px;color:#b5c5dc}.license-flag{font-size:9px;line-height:1.45;border:1px solid #7a6541;background:#302719;color:#ffe4a4;border-radius:6px;padding:5px 6px}.license-flag.open{border-color:#376b56;background:#173128;color:#b3f0d0}",
+".reference-actions{display:flex;gap:7px;margin-top:auto}.reference-actions a{flex:1;text-align:center;font-size:10px;text-decoration:none;color:#ffb6d4;border:1px solid #48546a;padding:7px;border-radius:7px}.reference-actions a:hover{background:#302433}",
+"@media(max-width:980px){.reference-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}",
+"@media(max-width:650px){.reference-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.reference-image{height:140px}.reference-body{padding:7px}.reference-actions{flex-direction:column}}",
 "@media(max-width:980px){.recipe-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}",
 "@media(max-width:650px){.library-controls{grid-template-columns:1fr 1fr}.library-controls .field:first-child{grid-column:1/-1}.recipe-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.library-header{padding:12px}.recipe-card canvas{height:130px}.recipe-body p{min-height:0}}",
 "@media(max-width:390px){.recipe-grid{gap:7px}.recipe-card canvas{height:110px}.recipe-body{padding:7px}}"
@@ -49,25 +60,60 @@ function installUI(){
  }
  if(!$("libraryOverlay")){
   const modal=document.createElement("div");modal.id="libraryOverlay";modal.className="library-overlay";modal.setAttribute("role","dialog");modal.setAttribute("aria-modal","true");modal.setAttribute("aria-labelledby","libraryTitle");
-  modal.innerHTML="<div class='library-panel'><div class='library-header'><div class='library-heading'><h2 id='libraryTitle'>Biblioteca de diseños de cabello anime</h2><p>Explorá 120 recetas de siluetas, flequillos, mechones, recogidos y ahoges. Las miniaturas son bocetos vectoriales orientativos, no PNG recortados. Al probar una idea, se activan solo las piezas reales que coincidan y se muestran los recortes pendientes.</p></div><button id='closeLibraryBtn' aria-label='Cerrar visor'>Cerrar ✕</button></div><div class='library-controls'><div class='field' style='margin:0'><label for='recipeSearch'>Buscar corte, rasgo o etiqueta</label><input id='recipeSearch' type='search' placeholder='Ej. bob, mechón largo, side_ponytail'></div><div class='field' style='margin:0'><label for='recipeFamily'>Familia</label><select id='recipeFamily'><option value=''>Todas las familias</option><option value='Corto'>Cortes cortos</option><option value='Medio'>Cortes medios</option><option value='Largo'>Cortes largos</option></select></div><div class='field' style='margin:0'><label for='recipeLength'>Largo</label><select id='recipeLength'><option value=''>Todos los largos</option><option value='short'>Corto</option><option value='medium'>Medio</option><option value='long'>Largo</option></select></div></div><div id='libraryCount' class='library-count'>Cargando biblioteca…</div><div class='library-scroll'><div id='recipeGrid' class='recipe-grid'></div></div></div>";
+  modal.innerHTML="<div class='library-panel'><div class='library-header'><div class='library-heading'><h2 id='libraryTitle'>Biblioteca de diseños de cabello anime</h2><p>120 recetas conceptuales más una colección de referencias visuales reales encontradas en la web y paquetes descargables con licencias registradas. Las referencias no verificadas son solo para estudiar estilos: no son recursos autorizados para copiar.</p></div><button id='closeLibraryBtn' aria-label='Cerrar visor'>Cerrar ✕</button></div><div class='viewer-tabs'><button id='recipesTab' class='active' type='button'>120 recetas conceptuales</button><button id='referencesTab' type='button'>Referencias web y recursos</button></div><div class='library-controls'><div class='field' style='margin:0'><label for='recipeSearch'>Buscar corte, rasgo o etiqueta</label><input id='recipeSearch' type='search' placeholder='Ej. bob, mechón largo, side_ponytail'></div><div class='field' style='margin:0'><label for='recipeFamily'>Familia</label><select id='recipeFamily'><option value=''>Todas las familias</option><option value='Corto'>Cortes cortos</option><option value='Medio'>Cortes medios</option><option value='Largo'>Cortes largos</option></select></div><div class='field' style='margin:0'><label for='recipeLength'>Largo</label><select id='recipeLength'><option value=''>Todos los largos</option><option value='short'>Corto</option><option value='medium'>Medio</option><option value='long'>Largo</option></select></div></div><div id='libraryCount' class='library-count'>Cargando catálogos…</div><div class='library-scroll'><div id='recipeGrid' class='recipe-grid'></div><div id='referenceGrid' class='reference-grid' hidden></div></div></div>";
   document.body.appendChild(modal);
   $("closeLibraryBtn").addEventListener("click",closeLibrary);
   modal.addEventListener("click",e=>{if(e.target===modal)closeLibrary();});
   document.addEventListener("keydown",e=>{if(e.key==="Escape")closeLibrary();});
   $("recipeSearch").addEventListener("input",renderLibrary);
   $("recipeFamily").addEventListener("change",renderLibrary);
-  $("recipeLength").addEventListener("change",renderLibrary);
+  $("recipeLength").addEventListener("change",()=>activeViewerTab==="recipes"?renderLibrary():renderWebReferences());
+  $("recipesTab").addEventListener("click",()=>switchViewerTab("recipes"));
+  $("referencesTab").addEventListener("click",()=>switchViewerTab("references"));
  }
 }
 function api(){return window.HairWorkbenchAPI;}
 function allLayers(){return api()?api().getLayers():[];}
 function openLibrary(){
- if(library){$("libraryOverlay").classList.add("open");$("recipeSearch").focus();return;}
- fetch("./hairstyle-library.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("No se pudo cargar hairstyle-library.json");return r.json();}).then(data=>{
-  library=data;
+ if(library&&webReferences){$("libraryOverlay").classList.add("open");$("recipeSearch").focus();return;}
+ Promise.all([
+  fetch("./hairstyle-library.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("No se pudo cargar hairstyle-library.json");return r.json();}),
+  fetch("./hairstyle-web-references.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("No se pudo cargar hairstyle-web-references.json");return r.json();})
+ ]).then(([recipes,refs])=>{
+  library=recipes;webReferences=refs;
   if(!Array.isArray(library.recipes))throw new Error("La biblioteca no contiene recetas válidas");
-  renderLibrary();$("libraryOverlay").classList.add("open");$("recipeSearch").focus();
+  if(!Array.isArray(webReferences.items))throw new Error("El catálogo web no contiene referencias válidas");
+  renderLibrary();renderWebReferences();$("libraryOverlay").classList.add("open");$("recipeSearch").focus();
  }).catch(e=>{if(api())api().say("No se pudo abrir el visor: "+e.message,"error");});
+}
+function switchViewerTab(tab){
+ activeViewerTab=tab;
+ const recipes=tab==="recipes";
+ $("recipesTab").classList.toggle("active",recipes);$("referencesTab").classList.toggle("active",!recipes);
+ $("recipeGrid").hidden=!recipes;$("referenceGrid").hidden=recipes;
+ $("recipeLength").parentElement.style.display=recipes?"flex":"none";
+ $("recipeFamily").innerHTML=recipes?
+  "<option value=''>Todas las familias</option><option value='Corto'>Cortes cortos</option><option value='Medio'>Cortes medios</option><option value='Largo'>Cortes largos</option>":
+  "<option value=''>Todas las categorías</option><option value='female'>Cabello femenino</option><option value='male'>Cabello masculino</option><option value='short'>Cortes cortos / cortos en capas</option><option value='editable'>Paquetes descargables</option>";
+ $("recipeFamily").value="";$("recipeLength").value="";
+ $("recipeSearch").placeholder=recipes?"Ej. bob, mechón largo, side_ponytail":"Ej. coleta, masculino, CC0, PNG, mechón";
+ recipes?renderLibrary():renderWebReferences();
+}
+function escapeHtml(value){return String(value==null?"":value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
+function renderWebReferences(){
+ if(!webReferences)return;
+ const q=$("recipeSearch").value.trim().toLowerCase(),fam=$("recipeFamily").value;
+ const rows=webReferences.items.filter(r=>(!fam||r.family===fam)&&(!q||[r.title,r.source_name,r.license_status,r.description,r.notes].concat(r.tags||[]).join(" ").toLowerCase().includes(q)));
+ $("libraryCount").textContent=rows.length+" de "+webReferences.items.length+" fuentes web · "+webReferences.items.filter(r=>r.usable_asset).length+" fuentes con paquetes/archivos descargables y licencia declarada.";
+ const root=$("referenceGrid");
+ if(!rows.length){root.innerHTML="<div class='library-empty'>No hay resultados. Probá otra búsqueda o limpiá el filtro de categoría.</div>";return;}
+ root.innerHTML=rows.map(r=>{
+  const safeTitle=escapeHtml(r.title),safeUrl=escapeHtml(r.source_url),safeDownload=escapeHtml(r.asset_download_url||r.source_url),safeImage=escapeHtml(r.image_url||"");
+  const media=r.image_url?"<img class='reference-image' loading='lazy' src='"+safeImage+"' alt='Referencia visual: "+safeTitle+"' onerror=\"this.style.display='none';this.nextElementSibling.hidden=false\"><div class='reference-placeholder' hidden>Vista previa externa no disponible.<br>Usá el enlace a la fuente para ver la imagen.</div>":"<div class='reference-placeholder'>Paquete de recursos<br>Consultá la fuente y descarga disponible.</div>";
+  const cls=r.usable_asset?"license-flag open":"license-flag";
+  const buttons=r.usable_asset?"<a href='"+safeUrl+"' target='_blank' rel='noopener noreferrer'>Fuente / licencia</a><a href='"+safeDownload+"' target='_blank' rel='noopener noreferrer'>Abrir descarga</a>":"<a href='"+safeUrl+"' target='_blank' rel='noopener noreferrer'>Ver referencia original</a>";
+  return "<article class='reference-card'>"+media+"<div class='reference-body'><b>"+safeTitle+"</b><div class='"+cls+"'>"+escapeHtml(r.license_status)+"</div><p>"+escapeHtml(r.description)+"</p><div class='reference-meta'>"+escapeHtml(r.source_name)+" · "+escapeHtml((r.tags||[]).slice(0,6).join(", "))+"</div><div class='reference-actions'>"+buttons+"</div><p>"+escapeHtml(r.notes)+"</p></div></article>";
+ }).join("");
 }
 function closeLibrary(){const m=$("libraryOverlay");if(m)m.classList.remove("open");}
 function labelsLen(n){return n==="short"?"Corto":n==="medium"?"Medio":"Largo";}
@@ -101,6 +147,7 @@ function drawThumb(r,canvas){
 }
 function renderLibrary(){
  if(!library)return;
+ if(activeViewerTab!=="recipes"){renderWebReferences();return;}
  const q=$("recipeSearch").value.trim().toLowerCase(),fam=$("recipeFamily").value,len=$("recipeLength").value;
  const rows=library.recipes.filter(r=>(!fam||r.family===fam)&&(!len||r.length===len)&&(!q||[r.name,r.description,r.family].concat(r.tags||[],r.accents||[]).join(" ").toLowerCase().includes(q)));
  const a=api(),baseCount=a?a.getCatalogHairCount():0;
