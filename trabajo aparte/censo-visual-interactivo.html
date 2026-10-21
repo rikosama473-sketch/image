@@ -73,8 +73,12 @@ function isCollection(e){return /tag index|tag collection|editorial collection|c
 function searchable(e){return [e.id,e.title,e.creator,e.source_platform,e.source_language,e.source_url,e.category,e.categories,targetText(e),redText(e),licenseText(e),e.prompt_visibility,e.research_record_ids,e.alternate_source_urls,e.alternate_store_note,e.price_current,e.file_format].map(asText).join(" ").toLowerCase()}
 const platforms=[...new Set(records.map(platform))].sort((a,b)=>a.localeCompare(b,"es"));
 for(const p of platforms){const o=document.createElement("option");o.value=p;o.textContent=p;$("platform").appendChild(o);}
+function alternateStoreLinks(e){
+ if(!Array.isArray(e.alternate_source_urls)||!e.alternate_source_urls.length)return "";
+ return e.alternate_source_urls.map(url=>'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">Otra tienda ↗</a>').join("");
+}
 function card(e,i){
- const t=targetText(e),r=redText(e),lic=licenseText(e);
+ const t=targetText(e),r=redText(e),lic=licenseText(e),alternateLinks=alternateStoreLinks(e);
  const tag=(Array.isArray(e.categories)?e.categories[0]:e.category)||e.target_component||categoryGroup(e);
  const thumb=e.thumbnail_url;
  const isPixivEmbed=e.thumbnail_kind==="pixiv_embed_preview"||(thumb&&thumb.includes("embed.pixiv.net/")&&(thumb.includes("artwork.php")||thumb.includes("decorate.php")));
