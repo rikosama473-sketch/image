@@ -944,17 +944,17 @@ El atlas HTML tiene miniaturas pequeñas al lado de los nombres de referencia, 2
 ### State after this supplement
 
 - The structured JSON index now has **234 URL-normalized records** after merging the deep-research source census with the prior curated list. It contains **234 source-preview URLs extracted from source metadata or visible image links**. This means preview URLs were found, not that every thumbnail was visually loaded in the final UI or that any source artwork is licensed for redistribution.
-- The original hairstyle atlas has 32 PixAI cards and an external-reference gallery. The new standalone visual census contains **237 searchable cards** with small preview images, filters, red warnings for unrelated elements, source-page links, and license/monochrome status fields. The VRoid listing is recorded for research but is not in the 2D asset cards because the file type is not directly compatible.
+- The original hairstyle atlas has 32 PixAI cards and an external-reference gallery. The new standalone visual census contains **239 searchable cards** with small preview images, filters, red warnings for unrelated elements, source-page links, and license/monochrome status fields. The VRoid listing is recorded for research but is not in the 2D asset cards because the file type is not directly compatible.
 - The UI's current clean square monochrome plate count remains **zero verified with a reuse license**. Each relevant card links to a tailored image search; those result pages remain candidates until their source, visual cleanliness, squareness, and license are checked.
 - The research now covers more direct source pages, but canonical URL deduplication alone does not prove distinct underlying pictures. No image-hash/perceptual deduplication pass has been completed, and no full third-party archive has been downloaded or dissected.
 
 
 ## Current UI and index paths — 21 Oct 2026
 
-- [Censo visual interactivo (237 cards with preview URLs)](./censo-visual-interactivo.html)
+- [Censo visual interactivo (239 cards with preview URLs)](./censo-visual-interactivo.html)
 - [Censo exhaustivo (153 unique canonical source URLs)](./censo-exhaustivo-fuentes-waifu-2026-10-21.md)
 - [Bibliography source URL audit](./auditoria-bibliografia-censo-waifu-2026-10-21.md)
-- [Expanded JSON source index (237 normalized URL records)](./indice-visual-componentes.json)
+- [Expanded JSON source index (239 normalized URL records)](./indice-visual-componentes.json)
 
 The preview images are remote URLs extracted from page metadata and image links. They are identification thumbnails, not cached/owned assets, and not every URL has been visually validated inside the final HTML. Four Itch.io event records were resolved to canonical product pages while retaining their event page as an alias.
 
@@ -998,4 +998,12 @@ These three listings were checked specifically because they expose facial-part c
 - [けものしゅがー — Dragon Girl](https://booth.pm/ja/items/3668928): free bust-up PNG; paid versions include a full character and a PSD with 13 eyes, 10 mouths, 4 brows and 4 effects. Commercial/noncommercial use and limited crop/resize/silhouette changes are allowed; redistribution/resale is prohibited.
 - [ねぎま💐 — Usuhoso Sister](https://booth.pm/ja/items/8826602): PNG expression pack ¥300, PSD ¥500, set ¥800. The PSD includes 10 mouths, 11 eyes, 3 brows and blush/sweat effects. Commercial use requires credit; crop/resize/recolor/additions are allowed; raw redistribution/resale and AI training are prohibited.
 
-Current combined index count: **237 source URL/store records**, all with a preview URL. 232 are direct image/preview candidates and 5 are Pixiv embed endpoints. The viewer can render 237 card strings in-memory and the JavaScript parses, but no successful external browser rendering was observed; individual thumbnail loading remains pending.
+Current combined index count: **239 source URL/store records**, all with a preview URL. 232 are direct image/preview candidates and 5 are Pixiv embed endpoints. The viewer can render 237 card strings in-memory and the JavaScript parses, but no successful external browser rendering was observed; individual thumbnail loading remains pending.
+
+
+## X costume-design sources added — 21 October 2026
+
+- [HIROSUMI SAITO — FRUITS ZIPPER costume design](https://x.com/hirosumi_saito/status/1974408214826598690): the post credits costume designer HIROSUMI SAITO and stylist 相澤樹 for a set of female idol costumes. [Source preview](https://pbs.twimg.com/media/G2aBzhUa0AAyXj7?format=webp&name=small). Reference only; rights for reusing/cropping the post artwork were not established.
+- [yochi — commissioned role uniform](https://x.com/yochichan__/status/2024818010834555184): the author says they designed and made a bespoke uniform based on an existing shop uniform, using nudibranch-inspired frills on the chest/front and hem. [Source preview](https://pbs.twimg.com/media/HBmZPbWaoAANCEN?format=webp&name=small). Reference only; no reuse license was stated.
+
+The current expanded index has **239 source records and 239 preview URLs**, including two original X posts. There are 234 direct image preview candidates and five Pixiv embed endpoints. Preview presence is not proof of successful browser loading, distinct underlying artwork, or redistribution rights.
