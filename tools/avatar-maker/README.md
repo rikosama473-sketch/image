@@ -26,13 +26,13 @@ Después de escoger una muestra, probá también **Exportar PNG**, **Guardar pro
 
 La acción **Eliminar fondo conservando píxeles** usa `rembg` con `isnet-anime`, una segmentación especializada para personajes anime. La alternativa `birefnet-portrait` sirve como comparación. El resultado debe tener canal alfa real, mantener las dimensiones del lienzo y pasa como capa candidata sin destruir la base. El recorte se ejecuta en el equipo local; no envía la imagen a una API generativa. La primera ejecución descarga los pesos del modelo seleccionado y los guarda en la caché local. El backend reutiliza la sesión del modelo y rechaza salidas que cambien las dimensiones o no tengan píxeles transparentes.
 
-Instalación opcional desde la raíz del repositorio:
+Instalación opcional: ejecutá `tools/avatar-maker/install-avatar-cutout.bat` en Windows o, desde la raíz del repositorio:
 
 ```bash
 python -m pip install -r requirements-avatar-cutout.txt
 ```
 
-Reiniciá `start-avatar-maker.bat` después de instalar. El modelo puede descargar cientos de MB y el primer uso puede tardar; no se instala automáticamente. Si el motor no está disponible, el editor muestra cómo habilitarlo y conserva el original.
+Reiniciá `tools/avatar-maker/start-avatar-maker.bat` después de instalar. El modelo puede descargar cientos de MB y el primer uso puede tardar; no se instala automáticamente. Si el motor no está disponible, el editor muestra cómo habilitarlo y conserva el original.
 
 ### Extracción generativa de piezas
 
