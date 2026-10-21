@@ -68,9 +68,9 @@ function redText(e){
  const parts=[asText(e.extras_red),asText(e.irrelevant_elements_red),asText(e.census_metadata?.map(m=>m.irrelevant_elements_red))].filter(x=>x&&x!=="null");
  return parts.join(" · ").trim();
 }
-function licenseText(e){return [asText(e.price_license_claim),asText(e.license_summary),asText(e.license_status)].filter(x=>x&&x!=="not_stated"&&x!=="undefined").join(" · ")}
+function licenseText(e){return [asText(e.price_current),asText(e.price_license_claim),asText(e.license_summary),asText(e.license_status),asText(e.file_format)].filter(x=>x&&x!=="not_stated"&&x!=="undefined").join(" · ")}
 function isCollection(e){return /tag index|tag collection|editorial collection|collection|category map|search result|Pixiv tag index/i.test([e.title,e.resource_type,e.asset_type].join(" "))}
-function searchable(e){return [e.id,e.title,e.creator,e.source_platform,e.source_language,e.source_url,e.category,e.categories,targetText(e),redText(e),licenseText(e),e.prompt_visibility,e.research_record_ids].map(asText).join(" ").toLowerCase()}
+function searchable(e){return [e.id,e.title,e.creator,e.source_platform,e.source_language,e.source_url,e.category,e.categories,targetText(e),redText(e),licenseText(e),e.prompt_visibility,e.research_record_ids,e.alternate_source_urls,e.alternate_store_note,e.price_current,e.file_format].map(asText).join(" ").toLowerCase()}
 const platforms=[...new Set(records.map(platform))].sort((a,b)=>a.localeCompare(b,"es"));
 for(const p of platforms){const o=document.createElement("option");o.value=p;o.textContent=p;$("platform").appendChild(o);}
 function card(e,i){
@@ -90,7 +90,7 @@ function card(e,i){
  <div class="warn"><strong>🔴 ELEMENTOS EXTRA / REVISIÓN:</strong> ${esc(r||"No se detallaron todos los elementos ajenos en el registro; inspeccionar la obra original antes de aislar este componente.")}</div>
  <div class="pending"><strong>Placa cuadrada B/N:</strong> ${esc(asText(e.monochrome_plate_status)||asText(e.bw_clean_plate_claim)||"sin confirmar")} · No se marca como recurso reutilizable sin licencia.</div>
  ${lic?`<div class="license"><strong>Precio/licencia:</strong> ${esc(lic)}</div>`:"<div class=\"license\">Precio/licencia: no verificados.</div>"}
- <div class="actions"><a href="${esc(e.source_url||"#")}" target="_blank" rel="noopener noreferrer">Abrir fuente original ↗</a>${e.monochrome_query_url?`<a href="${esc(e.monochrome_query_url)}" target="_blank" rel="noopener noreferrer">Buscar placa B/N ↗</a>`:""}${e.source_event_url?`<a href="${esc(e.source_event_url)}" target="_blank" rel="noopener noreferrer">Evento/listado previo ↗</a>`:""}</div>
+ <div class="actions"><a href="${esc(e.source_url||"#")}" target="_blank" rel="noopener noreferrer">Abrir fuente original ↗</a>${e.monochrome_query_url?`<a href="${esc(e.monochrome_query_url)}" target="_blank" rel="noopener noreferrer">Buscar placa B/N ↗</a>`:""}${e.source_event_url?`<a href="${esc(e.source_event_url)}" target="_blank" rel="noopener noreferrer">Evento/listado previo ↗</a>`:""}${alternateLinks}</div>
  </div></article>`;
 }
 const cards=$("cards");
