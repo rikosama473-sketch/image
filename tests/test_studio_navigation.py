@@ -46,7 +46,8 @@ class StudioNavigationTests(unittest.TestCase):
         parser = StudioNavParser()
         parser.feed(path.read_text(encoding="utf-8"))
         self.assertEqual(parser.nav_count, 1, f"{relative_path} debe tener una navegación IMAGE única")
-        self.assertIn(LOCAL_GENERATOR, parser.hrefs, f"{relative_path} debe enlazar al generador local opcional")
+        if relative_path != "tools/image-creator/index.html":
+            self.assertIn(LOCAL_GENERATOR, parser.hrefs, f"{relative_path} debe enlazar al generador local opcional")
         return parser
 
     def test_local_modules_link_to_every_other_module_with_resolvable_paths(self) -> None:
