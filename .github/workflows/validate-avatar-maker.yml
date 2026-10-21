@@ -21,6 +21,9 @@ on:
     paths:
       - "tools/avatar-maker/**"
       - "tools/hairstyle-workbench/**"
+      - "tools/visual-reference-library/**"
+      - "scripts/validate_visual_reference_library.py"
+      - "scripts/build_visual_contact_sheets.py"
       - "scripts/validate_avatar_maker.py"
       - "scripts/validate_hairstyle_workbench.py"
       - "scripts/run_real_anime_cutout_inference.py"
