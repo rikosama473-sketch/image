@@ -1918,7 +1918,12 @@
       "license_status": "paid modular asset listing/license verified; redistribution prohibited",
       "ordinal": 63,
       "thumbnail_status": "Store listing preview URL extracted from the product page; browser load not individually verified.",
-      "thumbnail_checked_date": "2026-10-21"
+      "thumbnail_checked_date": "2026-10-21",
+      "alternate_source_urls": [
+        "https://punglonewolf.itch.io/girl-sprite-psd-1"
+      ],
+      "alternate_store_note": "A cross-store listing by the same creator appears on Itch.io for $7.99; the BOOTH listing is ¥1,100. Treat these as alternate storefronts for the same layered-character concept, not two independent artwork records. Itch terms also prohibit redistribution/resale of raw PSD source.",
+      "alternate_store_thumbnail_url": "https://img.itch.zone/aW1nLzI0MzI1MDMyLmpwZWc=/original/yVivFB.jpeg"
     },
     {
       "id": "EXT-BOOTH-003",
@@ -9661,14 +9666,143 @@
       "thumbnail_checked_date": "2026-10-21",
       "thumbnail_status": "Illustration URL recovered from the tutorial page's linked image list; not visually checked in final HTML.",
       "ordinal": 230
+    },
+    {
+      "id": "EXT-IT-008",
+      "category": "hair_clothing_accessories",
+      "title": "Build a character [REWORKED] — 469 piezas PNG separadas",
+      "source_url": "https://maellemarylloup.itch.io/chibi-character-basics-reworked",
+      "thumbnail_url": "https://img.itch.zone/aW1nLzIyODQxNDA0LnBuZw==/original/Y2aUKJ.png",
+      "creator": "MaelleMarylloup",
+      "source_platform": "Itch.io",
+      "thumbnail_kind": "official_itch_asset_page_cover",
+      "asset_type": "free modular 2D character-building pack; chibi style, good for layer architecture research",
+      "price_current": "Name your own price; free download option listed",
+      "file_format": "Individual PNG parts 444×700 px; optional PSD also offered by the listing",
+      "claimed_content": "469 assets. 336 hair pieces: 13 bangs, 12 back-hair, 5 bonus-hair and 12 base-hair piece types; 42 base hair pieces offered in 8 colors. Also includes 45 body assets, clothing, eyes/mouth and accessories.",
+      "target_traits": [
+        "separated front bangs",
+        "separated back hair",
+        "bonus hair strands",
+        "base hairstyles",
+        "layer-compatible hair/body/clothing parts"
+      ],
+      "extras_red": [
+        "Chibi proportions and this artist's distinct style; colors/variants repeat a base design so 336 does not mean 336 unique silhouettes",
+        "other asset groups include body and outfits; filter by hair component",
+        "do not resell individual pieces"
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "separate color PNG components, not monochrome line-art plates",
+      "license_status": "Listing explicitly says free for personal/commercial projects but assets cannot be resold individually; embedding/redistributing inside a character-creator asset pack should be cleared with the author before use.",
+      "license_evidence": "Itch.io product page text",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official itch.io cover extracted from page metadata; browser display not visually tested.",
+      "ordinal": 231
+    },
+    {
+      "id": "EXT-IT-009",
+      "category": "character_reference",
+      "title": "FREE Anime girl Character Sprite — 5 hair styles / 6 outfits",
+      "source_url": "https://blackbunney.itch.io/free-anime-girl-character-sprite",
+      "thumbnail_url": "https://img.itch.zone/aW1nLzI0NDY4MzYxLnBuZw==/original/7ssHO5.png",
+      "creator": "blackbunney",
+      "source_platform": "Itch.io",
+      "thumbnail_kind": "official_itch_asset_page_cover",
+      "asset_type": "layered female character sprite, useful as architecture reference; not a clean part atlas",
+      "price_current": "Name your own price",
+      "file_format": "PSD 1680×1050 px",
+      "claimed_content": "5 hairstyles; 6 outfits; 10 expressions; separate pupil layers for eye color; hair colors adjustable; hairstyles can be combined.",
+      "target_traits": [
+        "hair layering and combine logic",
+        "separate pupil layer/color change",
+        "clothing switching",
+        "expression toggles"
+      ],
+      "extras_red": [
+        "complete character and face",
+        "style is the author's full sprite, not 5 independent hair PNGs promised for redistribution",
+        "terms prohibit reselling the sprite on its own"
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "layered color PSD, not square monochrome component plate",
+      "license_status": "Listing explicitly permits personal/commercial projects but says the sprite cannot be resold on its own; redistribute component source layers only after confirming the scope with creator.",
+      "license_evidence": "Itch.io product page text",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official itch.io cover extracted from page metadata; browser display not visually tested.",
+      "ordinal": 232
+    },
+    {
+      "id": "EXT-IT-010",
+      "category": "character_reference",
+      "title": "Customizable Visual Novel Cute Character Asset — front/back hair and clothing colors",
+      "source_url": "https://sharranghaeyo.itch.io/020222",
+      "thumbnail_url": "https://img.itch.zone/aW1nLzc5ODk1NDYucG5n/original/AybWha.png",
+      "creator": "sharranghaeyo",
+      "source_platform": "Itch.io",
+      "thumbnail_kind": "official_itch_asset_page_cover",
+      "asset_type": "layered PSD character sprite; component switchboard example",
+      "price_current": "Name your own price",
+      "file_format": "PSD 1130×1500 px",
+      "claimed_content": "4 mouth options; 2 noses; 1 accessory; 2 eye colors; 2 front-hair styles; 2 back-hair styles; 5 jumper colors; 6 sando colors; 4 blouse colors; 3 hair colors.",
+      "target_traits": [
+        "front and back hair are separate options",
+        "mouth/nose/eye colors toggled separately",
+        "garment color variants",
+        "combination logic"
+      ],
+      "extras_red": [
+        "full stylized character and face",
+        "only one accessory noted in listing",
+        "creator explicitly prohibits resale or redistribution of this asset"
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "layered color PSD, not monochrome isolated component sheet",
+      "license_status": "Listing permits personal and commercial projects; creator credit appreciated; explicitly prohibits reselling or redistributing the asset.",
+      "license_evidence": "Itch.io product page text",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official itch.io cover extracted from page metadata; browser display not visually tested.",
+      "ordinal": 233
+    },
+    {
+      "id": "EXT-IT-011",
+      "category": "character_reference",
+      "title": "Hiyori — free female visual-novel sprite with 4K/HD exports",
+      "source_url": "https://potat0master.itch.io/free-character-sprite-for-visual-novels-hiyori",
+      "thumbnail_url": "https://img.itch.zone/aW1nLzI3NzY3Nzg4LmpwZw==/original/ZauFBJ.jpg",
+      "creator": "Potat0Master",
+      "source_platform": "Itch.io",
+      "thumbnail_kind": "official_itch_asset_page_cover",
+      "asset_type": "full female character sprite; useful as layer/export and licensing reference",
+      "price_current": "Sprite exports are name-your-own-price; editable Clip/PSD source files listed for US$1",
+      "file_format": "PNG and WEBP in 2160p and 1080p; optional .clip and layered PSD source",
+      "claimed_content": "3 outfits (summer school, winter school, casual); 25+ expressions; one full character.",
+      "target_traits": [
+        "4K/HD export options",
+        "expressions as variants",
+        "layered source-file option",
+        "commercial license design"
+      ],
+      "extras_red": [
+        "complete character, face, hairstyle and costumes appear together",
+        "layered editable source files are a separate paid add-on",
+        "terms prohibit resale/sub-license/redistribution in original or modified form, including as another asset pack"
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "color character sprite, not square monochrome component plate",
+      "license_status": "Royalty-free for personal/commercial use, but listing explicitly bans resale, sublicensing or redistribution even in modified form; reference and workflow study only for IMAGE unless creator grants an exception.",
+      "license_evidence": "Itch.io product page text",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official itch.io cover extracted from page metadata; browser display not visually tested.",
+      "ordinal": 234
     }
   ],
   "statistics": {
-    "canonical_url_records": 230,
-    "structured_entries": 230,
-    "index_entries_with_thumbnail": 230,
+    "canonical_url_records": 234,
+    "structured_entries": 234,
+    "index_entries_with_thumbnail": 234,
     "index_entries_without_thumbnail": 0,
-    "direct_image_preview_candidates": 225,
+    "direct_image_preview_candidates": 229,
     "pixiv_embed_previews": 5,
     "pixai_source_entries": 40,
     "research_report_categorized_records": 160,
@@ -9751,7 +9885,14 @@
     "index_note": "The structured index combines 75 curated entries, 151 new source URLs from the deep-research census (two matched existing entries and were merged), and four later supplement sources, for 230 entries. The deep-research body has 160 categorized records, 154 URL fields (including one URL that occurs twice across categories), 153 distinct normalized URLs, and six cross-reference/alias rows without their own URL. Four pairs are separately flagged as the same underlying artwork under different identifiers/URLs.",
     "thumbnail_status_note": "All 230 records have thumbnail URLs. 225 are direct image/preview URLs, including static Pixivision cover images, and 5 use Pixiv artwork.php/decorate.php embed endpoints. The URLs have not all been visually loaded inside the final HTML browser; preview URLs can expire or be blocked. A URL is not proof of a successful visual render.",
     "deduplication_note": "URL-level normalization only. The deep-research report flags four pairs as duplicate underlying artworks, so 230 source records are not necessarily 230 distinct pictures. No cross-platform image-hash or perceptual deduplication pass has been completed.",
-    "license_note": "Preview URLs are for identifying and opening the source. They do not authorize downloading, cropping, redistributing or using the art as editor assets. Free-to-view, free-to-download, and commercial-use permission are different license scopes."
+    "license_note": "Use rights and distribution rights are separate. The Itch/BOOTH records marked modular are references for architecture; their exact terms may still prohibit repacking the source layers in a distributed character-editor. No raw assets were copied into IMAGE.",
+    "source_asset_shortlist_entries": 10,
+    "latest_additions": [
+      "EXT-IT-008",
+      "EXT-IT-009",
+      "EXT-IT-010",
+      "EXT-IT-011"
+    ]
   },
   "pixai_tag_browsers": [
     {
