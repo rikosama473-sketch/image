@@ -9982,10 +9982,10 @@
       "external_search_result_preview": 1
     },
     "verified_clean_square_plates": 0,
-    "index_note": "This is a 234-record index of source URLs and storefront pages; it is not a library of 234 unique images or licensed PNG assets. Build-up: 75 curated records + 151 new deep-census URLs after two matches merged + 4 accessory/clothing supplements + 4 modular asset listings = 234. The core deep-research body has 160 categorized rows and 153 normalized URL records; it notes four underlying-artwork duplicate pairs across different URLs, so no unique-image count is claimed.",
-    "thumbnail_status_note": "All 237 source records have thumbnail URLs. 232 are direct image/preview candidates; 5 use Pixiv embed endpoints. URLs were extracted from page metadata or visible image links and have not all been loaded inside the final browser UI.",
+    "index_note": "This is a 237-record index of source URLs/store pages, not a library of 237 unique images or licensed assets. Build-up: 75 curated records + 151 new deep-census URLs after two matches merged + 4 accessory/clothing supplements + 4 modular asset listings + 3 additional layered facial-variant listings = 237. The core deep-research body has 160 categorized rows, 154 URL fields including one repeated URL, and 153 distinct normalized URL records. Four pairs are separately flagged as likely duplicate underlying artworks across different URL IDs.",
+    "thumbnail_status_note": "All 237 source records have thumbnail URLs; 232 are direct image/preview candidates and 5 are Pixiv embed endpoints. The URLs were extracted from source metadata or visible image links, but every image has not been individually visually checked in the final browser UI.",
     "deduplication_note": "Source URL normalization only. The report flags four pairs as duplicate underlying artwork under different URLs, and one creator/product has two store pages recorded as alternate_source_urls. No cross-platform perceptual/image-hash deduplication has been done.",
-    "license_note": "These BOOTH entries show complete character sprites and expression layers. They are helpful for learning how to model eyes/mouth/brows as toggles, but their individual terms prohibit redistribution of the source assets. Do not package them into IMAGE without written permission.",
+    "license_note": "BOOTH and Itch.io layered-character entries help document how to separate eye/mouth/brow and hair/clothing variants. Most explicitly prohibit redistribution/resale of original asset files, even when personal/commercial project use is permitted. Written clearance is needed before packaging these component files with IMAGE.",
     "layered_facial_component_records_added_oct21": 3,
     "latest_additions": [
       "EXT-BOOTH-008",
