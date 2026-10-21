@@ -1,5 +1,11 @@
 # IMAGE Character Creator
 
+## Taller manual de peinados sin IA
+
+Para mantener el mismo rostro y cambiar solo el pelo, abrí el [Taller manual de peinados](../hairstyle-workbench/index.html). Permite alternar variantes guardadas, combinar piezas PNG transparentes, conservar los cortes parecidos como diseños independientes y exportar PNG/JSON. No usa generación ni APIs externas. Su muestra integrada es experimental y sus máscaras siguen pendientes de revisión visual.
+
+# IMAGE Character Creator
+
 Editor visual guiado por la referencia compartida: navegación lateral, ilustración grande, galería de miniaturas, capas activas y exportación. La base usa PNG anime reales del repositorio; no dibuja una cara mediante SVG ni figuras geométricas.
 
 ## Abrir
