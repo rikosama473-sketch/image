@@ -1,17 +1,32 @@
-# IMAGE — generador de imágenes anime con estilo propio
+# IMAGE — estudio modular de creación de personajes e ilustración anime
 
-Proyecto privado e independiente para crear un **motor local de generación de imágenes** que aprenda el patrón visual de la colección del usuario. La ruta prioritaria es utilizar un modelo base generativo compatible y entrenar una LoRA propia con ejemplos seleccionados, buscando imágenes nuevas de estilo similar con bajo consumo de recursos.
+IMAGE es un estudio local y modular para **buscar referencias, componer personajes anime, separar y editar capas, guardar proyectos, crear variantes y, de forma opcional, generar o editar imágenes mediante IA**. La biblioteca, el constructor, el editor 2D y el motor de generación son módulos relacionados de un mismo producto; ninguno sustituye a los demás.
 
-**No forma parte de WordWaifu ni de CharacterWord.**
+La identidad del proyecto no es la de un simple generador ni la de un archivador. Las funciones manuales deben seguir disponibles aunque no haya modelos de IA instalados, conexión remota o GPU dedicada.
 
-## Objetivo vigente
+## Objetivo y hardware
 
-1. Aprovechar las imágenes propias para descubrir qué estilo, prompts, checkpoints y LoRAs se usaron.
-2. Curar un conjunto de entrenamiento consistente y revisar la procedencia/permisos.
-3. Elegir un modelo base compatible con esas imágenes y el hardware disponible.
-4. Entrenar una LoRA propia que aprenda rasgos visuales comunes sin limitarse a memorizar imágenes.
-5. Crear una aplicación local para generar y guardar nuevas imágenes con controles reproducibles.
-6. Medir memoria, velocidad y calidad; optimizar después de tener una línea base real.
+El equipo objetivo de desarrollo es AMD Ryzen 5 5600G, 16 GB de RAM y gráficos Radeon integrados, sin GPU dedicada. El constructor y los editores 2D no dependen de difusión. El motor de IA local es opcional y su rendimiento no se considera validado en ese hardware hasta medir tiempo, memoria y estabilidad con un modelo concreto.
+
+IMAGE preserva los originales y distingue entre una ilustración completa, una máscara candidata, un recorte transparente y una capa semántica realmente aislada. Que una imagen tenga una etiqueta no garantiza que exista el recurso como PNG, que el recorte sea limpio ni que haya permiso para redistribuirlo o entrenarlo.
+
+## Módulos del estudio
+
+- **Constructor de personajes:** `tools/avatar-maker/index.html`. Combina ilustraciones y capas, ofrece transformaciones y ajustes visuales, administra variantes y proyectos JSON, y puede enviar una petición de edición IA solo cuando se ejecuta esa acción y está configurado el proveedor.
+- **Biblioteca visual:** `tools/visual-reference-library/index.html`. Reúne imágenes locales y referencias enlazadas, permite buscar/clasificar, anotar procedencia y revisión, guardar recetas visuales y exportar anotaciones. Una receta es una especificación, no una imagen nueva.
+- **Taller manual de peinados:** `tools/hairstyle-workbench/index.html`. Compone piezas PNG existentes, permite manejar variantes y exportar composiciones; no inventa los píxeles que estaban ocultos por otra capa.
+- **Editor manual de capas:** `tools/manual-character-editor/index.html`. Ofrece selecciones, máscara manual, recorte, borrado/restauración, extracción de regiones, capas y exportación PNG sin subir imágenes a un servicio remoto.
+- **Generador local de imágenes:** `tools/image-creator/index.html`, servido por `python ml/local_server.py` en `http://127.0.0.1:8765`. Usa un modelo compatible que el usuario proporciona/configura; no presupone que exista uno instalado ni que la IA local sea viable con rapidez aceptable.
+
+## Puesta en marcha
+
+En Windows, inicia `tools/avatar-maker/start-avatar-maker.bat`. El servidor local de herramientas escucha en `127.0.0.1:8766` y permite abrir el constructor, la biblioteca, el taller de peinados y el editor manual desde una navegación compartida. Si abres el editor manual con su lanzador independiente, los enlaces de otros módulos también resuelven desde la raíz del repositorio, en un puerto local temporal.
+
+El generador de difusión es un servidor aparte: ejecuta `python ml/local_server.py` tras instalar las dependencias opcionales apropiadas. No requiere una GPU dedicada para abrir el resto de IMAGE. Para la edición generativa mediante proveedor externo, la clave se lee desde el entorno y no debe guardarse en el HTML ni en un proyecto. No se envían imágenes a un servicio remoto en segundo plano.
+
+## Estado honesto de las funciones
+
+El repositorio contiene varias herramientas operativas, pero IMAGE no debe declararse consolidado solo porque existan pantallas o porque un botón esté presente. La apertura/guardado, exportación PNG, persistencia de capas, respuesta de cada motor y compatibilidad con el hardware deben validarse con pruebas y recorridos reales. Las capas generadas o segmentadas permanecen candidatas hasta revisar visualmente sus bordes, identidad y alineación.
 
 ## Decisión técnica
 

@@ -9,7 +9,7 @@
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.4 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
 button,input,select{font:inherit}button{color:var(--text);border:1px solid var(--line);background:#282d37;border-radius:8px;padding:8px 10px;cursor:pointer;transition:background .12s,border-color .12s}button:hover{background:#343b49;border-color:#68758d}button:disabled{opacity:.38;cursor:not-allowed}.primary{background:#31598d;border-color:#5f90d2}.primary:hover{background:#3c6ba7}.danger{color:#ffc0c0}.small{padding:5px 8px;font-size:12px}.active-tool{background:#d5e6ff;color:#111c2a;border-color:#fff}.muted{color:var(--muted)}.tiny{font-size:12px}.mono{font-variant-numeric:tabular-nums}
 header{display:flex;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid var(--line);background:#171a20;flex-wrap:wrap;position:sticky;top:0;z-index:5}
-.brand{font-weight:800;letter-spacing:.04em;font-size:15px}.brand em{color:var(--accent);font-style:normal}.header-sub{color:var(--muted);font-size:12px}.header-spacer{flex:1}.header-actions{display:flex;gap:7px;flex-wrap:wrap}
+.brand{font-weight:800;letter-spacing:.04em;font-size:15px}.brand em{color:var(--accent);font-style:normal}.header-sub{color:var(--muted);font-size:12px}.header-spacer{flex:1}.header-actions{display:flex;gap:7px;flex-wrap:wrap}.studio-module-nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.studio-module-nav a{display:inline-block;border:1px solid var(--line);border-radius:7px;padding:6px 8px;color:var(--muted);text-decoration:none;font-size:11px;white-space:nowrap;background:var(--panel)}.studio-module-nav a:hover{border-color:#879bb9;color:var(--text);background:var(--panel2)}
 main{display:grid;grid-template-columns:230px minmax(0,1fr) 250px;min-height:calc(100vh - 58px)}
 aside{background:var(--panel);padding:14px;border-right:1px solid var(--line);min-width:0}aside.right{border-right:0;border-left:1px solid var(--line)}.section{padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--line)}.section:last-child{border-bottom:0}.section h2{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin:0 0 10px;font-weight:800}
 .tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.tool-grid button{min-height:48px;text-align:left;font-size:12px;display:flex;flex-direction:column;gap:3px}.tool-grid strong{font-size:17px;line-height:1}
@@ -30,6 +30,7 @@ aside{background:var(--panel);padding:14px;border-right:1px solid var(--line);mi
 <header>
   <div class="brand"><em>IMAGE</em> / EDITOR MANUAL</div>
   <div class="header-sub">Recortes precisos, máscaras manuales y PNG con transparencia</div>
+  <nav class="studio-module-nav" data-image-studio-nav aria-label="Navegación del estudio IMAGE"><a href="../avatar-maker/index.html">Constructor</a><a href="../visual-reference-library/index.html">Biblioteca visual</a><a href="../hairstyle-workbench/index.html">Taller de peinados</a><a href="http://127.0.0.1:8765/" target="_blank" rel="noopener noreferrer">Generador local IA ↗</a></nav>
   <div class="header-spacer"></div>
   <div class="header-actions">
     <button id="openImageBtn" class="primary">Abrir imagen</button>
