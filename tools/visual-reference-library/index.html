@@ -46,7 +46,7 @@ dialog{width:min(760px,calc(100% - 20px));max-height:92vh;overflow:auto;border:1
     <button class="tab" data-tab="styles">Recetas de estilos</button>
   </nav>
 
-  <section class="controls">
+  <section id="controls" class="controls">
     <div class="field"><label for="search">Buscar por nombre, etiqueta o nota</label><input id="search" type="search" placeholder="ej. iris concéntrico, flequillo abierto, coleta..."></div>
     <div class="field"><label for="category">Categoría</label><select id="category"><option value="">Todas</option><option value="eyes">Ojos</option><option value="hair">Cabello</option><option value="bangs">Flequillos</option><option value="eyelashes">Pestañas</option><option value="iris">Iris</option><option value="pupils">Pupilas</option><option value="face">Rostro</option><option value="accessories">Accesorios</option><option value="full_character">Personajes completos</option><option value="mixed">Mixto</option></select></div>
     <div class="field"><label for="statusFilter">Estado de revisión</label><select id="statusFilter"><option value="">Todos los estados</option><option value="unreviewed">Sin revisar</option><option value="reviewed_reference">Referencia revisada</option><option value="candidate_for_cutout">Candidato a recorte</option><option value="approved_for_internal_use">Aprobado para uso interno</option><option value="rejected">Descartado</option><option value="pending_visual_review">Capa pendiente</option></select></div>
@@ -185,7 +185,7 @@ function openEdit(id){
  $("editId").value=id;$("editTitle").textContent=currentTitle(c);$("editSub").textContent=c.type+" · "+id;
  $("editPreview").src=c.image||"";$("editPreview").style.display=c.image?"block":"none";
  $("editSourceNote").innerHTML=(c.sourceUrl?'<a href="'+$esc(c.sourceUrl)+'" target="_blank" rel="noopener noreferrer">Abrir fuente original ↗</a>':'')+(c.path?'<br>Ruta: '+$esc(c.path):"");
- $("editName").value=a.label||c.title;$("editCategory").value=a.category||c.category||"mixed";$("editTags").value=(a.tags||c.tags||[]).join(", ");$("editStatus").value=a.review_status||((c.review==="pending_visual_review")?"unreviewed":c.review||"unreviewed");$("editLicense").value=a.license_status||c.license||"unreviewed";$("editNotes").value=a.notes||c.description||"";
+ $("editName").value=a.label||c.title;const wantedCategory=a.category||c.category||"mixed";$("editCategory").value=Array.from($("editCategory").options).some(o=>o.value===wantedCategory)?wantedCategory:"mixed";$("editTags").value=(a.tags||c.tags||[]).join(", ");$("editStatus").value=a.review_status||((c.review==="pending_visual_review")?"unreviewed":c.review||"unreviewed");$("editLicense").value=a.license_status||c.license||"unreviewed";$("editNotes").value=a.notes||c.description||"";
  $("editDialog").showModal();
 }
 function addReference(e){
