@@ -22,6 +22,8 @@
 | [Nashi / LearnManga — Basics: Female Hair Styles V2](https://www.pinterest.com/latoofcassidy/how-to-draw-anime-hair/) | ~24 bocetos en la lámina | Line art de cabeza y hombros, con recogidos, mechones laterales, largos y flequillos. | Atribución visible en la lámina; rastrear fuente original antes de reutilizar. |
 | [Pinterest — 9 variaciones sobre una misma cara](https://in.pinterest.com/pin/237001999135954931/) | 9 variantes | Buen modelo UX: cambiar el peinado sin cambiar la cara/base del personaje. | Fuente/pin; solo referencia visual. |
 | [Pinterest — bocetos femeninos numerados](https://www.pinterest.com/pin/pelo--2322237300007652/) | ~20 bocetos | Pequeñas diferencias de flequillo, largo y contorno facial. | Fuente/pin; contar únicamente una vez. |
+| [Dreamrabbit5 — Hairstyle Reference Sheet #1](https://www.deviantart.com/dreamrabbit5/art/Hairstyle-Reference-Sheet-1-1024230525) | Una hoja, baja resolución (640×480) | Referencia femenina para comparar cómo varía un personaje con distintos cortes. | El autor permite usarla como referencia/ideas y pide crédito con enlace; demasiado pequeña para ser fuente de piezas. |
+| [Hairstyle sketches con nombre](https://hairstyle.udlvirtual.edu.pe/view/female-anime-hairstyles-drawing.html) | ~30 estilos etiquetados | Rótulos como Curly Twin, Cheerleader, Romantic, Princess y Bob ayudan a encontrar un término en inglés. | Página tipo agregador/rehost; rastrear el origen y crédito antes de cualquier reutilización. |
 | [Pinterest — 12 siluetas sin rasgos faciales](https://br.pinterest.com/pin/rysunki--35817759532258682/) | 12 bocetos | Leer solo la forma del pelo, sin que ojos/expresión distraigan. | Fuente/pin; confirmar autor original. |
 | [Pinterest — 4 variantes de coleta](https://www.pinterest.com/pin/1001417667137969213/) | 4 diseños | Comparar coleta alta, lateral, curva/ondulada y baja. | Fuente/pin; útil para un subgrupo de recogidos. |
 | [Zefirka — colección de bocetos numerados](https://zefirka.club/wallpapers/4130-pricheski-sketch.html) | Una lámina de ~40 numerados en una imagen | ampliar el abanico de siluetas, cortes y recogidos. La página mezcla referencias femeninas y masculinas. | **Filtrar solo los diseños femeninos**, no contabilizar toda la página como femenina. |
@@ -29,7 +31,7 @@
 | [Syntelligence — pelo liso frente a twintails](https://syntelligence.jp/article/57539) | 8 ejemplos | Comparar con la misma cara: bob, melena recta y twintails onduladas. | Buena comparación de forma; no es una lámina de cientos. |
 | [Anime Outline — peinados femeninos paso a paso](https://www.animeoutline.com/how-to-draw-anime-and-manga-hair-female/) | Ejemplos didácticos | Entender estructura y construcción, no solo el nombre del corte. | Tutorial; comprobar atribución/licencia de cada dibujo. |
 
-**Cómputo responsable:** sumando el número anunciado/aparente de las hojas anteriores se supera el centenar de candidatos visuales, pero no se debe anunciar esa suma como “cientos de diseños únicos”: los pins pueden duplicar la misma obra, parte de una hoja puede ser mixta y algunas hojas muestran variaciones cercanas. Elythe + su espejo de WebNeel cuentan como una sola lámina de 50.
+**Cómputo responsable:** las hojas mejor identificadas ya dan un conjunto de más de 200 posiciones potenciales si se suman todos los números y láminas mencionadas, pero no se debe anunciar esa suma como “200 diseños únicos”: los pins pueden duplicar la misma obra, parte de una hoja puede ser mixta y algunas hojas muestran variaciones cercanas. Elythe + su espejo de WebNeel cuentan como una sola lámina de 50. La segunda página titulada AnaisKalinin está pendiente de verificación porque el nombre del archivo de su miniatura refleja otra atribución.
 
 ## B. PixAI — vocabulario para convertir diseños en prompts
 
@@ -84,8 +86,21 @@ Los resultados de X son puertas de búsqueda, no referencias que ya se hayan ver
 ## E. Paquetes voluminosos
 
 - [ArtStation — 300 Female Anime Hairstyle Sketches 4K v.01](https://www.artstation.com/marketplace/p/BBOL5/300-female-anime-hairstyle-sketches-4k-v-01): el listado consultado muestra 300 PNG de 4096×6144, ZIP de 1,7 GB, licencia estándar de USD 5,99 y licencia comercial ampliada de USD 12. Es una opción comercial real de mayor volumen, no gratuita.
+- [Etsy — 100+ Anime Hair Clip Stamps para Photoshop/Clip Studio](https://www.etsy.com/listing/1770766275/100-anime-hair-clip-stamps-photoshopclip): más de 100 sellos/brush stamps de cabello y accesorios, formato ABR; el precio mostrado durante la consulta era AU$9,34. Permite uso personal/comercial, pero prohíbe redistribuir o compartir los sellos como producto en sí. Es una herramienta para dibujar en el software compatible, no un pack que podamos incorporar directamente a IMAGE.
+- [Etsy — 100+ Anime Hair and Clip Stamps para Procreate](https://www.etsy.com/listing/1267272241/100-anime-hair-and-clip-procreate-stamps): alternativa equivalente para Procreate; la ficha anuncia más de 100 sellos y uso personal/comercial con prohibición de redistribución de los sellos originales.
+- [ArtStation — 100 basemesh female anime hair pack 2](https://www.artstation.com/marketplace/b/3QDY/100-basemesh-female-anime-hair-pack-2): cuatro packs de 25 modelos, USD 15 en la oferta consultada; formatos FBX/OBJ/BLEND. Es **3D** y consta como no disponible en algunas regiones, así que solo es relevante si IMAGE añade un módulo 3D; no equivale a 100 láminas de line art.
 - [ArtStation — 25 female anime hair pack 7](https://www.artstation.com/marketplace/p/6gXMa/25-female-anime-hair-pack-7): 25 modelos de pelo femenino en FBX/OBJ/BLEND. Es 3D, por tanto secundario para el objetivo actual de line art 2D.
 - [ArtStation — resultados de packs de pelo femenino/anime](https://www.artstation.com/marketplace/game-dev?q=Female%2BCharacter&section=latest&softwares=sculpt): muestra packs numerados de 25 modelos, pero hay que comprobar formato y previsualizaciones; no sumarlos como bocetos 2D.
+
+## Consultas para seguir ampliando el conjunto
+
+- [Pinterest: female anime hairstyle reference sheet](https://www.pinterest.com/search/pins/?q=female%20anime%20hairstyle%20reference%20sheet).
+- [Pinterest: anime girl hairstyle line art numbered](https://www.pinterest.com/search/pins/?q=anime%20girl%20hairstyle%20lineart%20numbered).
+- [Pixiv: 髪型 (peinados)](https://www.pixiv.net/tags/%E9%AB%AA%E5%9E%8B/artworks).
+- [Pixiv: ヘアアレンジ (arreglos de pelo)](https://www.pixiv.net/tags/%E3%83%98%E3%82%A2%E3%82%A2%E3%83%AC%E3%83%B3%E3%82%B8/artworks).
+- [X: 髪型資料 女の子 イラスト](https://x.com/search?q=%E9%AB%AA%E5%9E%8B%E8%B3%87%E6%96%99%20%E5%A5%B3%E3%81%AE%E5%AD%90%20%E3%82%A4%E3%83%A9%E3%82%B9%E3%83%88&src=typed_query).
+
+X y algunas páginas de Pixiv no devolvieron resultados suficientemente verificables en el índice web público de esta pasada; esos enlaces son consultas de búsqueda, no obras ya aprobadas.
 
 ## Siguiente fase recomendada
 
