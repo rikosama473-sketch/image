@@ -5,6 +5,8 @@ on:
     paths:
       - "tools/avatar-maker/**"
       - "scripts/validate_avatar_maker.py"
+      - "scripts/test_real_anime_cutout.py"
+      - "tests/test_real_anime_cutout.py"
       - "scripts/extract_avatar_psd_layers.py"
       - "requirements-avatar-assets.txt"
       - "requirements-avatar-cutout.txt"
@@ -14,6 +16,8 @@ on:
     paths:
       - "tools/avatar-maker/**"
       - "scripts/validate_avatar_maker.py"
+      - "scripts/test_real_anime_cutout.py"
+      - "tests/test_real_anime_cutout.py"
       - "scripts/extract_avatar_psd_layers.py"
       - "requirements-avatar-assets.txt"
       - "requirements-avatar-cutout.txt"
@@ -36,6 +40,8 @@ jobs:
       - name: Install image decoder used by cutout regression tests
         run: python -m pip install "Pillow>=10.0.0"
       - name: Check PSD extraction and local AI bridge syntax
-        run: python -m py_compile scripts/extract_avatar_psd_layers.py tools/avatar-maker/ai_edit_server.py
+        run: python -m py_compile scripts/extract_avatar_psd_layers.py tools/avatar-maker/ai_edit_server.py scripts/test_real_anime_cutout.py
       - name: Test local AI bridge validation and credential handling
         run: python -m unittest discover -s tests -p 'test_avatar_ai_bridge.py'
+      - name: Test real cutout diagnostics without invoking the AI model
+        run: python -m unittest discover -s tests -p 'test_real_anime_cutout.py'
