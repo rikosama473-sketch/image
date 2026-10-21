@@ -924,8 +924,26 @@ Estos recursos son especialmente pertinentes para comparar variedad, tamaño y f
 
 La rama de IMAGE mantiene ahora un índice JSON de **66 registros de fuente**: 26 obras individuales de PixAI y 40 páginas o recursos externos (obras, colecciones curatoriales, tutoriales, páginas de productos y candidatos pendientes). Esto es un recuento de URLs indexadas, no una afirmación de 66 imágenes perceptualmente únicas: no se ejecutó hash/deduplicación visual y pueden existir espejos o estilos similares.
 
-El atlas HTML tiene miniaturas pequeñas al lado de los nombres de referencia, 26 fichas PixAI con advertencias rojas, filtros de categoría y 9 tarjetas de productos/recursos con miniatura, precio y licencia. El JavaScript incorporado pasó comprobación sintáctica. No se afirmó que todas las imágenes remotas cargaran correctamente en un navegador real.
+El atlas HTML tiene miniaturas pequeñas al lado de los nombres de referencia, 29 fichas PixAI con advertencias rojas, filtros de categoría y 9 tarjetas visibles de productos 2D/modulares con miniatura, precio y licencia. El JavaScript incorporado pasó comprobación sintáctica. No se afirmó que todas las imágenes remotas cargaran correctamente en un navegador real.
 
 **Placas cuadradas monocromas con licencia de reutilización verificada: 0.** Los buscadores por componente apuntan a candidatas; no se debe marcar una placa como terminada hasta verificar que sea de un solo componente, cuadrada, limpia, legible a tamaño pequeño y permitida por su creador/licencia.
 
 **Carencias que siguen abiertas:** hoja limpia aislada de tiaras/coronas; gafas; pendientes; gargantillas/chokers; broches; conjuntos de calzado; formas de ojos sin cara; placas monocromas para distintas siluetas de ropa; y comprobar visualmente duplicados mediante hash/perceptual matching.
+
+
+## E. Final supplement: accessory-focused references and compatibility decision
+
+| ID | Reference | Main component | Red-marked extras / caveat | Source and verified thumbnail |
+|---|---|---|---|---|
+| PX-ACC-003 | *Test 1682* — PixAI; prompt explicitly identifies a mature female | Feathered pirate hat, earrings, necklace layers, skull belt buckle, fingerless gloves, charm choker, eyepatch, hair stick and forehead jewellery | Black hair/bun, makeup/eyes, blouse, corset, shorts, thigh-highs, garter straps, boots, weapons and ship/treasure setting | [Art page](https://pixai.art/artwork/2059352409018766871) · [official preview](https://images-ng.pixai.art/gi/stillThumb/f475e9ef-102a-4e77-9c55-eabce2f34284) |
+| PX-ACC-004 | *BALTAZAR* — PixAI | Red bandana/headband, leather corset, lace blouse, stockings/garters and pirate boots | Blue hair, brown eyes, face/pose, cutlass, rigging and sunset scene | [Art page](https://pixai.art/artwork/1988983784843677962) · [official preview](https://images-ng.pixai.art/gi/stillThumb/3788ec6b-6513-4696-8536-5f298659e3bb) |
+| PX-CLT-014 | *Kimono, Goth fashion* — セリュゥ, PixAI | Gothic kimono with ruffles/dark patterns, white socks, platform geta; Japanese hair ornaments should be a separate accessory record | Curled pigtails, blunt bangs, gothic makeup, face/pose, tatami, shoji and tea set | [Art page](https://pixai.art/artwork/2054448432647548872) · [official preview](https://images-ng.pixai.art/gi/stillThumb/78e742ff-c962-4240-b575-03567fbe8ccf) |
+| EXT-PXV-008 | Pixivision — *Drawings of Characters Wearing Headbands* | Headbands / forehead accessories, sporty and fantasy variants | Curated article includes complete character art; inspect individual original artworks for author/licence | [Collection page](https://pixivision.net/en/a/7373) · [preview](https://embed.pixiv.net/pixivision/en/a/7373/ogimage.jpg) |
+| EXT-BOOTH-006 | VRoid *Female Anime Outfit #1* — jonathan-yuri | 3D modular tops, bottoms, shoes, arm accessories, socks and textures | This is a VRoid custom-item set, not a drop-in 2D sprite/PNG layer. Listed colours cost ¥300 each and all colours ¥1,000; listing says commercial/non-commercial use and modifications are allowed but resale/redistribution is not | [Product page](https://booth.pm/en/items/4494132) · [store preview](https://booth.pximg.net/c/620x620/6e40c88d-f428-4223-bbc3-8d590eb6222b/i/4494132/cceca1bb-5c6a-4104-8eac-d62d28911db9_base_resized.jpg) |
+
+### State after this supplement
+
+- The structured JSON index has **71 source records**: 29 PixAI artwork pages and 42 external sources/product or editorial pages. All 71 records have a verified source-page preview URL; this does not mean the full image file has been downloaded or verified as licensed for redistribution.
+- The HTML atlas contains **29 individual PixAI cards** with official source thumbnails and red extra-element warnings, an additional external-reference gallery, and 9 detailed product/asset comparison cards. The VRoid listing is recorded for research but is not in the 2D asset cards because the file type is not directly compatible.
+- The UI's current clean square monochrome plate count remains **zero verified with a reuse license**. Each relevant card links to a tailored image search; those result pages remain candidates until their source, visual cleanliness, squareness, and license are checked.
+- The research now covers more direct source pages, but canonical URL deduplication alone does not prove distinct underlying pictures. No image-hash/perceptual deduplication pass has been completed, and no full third-party archive has been downloaded or dissected.
