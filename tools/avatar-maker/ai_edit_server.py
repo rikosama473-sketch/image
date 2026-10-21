@@ -18,7 +18,6 @@ from io import BytesIO
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-from PIL import Image, ImageOps
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
@@ -158,6 +157,7 @@ class Handler(SimpleHTTPRequestHandler):
             input_url = validate_data_url(body.get("image_data_url"), "Imagen del lienzo")
             encoded = input_url.split(",", 1)[1]
             raw = base64.b64decode(encoded, validate=True)
+            from PIL import Image, ImageOps
             with Image.open(BytesIO(raw)) as source:
                 source = ImageOps.exif_transpose(source)
                 source.load()
