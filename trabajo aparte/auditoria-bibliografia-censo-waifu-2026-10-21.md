@@ -195,3 +195,14 @@ These sources were added during the follow-up category/asset audit on 21 October
 
 - [X — HIROSUMI SAITO, FRUITS ZIPPER female idol costume design](https://x.com/hirosumi_saito/status/1974408214826598690)
 - [X — yochi, commissioned uniform with nudibranch-inspired frills](https://x.com/yochichan__/status/2024818010834555184)
+
+
+## License-oriented source pages added on 21 October 2026
+
+- [DeviantArt — yosopher, female anime hair guide, CC BY-SA 3.0](https://www.deviantart.com/yosopher/art/anime-hair-girls-guidelines-375934474)
+- [DeviantArt — Senpere, anime hairstyles, CC BY-NC-SA 3.0](https://www.deviantart.com/senpere/art/Anime-hairstyles-964082955)
+- [Kenney — Modular Characters, CC0, 425 generic 2D assets](https://kenney.nl/assets/modular-characters)
+- [OpenGameArt — Fumiko Complete Charset, female warrior](https://opengameart.org/content/fumiko-complete-charset)
+- [OpenGameArt — LPC Expanded modular parts, mixed OGA-BY / CC0 contributor licenses](https://opengameart.org/content/lpc-expanded-sit-run-jump-more)
+
+These license claims apply only within each source's documented scope. CC0, CC BY-SA and mixed contributor bundles require the source's license/readme and credit conditions to be respected; a whole mixed pack should not be assumed to be CC0.
