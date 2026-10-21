@@ -17,7 +17,9 @@ on:
     branches: [main]
     paths:
       - "tools/avatar-maker/**"
+      - "tools/hairstyle-workbench/**"
       - "scripts/validate_avatar_maker.py"
+      - "scripts/validate_hairstyle_workbench.py"
       - "scripts/run_real_anime_cutout_inference.py"
       - "tests/test_real_anime_cutout.py"
       - "scripts/extract_avatar_psd_layers.py"
