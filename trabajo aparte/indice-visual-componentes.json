@@ -1034,7 +1034,7 @@
       "category": "hair",
       "title": "Anime Outline — guía de peinados femeninos",
       "source_url": "https://www.animeoutline.com/how-to-draw-anime-and-manga-hair-female/",
-      "thumbnail_url": null,
+      "thumbnail_url": "https://www.animeoutline.com/wp-content/uploads/2012/12/anime_hairstyles.png",
       "creator": "AnimeOutline",
       "target_traits": [
         "female anime hair construction",
@@ -1048,12 +1048,12 @@
         "full head/face",
         "multiple styles in instructional context"
       ],
-      "monochrome_plate_status": "tutorial_no_standalone_asset_verified",
+      "monochrome_plate_status": "tutorial_montage_preview_only",
       "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+hair+reference+sheet+black+white+line+art",
       "license_status": "reference_only_tutorial",
       "ordinal": 37,
       "source_platform": "AnimeOutline",
-      "thumbnail_kind": "no_thumbnail_available",
+      "thumbnail_kind": "tutorial_sheet_preview",
       "red_warning_required": false
     },
     {
@@ -1144,11 +1144,11 @@
     "external_reference_entries": 24,
     "combined_index_entries": 40,
     "pixai_entries_with_thumbnail": 16,
-    "external_entries_with_thumbnail": 23,
+    "external_entries_with_thumbnail": 24,
     "verified_clean_square_plates": 0,
+    "pixai_tag_browsers": 8,
     "source_status_note": "Counts describe index records/candidates, not unique extracted PNGs. Pinterest mirrors and rehosts can duplicate original works; candidate entries stay marked until authorship and originality are checked.",
-    "monochrome_status_note": "Search links are queries, not confirmed plates. For a component-specific square monochrome sheet, use the direct clean source if one has been verified, otherwise retain search_pending.",
-    "pixai_tag_browsers": 8
+    "monochrome_status_note": "Search links are queries, not confirmed plates. For a component-specific square monochrome sheet, use the direct clean source if one has been verified, otherwise retain search_pending."
   },
   "pixai_tag_browsers": [
     {
