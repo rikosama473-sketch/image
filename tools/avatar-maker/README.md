@@ -36,6 +36,8 @@ python -m pip install -r requirements-avatar-cutout.txt
 
 Reiniciá `tools/avatar-maker/start-avatar-maker.bat` después de instalar. El modelo puede descargar cientos de MB y el primer uso puede tardar; no se instala automáticamente. Si el motor no está disponible, el editor muestra cómo habilitarlo y conserva el original.
 
+La calidad real se comprobó con una imagen del repositorio usando el modelo local (sin API de pago). Consulta las [métricas, máscaras y cuatro vistas de revisión de bordes](REAL_CUTOUT_REVIEW_2026-10.md) antes de aprobar un recorte.
+
 ### Extracción generativa de piezas
 
 Las acciones **Cabello, Ojos, Rostro, Ropa y Accesorios** usan el servicio de edición de imágenes y pueden reconstruir píxeles ocultos; no son una segmentación literal. Requieren el lanzador local y `OPENAI_API_KEY` en el entorno de Windows. Cada solicitud puede generar cargos. El resultado se registra como candidato pendiente de revisión, nunca como pieza aprobada automáticamente. Se conservan las dimensiones y el encuadre solicitados, pero debe comprobarse que el modelo los haya respetado.
