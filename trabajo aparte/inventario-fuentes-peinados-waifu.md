@@ -13,7 +13,10 @@ La investigación ampliada y las referencias verificadas están enlazadas aquí:
 - [Índice JSON de referencias visuales](./indice-visual-componentes.json): **71 registros de URL** (29 obras individuales de PixAI y 42 recursos/páginas externos), con 71 miniaturas, URL de origen, componente objetivo, extras rojos, tipo de recurso, estado de placa monocroma y situación de licencia.
 - [Atlas HTML interactivo](./atlas-peinados-interactivo.html): 26 fichas PixAI con miniaturas y avisos rojos, filtros de componente, vistas previas de colecciones de cabello y 9 tarjetas de productos modulares/de referencia con precio y licencia verificados.
 
-**Cómo leer las cifras:** 71 significa registros de origen en el índice; no son 66 PNG únicos, 66 cortes aislados ni 66 assets libres. Incluye obras individuales, páginas de colección, tutoriales y anuncios de packs. Se quitaron duplicados por URL canónica dentro del índice, pero **todavía no se ejecutó comparación de hashes ni deduplicación perceptual de las imágenes**; una lámina espejo podría representar la misma obra que otra página.
+**Cómo leer las cifras:** 71 significa registros de origen en el índice; no son 71 PNG únicos, 71 cortes aislados ni 71 assets libres. Incluye obras individuales, páginas de colección, tutoriales y anuncios de packs. Se quitaron duplicados por URL canónica dentro del índice, pero **todavía no se ejecutó comparación de hashes ni deduplicación perceptual de las imágenes**; una lámina espejo podría representar la misma obra que otra página.
+
+**Nota de compatibilidad:** el índice también registra un conjunto de ropa para VRoid 3D (archivos `.vroidcustomitem`). No se cuenta como recurso 2D listo para capas, porque IMAGE prioriza placas/PNGs bidimensionales y el recurso tiene restricciones de redistribución.
+
 
 **Estado de miniaturas:** las vistas previas oficiales de PixAI se muestran junto al nombre. Son miniaturas para reconocer y abrir la obra original, no capturas de página completa ni placas separadas. Las imágenes de Pinterest/BOOTH/ArtStation/Pixivision proceden de la vista previa vinculada a cada página.
 
