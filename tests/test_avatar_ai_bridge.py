@@ -5,10 +5,16 @@ import base64
 import importlib.util
 import json
 import os
+import sys
 import threading
+import types
 import unittest
 from http.client import HTTPConnection
+from io import BytesIO
 from pathlib import Path
+from unittest import mock
+
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULE_PATH = ROOT / "tools" / "avatar-maker" / "ai_edit_server.py"
@@ -133,6 +139,65 @@ class LocalBridgeHttpTests(unittest.TestCase):
         finally:
             if old is not None:
                 os.environ["OPENAI_API_KEY"] = old
+
+    def test_local_anime_cutout_preserves_canvas_and_requires_real_alpha(self):
+        source = Image.new("RGBA", (64, 64), (180, 130, 90, 255))
+        source_buffer = BytesIO()
+        source.save(source_buffer, format="PNG")
+        output_buffer = BytesIO()
+        output = Image.new("RGBA", (64, 64), (180, 130, 90, 255))
+        for y in range(64):
+            for x in range(64):
+                if x < 8 or x >= 56 or y < 8 or y >= 56:
+                    output.putpixel((x, y), (0, 0, 0, 0))
+        output.save(output_buffer, format="PNG")
+        calls = {"session": 0, "remove": 0, "model": None}
+
+        def fake_new_session(model):
+            calls["session"] += 1
+            calls["model"] = model
+            return object()
+
+        def fake_remove(image_bytes, **kwargs):
+            calls["remove"] += 1
+            self.assertTrue(kwargs.get("decontaminate"))
+            self.assertTrue(kwargs.get("force_return_bytes"))
+            return output_buffer.getvalue()
+
+        fake_rembg = types.SimpleNamespace(new_session=fake_new_session, remove=fake_remove)
+        old_key = os.environ.pop("OPENAI_API_KEY", None)
+        try:
+            with mock.patch.dict(sys.modules, {"rembg": fake_rembg}):
+                status, content = self.request("POST", "/api/remove-background", json.dumps({
+                    "model": "isnet-anime",
+                    "image_data_url": data_url("image/png", source_buffer.getvalue()),
+                }).encode("utf-8"))
+            self.assertEqual(status, 200, content)
+            payload = json.loads(content)
+            self.assertEqual(payload["engine"], "rembg-local")
+            self.assertTrue(payload["pixel_preserving"])
+            self.assertEqual((payload["width"], payload["height"]), (64, 64))
+            result = Image.open(BytesIO(base64.b64decode(payload["image_base64"]))).convert("RGBA")
+            self.assertEqual(result.size, (64, 64))
+            self.assertEqual(result.getchannel("A").getpixel((0, 0)), 0)
+            self.assertEqual(result.getchannel("A").getpixel((32, 32)), 255)
+            self.assertEqual(calls["model"], "isnet-anime")
+            self.assertEqual(calls["remove"], 1)
+        finally:
+            bridge._CUTOUT_SESSIONS.pop("isnet-anime", None)
+            if old_key is not None:
+                os.environ["OPENAI_API_KEY"] = old_key
+
+    def test_local_cutout_rejects_unknown_model(self):
+        png = Image.new("RGB", (64, 64), "white")
+        buffer = BytesIO()
+        png.save(buffer, format="PNG")
+        status, content = self.request("POST", "/api/remove-background", json.dumps({
+            "model": "not-a-model",
+            "image_data_url": data_url("image/png", buffer.getvalue()),
+        }).encode("utf-8"))
+        self.assertEqual(status, 400)
+        self.assertIn("Elegí el modelo local", json.loads(content)["error"])
 
 
 if __name__ == "__main__":
