@@ -75,7 +75,7 @@ families.forEach((f,i)=>combos.push({...f,id:"HAI-"+String(i+1).padStart(4,"0"),
 let n=26;
 for(let i=0;i<families.length;i++){
  const f=families[i];
- if(i%2===0){
+ if(true){
   const b=bangs[(i+2)%bangs.length], tx=textures[(i+1)%textures.length];
   combos.push({...f,id:"HAI-"+String(n++).padStart(4,"0"),name:f.name+" · "+b.replaceAll("-"," "),prompt:f.prompt+", "+b+", "+tx+" texture",bangs:b,texture:tx,base:false});
   const l=lengths[(i+1)%lengths.length];
