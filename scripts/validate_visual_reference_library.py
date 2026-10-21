@@ -12,7 +12,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "tools/visual-reference-library/index.html"
 CATALOG = ROOT / "tools/visual-reference-library/reference-library.json"
+ANNOTATIONS = ROOT / "tools/visual-reference-library/annotations.json"
 CONTACT_SHEETS = ROOT / "scripts/build_visual_contact_sheets.py"
+ANNOTATION_APPLIER = ROOT / "scripts/apply_visual_reference_annotations.py"
 
 
 def fail(message: str) -> None:
@@ -20,13 +22,15 @@ def fail(message: str) -> None:
 
 
 def main() -> None:
-    for path in (PAGE, CATALOG, CONTACT_SHEETS):
+    for path in (PAGE, CATALOG, ANNOTATIONS, CONTACT_SHEETS, ANNOTATION_APPLIER):
         if not path.is_file():
             fail(f"Missing required file: {path.relative_to(ROOT)}")
 
     html = PAGE.read_text(encoding="utf-8")
     for marker in (
         "reference-library.json",
+        "annotations.json",
+        "apply_visual_reference_annotations.py",
         "../avatar-maker/assets/image-library.json",
         "../avatar-maker/assets/catalog.json",
         "data-tab=\"web\"",
@@ -79,12 +83,26 @@ def main() -> None:
         fail("At least one Pinterest source must be present.")
 
     try:
-        ast.parse(CONTACT_SHEETS.read_text(encoding="utf-8"), filename=str(CONTACT_SHEETS))
-    except SyntaxError as exc:
-        fail(f"Contact sheet script syntax error: {exc}")
+        saved = json.loads(ANNOTATIONS.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        fail(f"Persistent annotation store is invalid JSON: {exc}")
+    if saved.get("schema_version") != 1 or not isinstance(saved.get("annotations"), dict):
+        fail("Persistent annotation store must use schema_version 1 and an annotations object.")
+    if not isinstance(saved.get("user_references"), list) or not isinstance(saved.get("style_recipes"), list):
+        fail("Persistent annotation store must include user_references and style_recipes arrays.")
+
+    for path, label in (
+        (CONTACT_SHEETS, "Contact sheet"),
+        (ANNOTATION_APPLIER, "Annotation applier"),
+    ):
+        try:
+            ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+        except SyntaxError as exc:
+            fail(f"{label} script syntax error: {exc}")
     print(
         "PASS: visual reference browser syntax; "
-        f"{len(items)} seeded web references; contact-sheet script syntax."
+        f"{len(items)} seeded web references; persistent annotation schema; "
+        "contact-sheet and annotation-importer syntax."
     )
 
 
