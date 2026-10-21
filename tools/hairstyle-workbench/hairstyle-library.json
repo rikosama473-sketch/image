@@ -150,7 +150,7 @@
     },
     {
       "id": "HSTYLE-003",
-      "name": "Pixie texturizado · flequillo lateral + coleta de lado",
+      "name": "Pixie texturizado · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Corto",
       "length": "short",
       "shape": "pixie",
@@ -161,13 +161,17 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "pixie_cut",
         "short_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -185,7 +189,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -195,10 +208,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: pixie texturizado con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con pixie texturizado, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -455,7 +476,7 @@
     },
     {
       "id": "HSTYLE-008",
-      "name": "Pixie largo · flequillo lateral + coleta de lado",
+      "name": "Pixie largo · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Corto",
       "length": "short",
       "shape": "pixie-long",
@@ -467,14 +488,18 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "pixie_cut",
         "short_hair",
         "layered_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -493,7 +518,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -503,10 +537,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: pixie largo con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con pixie largo, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -763,7 +805,7 @@
     },
     {
       "id": "HSTYLE-013",
-      "name": "Bob clásico · flequillo lateral + coleta de lado",
+      "name": "Bob clásico · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Corto",
       "length": "short",
       "shape": "bob",
@@ -774,13 +816,17 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "bob_cut",
         "short_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -798,7 +844,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -808,10 +863,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: bob clásico con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con bob clásico, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -1068,7 +1131,7 @@
     },
     {
       "id": "HSTYLE-018",
-      "name": "Bob francés · flequillo lateral + coleta de lado",
+      "name": "Bob francés · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Corto",
       "length": "short",
       "shape": "french-bob",
@@ -1080,14 +1143,18 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "bob_cut",
         "short_hair",
         "french_bob",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -1106,7 +1173,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -1116,10 +1192,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: bob francés con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con bob francés, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -1382,7 +1466,7 @@
     },
     {
       "id": "HSTYLE-023",
-      "name": "Microbob · flequillo lateral + coleta de lado",
+      "name": "Microbob · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Corto",
       "length": "short",
       "shape": "microbob",
@@ -1394,14 +1478,18 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "bob_cut",
         "short_hair",
         "micro_bob",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -1420,7 +1508,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -1430,10 +1527,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: microbob con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con microbob, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -1690,7 +1795,7 @@
     },
     {
       "id": "HSTYLE-028",
-      "name": "Bob asimétrico · flequillo lateral + coleta de lado",
+      "name": "Bob asimétrico · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Corto",
       "length": "short",
       "shape": "asym-bob",
@@ -1701,13 +1806,17 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "asymmetrical_bob",
         "short_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -1725,7 +1834,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -1735,10 +1853,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: bob asimétrico con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con bob asimétrico, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -1995,7 +2121,7 @@
     },
     {
       "id": "HSTYLE-033",
-      "name": "Bob en capas · flequillo lateral + coleta de lado",
+      "name": "Bob en capas · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Corto",
       "length": "short",
       "shape": "layered-bob",
@@ -2007,14 +2133,18 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "bob_cut",
         "short_hair",
         "layered_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -2033,7 +2163,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -2043,10 +2182,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: bob en capas con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con bob en capas, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -2309,7 +2456,7 @@
     },
     {
       "id": "HSTYLE-038",
-      "name": "Shag corto · flequillo lateral + coleta de lado",
+      "name": "Shag corto · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Corto",
       "length": "short",
       "shape": "shag",
@@ -2321,14 +2468,18 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "shag_cut",
         "short_hair",
         "layered_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -2347,7 +2498,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -2357,10 +2517,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: shag corto con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con shag corto, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -2623,7 +2791,7 @@
     },
     {
       "id": "HSTYLE-043",
-      "name": "Wolf cut corto · flequillo lateral + coleta de lado",
+      "name": "Wolf cut corto · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Corto",
       "length": "short",
       "shape": "wolf",
@@ -2635,14 +2803,18 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "wolf_cut",
         "short_hair",
         "layered_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -2661,7 +2833,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -2671,10 +2852,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: wolf cut corto con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con wolf cut corto, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -2931,7 +3120,7 @@
     },
     {
       "id": "HSTYLE-048",
-      "name": "Hime corto · flequillo lateral + coleta de lado",
+      "name": "Hime corto · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Corto",
       "length": "short",
       "shape": "hime",
@@ -2942,13 +3131,17 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "hime_cut",
         "short_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -2966,7 +3159,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -2976,10 +3178,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: hime corto con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con hime corto, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -3230,7 +3440,7 @@
     },
     {
       "id": "HSTYLE-053",
-      "name": "Corte garçon · flequillo lateral + coleta de lado",
+      "name": "Corte garçon · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Corto",
       "length": "short",
       "shape": "pixie",
@@ -3241,13 +3451,17 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "short_hair",
         "androgynous_haircut",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -3265,7 +3479,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -3275,10 +3498,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: corte garçon con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con corte garçon, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -3535,7 +3766,7 @@
     },
     {
       "id": "HSTYLE-058",
-      "name": "Undercut lateral · flequillo lateral + coleta de lado",
+      "name": "Undercut lateral · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Corto",
       "length": "short",
       "shape": "undercut",
@@ -3547,14 +3778,18 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "undercut",
         "sidecut",
         "short_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -3573,7 +3808,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -3583,10 +3827,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: undercut lateral con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con undercut lateral, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -3849,7 +4101,7 @@
     },
     {
       "id": "HSTYLE-063",
-      "name": "Melena a mandíbula · flequillo lateral + coleta de lado",
+      "name": "Melena a mandíbula · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Corto",
       "length": "short",
       "shape": "jaw-bob",
@@ -3861,14 +4113,18 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "bob_cut",
         "short_hair",
         "blunt_ends",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -3887,7 +4143,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -3897,10 +4162,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: melena a mandíbula con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con melena a mandíbula, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -4163,7 +4436,7 @@
     },
     {
       "id": "HSTYLE-068",
-      "name": "Lob recto · flequillo lateral + coleta de lado",
+      "name": "Lob recto · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Medio",
       "length": "medium",
       "shape": "lob",
@@ -4175,14 +4448,18 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "long_bob",
         "medium_hair",
         "straight_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -4201,7 +4478,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -4211,10 +4497,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: lob recto con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con lob recto, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -4477,7 +4771,7 @@
     },
     {
       "id": "HSTYLE-073",
-      "name": "Lob asimétrico · flequillo lateral + coleta de lado",
+      "name": "Lob asimétrico · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Medio",
       "length": "medium",
       "shape": "asym-lob",
@@ -4489,14 +4783,18 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "long_bob",
         "asymmetrical_bob",
         "medium_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -4515,7 +4813,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -4525,10 +4832,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: lob asimétrico con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con lob asimétrico, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -4791,7 +5106,7 @@
     },
     {
       "id": "HSTYLE-078",
-      "name": "Shag a hombros · flequillo lateral + coleta de lado",
+      "name": "Shag a hombros · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Medio",
       "length": "medium",
       "shape": "shag",
@@ -4803,14 +5118,18 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "shag_cut",
         "medium_hair",
         "layered_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -4829,7 +5148,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -4839,10 +5167,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: shag a hombros con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con shag a hombros, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -5105,7 +5441,7 @@
     },
     {
       "id": "HSTYLE-083",
-      "name": "Wolf cut medio · flequillo lateral + coleta de lado",
+      "name": "Wolf cut medio · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Medio",
       "length": "medium",
       "shape": "wolf",
@@ -5117,14 +5453,18 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "wolf_cut",
         "medium_hair",
         "layered_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -5143,7 +5483,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -5153,10 +5502,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: wolf cut medio con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con wolf cut medio, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -5413,7 +5770,7 @@
     },
     {
       "id": "HSTYLE-088",
-      "name": "Hime medio · flequillo lateral + coleta de lado",
+      "name": "Hime medio · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Medio",
       "length": "medium",
       "shape": "hime",
@@ -5424,13 +5781,17 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "hime_cut",
         "medium_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -5448,7 +5809,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -5458,10 +5828,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: hime medio con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con hime medio, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -5712,7 +6090,7 @@
     },
     {
       "id": "HSTYLE-093",
-      "name": "Capas a hombros · flequillo lateral + coleta de lado",
+      "name": "Capas a hombros · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Medio",
       "length": "medium",
       "shape": "layers",
@@ -5723,13 +6101,17 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "layered_hair",
         "medium_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -5747,7 +6129,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -5757,10 +6148,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: capas a hombros con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con capas a hombros, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -6011,7 +6410,7 @@
     },
     {
       "id": "HSTYLE-098",
-      "name": "Melena ondulada media · flequillo lateral + coleta de lado",
+      "name": "Melena ondulada media · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Medio",
       "length": "medium",
       "shape": "wavy",
@@ -6022,13 +6421,17 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "wavy_hair",
         "medium_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -6046,7 +6449,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -6056,10 +6468,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: melena ondulada media con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con melena ondulada media, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -6310,7 +6730,7 @@
     },
     {
       "id": "HSTYLE-103",
-      "name": "Largo recto · flequillo lateral + coleta de lado",
+      "name": "Largo recto · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Largo",
       "length": "long",
       "shape": "straight-long",
@@ -6321,13 +6741,17 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "long_hair",
         "straight_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -6345,7 +6769,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -6355,10 +6788,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: largo recto con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con largo recto, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -6615,7 +7056,7 @@
     },
     {
       "id": "HSTYLE-108",
-      "name": "Largo en U · flequillo lateral + coleta de lado",
+      "name": "Largo en U · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Largo",
       "length": "long",
       "shape": "u-cut",
@@ -6627,14 +7068,18 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "long_hair",
         "u-shaped_hair",
         "straight_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -6653,7 +7098,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -6663,10 +7117,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: largo en u con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con largo en u, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -6929,7 +7391,7 @@
     },
     {
       "id": "HSTYLE-113",
-      "name": "Largo en V · flequillo lateral + coleta de lado",
+      "name": "Largo en V · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Largo",
       "length": "long",
       "shape": "v-cut",
@@ -6941,14 +7403,18 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "long_hair",
         "v-shaped_hair",
         "layered_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -6967,7 +7433,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -6977,10 +7452,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: largo en v con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con largo en v, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
@@ -7237,7 +7720,7 @@
     },
     {
       "id": "HSTYLE-118",
-      "name": "Capas largas · flequillo lateral + coleta de lado",
+      "name": "Capas largas · flequillo lateral + coleta lateral + mechón largo + ahoge",
       "family": "Largo",
       "length": "long",
       "shape": "layers-long",
@@ -7248,13 +7731,17 @@
       "bangs": "swept_bangs",
       "arrangement": "side_ponytail",
       "accents": [
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "tags": [
         "long_hair",
         "layered_hair",
         "swept_bangs",
-        "side_ponytail"
+        "side_ponytail",
+        "long_sidelocks",
+        "ahoge"
       ],
       "components": [
         {
@@ -7272,7 +7759,16 @@
           "tags": [
             "swept_bangs"
           ],
-          "description": "swept bangs"
+          "description": "Flequillo hacia un lado"
+        },
+        {
+          "slot": "sidelocks",
+          "required": false,
+          "tags": [
+            "long_sidelocks",
+            "sidelocks"
+          ],
+          "description": "Mechón lateral largo"
         },
         {
           "slot": "tie",
@@ -7282,10 +7778,18 @@
             "ponytail"
           ],
           "description": "Coleta lateral"
+        },
+        {
+          "slot": "ahoge",
+          "required": false,
+          "tags": [
+            "ahoge"
+          ],
+          "description": "Ahoge"
         }
       ],
       "visual_status": "schematic_only",
-      "description": "Receta de diseño conceptual: capas largas con flequillo lateral + coleta de lado. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
+      "description": "Receta de diseño conceptual con capas largas, un mechón lateral largo, coleta de lado y ahoge. La miniatura es un boceto vectorial orientativo, no una ilustración ni un PNG de recorte.",
       "required_assets": [
         "PNG transparente separado por pieza para una composición exacta"
       ],
