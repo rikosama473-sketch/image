@@ -260,7 +260,7 @@ function starterWorkspace(root){
   grid.innerHTML=samples.map(a=>
    '<article class="starter-card"><img loading="lazy" src="'+safe(url(a.src))+'" alt="Vista previa de '+safe(a.label)+'"><b>'+safe(a.label)+'</b><small>'+safe(a.path)+'</small><span class="library-status">RETRATO COMPLETO · LICENCIA POR REVISAR</span><div class="actions"><button type="button" class="btn primary" data-starter-base="'+safe(a.id)+'">Usar como base</button><button type="button" class="btn" data-starter-test="'+safe(a.id)+'">Probar PNG</button><button type="button" class="btn" data-starter-overlay="'+safe(a.id)+'">Añadir capa de prueba</button></div></article>'
   ).join("");
-  $("starterCount").textContent=samples.length+" visibles · "+allStarterSamples.length+" retratos completos · "+(imageLibraryCache?imageLibraryCache.assets.length:0)+" recursos indexados.;
+  $("starterCount").textContent=samples.length+" visibles · "+allStarterSamples.length+" retratos completos · "+(imageLibraryCache?imageLibraryCache.assets.length:0)+" recursos indexados.";
   $("starterMoreStatus").textContent="Mostrando "+samples.length+" de "+allStarterSamples.length+" retratos.";
   $("starterMore").classList.toggle("hidden",samples.length>=allStarterSamples.length);
   grid.querySelectorAll("[data-starter-base]").forEach(b=>b.onclick=()=>useLibraryAsset(b.dataset.starterBase,"starter"));
