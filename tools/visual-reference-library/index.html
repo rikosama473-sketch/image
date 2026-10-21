@@ -208,7 +208,7 @@ function addReference(e){
  persist();$("addReferenceForm").reset();activeTab="web";setActiveTab("web");render();notice("Referencia guardada en este navegador. Exportá el JSON para conservarla fuera de él.");
 }
 function importBulkSources(){
- const lines=$("bulkSources").value.split(/\\r?\\n/).map(x=>x.trim()).filter(Boolean),category=$("bulkCategory").value;
+ const lines=$("bulkSources").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean),category=$("bulkCategory").value;
  const seen=new Set([...(referenceCatalog?.items||[]),...state.userReferences].map(x=>x.source_url).filter(Boolean));
  let added=0,duplicates=0,invalid=0;
  for(const raw of lines){
@@ -220,7 +220,7 @@ function importBulkSources(){
   const pinIndex=parts.indexOf("pin");
   const isPin=pinIndex>=0&&parts[pinIndex+1];
   const slug=isPin?parts[pinIndex+1]:parts[parts.length-1]||"tablero";
-  const friendly=decodeURIComponent(slug).replace(/[-_]+/g," ").replace(/\\s+/g," ").trim();
+  const friendly=decodeURIComponent(slug).replace(/[-_]+/g," ").replace(/\s+/g," ").trim();
   const id="bulk-ref-"+Date.now().toString(36)+"-"+String(added+1).padStart(3,"0");
   state.userReferences.push({id,title:(isPin?"Pin pendiente · ":"Tablero de referencia · ")+(friendly||"sin título"),kind:isPin?"pinterest_reference":"pinterest_board",category,image_url:"",source_url:source,creator:"Pendiente de identificar en la fuente original",license_status:"reference_only_unverified",usage:"Enlace importado por lote. No extraer ni redistribuir la imagen hasta comprobar la fuente original y sus permisos.",tags:[category,"needs_visual_review","bulk_import"],description:"Ficha provisional: abrir el enlace, revisar visualmente el contenido, sustituir el título provisional por un nombre de rasgos observables, añadir etiquetas y verificar autor/licencia. No hubo análisis visual automático.",review_status:"unreviewed"});
   added++;
