@@ -1147,6 +1147,81 @@
     "external_entries_with_thumbnail": 23,
     "verified_clean_square_plates": 0,
     "source_status_note": "Counts describe index records/candidates, not unique extracted PNGs. Pinterest mirrors and rehosts can duplicate original works; candidate entries stay marked until authorship and originality are checked.",
-    "monochrome_status_note": "Search links are queries, not confirmed plates. For a component-specific square monochrome sheet, use the direct clean source if one has been verified, otherwise retain search_pending."
-  }
+    "monochrome_status_note": "Search links are queries, not confirmed plates. For a component-specific square monochrome sheet, use the direct clean source if one has been verified, otherwise retain search_pending.",
+    "pixai_tag_browsers": 8
+  },
+  "pixai_tag_browsers": [
+    {
+      "category": "hair",
+      "tag": "hair_down",
+      "label": "Cabello suelto",
+      "count_snapshot": 7709,
+      "url": "https://pixai.art/en/tags/artwork/hair_down",
+      "verified_date": "2026-10-21",
+      "notes": "PixAI dice que los prompts de cada obra pueden estar ocultos por decisión del creador. Conteo incluye resultados mixtos."
+    },
+    {
+      "category": "hair",
+      "tag": "hair_over_one_eye",
+      "label": "Cabello sobre un ojo",
+      "count_snapshot": 121399,
+      "url": "https://pixai.art/tags/artwork/hair_over_one_eye",
+      "verified_date": "2026-10-21",
+      "notes": "Colección enorme; revisar prompt/obra individual y evitar duplicados."
+    },
+    {
+      "category": "hair",
+      "tag": "hair_over_eyes",
+      "label": "Flequillo cubriendo ambos ojos",
+      "count_snapshot": 19696,
+      "url": "https://pixai.art/tags/artwork/hair_over_eyes",
+      "verified_date": "2026-10-21",
+      "notes": "Colección mixta, no todos los resultados son femeninos."
+    },
+    {
+      "category": "clothing",
+      "tag": "school_uniform",
+      "label": "Uniforme escolar",
+      "count_snapshot": 414878,
+      "url": "https://pixai.art/tags/artwork/school_uniform",
+      "verified_date": "2026-10-21",
+      "notes": "Resultados mixtos en género, variantes y contenido."
+    },
+    {
+      "category": "clothing",
+      "tag": "serafuku",
+      "label": "Uniforme marinero",
+      "count_snapshot": 97536,
+      "url": "https://pixai.art/tags/artwork/serafuku",
+      "verified_date": "2026-10-21",
+      "notes": "Usar como vocabulario para cuello, pañuelo, blusa y falda; separar peinado/props."
+    },
+    {
+      "category": "clothing",
+      "tag": "lolita_fashion",
+      "label": "Moda Lolita",
+      "count_snapshot": 41502,
+      "url": "https://pixai.art/tags/artwork/lolita_fashion",
+      "verified_date": "2026-10-21",
+      "notes": "Distinguir Gothic, Sweet y Classic Lolita; revisar ropa, medias y adornos por separado."
+    },
+    {
+      "category": "clothing",
+      "tag": "wa_maid",
+      "label": "Wa-maid / doncella japonesa",
+      "count_snapshot": 2254,
+      "url": "https://pixai.art/tags/artwork/wa_maid",
+      "verified_date": "2026-10-21",
+      "notes": "Cruza elementos japoneses tradicionales con uniforme de maid. Colección mixta."
+    },
+    {
+      "category": "eyes",
+      "tag": "heterochromia",
+      "label": "Heterocromía",
+      "count_snapshot": 85718,
+      "url": "https://pixai.art/tags/artwork/heterochromia",
+      "verified_date": "2026-10-21",
+      "notes": "El número/color de iris son atributos; no acoplan automáticamente forma de ojos, pelo o vestuario."
+    }
+  ]
 }
