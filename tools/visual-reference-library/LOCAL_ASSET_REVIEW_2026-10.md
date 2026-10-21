@@ -16,18 +16,20 @@ El generador `scripts/build_visual_contact_sheets.py` se ejecutó con los archiv
 | Hojas de contacto producidas | 16 |
 | Grupos de duplicados exactos por hash | 1 |
 | Archivos sobrantes dentro de esos grupos | 1 |
-| Revisión adicional de casi duplicados | Ahora se genera una cola de candidatos por hash perceptual (distancia ≤ 3); cada pareja requiere comprobación visual y nunca se elimina automáticamente. |
+| Candidatos de casi duplicado por hash perceptual | 2 parejas para comprobación visual; distancia Hamming ≤ 3. No se elimina automáticamente. |
 
 La revisión en hojas de contacto muestra que el catálogo local está formado principalmente por ilustraciones completas de personajes, a menudo con variaciones de pose, encuadre o peinado. No corresponde marcar esas ilustraciones como recortes de ojos o cabello listos para combinar. En el inventario inicial, los assets también están clasificados como `full_illustration`; los nombres genéricos no permiten saber qué forma de ojo o corte tiene cada personaje.
 
 ## Duplicado exacto encontrado
 
-Los siguientes dos archivos son idénticos por contenido SHA-256 en el manifiesto de esta ejecución:
+Los siguientes dos archivos son idénticos por contenido SHA-256 en el manifiesto de la ejecución:
 
 - `from-PixAI-2051739918923127209-0.png` (catálogo `local-0447`)
 - `from-PixAI-2052089408399777103-1.png` (catálogo `local-0449`)
 
 No se elimina ninguno automáticamente. El informe lo marca como candidato a consolidación para no borrar recursos sin confirmación.
+
+La cola perceptual también señaló las parejas `local-0088` (`from-PixAI-2034997367572653389-3.png`) con `local-0102` (`from-PixAI-2035008093402782413-3.png`), y dos ilustraciones frontales generadas de Pibara. La inspección de hojas muestra que la primera pareja comparte composición y pose, pero tiene estampados de camiseta distintos: esto confirma que **una coincidencia perceptual es una pista, no un duplicado confirmado**. La segunda pareja también queda pendiente de comparación a resolución completa.
 
 ## Piezas ya identificadas en el catálogo semántico
 
@@ -43,6 +45,6 @@ Hay cinco máscaras candidatas de cabello —bob, largo liso, coleta alta, colet
 
 ## Artefacto descargable de esta ejecución
 
-[Hojas de contacto, manifiesto CSV y reporte de duplicados (GitHub Actions)](https://github.com/rikosama473-sketch/image/actions/runs/39604889219/artifacts/12347792216)
+[Hojas de contacto, manifiesto CSV y reporte de duplicados (GitHub Actions)](https://github.com/rikosama473-sketch/image/actions/runs/39607079312/artifacts/12349350592)
 
-El artefacto de esta corrida fue creado en el commit `5ef16cf73a6d06f4c814b22fbec9ae2724b17b2e`. El catálogo de imágenes no cambió después de esa corrida; si se modifican los assets, habrá que regenerar las hojas.
+El artefacto más reciente fue creado en el commit `ab7af05a055c6974effeeb884d17e35682221b57` e incluye el reporte perceptual. El catálogo de imágenes no cambió después de esa corrida; si se modifican assets o etiquetas del catálogo de imágenes, hay que regenerar las hojas.
