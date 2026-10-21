@@ -36,18 +36,19 @@ Equipo objetivo declarado: AMD Ryzen 5 5600G, 16 GB RAM y gráficos Radeon integ
 ## Validación
 
 - Navegación integrada: commit `846d2eb89c4ac128e4a3f2472eebd2b90dceb313`; [CI 39624819395](https://github.com/rikosama473-sketch/image/actions/runs/39624819395) = `success`.
-- Transferencia JSON entre módulos: commit `5b23e11660e8e9bd1a47cdb879bb6bad42e9568a`; [CI 39627167742](https://github.com/rikosama473-sketch/image/actions/runs/39627167742) = `success`.
-- Pasaron validadores del constructor, taller de peinados y biblioteca; sintaxis del editor y puente de IA; diagnósticos de recorte; y las regresiones `tests/test_studio_navigation.py` y `tests/test_project_handoff.py`.
-- La prueba de transferencia actual verifica estructura del JSON, despacho entre formatos, límites de importación y metadatos mediante tests de contrato/sintaxis. Todavía no se ha ejecutado una prueba visual interactiva del lienzo para abrir y exportar un proyecto real en el navegador.
-- No se ejecutó una generación real de difusión ni se midió RAM/tiempo/VRAM en el Ryzen 5 5600G durante este bloque.
+- Transferencia JSON entre módulos y límites de importación: commit `5b23e11660e8e9bd1a47cdb879bb6bad42e9568a`; [CI 39627167742](https://github.com/rikosama473-sketch/image/actions/runs/39627167742) = `success`.
+- Integración de `main` y recursos de ambas ramas: commit de dos padres `5e1f026c776d739f77a2dbc8f87723b6d480efb4`. Todos los workflows comprobados en ese commit terminaron en verde: [IMAGE tools 39628055744](https://github.com/rikosama473-sketch/image/actions/runs/39628055744), [asset generator 39628056149](https://github.com/rikosama473-sketch/image/actions/runs/39628056149), [Character Creator 39628056209](https://github.com/rikosama473-sketch/image/actions/runs/39628056209), [manual editor 39628056386](https://github.com/rikosama473-sketch/image/actions/runs/39628056386), [contact sheets 39628045965](https://github.com/rikosama473-sketch/image/actions/runs/39628045965) y [cutout smoke test 39628055986](https://github.com/rikosama473-sketch/image/actions/runs/39628055986).
+- Límite agregado de píxeles de importación: commit `4713dad7ddb9568a619521a2930714f885052f0d`. Validaciones aprobadas: [Character Creator 39628772989](https://github.com/rikosama473-sketch/image/actions/runs/39628772989), [Character Creator 39628764656](https://github.com/rikosama473-sketch/image/actions/runs/39628764656), [manual editor 39628773148](https://github.com/rikosama473-sketch/image/actions/runs/39628773148), [generator without API key 39628772958](https://github.com/rikosama473-sketch/image/actions/runs/39628772958), [IMAGE tools 39628773209](https://github.com/rikosama473-sketch/image/actions/runs/39628773209) y [cutout smoke test 39628773178](https://github.com/rikosama473-sketch/image/actions/runs/39628773178).
+- La transferencia está cubierta por pruebas de contrato, validación estática de HTML/JavaScript y CI. Todavía no se ha realizado una prueba E2E visual/interactiva que abra un proyecto real en un navegador y compruebe píxeles de salida.
+- No se ha generado una imagen Diffusers real en el Ryzen 5 5600G ni medido consumo/tiempo/calidad en ese hardware; el motor local permanece opcional y no validado para ese equipo.
 
 ## Estado de integración con `main`
 
-- Commit actual de integración: `5e1f026c776d739f77a2dbc8f87723b6d480efb4`, con primer padre la rama de trabajo y segundo padre `main` en `efb47f05b0906472062ff50b2e6fe575445ab38e`.
-- Se preservaron las 37 rutas añadidas exclusivamente en `main`, incluidos los recursos generados de Pibara y `trabajo aparte/diseño.md`. No se eliminaron ni sustituyeron archivos exclusivos de la rama de trabajo.
-- El único archivo que necesitó resolución semántica fue `data/character-prompt-registry.json`: se combinaron las ejecuciones por `run_id`, conservando los cinco registros de la rama y el registro `39622201248` de `main`. Resultado: seis IDs únicos; las ejecuciones compartidas no tenían diferencias.
-- La rama ahora está `248` commits por delante y `0` por detrás de `main`. GitHub informa el PR #19 como `mergeable=true`, pero sigue abierto y sin fusionar. `main` no se modificó.
-- Las ejecuciones de GitHub Actions para el commit de integración deben terminar antes de considerar validada la combinación completa. Los validadores del bloque de interoperabilidad sí pasaron en `5b23e11660e8e9bd1a47cdb879bb6bad42e9568a`.
+- Rama actual de trabajo: `work/easy-avatar-maker-2026-10`; commit de código más reciente comprobado: `4713dad7ddb9568a619521a2930714f885052f0d`.
+- `main` sigue en `efb47f05b0906472062ff50b2e6fe575445ab38e`; no se movió ni modificó directamente.
+- El commit `5e1f026c776d739f77a2dbc8f87723b6d480efb4` integra `main` como segundo padre y conserva las 37 rutas añadidas exclusivamente en `main`, incluidos los recursos generados de Pibara y `trabajo aparte/diseño.md`.
+- `data/character-prompt-registry.json` se combinó por `run_id`: los seis registros de Pibara son únicos y las entradas compartidas eran idénticas.
+- Después de integrar, la comparación con `main` era `ahead_by=250`, `behind_by=0`. El PR #19 está abierto, no fusionado y GitHub informa `mergeable=true`: [PR #19](https://github.com/rikosama473-sketch/image/pull/19).
 
 ## Problemas y límites conocidos
 
@@ -68,4 +69,4 @@ Equipo objetivo declarado: AMD Ryzen 5 5600G, 16 GB RAM y gráficos Radeon integ
 
 ## Siguiente tarea concreta
 
-Confirmar que los workflows iniciados por el commit de integración terminan en verde. Después, probar en un navegador real ambos traspasos: Constructor → Editor manual y Taller de peinados → Editor manual, incluyendo visibilidad/opacidad, guardar/reabrir y exportar PNG transparente. A continuación evaluar el motor local IA en el Ryzen 5 5600G sin GPU dedicada; no dar por utilizable un checkpoint hasta medir memoria, duración y calidad. Mantener las referencias y máscaras candidatas marcadas como pendientes.
+Ejecutar y documentar un recorrido E2E en navegador: exportar JSON desde Character Creator y Hairstyle Workbench, importarlo en el Editor manual, verificar alineación/visibilidad/opacidad, guardar y reabrir el proyecto, exportar PNG transparente y comparar dimensiones/píxeles. Luego evaluar el motor local en el Ryzen 5 5600G con un solo modelo moderado y registrar memoria/tiempo/calidad antes de recomendar cualquier checkpoint. No fusionar el PR automáticamente ni ampliar la matriz de modelos IA antes de esa prueba.
