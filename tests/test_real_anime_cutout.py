@@ -8,7 +8,7 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts" / "test_real_anime_cutout.py"
+SCRIPT = ROOT / "scripts" / "run_real_anime_cutout_inference.py"
 SPEC = importlib.util.spec_from_file_location("real_anime_cutout", SCRIPT)
 assert SPEC and SPEC.loader
 cutout = importlib.util.module_from_spec(SPEC)
