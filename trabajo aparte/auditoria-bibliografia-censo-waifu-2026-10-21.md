@@ -189,3 +189,9 @@ These sources were added during the follow-up category/asset audit on 21 October
 - [BOOTH — RA-STUDIO Miko-san layered expression PSD](https://booth.pm/en/items/2430742)
 - [BOOTH — Dragon Girl layered facial parts PSD](https://booth.pm/ja/items/3668928)
 - [BOOTH — Usuhoso Sister layered eyes/mouth/brow PSD](https://booth.pm/ja/items/8826602)
+
+
+## X costume-design sources added in the final category expansion
+
+- [X — HIROSUMI SAITO, FRUITS ZIPPER female idol costume design](https://x.com/hirosumi_saito/status/1974408214826598690)
+- [X — yochi, commissioned uniform with nudibranch-inspired frills](https://x.com/yochichan__/status/2024818010834555184)
