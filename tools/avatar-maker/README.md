@@ -10,7 +10,7 @@ Editor visual guiado por la referencia compartida: navegación lateral, ilustrac
 
 ## Prueba inicial con imágenes internas
 
-Al abrir el creador, la sección **Prueba inicial** muestra 24 ilustraciones internas con nombre de archivo PixAI por página y permite **cargar 24 más** en cada clic. Si no existen esas rutas en el índice, usa las primeras ilustraciones completas disponibles. Las muestras se presentan explícitamente como retratos completos: no se clasifican como cabello, ojos ni ropa aislados. La licencia y la procedencia siguen pendientes de revisión individual.
+Al abrir el creador, la sección **Prueba inicial** muestra 24 ilustraciones completas por página y permite **cargar 24 más** en cada clic. El catálogo actual incluye 759 imágenes clasificadas como ilustración completa; las imágenes con nombre PixAI se ordenan primero y luego aparecen las demás imágenes completas. Si no existen esas rutas en el índice, usa las primeras ilustraciones completas disponibles. Las muestras se presentan explícitamente como retratos completos: no se clasifican como cabello, ojos ni ropa aislados. La licencia y la procedencia siguen pendientes de revisión individual.
 
 En la tarjeta de cada muestra:
 
