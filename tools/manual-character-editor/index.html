@@ -208,12 +208,19 @@ function loadCanvasUrl(url){
 const MAX_IMPORTED_PROJECT_BYTES=120*1024*1024;
 const MAX_IMPORTED_PROJECT_EDGE=8192;
 const MAX_IMPORTED_PROJECT_PIXELS=40000000;
+const MAX_IMPORTED_PROJECT_TOTAL_LAYER_PIXELS=80000000;
 function checkedImportedDimensions(width,height){
  const w=Number(width),h=Number(height);
  if(!Number.isInteger(w)||!Number.isInteger(h)||w<1||h<1||w>MAX_IMPORTED_PROJECT_EDGE||h>MAX_IMPORTED_PROJECT_EDGE||w*h>MAX_IMPORTED_PROJECT_PIXELS){
-  throw new Error("Dimensiones no válidas o demasiado grandes. Se admite hasta 8192 px por lado y 40 megapíxeles por proyecto.");
+  throw new Error("Dimensiones no válidas o demasiado grandes. Se admite hasta 8192 px por lado y 40 megapíxeles por lienzo.");
  }
  return {width:w,height:h};
+}
+function checkImportedLayerBudget(width,height,count){
+ const total=width*height*count;
+ if(!Number.isSafeInteger(count)||count<1||!Number.isSafeInteger(total)||total>MAX_IMPORTED_PROJECT_TOTAL_LAYER_PIXELS){
+  throw new Error("La composición supera el presupuesto de 80 megapíxeles agregados entre capas. Reduce capas o resolución antes de importar.");
+ }
 }
 function projectImageSource(layer,app){
  if(!layer||typeof layer!=="object")throw new Error("Una capa no contiene información de imagen.");
@@ -314,6 +321,8 @@ async function importCharacterCreatorProject(data){
  if(!data.canvas||!sourceLayersRaw)throw new Error("El JSON del Constructor no contiene lienzo y capas válidos.");
  if(typeof data.baseSource!=="string"||!data.baseSource)throw new Error("Este proyecto del Constructor es antiguo y no registra la imagen base. Ábrelo en Constructor y vuelve a guardarlo con esta versión para habilitar la importación.");
  const dimensions=checkedImportedDimensions(data.canvas.width||768,data.canvas.height||1280);
+ if(sourceLayersRaw.length+1>200)throw new Error("El proyecto supera el límite de 200 capas importables, incluida la ilustración base.");
+ checkImportedLayerBudget(dimensions.width,dimensions.height,sourceLayersRaw.length+1);
  const app=data.app==="KIRA Avatar Maker"?"KIRA Avatar Maker":"IMAGE Character Creator";
  const baseSource=projectImageSource({src:data.baseSource},app);
  const baseImage=await loadProjectImageCanvas(baseSource);
@@ -330,7 +339,6 @@ async function importCharacterCreatorProject(data){
   sourceTags:[],sourcePath:baseSource,
   sourceTransform:{fit:"contain",width:baseImage.width,height:baseImage.height,filter:filter}
  }];
- if(sourceLayersRaw.length>200)throw new Error("El proyecto supera el límite de 200 capas importables.");
  const sourceLayers=sourceLayersRaw.map(function(layer,index){
   if(!layer||typeof layer!=="object")throw new Error("El proyecto contiene una capa con formato inválido.");
   return {layer:layer,index:index};
@@ -349,6 +357,7 @@ async function importHairstyleWorkbenchProject(data){
  const dimensions=checkedImportedDimensions(character.width||768,character.height||1280);
  if(!Array.isArray(data.layers)||!data.layers.length)throw new Error("El proyecto del Taller no contiene piezas para importar.");
  if(data.layers.length>200)throw new Error("El proyecto supera el límite de 200 capas importables.");
+ checkImportedLayerBudget(dimensions.width,dimensions.height,data.layers.length);
  const sourceLayers=data.layers.map(function(layer,index){
   if(!layer||typeof layer!=="object")throw new Error("El proyecto contiene una capa con formato inválido.");
   return {layer:layer,index:index};

@@ -22,6 +22,7 @@ Equipo objetivo declarado: AMD Ryzen 5 5600G, 16 GB RAM y gráficos Radeon integ
 - `data/training-labels.csv` y la documentación de `docs/`: registro de metadatos, procedencia y estrategia para seleccionar/validar un dataset. No entrenar automáticamente con la colección completa ni adivinar modelos/LoRAs a partir del nombre de archivo.
 
 ## Cambios realizados en este bloque
+- El importador limita también la memoria estimada: no permite más de 80 millones de píxeles agregados entre las capas que crea (cada una con su respaldo), además de los límites por imagen y por archivo.
 
 - Añadida navegación compartida entre constructor, biblioteca, taller de peinados, editor manual y generador local opcional.
 - Ajustado el lanzador independiente del editor manual para servir la raíz del repositorio y resolver enlaces a otros módulos.

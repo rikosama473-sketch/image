@@ -34,6 +34,9 @@ class ImageProjectHandoffTests(unittest.TestCase):
         self.assertIn('part===".."', self.manual)
         self.assertIn("Por seguridad, el editor solo acepta imágenes incrustadas o rutas locales", self.manual)
         self.assertIn("MAX_IMPORTED_PROJECT_BYTES=120*1024*1024", self.manual)
+        self.assertIn("MAX_IMPORTED_PROJECT_TOTAL_LAYER_PIXELS=80000000", self.manual)
+        self.assertIn("function checkImportedLayerBudget(", self.manual)
+        self.assertIn("checkImportedLayerBudget(dimensions.width,dimensions.height", self.manual)
 
     def test_source_metadata_is_saved_and_restored(self) -> None:
         for field in ("sourceApp", "sourceLayerId", "sourceCategory", "sourceStatus", "sourceTags", "sourcePath", "sourceTransform"):
