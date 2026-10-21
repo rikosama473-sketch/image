@@ -9954,14 +9954,168 @@
       "thumbnail_checked_date": "2026-10-21",
       "thumbnail_status": "Direct X pbs.twimg.com media thumbnail captured from the original public post; image load not checked in final UI.",
       "ordinal": 239
+    },
+    {
+      "id": "EXT-HIR-019",
+      "category": "hair",
+      "title": "Anime hair (girls) guidelines — rough hairstyle guide under CC BY-SA 3.0",
+      "source_url": "https://www.deviantart.com/yosopher/art/anime-hair-girls-guidelines-375934474",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a3958615-075b-4c79-a0bf-8cb428f8d8c9/d67tkwa-c8609f46-19f1-45ed-8a25-8fc20c176d06.jpg/v1/fill/w_500,h_369,q_75,strp/anime_hair_girls_guidelines_by_yosopher_d67tkwa-fullview.jpg",
+      "creator": "yosopher",
+      "source_platform": "DeviantArt",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "resource_type": "female anime hairstyle construction guide/rough drafts",
+      "target_traits": [
+        "female anime hair guidelines",
+        "simple sketch construction",
+        "hair mass and silhouette cues"
+      ],
+      "extras_red": [
+        "Low resolution 500×369 image; guide illustrations may show head/face",
+        "rough draft not a clean isolated modular part sheet",
+        "verify attribution/share-alike obligations if incorporating derived reference diagrams"
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "low-resolution rough guide; not square and no isolated part PNGs",
+      "license_status": "Creator/page declares Creative Commons Attribution-ShareAlike 3.0 (CC BY-SA 3.0); credit creator and license, indicate modifications, and share adapted material under same license if applicable.",
+      "license_evidence": "Source page links to CC BY-SA 3.0 and says free to use; verified on 2026-10-21",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Original DeviantArt/WixMedia image URL recovered from page metadata; not visually checked in final browser.",
+      "ordinal": 240
+    },
+    {
+      "id": "EXT-HIR-020",
+      "category": "hair",
+      "title": "Anime hairstyles — drill curls and floating hair (CC BY-NC-SA 3.0)",
+      "source_url": "https://www.deviantart.com/senpere/art/Anime-hairstyles-964082955",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/ee428d35-64f5-45a8-8751-6e538978726b/dfxzn63-acf7fbfa-05c5-45ef-a593-3783fe81f693.png/v1/fill/w_938,h_852,q_70,strp/anime_hairstyles_by_senpere_dfxzn63-pre.jpg",
+      "creator": "Senpere",
+      "source_platform": "DeviantArt",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "resource_type": "female anime hairstyle illustration/reference",
+      "target_traits": [
+        "drill curls / twin drills",
+        "floating hair strands",
+        "multiple silhouette examples"
+      ],
+      "extras_red": [
+        "full head/face and possibly eye design mixed with hairstyle",
+        "creator notes reference use and asks credit/ping on straight copy"
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "color/rough hairstyle page; no square plate verified",
+      "license_status": "Page links to CC BY-NC-SA 3.0. NonCommercial condition means do not use in commercial distribution without separate permission; credit and share-alike apply to derivatives.",
+      "license_evidence": "Source page links to CC BY-NC-SA 3.0; checked 2026-10-21",
+      "license_url": "https://creativecommons.org/licenses/by-nc-sa/3.0/",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Original DeviantArt/WixMedia preview URL captured; not visually checked in final browser.",
+      "ordinal": 241
+    },
+    {
+      "id": "EXT-CC0-001",
+      "category": "character_reference",
+      "title": "Kenney Modular Characters — 425 CC0 2D assets",
+      "source_url": "https://kenney.nl/assets/modular-characters",
+      "thumbnail_url": "https://kenney.nl/media/pages/assets/modular-characters/38079a52c2-1677670334/sample.png",
+      "creator": "Kenney",
+      "source_platform": "Kenney",
+      "thumbnail_kind": "official_store_preview",
+      "asset_type": "modular 2D character parts; generic game-art rather than anime line art",
+      "price_current": "Free",
+      "file_format": "2D asset pack (425 files, per official listing)",
+      "claimed_content": "425 modular 2D character assets; official page labels license Creative Commons CC0",
+      "target_traits": [
+        "modular character part architecture",
+        "separable base/body/gear parts",
+        "useful for learning how to assemble parts and test layers"
+      ],
+      "extras_red": [
+        "not female-anime-specific or waifu-style artwork",
+        "generic game art; do not present its sprites as anime line-art hairstyles",
+        "check exact package contents before mapping to IMAGE's modules"
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "Not an anime square monochrome reference plate; generic modular game assets",
+      "license_status": "Official Kenney page states CC0; reusable/modifiable/redistributable as CC0, subject to any rights not covered by CC0 such as trademarks/personality rights.",
+      "license_evidence": "Official page explicitly lists Creative Commons CC0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official Kenney page preview captured from metadata; not visually checked in final browser.",
+      "ordinal": 242
+    },
+    {
+      "id": "EXT-CC0-002",
+      "category": "character_reference",
+      "title": "Fumiko Complete Charset — female warrior, free commercial/noncommercial use",
+      "source_url": "https://opengameart.org/content/fumiko-complete-charset",
+      "thumbnail_url": "https://opengameart.org/sites/default/files/fum.png",
+      "creator": "OpenGameArt contributor (page text references source creator; confirm author field/readme before redistribution)",
+      "source_platform": "OpenGameArt",
+      "thumbnail_kind": "tutorial_sheet_preview",
+      "asset_type": "female pixel-art charset, not anime line art",
+      "price_current": "Free",
+      "file_format": "sprite/charset image files from OpenGameArt listing",
+      "claimed_content": "Complete female warrior character set for game use; official page description says assets are free for commercial and noncommercial use and shows CC0 license badge.",
+      "target_traits": [
+        "female warrior silhouette",
+        "sprite-sheet layout",
+        "complete character/pose reference"
+      ],
+      "extras_red": [
+        "pixel-art style, not anime line art",
+        "whole character set includes pose/body/outfit rather than isolated hair/clothing PNGs",
+        "verify license/readme for every file in package"
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "Pixel sprite sheet; not square black-white component plate",
+      "license_status": "OpenGameArt page describes free commercial/noncommercial use and displays a CC0 marker; confirm original asset/readme and author attribution before shipping.",
+      "license_evidence": "Official OpenGameArt page text and CC0 badge preview; checked 2026-10-21",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official OpenGameArt image URL extracted from page image links; not visually checked in final browser.",
+      "ordinal": 243
+    },
+    {
+      "id": "EXT-OGA-001",
+      "category": "hair_clothing_accessories",
+      "title": "LPC Expanded — hair, clothes, shoes and body-part variants (mixed item licenses)",
+      "source_url": "https://opengameart.org/content/lpc-expanded-sit-run-jump-more",
+      "thumbnail_url": "https://opengameart.org/sites/default/files/lpc-hair-4xpreview.gif",
+      "creator": "JaidynReiman and contributors",
+      "source_platform": "OpenGameArt",
+      "thumbnail_kind": "tutorial_sheet_preview",
+      "asset_type": "modular 2D game sprite parts; retro/pixel style, not anime waifu line art",
+      "price_current": "Free download",
+      "file_format": "LPC sprite/animation image assets",
+      "claimed_content": "Expanded LPC character assets including hair, clothes, shoes/boots/socks, heads/body and animations. Page lists OGA-BY 3.0 and OGA-BY 4.0 overall; some hair options are specifically credited CC0 to original contributors.",
+      "target_traits": [
+        "bangs/side-part/bob variants",
+        "hair parts and head options",
+        "clothing and footwear layering",
+        "large asset library with attribution records"
+      ],
+      "extras_red": [
+        "pixel-art aesthetic, not anime line art",
+        "parts have multiple contributors and license terms; do not treat all 425? assets as CC0",
+        "requires credit/attribution under OGA-BY where applicable"
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "pixel sprite preview, not square black-white component reference",
+      "license_status": "Mixed attribution licenses (OGA-BY 3.0/4.0) with some sub-assets marked CC0; obey individual license/credit table and share any license-required credits.",
+      "license_evidence": "OpenGameArt page lists license(s), specific CC0 contributor credits and 2025 update; checked 2026-10-21",
+      "license_url": "https://opengameart.org/content/lpc-expanded-sit-run-jump-more",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official page preview GIF extracted from source image links; not visually checked in final browser.",
+      "ordinal": 244
     }
   ],
   "statistics": {
-    "canonical_url_records": 239,
-    "structured_entries": 239,
-    "index_entries_with_thumbnail": 239,
+    "canonical_url_records": 244,
+    "structured_entries": 244,
+    "index_entries_with_thumbnail": 244,
     "index_entries_without_thumbnail": 0,
-    "direct_image_preview_candidates": 234,
+    "direct_image_preview_candidates": 239,
     "pixiv_embed_previews": 5,
     "pixai_source_entries": 40,
     "research_report_categorized_records": 160,
@@ -9975,7 +10129,7 @@
     "asset_product_alternate_store_aliases": 1,
     "pixai_tag_browsers": 8,
     "category_record_counts": {
-      "hair": 32,
+      "hair": 34,
       "clothing": 14,
       "eyes": 9,
       "accessories": 18,
@@ -9983,7 +10137,7 @@
       "eyes_hair": 1,
       "hair_accessories": 3,
       "hair_eyes": 1,
-      "character_reference": 7,
+      "character_reference": 9,
       "accessories_clothing": 1,
       "female_hair": 28,
       "lolita_clothing": 14,
@@ -9997,11 +10151,11 @@
       "multi_component_reference": 18,
       "booth_products": 2,
       "itch_io_assets": 7,
-      "hair_clothing_accessories": 1
+      "hair_clothing_accessories": 2
     },
     "platform_record_counts": {
       "PixAI": 40,
-      "DeviantArt": 50,
+      "DeviantArt": 52,
       "Pinterest": 11,
       "SKIMA": 2,
       "Seitosha book sample": 1,
@@ -10029,35 +10183,41 @@
       "CharacterGen": 1,
       "BOOTH.pm": 2,
       "Itch.io": 11,
-      "X": 2
+      "X": 2,
+      "Kenney": 1,
+      "OpenGameArt": 2
     },
     "thumbnail_kinds": {
       "official_platform_preview": 33,
       "external_page_or_artwork_preview": 24,
-      "tutorial_sheet_preview": 2,
+      "tutorial_sheet_preview": 4,
       "editorial_collection_preview": 3,
       "pixiv_embed_preview": 5,
       "official_marketplace_preview": 4,
-      "official_store_preview": 9,
+      "official_store_preview": 10,
       "tutorial_preview": 1,
-      "source_page_metadata_preview_candidate": 147,
+      "source_page_metadata_preview_candidate": 149,
       "official_itch_asset_page_cover": 8,
       "external_search_result_preview": 1,
       "official_x_post_media_preview": 2
     },
     "verified_clean_square_plates": 0,
-    "index_note": "This is a 239-record index of source URLs/store pages, not a library of 239 unique images or licensed assets. Build-up: 75 curated entries + 151 new core deep-census URLs (two matches merged) + 4 accessory/clothing supplements + 4 modular asset listings + 3 facial-variant listings + 2 X costume-design posts. The core deep-research body has 160 categorized rows and 153 distinct normalized URL records after a repeated URL is removed. Four pairs are flagged as likely duplicate underlying artworks across distinct URL paths.",
-    "thumbnail_status_note": "All 239 source records have thumbnail URLs; 234 are direct image/preview candidates and 5 are Pixiv embed endpoints. Source metadata/preview URLs are recorded, but every thumbnail has not been successfully rendered and visually checked in the final browser UI.",
+    "index_note": "This is a source URL/store/page index, not a pack of downloaded assets. CC0 and CC BY-SA candidates are tracked separately with source license evidence; mixed contributor packs need item-level checks. The 239 base entries plus these five license-oriented sources now give 244 indexed source URLs.",
+    "thumbnail_status_note": "All 244 source records have preview URLs; 239 direct image/preview candidates and 5 Pixiv embed endpoints. URL capture does not prove browser loading; individual thumbnails remain pending visual UI validation.",
     "deduplication_note": "Source URL normalization only. The report flags four pairs as duplicate underlying artwork under different URLs, and one creator/product has two store pages recorded as alternate_source_urls. No cross-platform perceptual/image-hash deduplication has been done.",
-    "license_note": "The source index supports research and identification. Public previews, free downloads and commercial-use permission do not imply permission to redistribute individual PNG/PSD source layers inside IMAGE. Follow each item-level license; ask creators where an editor distribution would expose source parts.",
+    "license_note": "The CC0 / CC BY-SA records offer more permissive routes for original work or derived work when conditions are obeyed, but the generic/pixel-art packs are not equivalent to high-quality anime line art. For any redistribution in IMAGE, retain the license URL, author/credit requirements and any per-asset license differences.",
     "layered_facial_component_records_added_oct21": 3,
     "latest_additions": [
-      "EXT-BOOTH-008",
-      "EXT-BOOTH-009",
-      "EXT-BOOTH-010"
+      "EXT-HIR-019",
+      "EXT-HIR-020",
+      "EXT-CC0-001",
+      "EXT-CC0-002",
+      "EXT-OGA-001"
     ],
     "x_source_records": 2,
-    "last_extension": "Two canonical X posts added to the clothing category on 2026-10-21; public descriptions/thumbnail endpoints verified, reuse rights unverified."
+    "last_extension": "Two canonical X posts added to the clothing category on 2026-10-21; public descriptions/thumbnail endpoints verified, reuse rights unverified.",
+    "reusable_license_research_candidates": 4,
+    "later_license_research_sources": 5
   },
   "pixai_tag_browsers": [
     {
