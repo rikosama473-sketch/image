@@ -1,0 +1,914 @@
+{
+  "schema_version": "1.0.0",
+  "project": "IMAGE",
+  "created_date": "2026-10-21",
+  "scope": "Female anime / waifu character design reference atlas",
+  "status": "research_index_not_assets",
+  "ui_behavior": {
+    "thumbnail": "Use thumbnail_url as a small preview beside the ficha name; link to source_url. PixAI image links are official platform preview variants where supplied.",
+    "red_warning": "Render extras_red as a red warning box. These are elements visible in or described by the source artwork that do not belong to the target component.",
+    "monochrome_square": "Use monochrome_query_url as a search query only. monochrome_plate_status=search_pending means no clean licensed square plate has been verified for that exact component.",
+    "license": "Never treat a public webpage, PixAI artwork, Pinterest mirror, or thumbnail as permission to redistribute the image."
+  },
+  "reference_entries": [
+    {
+      "id": "PX-HIR-001",
+      "category": "hair",
+      "title": "Melena larga en capas con flequillo asimétrico",
+      "source_url": "https://pixai.art/artwork/2068523186486809301",
+      "thumbnail_url": "https://images-ng.pixai.art/ji/stillThumb/edd7cfb9-3dc3-4ddd-a58a-3a885d9e09fe",
+      "creator": "iplnrcgjocwx",
+      "target_traits": [
+        "very long layered hair",
+        "messy layered bangs",
+        "long asymmetrical fringe",
+        "curved side bangs",
+        "long thin sidelocks",
+        "feathered ends",
+        "floating strands",
+        "thick silky volume"
+      ],
+      "extras_red": [
+        "cyan eyes",
+        "pointed ears",
+        "black horns",
+        "halo",
+        "glowing forehead mark",
+        "navy school uniform",
+        "chest crest",
+        "dark gradient background"
+      ],
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+long+layered+hair+asymmetrical+bangs+black+white+line+art+reference",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 1
+    },
+    {
+      "id": "PX-CLT-001",
+      "category": "clothing",
+      "title": "Uniforme académico femenino detallado",
+      "source_url": "https://pixai.art/artwork/2067278425733525427",
+      "thumbnail_url": "https://images-ng.pixai.art/images/stillThumb/5e9c587f-9217-430e-92a6-0f5be2463810",
+      "creator": "ヒイロ",
+      "target_traits": [
+        "tailored navy blazer",
+        "structured shoulders",
+        "gold piping",
+        "white shirt",
+        "burgundy ribbon tie",
+        "high-waisted pleated skirt",
+        "silver buttons",
+        "small cross brooch",
+        "black belt",
+        "ankle boots"
+      ],
+      "extras_red": [
+        "Ranko Kanzaki character identity",
+        "silver hair",
+        "red eyes",
+        "smile",
+        "turning pose",
+        "books",
+        "desk",
+        "historical library",
+        "cinematic light"
+      ],
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=female+anime+school+uniform+blazer+pleated+skirt+black+white+lineart+front+view+reference",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 2
+    },
+    {
+      "id": "PX-EYE-001",
+      "category": "eyes",
+      "title": "Heterocromía rosa y aqua con pestañas largas",
+      "source_url": "https://pixai.art/artwork/2066833884447729584",
+      "thumbnail_url": "https://images-ng.pixai.art/ji/stillThumb/b42c4aa9-9a34-4f59-be09-4a0b697dde32",
+      "creator": "dance partner",
+      "target_traits": [
+        "left iris pink",
+        "right iris aqua blue",
+        "heterochromia",
+        "very long eyelashes",
+        "defined upper eyelids",
+        "almond-shaped eyes"
+      ],
+      "extras_red": [
+        "emerald green short wolf cut",
+        "red inner hair",
+        "extreme long bangs",
+        "gothic red and black dress",
+        "detached sleeves",
+        "ribbons",
+        "long nails",
+        "hand toward camera",
+        "night city"
+      ],
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+eye+shape+iris+eyelash+design+sheet+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 3
+    },
+    {
+      "id": "PX-ACC-001",
+      "category": "accessories",
+      "title": "Lazos, clips y horquillas de cabello",
+      "source_url": "https://pixai.art/artwork/1975861057626129555",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/4299fcb5-e789-4668-a4ea-95ed15c43fc2",
+      "creator": "liobim",
+      "target_traits": [
+        "blue bow hair ties",
+        "panda-head hair clips",
+        "cookie-shaped hair clips",
+        "black mechanical hairpins",
+        "small blue eye decorations"
+      ],
+      "extras_red": [
+        "white fluffy twin tails",
+        "dark eyes and eyeliner",
+        "sailor blouse",
+        "techwear jacket",
+        "polka-dot lace skirt",
+        "designed backpack",
+        "console",
+        "floating gifts"
+      ],
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+hair+accessories+hairpins+ribbon+bow+clips+black+white+line+art+asset+sheet",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 4
+    },
+    {
+      "id": "PX-CLT-002",
+      "category": "clothing",
+      "title": "Vestido gótico Lolita con corsé y encaje",
+      "source_url": "https://pixai.art/artwork/2023390201162778455",
+      "thumbnail_url": "https://images-ng.pixai.art/images/stillThumb/0e836626-74da-4297-880a-af0992626f2a",
+      "creator": "kovpvkzzduiq",
+      "target_traits": [
+        "white puff-sleeve blouse",
+        "ruffled cuffs",
+        "black corset vest",
+        "front zipper",
+        "silver buttons",
+        "jabot collar",
+        "tiered skirt",
+        "sheer overlay",
+        "white ruffle trim"
+      ],
+      "extras_red": [
+        "dark curly hair",
+        "violet eyes",
+        "face and hands posing",
+        "purple-black gradient background",
+        "studio lighting",
+        "cross brooch and chains must be catalogued separately"
+      ],
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=gothic+lolita+dress+front+view+black+white+fashion+lineart+reference",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 5
+    },
+    {
+      "id": "PX-EYE-002",
+      "category": "eyes",
+      "title": "Ojos redondos violetas y pestañas definidas",
+      "source_url": "https://pixai.art/artwork/2068118178282481862",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/55e5beb6-8b47-4673-bc99-c8084e8bdc52",
+      "creator": "らいむぎ",
+      "target_traits": [
+        "large round eyes",
+        "pale violet iris",
+        "visible pupil",
+        "defined upper lashes",
+        "soft lower lashes",
+        "rounded eyelids"
+      ],
+      "extras_red": [
+        "waist-length white hair",
+        "face-framing locks",
+        "mage tunic and cape",
+        "lavender ribbons",
+        "crystal brooch",
+        "hand on sleeve",
+        "magic circle background"
+      ],
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+eye+design+chart+round+eyes+eyelash+line+art+white+background+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 6
+    },
+    {
+      "id": "PX-CLT-003",
+      "category": "clothing",
+      "title": "Camisa, blazer, corbata y falda plisada",
+      "source_url": "https://pixai.art/artwork/1951943022458520065",
+      "thumbnail_url": "https://images-ng.pixai.art/images/stillThumb/5be0fc4d-3ec1-4065-aeae-89595b95a603",
+      "creator": "kinoko yasui",
+      "target_traits": [
+        "navy blazer",
+        "white shirt",
+        "red ribbon tie",
+        "pleated skirt",
+        "visible seams",
+        "fabric folds"
+      ],
+      "extras_red": [
+        "long wavy black hair",
+        "shy expression",
+        "full-body posture",
+        "park",
+        "cherry blossoms",
+        "night/painterly lighting"
+      ],
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+uniform+blazer+shirt+ribbon+pleated+skirt+monochrome+design+sheet",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 7
+    },
+    {
+      "id": "PX-ACC-002",
+      "category": "accessories",
+      "title": "Diadema, cruz, cinta y anillos góticos",
+      "source_url": "https://pixai.art/artwork/2056733953910257401",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/f9cdb338-8f31-49f9-a328-400b88de68db",
+      "creator": "dance partner",
+      "target_traits": [
+        "frilled headband",
+        "silver cross necklace",
+        "black ribbon",
+        "rings",
+        "black nail polish with white cross"
+      ],
+      "extras_red": [
+        "two-tone hime cut",
+        "silver eyes",
+        "gothic dress",
+        "sleeves",
+        "boots",
+        "long nails",
+        "sitting pose",
+        "castle setting"
+      ],
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=gothic+lolita+accessories+headband+cross+necklace+ribbon+rings+lineart+black+white+isolated",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 8
+    },
+    {
+      "id": "PX-HIR-002",
+      "category": "hair",
+      "title": "Twintails altas con trenzas laterales",
+      "source_url": "https://pixai.art/artwork/2003118040187167911",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/6c4a08f3-c9b2-4055-b5c5-889dbeab73a8",
+      "creator": "Kayros",
+      "target_traits": [
+        "long white hair",
+        "blunt bangs",
+        "long sidelocks",
+        "hair intakes",
+        "high twintails",
+        "side braids"
+      ],
+      "extras_red": [
+        "Sparxie character identity",
+        "pink eyes",
+        "body shape",
+        "outfit"
+      ],
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=female+anime+high+twin+tails+side+braids+lineart+black+white+head+only+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 9
+    },
+    {
+      "id": "PX-HIR-003",
+      "category": "hair",
+      "title": "Hime cut con ahoge y horquilla",
+      "source_url": "https://pixai.art/artwork/2044545791833002613",
+      "thumbnail_url": "https://images-ng.pixai.art/images/stillThumb/36423974-d477-45cd-b2e0-31a0d96c04d2",
+      "creator": ".Silencieuse",
+      "target_traits": [
+        "long white hair",
+        "soft hime cut",
+        "single ahoge",
+        "even fringe",
+        "long straight back hair",
+        "bat-shaped hair pin"
+      ],
+      "extras_red": [
+        "red eyes",
+        "fangs",
+        "round glasses",
+        "large scythe",
+        "glowing blue butterflies",
+        "night sky",
+        "arch"
+      ],
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+hime+cut+ahoge+front+view+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 10
+    },
+    {
+      "id": "PX-HIR-004",
+      "category": "hair",
+      "title": "Twintails sueltas con corona y rosas",
+      "source_url": "https://pixai.art/artwork/2036643543398309533",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/16c15670-ef85-41df-aa57-bf9b176aea66",
+      "creator": "HAI-YAI",
+      "target_traits": [
+        "long flowing mint-green hair",
+        "loose twin-tail silhouette",
+        "separate tied sections",
+        "flowing strands"
+      ],
+      "extras_red": [
+        "gold crown",
+        "black roses",
+        "black ribbon ornaments",
+        "white backless dress",
+        "large sleeves",
+        "gold chain necklace",
+        "rose held in hand",
+        "dark background",
+        "dramatic light"
+      ],
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+loose+twin+tails+black+white+hair+silhouette+line+art+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 11
+    },
+    {
+      "id": "PX-CLT-004",
+      "category": "clothing_accessories",
+      "title": "Vestido gótico con corsé, encaje y lazos",
+      "source_url": "https://pixai.art/artwork/2068412324670692497",
+      "thumbnail_url": "https://images-ng.pixai.art/ji/stillThumb/1cd3b5d9-22bb-4fde-9caf-979b95cddc6c",
+      "creator": "水車場",
+      "target_traits": [
+        "fitted black corset bodice",
+        "white lace trim",
+        "layered ruffles",
+        "puff sleeves",
+        "lace cuffs",
+        "tiered skirt",
+        "platform boots"
+      ],
+      "extras_red": [
+        "adult woman",
+        "long black twin tails",
+        "straight blunt bangs",
+        "large satin bows",
+        "heart jewel decorations",
+        "cross charms",
+        "choker",
+        "ear piercings",
+        "urban editorial pose"
+      ],
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=gothic+lolita+dress+front+view+black+white+lineart+design+sheet+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 12
+    },
+    {
+      "id": "PX-CLT-005",
+      "category": "clothing",
+      "title": "Vestido negro con cruces, encaje y corsé",
+      "source_url": "https://pixai.art/artwork/2057105226671308493",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/181a046c-816a-44d6-a9dc-65cc9ff4f303",
+      "creator": "Linkana",
+      "target_traits": [
+        "black dress",
+        "cross print",
+        "bat print",
+        "white frills",
+        "lace trim",
+        "long sleeves",
+        "corset",
+        "petticoat",
+        "platform shoes"
+      ],
+      "extras_red": [
+        "adult female character",
+        "white hair",
+        "pink eyes",
+        "very pale skin",
+        "lolita hairband",
+        "black thigh-highs",
+        "hair and face colors"
+      ],
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=gothic+lolita+black+dress+white+lace+cross+corset+flat+fashion+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 13
+    },
+    {
+      "id": "PX-CLT-006",
+      "category": "clothing",
+      "title": "Uniforme marinero con cardigan rosa y falda a cuadros",
+      "source_url": "https://pixai.art/artwork/2004048974443601056",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/b776263d-354f-4bc2-9f01-2cde90077b92",
+      "creator": "yuki m",
+      "target_traits": [
+        "white sailor uniform",
+        "navy collar",
+        "pink cardigan",
+        "plaid pleated skirt",
+        "black high socks"
+      ],
+      "extras_red": [
+        "blonde twin tails",
+        "red ribbon",
+        "golden eyes",
+        "toast in mouth",
+        "running pose",
+        "school bag",
+        "morning scene"
+      ],
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+sailor+uniform+pink+cardigan+pleated+plaid+skirt+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 14
+    },
+    {
+      "id": "PX-CLT-007",
+      "category": "clothing",
+      "title": "Traje de magical girl",
+      "source_url": "https://pixai.art/artwork/2038849436760416274",
+      "thumbnail_url": "https://images-ng.pixai.art/ji/stillThumb/9492d224-64cf-4ea5-9b25-3415007b2bcf",
+      "creator": "glow_777_#0",
+      "target_traits": [
+        "magical girl skirt costume",
+        "puffed short sleeves",
+        "white gloves",
+        "fingerless gloves",
+        "fitted bodice",
+        "layered skirt"
+      ],
+      "extras_red": [
+        "Cure Eclair character identity",
+        "aqua ponytail",
+        "blue bow",
+        "hat",
+        "earrings",
+        "orange eyes",
+        "pose and setting"
+      ],
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=female+anime+magical+girl+costume+front+view+lineart+black+white+sheet+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 15
+    },
+    {
+      "id": "PX-EYE-003",
+      "category": "eyes_hair",
+      "title": "Ojos grandes, iris azul hielo y pestañas superiores largas",
+      "source_url": "https://pixai.art/artwork/2018108685314540480",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/2ae35e9a-c89c-4f5d-a410-271fa6e0e43b",
+      "creator": "God",
+      "target_traits": [
+        "large eyes",
+        "slightly lowered outer corners",
+        "upper eyelashes longer than lower lashes",
+        "sky-blue to icy-blue iris gradient"
+      ],
+      "extras_red": [
+        "extremely long silver-blue hair",
+        "heavy layered bangs",
+        "long side locks",
+        "mage outfit",
+        "belt",
+        "fantasy ceremonial accessories and composition"
+      ],
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+eye+design+sheet+large+eyes+lowered+outer+corners+long+upper+lashes+black+white+lineart",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 16
+    },
+    {
+      "id": "EXT-HIR-001",
+      "category": "hair",
+      "title": "Elythe — 50 peinados femeninos line art",
+      "source_url": "https://www.deviantart.com/elythe/art/Various-Female-Anime-Manga-Hairstyles-307583395",
+      "thumbnail_url": "https://orig13.deviantart.net/5e48/f/2015/041/e/4/various_female_anime_manga_hairstyles_by_elythe-d534kv7.jpg",
+      "creator": "Elythe",
+      "target_traits": [
+        "50 numbered female hairstyle silhouettes",
+        "bobs",
+        "braids",
+        "curls",
+        "twin tails",
+        "updos",
+        "bangs"
+      ],
+      "extras_red": [
+        "artist watermark",
+        "other artists' usage rights still apply"
+      ],
+      "monochrome_plate_status": "source_is_monochrome_reference_sheet",
+      "license_status": "reference_and_attribution_required",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 17,
+      "monochrome_query_url": null
+    },
+    {
+      "id": "EXT-EYE-001",
+      "category": "eyes",
+      "title": "63 pares de ojos anime femeninos",
+      "source_url": "https://iza-nagi.deviantart.com/art/63-PAIRS-OF-FEMALE-ANIME-EYES-A-Fun-Project-347166867",
+      "thumbnail_url": "https://orig09.deviantart.net/3bf6/f/2013/006/8/0/63_pairs_of_female_anime_eyes___a_fun_project_by_iza_nagi-d5qozo3.jpg",
+      "creator": "iza-nagi / aadisart",
+      "target_traits": [
+        "63 paired eye styles",
+        "iris variation",
+        "eyelash and upper lid silhouettes",
+        "expressive eye types"
+      ],
+      "extras_red": [
+        "handwritten labels",
+        "author's original drawing rights remain"
+      ],
+      "monochrome_plate_status": "source_is_monochrome_reference_sheet",
+      "license_status": "reference_only_attribution_required",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 18,
+      "monochrome_query_url": null
+    },
+    {
+      "id": "EXT-EYE-002",
+      "category": "eyes",
+      "title": "37 pares de ojos femeninos",
+      "source_url": "https://www.pinterest.com/pin/483081497528673587/",
+      "thumbnail_url": "https://i.pinimg.com/originals/d1/ce/8f/d1ce8f69f400c335eaf36b817a954b04.jpg",
+      "creator": "Original creator not confirmed from pin",
+      "target_traits": [
+        "37 eye shape designs",
+        "iris and lash comparisons",
+        "handwritten labels"
+      ],
+      "extras_red": [
+        "source author not verified",
+        "Pinterest mirror"
+      ],
+      "monochrome_plate_status": "source_is_monochrome_reference_sheet",
+      "license_status": "reference_only_source_author_pending",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 19,
+      "monochrome_query_url": null
+    },
+    {
+      "id": "EXT-EYE-003",
+      "category": "eyes",
+      "title": "Anime eyelashes step by step",
+      "source_url": "https://www.pinterest.com/pin/how-to-draw-anime-eyelashes-step-by-step-animeoutline--13159023899910420/",
+      "thumbnail_url": "https://i.pinimg.com/736x/9b/34/f9/9b34f9990d6bdf3cdcba956dc82c95dd.jpg",
+      "creator": "AnimeOutline / Pinterest mirror",
+      "target_traits": [
+        "lash-line variations",
+        "upper lash thickness",
+        "lower lashes",
+        "paired-eye silhouette"
+      ],
+      "extras_red": [
+        "Pinterest mirror",
+        "watermark in source image"
+      ],
+      "monochrome_plate_status": "source_is_monochrome_reference_sheet",
+      "license_status": "reference_only_keep_attribution",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 20,
+      "monochrome_query_url": null
+    },
+    {
+      "id": "EXT-CLT-001",
+      "category": "clothing",
+      "title": "Hoja de diseño de ropa femenina con vistas y detalles",
+      "source_url": "https://skima.jp/item/detail?item_id=153074",
+      "thumbnail_url": "https://cdn-common.skima.jp/item/877/337/877337/showcase-1e66065b65de41552edddc8805ad4dd5-20220126194938.jpeg",
+      "creator": "SKIMA listing artist not extracted",
+      "target_traits": [
+        "front and back clothing views",
+        "top construction",
+        "skirt pleats and ties",
+        "stockings and shoes",
+        "accessory callouts"
+      ],
+      "extras_red": [
+        "paid commission listing",
+        "source's reuse license not established"
+      ],
+      "monochrome_plate_status": "source_is_monochrome_reference_sheet",
+      "license_status": "reference_only_license_pending",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 21,
+      "monochrome_query_url": null
+    },
+    {
+      "id": "EXT-ACC-001",
+      "category": "accessories",
+      "title": "Lámina de accesorios de cabello del libro de Shinnmoto",
+      "source_url": "https://www.seitosha.co.jp/book/9784791631414/",
+      "thumbnail_url": "https://www.seitosha.co.jp/upload/2022/11/688aa84d938263ed9e37951abca494515442e945.jpg",
+      "creator": "Shinmoto / publisher sample page",
+      "target_traits": [
+        "headband",
+        "banana clip",
+        "scrunchie",
+        "ribbon variations",
+        "decorated hair tie",
+        "hair pins"
+      ],
+      "extras_red": [
+        "copyrighted book sample",
+        "not free asset"
+      ],
+      "monochrome_plate_status": "source_is_monochrome_reference_sheet",
+      "license_status": "reference_only_copyrighted_book",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 22,
+      "monochrome_query_url": null
+    },
+    {
+      "id": "EXT-HIR-002",
+      "category": "hair",
+      "title": "Hime cut drawing guide",
+      "source_url": "https://www.animeoutline.com/how-to-draw-anime-hime-cut-hairstyle/",
+      "thumbnail_url": "https://www.animeoutline.com/wp-content/uploads/2023/06/anime_hime_cut.png",
+      "creator": "AnimeOutline",
+      "target_traits": [
+        "long straight back hair",
+        "blunt fringe",
+        "chin-length side locks",
+        "six-step guide"
+      ],
+      "extras_red": [
+        "tutorial branding/watermark"
+      ],
+      "monochrome_plate_status": "source_is_monochrome_reference",
+      "license_status": "reference_only_tutorial",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 23,
+      "monochrome_query_url": null
+    },
+    {
+      "id": "EXT-MIX-001",
+      "category": "clothing",
+      "title": "KOiCLOSET — set de vestuario intercambiable femenino",
+      "source_url": "https://booth.pm/ja/items/7977808",
+      "thumbnail_url": "https://booth.pximg.net/c/620x620/b4d051fb-d01f-408d-92c9-bb3ec9ad65ce/i/7977808/931867a2-4546-4316-9034-24cd44de487a_base_resized.jpg",
+      "creator": "KOiCLOSET",
+      "target_traits": [
+        "50+ clothing variants",
+        "7 skin tone variations",
+        "tops",
+        "skirts",
+        "shoes",
+        "small accessories",
+        "layered PSD"
+      ],
+      "extras_red": [
+        "free basic pack needs social-post like/RT cooperation according to listing",
+        "paid packs and full pack",
+        "terms prohibit redistribution"
+      ],
+      "monochrome_plate_status": "colored modular asset; not a line-art sheet",
+      "license_status": "usage_terms_must_be_checked_not_for_redistribution",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 24,
+      "monochrome_query_url": null
+    },
+    {
+      "id": "EXT-HIR-003",
+      "category": "hair",
+      "title": "Pixivision — hairstyle catalog collection",
+      "source_url": "https://pixivision.net/en/a/77",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/77/ogimage.jpg",
+      "creator": "Pixivision (curated multiple creators)",
+      "target_traits": [
+        "curated hair art examples",
+        "some style names",
+        "Hair 100 article linked inside the curation"
+      ],
+      "extras_red": [
+        "includes male and female styles",
+        "each artwork has its own creator and rights"
+      ],
+      "monochrome_plate_status": "mixed-color curated page thumbnail",
+      "license_status": "reference_only_follow_each_original_source",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "red_warning_required": true,
+      "ordinal": 25,
+      "monochrome_query_url": null
+    },
+    {
+      "id": "EXT-HIR-004",
+      "category": "hair",
+      "title": "Anime Female Hair Style 3 — RuuRuu-Chan",
+      "source_url": "https://ruuruu-chan.deviantart.com/art/Anime-Female-Hair-Style-3-353795363",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a1bb4adf-4043-45fc-8843-5013a3eaf47a/d5un28z-e4a077ad-a852-4da0-821d-66c441596e16.png/v1/fill/w_894%2Ch_894%2Cq_75%2Cstrp/anime_female_hair_style_3_by_ruuruu_chan-d5un28z.png",
+      "creator": "RuuRuu-Chan",
+      "target_traits": [
+        "9 numbered female hair sketches",
+        "braids",
+        "wavy ponytails",
+        "layered and asymmetric shapes"
+      ],
+      "extras_red": [
+        "artist signature/watermark",
+        "keep attribution"
+      ],
+      "monochrome_plate_status": "source_is_monochrome_reference_sheet",
+      "license_status": "reference_only_attribution_required",
+      "source_platform": "external",
+      "thumbnail_kind": "external_image_preview",
+      "red_warning_required": false,
+      "ordinal": 26,
+      "monochrome_query_url": null
+    },
+    {
+      "id": "EXT-HIR-005",
+      "category": "hair",
+      "title": "Female Hair Styles V2 — Nashi / LearnManga",
+      "source_url": "https://www.pinterest.com/latoofcassidy/how-to-draw-anime-hair/",
+      "thumbnail_url": "https://i.pinimg.com/originals/79/09/38/790938ec545b833d3fba0aea73f7109b.jpg",
+      "creator": "Nashi / LearnManga attribution visible in the sheet",
+      "target_traits": [
+        "24 female hairstyle sketches",
+        "braids",
+        "ponytails",
+        "updos",
+        "bangs"
+      ],
+      "extras_red": [
+        "Pinterest mirror; original source must be found"
+      ],
+      "monochrome_plate_status": "source_is_monochrome_reference_sheet",
+      "license_status": "reference_only_original_license_pending",
+      "source_platform": "external",
+      "thumbnail_kind": "external_image_preview",
+      "red_warning_required": false,
+      "ordinal": 27,
+      "monochrome_query_url": null
+    },
+    {
+      "id": "EXT-HIR-006",
+      "category": "hair",
+      "title": "Cuadrícula de 50 peinados femeninos",
+      "source_url": "https://www.pinterest.com/pin/281543716175955/",
+      "thumbnail_url": "https://i.pinimg.com/originals/02/80/4b/02804b679c1fd51f157312ca68f63b30.jpg",
+      "creator": "Original creator not verified at pin level",
+      "target_traits": [
+        "50 numbered female style silhouettes"
+      ],
+      "extras_red": [
+        "Pinterest mirror",
+        "possible overlap with other 50-style sheets"
+      ],
+      "monochrome_plate_status": "color-sheet-reference",
+      "license_status": "reference_only_source_pending",
+      "source_platform": "external",
+      "thumbnail_kind": "external_image_preview",
+      "red_warning_required": false,
+      "ordinal": 28,
+      "monochrome_query_url": null
+    },
+    {
+      "id": "EXT-HIR-007",
+      "category": "hair",
+      "title": "Nine hairstyles, same face",
+      "source_url": "https://in.pinterest.com/pin/237001999135954931/",
+      "thumbnail_url": "https://i.pinimg.com/originals/b1/b9/30/b1b9308df143e02e6591f778e1689361.jpg",
+      "creator": "Original creator not verified at pin level",
+      "target_traits": [
+        "9 hairstyle options with a similar face base"
+      ],
+      "extras_red": [
+        "Pinterest mirror"
+      ],
+      "monochrome_plate_status": "source_is_monochrome_reference_sheet",
+      "license_status": "reference_only_source_pending",
+      "source_platform": "external",
+      "thumbnail_kind": "external_image_preview",
+      "red_warning_required": false,
+      "ordinal": 29,
+      "monochrome_query_url": null
+    },
+    {
+      "id": "EXT-HIR-008",
+      "category": "hair",
+      "title": "12 female hair silhouettes without facial details",
+      "source_url": "https://br.pinterest.com/pin/rysunki--35817759532258682/",
+      "thumbnail_url": "https://i.pinimg.com/originals/63/93/34/639334b060419516d0dadfc68da2231e.jpg",
+      "creator": "Original creator not confirmed from pin",
+      "target_traits": [
+        "12 hairstyles without facial distraction"
+      ],
+      "extras_red": [
+        "source author/license pending"
+      ],
+      "monochrome_plate_status": "source_is_monochrome_reference_sheet",
+      "license_status": "reference_only_source_pending",
+      "source_platform": "external",
+      "thumbnail_kind": "external_image_preview",
+      "red_warning_required": false,
+      "ordinal": 30,
+      "monochrome_query_url": null
+    },
+    {
+      "id": "EXT-HIR-009",
+      "category": "hair",
+      "title": "Twintails 3×3 variation matrix",
+      "source_url": "https://jp.pinterest.com/pin/617274692708948689/",
+      "thumbnail_url": "https://i.pinimg.com/originals/60/01/16/6001165fa910ea3737f5d025482e5d3d.jpg",
+      "creator": "Original creator not verified at pin level",
+      "target_traits": [
+        "three tie heights by three tail lengths"
+      ],
+      "extras_red": [
+        "Pinterest mirror"
+      ],
+      "monochrome_plate_status": "reference_chart",
+      "license_status": "reference_only_source_pending",
+      "source_platform": "external",
+      "thumbnail_kind": "external_image_preview",
+      "red_warning_required": false,
+      "ordinal": 31,
+      "monochrome_query_url": null
+    }
+  ],
+  "statistics": {
+    "pixai_entries": 25,
+    "external_reference_sheets": 6,
+    "combined_index_entries": 31,
+    "pixai_entries_with_thumbnail": 25,
+    "external_entries_with_thumbnail": 6,
+    "verified_clean_square_plates": 0,
+    "note": "Thumbnail sources and title/prompt metadata were checked through page metadata or visible source results. This count describes indexed references, not reusable licensed assets or unique extracted PNG components."
+  }
+}
