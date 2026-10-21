@@ -102,6 +102,10 @@ def main() -> None:
     if not isinstance(saved.get("user_references"), list) or not isinstance(saved.get("style_recipes"), list):
         fail("Persistent annotation store must include user_references and style_recipes arrays.")
 
+    contact_source = CONTACT_SHEETS.read_text(encoding="utf-8")
+    if "near-duplicates-candidates.json" not in contact_source or "near_duplicate_candidate_pairs" not in contact_source:
+        fail("Contact-sheet script must report perceptual near-duplicate candidates.")
+
     for path, label in (
         (CONTACT_SHEETS, "Contact sheet"),
         (ANNOTATION_APPLIER, "Annotation applier"),
