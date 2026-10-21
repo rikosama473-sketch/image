@@ -7,7 +7,7 @@
 
 ## Executive Summary
 
-This report catalogs **140+ genuinely distinct reference entries** across four component categories (hairstyles, clothing, eyes, accessories) for a female anime character editor asset library. It separates **reference-only imagery** (DeviantArt, Pixiv, tutorials — not commercially reusable) from **downloadable/licensed assets** (ArtStation Marketplace, Itch.io, BOOTH, CraftPix). Verified prices and licenses are noted only where confirmed in evidence. A UI workflow is proposed for marking "extra elements" that must be isolated per component. Image-search query links are provided wherever direct clean monochrome square references cannot be confirmed from evidence.
+This report inventories **140+ reference candidates and catalog records** across four component categories (hairstyles, clothing, eyes, accessories) for a female anime character editor. The detailed atlas taxonomy includes **117 named style tiles** (30 hair, 30 clothing, 30 eye styles, 27 accessories). These counts describe research records and style categories, not 140 unique image files: mirrored sheets, multiple views and tag pages must be deduplicated before claiming a unique-image count. It separates **reference-only imagery** (DeviantArt, Pixiv, tutorials — not commercially reusable by default) from **downloadable/licensed assets** (ArtStation Marketplace, Itch.io, BOOTH, CraftPix). Prices and licenses are included only where they appeared in the consulted evidence. A UI workflow is proposed for marking "extra elements" that must be isolated per component. Image-search query links are provided wherever direct clean monochrome square references cannot be confirmed from evidence.
 
 **Key decisions for the team:**
 - Best free commercial-use sprite base: cogabushi's 25-pack (Itch.io, free, commercial OK) [25] and CraftPix schoolgirls pack (royalty-free, unlimited projects) [26]
@@ -782,7 +782,7 @@ Run these BOOTH queries to find clothing/hairstyle-specific reference packs (not
 
 ---
 
-*Report covers 70 verified evidence sources, 117+ catalogued atlas entries across 4 component categories, and 10 downloadable/purchasable asset products with confirmed prices or license terms. All claims are supported by inline citations; unverified areas are explicitly flagged.*
+*Report cites 70 source URLs, catalogs 117 named style tiles across 4 component categories and compares 10 downloadable/purchasable products with price or license information in the consulted listings. Style tiles, source pages and image files are different units; a final asset import still needs duplicate checks, current license review and clean-plate verification. Inline citations point to the listed sources, and evidence gaps are explicitly flagged.*
 
 ## Enlaces directos de las fuentes citadas
 
