@@ -26,6 +26,8 @@ Después de escoger una muestra, probá también **Exportar PNG**, **Guardar pro
 
 La acción **Quitar fondo sin redibujar el personaje** usa `rembg` con `isnet-anime`, una segmentación especializada para personajes anime. La alternativa `birefnet-portrait` sirve como comparación. El resultado debe tener canal alfa real, mantener las dimensiones del lienzo y pasa como capa candidata sin destruir la base. El servicio es local y no envía la imagen a una API generativa. La máscara y la geometría se preservan; la decontaminación puede ajustar el color RGB de los bordes para reducir halos. La primera ejecución descarga los pesos del modelo y los guarda en la caché local. El backend reutiliza la sesión y rechaza salidas que cambien las dimensiones o no tengan transparencia. La dependencia fijada requiere Python 3.11, 3.12 o 3.13; el instalador selecciona una versión disponible.
 
+Al aplicar este recorte, la base opaca se oculta automáticamente para que su fondo no tape el alfa; el control ◉ de la barra del lienzo permite mostrarla de nuevo y la preferencia se conserva en el JSON.
+
 Instalación opcional: ejecutá `tools/avatar-maker/install-avatar-cutout.bat` en Windows o, desde la raíz del repositorio:
 
 ```bash
