@@ -998,7 +998,7 @@ These three listings were checked specifically because they expose facial-part c
 - [けものしゅがー — Dragon Girl](https://booth.pm/ja/items/3668928): free bust-up PNG; paid versions include a full character and a PSD with 13 eyes, 10 mouths, 4 brows and 4 effects. Commercial/noncommercial use and limited crop/resize/silhouette changes are allowed; redistribution/resale is prohibited.
 - [ねぎま💐 — Usuhoso Sister](https://booth.pm/ja/items/8826602): PNG expression pack ¥300, PSD ¥500, set ¥800. The PSD includes 10 mouths, 11 eyes, 3 brows and blush/sweat effects. Commercial use requires credit; crop/resize/recolor/additions are allowed; raw redistribution/resale and AI training are prohibited.
 
-Current combined index count: **239 source URL/store records**, all with a preview URL. 232 are direct image/preview candidates and 5 are Pixiv embed endpoints. The viewer can render 237 card strings in-memory and the JavaScript parses, but no successful external browser rendering was observed; individual thumbnail loading remains pending.
+Current combined index count: **239 source URL/store records**, all with a preview URL. 234 are direct image/preview candidates and 5 are Pixiv embed endpoints. The viewer can render 237 card strings in-memory and the JavaScript parses, but no successful external browser rendering was observed; individual thumbnail loading remains pending.
 
 
 ## X costume-design sources added — 21 October 2026
