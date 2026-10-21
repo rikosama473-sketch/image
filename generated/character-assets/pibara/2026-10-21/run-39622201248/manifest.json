@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "character_id": "pibara",
+  "pack": "expressions-core-5",
+  "pack_status": "partial",
+  "created_at_utc": "2026-10-21T15:03:15.462349+00:00",
+  "source": {
+    "repository": "rikosama473-sketch/image",
+    "ref": "5cce1ff044885cbbd576766fa07e85db4ab732bd",
+    "path": "from-PixAI-2034984086876227343-0.png",
+    "url": "https://raw.githubusercontent.com/rikosama473-sketch/image/5cce1ff044885cbbd576766fa07e85db4ab732bd/from-PixAI-2034984086876227343-0.png",
+    "sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+    "dimensions": [
+      768,
+      1280
+    ]
+  },
+  "generator": {
+    "space_id": "conradlocke/krea2-identity-edit",
+    "space_url": "https://huggingface.co/spaces/conradlocke/krea2-identity-edit",
+    "api_name": "/edit",
+    "openai_api_key_used": false,
+    "inference_api_paid_by_openai": false,
+    "ref_boost": 4.0,
+    "grounding_px": 768,
+    "lora_scale": 1.0,
+    "steps": 12,
+    "guidance_scale": 0.0,
+    "background_removed": true
+  },
+  "required_asset_ids": [
+    "happy",
+    "surprised",
+    "sad",
+    "annoyed",
+    "shy"
+  ],
+  "completed_asset_ids": [
+    "happy",
+    "surprised",
+    "sad"
+  ],
+  "variants": [
+    {
+      "index": 1,
+      "asset_id": "happy",
+      "change": "Change only the facial expression to a warm, readable smile with gently lifted cheeks. Keep eyes, hairstyle, accessories, clothes and pose unchanged.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Change only the facial expression to a warm, readable smile with gently lifted cheeks. Keep eyes, hairstyle, accessories, clothes and pose unchanged.",
+      "requested_seed": 1201,
+      "returned_seed": 1201,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-21/run-39622201248/renders/01-happy.png",
+        "sha256": "8ee6bc75209a5e085efc18afca5da4e495ce5cd79daf316c731a6c90c3b19944",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-21/run-39622201248/transparent/01-happy.png",
+        "sha256": "b45b5d9dfa75c333d3456c47e619e596f6b0cec3677383d58b6a582c7d109ece",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.29198,
+        "opaque_pixel_ratio": 0.63535,
+        "quality_warning": null
+      }
+    },
+    {
+      "index": 2,
+      "asset_id": "surprised",
+      "change": "Change only the expression to mild surprise: raised brows, more open eyes and a small parted mouth. Keep hairstyle, eye color, accessories, clothes and pose unchanged.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Change only the expression to mild surprise: raised brows, more open eyes and a small parted mouth. Keep hairstyle, eye color, accessories, clothes and pose unchanged.",
+      "requested_seed": 1202,
+      "returned_seed": 1202,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-21/run-39622201248/renders/02-surprised.png",
+        "sha256": "baa11570407b72d794a9ce52fb748e61c27615721f56309d1ab4536437528b1a",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-21/run-39622201248/transparent/02-surprised.png",
+        "sha256": "af4cdc0d2298e72835ce5f38b7c34e2ccd509754b5090dd11c0b0c1172ef571e",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.29176,
+        "opaque_pixel_ratio": 0.6291,
+        "quality_warning": null
+      }
+    },
+    {
+      "index": 3,
+      "asset_id": "sad",
+      "change": "Change only the expression to quiet sadness with softly lowered brows and a slightly downturned mouth. Keep hairstyle, eye color, accessories, clothes and pose unchanged.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Change only the expression to quiet sadness with softly lowered brows and a slightly downturned mouth. Keep hairstyle, eye color, accessories, clothes and pose unchanged.",
+      "requested_seed": 1203,
+      "returned_seed": 1203,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-21/run-39622201248/renders/03-sad.png",
+        "sha256": "79885dd4f06c57fff0266a09a0a5818108b0862f54fe99c022f9de72b52379cc",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-21/run-39622201248/transparent/03-sad.png",
+        "sha256": "411796ff48402ab62716e8b96f459cb6147acdb379581e0bbd16a7042622ed75",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.29116,
+        "opaque_pixel_ratio": 0.60372,
+        "quality_warning": null
+      }
+    }
+  ],
+  "last_error": "You have exceeded your ZeroGPU runs limit. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens",
+  "review_status": "needs_visual_identity_review",
+  "warning": "Generated renders and automated transparent cutouts require review of likeness and hair/accessory edges."
+}
