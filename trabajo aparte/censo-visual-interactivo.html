@@ -31,7 +31,7 @@ main{max-width:1440px;margin:auto;padding:18px}.filters{position:sticky;top:0;z-
 <div class="options">
 <label><input type="checkbox" id="redOnly"> Mostrar solo fichas con alerta roja</label>
 <label><input type="checkbox" id="hideCollections"> Ocultar índices de etiquetas/colecciones generales</label>
-<label><input type="checkbox" id="hideNoThumb"> Ocultar si la miniatura no carga</label>
+
 <button id="clear" type="button" style="border:1px solid var(--line);background:#fff;border-radius:7px;padding:5px 9px;cursor:pointer">Restablecer</button>
 </div>
 <div class="resultsline"><span id="resultCount" aria-live="polite">Cargando referencias…</span><span>Orden: relevancia de búsqueda / registro</span></div>
@@ -50,17 +50,19 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const asText=v=>Array.isArray(v)?v.filter(Boolean).join("; "):(v==null?"":String(v));
 function platform(e){return e.source_platform||e.sourcePlatform||e.thumbnail_page_title?.split(" on ").pop()||(()=>{try{return new URL(e.source_url).hostname.replace(/^www\./,"")}catch{return"Plataforma desconocida"}})()}
-function categoryGroup(e){
- const val=(asText(e.category)+" "+asText(e.categories)+" "+asText(e.target_component)+" "+asText(e.asset_type)+" "+asText(e.resource_type)+" "+asText(e.source_platform)).toLowerCase();
- if(/itch\.io|booth product|downloadable|paid reference pack|modular asset|product|asset pack/.test(val)&&!/pixai/.test(val))return "products";
- if(/tutorial|how to draw|guide|tutorial\/reference/.test(val))return "tutorials";
- if(/eye|eyes|iris|eyelash|pupil|ocular/.test(val))return "eyes";
- if(/accessor|hairpin|choker|earring|brooch|glasses|tiara|headband|ribbon|jewelry|jewellery|shoe|stocking|sock|belt|glove|crown|pin/.test(val))return "accessories";
- if(/hair|hairstyle|hime|twintail|pigtail|braid|pony|bang|ahoge|bob|drill/.test(val))return "hair";
- if(/clothing|costume|uniform|lolita|kimono|yukata|hakama|miko|maid|magical girl|armor|outfit|dress|fashion|idol|cyberpunk|streetwear|garment|clothes/.test(val))return "clothing";
- if(/multi_component|character_reference|character sheet|reference sheet|character design/.test(val))return "multi";
- return "multi";
+function categoryGroups(e){
+ const val=(asText(e.category)+" "+asText(e.categories)+" "+asText(e.target_component)+" "+asText(e.target_traits)+" "+asText(e.asset_type)+" "+asText(e.resource_type)+" "+asText(e.source_platform)+" "+asText(e.title)).toLowerCase();
+ const groups=[];
+ if(/hair|hairstyle|hime|twintail|pigtail|braid|pony|bang|ahoge|bob|drill|peinado|cabello/.test(val))groups.push("hair");
+ if(/eye|eyes|iris|eyelash|pupil|ocular|ojo|pestañ/.test(val))groups.push("eyes");
+ if(/accessor|hairpin|choker|earring|brooch|glasses|tiara|headband|ribbon|jewelry|jewellery|shoe|stocking|sock|belt|glove|crown|pin|gafas|accesorio/.test(val))groups.push("accessories");
+ if(/clothing|costume|uniform|lolita|kimono|yukata|hakama|miko|maid|magical girl|armor|outfit|dress|fashion|idol|cyberpunk|streetwear|garment|clothes|vestuario|ropa|uniforme/.test(val))groups.push("clothing");
+ if(/tutorial|how to draw|guide/.test(val))groups.push("tutorials");
+ if(/itch\.io|booth|artstation marketplace|paid reference pack|modular asset|downloadable|product|asset pack/.test(val))groups.push("products");
+ if(/multi_component|character_reference|character sheet|reference sheet|character design/.test(val)||groups.length===0)groups.push("multi");
+ return [...new Set(groups)];
 }
+function categoryGroup(e){return categoryGroups(e)[0]||"multi";}
 function targetText(e){return asText(e.target_traits)||asText(e.target_component)||asText(e.census_metadata?.map(m=>m.target_component))||asText(e.claimed_content)||asText(e.description)||"Componente objetivo pendiente de precisar."}
 function redText(e){
  const parts=[asText(e.extras_red),asText(e.irrelevant_elements_red),asText(e.census_metadata?.map(m=>m.irrelevant_elements_red))].filter(x=>x&&x!=="null");
@@ -91,12 +93,12 @@ function card(e,i){
 }
 const cards=$("cards");
 function apply(){
- const query=$("query").value.trim().toLowerCase(),cat=$("category").value,plat=$("platform").value,preview=$("preview").value,red=$("redOnly").checked,collections=$("hideCollections").checked,noThumb=$("hideNoThumb").checked;
+ const query=$("query").value.trim().toLowerCase(),cat=$("category").value,plat=$("platform").value,preview=$("preview").value,red=$("redOnly").checked,collections=$("hideCollections").checked;
  let show=0,html="";
  for(let i=0;i<records.length;i++){
   const e=records[i],g=categoryGroup(e);
   if(query&&!searchable(e).includes(query))continue;
-  if(cat!=="all"&&g!==cat)continue;
+  if(cat!=="all"&&!categoryGroups(e).includes(cat))continue;
   if(plat!=="all"&&platform(e)!==plat)continue;
   if(preview==="shown"&&!e.thumbnail_url)continue;
   if(preview==="license"&&!licenseText(e))continue;
@@ -111,11 +113,11 @@ function apply(){
  for(const article of cards.querySelectorAll(".record")){
   const img=article.querySelector("img");
   if(img)img.addEventListener("error",()=>{img.hidden=true;const fallback=article.querySelector(".fallback");if(fallback)fallback.hidden=false;},{once:true});
-  if(noThumb&&!img)article.hidden=true;
+
  }
 }
-["query","category","platform","preview","redOnly","hideCollections","hideNoThumb"].forEach(id=>$(id).addEventListener(id==="query"?"input":"change",apply));
-$("clear").addEventListener("click",()=>{$("query").value="";$("category").value="all";$("platform").value="all";$("preview").value="all";$("redOnly").checked=false;$("hideCollections").checked=false;$("hideNoThumb").checked=false;apply();});
+["query","category","platform","preview","redOnly","hideCollections"].forEach(id=>$(id).addEventListener(id==="query"?"input":"change",apply));
+$("clear").addEventListener("click",()=>{$("query").value="";$("category").value="all";$("platform").value="all";$("preview").value="all";$("redOnly").checked=false;$("hideCollections").checked=false;apply();});
 apply();
 </script>
 </body>
