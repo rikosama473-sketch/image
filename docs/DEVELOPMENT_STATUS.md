@@ -42,10 +42,11 @@ Equipo objetivo declarado: AMD Ryzen 5 5600G, 16 GB RAM y gráficos Radeon integ
 
 ## Estado de integración con `main`
 
-- Comparación comprobada en esta sesión: `main` en `efb47f05b0906472062ff50b2e6fe575445ab38e`; la rama de trabajo estaba 244 commits por delante y 5 por detrás.
-- `data/character-prompt-registry.json` tiene cambios en ambos lados de la divergencia. Se debe reconciliar por contenido, no reemplazar un archivo completo a ciegas.
-- `main` también contiene recursos generados recientes y `trabajo aparte/diseño.md` que no aparecen en esta rama. Preservarlos y revisar su procedencia antes de preparar la integración.
-- GitHub continúa mostrando el PR #19 como `mergeable=false`. No se ha fusionado el PR ni movido `main`; la comparación anterior confirma el solapamiento en el registro, pero no atribuye sin más todos los conflictos a un único archivo.
+- Commit actual de integración: `5e1f026c776d739f77a2dbc8f87723b6d480efb4`, con primer padre la rama de trabajo y segundo padre `main` en `efb47f05b0906472062ff50b2e6fe575445ab38e`.
+- Se preservaron las 37 rutas añadidas exclusivamente en `main`, incluidos los recursos generados de Pibara y `trabajo aparte/diseño.md`. No se eliminaron ni sustituyeron archivos exclusivos de la rama de trabajo.
+- El único archivo que necesitó resolución semántica fue `data/character-prompt-registry.json`: se combinaron las ejecuciones por `run_id`, conservando los cinco registros de la rama y el registro `39622201248` de `main`. Resultado: seis IDs únicos; las ejecuciones compartidas no tenían diferencias.
+- La rama ahora está `248` commits por delante y `0` por detrás de `main`. GitHub informa el PR #19 como `mergeable=true`, pero sigue abierto y sin fusionar. `main` no se modificó.
+- Las ejecuciones de GitHub Actions para el commit de integración deben terminar antes de considerar validada la combinación completa. Los validadores del bloque de interoperabilidad sí pasaron en `5b23e11660e8e9bd1a47cdb879bb6bad42e9568a`.
 
 ## Problemas y límites conocidos
 
@@ -66,4 +67,4 @@ Equipo objetivo declarado: AMD Ryzen 5 5600G, 16 GB RAM y gráficos Radeon integ
 
 ## Siguiente tarea concreta
 
-Reconciliar semánticamente los cinco commits que existen solo en `main` y los cambios solapados de `data/character-prompt-registry.json`, sin borrar los assets y notas que solo están en `main`. Después probar en navegador la transferencia Constructor → Editor manual y Taller de peinados → Editor manual, incluyendo guardar/reabrir y exportar PNG transparente. No ampliar aún la matriz de modelos IA.
+Confirmar que los workflows iniciados por el commit de integración terminan en verde. Después, probar en un navegador real ambos traspasos: Constructor → Editor manual y Taller de peinados → Editor manual, incluyendo visibilidad/opacidad, guardar/reabrir y exportar PNG transparente. A continuación evaluar el motor local IA en el Ryzen 5 5600G sin GPU dedicada; no dar por utilizable un checkpoint hasta medir memoria, duración y calidad. Mantener las referencias y máscaras candidatas marcadas como pendientes.
