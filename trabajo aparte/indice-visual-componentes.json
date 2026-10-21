@@ -6952,8 +6952,8 @@
       "creator": "NeoRyker08",
       "source_platform": "DeviantArt",
       "source_language": "DeviantArt / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/bfe620f5-34c8-4c54-81ab-9fa4e1eecffb/dg9l8ek-c0f4541a-eb35-40ee-9a7e-a4153e73eb41.gif/v1/fill/w_1198,h_667,q_85,strp/lucy_6_cyberpunk_edgerunner_steam_artwork_by_neoryker08_dg9l8ek-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9OTU0IiwicGF0aCI6Ii9mL2JmZTYyMGY1LTM0YzgtNGM1NC04MW",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "idol_casual_street_cyberpunk",
       "categories": [
         "idol_casual_street_cyberpunk"
@@ -6984,7 +6984,10 @@
           "license_evidence_status": "unverified_or_pending",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Lucy #6 | Cyberpunk Edgerunner Steam Artwork by NeoRyker08 on DeviantArt",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-I-01",
@@ -6997,8 +7000,8 @@
       "creator": "GVAAT's Workshop",
       "source_platform": "GVAAT's Workshop",
       "source_language": "GVAAT's Workshop / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "http://www.gvaat.com/wp-content/uploads/2019/08/SMALL_anime_draw-eyes-all_small.jpg",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "anime_eyes",
       "categories": [
         "anime_eyes"
@@ -7029,7 +7032,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Finally Learn to Draw Anime Eyes, a Step-by-Step Guide! – GVAAT'S WORKSHOP",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-I-02",
@@ -7042,8 +7048,8 @@
       "creator": "Anime Art Academy / Japanese Pros",
       "source_platform": "Anime Art Academy",
       "source_language": "Anime Art Academy / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://pub-c3923c15940b4023a5f8c06609aa5144.r2.dev/guide-pages/eyes-beginners/20261015-v1/hero.webp",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "anime_eyes",
       "categories": [
         "anime_eyes"
@@ -7074,7 +7080,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "How to Draw Anime Eyes for Beginners | Japanese Pros",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-I-03",
@@ -7087,8 +7096,8 @@
       "creator": "Valentina-Remenar",
       "source_platform": "DeviantArt",
       "source_language": "DeviantArt / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/023f46e8-bc77-48ad-9eb7-40e9061c8335/d6197yk-64e1ffd1-fbb4-42c0-b433-caa70ad4ea1f.jpg/v1/fill/w_1192,h_670,q_70,strp/_painting_anime_eyes_video_tutorial__by_valentina_remenar_d6197yk-pre.jpg",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "anime_eyes",
       "categories": [
         "anime_eyes"
@@ -7119,7 +7128,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "+Painting anime eyes... video tutorial+ by Valentina-Remenar on DeviantArt",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-I-04",
@@ -7132,8 +7144,8 @@
       "creator": "Boredom Wizard",
       "source_platform": "Boredom Wizard",
       "source_language": "Boredom Wizard / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://boredomwizard.com/wp-content/uploads/2026/08/How-to-Draw-Eyes.webp",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "anime_eyes",
       "categories": [
         "anime_eyes"
@@ -7164,7 +7176,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "How to Draw Eyes: Easy Step-by-Step Guide (20 Styles)",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-I-05",
@@ -7177,8 +7192,8 @@
       "creator": "dlite-yamamoto",
       "source_platform": "DeviantArt",
       "source_language": "DeviantArt / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/ee680b75-6733-408d-ace1-1d2f559a6291/d5qlz6x-6cee1883-c405-4998-ac65-75bf1a3765ce.jpg/v1/fill/w_754,h_1060,q_70,strp/tutorial_1_female_anime_eyes_or_face__by_dlite_yamamoto_d5qlz6x-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTI2NSIsInBhdGgiOiIvZi9lZTY4MGI3NS02NzMzLTQwOGQtYW",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "anime_eyes",
       "categories": [
         "anime_eyes"
@@ -7209,7 +7224,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Tutorial 1 : Female Anime Eyes. . . or face? by dlite-yamamoto on DeviantArt",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-I-06",
@@ -7222,8 +7240,8 @@
       "creator": "PenguinNinja226",
       "source_platform": "DeviantArt",
       "source_language": "DeviantArt / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/5e215ca4-4c8b-4b99-8299-a4715633dadc/d181lza-01fda96d-64ea-4d9a-bafa-2cf94f1eef03.jpg/v1/fill/w_774,h_1032,q_70,strp/anime_eye_chart_by_penguinninja226_d181lza-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTA2NyIsInBhdGgiOiIvZi81ZTIxNWNhNC00YzhiLTRiOTktODI5OS1hNDcxNTYzM2RhZGM",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "anime_eyes",
       "categories": [
         "anime_eyes"
@@ -7254,7 +7272,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Anime Eye Chart by PenguinNinja226 on DeviantArt",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-I-07",
@@ -7267,8 +7288,8 @@
       "creator": "Remarin",
       "source_platform": "DeviantArt",
       "source_language": "DeviantArt / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e413e12a-cfd7-47c4-8f1b-842c5529b965/dc0h3fm-d3c05d20-e028-41ab-b11d-ea0b86f49926.png/v1/fill/w_647,h_1236,q_70,strp/eye_tutorial__by_remarin_dc0h3fm-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTcxOSIsInBhdGgiOiIvZi9lNDEzZTEyYS1jZmQ3LTQ3YzQtOGYxYi04NDJjNTUyOWI5NjUvZGMwaDNmb",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "anime_eyes",
       "categories": [
         "anime_eyes"
@@ -7299,7 +7320,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Eye 'tutorial' by Remarin on DeviantArt",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-I-08",
@@ -7312,8 +7336,8 @@
       "creator": "Bunbunfluffyyy01",
       "source_platform": "DeviantArt",
       "source_language": "DeviantArt / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/cdb6b55f-d8a9-4a8b-b191-424cd790e387/dbiqyfy-a46312e4-3622-4946-a808-683e9dcd1224.png/v1/fill/w_807,h_990,q_70,strp/_drawing_tutorial_female_anime_eyes_by_bunbunfluffyyy01_dbiqyfy-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTI1NyIsInBhdGgiOiIvZi9jZGI2YjU1Zi1kOGE5LTRhOGItYjE",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "anime_eyes",
       "categories": [
         "anime_eyes"
@@ -7344,7 +7368,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "~Drawing Tutorial~ Female Anime Eyes by Bunbunfluffyyy01 on DeviantArt",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-I-09",
@@ -7357,8 +7384,8 @@
       "creator": "Temarimaru",
       "source_platform": "DeviantArt",
       "source_language": "DeviantArt / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/ee7bf7b9-8de4-4576-90d7-3ae6afa8cbe5/df8w9p3-33a8bb04-6b99-4f5c-aa8c-139e7b81c0d2.png/v1/fill/w_1032,h_774,q_70,strp/simple_anime_eye_tutorial_by_temarimaru_by_temarimaru_df8w9p3-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzAwMCIsInBhdGgiOiIvZi9lZTdiZjdiOS04ZGU0LTQ1NzYtOTBk",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "anime_eyes",
       "categories": [
         "anime_eyes"
@@ -7389,7 +7416,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Simple Anime Eye Tutorial by Temarimaru by Temarimaru on DeviantArt",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-I-10",
@@ -7402,8 +7432,8 @@
       "creator": "InokitheFox",
       "source_platform": "DeviantArt",
       "source_language": "DeviantArt / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2e16d730-78af-4560-a200-4dd59ff710c6/dcloamj-2852dc52-ea0a-4ce3-8b4a-628f095633e1.png/v1/fill/w_900,h_566,q_80,strp/eye_shapes_reference_by_inokithefox_dcloamj-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTY2IiwicGF0aCI6Ii9mLzJlMTZkNzMwLTc4YWYtNDU2MC1hMjAwLTRkZDU5ZmY3MT",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "anime_eyes",
       "categories": [
         "anime_eyes"
@@ -7434,7 +7464,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Eye Shapes Reference by InokitheFox on DeviantArt",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-I-11",
@@ -7447,8 +7480,8 @@
       "creator": "Thermochrome",
       "source_platform": "DeviantArt",
       "source_language": "DeviantArt / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/1cdb2927-b015-4bcd-9e85-c0c5b5589c1d/d8uwqj3-9d874d94-633c-430f-9ec8-5e8d0467c179.jpg/v1/fill/w_868,h_920,q_70,strp/intermediate_anime_eye_shape_study_and_tutorial_by_thermochrome_d8uwqj3-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NDUyOCIsInBhdGgiOiIvZi8xY2RiMjkyNy1iMDE1LTR",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "anime_eyes",
       "categories": [
         "anime_eyes"
@@ -7479,7 +7512,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Intermediate Anime Eye Shape Study and Tutorial by Thermochrome on DeviantArt",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-I-12",
@@ -7492,8 +7528,8 @@
       "creator": "Thousand Lashes business blog",
       "source_platform": "Thousand Lashes",
       "source_language": "Thousand Lashes / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "http://thousandlashes.biz/cdn/shop/articles/Lash_Mapping_For_Anime_Lashes_5a3947a1-896b-4b11-8043-9adaf1363d61.jpg?v=1752307556",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "anime_eyes",
       "categories": [
         "anime_eyes"
@@ -7524,7 +7560,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Lash Mapping For Anime Lashes",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-I-13",
@@ -7537,8 +7576,8 @@
       "creator": "Pixiv platform",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese (category: 目/eyes)",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://s.pximg.net/common/images/howto/ogp.png",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "anime_eyes",
       "categories": [
         "anime_eyes"
@@ -7569,7 +7608,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "How to Draw lets you search for drawing tutorials and art references!",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-I-14",
@@ -7582,8 +7624,8 @@
       "creator": "Pixiv tag index",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese (tag: 目の描き方)",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "anime_eyes",
       "categories": [
         "anime_eyes"
@@ -7614,7 +7656,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Popular illustrations and manga tagged \"目の描き方\" | pixiv",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-I-15",
@@ -7627,8 +7672,8 @@
       "creator": "Pixivision (Japanese edition)",
       "source_platform": "Pixivision",
       "source_language": "Pixivision / Japanese",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/ja/a/9501/ogimage.jpg",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "anime_eyes",
       "categories": [
         "anime_eyes"
@@ -7659,7 +7704,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "クリエイターの個性的が光る！目の描き方特集",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-J-01",
@@ -7672,8 +7720,8 @@
       "creator": "Pixivision editorial",
       "source_platform": "Pixivision",
       "source_language": "Pixivision / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/11118/ogimage.jpg",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "accessories",
       "categories": [
         "accessories"
@@ -7704,7 +7752,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Drawings of Thigh-High Socks - Thigh's the Limit",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-J-02",
@@ -7717,8 +7768,8 @@
       "creator": "SwordwaltzWORKS",
       "source_platform": "DeviantArt",
       "source_language": "DeviantArt / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a0c2d0d6-a788-4900-9abe-75d36519aad4/d8hxxg6-89fe0755-00e9-4a36-8a8e-d0f210a6f8b7.jpg/v1/fill/w_1250,h_639,q_70,strp/how_to_shading_the_thigh_high_stockings_by_swordwaltzworks_d8hxxg6-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiIvZi9hMGMyZDBkNi1hNzg4LTQ5MDAtOWFiZS03NWQzNjUxOWFhZDQ",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "accessories",
       "categories": [
         "accessories"
@@ -7749,7 +7800,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "HOW TO SHADING THE THIGH HIGH STOCKINGS by SwordwaltzWORKS on DeviantArt",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-J-03",
@@ -7762,8 +7816,8 @@
       "creator": "AnimeOutline",
       "source_platform": "AnimeOutline",
       "source_language": "AnimeOutline / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://www.animeoutline.com/wp-content/uploads/2021/08/anime_socks_stockings_and_tights.png",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "accessories",
       "categories": [
         "accessories"
@@ -7794,7 +7848,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "How to Draw Anime Socks, Stockings & Tights - AnimeOutline",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-J-04",
@@ -7807,8 +7864,8 @@
       "creator": "Pixivision editorial",
       "source_platform": "Pixivision",
       "source_language": "Pixivision / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/9765/ogimage.jpg",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "accessories",
       "categories": [
         "accessories"
@@ -7839,7 +7896,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Drawings Featuring Rings - A Sparkle on Your Finger",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-J-05",
@@ -7852,8 +7912,8 @@
       "creator": "RadenWA",
       "source_platform": "DeviantArt",
       "source_language": "DeviantArt / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b63f2f5c-bf0a-4fc6-8798-4165ffc94812/ddqlvhf-5f01aa99-f413-48a3-938b-5151d4a96133.jpg/v1/fill/w_894,h_894,q_70,strp/wa_s_boots_reference_photo_set_by_radenwa_ddqlvhf-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTAyNCIsInBhdGgiOiIvZi9iNjNmMmY1Yy1iZjBhLTRmYzYtODc5OC00MTY1ZmZjO",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "accessories",
       "categories": [
         "accessories"
@@ -7884,7 +7944,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "WA's Boots Reference Photo Set by RadenWA on DeviantArt",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-J-06",
@@ -7897,8 +7960,8 @@
       "creator": "AngelKite",
       "source_platform": "DeviantArt",
       "source_language": "DeviantArt / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/8c38bea3-dc26-4209-8d84-5e359193be6b/dbstgas-887035ff-a225-4370-a8e5-56772fe7daf9.png/v1/fill/w_800,h_667,q_80,strp/shoes_guide_by_angelkite_dbstgas-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiIvZi84YzM4YmVhMy1kYzI2LTQyMDktOGQ4NC01ZTM1OTE5M2JlNmIvZGJzdGdhcy04ODcwMzVmZi1hMjI1L",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "accessories",
       "categories": [
         "accessories"
@@ -7929,7 +7992,10 @@
           "license_evidence_status": "not_independently_verified_by_indexer",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "shoes guide by AngelKite on DeviantArt",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-J-07",
@@ -7942,8 +8008,8 @@
       "creator": "AoiOgataArtist",
       "source_platform": "DeviantArt",
       "source_language": "DeviantArt / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/5442afd0-cca5-476e-abe9-eec312a4e8e3/dcltl4i-08ab3918-af95-4695-8d2e-53e15ed11aaf.jpg/v1/fill/w_739,h_1082,q_70,strp/meganekko_by_aoiogataartist_dcltl4i-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTI4MCIsInBhdGgiOiIvZi81NDQyYWZkMC1jY2E1LTQ3NmUtYWJlOS1lZWMzMTJhNGU4ZTMvZGNsdG",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "accessories",
       "categories": [
         "accessories"
@@ -7974,7 +8040,10 @@
           "license_evidence_status": "unverified_or_pending",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Meganekko by AoiOgataArtist on DeviantArt",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-J-08",
@@ -7987,8 +8056,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "accessories",
       "categories": [
         "accessories"
@@ -8019,7 +8088,10 @@
           "license_evidence_status": "unverified_or_pending",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Skeb, Commission, gloves / April 11th, 2022 - pixiv",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-K-01",
@@ -8032,8 +8104,8 @@
       "creator": "Ranmay",
       "source_platform": "DeviantArt",
       "source_language": "DeviantArt / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b6d3a3b3-b6c2-45cf-a3b6-244526250853/dj9sfth-5b66acd6-4949-4c3e-836e-16da1d8aca8c.png/v1/fill/w_1222,h_654,q_70,strp/character_design_reference_sheet_minerva_by_ranmay_dj9sfth-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9Njg1IiwicGF0aCI6Ii9mL2I2ZDNhM2IzLWI2YzItNDVjZi1hM2I2LTI",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "multi_component_reference",
       "categories": [
         "multi_component_reference"
@@ -8064,7 +8136,10 @@
           "license_evidence_status": "claim_marked_verified_in_census_requires_original_page_review",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Character Design Reference Sheet: Minerva by Ranmay on DeviantArt",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-K-02",
@@ -8077,8 +8152,8 @@
       "creator": "AnIdiotNamedBlue",
       "source_platform": "DeviantArt",
       "source_language": "DeviantArt / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/4e0e68a4-8617-4e78-bcd7-669523141082/dggi600-4b6d6e88-80f7-48ec-9d6b-36eccf6c5840.png/v1/fill/w_964,h_829,q_70,strp/character_design_sheet_sophia_by_anidiotnamedblue_dggi600-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTEwMCIsInBhdGgiOiIvZi80ZTBlNjhhNC04NjE3LTRlNzgtYmNkNy02N",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "multi_component_reference",
       "categories": [
         "multi_component_reference"
@@ -8109,7 +8184,10 @@
           "license_evidence_status": "unverified_or_pending",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Character Design Sheet - Sophia by AnIdiotNamedBlue on DeviantArt",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-K-03",
@@ -8122,8 +8200,8 @@
       "creator": "Silvadorkable",
       "source_platform": "DeviantArt",
       "source_language": "DeviantArt / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/6a6b4f16-29d0-4e33-9b3f-6cec99af81d9/d35o8vy-734b30d5-f2a4-4e77-ba3b-24af8924b421.jpg/v1/fill/w_804,h_994,q_70,strp/reference_template_1_by_silvadorkable_d35o8vy-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTU3NiIsInBhdGgiOiIvZi82YTZiNGYxNi0yOWQwLTRlMzMtOWIzZi02Y2VjOTlhZjgxZ",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "multi_component_reference",
       "categories": [
         "multi_component_reference"
@@ -8154,7 +8232,10 @@
           "license_evidence_status": "claim_marked_verified_in_census_requires_original_page_review",
           "bw_clean_plate_claim": "PARTIALLY CONFIRMED — line-art base; blank anatomy only; not a component plate"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Reference Template 1 by Silvadorkable on DeviantArt",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-K-04",
@@ -8167,8 +8248,8 @@
       "creator": "LadyHeiwa",
       "source_platform": "DeviantArt",
       "source_language": "DeviantArt / English",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/70a8b488-e6ed-4def-9f73-85f819e923d4/dbrrqyd-b20cb135-c13b-453a-983b-bc655e04dbdf.jpg/v1/fill/w_948,h_843,q_70,strp/character_sheet_base_female_typical_bodytype__by_ladyheiwa_dbrrqyd-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzU5MCIsInBhdGgiOiIvZi83MGE4YjQ4OC1lNmVkLTRkZWYt",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "multi_component_reference",
       "categories": [
         "multi_component_reference"
@@ -8199,7 +8280,10 @@
           "license_evidence_status": "claim_marked_verified_in_census_requires_original_page_review",
           "bw_clean_plate_claim": "PARTIALLY CONFIRMED — blank line-art base; \"component plate\" status not confirmed"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Character Sheet Base (FEMALE/Typical Bodytype) by LadyHeiwa on DeviantArt",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-K-05",
@@ -8212,8 +8296,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / French-titled (dessin/lecture)",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "multi_component_reference",
       "categories": [
         "multi_component_reference"
@@ -8244,7 +8328,10 @@
           "license_evidence_status": "unverified_or_pending",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "Tutorial, dessin, lecture 1000+ bookmarks / May 6th, 2012 - pixiv",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-K-06",
@@ -8257,8 +8344,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese",
-      "thumbnail_url": null,
-      "thumbnail_kind": "not_verified_no_thumbnail",
+      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
+      "thumbnail_kind": "source_page_metadata_preview_candidate",
       "category": "multi_component_reference",
       "categories": [
         "multi_component_reference"
@@ -8289,7 +8376,10 @@
           "license_evidence_status": "unverified_or_pending",
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
-      ]
+      ],
+      "thumbnail_page_title": "how to draw, Tutorial, Making-of / July 27th, 2024 - pixiv",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
     },
     {
       "id": "CENSUS-K-07",
@@ -9240,7 +9330,7 @@
   "statistics": {
     "canonical_url_records": 226,
     "structured_entries": 226,
-    "index_entries_with_thumbnail": 175,
+    "index_entries_with_thumbnail": 205,
     "pixai_source_entries": 39,
     "research_report_categorized_records": 160,
     "research_records_with_source_url": 154,
@@ -9284,7 +9374,7 @@
     "index_note": "The census metadata was merged without inventing preview URLs. For new records, thumbnail_url=null until a direct official preview is captured and visually checked. URL canonicalization is basic and does not detect same image posted at different URLs. The long-form research report has 160 categorized records, 154 with a URL, and 153 normalized unique URLs; 6 records in category N/K are cross-reference aliases with no repeated URL.",
     "deduplication_note": "URL-level duplicates are grouped where normalized URLs match. No perceptual image hashing or manual duplicate image comparison has been run.",
     "license_note": "License claims from the long-form report are stored as claims with an evidence-status field; original terms must be revisited before importing or redistributing assets. Free-to-view does not mean reusable.",
-    "thumbnail_retrieval_batches": 10,
+    "thumbnail_retrieval_batches": 13,
     "thumbnail_status_note": "New preview URLs were extracted from official source-page metadata or visible image links. They are still candidates until visual load is checked in the actual atlas; previews are for identification only, not reusable assets."
   },
   "pixai_tag_browsers": [
