@@ -6,6 +6,8 @@ Abrí la [Biblioteca visual](../visual-reference-library/index.html) después de
 
 Para crear hojas de contacto de todas las imágenes locales y detectar duplicados exactos por contenido: `python scripts/build_visual_contact_sheets.py`. El informe y las hojas se guardan en `generated/visual-reference-contact-sheets/`. También existe el workflow manual **Build IMAGE visual contact sheets** en GitHub Actions. El reporte incluye duplicados exactos por SHA-256 y candidatos de casi duplicado por hash perceptual; las coincidencias aproximadas se revisan manualmente y nunca se borran automáticamente. La primera ejecución real procesó 764/764 imágenes legibles, creó 16 hojas de contacto y detectó un grupo de duplicados exactos. Consulta el [informe visual](../visual-reference-library/LOCAL_ASSET_REVIEW_2026-10.md) y descarga el [artefacto de hojas de contacto](https://github.com/rikosama473-sketch/image/actions/runs/39604889219/artifacts/12347792216). Es una revisión general de las hojas, no una clasificación individual de cada ojo o peinado.
 
+Para abrir solo esta herramienta en Windows, ejecutá `tools/visual-reference-library/start-visual-reference-library.bat`. Levanta el mismo servidor local en `127.0.0.1:8766` y abre directamente la biblioteca visual.
+
 ## Taller manual de peinados sin IA
 
 Para mantener el mismo rostro y cambiar solo el pelo, abrí el [Taller manual de peinados](../hairstyle-workbench/index.html). Permite alternar variantes guardadas, combinar piezas PNG transparentes, conservar los cortes parecidos como diseños independientes y exportar PNG/JSON. No usa generación ni APIs externas. Su muestra integrada es experimental y sus máscaras siguen pendientes de revisión visual.
