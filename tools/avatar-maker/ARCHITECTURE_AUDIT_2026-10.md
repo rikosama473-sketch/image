@@ -14,7 +14,8 @@
 3. **Uso repetido del modelo.** Se cachean sesiones de segmentación por modelo en vez de inicializar la red en cada petición. La inicialización es bajo demanda: instalar el extra es opcional y la primera ejecución puede descargar los pesos.
 4. **Seguridad y tolerancia a errores.** El endpoint local restringe host/origen, valida formato y tamaño, limita los píxeles de entrada y no modifica la imagen original. La ausencia del extra devuelve un error controlado con instrucciones.
 5. **Regresión.** El validador comprueba sintaxis JavaScript con Node, identificadores HTML, rutas y esquema de catálogos, y ahora verifica la integración del motor y el mínimo de ilustraciones completas. Las pruebas de servicio cubren la salida alfa, dimensiones conservadas, modelo no permitido y la ruta existente de edición API.
-6. **Revisión de capas.** Ninguna salida de segmentación se aprueba automáticamente. Deben revisarse el canal alfa, cabello fino, halos, bordes, identidad y alineación. Mantener este estado de candidato protege contra errores de capas y composiciones que se desincronizan.
+6. **Composición no destructiva.** La base se puede ocultar independientemente; su estado persiste en JSON. Al aplicar el recorte de fondo, se oculta automáticamente la base opaca para que no vuelva a cubrir la salida alfa; se puede restaurar en cualquier momento.
+7. **Revisión de capas.** Ninguna salida de segmentación se aprueba automáticamente. Deben revisarse el canal alfa, cabello fino, halos, bordes, identidad y alineación. Mantener este estado de candidato protege contra errores de capas y composiciones que se desincronizan.
 
 ## Referencias técnicas contrastadas
 
