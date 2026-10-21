@@ -85,4 +85,12 @@ Abrir el taller en navegador con el lanzador local y probar el filtro «Uso como
 - Verificación local del cambio: se comprobó que el handler antiguo existía exactamente una vez y se sustituyó por el nuevo. **Las pruebas automatizadas/CI de este commit todavía no se han confirmado**, por lo que no se declara el cambio validado integralmente.
 - La PR #19 sigue siendo la vía de integración; no se modificó `main` ni se fusionaron ramas.
 - Generación visual pendiente: el paquete anatómico de Pibara registrado en `run-39500149462` produjo 3/4 vistas, con deriva de identidad y una vista frontal recortada; no son capas semánticas aprobadas. El workflow documenta que la cuota pública ZeroGPU se agotó y admite un secreto `HF_TOKEN` para aumentar cuota; no se afirma que ese secreto esté configurado.
-- Próxima tarea prioritaria: añadir una prueba de regresión para que centrar una capa conserve `w/h` y calcular los offsets correctos; después validar el recorrido del constructor y el editor manual. Para nuevos assets, reanudar una generación controlada de un único paquete de cabello de Pibara y revisar visualmente cada salida antes de incorporarla como pieza reutilizable.
+- La prueba de regresión para el centrado ya se añadió en `tests/test_project_handoff.py` (commit `6e044a1f8aa1e939ed8d19302fc1e337f4a9fb34`). En el commit posterior `7f1cf5896486e9c217c8707439c27c73b77c957d` se ampliaron las pruebas de contrato para cubrir guardado/recarga de capas, metadatos de procedencia y exportación PNG del editor manual. Son aserciones estáticas de código; no equivalen a una prueba interactiva de navegador y aún falta confirmar su ejecución en CI.
+
+
+## Continuación de verificación — 2026-10-21 (bloque 2)
+
+- Commit de pruebas: `7f1cf5896486e9c217c8707439c27c73b77c957d`. Añade contratos para `saveProject()`/`openProject(file)`, persistencia y restauración de PNG de capa/copia de respaldo, máscara de selección, metadatos de procedencia, y composición/exportación PNG sin pintar un fondo opaco por defecto.
+- La exportación de composición se verifica por contrato: `makeComposite()` parte de un canvas nuevo, dibuja solo capas visibles respetando opacidad y `exportCanvas()` codifica `image/png`. Esto no sustituye una inspección de los píxeles del archivo exportado.
+- Estado honesto: el nuevo test y el test de centrado están escritos en la rama; la ejecución de la suite y la prueba visual E2E siguen pendientes de confirmación. No se ha modificado `main` ni fusionado el PR #19.
+- Próximo paso: obtener el resultado de CI de estos commits; si la suite falla, corregir el fallo real. Luego realizar la prueba interactiva Constructor → guardar JSON → Editor manual → guardar/reabrir → exportar PNG transparente, antes de aprobar assets modulares de Pibara.
