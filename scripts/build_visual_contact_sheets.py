@@ -70,18 +70,31 @@ def checkerboard(size: tuple[int, int], cell: int = 12) -> Image.Image:
     return canvas
 
 
-def render_thumbnail(path: Path, size: tuple[int, int]) -> tuple[Image.Image, tuple[int, int], str]:
+def render_thumbnail(path: Path, size: tuple[int, int]) -> tuple[Image.Image, tuple[int, int], str, str]:
     with Image.open(path) as original:
         original.load()
         dims = original.size
         image_format = str(original.format or "unknown")
-        rgba = original.convert("RGBA")
+        full_rgba = original.convert("RGBA")
+        # Hash the visible artwork on a neutral white background so alpha-only
+        # differences do not dominate the near-duplicate check.
+        flattened = Image.new("RGBA", full_rgba.size, (255, 255, 255, 255))
+        flattened.alpha_composite(full_rgba)
+        gray = ImageOps.grayscale(flattened).resize((9, 8), Image.Resampling.LANCZOS)
+        pixels = list(gray.getdata())
+        bits = 0
+        for y in range(8):
+            for x in range(8):
+                if pixels[y * 9 + x] > pixels[y * 9 + x + 1]:
+                    bits |= 1 << (y * 8 + x)
+        difference_hash = f"{bits:016x}"
+        rgba = full_rgba.copy()
         rgba.thumbnail(size, Image.Resampling.LANCZOS)
         background = checkerboard(size)
         x = (size[0] - rgba.width) // 2
         y = (size[1] - rgba.height) // 2
         background.paste(rgba, (x, y), rgba.getchannel("A"))
-    return background, dims, image_format
+    return background, dims, image_format, difference_hash
 
 
 def main() -> None:
@@ -126,6 +139,7 @@ def main() -> None:
             "height": None,
             "format": None,
             "sha256": None,
+            "dhash64": None,
             "exact_duplicate_of": None,
             "error": "",
         }
@@ -136,9 +150,10 @@ def main() -> None:
             try:
                 record["sha256"] = sha256_file(path)
                 exact_hashes[record["sha256"]].append(asset_id)
-                thumb, dimensions, image_format = render_thumbnail(path, (thumb_w, thumb_h))
+                thumb, dimensions, image_format, difference_hash = render_thumbnail(path, (thumb_w, thumb_h))
                 record["width"], record["height"] = dimensions
                 record["format"] = image_format
+                record["dhash64"] = difference_hash
             except Exception as exc:  # report one broken image; continue the catalogue
                 record["error"] = f"{type(exc).__name__}: {exc}"
         if record["error"]:
@@ -156,6 +171,30 @@ def main() -> None:
             duplicates.setdefault(digest, [{"id": first_ids[digest], "path": next((r["path"] for r in rows_out if r["id"] == first_ids[digest]), "")}]).append({"id": row["id"], "path": row["path"]})
         else:
             first_ids[digest] = row["id"]
+
+    # Perceptual dHash catches candidates that differ slightly in encoding, crop,
+    # or a small region. It is only a review queue, never an auto-delete decision.
+    near_duplicate_candidates: list[dict[str, Any]] = []
+    hashable = [row for row in rows_out if row.get("dhash64") and row.get("sha256")]
+    for left_index, left in enumerate(hashable):
+        left_hash = int(str(left["dhash64"]), 16)
+        for right in hashable[left_index + 1:]:
+            if left.get("sha256") == right.get("sha256"):
+                continue
+            distance = (left_hash ^ int(str(right["dhash64"]), 16)).bit_count()
+            if distance <= 3:
+                near_duplicate_candidates.append({
+                    "hamming_distance": distance,
+                    "id_a": left["id"],
+                    "path_a": left["path"],
+                    "id_b": right["id"],
+                    "path_b": right["path"],
+                    "review_status": "candidate_requires_visual_confirmation",
+                })
+    near_duplicate_candidates.sort(key=lambda item: (item["hamming_distance"], item["path_a"], item["path_b"]))
+    (output / "near-duplicates-candidates.json").write_text(
+        json.dumps(near_duplicate_candidates, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
 
     for start in range(0, len(prepared), args.per_sheet):
         group = prepared[start:start + args.per_sheet]
@@ -200,12 +239,13 @@ def main() -> None:
         "missing_or_unreadable": len(errors),
         "exact_duplicate_groups": len(duplicate_groups),
         "exact_duplicate_extra_files": sum(len(group) - 1 for group in duplicate_groups),
+        "near_duplicate_candidate_pairs": len(near_duplicate_candidates),
         "contact_sheets": math.ceil(len(prepared) / args.per_sheet),
         "review_policy": "Contact sheets support human visual review; metadata and filenames do not establish visual class, authorship, rights, or training permission.",
         "errors": errors,
     }
     (output / "contact-sheet-index.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({k: summary[k] for k in ("assets_indexed", "images_readable", "missing_or_unreadable", "exact_duplicate_groups", "contact_sheets")}, indent=2))
+    print(json.dumps({k: summary[k] for k in ("assets_indexed", "images_readable", "missing_or_unreadable", "exact_duplicate_groups", "near_duplicate_candidate_pairs", "contact_sheets")}, indent=2))
 
 
 if __name__ == "__main__":
