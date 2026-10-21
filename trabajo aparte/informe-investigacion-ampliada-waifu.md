@@ -858,3 +858,74 @@ La numeración enlaza con las referencias [n] utilizadas en el informe. Las cifr
 68. https://docs.novelai.net/en/image/tutorial-charactercreation/
 69. https://www.deviantart.com/learntodrawanime/art/How-to-Draw-Anime-Hair-Styles-285515551
 70. https://booth.pm/ja/items/5051971
+
+
+---
+
+# Suplemento de auditoría verificable — 21 de octubre de 2026
+
+## A. Nuevas obras individuales de PixAI con miniatura oficial verificada
+
+Se verificó la página pública y la URL de miniatura que PixAI expone en su metadata Open Graph / Twitter. La miniatura sirve para reconocer la ficha; no es una placa limpia ni concede permiso para reusar el arte. Los elementos de la última columna deben aparecer en rojo en el atlas cuando el componente objetivo es otro.
+
+| ID de ficha | Obra / autor en la página | Componente objetivo | Elementos ajenos a marcar en rojo | Obra y miniatura |
+|---|---|---|---|---|
+| PX-CLT-008 | *Maid, Apron* — toushiro | Vestido maid, delantal blanco, mangas abullonadas y cofia | Bob azul, ojos, cara, manos, destellos y fondo | [Obra](https://pixai.art/artwork/2010038137810894262) · [miniatura](https://images-ng.pixai.art/gi/stillThumb/59bdb962-715c-4ec7-8f84-d3adde0a031b) |
+| PX-CLT-009 | *Maid For London* — Evernight | Vestido negro, delantal y cofia con volantes | Pelo azul, ojos, expresión, manos y ambiente | [Obra](https://pixai.art/artwork/2058836489898426706) · [miniatura](https://images-ng.pixai.art/ji/stillThumb/ab601606-e6b2-4e03-aaf1-5727380b9e14) |
+| PX-CLT-010 | *Elegance of a Miko in Traditional Kimono* — Kageume | Haori blanco, hakama roja, obi y geta | Identidad de Kikyo, coleta baja negra, joyería, flores, Fuji y niebla | [Obra](https://pixai.art/artwork/2009472326978257764) · [miniatura](https://images-ng.pixai.art/gi/stillThumb/f63268e3-f78b-4ded-8fa9-1e4bdc818626) |
+| PX-CLT-011 | *Anime Girl in Gothic Lolita Style* — papapoa20 | Mangas, falda en capas, volantes y encaje Gothic Lolita | Flequillo, largo/color de cabello, ojos, cara y fondo | [Obra](https://pixai.art/artwork/1975497579583979500) · [miniatura](https://images-ng.pixai.art/gi/stillThumb/eea6c521-1c61-42d5-9f37-1c3a46abb0ab) |
+| PX-CLT-012 | *wptdoaobskhe* | Capa de asesina, corpiño/cinturón de cuero, túnica, hebillas y botas | Personaje Nekota Tsuna, pelo rubio-naranja, ojos naranjas, orejas rojas y fondo oscuro | [Obra](https://pixai.art/artwork/2056692542938534515) · [miniatura](https://images-ng.pixai.art/images/stillThumb/7a3c5718-cd70-4993-b5f2-758d1ea8da8e) |
+| PX-HIR-009 | *Liya Hanterys* | Coletas gemelas y rizos tipo drill | Dos personajes, rostros, ojos, vestuario y pose | [Obra](https://pixai.art/artwork/2064289424490834628) · [miniatura](https://images-ng.pixai.art/images/stillThumb/18e75be3-98eb-4bfb-bffc-81bed58ebfcb) |
+| PX-HIR-010 | *nao10s* | Coletas rosa pastel, ahoge y adornos de estrella | Identidad de Nika Aoi, ojos naranjas, colmillo, camisa, tirantes y pose | [Obra](https://pixai.art/artwork/2017996244360224755) · [miniatura](https://images-ng.pixai.art/gi/stillThumb/7ccb67af-3731-4a3b-b827-acf9eacdc5cc) |
+| PX-HIR-EYE-001 | *เอก ภพ* (prompt público de mujer adulta) | Coleta alta violeta, iris lavanda y pestañas | Rostro/cuerpo adulto, ropa, ambiente y luz | [Obra](https://pixai.art/artwork/2067006211671141998) · [miniatura](https://images-ng.pixai.art/ji/stillThumb/4b5f71d5-4c8e-472a-a0d9-b1e9c3b58a7b) |
+| PX-EYE-004 | *しいちゃん* | Ojos de gradiente oscuro y pestañas | Cabello, personaje completo, ropa, pose, expresión e iluminación | [Obra](https://pixai.art/artwork/2009787699034070177) · [miniatura](https://images-ng.pixai.art/gi/stillThumb/495a777d-9952-4b57-8a7d-d3bdd0528c20) |
+| PX-CLT-013 | *Dress, Gothic Lolita* — note | Vestido negro, cuello jabot, volantes, encaje y broche | Twintails negras, ojos brillantes, expresión y tema sobrenatural/urbano | [Obra](https://pixai.art/artwork/1969073009517559886) · [miniatura](https://images-ng.pixai.art/gi/stillThumb/f0666ed5-0c39-46e1-b1d0-42206272040c) |
+
+**Límite de verificación:** se comprobó el URL de vista previa contra metadata de cada página; no se hizo descarga local, recorte de pelo/ropa/ojos ni análisis perceptual de duplicados. El prompt de algunas obras es corto o parcialmente oculto; en esos registros los detalles que no aparecen en el texto deben confirmarse mirando la obra, no adivinarse.
+
+## B. Pixiv/Pixivision: referencias curatoriales y catálogos de peinado
+
+| Recurso | Para qué sirve | Preview / página |
+|---|---|---|
+| Pixivision — *Drawings of Hairstyles, Hair Colors, and Hair Accessories* | Descubrir obras originales de coleta, trenzas, bob y accesorios desde una selección editorial; cada ilustración tiene autor y términos propios | [Página](https://pixivision.net/en/a/10057) · [preview](https://embed.pixiv.net/pixivision/en/a/10057/ogimage.jpg) |
+| Pixivision — *Drawings of Girls With Braids* | Trenzas sueltas, dobles, laterales y decoradas con cintas, en estilos dulces y elegantes | [Página](https://pixivision.net/en/a/9774) · [preview](https://embed.pixiv.net/pixivision/en/a/9774/ogimage.jpg) |
+| Pixiv — SEN / セン, *Hair catalog 01* | Candidato de catálogo de peinado descrito como material gratuito; el alcance de los permisos debe confirmarse en la publicación original | [Página](https://www.pixiv.net/artworks/105435259) |
+| Pixiv — minmin, *Hairstyle patterns by combination* | Variantes de peinado sobre una base de chica similar; útil para estudiar combinaciones | [Página](https://www.pixiv.net/artworks/48989268) |
+| Pixiv — *Original Character hairstyle catalog template* | Ejemplo de plantilla de catálogo de peinados para un personaje propio | [Página](https://www.pixiv.net/artworks/107123016) |
+| Pixiv — 猫月ユキ, *Oiran hairstyle catalog* | Recogidos tradicionales, peines y kanzashi; útil para distinguir el peinado de la ornamentación | [Página](https://www.pixiv.net/artworks/51157718) |
+| Pixiv — よみ, *Hairstyle 100* | Cien variaciones según el título; descripción indica inspiración también en peinados reales, por lo que no todas las siluetas son necesariamente anime | [Página](https://www.pixiv.net/artworks/41521254) |
+
+Los previews integrados de Pixiv pueden ser iframes y no ficheros de imagen directos; las fichas no deben depender de que esos endpoints se comporten como una URL JPEG estática. Pixivision sí facilita imágenes editoriales de portada, pero su portada no reemplaza las obras individuales.
+
+## C. Packs visuales y recursos modulares con términos comprobados
+
+Estos recursos son especialmente pertinentes para comparar variedad, tamaño y flujo por capas, pero no se debe confundir “uso comercial permitido” con “puedo distribuir el archivo original incluido en mi editor”.
+
+| Recurso | Precio/listado consultado | Contenido confirmado | Condiciones / decisión para IMAGE |
+|---|---|---|---|
+| [300 Female Anime Hairstyle Sketches 4K v.01 — 8qubitStudio](https://www.artstation.com/marketplace/p/BBOL5/300-female-anime-hairstyle-sketches-4k-v-01) | US$5,99 estándar; US$12 extendida | 300 diseños según el vendedor; PNG 4096×6144; ZIP 1,7 GB; bob, rizos, doble moño, twintails en alturas/largos distintos, pixie, coleta y trenzas | Estándar: uso personal + un proyecto comercial hasta 2.000 ventas o 20.000 vistas. Extendida: proyectos/ventas ilimitados. No redistribuir el ZIP. La página indica que se incluye salida de programas generativos y menciona IA como inspiración/refinamiento. Mejor densidad para investigar cabello, si las muestras justifican tamaño/precio. |
+| [210 Girl Model Sheet v.139 — Ferial Studio](https://www.artstation.com/marketplace/p/m95P9/210-girl-model-sheet-anime-character-reference-image-pack-v-139-4k) | US$4,99 estándar; US$15 extendida | 210 hojas de personajes femeninos según anuncio; JPEG 4441×2489; RAR 370 MB | Estándar limitado a un proyecto comercial hasta 2.000 ventas/20.000 vistas; extendida ilimitada. El vendedor prohíbe re-publicar/revender los productos de forma gratuita. Contiene personajes completos, no piezas independientes. |
+| [240 Asian Female Model Sheet v.146 — Ferial Studio](https://www.artstation.com/marketplace/p/NXgo7/240-asian-female-model-sheet-anime-character-reference-image-pack-v-146-4k) | US$4,99 estándar; US$15 extendida | 240 hojas según anuncio; JPEG 4096×4096; RAR 570 MB | Misma estructura estándar/extendida y restricción de no republicación del vendedor. Tratar como visual reference, no como biblioteca de pelo/ojos recortados. |
+| [370 Fantasy Female Medieval Warrior Armor — DreamWork Studio](https://www.artstation.com/marketplace/p/BLjdM/370-fantasy-female-medieval-warrior-armor-character-references-8k-res-draft) | US$5 estándar; US$15 extendida | 370 referencias; imágenes JPEG 8K; RAR 460 MB; descritas por la página como imágenes de aspecto escultórico/3D | Estándar de un proyecto y límite de vistas/ventas; extendida ilimitada. La fuente no es line art monocroma; útil para explorar piezas y volúmenes de armadura. |
+| [Magical Academy Uniform Set Vol.1 — Studio chacana assets](https://booth.pm/en/items/6868287) | Muestra gratuita; versión completa listada a ¥1.500 | Más de 30 piezas según anuncio: tops, blusas, capa, corsé, faldas, shorts, zapatos, lazos, diademas, broches, varita, mangas, volantes y cuellos. PSD por capas y PNG transparente | El vendedor permite uso comercial, crédito opcional, pero prohíbe redistribuir/revender los ficheros fuente. Buena referencia de modularidad; no insertar el pack intacto en la distribución de IMAGE. |
+| [Female Character PSD — PungLoneWolf](https://booth.pm/ja/items/7715930) | ¥1.100 | PSD transparente 1504×2409: 1 cuerpo, una twintail rubia, 3 variantes de ojos/expresión, 7 bocas, rubor, y 4 atuendos (uniforme, casual, gymwear, traje de baño) | Permite uso comercial y cambios/mezclas, crédito opcional; prohíbe redistribuir o revender los ficheros. No incorporar PSD original a un editor que distribuya assets. |
+| [Marumori — PSD gratuito con cabello en capas](https://booth.pm/ja/items/4997076) | ¥0, 2,59 MB | PSD con capas de pelo frontal/lateral/trasero, variantes de expresión y line art según ficha | Aunque gratis, el anunciante prohíbe modificaciones, redistribución y entrenamiento de IA; los usos listados son ilustración para MV/vídeos/tutoriales. No es libre para convertirlo en un catálogo de piezas combinables sin permiso. |
+| [Wolf-cut girl — Studio Oneness](https://booth.pm/ja/items/8251188) | Vista previa gratuita; PSD por capas a ¥1.000 | PNG de personaje 2000×4000 y busto 1600×1600; versión pagada con PSD y 38+ variaciones de expresión | Versión gratuita solo permite tamaño/recorte; se prohíben cambios adicionales, redistribución y entrenamiento de IA. No recortar el cabello para mezclarlo sin permiso específico. |
+| [Chica de estilo chino rosa/cyan — suiu_yohira](https://booth.pm/ja/items/8689650) | ¥500 | PSD de 6000×9000, seis variantes de expresión, brazo normal/adiós y capas/estados de ojos | Permite uso en apps/juegos/vídeo con atribución; prohíbe redistribución y entrenamiento de IA. No compartir sus capas como paquete. |
+
+### Recomendación de inversión (condicional, no compra automática)
+
+- Para **explorar solo siluetas de cabello**, la página de 300 diseños es la opción con el mayor volumen anunciado directamente relevante, pero ocupa 1,7 GB y el coste/resultado debe evaluarse mirando las muestras antes de comprar.
+- Para **vestuario intercambiable**, el pack Magical Academy da una muestra gratuita de piezas y una ruta modular verificable. Sus archivos fuente no pueden redistribuirse.
+- Para **probar una arquitectura de personaje con capas**, el PSD de PungLoneWolf tiene una estructura clara y precio visible, pero la licencia prohíbe distribuir el original; solo sirve tras revisar si el uso concreto encaja con sus términos.
+- Ningún pack de esta lista sustituye la tarea de crear placas propias de componentes, ni autoriza convertir sus ficheros fuente en una biblioteca de assets distribuible sin permiso.
+
+## D. Actualización de estado y control de calidad
+
+La rama de IMAGE mantiene ahora un índice JSON de **66 registros de fuente**: 26 obras individuales de PixAI y 40 páginas o recursos externos (obras, colecciones curatoriales, tutoriales, páginas de productos y candidatos pendientes). Esto es un recuento de URLs indexadas, no una afirmación de 66 imágenes perceptualmente únicas: no se ejecutó hash/deduplicación visual y pueden existir espejos o estilos similares.
+
+El atlas HTML tiene miniaturas pequeñas al lado de los nombres de referencia, 26 fichas PixAI con advertencias rojas, filtros de categoría y 9 tarjetas de productos/recursos con miniatura, precio y licencia. El JavaScript incorporado pasó comprobación sintáctica. No se afirmó que todas las imágenes remotas cargaran correctamente en un navegador real.
+
+**Placas cuadradas monocromas con licencia de reutilización verificada: 0.** Los buscadores por componente apuntan a candidatas; no se debe marcar una placa como terminada hasta verificar que sea de un solo componente, cuadrada, limpia, legible a tamaño pequeño y permitida por su creador/licencia.
+
+**Carencias que siguen abiertas:** hoja limpia aislada de tiaras/coronas; gafas; pendientes; gargantillas/chokers; broches; conjuntos de calzado; formas de ojos sin cara; placas monocromas para distintas siluetas de ropa; y comprobar visualmente duplicados mediante hash/perceptual matching.
