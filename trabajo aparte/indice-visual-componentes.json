@@ -9892,14 +9892,76 @@
       "thumbnail_checked_date": "2026-10-21",
       "thumbnail_status": "Official BOOTH product preview URL extracted from product page metadata; browser load not individually verified.",
       "ordinal": 237
+    },
+    {
+      "id": "EXT-X-001",
+      "category": "clothing",
+      "title": "FRUITS ZIPPER — vestuario idol femenino diseñado por HIROSUMI SAITO",
+      "source_url": "https://x.com/hirosumi_saito/status/1974408214826598690",
+      "thumbnail_url": "https://pbs.twimg.com/media/G2aBzhUa0AAyXj7?format=webp&name=small",
+      "creator": "HIROSUMI SAITO (@hirosumi_saito); stylist credited as 相澤樹 / Mikitiaizawa",
+      "source_platform": "X",
+      "thumbnail_kind": "official_x_post_media_preview",
+      "asset_type": "professional costume-design reference post; real performer clothing, not an anime asset",
+      "target_traits": [
+        "multi-performer female idol costume variations",
+        "stage-pop costume construction",
+        "cross-look comparison within one group"
+      ],
+      "extras_red": [
+        "multiple real female performers and complete bodies/faces/hair",
+        "different costumes appear together, not isolated garment pieces",
+        "official group and commissioned stylist/costume design",
+        "stage/performance styling and image composition"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=female+idol+costume+design+sheet+individual+garments+black+white+lineart+square",
+      "monochrome_plate_status": "real-costume photography/post, not monochrome anime component plate",
+      "license_status": "Reference only; source credits costume designer/stylist, but reuse or asset redistribution license is not stated. Do not reproduce/crop as IMAGE assets without permission.",
+      "license_evidence": "X source post text",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Direct X pbs.twimg.com media preview URL extracted from the original public post metadata; image load not checked in final UI.",
+      "ordinal": 238
+    },
+    {
+      "id": "EXT-X-002",
+      "category": "clothing_accessories",
+      "title": "Yochi — uniforme de encargo con volantes inspirados en nudibranquio",
+      "source_url": "https://x.com/yochichan__/status/2024818010834555184",
+      "thumbnail_url": "https://pbs.twimg.com/media/HBmZPbWaoAANCEN?format=webp&name=small",
+      "creator": "yochi / アイドル衣装 (@yochichan__)",
+      "source_platform": "X",
+      "thumbnail_kind": "official_x_post_media_preview",
+      "asset_type": "original custom-costume design and construction post",
+      "target_traits": [
+        "uniform base silhouette",
+        "frills around chest/front neckline",
+        "frilled hem",
+        "sea-slug/nudibranch-inspired motif",
+        "black-and-blue contrasting trim"
+      ],
+      "extras_red": [
+        "complete custom outfit for a named customer",
+        "full garment and fit on a person/model",
+        "hair/face/body proportions and accessories",
+        "design is commissioned work, not a generic clothing asset"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+uniform+design+ruffled+chest+hem+black+white+fashion+lineart+sheet",
+      "monochrome_plate_status": "real costume reference photo; not a square monochrome anime garment plate",
+      "license_status": "Reference only; post does not state a reuse/redistribution license. Use to study placement of frills, not copy or redistribute the original costume art.",
+      "license_evidence": "X source post text",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Direct X pbs.twimg.com media thumbnail captured from the original public post; image load not checked in final UI.",
+      "ordinal": 239
     }
   ],
   "statistics": {
-    "canonical_url_records": 237,
-    "structured_entries": 237,
-    "index_entries_with_thumbnail": 237,
+    "canonical_url_records": 239,
+    "structured_entries": 239,
+    "index_entries_with_thumbnail": 239,
     "index_entries_without_thumbnail": 0,
-    "direct_image_preview_candidates": 232,
+    "direct_image_preview_candidates": 234,
     "pixiv_embed_previews": 5,
     "pixai_source_entries": 40,
     "research_report_categorized_records": 160,
@@ -9982,8 +10044,8 @@
       "external_search_result_preview": 1
     },
     "verified_clean_square_plates": 0,
-    "index_note": "This is a 237-record index of source URLs/store pages, not a library of 237 unique images or licensed assets. Build-up: 75 curated records + 151 new deep-census URLs after two matches merged + 4 accessory/clothing supplements + 4 modular asset listings + 3 additional layered facial-variant listings = 237. The core deep-research body has 160 categorized rows, 154 URL fields including one repeated URL, and 153 distinct normalized URL records. Four pairs are separately flagged as likely duplicate underlying artworks across different URL IDs.",
-    "thumbnail_status_note": "All 237 source records have thumbnail URLs; 232 are direct image/preview candidates and 5 are Pixiv embed endpoints. The URLs were extracted from source metadata or visible image links, but every image has not been individually visually checked in the final browser UI.",
+    "index_note": "This is a 239-record index of source URLs/store pages, not a library of 239 unique images or licensed assets. Build-up: 75 curated records + 151 new deep-census URLs after two matches merged + 4 accessory/clothing supplements + 4 modular asset listings + 3 facial-variant listings + 2 X costume-design posts = 239. The core deep-research body has 160 categorized rows, 154 URL fields including one repeated URL, and 153 distinct normalized URL records. Four pairs are flagged as likely duplicate underlying artworks across different URL IDs.",
+    "thumbnail_status_note": "All 239 source records have thumbnail URLs. 234 are direct image/preview candidates and 5 are Pixiv embed endpoints. X pbs.twimg.com previews and the other remote thumbnails have not all been individually checked in the final browser UI.",
     "deduplication_note": "Source URL normalization only. The report flags four pairs as duplicate underlying artwork under different URLs, and one creator/product has two store pages recorded as alternate_source_urls. No cross-platform perceptual/image-hash deduplication has been done.",
     "license_note": "BOOTH and Itch.io layered-character entries help document how to separate eye/mouth/brow and hair/clothing variants. Most explicitly prohibit redistribution/resale of original asset files, even when personal/commercial project use is permitted. Written clearance is needed before packaging these component files with IMAGE.",
     "layered_facial_component_records_added_oct21": 3,
@@ -9991,7 +10053,9 @@
       "EXT-BOOTH-008",
       "EXT-BOOTH-009",
       "EXT-BOOTH-010"
-    ]
+    ],
+    "x_source_records": 2,
+    "last_extension": "Two canonical X posts added to the clothing category on 2026-10-21; public descriptions/thumbnail endpoints verified, reuse rights unverified."
   },
   "pixai_tag_browsers": [
     {
