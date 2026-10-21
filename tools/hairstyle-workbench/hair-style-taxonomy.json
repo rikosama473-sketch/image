@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 1,
   "title": "Vocabulario de peinados para IMAGE",
   "language": "es",
   "purpose": "Clasificar piezas y variantes de cabello para un editor manual de personajes. Las etiquetas describen rasgos independientes; no representan una lista de imágenes ni garantizan que cada etiqueta sea un tag oficial de Danbooru.",
