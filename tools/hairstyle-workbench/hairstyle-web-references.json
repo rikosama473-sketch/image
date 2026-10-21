@@ -79,7 +79,7 @@
       "id": "web-004",
       "title": "50 siluetas de cabello anime masculino",
       "kind": "reference_sheet",
-      "family": "male",
+      "family": "compatible",
       "image_url": "https://i.pinimg.com/originals/f6/74/29/f67429af6745a41a88e5cd0738d7ab42.jpg",
       "source_url": "https://www.pinterest.com/pin/365213851010016701/",
       "source_name": "Pinterest / 50 Anime Male Hairstyles",
@@ -95,7 +95,10 @@
         "swept_bangs"
       ],
       "description": "Lámina numerada con 50 siluetas distintas sin depender de un color o rostro concretos.",
-      "notes": "Muy útil como índice para rastrear cortes individuales. Permiso de reutilización no verificado."
+      "notes": "Muy útil como índice para rastrear cortes individuales. Permiso de reutilización no verificado.",
+      "style_fit": "compatible",
+      "studio_anchor": "ANIME LINE ART",
+      "color_required": false
     },
     {
       "id": "web-005",
@@ -145,7 +148,7 @@
       "id": "web-007",
       "title": "Peinados anime cortos con mechones y capas",
       "kind": "reference_sheet",
-      "family": "short",
+      "family": "compatible",
       "image_url": "https://pbs.twimg.com/media/FUopDFsakAEQOEN.jpg",
       "source_url": "https://x.com/fujirin555_/status/1534083761545314306",
       "source_name": "X / @fujirin555_",
@@ -160,7 +163,10 @@
         "asymmetrical_bob"
       ],
       "description": "Diseños cortos con capas, laterales, perfil y mechones que rompen la silueta.",
-      "notes": "Referencia de construcción de volumen y contorno de cabeza."
+      "notes": "Referencia de construcción de volumen y contorno de cabeza.",
+      "style_fit": "compatible",
+      "studio_anchor": "ANIME LINE ART",
+      "color_required": false
     },
     {
       "id": "asset-cc0-portraits",
@@ -662,9 +668,139 @@
       ],
       "description": "Punto de entrada a hojas de modelo de animación que muestran cómo separar cabello en formas legibles y mantener continuidad entre ángulos.",
       "notes": "El criterio es arte 2D de producción. No se incluyen sprites, renders 3D ni catálogos de peinados realistas en el conjunto principal."
+    },
+    {
+      "id": "style-trigger-bna",
+      "title": "Trigger · BNA — silueta corta desde varios ángulos",
+      "kind": "production_lineart",
+      "family": "target_style",
+      "style_fit": "target",
+      "studio_anchor": "TRIGGER",
+      "image_url": "https://i.pinimg.com/originals/6b/ae/ee/6baeeecfba8027eddae95fc71432f77c.png",
+      "source_url": "https://www.pinterest.com/pin/553239135480699690/",
+      "official_studio_url": "https://www.st-trigger.co.jp/",
+      "source_name": "BNA Character Model Sheet · repost de referencia",
+      "license_status": "Copyright de titulares; enlace de referencia, no redistribuible",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "color_required": false,
+      "tags": [
+        "short_hair",
+        "layered_hair",
+        "back_view",
+        "side_view",
+        "hair_silhouette",
+        "production_design"
+      ],
+      "description": "Hoja de modelo de cabello corto con vistas frontal, lateral y trasera. La referencia está en color, pero sirve por sus contornos y el agrupamiento de mechones.",
+      "notes": "Ancla visual de Trigger. Se acepta color cuando el lenguaje de diseño coincide; el color de pelo no se usa como filtro."
+    },
+    {
+      "id": "style-compatible-railgun",
+      "title": "Anime TV line art · cabello largo recogido y mechones laterales",
+      "kind": "production_lineart",
+      "family": "compatible",
+      "style_fit": "compatible",
+      "studio_anchor": "ANIME TV SETTEI",
+      "image_url": "https://images.squarespace-cdn.com/content/v1/54fc8146e4b02a22841f4df7/1567465977527-CK0HZJXIT0ZWD89IKAVD/Art%2Bof%2BA%2BCertain%2BScientific%2BRailgun%2B-%2B41.jpg",
+      "source_url": "https://characterdesignreferences.com/art-of-animation-8/art-of-a-certain-scientific-railgun",
+      "source_name": "Character Design References · A Certain Scientific Railgun",
+      "license_status": "Copyright de los titulares; solo referencia visual enlazada",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "color_required": false,
+      "tags": [
+        "long_hair",
+        "side_buns",
+        "ponytail",
+        "long_sidelocks",
+        "side_view",
+        "three_quarter_view",
+        "production_lineart"
+      ],
+      "description": "Hoja monocromática de anime televisivo; varias vistas del cabello largo recogido con mechones frontales y laterales.",
+      "notes": "Compatible por la claridad de silueta y la construcción por grupos de mechones; no es una afirmación de que lo haya producido Madhouse o Trigger."
+    },
+    {
+      "id": "style-compatible-girls-und-panzer",
+      "title": "Anime TV line art · bob y corte a la mandíbula en diferentes vistas",
+      "kind": "production_lineart",
+      "family": "compatible",
+      "style_fit": "compatible",
+      "studio_anchor": "ANIME TV SETTEI",
+      "image_url": "https://images.squarespace-cdn.com/content/v1/54fc8146e4b02a22841f4df7/1572436001222-2WKAS8BPZEBYJ4Z07TX0/Art%2Bof%2BGirls%2Bund%2BPanzer%2B-%2B6.jpg",
+      "source_url": "https://characterdesignreferences.com/art-of-animation-9/art-of-girls-und-panzer",
+      "source_name": "Character Design References · Art of Girls und Panzer",
+      "license_status": "Copyright de los titulares; solo referencia visual enlazada",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "color_required": false,
+      "tags": [
+        "bob_cut",
+        "short_hair",
+        "jaw_length_hair",
+        "blunt_bangs",
+        "side_view",
+        "three_quarter_view",
+        "production_lineart"
+      ],
+      "description": "Hoja de modelo limpia en blanco y negro que compara flequillo, contorno de mandíbula y volumen posterior.",
+      "notes": "Referencia útil para piezas cortas y para mantener el corte estable en vistas frontal/lateral."
+    },
+    {
+      "id": "style-compatible-bloodc",
+      "title": "Anime production line art · cabello largo con capas y flequillo",
+      "kind": "production_lineart",
+      "family": "compatible",
+      "style_fit": "compatible",
+      "studio_anchor": "ANIME FILM SETTEI",
+      "image_url": "https://moee.oss-cn-shanghai.aliyuncs.com/moehuioss/2025/04/BLOODCTheLastDarkSketch_08.jpg",
+      "source_url": "https://www.moehui.com/272345.html",
+      "source_name": "萌绘 · BLOOD-C The Last Dark line art archive",
+      "license_status": "Copyright de los titulares; solo referencia visual enlazada",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "color_required": false,
+      "tags": [
+        "long_hair",
+        "layered_hair",
+        "swept_bangs",
+        "long_sidelocks",
+        "side_view",
+        "three_quarter_view",
+        "production_lineart"
+      ],
+      "description": "Hoja monocromática de dibujo de producción con vistas y variaciones del cabello largo, capas y caída lateral.",
+      "notes": "Se usa por estructura y línea de modelo, no para copiar la identidad del personaje."
+    },
+    {
+      "id": "style-compatible-nana",
+      "title": "Anime production sketch · cabello masculino medio despeinado",
+      "kind": "production_lineart",
+      "family": "compatible",
+      "style_fit": "compatible",
+      "studio_anchor": "ANIME TV SETTEI",
+      "image_url": "https://nana-nana.net/images/nana/production/44.png",
+      "source_url": "https://nana-nana.net/nanaproduction.html",
+      "source_name": "NANA · production sketches",
+      "license_status": "Copyright de titulares; solo referencia visual enlazada",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "color_required": false,
+      "tags": [
+        "medium_hair",
+        "messy_hair",
+        "layered_hair",
+        "swept_bangs",
+        "side_view",
+        "back_view",
+        "production_lineart"
+      ],
+      "description": "Bocetos de producción en blanco y negro que muestran cabello medio, mechones despeinados y volumen desde varios ángulos.",
+      "notes": "Complemento para cabello masculino y cortes asimétricos; es una referencia de construcción, no una pieza que se pueda extraer y redistribuir."
     }
   ],
-  "item_count": 28,
+  "item_count": 33,
   "art_direction": {
     "id": "anime-tv-production-lineart",
     "label": "Anime 2D de producción — referencias Madhouse / Trigger",
