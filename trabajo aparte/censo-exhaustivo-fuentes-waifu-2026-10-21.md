@@ -2703,7 +2703,7 @@ Each record follows this schema:
 
 - Research run completed after 1,128 seconds of deep research; do not interpret that runtime as a guarantee of every page being manually inspected.
 - Report body: 160 categorized records; 154 records have a URL, with one exact URL repeated across two categories, resulting in 153 normalized URL records in the base list.
-- The separate IMAGE machine-readable index now combines the base source list, earlier curated references, four accessory/clothing supplements, four modular asset-listing records and three additional layered-expression listings, for 237 URL-normalized records. Its count is not interchangeable with the base report's 153 normalized URL records.
+- The separate IMAGE machine-readable index now combines the base source list, earlier curated references, four accessory/clothing supplements, four modular asset-listing records, three additional layered-expression listings and two X costume-design posts, for 239 URL-normalized records. Its count is not interchangeable with the base report's 153 normalized URL records.
 - This is a research catalogue, not a downloaded image library. No thousands of assets were downloaded; no perceptual/image-hash deduplication was performed; no licensed clean square monochrome component plates were verified.
 - Each source page still needs direct image inspection before using its preview as a dependable style exemplar. License terms must be rechecked at the item level before any redistribution or bundling in IMAGE.
 
@@ -2734,3 +2734,15 @@ These listings matter because IMAGE needs to combine parts, but “downloadable�
 
 These are **architecture references** for separated eyes, mouth, brow and expression effects. They are not reusable clean square monochrome plates, and their character bodies/face styles should not be extracted into an IMAGE asset pack unless the exact redistribution rights are granted.
 
+
+
+## SECTION 10 — ORIGINAL X POSTS FOR FEMALE COSTUME DESIGN
+
+These two source posts are included as clothing-design references. They are not anime asset sheets and carry no verified license for copying/reusing their artwork. Use them for vocabulary and construction ideas only.
+
+| Source post | What the author states | Target component | 🔴 Elements not to merge into an IMAGE garment asset | Preview |
+|---|---|---|---|---|
+| [HIROSUMI SAITO — FRUITS ZIPPER costume design](https://x.com/hirosumi_saito/status/1974408214826598690) | The post credits costume designer HIROSUMI SAITO and stylist 相澤樹 for an ensemble of costumes for the female idol group FRUITS ZIPPER. | Compare coordinated female idol styling, garment families and costume variations across one group. | Multiple real performers, faces/hair/body proportions, complete costumes, stage styling and composition. It is not a flat isolated clothing sheet. | [X media preview](https://pbs.twimg.com/media/G2aBzhUa0AAyXj7?format=webp&name=small) |
+| [yochi — custom role uniform](https://x.com/yochichan__/status/2024818010834555184) | The author states they designed and made a custom uniform based on the shop's existing uniform; frills inspired by a nudibranch were added around the chest/front and hem. | Garment base with themed ruffle placement and contrast trim. | Custom commissioned uniform shown on its wearer/model; hair/face/body and other styling are not garment pieces. Rights for reuse are not stated. | [X media preview](https://pbs.twimg.com/media/HBmZPbWaoAANCEN?format=webp&name=small) |
+
+**Current index count:** 239 URL-normalized source records. The core deep-research base list contains 153 distinct normalized URL records; the combined editor index also contains older curated sources, four accessory/clothing supplements, four modular-asset listings, three facial-variant listings and two X costume-design posts. These are source records, not 239 distinct image files. The visual viewer has 239 preview URLs, but external image loading still requires browser verification.
