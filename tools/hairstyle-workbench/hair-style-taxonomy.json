@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "title": "Vocabulario de peinados para IMAGE",
   "language": "es",
   "purpose": "Clasificar piezas y variantes de cabello para un editor manual de personajes. Las etiquetas describen rasgos independientes; no representan una lista de imágenes ni garantizan que cada etiqueta sea un tag oficial de Danbooru.",
@@ -94,6 +94,54 @@
           "tag": "spiky_hair",
           "label": "Puntas / pinchos",
           "kind": "reference_tag"
+        },
+        {
+          "tag": "french_bob",
+          "label": "Bob francés",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
+        },
+        {
+          "tag": "micro_bob",
+          "label": "Microbob",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
+        },
+        {
+          "tag": "long_bob",
+          "label": "Long bob / lob",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
+        },
+        {
+          "tag": "u-shaped_hair",
+          "label": "Corte en U",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
+        },
+        {
+          "tag": "v-shaped_hair",
+          "label": "Corte en V",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
+        },
+        {
+          "tag": "androgynous_haircut",
+          "label": "Corte andrógino",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
+        },
+        {
+          "tag": "blunt_ends",
+          "label": "Puntas rectas",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
+        },
+        {
+          "tag": "jaw_length_hair",
+          "label": "Largo a la mandíbula",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
         }
       ]
     },
@@ -130,6 +178,12 @@
           "tag": "hair_over_one_eye",
           "label": "Pelo sobre un ojo",
           "kind": "reference_tag"
+        },
+        {
+          "tag": "no_bangs",
+          "label": "Frente despejada / sin flequillo",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
         }
       ]
     },
@@ -374,5 +428,11 @@
       "url": "https://safebooru.donmai.us/wiki_pages/twintails",
       "use": "Ejemplo de distinción de dos coletas frente a recogidos parciales."
     }
-  ]
+  ],
+  "recipe_library": {
+    "path": "hairstyle-library.json",
+    "entries": 120,
+    "meaning": "Recetas de diseño y bocetos esquemáticos; no equivale a 120 imágenes PNG disponibles.",
+    "deduplication": "Prohibido fusionar o borrar variantes parecidas automáticamente."
+  }
 }
