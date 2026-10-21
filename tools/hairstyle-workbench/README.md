@@ -49,7 +49,7 @@ El catálogo de bocetos sirve como explorador de diseño. La disponibilidad y ca
 
 ## Colección de referencias reales encontradas en la web
 
-El visor ahora tiene dos pestañas: **120 recetas conceptuales** y **Referencias web y recursos**. Esta segunda pestaña registra 12 fuentes localizadas en la web: siete láminas de referencia visual y cinco fuentes de recursos descargables. Las láminas se muestran desde sus URL originales y se enlazan con la página de origen; no se copian al repositorio ni se presentan como libres de derechos.
+El visor ahora tiene dos pestañas: **120 recetas conceptuales** y **Referencias web y recursos**. Esta segunda pestaña registra 20 fuentes localizadas en la web: referencias visuales femeninas y masculinas, láminas con varias decenas de cortes, vistas laterales/traseras y cinco fuentes de recursos descargables con licencia declarada. Quince entradas incluyen vista previa remota; todas conservan enlace a su fuente y estado de licencia. Las referencias sin permiso comprobado no se copian al repositorio ni se presentan como libres de derechos.
 
 ### Fuentes con archivos/licencias declaradas
 
