@@ -50,7 +50,7 @@ def main():
     if library.get("asset_count")!=len(assets) or len(assets)<1:
         print("Image library asset_count does not match its assets array.",file=sys.stderr); return 1
     requirements = CUTOUT_REQUIREMENTS_PATH.read_text(encoding="utf-8")
-    if "rembg[cpu]==2.0.82" not in requirements:
+    if "rembg[cpu]==2.0.85" not in requirements:
         print("Local anime-cutout dependency is missing or not pinned.", file=sys.stderr); return 1
     full_illustrations = sum(1 for item in assets if isinstance(item, dict) and item.get("kind") == "full_illustration")
     if full_illustrations < 24:
