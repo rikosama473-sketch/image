@@ -12,6 +12,13 @@
 
 
 .stage #maskOverlay{display:none;pointer-events:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2}
+.starter-card{min-width:0;background:#10223b;border:1px solid #304765;border-radius:8px;padding:7px;display:flex;flex-direction:column;gap:6px;overflow:hidden}
+.starter-card img{width:100%;height:150px;object-fit:contain;background:#0a192d;border-radius:5px}
+.starter-card b{font-size:10px;overflow-wrap:anywhere}
+.starter-card small{font-size:8px;color:#a6b8d1;overflow-wrap:anywhere}
+.starter-card .actions{display:grid;grid-template-columns:1fr;gap:5px}
+.starter-card .btn{font-size:9px;padding:7px}
+@media(max-width:520px){.starter-card img{height:120px}}
 .stage #maskOverlay.visible{display:block}
 .stage #maskOverlay.painting{pointer-events:auto;cursor:crosshair;touch-action:none}
 .ai-mask-panel{display:flex;flex-direction:column;gap:9px;border:1px solid #72516d;background:#171b30;border-radius:9px;padding:11px}
@@ -111,6 +118,7 @@
 (function(){
 const $=id=>document.getElementById(id),W=768,H=1280;
 const cats=[
+{id:"starter",label:"Prueba inicial",icon:"▶",pills:["Imágenes internas"]},
 {id:"hair",label:"Cabello",icon:"♧",pills:["Todos","Cortos","Medios","Largos","Recogidos","Accesorios"]},
 {id:"face",label:"Cara",icon:"☻",pills:["Todos","Rostro","Forma","Detalles"]},
 {id:"eyes",label:"Ojos",icon:"◉",pills:["Todos","Expresión","Estilo","Color"]},
@@ -142,7 +150,7 @@ const masks=[
 ];
 const backgrounds=[["Noche","#071426"],["Grafito","#263346"],["Pizarra","#526178"],["Rosa pálido","#f0d5e2"],["Lavanda","#dad1f4"],["Celeste","#c7dff6"],["Crema","#f8efd9"],["Verde suave","#c9e6d7"],["Blanco","#ffffff"],["Gris claro","#e8e4e5"],["Transparente","transparent"]];
 const styles=[{id:"trigger",label:"Trigger",filter:"none"},{id:"madhouse",label:"Madhouse",filter:"saturate(.94) contrast(1.04)"},{id:"classic",label:"Clásico",filter:"saturate(.78)"},{id:"chibi",label:"Chibi",filter:"saturate(1.1) brightness(1.04)"}];
-let state={look:"ponytail",category:"hair",pill:"Todos",background:"#e8e4e5",transparent:false,checker:true,style:"trigger",name:"Pibara",layers:[],selected:"base",lighting:1};
+let state={look:"ponytail",category:"starter",pill:"Todos",background:"#e8e4e5",transparent:false,checker:true,style:"trigger",name:"Pibara",layers:[],selected:"base",lighting:1};
 let pending=null,to=null,drag=null;
 let aiResult=null,aiResults=[],aiSelectedIndex=0,aiBusy=false,aiReferenceDataUrl="",aiReferenceName="";
 let aiSettings={prompt:"",model:"gpt-image-2.5-sunburst",quality:"medium",variants:1,background:"auto",direction:"preserve"};
@@ -175,6 +183,7 @@ function gallery(){
  header();const root=$("content");root.innerHTML="";
  if(state.category==="ai"){aiWorkspace(root);return;}
  if(state.category==="anatomy"){anatomyWorkspace(root);return;}
+ if(state.category==="starter"){starterWorkspace(root);return;}
  if(state.category==="library"){libraryWorkspace(root);return;}
   if(state.category==="color"||state.category==="background"){colors(root);if(state.category==="background")root.insertAdjacentHTML("beforeend",'<div class="field"><label for="lightRange">Iluminación</label><input id="lightRange" type="range" min=".65" max="1.3" step=".01" value="'+state.lighting+'"><output>'+Math.round(state.lighting*100)+'%</output></div>');if($("lightRange"))$("lightRange").oninput=e=>{state.lighting=Number(e.target.value);e.target.nextElementSibling.value=Math.round(state.lighting*100)+"%";render();};return;}
  if(state.category==="hair"){
@@ -194,7 +203,7 @@ function colors(root){root.insertAdjacentHTML("beforeend",'<div class="sectionhe
  root.querySelectorAll("[data-bg]").forEach(b=>b.onclick=()=>{state.background=b.dataset.bg;state.transparent=b.dataset.bg==="transparent";gallery();render();});$("tintRange").oninput=e=>{const l=state.layers.find(x=>x.id===state.selected);if(!l){toast("Seleccioná una capa independiente para cambiar su tono.");return;}l.hue=Number(e.target.value);e.target.nextElementSibling.value=l.hue+"°";render();};
 }
 function renderLayers(){
- const all=[{id:"base",name:activeLook().label,src:activeLook().src,kind:"base",visible:true},...state.layers];$("layerList").innerHTML=all.map(l=>'<button class="layercard '+(l.id===state.selected?"active":"")+'" data-layer="'+l.id+'"><img alt="" src="'+url(l.dataUrl||l.src)+'"><b>'+safe(l.name)+'</b><small>'+safe(l.kind==="base"?"Retrato completo":l.kind==="candidate"?"Máscara beta":l.kind==="ai_result"?"Resultado de IA":l.kind==="anatomy_guide"?"Guía anatómica":l.kind==="manual_mask_layer"?"Pieza separada":"Pieza importada")+'</small>'+(l.kind==="base"?'':'<span class="visibility" data-visible="'+l.id+'">'+(l.visible?"◉":"○")+'</span>')+'</button>').join("");
+ const all=[{id:"base",name:activeLook().label,src:activeLook().src,kind:"base",visible:true},...state.layers];$("layerList").innerHTML=all.map(l=>'<button class="layercard '+(l.id===state.selected?"active":"")+'" data-layer="'+l.id+'"><img alt="" src="'+url(l.dataUrl||l.src)+'"><b>'+safe(l.name)+'</b><small>'+safe(l.kind==="base"?"Retrato completo":l.kind==="candidate"?"Máscara beta":l.kind==="ai_result"?"Resultado de IA":l.kind==="anatomy_guide"?"Guía anatómica":l.kind==="manual_mask_layer"?"Pieza separada":l.kind==="internal_test_overlay"?"Superposición de prueba":"Pieza importada")+'</small>'+(l.kind==="base"?'':'<span class="visibility" data-visible="'+l.id+'">'+(l.visible?"◉":"○")+'</span>')+'</button>').join("");
  $("layerTabs").innerHTML='<button class="layertab '+(state.selected==="base"?"active":"")+'" data-base>Retrato</button>'+state.layers.map(l=>'<button class="layertab '+(l.id===state.selected?"active":"")+'" data-tab="'+l.id+'">'+safe(l.name)+'</button>').join("");
  $("layerList").querySelectorAll("[data-layer]").forEach(b=>b.onclick=e=>{if(e.target.closest("[data-visible]"))return;state.selected=b.dataset.layer;renderLayers();adjust();});
  $("layerList").querySelectorAll("[data-visible]").forEach(b=>b.onclick=e=>{e.stopPropagation();const l=state.layers.find(x=>x.id===b.dataset.visible);if(l)l.visible=!l.visible;render();});
@@ -219,13 +228,89 @@ async function loadImageLibrary(){
  });
  return imageLibraryPromise;
 }
+function starterWorkspace(root){
+ root.innerHTML=
+  '<div class="library-hero"><strong>▶ Prueba inicial con imágenes internas</strong><p>Este banco usa ilustraciones que ya están dentro del repositorio. Cada muestra es un retrato completo de prueba, no una capa de cabello, ojos o ropa. La procedencia y la licencia siguen sin verificarse individualmente.</p></div>'+
+  '<div class="plain"><b>Prueba recomendada:</b> carga un retrato como base; ejecuta la prueba automática de carga, renderizado y conversión PNG; añade otra ilustración como superposición y prueba ocultar, mover, cambiar opacidad, exportar PNG y guardar el proyecto JSON con los controles generales.</div>'+
+  '<div class="library-actions"><span id="starterCount" class="tiny">Cargando las muestras internas…</span><button id="starterReload" class="btn">Recargar muestras</button></div>'+
+  '<div id="starterGrid" class="library-grid"></div>'+
+  '<div id="starterTestStatus" class="notice" role="status"><b>Prueba de funcionamiento</b>Seleccioná una muestra y ejecutá “Probar PNG” para verificar que la imagen se decodifica, aparece en el lienzo y se puede convertir a PNG sin descargar automáticamente el archivo.</div>';
+ const rootElement=$("content"),grid=$("starterGrid");
+ const load=async()=>{
+  grid.innerHTML='<div class="plain">Leyendo imágenes internas…</div>';
+  try{
+   const data=await loadImageLibrary();
+   if(rootElement!==$("content"))return;
+   const all=Array.isArray(data.assets)?data.assets:[];
+   const internal=all.filter(a=>a&&a.kind==="full_illustration"&&/^from-PixAI-/i.test(String(a.path||"")));
+   const samples=(internal.length?internal:all.filter(a=>a&&a.kind==="full_illustration")).slice(0,12);
+   if(!samples.length)throw Error("El catálogo no contiene imágenes internas de ilustración completa.");
+   grid.innerHTML=samples.map(a=>
+    '<article class="starter-card"><img loading="lazy" src="'+safe(url(a.src))+'" alt="Vista previa de '+safe(a.label)+'"><b>'+safe(a.label)+'</b><small>'+safe(a.path)+'</small><span class="library-status">RETRATO COMPLETO · REVISIÓN PENDIENTE</span><div class="actions"><button type="button" class="btn primary" data-starter-base="'+safe(a.id)+'">Usar como base</button><button type="button" class="btn" data-starter-test="'+safe(a.id)+'">Probar PNG</button><button type="button" class="btn" data-starter-overlay="'+safe(a.id)+'">Añadir capa de prueba</button></div></article>'
+   ).join("");
+   $("starterCount").textContent=samples.length+" muestras internas disponibles de "+all.length+" imágenes indexadas.";
+   grid.querySelectorAll("[data-starter-base]").forEach(b=>b.onclick=()=>useLibraryAsset(b.dataset.starterBase,"starter"));
+   grid.querySelectorAll("[data-starter-test]").forEach(b=>b.onclick=()=>runStarterSmokeTest(b.dataset.starterTest));
+   grid.querySelectorAll("[data-starter-overlay]").forEach(b=>b.onclick=()=>addLibraryAssetAsTestLayer(b.dataset.starterOverlay));
+  }catch(e){
+   if(rootElement!==$("content"))return;
+   grid.innerHTML='<div class="plain">No se pudo cargar el catálogo interno. Abrí el editor con start-avatar-maker.bat y volvé a intentarlo.</div>';
+   $("starterCount").textContent=String(e&&e.message||e);
+  }
+ };
+ $("starterReload").onclick=()=>{imageLibraryCache=null;imageLibraryPromise=null;load();};
+ load();
+}
+async function runStarterSmokeTest(id){
+ const result=$("starterTestStatus");
+ if(result)result.innerHTML='<b>Prueba en curso</b>Decodificando la imagen, dibujando el lienzo y preparando la salida PNG…';
+ try{
+  const data=await loadImageLibrary();
+  const asset=data.assets.find(x=>x.id===id);
+  if(!asset)throw Error("La muestra ya no aparece en el catálogo.");
+  const source=await img(asset.src);
+  if(!source.naturalWidth||!source.naturalHeight)throw Error("La imagen se descargó pero el navegador no pudo decodificarla.");
+  useLibraryAsset(id,"starter");
+  await drawCanvas();
+  const blob=await new Promise((resolve,reject)=>{
+   try{$("canvas").toBlob(b=>b?resolve(b):reject(Error("El navegador no devolvió un PNG.")),"image/png");}
+   catch(e){reject(e);}
+  });
+  if(!blob||blob.type!=="image/png"||blob.size<=0)throw Error("La conversión de lienzo a PNG produjo una salida vacía o inválida.");
+  const msg="PASS · Imagen "+source.naturalWidth+"×"+source.naturalHeight+" cargada; lienzo dibujado; PNG generado ("+Math.max(1,Math.round(blob.size/1024))+" KiB). No se descargó ningún archivo.";
+  const current=$("starterTestStatus");
+  if(current)current.innerHTML='<b>✓ Prueba superada</b>'+safe(msg);
+  status("Prueba interna aprobada: carga, renderizado y exportabilidad PNG.",false);
+  toast("Prueba PNG superada: "+source.naturalWidth+"×"+source.naturalHeight);
+ }catch(e){
+  const msg=String(e&&e.message||e);
+  const current=$("starterTestStatus");
+  if(current)current.innerHTML='<b>✕ Prueba fallida</b>'+safe(msg);
+  status("Prueba interna fallida: "+msg,true);
+  toast("No se completó la prueba: "+msg.slice(0,140));
+ }
+}
+async function addLibraryAssetAsTestLayer(id){
+ try{
+  const data=await loadImageLibrary(),asset=data.assets.find(x=>x.id===id);
+  if(!asset)throw Error("No se encontró la ilustración elegida.");
+  const source=await img(asset.src);
+  if(!source.naturalWidth||!source.naturalHeight)throw Error("No se pudo decodificar la imagen interna.");
+  const scale=Math.min(W*.62/source.naturalWidth,H*.58/source.naturalHeight);
+  const w=Math.round(source.naturalWidth*scale),h=Math.round(source.naturalHeight*scale);
+  const layer={id:"internal-test-"+Date.now(),assetId:asset.id,name:"Prueba completa · "+asset.label,category:"test",group:null,src:asset.src,kind:"internal_test_overlay",x:Math.round((W-w)/2),y:Math.round((H-h)/2),w,h,opacity:.58,hue:0,visible:true,order:state.layers.length,status:"test_full_illustration"};
+  state.layers.push(layer);state.selected=layer.id;state.category="starter";state.pill="Imágenes internas";
+  renderNav();gallery();await render();
+  toast("Superposición de prueba añadida. Probá opacidad, posición, visibilidad, orden y eliminar.");
+ }catch(e){toast("No se pudo añadir la capa de prueba: "+String(e&&e.message||e));}
+}
 function libraryWorkspace(root){
  root.innerHTML=
-  '<div class="library-hero"><strong>▦ Biblioteca local de ilustraciones</strong><p>Catálogo de 759 imágenes rasterizadas presentes en el repositorio. Buscá por nombre o ruta y cargá una imagen como retrato base. La procedencia y los permisos se muestran por separado: un archivo local no implica licencia confirmada.</p></div>'+
+  '<div class="library-hero"><strong>▦ Biblioteca local de ilustraciones</strong><p>Catálogo de imágenes rasterizadas presentes en el repositorio. Buscá por nombre o ruta y cargá una imagen como retrato base. La procedencia y los permisos se muestran por separado: un archivo local no implica licencia confirmada.</p></div>'+
   '<div class="filterrow"><input id="librarySearch" class="search" placeholder="Buscar nombre, archivo o procedencia…" aria-label="Buscar en biblioteca"><select id="libraryReview" class="select"><option value="all">Todas</option><option value="origin">Procedencia pendiente</option><option value="license">Licencia revisada</option><option value="training">Permiso de entrenamiento</option></select></div>'+
   '<div class="library-actions"><span id="libraryCount" class="tiny">Cargando biblioteca…</span><button id="libraryReload" class="btn">Actualizar catálogo</button></div>'+
   '<div id="libraryGrid" class="library-grid"></div><div class="library-actions"><span id="libraryPage" class="tiny"></span><button id="libraryMore" class="btn primary">Cargar más imágenes</button></div>'+
-  '<div class="anatomy-tip"><b>Importante:</b> la biblioteca registra 759 archivos, pero las pistas de nombres no certifican a qué anime pertenecen ni sus derechos. No se usa nada como capa independiente ni como material de entrenamiento sin una revisión propia.</div>';
+  '<div class="anatomy-tip"><b>Importante:</b> la biblioteca registra archivos del repositorio, pero las pistas de nombres no certifican a qué anime pertenecen ni sus derechos. No se usa nada como capa independiente ni como material de entrenamiento sin una revisión propia.</div>';
  const grid=$("libraryGrid");
  let allAssets=[],filtered=[],page=1;
  const search=$("librarySearch"),review=$("libraryReview");
@@ -264,12 +349,12 @@ function libraryWorkspace(root){
  $("libraryReload").onclick=()=>{imageLibraryCache=null;imageLibraryPromise=null;load();};
  load();
 }
-function useLibraryAsset(id){
+function useLibraryAsset(id,returnCategory="hair"){
  if(!imageLibraryCache)return;
  const asset=imageLibraryCache.assets.find(x=>x.id===id);if(!asset)return;
  let look=looks.find(x=>x.id===asset.id);
  if(!look){look={id:asset.id,label:asset.label,src:asset.src,render:asset.src,tags:["Todos"],libraryPath:asset.path,sourceReview:asset.license_review};looks.push(look);}
- state.look=look.id;state.selected="base";state.category="hair";state.pill="Todos";
+ state.look=look.id;state.selected="base";state.category=returnCategory;state.pill=returnCategory==="starter"?"Imágenes internas":"Todos";
  renderNav();render();gallery();
  toast("Imagen cargada como retrato base. No se ha certificado su procedencia ni licencia.");
 }
