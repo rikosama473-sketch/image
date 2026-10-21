@@ -31,10 +31,18 @@ Equipo objetivo declarado: AMD Ryzen 5 5600G, 16 GB RAM y gráficos Radeon integ
 
 ## Validación
 
-- Base preexistente: el texto de PR #19 reportaba tres trabajos CI verdes para un commit anterior de su rama; eso no sustituye la comprobación de este nuevo commit.
-- Este conector permite leer/escribir GitHub y consultar ejecuciones/estados, pero no ejecuta directamente las pruebas unitarias en el equipo del usuario.
-- Después de publicar este bloque, revisar los jobs de GitHub Actions asociados al nuevo commit. La navegación estática se considera validada únicamente si la nueva prueba pasa en CI.
+- Commit de código validado: `846d2eb89c4ac128e4a3f2472eebd2b90dceb313`.
+- GitHub Actions: [ejecución 39624819395](https://github.com/rikosama473-sketch/image/actions/runs/39624819395), conclusión `success`.
+- La ejecución aprobó los validadores del constructor, taller manual de peinados y biblioteca visual, el test de navegación integrada, la validación del puente de IA, la sintaxis y los diagnósticos de recorte.
+- La prueba `tests/test_studio_navigation.py` se ejecuta ahora desde `.github/workflows/validate-avatar-maker.yml`; las rutas forman parte de las condiciones de activación del workflow.
 - No se ejecutó una generación real de difusión ni se midió RAM/tiempo/VRAM en el Ryzen 5 5600G durante este bloque.
+
+## Estado de integración con `main`
+
+- Comparación comprobada en esta sesión: `main` en `efb47f05b0906472062ff50b2e6fe575445ab38e`; la rama de trabajo estaba 244 commits por delante y 5 por detrás.
+- `data/character-prompt-registry.json` tiene cambios en ambos lados de la divergencia. Se debe reconciliar por contenido, no reemplazar un archivo completo a ciegas.
+- `main` también contiene recursos generados recientes y `trabajo aparte/diseño.md` que no aparecen en esta rama. Preservarlos y revisar su procedencia antes de preparar la integración.
+- GitHub continúa mostrando el PR #19 como `mergeable=false`. No se ha fusionado el PR ni movido `main`; la comparación anterior confirma el solapamiento en el registro, pero no atribuye sin más todos los conflictos a un único archivo.
 
 ## Problemas y límites conocidos
 
