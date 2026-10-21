@@ -22,9 +22,9 @@ Después de escoger una muestra, probá también **Exportar PNG**, **Guardar pro
 
 ## Recorte profesional y capas con transparencia
 
-### Recorte de fondo local (píxeles originales)
+### Recorte de fondo local (sin regeneración del personaje)
 
-La acción **Eliminar fondo conservando píxeles** usa `rembg` con `isnet-anime`, una segmentación especializada para personajes anime. La alternativa `birefnet-portrait` sirve como comparación. El resultado debe tener canal alfa real, mantener las dimensiones del lienzo y pasa como capa candidata sin destruir la base. El recorte se ejecuta en el equipo local; no envía la imagen a una API generativa. La primera ejecución descarga los pesos del modelo seleccionado y los guarda en la caché local. El backend reutiliza la sesión del modelo y rechaza salidas que cambien las dimensiones o no tengan píxeles transparentes.
+La acción **Quitar fondo sin redibujar el personaje** usa `rembg` con `isnet-anime`, una segmentación especializada para personajes anime. La alternativa `birefnet-portrait` sirve como comparación. El resultado debe tener canal alfa real, mantener las dimensiones del lienzo y pasa como capa candidata sin destruir la base. El servicio es local y no envía la imagen a una API generativa. La máscara y la geometría se preservan; la decontaminación puede ajustar el color RGB de los bordes para reducir halos. La primera ejecución descarga los pesos del modelo y los guarda en la caché local. El backend reutiliza la sesión y rechaza salidas que cambien las dimensiones o no tengan transparencia. La dependencia fijada requiere Python 3.11, 3.12 o 3.13; el instalador selecciona una versión disponible.
 
 Instalación opcional: ejecutá `tools/avatar-maker/install-avatar-cutout.bat` en Windows o, desde la raíz del repositorio:
 
