@@ -257,5 +257,7 @@
     "Keep complete illustrations, references, and isolated cutout candidates as separate kinds.",
     "Use stable IDs and preserve source URL, creator, license status, tags, and review status.",
     "Generated style records are recipes, not generated image files."
-  ]
+  ],
+  "contact_sheet_generator": "scripts/build_visual_contact_sheets.py",
+  "library_ui": "tools/visual-reference-library/index.html"
 }
