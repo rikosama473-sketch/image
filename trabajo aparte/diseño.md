@@ -32,7 +32,7 @@ La biblioteca de IMAGE tiene una segunda vista orientada a búsqueda rápida. El
 - [Auditoría de bibliografía](./auditoria-bibliografia-censo-waifu-2026-10-21.md): URLs de los sitios consultados.
 - [Atlas inicial de peinados y constructor de prompts](./atlas-peinados-interactivo.html): interfaz anterior enfocada en recetas de peinados y prompts para PixAI.
 
-**Control de calidad:** 226 registros tienen URL de preview, pero las miniaturas aún no se han validado una por una dentro del navegador final; algunas URLs remotas podrían caducar o no cargar. La lista de 230 direcciones es única por normalización de URL, no por hash visual: el mismo dibujo alojado en dos plataformas puede seguir apareciendo más de una vez. No se han descargado o recortado las imágenes de todos los sitios.
+**Control de calidad:** 230 registros tienen URL de preview, pero las miniaturas aún no se han validado una por una dentro del navegador final; algunas URLs remotas podrían caducar o no cargar. La lista de 230 direcciones es única por normalización de URL, no por hash visual: el mismo dibujo alojado en dos plataformas puede seguir apareciendo más de una vez. No se han descargado o recortado las imágenes de todos los sitios.
 
 **Placa monocroma:** 0 referencias cuadradas en blanco y negro tienen licencia de reutilización confirmada. Las búsquedas monocromas son candidatas, no assets terminados. Las páginas comerciales pueden permitir el uso de los resultados de arte mientras prohíben redistribuir los PSD/PNG fuente.
 
