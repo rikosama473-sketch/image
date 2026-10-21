@@ -12,6 +12,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "tools" / "hairstyle-workbench" / "index.html"
 TAXONOMY = ROOT / "tools" / "hairstyle-workbench" / "hair-style-taxonomy.json"
+LIBRARY_JSON = ROOT / "tools" / "hairstyle-workbench" / "hairstyle-library.json"
+LIBRARY_JS = ROOT / "tools" / "hairstyle-workbench" / "hairstyle-library.js"
 
 
 def fail(message: str) -> None:
@@ -23,6 +25,10 @@ def main() -> None:
         fail(f"Missing page: {PAGE}")
     if not TAXONOMY.is_file():
         fail(f"Missing taxonomy: {TAXONOMY}")
+    if not LIBRARY_JSON.is_file():
+        fail(f"Missing recipe library: {LIBRARY_JSON}")
+    if not LIBRARY_JS.is_file():
+        fail(f"Missing recipe viewer script: {LIBRARY_JS}")
 
     html = PAGE.read_text(encoding="utf-8")
     required = (
@@ -36,6 +42,7 @@ def main() -> None:
         "pieceTags",
         "tools/avatar-maker/assets/catalog.json",
         "no llama a ninguna IA ni a una API",
+        'src="./hairstyle-library.js"',
     )
     missing = [marker for marker in required if marker not in html]
     if missing:
@@ -47,6 +54,10 @@ def main() -> None:
     found = [marker for marker in forbidden if marker in html]
     if found:
         fail("The no-AI workbench contains provider/API code: " + ", ".join(found))
+    viewer = LIBRARY_JS.read_text(encoding="utf-8")
+    viewer_forbidden = [marker for marker in forbidden if marker in viewer]
+    if viewer_forbidden:
+        fail("The recipe viewer contains provider/API code: " + ", ".join(viewer_forbidden))
 
     scripts = re.findall(r"<script>([\s\S]*?)</script>", html)
     if not scripts:
@@ -65,6 +76,39 @@ def main() -> None:
             fail("JavaScript syntax error: " + (result.stderr.strip() or result.stdout.strip()))
     finally:
         temporary_script.unlink(missing_ok=True)
+
+    result = subprocess.run(
+        ["node", "--check", str(LIBRARY_JS)],
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if result.returncode:
+        fail("Recipe viewer JavaScript syntax error: " + (result.stderr.strip() or result.stdout.strip()))
+
+    try:
+        library = json.loads(LIBRARY_JSON.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        fail(f"Recipe library JSON is invalid: {exc}")
+    recipes = library.get("recipes")
+    if library.get("schema_version") != 1 or not isinstance(recipes, list) or len(recipes) != 120:
+        fail("Recipe library must have schema version 1 and exactly 120 recipes.")
+    recipe_ids = [recipe.get("id") for recipe in recipes]
+    recipe_names = [recipe.get("name") for recipe in recipes]
+    if len(set(recipe_ids)) != 120 or len(set(recipe_names)) != 120:
+        fail("Recipe IDs and names must be unique; similar designs must remain separately stored.")
+    allowed_slots = {"haircut", "bangs", "sidelocks", "tie", "ahoge", "accessory"}
+    for recipe in recipes:
+        components = recipe.get("components")
+        if recipe.get("visual_status") != "schematic_only" or recipe.get("do_not_deduplicate") is not True:
+            fail(f"Recipe {recipe.get('id')} is missing schematic-only or retention metadata.")
+        if not isinstance(components, list) or not any(part.get("slot") == "haircut" for part in components):
+            fail(f"Recipe {recipe.get('id')} must include a base haircut component.")
+        if any(part.get("slot") not in allowed_slots or not part.get("tags") for part in components):
+            fail(f"Recipe {recipe.get('id')} contains a component without a supported slot or tags.")
+    requested_combo = ("short_hair", "long_sidelocks", "side_ponytail", "ahoge")
+    if not any(all(tag in recipe.get("tags", []) for tag in requested_combo) for recipe in recipes):
+        fail("The example combination short hair + long side lock + side ponytail + ahoge is missing.")
 
     try:
         taxonomy = json.loads(TAXONOMY.read_text(encoding="utf-8"))
@@ -85,7 +129,7 @@ def main() -> None:
 
     print(
         "PASS: manual hairstyle workbench, inline JavaScript, local-only behavior, "
-        f"and {len(tags)} tags across {len(groups)} taxonomy groups."
+        f"{len(tags)} taxonomy tags, {len(recipes)} unique recipes, and valid viewer JavaScript."
     )
 
 
