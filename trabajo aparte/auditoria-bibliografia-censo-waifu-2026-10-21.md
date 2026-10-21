@@ -159,3 +159,26 @@ The deep-research report emitted 157 citation URL entries; there are 157 unique 
 155. https://www.deviantart.com/lolioverflow/art/Reference-Sheet-Nekomimi-Wizard-985022121
 156. https://www.deviantart.com/ktchuuu/art/Vtuber-Reference-Sheet-ktchuuu-1030210831
 157. https://www.deviantart.com/emilychanart/art/Reference-sheet-character-design-1358635626
+
+
+## Supplementary sources added after the original deep-research citation list
+
+These sources were added during the follow-up category/asset audit on 21 October 2026. They supplement (they do not replace) the 157 URL entries returned by the deep-research citation response. Some are product/listing pages or editorial/search pages, not clean assets; the license and author status is stated in the corresponding index record.
+
+- [PixAI — mature adult hanfu three-view detail sheet](https://pixai.art/en/artwork/2030382830012815414)
+- [SKIMA — costume design and detail-callout gallery](https://skima.jp/gallery?id=223959)
+- [Pinterest — anime crowns and tiaras discovery page (creator pending)](https://www.pinterest.com/ideas/anime-crown-drawing/893994423745/)
+- [Syntelligence — soft eyelash drawing guide](https://syntelligence.jp/article/57481)
+- [Clip Studio — female accessories drawing tutorial](https://www.clipstudio.net/oekaki/archives/149504)
+- [Pixivision — characters wearing headbands](https://pixivision.net/en/a/7373)
+- [PixAI — pirate accessories / mature woman](https://pixai.art/artwork/2059352409018766871)
+- [PixAI — pirate bandana, corset and lace blouse](https://pixai.art/artwork/1988983784843677962)
+- [PixAI — gothic kimono with ruffles](https://pixai.art/artwork/2054448432647548872)
+- [BOOTH — VRoid Female Anime Outfit #1](https://booth.pm/en/items/4494132)
+- [Itch.io — Build a character [REWORKED], 469 modular PNGs](https://maellemarylloup.itch.io/chibi-character-basics-reworked)
+- [Itch.io — FREE Anime girl Character Sprite by blackbunney](https://blackbunney.itch.io/free-anime-girl-character-sprite)
+- [Itch.io — Customizable Visual Novel Cute Character Asset](https://sharranghaeyo.itch.io/020222)
+- [Itch.io — Hiyori free female character sprite](https://potat0master.itch.io/free-character-sprite-for-visual-novels-hiyori)
+- [Itch.io — Pung Lone Wolf layered female character sprite alternate storefront](https://punglonewolf.itch.io/girl-sprite-psd-1)
+
+**Warning:** this appendix provides source traceability, not blanket reuse permission. Any downloadable asset must be checked against its exact item license and redistribution conditions before being included in a distributable editor.
