@@ -27,7 +27,10 @@ class AlphaMetricsTests(unittest.TestCase):
         result = cutout.alpha_metrics(image)
         self.assertEqual(result["pixels"], 100)
         self.assertEqual(result["transparent_pixels"], 30)
-        self.assertEqual(result["semi_transparent_pixels"], 20)
+        self.assertEqual(result["partial_alpha_pixels"], 20)
+        self.assertEqual(result["transition_alpha_65_249_pixels"], 20)
+        self.assertEqual(result["near_opaque_250_254_pixels"], 0)
+        self.assertEqual(result["near_opaque_250_254_percent"], 0.0)
         self.assertEqual(result["opaque_pixels"], 50)
         self.assertTrue(result["alpha_is_non_binary"])
         self.assertTrue(result["alpha_has_transparency"])
@@ -39,6 +42,15 @@ class AlphaMetricsTests(unittest.TestCase):
         self.assertEqual(preview.size, image.size)
         self.assertEqual(preview.mode, "RGB")
         self.assertNotEqual(preview.getpixel((0, 0)), preview.getpixel((12, 0)))
+
+    def test_composite_on_preserves_size_and_shows_transparent_background(self):
+        image = Image.new("RGBA", (48, 48), (255, 0, 0, 0))
+        image.putpixel((24, 24), (255, 0, 0, 255))
+        preview = cutout.composite_on(image, (0, 0, 0))
+        self.assertEqual(preview.size, image.size)
+        self.assertEqual(preview.mode, "RGB")
+        self.assertEqual(preview.getpixel((0, 0)), (0, 0, 0))
+        self.assertEqual(preview.getpixel((24, 24)), (255, 0, 0))
 
     def test_repo_path_rejects_parent_traversal(self):
         with self.assertRaises(SystemExit):
