@@ -664,10 +664,11 @@ function refreshAIStatus(){
 }
 async function baseImageDataUrl(){
  const can=document.createElement("canvas");can.width=W;can.height=H;
- const ctx=can.getContext("2d",{alpha:true}),base=await img(activeLook().src),sty=styles.find(x=>x.id===state.style);
- ctx.save();ctx.filter=(sty&&sty.filter!=="none"?sty.filter+" ":"")+"brightness("+state.lighting+")";
+ const ctx=can.getContext("2d",{alpha:true});
+ const base=await img(activeLook().src);
+ // Segmentation must not bake display filters or brightness into the source pixels.
  if(base.naturalWidth===W&&base.naturalHeight===H)ctx.drawImage(base,0,0);else contain(ctx,base);
- ctx.restore();return can.toDataURL("image/png");
+ return can.toDataURL("image/png");
 }
 function aiCutoutPromptForUser(text){
  return "Actúa como artista técnico senior de producción anime 2D, especializado en capas limpias para un editor de personajes. Instrucción del componente solicitado: "+text.trim()+"\n"+
