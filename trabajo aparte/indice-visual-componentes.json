@@ -9806,12 +9806,14 @@
     "pixiv_embed_previews": 5,
     "pixai_source_entries": 40,
     "research_report_categorized_records": 160,
-    "research_records_with_source_url": 154,
-    "research_unique_source_urls": 153,
+    "research_records_with_url": 154,
+    "research_base_distinct_normalized_urls": 153,
     "research_urls_merged_into_existing": 2,
-    "new_research_url_entries_added": 151,
-    "research_alias_records_without_repeated_url": 6,
-    "accessories_gap_supplement_records": 4,
+    "research_new_records_added_to_curated_index": 151,
+    "research_alias_records_without_url": 6,
+    "later_supplement_sources_before_asset_shortlist": 4,
+    "asset_product_records_added_oct21": 4,
+    "asset_product_alternate_store_aliases": 1,
     "pixai_tag_browsers": 8,
     "category_record_counts": {
       "hair": 32,
@@ -9822,7 +9824,7 @@
       "eyes_hair": 1,
       "hair_accessories": 3,
       "hair_eyes": 1,
-      "character_reference": 4,
+      "character_reference": 7,
       "accessories_clothing": 1,
       "female_hair": 28,
       "lolita_clothing": 14,
@@ -9835,7 +9837,8 @@
       "anime_eyes": 15,
       "multi_component_reference": 18,
       "booth_products": 2,
-      "itch_io_assets": 7
+      "itch_io_assets": 7,
+      "hair_clothing_accessories": 1
     },
     "platform_record_counts": {
       "PixAI": 40,
@@ -9866,7 +9869,7 @@
       "Thousand Lashes": 1,
       "CharacterGen": 1,
       "BOOTH.pm": 2,
-      "Itch.io": 7
+      "Itch.io": 11
     },
     "thumbnail_kinds": {
       "official_platform_preview": 33,
@@ -9878,21 +9881,14 @@
       "official_store_preview": 6,
       "tutorial_preview": 1,
       "source_page_metadata_preview_candidate": 147,
-      "official_itch_asset_page_cover": 4,
+      "official_itch_asset_page_cover": 8,
       "external_search_result_preview": 1
     },
     "verified_clean_square_plates": 0,
-    "index_note": "The structured index combines 75 curated entries, 151 new source URLs from the deep-research census (two matched existing entries and were merged), and four later supplement sources, for 230 entries. The deep-research body has 160 categorized records, 154 URL fields (including one URL that occurs twice across categories), 153 distinct normalized URLs, and six cross-reference/alias rows without their own URL. Four pairs are separately flagged as the same underlying artwork under different identifiers/URLs.",
-    "thumbnail_status_note": "All 230 records have thumbnail URLs. 225 are direct image/preview URLs, including static Pixivision cover images, and 5 use Pixiv artwork.php/decorate.php embed endpoints. The URLs have not all been visually loaded inside the final HTML browser; preview URLs can expire or be blocked. A URL is not proof of a successful visual render.",
-    "deduplication_note": "URL-level normalization only. The deep-research report flags four pairs as duplicate underlying artworks, so 230 source records are not necessarily 230 distinct pictures. No cross-platform image-hash or perceptual deduplication pass has been completed.",
-    "license_note": "Use rights and distribution rights are separate. The Itch/BOOTH records marked modular are references for architecture; their exact terms may still prohibit repacking the source layers in a distributed character-editor. No raw assets were copied into IMAGE.",
-    "source_asset_shortlist_entries": 10,
-    "latest_additions": [
-      "EXT-IT-008",
-      "EXT-IT-009",
-      "EXT-IT-010",
-      "EXT-IT-011"
-    ]
+    "index_note": "This is a 234-record index of source URLs and storefront pages; it is not a library of 234 unique images or licensed PNG assets. Build-up: 75 curated records + 151 new deep-census URLs after two matches merged + 4 accessory/clothing supplements + 4 modular asset listings = 234. The core deep-research body has 160 categorized rows and 153 normalized URL records; it notes four underlying-artwork duplicate pairs across different URLs, so no unique-image count is claimed.",
+    "thumbnail_status_note": "All 234 source records have thumbnail_url fields. 229 are direct image/preview URL candidates; 5 are Pixiv artwork.php/decorate.php embed endpoints. None of the 234 has been visually confirmed one-by-one in the final browser UI because the preview service failed to render through the available network. A recorded preview URL does not guarantee it will load for every user.",
+    "deduplication_note": "Source URL normalization only. The report flags four pairs as duplicate underlying artwork under different URLs, and one creator/product has two store pages recorded as alternate_source_urls. No cross-platform perceptual/image-hash deduplication has been done.",
+    "license_note": "Publicly viewable and commercial-use-allowed are not equivalent to permission to repackage source files inside a distributed editor. Terms may forbid redistribution even when commercial use in an end product is permitted. The four newly indexed asset listings are research candidates only; no source file was copied into IMAGE."
   },
   "pixai_tag_browsers": [
     {
