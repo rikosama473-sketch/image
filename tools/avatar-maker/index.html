@@ -235,12 +235,12 @@ function starterWorkspace(root){
   '<div class="library-actions"><span id="starterCount" class="tiny">Cargando las muestras internas…</span><button id="starterReload" class="btn">Recargar muestras</button></div>'+
   '<div id="starterGrid" class="library-grid"></div>'+
   '<div id="starterTestStatus" class="notice" role="status"><b>Prueba de funcionamiento</b>Seleccioná una muestra y ejecutá “Probar PNG” para verificar que la imagen se decodifica, aparece en el lienzo y se puede convertir a PNG sin descargar automáticamente el archivo.</div>';
- const rootElement=$("content"),grid=$("starterGrid");
+ const grid=$("starterGrid");
  const load=async()=>{
   grid.innerHTML='<div class="plain">Leyendo imágenes internas…</div>';
   try{
    const data=await loadImageLibrary();
-   if(rootElement!==$("content"))return;
+   if(state.category!=="starter")return;
    const all=Array.isArray(data.assets)?data.assets:[];
    const internal=all.filter(a=>a&&a.kind==="full_illustration"&&/^from-PixAI-/i.test(String(a.path||"")));
    const samples=(internal.length?internal:all.filter(a=>a&&a.kind==="full_illustration")).slice(0,12);
