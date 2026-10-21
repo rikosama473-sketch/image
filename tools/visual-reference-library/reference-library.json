@@ -249,6 +249,85 @@
       ],
       "description": "Lámina de múltiples siluetas de cabello masculino identificadas con números; conviene registrar cada corte como una ficha independiente tras revisar la lámina.",
       "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-board-hair-008",
+      "title": "Hair references — tablero Pinterest",
+      "kind": "pinterest_board",
+      "category": "hair",
+      "image_url": "",
+      "source_url": "https://ar.pinterest.com/spacegirl707/hair-references/",
+      "creator": "spacegirl707 (tablero de varios autores)",
+      "license_status": "reference_only_unverified",
+      "usage": "Usar para descubrir imágenes. Abrir cada pin y comprobar el autor original y la licencia antes de extraer una pieza.",
+      "tags": [
+        "hair",
+        "discovery_board",
+        "hair_reference",
+        "sketch",
+        "silhouette"
+      ],
+      "description": "Tablero de Pinterest con ideas de referencia de cabello y dibujo; cada pin debe tener su propia ficha y procedencia.",
+      "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-board-hair-009",
+      "title": "Referencia anime cabello — 100 ideas",
+      "kind": "pinterest_board",
+      "category": "hair",
+      "image_url": "",
+      "source_url": "https://ar.pinterest.com/viktorsuarez9/referencia-anime-cabello/",
+      "creator": "viktorsuarez9 (tablero de varios autores)",
+      "license_status": "reference_only_unverified",
+      "usage": "Tablero de descubrimiento, no paquete de assets descargable. Las fuentes originales se registran por pin.",
+      "tags": [
+        "hair",
+        "anime_hair",
+        "bangs",
+        "cut",
+        "style_discovery"
+      ],
+      "description": "Colección amplia de referencias de cabello anime. Revisar por separado cortes, flequillos y mechones.",
+      "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-board-mixed-010",
+      "title": "Bases, ojos y cabello anime — tablero",
+      "kind": "pinterest_board",
+      "category": "mixed",
+      "image_url": "",
+      "source_url": "https://ar.pinterest.com/nemurin15/bases-ojos-cabello-anime-y-mas/",
+      "creator": "nemurin15 (tablero de varios autores)",
+      "license_status": "reference_only_unverified",
+      "usage": "Descubrimiento de referencias. No asumir que cada pin está autorizado para redistribución, extracción o entrenamiento.",
+      "tags": [
+        "eyes",
+        "hair",
+        "face",
+        "bases",
+        "discovery_board"
+      ],
+      "description": "Tablero mixto para encontrar ojos, bases faciales y cabello. Separar cada imagen útil en su propia ficha visual.",
+      "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-board-hair-011",
+      "title": "Pelo — referencia para dibujos",
+      "kind": "pinterest_board",
+      "category": "hair",
+      "image_url": "",
+      "source_url": "https://ar.pinterest.com/marysoldelpilarrodriguez/pelo-referencia-para-dibujos/",
+      "creator": "marysoldelpilarrodriguez (tablero de varios autores)",
+      "license_status": "reference_only_unverified",
+      "usage": "Referencia de descubrimiento; verificar autor original y permiso de uso por cada imagen.",
+      "tags": [
+        "hair",
+        "drawing_reference",
+        "hair_shapes",
+        "silhouette"
+      ],
+      "description": "Tablero de referencias para dibujo de cabello, útil para ampliar futuras categorías visuales.",
+      "review_status": "unreviewed"
     }
   ],
   "rules": [
