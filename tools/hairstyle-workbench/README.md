@@ -47,22 +47,33 @@ Al pulsar **Probar en el lienzo**, el editor activa las piezas reales que puede 
 
 El catálogo de bocetos sirve como explorador de diseño. La disponibilidad y calidad de un peinado real depende de tener el recorte PNG correcto, la transparencia limpia, las proporciones alineadas y la revisión visual del recurso. Las máscaras candidatas existentes continúan marcadas como pendientes hasta revisarlas.
 
-## Colección de referencias reales encontradas en la web
+## Tu estilo visual: anime 2D de producción, tipo Madhouse / Trigger
 
-El visor ahora tiene dos pestañas: **120 recetas conceptuales** y **Referencias web y recursos**. Esta segunda pestaña registra 20 fuentes localizadas en la web: referencias visuales femeninas y masculinas, láminas con varias decenas de cortes, vistas laterales/traseras y cinco fuentes de recursos descargables con licencia declarada. Quince entradas incluyen vista previa remota; todas conservan enlace a su fuente y estado de licencia. Las referencias sin permiso comprobado no se copian al repositorio ni se presentan como libres de derechos.
+**El criterio principal es la coincidencia de dibujo, no el color.** El visor se abre ahora directamente en una galería de referencias monocromáticas o line art de anime de producción. Prioriza contornos legibles, siluetas limpias, mechones agrupados y vistas de modelo útiles para separar cabello en capas.
 
-### Fuentes con archivos/licencias declaradas
+El archivo [`hairstyle-web-references.json`](hairstyle-web-references.json) registra 33 fuentes, pero el visor muestra de inicio solo las 15 marcadas como **anclas Madhouse/Trigger o line art anime compatible**. Las fuentes de sprites, pixel art y estilos ajenos quedan fuera del conjunto principal; existe un filtro explícito para mostrarlas si hiciera falta. No se usa el color del cabello como criterio de búsqueda.
 
-- [Anime Girl and Boy Portraits — OpenGameArt](https://opengameart.org/content/anime-girl-and-boy-portraits): el autor declara CC0 y describe un XCF de GIMP con capas editables, dos cortes femeninos y dos masculinos, y opciones de coleta. [ZIP](https://opengameart.org/sites/default/files/allanime-11-28-2020.zip).
-- [Hair Animation — OpenGameArt](https://opengameart.org/content/hair-animation): CC0 declarado; contiene PSD y GIF de muestras de cabello corto/largo.
-- [Hair for 24x32 bases — OpenGameArt](https://opengameart.org/content/hair-for-24x32-bases): CC0 declarado; nueve peinados de sprite, incluidos rizado y trenza. Es pixel art pequeño, no una pieza anime HD.
-- [Anime LPC Hair — OpenGameArt](https://opengameart.org/content/anime-lpc-hair): CC-BY 3.0; conservar atribución.
-- [Hair for male and female anime base sprites — OpenGameArt](https://lpc.opengameart.org/content/hair-for-male-and-female-anime-base-sprites): la página enumera GPL-2.0, GPL-3.0, CC-BY-3.0 y CC-BY-SA-3.0. Revisar la licencia elegida y atribuir al autor antes de redistribuir.
+### Referencias prioritarias del lenguaje de dibujo
 
-Estos son puntos de partida para importar y separar capas, no una afirmación de que todos los archivos ya están extraídos, alineados o aprobados para el estilo final. La pestaña identifica cada recurso, su licencia declarada, URL de origen y si es una referencia o un archivo descargable.
+- [Trigger — Kill la Kill, modelo y bocetos de cabello](https://characterdesignreferences.com/art-of-animation-6/art-of-kill-la-kill): contorno angular, mechones direccionales y siluetas expresivas.
+- [Trigger — Little Witch Academia, giro de cabeza](https://characterdesignreferences.com/art-of-animation-8/art-of-little-witch-academia): corte corto en vistas frontal, lateral y trasera.
+- [Trigger — Little Witch Academia, cabello largo y ondas](https://characterdesignreferences.com/art-of-animation-8/art-of-little-witch-academia): volumen de pelo largo, caída y curvas por grupos.
+- [Madhouse — Perfect Blue, hojas de modelo](https://characterdesignreferences.com/art-of-animation-3/perfect-blue): cabello corto y largo desde distintos ángulos; útil para mantener la silueta constante.
+- [Anime TV — A Certain Scientific Railgun](https://characterdesignreferences.com/art-of-animation-8/art-of-a-certain-scientific-railgun): cabello largo recogido, mechones frontales y vistas laterales.
+- [Anime TV — Girls und Panzer](https://characterdesignreferences.com/art-of-animation-9/art-of-girls-und-panzer): bob y contorno de mandíbula desde varias direcciones.
+- [Guía line art de unos 50 peinados](https://www.pinterest.com/pin/569494315363825774/): fuente complementaria para descubrir variedad de cortes sin depender del color.
+- [Comparación de cortes en line art](https://syntelligence.jp/article/57539): cabello corto, largo y coletas dobles sobre cabezas consistentes.
 
-### Referencias visuales sin permiso de reutilización confirmado
+Las hojas de producción y referencias de series están protegidas por sus titulares. Se enlazan para estudiar lenguaje de dibujo y continuidad, no para copiar o redistribuir los originales. Las miniaturas se cargan desde sus fuentes: si un sitio cambia la URL o bloquea la vista previa, el visor ofrece un enlace para abrir la fuente original.
 
-La colección incluye láminas de variantes femeninas, masculinas, cortes cortos, mechones, coletas, trenzas y bob/hime/wolf cut. Sus miniaturas son enlaces de referencia remotos; la etiqueta **No verificada; referencia visual únicamente** significa que se pueden estudiar para descubrir diseños, pero no deben copiarse, descargarse para redistribución o transformarse en recortes integrados sin verificar permisos con quien tenga los derechos.
+### Cómo usar el filtro
 
-El próximo paso de la colección real es descargar los paquetes que permiten reutilización, extraer sus capas de cabello, normalizar transparencia y pivote, hacer control visual y convertir cada pieza aprobada a un asset individual con su licencia y atribución preservadas.
+1. Ejecutá `tools/avatar-maker/start-avatar-maker.bat` y abrí `http://127.0.0.1:8766/tools/hairstyle-workbench/index.html`.
+2. Entrá en **Visor de 120 diseños**. El visor abrirá primero **Mi estilo · line art anime**, no las recetas esquemáticas.
+3. Elegí **Solo mi estilo** para combinar las referencias de Madhouse/Trigger con las hojas line art compatibles. Los otros estilos están ocultos por defecto.
+
+Las 120 recetas conceptuales siguen disponibles como ideas de composición, pero no se consideran modelos visuales finales ni reemplazan una biblioteca de recortes. El siguiente trabajo artístico debe usar el lenguaje visual de estas hojas como referencia al normalizar las piezas: silueta posterior, flequillos, mechones laterales, recogidos y accesorios. El color puede añadirse después o no usarse en absoluto.
+
+### Fuentes reutilizables y licencias
+
+El catálogo conserva además cinco enlaces a paquetes de OpenGameArt con licencias declaradas, pero no se muestran en la galería principal porque parte de ellos usa pixel art u otros estilos. No se han extraído todavía en PNG aprobados. Antes de incorporarlos, cada archivo debe pasar un filtro de estilo; tener licencia reutilizable no significa que encaje con el arte de IMAGE.
