@@ -9542,12 +9542,131 @@
       "thumbnail_page_title": "Anime Character Asset: Char_594 by studentspub",
       "thumbnail_checked_date": "2026-10-21",
       "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+    },
+    {
+      "id": "PX-CLT-015",
+      "category": "clothing_accessories",
+      "title": "Hanfu azul-violeta de tres vistas con accesorios y paneles de detalle",
+      "source_url": "https://pixai.art/en/artwork/2030382830012815414",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/96adb65a-f11e-45ae-aabb-466d5100446e",
+      "creator": "メアリーハーカー",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public; prompt specifies an adult woman aged 30 and requests front/back/side turnaround plus waist, bodice, glove, back, hair bow, shoe and jewellery detail panels",
+      "target_traits": [
+        "blue-purple hanfu wrap top and skirt",
+        "long soft overskirt sheer layer",
+        "black embroidered tights",
+        "embroidered shoes",
+        "waist sash/belt",
+        "hair rose ornament",
+        "glove design",
+        "front/back/side turnaround"
+      ],
+      "extras_red": [
+        "black flowing hair",
+        "face and eyes",
+        "body silhouette/proportions",
+        "rose as hair ornament vs separate accessory",
+        "background and lighting; isolate garment callouts from full character"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+hanfu+costume+front+back+side+design+sheet+isolated+garment+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official PixAI stillThumb extracted from source metadata; visual load not individually verified.",
+      "ordinal": 227
+    },
+    {
+      "id": "EXT-CLT-002",
+      "category": "clothing",
+      "title": "Hoja de diseño de vestuario con vistas y detalles (SKIMA gallery)",
+      "source_url": "https://skima.jp/gallery?id=223959",
+      "thumbnail_url": "https://cdn-gallery.skima.jp/gallery/549/165/549165/0461bedf97695b31bfbb6f0f50d148e2-20221206191407.jpeg",
+      "creator": "SKIMA gallery artist (identity/license not confirmed in this capture)",
+      "source_platform": "SKIMA",
+      "thumbnail_kind": "external_page_or_artwork_preview",
+      "target_traits": [
+        "front-facing outfit construction",
+        "garment/accessory callouts",
+        "layered clothing and styling details"
+      ],
+      "extras_red": [
+        "full anime character silhouette",
+        "hair/eyes/face",
+        "jewellery/garment details may be mixed together",
+        "creator permissions not yet verified"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+costume+design+sheet+clothing+accessory+callouts+black+white+lineart+square",
+      "monochrome_plate_status": "candidate_reference_sheet_license_pending",
+      "license_status": "reference_only_license_not_verified",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Direct gallery image URL extracted from source listing; not visually checked in final HTML.",
+      "ordinal": 228
+    },
+    {
+      "id": "EXT-ACC-004",
+      "category": "accessories",
+      "title": "Pinterest topic index — anime crowns and tiaras",
+      "source_url": "https://www.pinterest.com/ideas/anime-crown-drawing/893994423745/",
+      "thumbnail_url": "https://i.pinimg.com/736x/4e/85/fb/4e85fbfe0465f46b927de818711440ed.jpg",
+      "creator": "Original creator of sample pin not confirmed",
+      "source_platform": "Pinterest",
+      "thumbnail_kind": "external_search_result_preview",
+      "target_traits": [
+        "crown silhouettes",
+        "princess tiara variations",
+        "gem and peak placements",
+        "monochrome line-art examples among search results"
+      ],
+      "extras_red": [
+        "This is an idea/search page, not one canonical authored plate",
+        "preview image source attribution pending",
+        "other search results may be colored, watermarked, or copyrighted"
+      ],
+      "red_warning_required": false,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+tiara+crown+design+sheet+black+white+lineart+isolated+square",
+      "monochrome_plate_status": "search_page_not_plate_license_pending",
+      "license_status": "reference_only_original_pin_and_license_pending",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Thumbnail is one preview surfaced by Pinterest; attribution and right to reuse are not confirmed.",
+      "ordinal": 229
+    },
+    {
+      "id": "EXT-EYE-004",
+      "category": "eyes",
+      "title": "Syntelligence — guía visual de pestañas suaves",
+      "source_url": "https://syntelligence.jp/article/57481",
+      "thumbnail_url": "https://d2o4rrq92x9csx.cloudfront.net/articles/eyelash-illustration_4-5-6-25.webp",
+      "creator": "Syntelligence editorial page (individual illustrator attribution not recovered)",
+      "source_platform": "Syntelligence",
+      "thumbnail_kind": "tutorial_sheet_preview",
+      "target_traits": [
+        "soft thin lash strokes",
+        "tapered eyelash ends",
+        "irregular natural lash spacing",
+        "soft lower-lash treatment"
+      ],
+      "extras_red": [
+        "eye and face context may be visible",
+        "image may be a cropped/tutorial illustration",
+        "source license for reuse not confirmed"
+      ],
+      "red_warning_required": false,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+eyelash+design+sheet+upper+lower+lashes+black+white+lineart",
+      "monochrome_plate_status": "tutorial_image_not_licensed_component_plate",
+      "license_status": "reference_only_tutorial_terms_pending",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Illustration URL recovered from the tutorial page's linked image list; not visually checked in final HTML.",
+      "ordinal": 230
     }
   ],
   "statistics": {
-    "canonical_url_records": 226,
-    "structured_entries": 226,
-    "index_entries_with_thumbnail": 226,
+    "canonical_url_records": 230,
+    "structured_entries": 230,
+    "index_entries_with_thumbnail": 230,
     "pixai_source_entries": 39,
     "research_report_categorized_records": 160,
     "research_records_with_source_url": 154,
@@ -9589,14 +9708,21 @@
     "pixai_tag_browsers": 8,
     "verified_clean_square_plates": 0,
     "index_note": "Merged index combines the prior curated set with a 153-URL canonical deep-research census. All thumbnail links are external previews, not cached local images or reuse permissions. Basic URL canonicalization was used; same artwork hosted at different URLs can remain duplicated.",
-    "deduplication_note": "No perceptual image hashing or visual comparison has been run. Source URL uniqueness must not be confused with visual artwork uniqueness.",
-    "license_note": "Free-to-view, downloadable, and commercial-use-permitted are not equivalent to permission to redistribute assets within IMAGE. Each item needs an item-level license check before import.",
+    "deduplication_note": "URL-level canonicalization only. No perceptual image hashing or manual image-level deduplication has been run. Same art on different platforms may still be duplicated.",
+    "license_note": "Public previews/collections do not grant asset reuse rights; licenses and attribution for each item need source-level confirmation before incorporation.",
     "thumbnail_retrieval_batches": 16,
-    "thumbnail_status_note": "226 preview references are recorded: 221 direct image candidates and 5 Pixiv embed endpoints. The 151 newly harvested URLs have source-page title/date metadata; the original 75 curated previews retain their earlier provenance. None of the 226 URLs has been individually checked for loading in the final browser UI because the hosted HTML preview network failed. Failed images should show the fallback/open-source link.",
+    "thumbnail_status_note": "Preview URLs extracted from source-page metadata or image links. They are candidate previews; the final hosted HTML could not be rendered in the browser network, so every image has not been visually verified there. Pixivision collection covers are direct image URLs; Pixiv individual embeds may need iframe handling.",
     "records_without_thumbnail": 0,
     "canonical_itch_pages_corrected": 4,
-    "direct_image_preview_candidates": 221,
-    "pixiv_embed_previews": 5
+    "direct_image_preview_candidates": 225,
+    "pixiv_embed_previews": 5,
+    "accessories_gaps_research_additions": 3,
+    "latest_additions": [
+      "PX-CLT-015",
+      "EXT-CLT-002",
+      "EXT-ACC-004",
+      "EXT-EYE-004"
+    ]
   },
   "pixai_tag_browsers": [
     {
