@@ -89,6 +89,16 @@
 .ai-variant span{display:block;padding:5px 0 2px;font-size:10px;font-weight:800}
 .ai-control-grid .tiny{display:block;margin-top:4px;line-height:1.4}
 @media(max-width:520px){.ai-variant-strip{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.ai-variant{padding:3px}.ai-variant span{font-size:8px}}
+
+#starterGrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.starter-card img{height:105px}
+.starter-card .actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+.starter-card .actions button:first-child{grid-column:1/-1}
+.starter-card .btn{font-size:9px;padding:6px 5px}
+.ai-cutout-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.ai-cutout-actions .btn{font-size:10px;padding:8px 4px}
+@media(max-width:830px){#starterGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:520px){#starterGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.starter-card img{height:115px}.ai-cutout-actions{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -203,7 +213,7 @@ function colors(root){root.insertAdjacentHTML("beforeend",'<div class="sectionhe
  root.querySelectorAll("[data-bg]").forEach(b=>b.onclick=()=>{state.background=b.dataset.bg;state.transparent=b.dataset.bg==="transparent";gallery();render();});$("tintRange").oninput=e=>{const l=state.layers.find(x=>x.id===state.selected);if(!l){toast("Seleccioná una capa independiente para cambiar su tono.");return;}l.hue=Number(e.target.value);e.target.nextElementSibling.value=l.hue+"°";render();};
 }
 function renderLayers(){
- const all=[{id:"base",name:activeLook().label,src:activeLook().src,kind:"base",visible:true},...state.layers];$("layerList").innerHTML=all.map(l=>'<button class="layercard '+(l.id===state.selected?"active":"")+'" data-layer="'+l.id+'"><img alt="" src="'+url(l.dataUrl||l.src)+'"><b>'+safe(l.name)+'</b><small>'+safe(l.kind==="base"?"Retrato completo":l.kind==="candidate"?"Máscara beta":l.kind==="ai_result"?"Resultado de IA":l.kind==="anatomy_guide"?"Guía anatómica":l.kind==="manual_mask_layer"?"Pieza separada":l.kind==="internal_test_overlay"?"Superposición de prueba":"Pieza importada")+'</small>'+(l.kind==="base"?'':'<span class="visibility" data-visible="'+l.id+'">'+(l.visible?"◉":"○")+'</span>')+'</button>').join("");
+ const all=[{id:"base",name:activeLook().label,src:activeLook().src,kind:"base",visible:true},...state.layers];$("layerList").innerHTML=all.map(l=>'<button class="layercard '+(l.id===state.selected?"active":"")+'" data-layer="'+l.id+'"><img alt="" src="'+url(l.dataUrl||l.src)+'"><b>'+safe(l.name)+'</b><small>'+safe(l.kind==="base"?"Retrato completo":l.kind==="candidate"?"Máscara beta":l.kind==="ai_result"?"Resultado de IA":l.kind==="anatomy_guide"?"Guía anatómica":l.kind==="manual_mask_layer"?"Pieza separada":l.kind==="ai_cutout"?"Recorte IA pendiente":l.kind==="internal_test_overlay"?"Superposición de prueba":"Pieza importada")+'</small>'+(l.kind==="base"?'':'<span class="visibility" data-visible="'+l.id+'">'+(l.visible?"◉":"○")+'</span>')+'</button>').join("");
  $("layerTabs").innerHTML='<button class="layertab '+(state.selected==="base"?"active":"")+'" data-base>Retrato</button>'+state.layers.map(l=>'<button class="layertab '+(l.id===state.selected?"active":"")+'" data-tab="'+l.id+'">'+safe(l.name)+'</button>').join("");
  $("layerList").querySelectorAll("[data-layer]").forEach(b=>b.onclick=e=>{if(e.target.closest("[data-visible]"))return;state.selected=b.dataset.layer;renderLayers();adjust();});
  $("layerList").querySelectorAll("[data-visible]").forEach(b=>b.onclick=e=>{e.stopPropagation();const l=state.layers.find(x=>x.id===b.dataset.visible);if(l)l.visible=!l.visible;render();});
@@ -212,7 +222,7 @@ function renderLayers(){
 }
 function adjust(){
  const root=$("content");let box=$("adjustBox");if(box)box.remove();const l=state.layers.find(x=>x.id===state.selected);if(!l)return;
- box=document.createElement("section");box.id="adjustBox";box.innerHTML='<div class="sectionhead"><b>Ajustes de capa</b><span>'+(l.kind==="candidate"?"Pendiente de revisión":"Editable")+'</span></div>'+field("Posición X","posX",-384,384,l.x||0,1)+field("Posición Y","posY",-640,640,l.y||0,1)+field("Tamaño","scale",.1,2.5,l.w/W,.01)+field("Opacidad","opacity",0,1,l.opacity,.01)+'<div class="actions"><button id="centerLayer" class="btn">Centrar</button><button id="frontLayer" class="btn">Traer adelante</button><button id="backLayer" class="btn">Enviar atrás</button><button id="deleteLayer" class="btn">Quitar</button></div>'+(l.kind==="candidate"?'<div class="notice" style="margin-top:8px"><b>Máscara no aprobada</b>Conservá el PNG original y revisá la silueta con y sin esta capa.</div>':'');root.prepend(box);
+ box=document.createElement("section");box.id="adjustBox";box.innerHTML='<div class="sectionhead"><b>Ajustes de capa</b><span>'+((l.kind==="candidate"||l.kind==="ai_cutout")?"Pendiente de revisión":"Editable")+'</span></div>'+field("Posición X","posX",-384,384,l.x||0,1)+field("Posición Y","posY",-640,640,l.y||0,1)+field("Tamaño","scale",.1,2.5,l.w/W,.01)+field("Opacidad","opacity",0,1,l.opacity,.01)+'<div class="actions"><button id="centerLayer" class="btn">Centrar</button><button id="frontLayer" class="btn">Traer adelante</button><button id="backLayer" class="btn">Enviar atrás</button><button id="deleteLayer" class="btn">Quitar</button></div>'+((l.kind==="candidate"||l.kind==="ai_cutout")?'<div class="notice" style="margin-top:8px"><b>Recorte pendiente de revisión</b>Conservá el PNG original y revisá la silueta con y sin esta capa.</div>':'');root.prepend(box);
  [["posX","x"],["posY","y"],["opacity","opacity"]].forEach(([id,key])=>$(id).oninput=e=>{l[key]=Number(e.target.value);e.target.nextElementSibling.value=key==="opacity"?Math.round(l[key]*100)+"%":l[key];drawCanvas();});
  $("scale").oninput=e=>{const s=Number(e.target.value),cx=l.x+l.w/2,cy=l.y+l.h/2;l.w=W*s;l.h=H*s;l.x=Math.round(cx-l.w/2);l.y=Math.round(cy-l.h/2);e.target.nextElementSibling.value=Math.round(s*100)+"%";drawCanvas();};
  $("centerLayer").onclick=()=>{l.x=0;l.y=0;l.w=W;l.h=H;render();};$("frontLayer").onclick=()=>{l.order=Math.max(-1,...state.layers.map(x=>x.order||0))+1;render();};$("backLayer").onclick=()=>{l.order=Math.min(0,...state.layers.map(x=>x.order||0))-1;render();};$("deleteLayer").onclick=()=>{state.layers=state.layers.filter(x=>x.id!==l.id);state.selected="base";render();gallery();};
@@ -228,14 +238,35 @@ async function loadImageLibrary(){
  });
  return imageLibraryPromise;
 }
+const AI_CUTOUT_TARGETS={
+ hair:{label:"Cabello",category:"hair",group:"ai-cutout-hair",prompt:"Extrae únicamente el cabello visible, incluyendo pelo posterior, parte superior, flequillo, mechones laterales y coletas o trenzas. Excluye piel, cara, ojos, orejas, cuello, cuerpo y ropa."},
+ eyes:{label:"Ojos",category:"eyes",group:"ai-cutout-eyes",prompt:"Extrae únicamente los dos ojos anime, iris, pupilas, brillos, pestañas y cejas visibles. Excluye toda la piel, rostro, nariz, boca, cabello y fondo."},
+ face:{label:"Rostro",category:"face",group:"ai-cutout-face",prompt:"Extrae la pieza facial: piel de la cara, nariz, boca y orejas visibles. Excluye el cabello, cuello, cuerpo, ropa y fondo. Conserva identidad y expresión."},
+ clothes:{label:"Ropa",category:"clothes",group:"ai-cutout-clothes",prompt:"Extrae únicamente las prendas y los adornos que formen parte de ellas. Excluye rostro, cabello, piel, manos, extremidades descubiertas, accesorios separados y fondo."},
+ accessories:{label:"Accesorios",category:"accessories",group:"ai-cutout-accessories",prompt:"Extrae únicamente accesorios visibles como lazos, horquillas, gafas, pendientes, cintas, broches y joyas. Excluye el resto del personaje y el fondo."}
+};
 function starterWorkspace(root){
  root.innerHTML=
   '<div class="library-hero"><strong>▶ Prueba inicial con imágenes internas</strong><p>Este banco usa ilustraciones que ya están dentro del repositorio. Cada muestra es un retrato completo de prueba, no una capa de cabello, ojos o ropa. La procedencia y la licencia siguen sin verificarse individualmente.</p></div>'+
-  '<div class="plain"><b>Prueba recomendada:</b> carga un retrato como base; ejecuta la prueba automática de carga, renderizado y conversión PNG; añade otra ilustración como superposición y prueba ocultar, mover, cambiar opacidad, exportar PNG y guardar el proyecto JSON con los controles generales.</div>'+
-  '<div class="library-actions"><span id="starterCount" class="tiny">Cargando las muestras internas…</span><button id="starterReload" class="btn">Recargar muestras</button></div>'+
-  '<div id="starterGrid" class="library-grid"></div>'+
-  '<div id="starterTestStatus" class="notice" role="status"><b>Prueba de funcionamiento</b>Seleccioná una muestra y ejecutá “Probar PNG” para verificar que la imagen se decodifica, aparece en el lienzo y se puede convertir a PNG sin descargar automáticamente el archivo.</div>';
+  '<div class="plain"><b>Prueba inicial:</b> carga retratos internos para comprobar composición, capas y exportación. Son ilustraciones completas; ninguna se etiqueta falsamente como cabello u ojos ya recortados.</div>'+
+  '<section class="ai-mask-panel"><div class="ai-mask-head"><strong>✦ Recorte profesional asistido por IA</strong><span>PNG alfa · 768×1280</span></div><p>Selecciona un retrato de abajo y elige qué pieza extraer. Se genera una capa candidata con transparencia y alineación del lienzo; debes revisar el resultado. Requiere el lanzador local y OPENAI_API_KEY; la API puede generar cargos.</p><div class="actions ai-cutout-actions">'+Object.entries(AI_CUTOUT_TARGETS).map(([id,t])=>'<button type="button" class="btn" data-ai-cutout="'+id+'">✦ '+safe(t.label)+'</button>').join("")+'</div><div class="actions" style="margin-top:7px"><a class="linkbtn" href="https://github.com/rikosama473-sketch/image/actions/workflows/generate-hairstyle-variants.yml" target="_blank" rel="noopener">Generar paquetes IA de 5–6 peinados →</a></div><p class="tiny">La generación por paquetes usa los estilos core, cortes cortos, recogidos, flequillos y ondas/trenzas. Ejecutar la generación también requiere la clave del proveedor en GitHub Actions.</p></section>'+
+  '<div class="library-actions"><span id="starterCount" class="tiny">Cargando imágenes internas…</span><button id="starterReload" class="btn">Recargar</button></div>'+
+  '<div id="starterGrid" class="library-grid"></div><div class="library-actions"><span id="starterMoreStatus" class="tiny"></span><button id="starterMore" class="btn primary">Cargar 24 imágenes más</button></div>'+
+  '<div id="starterTestStatus" class="notice" role="status"><b>Prueba de funcionamiento</b>“Probar PNG” comprueba carga, renderizado y conversión. “Añadir capa de prueba” valida opacidad, orden, posición y visibilidad.</div>';
  const grid=$("starterGrid");
+ let allStarterSamples=[],shownStarterCount=24;
+ const renderStarterSamples=()=>{
+  const samples=allStarterSamples.slice(0,shownStarterCount);
+  grid.innerHTML=samples.map(a=>
+   '<article class="starter-card"><img loading="lazy" src="'+safe(url(a.src))+'" alt="Vista previa de '+safe(a.label)+'"><b>'+safe(a.label)+'</b><small>'+safe(a.path)+'</small><span class="library-status">RETRATO COMPLETO · LICENCIA POR REVISAR</span><div class="actions"><button type="button" class="btn primary" data-starter-base="'+safe(a.id)+'">Usar como base</button><button type="button" class="btn" data-starter-test="'+safe(a.id)+'">Probar PNG</button><button type="button" class="btn" data-starter-overlay="'+safe(a.id)+'">Añadir capa de prueba</button></div></article>'
+  ).join("");
+  $("starterCount").textContent=samples.length+" visibles · "+allStarterSamples.length+" retratos internos · "+(imageLibraryCache?imageLibraryCache.assets.length:0)+" recursos indexados.";
+  $("starterMoreStatus").textContent="Mostrando "+samples.length+" de "+allStarterSamples.length+" retratos.";
+  $("starterMore").classList.toggle("hidden",samples.length>=allStarterSamples.length);
+  grid.querySelectorAll("[data-starter-base]").forEach(b=>b.onclick=()=>useLibraryAsset(b.dataset.starterBase,"starter"));
+  grid.querySelectorAll("[data-starter-test]").forEach(b=>b.onclick=()=>runStarterSmokeTest(b.dataset.starterTest));
+  grid.querySelectorAll("[data-starter-overlay]").forEach(b=>b.onclick=()=>addLibraryAssetAsTestLayer(b.dataset.starterOverlay));
+ };
  const load=async()=>{
   grid.innerHTML='<div class="plain">Leyendo imágenes internas…</div>';
   try{
@@ -243,22 +274,19 @@ function starterWorkspace(root){
    if(state.category!=="starter")return;
    const all=Array.isArray(data.assets)?data.assets:[];
    const internal=all.filter(a=>a&&a.kind==="full_illustration"&&/^from-PixAI-/i.test(String(a.path||"")));
-   const samples=(internal.length?internal:all.filter(a=>a&&a.kind==="full_illustration")).slice(0,12);
-   if(!samples.length)throw Error("El catálogo no contiene imágenes internas de ilustración completa.");
-   grid.innerHTML=samples.map(a=>
-    '<article class="starter-card"><img loading="lazy" src="'+safe(url(a.src))+'" alt="Vista previa de '+safe(a.label)+'"><b>'+safe(a.label)+'</b><small>'+safe(a.path)+'</small><span class="library-status">RETRATO COMPLETO · REVISIÓN PENDIENTE</span><div class="actions"><button type="button" class="btn primary" data-starter-base="'+safe(a.id)+'">Usar como base</button><button type="button" class="btn" data-starter-test="'+safe(a.id)+'">Probar PNG</button><button type="button" class="btn" data-starter-overlay="'+safe(a.id)+'">Añadir capa de prueba</button></div></article>'
-   ).join("");
-   $("starterCount").textContent=samples.length+" muestras internas disponibles de "+all.length+" imágenes indexadas.";
-   grid.querySelectorAll("[data-starter-base]").forEach(b=>b.onclick=()=>useLibraryAsset(b.dataset.starterBase,"starter"));
-   grid.querySelectorAll("[data-starter-test]").forEach(b=>b.onclick=()=>runStarterSmokeTest(b.dataset.starterTest));
-   grid.querySelectorAll("[data-starter-overlay]").forEach(b=>b.onclick=()=>addLibraryAssetAsTestLayer(b.dataset.starterOverlay));
+   allStarterSamples=internal.length?internal:all.filter(a=>a&&a.kind==="full_illustration");
+   shownStarterCount=Math.min(24,allStarterSamples.length);
+   if(!allStarterSamples.length)throw Error("El catálogo no contiene imágenes internas de ilustración completa.");
+   renderStarterSamples();
   }catch(e){
    if(state.category!=="starter")return;
-   grid.innerHTML='<div class="plain">No se pudo cargar el catálogo interno. Abrí el editor con start-avatar-maker.bat y volvé a intentarlo.</div>';
+   grid.innerHTML='<div class="plain">No se pudo cargar el catálogo interno. Abre el editor con start-avatar-maker.bat y vuelve a intentarlo.</div>';
    $("starterCount").textContent=String(e&&e.message||e);
   }
  };
- $("starterReload").onclick=()=>{imageLibraryCache=null;imageLibraryPromise=null;load();};
+ $("starterReload").onclick=()=>{imageLibraryCache=null;imageLibraryPromise=null;shownStarterCount=24;load();};
+ $("starterMore").onclick=()=>{shownStarterCount=Math.min(shownStarterCount+24,allStarterSamples.length);renderStarterSamples();};
+ root.querySelectorAll("[data-ai-cutout]").forEach(b=>b.onclick=()=>startAICutout(b.dataset.aiCutout));
  load();
 }
 async function runStarterSmokeTest(id){
@@ -303,6 +331,16 @@ async function addLibraryAssetAsTestLayer(id){
   renderNav();gallery();await render();
   toast("Superposición de prueba añadida. Probá opacidad, posición, visibilidad, orden y eliminar.");
  }catch(e){toast("No se pudo añadir la capa de prueba: "+String(e&&e.message||e));}
+}
+async function startAICutout(targetId){
+ const target=AI_CUTOUT_TARGETS[targetId];
+ if(!target){toast("Tipo de recorte desconocido.");return;}
+ aiMaskStrokes=[];aiMaskDrawing=null;setAIMaskMode(false);
+ aiSettings.model="gpt-image-2.5-sunburst";aiSettings.quality="high";aiSettings.variants=2;aiSettings.background="transparent";aiSettings.direction="preserve";aiSettings.prompt=target.prompt;
+ aiNextResultMeta={kind:"ai_cutout",name:"Recorte IA · "+target.label,category:target.category,group:target.group,targetId};
+ state.category="ai";state.pill="Todos";renderNav();gallery();
+ toast("Preparando el recorte IA de "+target.label+". Se enviará el retrato base seleccionado a la API.");
+ await runAIEdit();
 }
 function libraryWorkspace(root){
  root.innerHTML=
@@ -600,6 +638,17 @@ function refreshAIStatus(){
   current.textContent=d.api_key_configured?"Servicio local disponible. La clave se encuentra solo en el entorno; elegí el modelo y generá una edición.":"Servicio local disponible, pero falta OPENAI_API_KEY. Configurala en la terminal siguiendo AI_EDITING.md; el editor manual seguirá funcionando.";
  }).catch(()=>{const current=$("aiServiceStatus");if(current)current.textContent="Puente de IA no detectado. Abrí el editor con start-avatar-maker.bat y revisá AI_EDITING.md. No pegues tu clave API en la página.";});
 }
+async function baseImageDataUrl(){
+ const can=document.createElement("canvas");can.width=W;can.height=H;
+ const ctx=can.getContext("2d",{alpha:true}),base=await img(activeLook().src),sty=styles.find(x=>x.id===state.style);
+ ctx.save();ctx.filter=(sty&&sty.filter!=="none"?sty.filter+" ":"")+"brightness("+state.lighting+")";
+ if(base.naturalWidth===W&&base.naturalHeight===H)ctx.drawImage(base,0,0);else contain(ctx,base);
+ ctx.restore();return can.toDataURL("image/png");
+}
+function aiCutoutPromptForUser(text){
+ return "Actúa como artista técnico senior de producción anime 2D, especializado en capas limpias para un editor de personajes. Instrucción del componente solicitado: "+text.trim()+"\n"+
+ "Entrega una sola pieza, como PNG con transparencia alfa REAL. Mantén el lienzo completo EXACTO de 768×1280 píxeles. Conserva la escala, orientación y coordenadas originales de la pieza; todo píxel fuera de la pieza debe ser transparente. No recortes al borde, no centres, no agrandes, no reduzcas, no gires y no alteres el encuadre. Preserva la identidad visual, el color, el sombreado y el lineart del original. Limpia halos, matte blanco, bordes serrados y restos de las otras categorías. No simules transparencia con un damero ni fondo blanco. No agregues texto, etiquetas, paneles, marcos, personajes, ni sombras externas. Si hay un borde parcialmente oculto, reconstruye solamente lo necesario para conseguir una silueta coherente. El resultado es una capa candidata que se revisará, no un recorte aprobado automáticamente.";
+}
 function aiPromptForUser(text,direction){
  const directions={
   preserve:"Dirección artística: conserva el lenguaje visual de la imagen original, el diseño anime 2D, el lineart y el sombreado existentes.",
@@ -621,13 +670,13 @@ async function runAIEdit(){
  try{
   await drawCanvas();
   setAIMaskMode(false);
-  const imageDataUrl=$("canvas").toDataURL("image/png");
+  const imageDataUrl=requestMeta&&requestMeta.kind==="ai_cutout"?await baseImageDataUrl():$("canvas").toDataURL("image/png");
   const maskDataUrl=aiMaskStrokes.length?createAIMaskDataUrl():null;
   const response=await fetch("/api/ai-edit",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
    image_data_url:imageDataUrl,
    mask_data_url:maskDataUrl,
    reference_data_url:aiReferenceDataUrl||null,
-   prompt:requestMeta&&requestMeta.kind==="anatomy_guide"?anatomyPromptForUser(prompt,aiSettings.direction):aiPromptForUser(prompt,aiSettings.direction),
+   prompt:requestMeta&&requestMeta.kind==="anatomy_guide"?anatomyPromptForUser(prompt,aiSettings.direction):requestMeta&&requestMeta.kind==="ai_cutout"?aiCutoutPromptForUser(prompt):aiPromptForUser(prompt,aiSettings.direction),
    model:aiSettings.model,
    quality:aiSettings.quality,
    variants:aiSettings.variants,
@@ -657,9 +706,14 @@ async function runAIEdit(){
 }
 function applyAIResult(){
  if(!aiResult){toast("No hay un resultado para aplicar.");return;}
- const l={id:"ai-"+Date.now(),name:aiResultMeta.name||"Edición IA",category:aiResultMeta.kind==="anatomy_guide"?"anatomy":"ai",group:null,dataUrl:aiResult,kind:aiResultMeta.kind||"ai_result",x:0,y:0,w:W,h:H,opacity:1,hue:0,visible:true,order:Math.max(-1,...state.layers.map(x=>Number.isFinite(x.order)?x.order:-1))+1,status:"unreviewed_ai_result"};
+ const meta={...aiResultMeta};
+ if(meta.kind==="ai_cutout"&&meta.group)state.layers=state.layers.filter(x=>!(x.kind==="ai_cutout"&&x.group===meta.group));
+ const nextOrder=Math.max(-1,...state.layers.map(x=>Number.isFinite(x.order)?x.order:-1))+1;
+ const kind=meta.kind||"ai_result",category=kind==="ai_cutout"?(meta.category||"hair"):kind==="anatomy_guide"?"anatomy":"ai";
+ const l={id:"ai-"+Date.now(),name:meta.name||"Edición IA",category,group:kind==="ai_cutout"?(meta.group||null):null,dataUrl:aiResult,kind,x:0,y:0,w:W,h:H,opacity:1,hue:0,visible:true,order:nextOrder,status:kind==="ai_cutout"?"pending_ai_cutout_review":"unreviewed_ai_result"};
  state.layers.push(l);cache.set(aiResult,img(aiResult));state.selected=l.id;aiResult=null;aiResults=[];aiSelectedIndex=0;aiResultMeta={kind:"ai_result",name:"Edición IA"};
- gallery();render();toast("Edición añadida como capa superior. Ocúltala para volver a ver el original.");
+ if(kind==="ai_cutout"){state.category=category;state.pill="Todos";}
+ renderNav();gallery();render();toast(kind==="ai_cutout"?"Recorte IA añadido como capa candidata. Revisa alfa, contorno y alineación antes de aprobar.":"Edición añadida como capa superior. Ocúltala para volver a ver el original.");
 }
 
 function renderStyles(){$("styles").innerHTML=styles.map(s=>'<button class="stylecard '+(s.id===state.style?"active":"")+'" data-style="'+s.id+'" title="Filtro de color, no cambia el dibujo"><img src="'+url(activeLook().src)+'" alt=""><span>'+s.label+'</span></button>').join("");$("styles").querySelectorAll("[data-style]").forEach(b=>b.onclick=()=>{state.style=b.dataset.style;renderStyles();render();});}
