@@ -119,7 +119,7 @@ dialog{width:min(760px,calc(100% - 20px));max-height:92vh;overflow:auto;border:1
 "use strict";
 const $=id=>document.getElementById(id);
 const STORAGE_KEY="image.visual-reference-library.v1";
-let referenceCatalog=null, imageLibrary=null, assetCatalog=null, annotationCatalog=null, activeTab="web", cardIndex=new Map();
+let referenceCatalog=null, imageLibrary=null, assetCatalog=null, annotationCatalog=null, activeTab="web", cardIndex=new Map(), visibleCount=60;
 let state={annotations:{},userReferences:[],styles:[],selectedIds:[]};
 const categoryNames={eyes:"Ojos",hair:"Cabello",bangs:"Flequillos",eyelashes:"Pestañas",iris:"Iris",pupils:"Pupilas",accessories:"Accesorios",face:"Rostro",mixed:"Mixto",full_character:"Personaje completo",body:"Cuerpo",clothes:"Ropa",other:"Otro"};
 const statusNames={unreviewed:"Sin revisar",reviewed_reference:"Referencia revisada",candidate_for_cutout:"Candidato a recorte",approved_for_internal_use:"Aprobado para uso interno",rejected:"Descartado",pending_visual_review:"Pendiente de revisión visual"};
@@ -176,7 +176,9 @@ function render(){
  });
  const titles={web:["Referencias web / Pinterest","Fuentes externas enlazadas; las licencias no están asumidas."],local:["Imágenes existentes del repositorio","Las imágenes no se clasificaron automáticamente por lo que parecen: todas siguen disponibles para revisión visual."],layers:["Piezas separables y variantes completas","Las máscaras candidatas son experimentales. Una ilustración completa no es un recorte de ojos o cabello." ]};
  $("listTitle").textContent=titles[activeTab][0];$("listSubtitle").textContent=titles[activeTab][1];$("resultCount").textContent=cards.length+" resultados";
- $("grid").innerHTML=cards.length?cards.map(buildCard).join(""):'<div class="empty">No hay resultados con esos filtros.</div>';
+ const shown=cards.slice(0,visibleCount);
+ $("grid").innerHTML=cards.length?shown.map(buildCard).join(""):'<div class="empty">No hay resultados con esos filtros.</div>';
+ if(cards.length>visibleCount){const wrap=document.createElement("div");wrap.className="empty";const more=document.createElement("button");more.id="loadMoreBtn";more.className="btn";more.type="button";more.textContent="Cargar 60 más ("+(cards.length-visibleCount)+" restantes)";wrap.appendChild(more);$("grid").appendChild(wrap);}
  $("statStyles").textContent=state.styles.length;
 }
 function renderStyles(){
@@ -229,7 +231,7 @@ function importBulkSources(){
  if(added){$("bulkSources").value="";activeTab="web";setActiveTab("web");render();}
  else notice("No se importó ningún enlace. Usá URLs HTTPS de pinterest.com, una por línea.");
 }
-function setActiveTab(tab){activeTab=tab;document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));$("category").value="";$("statusFilter").value="";$("search").value="";$("addReferencePanel").style.display=tab==="web"?"block":"none";$("variationPanel").style.display=tab==="styles"?"none":"block";$("controls").style.display=tab==="styles"?"none":"grid";render();}
+function setActiveTab(tab){visibleCount=60;activeTab=tab;document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));$("category").value="";$("statusFilter").value="";$("search").value="";$("addReferencePanel").style.display=tab==="web"?"block":"none";$("variationPanel").style.display=tab==="styles"?"none":"block";$("controls").style.display=tab==="styles"?"none":"grid";render();}
 function makeVariation(){
  const selected=state.selectedIds.map(id=>cardIndex.get(id)).filter(Boolean);
  if(!selected.length){notice("Elegí al menos una referencia con la casilla “Elegir”.");return;}
@@ -260,7 +262,8 @@ function importBundle(file){
 function selectCard(id,checked){state.selectedIds=checked?Array.from(new Set([...state.selectedIds,id])):state.selectedIds.filter(x=>x!==id);persist();$("selectionStatus").textContent=state.selectedIds.length+" referencias seleccionadas";}
 function bindEvents(){
  document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>setActiveTab(b.dataset.tab)));
- ["search","category","statusFilter"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",render));
+ const rerenderFromStart=()=>{visibleCount=60;render();};
+ ["search","category","statusFilter"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",rerenderFromStart));
  $("clearFilters").addEventListener("click",()=>{$("search").value="";$("category").value="";$("statusFilter").value="";render();});
  $("addReferenceForm").addEventListener("submit",addReference);
  $("importBulkBtn").addEventListener("click",importBulkSources);
@@ -272,7 +275,7 @@ function bindEvents(){
  $("editForm").addEventListener("submit",e=>{e.preventDefault();const id=$("editId").value;state.annotations[id]={label:$("editName").value.trim(),category:$("editCategory").value,tags:parseTags($("editTags").value),review_status:$("editStatus").value,license_status:$("editLicense").value,notes:$("editNotes").value.trim(),updated_at:new Date().toISOString()};persist();$("editDialog").close();render();notice("Ficha anotada en este navegador; exportá el JSON para respaldarla.");});
  $("resetAnnotation").addEventListener("click",()=>{delete state.annotations[$("editId").value];persist();$("editDialog").close();render();});
  $("grid").addEventListener("change",e=>{const id=e.target.dataset.select;if(id)selectCard(id,e.target.checked);});
- $("grid").addEventListener("click",e=>{const edit=e.target.closest("[data-edit]");if(edit){openEdit(edit.dataset.edit);return;}const copy=e.target.closest("[data-copy-style]");if(copy){const item=state.styles[Number(copy.dataset.copyStyle)];if(item)navigator.clipboard?.writeText(item.prompt_spec).then(()=>notice("Especificación copiada."),()=>notice("No se pudo copiar automáticamente. Seleccioná el texto del bloque."));return;}const del=e.target.closest("[data-delete-style]");if(del){const ix=Number(del.dataset.deleteStyle);state.styles.splice(ix,1);persist();render();}});
+ $("grid").addEventListener("click",e=>{const more=e.target.closest("#loadMoreBtn");if(more){visibleCount+=60;render();return;}const edit=e.target.closest("[data-edit]");if(edit){openEdit(edit.dataset.edit);return;}const copy=e.target.closest("[data-copy-style]");if(copy){const item=state.styles[Number(copy.dataset.copyStyle)];if(item)navigator.clipboard?.writeText(item.prompt_spec).then(()=>notice("Especificación copiada."),()=>notice("No se pudo copiar automáticamente. Seleccioná el texto del bloque."));return;}const del=e.target.closest("[data-delete-style]");if(del){const ix=Number(del.dataset.deleteStyle);state.styles.splice(ix,1);persist();render();}});
 }
 async function load(){
  loadState();bindEvents();
