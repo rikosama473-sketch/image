@@ -943,18 +943,18 @@ El atlas HTML tiene miniaturas pequeñas al lado de los nombres de referencia, 2
 
 ### State after this supplement
 
-- The structured JSON index now has **230 URL-normalized records** after merging the deep-research source census with the prior curated list. It contains **230 source-preview URLs extracted from source metadata or visible image links**. This means preview URLs were found, not that every thumbnail was visually loaded in the final UI or that any source artwork is licensed for redistribution.
-- The original hairstyle atlas has 32 PixAI cards and an external-reference gallery. The new standalone visual census contains **230 searchable cards** with small preview images, filters, red warnings for unrelated elements, source-page links, and license/monochrome status fields. The VRoid listing is recorded for research but is not in the 2D asset cards because the file type is not directly compatible.
+- The structured JSON index now has **234 URL-normalized records** after merging the deep-research source census with the prior curated list. It contains **234 source-preview URLs extracted from source metadata or visible image links**. This means preview URLs were found, not that every thumbnail was visually loaded in the final UI or that any source artwork is licensed for redistribution.
+- The original hairstyle atlas has 32 PixAI cards and an external-reference gallery. The new standalone visual census contains **234 searchable cards** with small preview images, filters, red warnings for unrelated elements, source-page links, and license/monochrome status fields. The VRoid listing is recorded for research but is not in the 2D asset cards because the file type is not directly compatible.
 - The UI's current clean square monochrome plate count remains **zero verified with a reuse license**. Each relevant card links to a tailored image search; those result pages remain candidates until their source, visual cleanliness, squareness, and license are checked.
 - The research now covers more direct source pages, but canonical URL deduplication alone does not prove distinct underlying pictures. No image-hash/perceptual deduplication pass has been completed, and no full third-party archive has been downloaded or dissected.
 
 
 ## Current UI and index paths — 21 Oct 2026
 
-- [Censo visual interactivo (230 cards with preview URLs)](./censo-visual-interactivo.html)
+- [Censo visual interactivo (234 cards with preview URLs)](./censo-visual-interactivo.html)
 - [Censo exhaustivo (153 unique canonical source URLs)](./censo-exhaustivo-fuentes-waifu-2026-10-21.md)
 - [Bibliography source URL audit](./auditoria-bibliografia-censo-waifu-2026-10-21.md)
-- [Expanded JSON source index (230 normalized URL records)](./indice-visual-componentes.json)
+- [Expanded JSON source index (234 normalized URL records)](./indice-visual-componentes.json)
 
 The preview images are remote URLs extracted from page metadata and image links. They are identification thumbnails, not cached/owned assets, and not every URL has been visually validated inside the final HTML. Four Itch.io event records were resolved to canonical product pages while retaining their event page as an alias.
 
@@ -971,4 +971,20 @@ Esta ampliación cubre algunas categorías que la auditoría inicial había marc
 | EXT-EYE-004 | [Syntelligence — guía visual de pestañas suaves](https://syntelligence.jp/article/57481) | Describe pestañas finas y afiladas, agrupación ligera y distribución irregular para una apariencia suave. Útil para etiquetar pestañas por grosor, longitud, densidad y curvatura. | La ilustración sigue dentro de una página tutorial; no se ha verificado licencia para aislarla como asset ni una placa cuadrada autónoma. |
 
 **Resultado de esta ampliación:** el índice pasó de 226 a **230 registros normalizados**, y el visor se sincronizó con la misma cantidad. Hay URL de vista previa registrada en los 230 casos, pero las vistas remotas no se han cargado individualmente en el navegador final. Esto es más estricto que llamar “miniaturas verificadas” a todos los enlaces.
+
+
+
+## Asset shortlist update — modular parts, prices and restrictions (2026-10-21)
+
+The goal here is not only inspiration: these pages show how real layer-based character editors organize interchangeable hair and clothing. They are indexed as products/research references, **not as assets already cleared for redistribution in IMAGE**.
+
+| Resource | Official listing / preview | Verified contents from listing | Price / terms to observe | Suitability decision |
+|---|---|---|---|---|
+| **Build a character [REWORKED] — MaelleMarylloup** | [Itch.io listing](https://maellemarylloup.itch.io/chibi-character-basics-reworked) · [cover preview](https://img.itch.zone/aW1nLzIyODQxNDA0LnBuZw==/original/Y2aUKJ.png) | The seller advertises 469 separate PNG items (444×700 px): 336 hair pieces split into bangs/back-hair/bonus/base hair; 42 base hair pieces offered in eight colors, plus body and clothing/accessory components. The hair-piece count includes color variants, so it does **not** mean 336 distinct silhouettes. | Name-your-own-price with free option; listing says personal and commercial project use is allowed, but the asset pieces may not be resold individually. Ask permission before including the parts as downloadable content in a character-creator. | **Best architectural reference** for distinct hair layers, especially bangs/back-hair/bonus pieces; style is chibi and the license must be checked for redistribution in an editor. |
+| **FREE Anime girl Character Sprite — blackbunney** | [Itch.io listing](https://blackbunney.itch.io/free-anime-girl-character-sprite) · [cover preview](https://img.itch.zone/aW1nLzI0NDY4MzYxLnBuZw==/original/7ssHO5.png) | Layered PSD (1680×1050): five hairstyles, six outfits, ten expressions and separate pupil layers. Hair colors and hairstyle combinations are adjustable. | Name-your-own-price; the listing permits personal/commercial projects but prohibits reselling the sprite on its own. | Useful reference for **state/combination logic** (hair + clothing + expression); not a clean isolated-hair reference sheet, and raw layers should not be bundled in IMAGE without clarification. |
+| **Customizable Visual Novel Cute Character Asset — sharranghaeyo** | [Itch.io listing](https://sharranghaeyo.itch.io/020222) · [cover preview](https://img.itch.zone/aW1nLzc5ODk1NDYucG5n/original/AybWha.png) | Layered PSD 1130×1500: mouth/nose options, two eye colors, front/back hairstyles, multiple garment color variants and hair colors. | Name-your-own-price; personal/commercial use permitted; credit appreciated; seller explicitly bans resale/redistribution. | Useful for learning how to store **front hair, back hair, eyes, and clothing color** as independent selections, but not for direct redistribution as source parts. |
+| **Hiyori — Potat0Master** | [Itch.io listing](https://potat0master.itch.io/free-character-sprite-for-visual-novels-hiyori) · [cover preview](https://img.itch.zone/aW1nLzI3NzY3Nzg4LmpwZw==/original/ZauFBJ.jpg) | Free character exports in PNG/WEBP at HD/4K; three outfit variants and 25+ expressions. Layered Clip Studio/PSD source files are offered as a separate US$1 option. | Listing says personal/commercial use is allowed but prohibits resale, sublicensing or redistribution of the assets in original or modified form, including as an asset pack. | Useful as reference for **export quality and expression variants**; not suitable for repackaging the actual source files. |
+| **Layered Female Character Sprite — Pung Lone Wolf** (cross-store alias) | [BOOTH listing](https://booth.pm/ja/items/7715930) · [Itch.io listing](https://punglonewolf.itch.io/girl-sprite-psd-1) | One body, one blonde twin-tail hairstyle, eye/mouth/blush options and four outfits; layered PSD, transparent background. | BOOTH lists ¥1,100; Itch.io lists US$7.99. The listings describe substantially the same set and both prohibit redistribution/resale of raw files. | Kept as **one asset record with two storefront links**, not two independent designs. The editor can study the layer schema; importing or distributing the source requires separate license review. |
+
+**Important distinction:** the first four products are modular/color assets or full-character sprites. They are not monochrome square reference plates, and “commercial use allowed” does not automatically permit redistributing the component images as a downloadable library. The current index has **234 source records and 234 preview URLs**; the 229 direct-image candidates plus five Pixiv embed endpoints have not all been visually checked in the final browser. The count of **licensed clean square monochrome component plates remains 0**.
 
