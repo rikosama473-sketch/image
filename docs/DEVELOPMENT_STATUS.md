@@ -40,6 +40,8 @@ Equipo objetivo declarado: AMD Ryzen 5 5600G, 16 GB RAM y gráficos Radeon integ
 
 ## Validación
 
+- Catálogo de peinados y filtro de montaje: commit `021031adfb0b8db9160819686292ee7523995640`; el primer intento detectó una aserción de título obsoleta en el validador. Corregida la expectativa sin rebajar el test; [CI 39634158944](https://github.com/rikosama473-sketch/image/actions/runs/39634158944) sobre el validador corregido = `success`.
+
 - Navegación integrada: commit `846d2eb89c4ac128e4a3f2472eebd2b90dceb313`; [CI 39624819395](https://github.com/rikosama473-sketch/image/actions/runs/39624819395) = `success`.
 - Transferencia JSON entre módulos y límites de importación: commit `5b23e11660e8e9bd1a47cdb879bb6bad42e9568a`; [CI 39627167742](https://github.com/rikosama473-sketch/image/actions/runs/39627167742) = `success`.
 - Integración de `main` y recursos de ambas ramas: commit de dos padres `5e1f026c776d739f77a2dbc8f87723b6d480efb4`. Todos los workflows comprobados en ese commit terminaron en verde: [IMAGE tools 39628055744](https://github.com/rikosama473-sketch/image/actions/runs/39628055744), [asset generator 39628056149](https://github.com/rikosama473-sketch/image/actions/runs/39628056149), [Character Creator 39628056209](https://github.com/rikosama473-sketch/image/actions/runs/39628056209), [manual editor 39628056386](https://github.com/rikosama473-sketch/image/actions/runs/39628056386), [contact sheets 39628045965](https://github.com/rikosama473-sketch/image/actions/runs/39628045965) y [cutout smoke test 39628055986](https://github.com/rikosama473-sketch/image/actions/runs/39628055986).
@@ -74,4 +76,4 @@ Equipo objetivo declarado: AMD Ryzen 5 5600G, 16 GB RAM y gráficos Radeon integ
 
 ## Siguiente tarea concreta
 
-Comprobar el workflow de esta tanda visual. Después ejecutar una prueba visual en navegador para revisar las nuevas imágenes, comprobar filtros de montaje y probar la transferencia de piezas a una base plana. Revisar visualmente los recortes antes de aprobarlos. Mantener el PR abierto y no descargar modelos grandes hasta cerrar las pruebas prácticas.
+Abrir el taller en navegador con el lanzador local y probar el filtro «Uso como capa»: comprobar que el paquete HMLF001 y los paquetes con licencia declarada aparecen en las categorías correctas, que las vistas de referencia no se presentan como recortes aprobados y que los dos enlaces Pinterest quedan pendientes. A continuación, ejecutar el recorrido visual Constructor/Taller → Editor manual, guardar/reabrir y exportar PNG transparente. No fusionar automáticamente el PR ni recomendar un checkpoint local sin una medición real.
