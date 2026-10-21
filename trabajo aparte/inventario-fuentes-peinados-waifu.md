@@ -7,20 +7,25 @@
 
 ## Estado de la investigación ampliada — 21 de octubre de 2026
 
-La investigación ampliada y las referencias verificadas están enlazadas aquí:
+Se completó una ampliación del censo de fuentes de cabello, ropa, ojos y accesorios femeninos. Los archivos principales están aquí:
 
-- [Informe ampliado y suplemento de auditoría](./informe-investigacion-ampliada-waifu.md): vocabulario de 117 estilos (30 cabello, 30 ropa, 30 ojos y 27 accesorios), fuente base de 70 URLs citadas, evidencia adicional de PixAI/Pixiv/BOOTH/ArtStation, precios y condiciones de uso comprobadas.
-- [Índice JSON de referencias visuales](./indice-visual-componentes.json): **71 registros de URL** (29 obras individuales de PixAI y 42 recursos/páginas externos), con 71 miniaturas, URL de origen, componente objetivo, extras rojos, tipo de recurso, estado de placa monocroma y situación de licencia.
-- [Atlas HTML interactivo](./atlas-peinados-interactivo.html): 29 fichas PixAI con miniaturas y avisos rojos, filtros de componente, vistas previas de colecciones de cabello y 9 tarjetas de productos modulares/de referencia con precio y licencia verificados.
+- [**Censo visual interactivo — 226 fichas con miniatura**](./censo-visual-interactivo.html): búsqueda libre por rasgos, filtro por componente y plataforma, aviso rojo de elementos ajenos, enlace a fuente original y estado de licencia.
+- [**Censo exhaustivo — 153 URLs canónicas únicas**](./censo-exhaustivo-fuentes-waifu-2026-10-21.md): informe profundo con fichas categorizadas, elementos a marcar en rojo, visibilidad de prompts, precio/licencia solo cuando la fuente lo indicó, brechas y recomendaciones.
+- [Bibliografía del censo](./auditoria-bibliografia-censo-waifu-2026-10-21.md): URLs de fuente para auditar el informe.
+- [Índice JSON de referencias](./indice-visual-componentes.json): **226 registros de URL normalizada**, con 226 URLs de miniatura capturadas de páginas/fuentes, componentes objetivo y campos sobre elementos ajenos, licencia y estado de placa monocroma.
+- [Atlas de peinados y prompts](./atlas-peinados-interactivo.html): primera interfaz de recetas de peinado, filtros y fichas PixAI con alertas rojas.
 
-**Cómo leer las cifras:** 71 significa registros de origen en el índice; no son 71 PNG únicos, 71 cortes aislados ni 71 assets libres. Incluye obras individuales, páginas de colección, tutoriales y anuncios de packs. Se quitaron duplicados por URL canónica dentro del índice, pero **todavía no se ejecutó comparación de hashes ni deduplicación perceptual de las imágenes**; una lámina espejo podría representar la misma obra que otra página.
+### Cómo leer los números
 
-**Nota de compatibilidad:** el índice también registra un conjunto de ropa para VRoid 3D (archivos `.vroidcustomitem`). No se cuenta como recurso 2D listo para capas, porque IMAGE prioriza placas/PNGs bidimensionales y el recurso tiene restricciones de redistribución.
+El informe de investigación profunda contiene **160 registros categorizados**, 154 con URL y seis alias/cross-references que remiten a registros existentes. Entre los que tienen URL se detectó un duplicado entre categorías, resultando en **153 URLs canónicas únicas** en ese censo. El índice de IMAGE combina esas fuentes con el índice visual previo: 75 fichas iniciales + 151 registros nuevos de fuente, con dos coincidencias absorbidas en lugar de duplicarlas = **226 registros en total**.
 
+Las 226 vistas previas se extrajeron de metadata o enlaces visibles de las páginas fuente. **Todavía no se verificó visualmente que todas carguen en el HTML final** y algunas URLs de CDN pueden cambiar o bloquearse. La interfaz tiene un fallback de “vista previa no disponible” y permite abrir la fuente original. No se descargaron los 226 archivos completos.
 
-**Estado de miniaturas:** las vistas previas oficiales de PixAI se muestran junto al nombre. Son miniaturas para reconocer y abrir la obra original, no capturas de página completa ni placas separadas. Las imágenes de Pinterest/BOOTH/ArtStation/Pixivision proceden de la vista previa vinculada a cada página.
+**Deduplicación:** se normalizaron las URLs canónicas. No se ejecutó comparación de hashes ni deduplicación perceptual entre sitios distintos, de modo que una ilustración subida en dos plataformas podría aparecer como dos fuentes. Los registros de censo preservan alias cuando la fuente inicial era un evento/listado en vez de la página de producto.
 
-**Estado de la referencia cuadrada monocroma:** la cifra de placas cuadradas monocromas con licencia de reutilización confirmada sigue siendo **0**. El atlas propone consultas de búsqueda por componente, pero no marca como terminado un recorte que no se haya encontrado, inspeccionado y validado legalmente. De los packs modulares se registran expresamente las condiciones que prohíben redistribuir los archivos originales.
+**Estado de placas cuadradas en blanco y negro:** **0 confirmadas con licencia de reutilización**. Hay búsquedas por componente y referencias monocromas candidatas, pero no se declara que una placa esté lista para importar sin comprobar forma, fondo, legibilidad y derechos.
+
+**Derechos y licencias:** “gratis para ver/descargar”, “uso comercial permitido” y “permiso para redistribuir dentro de IMAGE” son cosas distintas. Algunos recursos comerciales permiten uso final en proyectos, pero prohíben redistribuir su PSD/PNG original. Cada incorporación necesita revisión de licencia a nivel de recurso.
 
 
 ## Criterio de selección
