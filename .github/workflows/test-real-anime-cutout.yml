@@ -4,14 +4,14 @@ on:
   push:
     branches: [work/easy-avatar-maker-2026-10, main]
     paths:
-      - "scripts/test_real_anime_cutout.py"
+      - "scripts/run_real_anime_cutout_inference.py"
       - "requirements-avatar-cutout.txt"
       - "from-PixAI-2034984086876227343-0.png"
       - ".github/workflows/test-real-anime-cutout.yml"
   pull_request:
     branches: [main]
     paths:
-      - "scripts/test_real_anime_cutout.py"
+      - "scripts/run_real_anime_cutout_inference.py"
       - "requirements-avatar-cutout.txt"
       - "from-PixAI-2034984086876227343-0.png"
       - ".github/workflows/test-real-anime-cutout.yml"
@@ -55,7 +55,7 @@ jobs:
         run: python -m pip install --disable-pip-version-check -r requirements-avatar-cutout.txt "Pillow>=10.0.0"
       - name: Run real inference on a repository anime illustration
         run: >-
-          python scripts/test_real_anime_cutout.py
+          python scripts/run_real_anime_cutout_inference.py
           --input from-PixAI-2034984086876227343-0.png
           --output artifacts/real-anime-cutout
           --model "${{ env.CUTOUT_MODEL }}"
