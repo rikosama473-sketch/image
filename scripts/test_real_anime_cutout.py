@@ -100,8 +100,8 @@ def main() -> int:
     width, height = source.size
     if width < 64 or height < 64 or width * height > 20_000_000:
         fail(f"source dimensions {width}x{height} are outside the 64px–20MP test bounds.")
-    if len(source.getchannel("A").getextrema()) == 0:
-        fail("unexpected alpha channel state in the source image.")
+    if source.getchannel("A").getextrema() == (0, 0):
+        fail("source image is fully transparent; choose a visible anime illustration.")
 
     try:
         import rembg
