@@ -2703,7 +2703,7 @@ Each record follows this schema:
 
 - Research run completed after 1,128 seconds of deep research; do not interpret that runtime as a guarantee of every page being manually inspected.
 - Report body: 160 categorized records; 154 records have a URL, with one exact URL repeated across two categories, resulting in 153 normalized URL records in the base list.
-- The separate IMAGE machine-readable index now combines the base source list, earlier curated references, four accessory/clothing supplements and four modular asset-listing records, for 234 URL-normalized records. Its count is not interchangeable with the base report's 153 normalized URL records.
+- The separate IMAGE machine-readable index now combines the base source list, earlier curated references, four accessory/clothing supplements, four modular asset-listing records and three additional layered-expression listings, for 237 URL-normalized records. Its count is not interchangeable with the base report's 153 normalized URL records.
 - This is a research catalogue, not a downloaded image library. No thousands of assets were downloaded; no perceptual/image-hash deduplication was performed; no licensed clean square monochrome component plates were verified.
 - Each source page still needs direct image inspection before using its preview as a dependable style exemplar. License terms must be rechecked at the item level before any redistribution or bundling in IMAGE.
 
@@ -2721,4 +2721,16 @@ These listings matter because IMAGE needs to combine parts, but “downloadable�
 | [Pung Lone Wolf — alternate Itch.io store](https://punglonewolf.itch.io/girl-sprite-psd-1) | Same creator's layered female-character set as [the BOOTH listing](https://booth.pm/ja/items/7715930): body, blonde twin tails, eyes/mouth/blush and 4 outfits. | BOOTH ¥1,100; Itch.io US$7.99 | Both store pages prohibit redistribution/resale of raw PSD assets. | Linked as an alternate storefront under one index record to avoid counting a second copy of the same design. |
 
 **Current source/index counts after these supplements:** the base deep-research list contains 153 normalized URL records (the report's 160 categorized rows include aliases and one duplicated URL field). The wider IMAGE index currently has 234 URL-normalized records: 75 prior curated entries, 151 new deep-census URLs after two matches were merged, four accessory/clothing supplements, and four modular-asset listings. The Pung Lone Wolf cross-store URL is stored as an alternate storefront, not a separate design record.
+
+
+
+## SECTION 9 — ADDITIONAL LAYERED EXPRESSION REFERENCES FROM BOOTH
+
+| Product page | Contents visible in terms | Price stated by listing | Important limits |
+|---|---|---|---|
+| [Miko-san — RA-STUDIO](https://booth.pm/en/items/2430742) | Free PNG set with 17 variants; paid PSD at 350 dpi has 6 eye, 4 mouth and 3 brow parts plus sweat/blush/shadow effects. Preview is a complete miko character, not a standalone face-part sheet. | Free PNG ZIP (12 MB); paid PSD ¥300 | Personal/doujin use permitted; corporate use requires contacting creator. R18/R18G use and raw asset redistribution/resale are prohibited. |
+| [Dragon Girl — けものしゅがー](https://booth.pm/ja/items/3668928) | Free bust-up PNG with 4 expression variants; paid PSD has 13 eyes, 10 mouths, 4 brows and 4 effects. | Free PNG ZIP (3.74 MB); full PNG ¥300; PSD ¥300 | Commercial/noncommercial use and limited crop/resize/silhouette changes allowed; redistribution/resale prohibited. |
+| [Usuhoso Sister — ねぎま💐](https://booth.pm/ja/items/8826602) | 10 PNG expression variants; PSD has 10 mouths, 11 eyes, 3 brows and blush/sweat decorations. | PNG ¥300; PSD ¥500; set ¥800 | Personal/commercial use allowed; credit required for commercial use. Cropping, resizing, recoloring and additions permitted; redistribution/resale and AI training prohibited, merch sale requires prior permission. |
+
+These are **architecture references** for separated eyes, mouth, brow and expression effects. They are not reusable clean square monochrome plates, and their character bodies/face styles should not be extracted into an IMAGE asset pack unless the exact redistribution rights are granted.
 
