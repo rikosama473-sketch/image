@@ -17,6 +17,7 @@ CATALOG = ROOT / "tools/visual-reference-library/reference-library.json"
 ANNOTATIONS = ROOT / "tools/visual-reference-library/annotations.json"
 CONTACT_SHEETS = ROOT / "scripts/build_visual_contact_sheets.py"
 ANNOTATION_APPLIER = ROOT / "scripts/apply_visual_reference_annotations.py"
+LAUNCHER = ROOT / "tools/visual-reference-library/start-visual-reference-library.bat"
 
 
 def fail(message: str) -> None:
@@ -24,7 +25,7 @@ def fail(message: str) -> None:
 
 
 def main() -> None:
-    for path in (PAGE, AVATAR_PAGE, CATALOG, ANNOTATIONS, CONTACT_SHEETS, ANNOTATION_APPLIER):
+    for path in (PAGE, AVATAR_PAGE, CATALOG, ANNOTATIONS, CONTACT_SHEETS, ANNOTATION_APPLIER, LAUNCHER):
         if not path.is_file():
             fail(f"Missing required file: {path.relative_to(ROOT)}")
 
@@ -65,6 +66,10 @@ def main() -> None:
             fail("Inline JavaScript syntax error: " + (result.stderr.strip() or result.stdout.strip()))
     finally:
         temp_js.unlink(missing_ok=True)
+
+    launcher_text = LAUNCHER.read_text(encoding="utf-8")
+    if "tools/avatar-maker/ai_edit_server.py" not in launcher_text or "tools/visual-reference-library/index.html" not in launcher_text:
+        fail("Windows launcher must open the visual library with the existing local server.")
 
     avatar_html = AVATAR_PAGE.read_text(encoding="utf-8")
     for marker in ("new URLSearchParams(window.location.search)", "visualPrompt", "visualBackground", "aiNextResultMeta"):
