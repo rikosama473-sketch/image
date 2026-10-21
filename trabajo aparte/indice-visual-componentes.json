@@ -1137,18 +1137,703 @@
       "source_platform": "external",
       "thumbnail_kind": "external_page_or_artwork_preview",
       "red_warning_required": false
+    },
+    {
+      "id": "PX-CLT-008",
+      "category": "clothing_accessories",
+      "title": "Uniforme maid clásico negro y blanco con delantal y cofia",
+      "source_url": "https://pixai.art/artwork/2010038137810894262",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/59bdb962-715c-4ec7-8f84-d3adde0a031b",
+      "creator": "toushiro",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public description; prompt shown as short tags/parameters",
+      "target_traits": [
+        "black maid dress",
+        "puffy short sleeves",
+        "white frilled apron tied at back",
+        "matching white lace headdress",
+        "small side hair ribbon"
+      ],
+      "extras_red": [
+        "short blue bob",
+        "blue eyes",
+        "facial expression",
+        "hands and pose",
+        "sparkle effects and background"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+maid+uniform+apron+headdress+front+view+monochrome+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "ordinal": 41
+    },
+    {
+      "id": "PX-CLT-009",
+      "category": "clothing",
+      "title": "Uniforme de doncella con vestido negro, delantal blanco y cofia",
+      "source_url": "https://pixai.art/artwork/2058836489898426706",
+      "thumbnail_url": "https://images-ng.pixai.art/ji/stillThumb/ab601606-e6b2-4e03-aaf1-5727380b9e14",
+      "creator": "Evernight",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public; short prompt: maid hair blue, bottom white",
+      "target_traits": [
+        "black dress",
+        "white waist apron",
+        "white frilled headdress",
+        "long sleeves and cuffs",
+        "frill placement"
+      ],
+      "extras_red": [
+        "blue hair",
+        "blue eyes",
+        "face and expression",
+        "hands",
+        "minimal indoor background"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=maid+dress+front+back+design+sheet+black+white+lineart+white+background+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "ordinal": 42
+    },
+    {
+      "id": "PX-CLT-010",
+      "category": "clothing_accessories",
+      "title": "Miko: haori blanco, hakama roja y obi",
+      "source_url": "https://pixai.art/artwork/2009472326978257764",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/f63268e3-f78b-4ded-8fa9-1e4bdc818626",
+      "creator": "Kageume",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public",
+      "target_traits": [
+        "miko outfit",
+        "white haori",
+        "red hakama skirt",
+        "obi sash",
+        "geta sandals",
+        "traditional patterned cloth"
+      ],
+      "extras_red": [
+        "Kikyo / Inuyasha character identity",
+        "long black hair and low ponytail",
+        "jewelry",
+        "flowers",
+        "Fuji mountain",
+        "mist and landscape"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=miko+shrine+maiden+white+haori+red+hakama+front+back+black+white+line+art+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "ordinal": 43
+    },
+    {
+      "id": "PX-CLT-011",
+      "category": "clothing_accessories",
+      "title": "Gothic Lolita: mangas largas, falda de capas y adornos",
+      "source_url": "https://pixai.art/artwork/1975497579583979500",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/eea6c521-1c61-42d5-9f37-1c3a46abb0ab",
+      "creator": "papapoa20",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public",
+      "target_traits": [
+        "long sleeves",
+        "layered skirt",
+        "gothic Lolita silhouette",
+        "ruffles and lace details"
+      ],
+      "extras_red": [
+        "hair between eyes",
+        "hair color and cut",
+        "eyes and expression",
+        "face/pose",
+        "background and lighting"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=gothic+lolita+outfit+design+sheet+front+back+monochrome+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "ordinal": 44
+    },
+    {
+      "id": "PX-CLT-012",
+      "category": "clothing_accessories",
+      "title": "Vestuario de fantasía oscura: capa, corpiño y botas altas",
+      "source_url": "https://pixai.art/artwork/2056692542938534515",
+      "thumbnail_url": "https://images-ng.pixai.art/images/stillThumb/7a3c5718-cd70-4993-b5f2-758d1ea8da8e",
+      "creator": "wptdoaobskhe",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public",
+      "target_traits": [
+        "hooded assassin cloak",
+        "navy and black medieval garments",
+        "velvet cape with gold embroidery",
+        "leather corset belt",
+        "layered tunic",
+        "metallic buckles",
+        "dark gloves",
+        "thigh straps",
+        "leggings",
+        "tall lace-up boots",
+        "waist satchel"
+      ],
+      "extras_red": [
+        "Nekota Tsuna character identity",
+        "blonde hair with orange highlights",
+        "orange eyes",
+        "red cat ears",
+        "dark gradient background",
+        "cinematic lighting"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=female+fantasy+assassin+outfit+cloak+corset+belt+boots+black+white+lineart+design+sheet+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "ordinal": 45
+    },
+    {
+      "id": "PX-HIR-009",
+      "category": "hair",
+      "title": "Coletas gemelas con rizo tipo drill",
+      "source_url": "https://pixai.art/artwork/2064289424490834628",
+      "thumbnail_url": "https://images-ng.pixai.art/images/stillThumb/18e75be3-98eb-4bfb-bffc-81bed58ebfcb",
+      "creator": "Liya Hanterys",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public page; prompt details not confirmed in fetch",
+      "target_traits": [
+        "blonde twin-drill pigtails",
+        "tight spiral side curls",
+        "two-sided tied silhouette"
+      ],
+      "extras_red": [
+        "two-character composition",
+        "blue eyes",
+        "faces and expressions",
+        "wardrobe and pose"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+twin+drill+curl+ponytails+hair+only+black+white+line+art+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "ordinal": 46
+    },
+    {
+      "id": "PX-HIR-010",
+      "category": "hair_accessories",
+      "title": "Coletas rosas pastel, ahoge y adornos de estrella",
+      "source_url": "https://pixai.art/artwork/2017996244360224755",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/7ccb67af-3731-4a3b-b827-acf9eacdc5cc",
+      "creator": "nao10s",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public",
+      "target_traits": [
+        "pastel pink pigtails",
+        "star hair ornaments",
+        "single ahoge",
+        "long twin-tail variation"
+      ],
+      "extras_red": [
+        "Nika Aoi character identity",
+        "orange eyes",
+        "fang",
+        "white shirt",
+        "black suspenders",
+        "pose and scene"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+pink+twin+tails+ahoge+star+clips+black+white+hair+reference+sheet",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "ordinal": 47
+    },
+    {
+      "id": "PX-HIR-EYE-001",
+      "category": "hair_eyes",
+      "title": "Coleta alta violeta y ojos lavanda con iris detallado",
+      "source_url": "https://pixai.art/artwork/2067006211671141998",
+      "thumbnail_url": "https://images-ng.pixai.art/ji/stillThumb/4b5f71d5-4c8e-472a-a0d9-b1e9c3b58a7b",
+      "creator": "เอก ภพ",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public; detailed prompt explicitly says adult woman",
+      "target_traits": [
+        "high ponytail",
+        "long silky purple hair",
+        "face-framing strands",
+        "violet iris",
+        "radial iris pattern",
+        "lavender-violet gradients",
+        "glossy catchlights",
+        "delicate eyelashes"
+      ],
+      "extras_red": [
+        "adult female face and body proportions",
+        "wardrobe",
+        "background and lighting"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+high+ponytail+head+only+purple+iris+eye+shape+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "ordinal": 48
+    },
+    {
+      "id": "PX-EYE-004",
+      "category": "eyes",
+      "title": "Ojos de gradiente oscuro y línea de pestañas definida",
+      "source_url": "https://pixai.art/artwork/2009787699034070177",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/495a777d-9952-4b57-8a7d-d3bdd0528c20",
+      "creator": "しいちゃん",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public; full useful prompt visibility incomplete",
+      "target_traits": [
+        "black gradient eyes",
+        "soft expressive eyes",
+        "dark lashes",
+        "iris gradient"
+      ],
+      "extras_red": [
+        "full character",
+        "hair and hairstyle",
+        "clothing",
+        "pose and lighting"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+eyes+black+gradient+iris+eyelash+shape+monochrome+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "ordinal": 49
+    },
+    {
+      "id": "PX-CLT-013",
+      "category": "clothing_accessories",
+      "title": "Gothic Lolita: vestido negro, encaje, jabot y broche",
+      "source_url": "https://pixai.art/artwork/1969073009517559886",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/f0666ed5-0c39-46e1-b1d0-42206272040c",
+      "creator": "note",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public",
+      "target_traits": [
+        "black gothic dress",
+        "long sleeves",
+        "necktie/jabot",
+        "layered fabric",
+        "lace details",
+        "frilled cuffs",
+        "ornate brooch"
+      ],
+      "extras_red": [
+        "black long twintails",
+        "glowing red-pink eyes",
+        "dark expression",
+        "ship/abyssal theme",
+        "cyberpunk city background and lighting"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=gothic+lolita+dress+jabot+brooch+front+view+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "ordinal": 50
+    },
+    {
+      "id": "EXT-PXV-001",
+      "category": "hair",
+      "title": "Pixivision: catálogo curado de peinados, colores y accesorios",
+      "source_url": "https://pixivision.net/en/a/10057",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/10057/ogimage.jpg",
+      "creator": "Pixivision curation, multiple Pixiv artists",
+      "source_platform": "Pixivision",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_traits": [
+        "curated hair designs",
+        "ponytails",
+        "braids",
+        "bobs",
+        "hair accessories",
+        "multiple independent artists"
+      ],
+      "extras_red": [
+        "gallery/cover image is not a single hairstyle asset",
+        "each linked art has separate rights and author"
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "curated_color_collection_not_clean_plate",
+      "license_status": "reference_only_follow_each_original_work",
+      "ordinal": 51
+    },
+    {
+      "id": "EXT-PXV-002",
+      "category": "hair",
+      "title": "Pixivision: peinados de chicas con trenzas",
+      "source_url": "https://pixivision.net/en/a/9774",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/9774/ogimage.jpg",
+      "creator": "Pixivision curation, multiple Pixiv artists",
+      "source_platform": "Pixivision",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_traits": [
+        "single braids",
+        "twin braids",
+        "braids with ribbons",
+        "braided updos",
+        "casual and elegant braid variants"
+      ],
+      "extras_red": [
+        "editorial cover is a collection, not one isolated style",
+        "individual works have separate rights"
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "curated_collection_not_clean_plate",
+      "license_status": "reference_only_follow_each_original_work",
+      "ordinal": 52
+    },
+    {
+      "id": "EXT-PXV-003",
+      "category": "hair",
+      "title": "Pixiv: catálogo gratuito de peinados 01 (SEN)",
+      "source_url": "https://www.pixiv.net/artworks/105435259",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=105435259&mdate=1676531761",
+      "creator": "SEN / セン (creator attribution from search result; verify on original page)",
+      "source_platform": "Pixiv",
+      "thumbnail_kind": "pixiv_embed_preview",
+      "target_traits": [
+        "hair catalog / female hair variants",
+        "drawing tutorial and material",
+        "likely free resource per title"
+      ],
+      "extras_red": [
+        "original author must be acknowledged",
+        "preview iframe not necessarily an image file",
+        "use restrictions not fully confirmed"
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "source_detail_and_license_pending",
+      "license_status": "reference_only_free_material_claim_needs_terms_check",
+      "ordinal": 53
+    },
+    {
+      "id": "EXT-PXV-004",
+      "category": "hair",
+      "title": "Pixiv: patrones de combinación de peinados femeninos",
+      "source_url": "https://www.pixiv.net/artworks/48989268",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=48989268&mdate=1425015543",
+      "creator": "minmin",
+      "source_platform": "Pixiv",
+      "thumbnail_kind": "pixiv_embed_preview",
+      "target_traits": [
+        "combinations of hairstyle components",
+        "front/side hair variants over a similar girl base",
+        "drawing reference"
+      ],
+      "extras_red": [
+        "face/eyes/outfit may vary in source",
+        "illustration remains creator copyrighted"
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "preview_only_source_license_pending",
+      "license_status": "reference_only_original_creator_rights",
+      "ordinal": 54
+    },
+    {
+      "id": "EXT-PXV-005",
+      "category": "hair",
+      "title": "Pixiv: catálogo de peinados de personaje original",
+      "source_url": "https://www.pixiv.net/artworks/107123016",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=107123016&mdate=1681314603",
+      "creator": "猫虫 (search result attribution; original page currently hides detailed metadata)",
+      "source_platform": "Pixiv",
+      "thumbnail_kind": "pixiv_embed_preview",
+      "target_traits": [
+        "hairstyle catalog template",
+        "variations for one OC",
+        "useful for same-face comparison"
+      ],
+      "extras_red": [
+        "original character face",
+        "possible non-free template terms",
+        "creator rights remain"
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "preview_only_license_pending",
+      "license_status": "reference_only_original_creator_rights",
+      "ordinal": 55
+    },
+    {
+      "id": "EXT-PXV-006",
+      "category": "hair_accessories",
+      "title": "Pixiv: catálogo de peinados Oiran / peinados tradicionales",
+      "source_url": "https://www.pixiv.net/artworks/51157718",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=51157718&mdate=1435586083",
+      "creator": "猫月ユキ (search result attribution)",
+      "source_platform": "Pixiv",
+      "thumbnail_kind": "pixiv_embed_preview",
+      "target_traits": [
+        "oiran style updos",
+        "kanzashi ornament placement",
+        "traditional comb and floral pin variations"
+      ],
+      "extras_red": [
+        "Japanese traditional costume",
+        "face/hair color and character design",
+        "background"
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "preview_only_license_pending",
+      "license_status": "reference_only_original_creator_rights",
+      "ordinal": 56
+    },
+    {
+      "id": "EXT-PXV-007",
+      "category": "hair",
+      "title": "Pixiv: catálogo de 100 peinados",
+      "source_url": "https://www.pixiv.net/artworks/41521254",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=41521254&mdate=1424357696",
+      "creator": "よみ (search result attribution)",
+      "source_platform": "Pixiv",
+      "thumbnail_kind": "pixiv_embed_preview",
+      "target_traits": [
+        "100 hair styles catalog according to work title",
+        "haircut naming inspiration",
+        "style variations"
+      ],
+      "extras_red": [
+        "description says it draws from real-life hair; anime conversion needed",
+        "rights remain with artist"
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "preview_only_license_pending",
+      "license_status": "reference_only_original_creator_rights",
+      "ordinal": 57
+    },
+    {
+      "id": "EXT-AS-001",
+      "category": "hair",
+      "title": "300 Female Anime Hairstyle Sketches 4K v.01",
+      "source_url": "https://www.artstation.com/marketplace/p/BBOL5/300-female-anime-hairstyle-sketches-4k-v-01",
+      "thumbnail_url": "https://cdna.artstation.com/p/marketplace/presentation_assets/004/545/268/medium/file.jpg?1747824646",
+      "creator": "8qubitStudio",
+      "source_platform": "ArtStation Marketplace",
+      "thumbnail_kind": "official_marketplace_preview",
+      "asset_type": "paid reference pack",
+      "price_current": "USD $5.99 standard / USD $12.00 extended",
+      "file_format": "ZIP with PNG",
+      "file_size": "1.7 GB",
+      "resolution": "4096×6144 per image per listing",
+      "claimed_content": "300 hairstyle sketches; bob, curls, double buns, long hair, long/low/short twintails, pixie, ponytail, braids, spiked hair",
+      "license_summary": "Standard: personal use + one commercial project up to 2,000 sales or 20,000 views. Extended: unlimited commercial projects/sales/views. Individual single-user terms; do not redistribute source files.",
+      "extras_red": [
+        "No face/body is expected in pure hair sketches, but inspect pack samples before importing; this is paid content and not an automatically open asset license."
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "listing_preview_verified; full archive not opened; license permits project use not resale/repackaging",
+      "license_status": "paid_reference_pack_current_listing_verified",
+      "ordinal": 58
+    },
+    {
+      "id": "EXT-AS-002",
+      "category": "character_reference",
+      "title": "210 Girl Model Sheet — Anime Character Reference Pack v.139",
+      "source_url": "https://www.artstation.com/marketplace/p/m95P9/210-girl-model-sheet-anime-character-reference-image-pack-v-139-4k",
+      "thumbnail_url": "https://cdna.artstation.com/p/marketplace/presentation_assets/004/813/164/medium/file.jpg?1757113698",
+      "creator": "Ferial Studio",
+      "source_platform": "ArtStation Marketplace",
+      "thumbnail_kind": "official_marketplace_preview",
+      "asset_type": "paid 4K model-sheet pack",
+      "price_current": "USD $4.99 standard / USD $15.00 extended",
+      "file_format": "RAR / JPEG",
+      "file_size": "370 MB",
+      "resolution": "4K (4441×2489)",
+      "claimed_content": "210 female anime character sheets",
+      "license_summary": "Standard: personal use + one commercial project up to 2,000 sales or 20,000 views. Extended: unlimited commercial projects/sales/views. Product page prohibits resale/republishing the product for free.",
+      "extras_red": [
+        "Full character sheets mix face, eyes, hair, body and outfit; select only the desired part and do not confuse model-sheet counts with isolated component assets."
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "Marketplace contact sheet preview; no licensed isolated square monochrome component plate confirmed",
+      "license_status": "paid_reference_pack_current_listing_verified; source says output includes generative AI",
+      "ordinal": 59
+    },
+    {
+      "id": "EXT-AS-003",
+      "category": "character_reference",
+      "title": "240 Asian Female Model Sheet — Anime Character Reference Pack v.146",
+      "source_url": "https://www.artstation.com/marketplace/p/NXgo7/240-asian-female-model-sheet-anime-character-reference-image-pack-v-146-4k",
+      "thumbnail_url": "https://cdna.artstation.com/p/marketplace/presentation_assets/005/012/893/medium/file.jpg?1764688064",
+      "creator": "Ferial Studio",
+      "source_platform": "ArtStation Marketplace",
+      "thumbnail_kind": "official_marketplace_preview",
+      "asset_type": "paid 4K model-sheet pack",
+      "price_current": "USD $4.99 standard / USD $15.00 extended",
+      "file_format": "RAR / JPEG",
+      "file_size": "570 MB",
+      "resolution": "4K (4096×4096)",
+      "claimed_content": "240 Asian female anime model sheets",
+      "license_summary": "Standard: personal use + one commercial project up to 2,000 sales or 20,000 views. Extended: unlimited commercial projects/sales/views. Product page prohibits resale/republishing the product for free.",
+      "extras_red": [
+        "Full characters: not isolated hair/eyes/clothing pieces. Use as visual references and mark all non-target elements red."
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "Marketplace preview verified; no licensed isolated square monochrome plate confirmed",
+      "license_status": "paid_reference_pack_current_listing_verified; source says output includes generative AI",
+      "ordinal": 60
+    },
+    {
+      "id": "EXT-AS-004",
+      "category": "clothing",
+      "title": "370 Fantasy Female Medieval Warrior Armor References 8K",
+      "source_url": "https://www.artstation.com/marketplace/p/BLjdM/370-fantasy-female-medieval-warrior-armor-character-references-8k-res-draft",
+      "thumbnail_url": "https://cdnb.artstation.com/p/marketplace/presentation_assets/002/950/193/medium/file.jpg?1692610244",
+      "creator": "DreamWork | Studio",
+      "source_platform": "ArtStation Marketplace",
+      "thumbnail_kind": "official_marketplace_preview",
+      "asset_type": "paid armor reference pack",
+      "price_current": "USD $5.00 standard / USD $15.00 extended",
+      "file_format": "RAR / JPEG",
+      "file_size": "460 MB",
+      "resolution": "8K per listing",
+      "claimed_content": "370 fantasy female medieval warrior armor references rendered as 3D-sculpture-style images",
+      "license_summary": "Standard: personal use + one commercial project up to 2,000 sales or 20,000 views. Extended: unlimited commercial projects/sales/views. Page says license supports reference/concept-art uses; do not redistribute the files.",
+      "extras_red": [
+        "Hair, face, weapons, poses and armor are mixed across samples; no individual armor part is a separate PNG unless verified inside the pack."
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "Full-color 3D render-style reference pack, not a monochrome line-art sheet",
+      "license_status": "paid_reference_pack_current_listing_verified; AI-display/3D sculpt images described by seller",
+      "ordinal": 61
+    },
+    {
+      "id": "EXT-BOOTH-001",
+      "category": "clothing",
+      "title": "Magical Academy Uniform Set Vol.1 — modular costume set",
+      "source_url": "https://booth.pm/en/items/6868287",
+      "thumbnail_url": "https://booth.pximg.net/c/620x620/b6f2fe5e-5320-4d64-9b63-e2ba962f5c60/i/6868287/50e5292b-139f-476b-9160-d86ee8bdeabe_base_resized.jpg",
+      "creator": "Studio chacana assets",
+      "source_platform": "BOOTH",
+      "thumbnail_kind": "official_store_preview",
+      "asset_type": "modular clothing asset pack",
+      "price_current": "Free sample / full product ¥1,500",
+      "file_format": "PSD layers + transparent PNG",
+      "claimed_content": "30+ parts: sailor tops, blouses, cape, corset, three skirts, shorts, loafers/boots, ribbons, headbands, brooch, wand, sleeves/frills/collars",
+      "license_summary": "Seller explicitly permits commercial use; attribution optional; free sample includes selected parts; redistribution/resale prohibited.",
+      "extras_red": [
+        "Product preview may show full outfit/character; download terms govern use. Do not bundle original source files in IMAGE distribution."
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "colored modular parts, not monochrome line art; PSD/PNG sample availability verified",
+      "license_status": "modular asset listing/license verified; redistribution prohibited",
+      "ordinal": 62
+    },
+    {
+      "id": "EXT-BOOTH-002",
+      "category": "character_reference",
+      "title": "Female Character PSD — separated body, hair, clothing and expressions",
+      "source_url": "https://booth.pm/ja/items/7715930",
+      "thumbnail_url": "https://booth.pximg.net/c/620x620/0f28f713-7639-4be3-be3a-90f8467327ec/i/7715930/7390c593-7fad-4895-abdf-8aa08bb15a08_base_resized.jpg",
+      "creator": "PungLoneWolf",
+      "source_platform": "BOOTH",
+      "thumbnail_kind": "official_store_preview",
+      "asset_type": "paid modular female character PSD",
+      "price_current": "¥1,100",
+      "file_format": "layered PSD / transparent background",
+      "resolution": "1504×2409",
+      "claimed_content": "1 body; 1 blonde twin-tail hairstyle; 3 eye/expression states; 7 mouth options; blush; 4 outfits: school uniform, casual, gymwear, swimsuit",
+      "license_summary": "Commercial use and modifications/part-combination allowed; credit optional; redistribution/resale prohibited.",
+      "extras_red": [
+        "Character model itself, hair/eyes/outfit are layered; do not treat source product as a freely redistributable asset."
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "layered colored PSD, not black/white line-art reference",
+      "license_status": "paid modular asset listing/license verified; redistribution prohibited",
+      "ordinal": 63
+    },
+    {
+      "id": "EXT-BOOTH-003",
+      "category": "hair",
+      "title": "Marumori — free PSD with front/side/back hair layers",
+      "source_url": "https://booth.pm/ja/items/4997076",
+      "thumbnail_url": "https://booth.pximg.net/c/620x620/9d2f382d-2188-45e2-acc3-e509db922da6/i/4997076/f1547984-10c6-4ba1-a496-c0e00c6779be_base_resized.jpg",
+      "creator": "Marumori; illustration by koori",
+      "source_platform": "BOOTH",
+      "thumbnail_kind": "official_store_preview",
+      "asset_type": "free modular PSD reference sample",
+      "price_current": "¥0",
+      "file_format": "PSD",
+      "file_size": "2.59 MB",
+      "claimed_content": "full-body character, three expression variants, hair parts in front/side/back layers and line-only data",
+      "license_summary": "Permits illustration use for MV, singing videos and tutorials; forbids redistribution, modification, self-claiming, and AI training; other uses require contacting creator.",
+      "extras_red": [
+        "Full character and face remain bundled; hair can be studied as layer architecture, but terms prohibit modifications and do not automatically authorize a new character editor's combinable hair assets."
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "line-only character layer exists per listing, but not a square isolated hair plate",
+      "license_status": "free to download; reuse scope narrow, not suitable for bundling into a remix editor without written permission",
+      "ordinal": 64
+    },
+    {
+      "id": "EXT-BOOTH-004",
+      "category": "hair",
+      "title": "Wolf-cut girl — free preview and paid layered PSD variant",
+      "source_url": "https://booth.pm/ja/items/8251188",
+      "thumbnail_url": "https://booth.pximg.net/c/620x620/3ba26608-e911-4fdd-a3b4-631364863043/i/8251188/577bd9be-f5c1-4499-85b1-7afa11a1603d_base_resized.jpg",
+      "creator": "studio-oneness / Mugi",
+      "source_platform": "BOOTH",
+      "thumbnail_kind": "official_store_preview",
+      "asset_type": "character illustration variants",
+      "price_current": "Free PNG/ZIP preview; paid layered PSD ¥1,000",
+      "file_format": "transparent PNG and paid PSD",
+      "resolution": "full body 2000×4000 px; bust-up 1600×1600 px",
+      "claimed_content": "wolf-cut female design; 38+ expression variations on paid version",
+      "license_summary": "Free terms allow size change/cropping only; if used in sold/monetized content, credit 'OnenessAlphA'. Prohibits redistribution, other modifications, AI training, and adult-content use.",
+      "extras_red": [
+        "Full character/face/body is not an isolated hairstyle asset; cropping to extract hair would likely exceed the stated permitted modification."
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "colored character art, no isolated monochrome plate",
+      "license_status": "free preview and paid variant verified; restrictive modification license",
+      "ordinal": 65
+    },
+    {
+      "id": "EXT-BOOTH-005",
+      "category": "character_reference",
+      "title": "Pink/cyan Chinese-inspired girl — layered PSD",
+      "source_url": "https://booth.pm/ja/items/8689650",
+      "thumbnail_url": "https://booth.pximg.net/c/620x620/47fa7931-51f2-4af7-bd0a-66c060d9dc94/i/8689650/9bee07c0-18d8-413b-bf0b-40b0f25ad3f3_base_resized.jpg",
+      "creator": "suiu_yohira",
+      "source_platform": "BOOTH",
+      "thumbnail_kind": "official_store_preview",
+      "asset_type": "paid modular character illustration",
+      "price_current": "¥500",
+      "file_format": "layered PSD",
+      "resolution": "6000×9000 px, 350 ppi",
+      "claimed_content": "six expression variants including tears, heart and sparkle eye states; arm variants and eye layers",
+      "license_summary": "Permits apps/games/video/VTuber use and modification needed for model rigging; credit required; forbids redistribution/reposting/self-claiming and AI training.",
+      "extras_red": [
+        "Full character, Chinese-inspired clothing, hair and face are combined across layers; ensure per-layer terms before using any layer in a bundled editor."
+      ],
+      "red_warning_required": false,
+      "monochrome_plate_status": "colored layered PSD, not monochrome square plate",
+      "license_status": "paid listing/license verified; redistribution prohibited",
+      "ordinal": 66
     }
   ],
   "statistics": {
-    "pixai_entries": 16,
-    "external_reference_entries": 24,
-    "combined_index_entries": 40,
-    "pixai_entries_with_thumbnail": 16,
-    "external_entries_with_thumbnail": 24,
+    "pixai_entries": 26,
+    "external_reference_entries": 40,
+    "combined_index_entries": 66,
+    "pixai_entries_with_thumbnail": 26,
+    "external_entries_with_thumbnail": 40,
     "verified_clean_square_plates": 0,
     "pixai_tag_browsers": 8,
-    "source_status_note": "Counts describe index records/candidates, not unique extracted PNGs. Pinterest mirrors and rehosts can duplicate original works; candidate entries stay marked until authorship and originality are checked.",
-    "monochrome_status_note": "Search links are queries, not confirmed plates. For a component-specific square monochrome sheet, use the direct clean source if one has been verified, otherwise retain search_pending."
+    "source_status_note": "Counts describe index records/candidates, not unique isolated PNGs. Pixivision collections, Pinterest mirrors, PixAI artwork and product previews are different record types; only canonical individual source pages are deduplicated by source_url. Full visual perceptual/hashing deduplication remains unperformed.",
+    "monochrome_status_note": "Search links are queries, not confirmed plates. None of the PixAI examples has been proven to be a reusable square monochrome component plate. Layered PSD products are assets with their own terms, not automatically redistributable editor content."
   },
   "pixai_tag_browsers": [
     {
