@@ -10,7 +10,7 @@ Editor visual guiado por la referencia compartida: navegación lateral, ilustrac
 
 ## Prueba inicial con imágenes internas
 
-Al abrir el creador, la sección **Prueba inicial** muestra hasta 12 ilustraciones internas con nombre de archivo PixAI para comenzar las pruebas. Si no existen esas rutas en el índice, usa las primeras ilustraciones completas disponibles. Las muestras se presentan explícitamente como retratos completos: no se clasifican como cabello, ojos ni ropa aislados. La licencia y la procedencia siguen pendientes de revisión individual.
+Al abrir el creador, la sección **Prueba inicial** muestra 24 ilustraciones internas con nombre de archivo PixAI por página y permite **cargar 24 más** en cada clic. Si no existen esas rutas en el índice, usa las primeras ilustraciones completas disponibles. Las muestras se presentan explícitamente como retratos completos: no se clasifican como cabello, ojos ni ropa aislados. La licencia y la procedencia siguen pendientes de revisión individual.
 
 En la tarjeta de cada muestra:
 
@@ -19,6 +19,14 @@ En la tarjeta de cada muestra:
 - **Añadir capa de prueba** agrega una ilustración completa como superposición semitransparente para probar selección, posición, escala, opacidad, orden, visibilidad y eliminación.
 
 Después de escoger una muestra, probá también **Exportar PNG**, **Guardar proyecto JSON** y volver a cargar ese JSON. Los proyectos guardan el ID de la imagen base; al reabrirlos, el editor vuelve a resolver el ID en el catálogo interno para recuperar el retrato seleccionado. Las imágenes de prueba son para comprobar la integración y no se marcan como recursos aprobados para redistribución o entrenamiento.
+
+## Recorte profesional asistido por IA
+
+La sección **Prueba inicial** incluye acciones de recorte por categoría: **Cabello, Ojos, Rostro, Ropa y Accesorios**. Selecciona primero una de las ilustraciones del catálogo y pulsa la categoría que necesitas. El flujo envía al servicio local la imagen base seleccionada, sin las superposiciones temporales de prueba, y solicita una única pieza con transparencia alfa real y lienzo completo de 768×1280, preservando posición y escala. El resultado se presenta como candidato, no como recorte ya aprobado.
+
+Al pulsar aplicar, la pieza queda en su categoría y con un grupo independiente; generar otra extracción de esa misma categoría sustituye la candidata IA anterior de ese grupo, pero no destruye la ilustración base. Revisa el canal alfa, los contornos, la identidad, la zona de contacto con otros componentes y la alineación antes de usarla. La extracción IA puede reconstruir píxeles ocultos, por lo que el resultado no se considera un recorte literal ni se aprueba automáticamente.
+
+El servicio requiere el lanzador local y `OPENAI_API_KEY` en el entorno de Windows. Cada solicitud puede generar cargos; el selector solicita dos alternativas para comparar y escoge la primera como vista previa inicial. El enlace al flujo de GitHub Actions también permite generar paquetes IA de 5–6 variantes de peinado (core, cortes cortos, recogidos, flequillos y ondas/trenzas). La generación en Actions necesita el secreto `OPENAI_API_KEY` configurado en el repositorio; la vista previa de recorte del paquete no genera imágenes ni consume esa llamada.
 
 ## Implementado
 
