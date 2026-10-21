@@ -20,13 +20,27 @@ En la tarjeta de cada muestra:
 
 Después de escoger una muestra, probá también **Exportar PNG**, **Guardar proyecto JSON** y volver a cargar ese JSON. Los proyectos guardan el ID de la imagen base; al reabrirlos, el editor vuelve a resolver el ID en el catálogo interno para recuperar el retrato seleccionado. Las imágenes de prueba son para comprobar la integración y no se marcan como recursos aprobados para redistribución o entrenamiento.
 
-## Recorte profesional asistido por IA
+## Recorte profesional y capas con transparencia
 
-La sección **Prueba inicial** incluye acciones de recorte por categoría: **Cabello, Ojos, Rostro, Ropa y Accesorios**. Selecciona primero una de las ilustraciones del catálogo y pulsa la categoría que necesitas. El flujo envía al servicio local la imagen base seleccionada, sin las superposiciones temporales de prueba, y solicita una única pieza con transparencia alfa real y lienzo completo de 768×1280, preservando posición y escala. El resultado se presenta como candidato, no como recorte ya aprobado.
+### Recorte de fondo local (píxeles originales)
 
-Al pulsar aplicar, la pieza queda en su categoría y con un grupo independiente; generar otra extracción de esa misma categoría sustituye la candidata IA anterior de ese grupo, pero no destruye la ilustración base. Revisa el canal alfa, los contornos, la identidad, la zona de contacto con otros componentes y la alineación antes de usarla. La extracción IA puede reconstruir píxeles ocultos, por lo que el resultado no se considera un recorte literal ni se aprueba automáticamente.
+La acción **Eliminar fondo conservando píxeles** usa `rembg` con `isnet-anime`, una segmentación especializada para personajes anime. La alternativa `birefnet-portrait` sirve como comparación. El resultado debe tener canal alfa real, mantener las dimensiones del lienzo y pasa como capa candidata sin destruir la base. El recorte se ejecuta en el equipo local; no envía la imagen a una API generativa. La primera ejecución descarga los pesos del modelo seleccionado y los guarda en la caché local. El backend reutiliza la sesión del modelo y rechaza salidas que cambien las dimensiones o no tengan píxeles transparentes.
 
-El servicio requiere el lanzador local y `OPENAI_API_KEY` en el entorno de Windows. Cada solicitud puede generar cargos; el selector solicita dos alternativas para comparar y escoge la primera como vista previa inicial. El enlace al flujo de GitHub Actions también permite generar paquetes IA de 5–6 variantes de peinado (core, cortes cortos, recogidos, flequillos y ondas/trenzas). La generación en Actions necesita el secreto `OPENAI_API_KEY` configurado en el repositorio; la vista previa de recorte del paquete no genera imágenes ni consume esa llamada.
+Instalación opcional desde la raíz del repositorio:
+
+```bash
+python -m pip install -r requirements-avatar-cutout.txt
+```
+
+Reiniciá `start-avatar-maker.bat` después de instalar. El modelo puede descargar cientos de MB y el primer uso puede tardar; no se instala automáticamente. Si el motor no está disponible, el editor muestra cómo habilitarlo y conserva el original.
+
+### Extracción generativa de piezas
+
+Las acciones **Cabello, Ojos, Rostro, Ropa y Accesorios** usan el servicio de edición de imágenes y pueden reconstruir píxeles ocultos; no son una segmentación literal. Requieren el lanzador local y `OPENAI_API_KEY` en el entorno de Windows. Cada solicitud puede generar cargos. El resultado se registra como candidato pendiente de revisión, nunca como pieza aprobada automáticamente. Se conservan las dimensiones y el encuadre solicitados, pero debe comprobarse que el modelo los haya respetado.
+
+Al revisar cualquier candidato, comprobá el canal alfa, bordes del cabello, halos de color, rostro/ropa que hayan quedado pegados, identidad y posición del lienzo. La biblioteca contiene retratos completos y no se los etiqueta como piezas sueltas. Las acciones de selección, opacidad, orden, visibilidad, eliminación, guardado JSON y exportación PNG deben validarse antes de aprobar una capa.
+
+El enlace al flujo de GitHub Actions permite generar paquetes de 5–6 variantes de peinado (core, cortes cortos, recogidos, flequillos y ondas/trenzas). Esa generación necesita el secreto `OPENAI_API_KEY` configurado en Actions; el modo `preview` no genera imágenes ni consume la llamada a la API.
 
 ## Implementado
 
