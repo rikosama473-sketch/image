@@ -1,0 +1,154 @@
+(function(){
+"use strict";
+const $=id=>document.getElementById(id);
+const HAIR_CATEGORIES=["haircut","bangs","sidelocks","tie","ahoge","accessory"];
+let library=null;
+const css=[
+".library-btn{border-color:#8a5572!important;background:#392638!important;font-weight:800}",
+".combo-note{font-size:10px;line-height:1.5;color:#9eacc3;margin:7px 0}",
+".combo-list{display:flex;flex-direction:column;gap:6px}",
+".combo-option{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px;align-items:start;padding:7px;border:1px solid #354156;border-radius:8px;background:#111721;cursor:pointer}",
+".combo-option input{width:15px;margin:2px 0;accent-color:#ee5d9d}",
+".combo-option b{display:block;font-size:11px}.combo-option small{display:block;color:#9eacc3;font-size:9px;overflow-wrap:anywhere}",
+".library-overlay{display:none;position:fixed;inset:0;z-index:40;background:#070910ed;padding:clamp(8px,2vw,24px);align-items:center;justify-content:center}",
+".library-overlay.open{display:flex}.library-panel{width:min(1320px,100%);height:min(94vh,1100px);background:#151a25;border:1px solid #48546a;border-radius:16px;box-shadow:0 25px 80px #000b;display:flex;flex-direction:column;min-height:0;overflow:hidden}",
+".library-header{display:flex;gap:12px;align-items:flex-start;padding:16px 18px;border-bottom:1px solid #354156;background:#1b202d}.library-heading{min-width:0;flex:1}.library-heading h2{font-size:18px;margin:0 0 5px}.library-heading p{font-size:11px;color:#9eacc3;max-width:820px;margin:0;line-height:1.55}",
+".library-controls{display:grid;grid-template-columns:minmax(180px,2fr) repeat(2,minmax(130px,1fr));gap:8px;padding:12px 16px;border-bottom:1px solid #354156;background:#121722}.library-count{font-size:11px;color:#9eacc3;padding:10px 17px}",
+".library-scroll{flex:1;overflow:auto;padding:0 16px 18px;min-height:0}.recipe-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}",
+".recipe-card{min-width:0;border:1px solid #394358;border-radius:11px;overflow:hidden;background:#10151f;display:flex;flex-direction:column}.recipe-card canvas{width:100%;height:150px;display:block;background:radial-gradient(ellipse at center,#252c3b,#151a25 72%)}",
+".recipe-body{padding:9px;display:flex;flex:1;flex-direction:column;gap:6px}.recipe-body b{font-size:12px;line-height:1.35;min-height:31px}.recipe-body p{font-size:10px;color:#9eacc3;line-height:1.45;margin:0;min-height:43px}",
+".recipe-tags{display:flex;gap:4px;flex-wrap:wrap}.recipe-tags span{font-size:9px;border:1px solid #47536a;color:#ccd7eb;border-radius:5px;padding:2px 5px}.recipe-meta{font-size:9px;color:#f3c4dc}.recipe-body button{margin-top:auto;width:100%;font-size:11px}",
+".library-empty{padding:35px;text-align:center;color:#9eacc3;font-size:13px}",
+"@media(max-width:980px){.recipe-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}",
+"@media(max-width:650px){.library-controls{grid-template-columns:1fr 1fr}.library-controls .field:first-child{grid-column:1/-1}.recipe-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.library-header{padding:12px}.recipe-card canvas{height:130px}.recipe-body p{min-height:0}}",
+"@media(max-width:390px){.recipe-grid{gap:7px}.recipe-card canvas{height:110px}.recipe-body{padding:7px}}"
+].join("");
+const style=document.createElement("style");style.textContent=css;document.head.appendChild(style);
+function installSlot(){
+ const grid=$("slots"),select=$("pieceType");
+ if(grid&&!grid.querySelector('[data-slot="ahoge"]')){
+  const b=document.createElement("button");b.className="slot";b.dataset.slot="ahoge";
+  b.innerHTML="<strong>↟ Ahoge</strong><small>Mechón levantado</small>";grid.appendChild(b);
+  b.addEventListener("click",()=>{if(window.HairWorkbenchAPI)window.HairWorkbenchAPI.setSlot("ahoge");grid.querySelectorAll("[data-slot]").forEach(x=>x.classList.toggle("active",x.dataset.slot==="ahoge"));});
+ }
+ if(select&&!select.querySelector('option[value="ahoge"]')){const o=document.createElement("option");o.value="ahoge";o.textContent="Ahoge / mechón levantado";select.appendChild(o);}
+}
+function installUI(){
+ const header=document.querySelector("header");
+ const demo=$("demoBtn");
+ if(header&&demo&&!$("libraryBtn")){
+  const b=document.createElement("button");b.id="libraryBtn";b.className="library-btn";b.textContent="Visor de 120 diseños";header.querySelector(".actions").insertBefore(b,demo);b.addEventListener("click",openLibrary);
+ }
+ const aside=document.querySelector(".layout > aside");
+ if(aside&&!$("combinationTray")){
+  const sec=document.createElement("section");sec.className="section";sec.innerHTML="<h2>Combinador manual de piezas</h2><p class='combo-note'>Marcá las piezas de cabello que quieras superponer. Las alternativas de corte completo se excluyen entre sí; flequillos, mechones, coletas parciales, ahoges y adornos sí pueden coexistir. Cambios en vivo.</p><div id='combinationStatus' class='count'>Cargando capas…</div><div id='combinationTray' class='combo-list'></div><button id='libraryBtnSide' class='library-btn' style='width:100%;margin-top:9px'>Buscar receta de peinado</button>";
+  const sections=Array.from(aside.querySelectorAll(".section"));
+  const anchor=sections.find(s=>(s.querySelector("h2")?.textContent||"").toLowerCase().includes("conservación"));
+  aside.insertBefore(sec,anchor||null);
+  $("libraryBtnSide").addEventListener("click",openLibrary);
+ }
+ if(!$("libraryOverlay")){
+  const modal=document.createElement("div");modal.id="libraryOverlay";modal.className="library-overlay";modal.setAttribute("role","dialog");modal.setAttribute("aria-modal","true");modal.setAttribute("aria-labelledby","libraryTitle");
+  modal.innerHTML="<div class='library-panel'><div class='library-header'><div class='library-heading'><h2 id='libraryTitle'>Biblioteca de diseños de cabello anime</h2><p>Explorá 120 recetas de siluetas, flequillos, mechones, recogidos y ahoges. Las miniaturas son bocetos vectoriales orientativos, no PNG recortados. Al probar una idea, se activan solo las piezas reales que coincidan y se muestran los recortes pendientes.</p></div><button id='closeLibraryBtn' aria-label='Cerrar visor'>Cerrar ✕</button></div><div class='library-controls'><div class='field' style='margin:0'><label for='recipeSearch'>Buscar corte, rasgo o etiqueta</label><input id='recipeSearch' type='search' placeholder='Ej. bob, mechón largo, side_ponytail'></div><div class='field' style='margin:0'><label for='recipeFamily'>Familia</label><select id='recipeFamily'><option value=''>Todas las familias</option><option value='Corto'>Cortes cortos</option><option value='Medio'>Cortes medios</option><option value='Largo'>Cortes largos</option></select></div><div class='field' style='margin:0'><label for='recipeLength'>Largo</label><select id='recipeLength'><option value=''>Todos los largos</option><option value='short'>Corto</option><option value='medium'>Medio</option><option value='long'>Largo</option></select></div></div><div id='libraryCount' class='library-count'>Cargando biblioteca…</div><div class='library-scroll'><div id='recipeGrid' class='recipe-grid'></div></div></div>";
+  document.body.appendChild(modal);
+  $("closeLibraryBtn").addEventListener("click",closeLibrary);
+  modal.addEventListener("click",e=>{if(e.target===modal)closeLibrary();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeLibrary();});
+  $("recipeSearch").addEventListener("input",renderLibrary);
+  $("recipeFamily").addEventListener("change",renderLibrary);
+  $("recipeLength").addEventListener("change",renderLibrary);
+ }
+}
+function api(){return window.HairWorkbenchAPI;}
+function allLayers(){return api()?api().getLayers():[];}
+function openLibrary(){
+ if(library){$("libraryOverlay").classList.add("open");$("recipeSearch").focus();return;}
+ fetch("./hairstyle-library.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("No se pudo cargar hairstyle-library.json");return r.json();}).then(data=>{
+  library=data;
+  if(!Array.isArray(library.recipes))throw new Error("La biblioteca no contiene recetas válidas");
+  renderLibrary();$("libraryOverlay").classList.add("open");$("recipeSearch").focus();
+ }).catch(e=>{if(api())api().say("No se pudo abrir el visor: "+e.message,"error");});
+}
+function closeLibrary(){const m=$("libraryOverlay");if(m)m.classList.remove("open");}
+function labelsLen(n){return n==="short"?"Corto":n==="medium"?"Medio":"Largo";}
+function drawThumb(r,canvas){
+ const c=canvas.getContext("2d"),w=canvas.width,h=canvas.height;
+ const seed=Number((r.id.match(/(\d+)$/)||[])[1]||1);
+ c.clearRect(0,0,w,h);
+ const palette=[["#4a3970","#bf609c"],["#344c72","#7e9ed9"],["#5a373f","#d17b7d"],["#3f4f4a","#9bbda3"],["#5b4635","#c39b70"],["#373b55","#a1a0d7"]];
+ const colors=palette[seed%palette.length],hair=c.createLinearGradient(25,15,105,145);hair.addColorStop(0,colors[0]);hair.addColorStop(1,colors[1]);
+ const end=r.length==="short"?91:r.length==="medium"?119:153,shift=(seed%5)-2;
+ c.lineCap="round";c.lineJoin="round";
+ c.fillStyle=hair;c.beginPath();c.moveTo(31,77);c.bezierCurveTo(25,43,33,20,59,19);c.bezierCurveTo(85,13,103,36,96,72);c.lineTo(99+shift,end-7);c.quadraticCurveTo(94,end+3,82,end-1);c.lineTo(77,81);c.lineTo(51,82);c.lineTo(45,end-2);c.quadraticCurveTo(26,end+2,26,end-8);c.closePath();c.fill();
+ if(r.shape==="shag"||r.shape==="wolf"||r.shape==="layers-long"){c.strokeStyle=colors[0];c.lineWidth=3;for(let k=0;k<4;k++){c.beginPath();c.moveTo(35+k*13,70);c.quadraticCurveTo(24+k*16,93+k*3,31+k*14,end-2);c.stroke();}}
+ c.fillStyle="#e6ac9a";c.fillRect(55,91,18,19);
+ c.fillStyle="#f4cbb7";c.beginPath();c.ellipse(64,63,25,33,0,0,Math.PI*2);c.fill();
+ c.fillStyle="#e8b1a2";c.beginPath();c.ellipse(38,66,4,7,0,0,Math.PI*2);c.ellipse(90,66,4,7,0,0,Math.PI*2);c.fill();
+ c.fillStyle=hair;c.beginPath();c.moveTo(34,65);c.bezierCurveTo(28,35,40,20,62,22);c.bezierCurveTo(86,17,100,37,94,64);c.quadraticCurveTo(81,49,76,40);c.quadraticCurveTo(58,55,37,48);c.closePath();c.fill();
+ c.strokeStyle="#493d56";c.lineWidth=2;c.beginPath();c.moveTo(48,65);c.lineTo(56,65);c.moveTo(72,65);c.lineTo(80,65);c.stroke();
+ c.strokeStyle="#ad6b75";c.lineWidth=1.5;c.beginPath();c.moveTo(60,80);c.quadraticCurveTo(64,83,68,80);c.stroke();
+ if(r.bangs==="blunt_bangs"){c.fillStyle=hair;c.beginPath();c.moveTo(37,46);c.quadraticCurveTo(64,37,91,47);c.lineTo(86,61);for(let x=81;x>=42;x-=8)c.lineTo(x,59+(x%3));c.closePath();c.fill();}
+ else if(r.bangs==="curtain_bangs"){c.fillStyle=hair;c.beginPath();c.moveTo(38,44);c.quadraticCurveTo(52,38,62,47);c.lineTo(58,62);c.quadraticCurveTo(48,54,43,60);c.closePath();c.fill();c.beginPath();c.moveTo(65,47);c.quadraticCurveTo(77,37,90,45);c.lineTo(86,61);c.quadraticCurveTo(76,53,68,62);c.closePath();c.fill();}
+ else if(r.bangs==="swept_bangs"){c.fillStyle=hair;c.beginPath();c.moveTo(36,44);c.quadraticCurveTo(62,34,92,42);c.quadraticCurveTo(76,52,49,60);c.closePath();c.fill();}
+ else if(r.bangs==="parted_bangs"){c.fillStyle=hair;c.beginPath();c.moveTo(37,44);c.quadraticCurveTo(50,38,61,45);c.lineTo(57,61);c.quadraticCurveTo(48,55,43,60);c.closePath();c.fill();c.beginPath();c.moveTo(67,45);c.quadraticCurveTo(79,38,91,44);c.lineTo(85,60);c.quadraticCurveTo(77,55,69,61);c.closePath();c.fill();}
+ if((r.accents||[]).includes("long_sidelocks")){c.strokeStyle=colors[1];c.lineWidth=6;c.beginPath();c.moveTo(39,65);c.quadraticCurveTo(37,90,43,end-1);c.moveTo(89,65);c.quadraticCurveTo(92,90,86,end-2);c.stroke();}
+ if(r.arrangement==="side_ponytail"){c.fillStyle=hair;c.beginPath();c.moveTo(87,48);c.quadraticCurveTo(104,45,108,67);c.quadraticCurveTo(112,84,102,95);c.quadraticCurveTo(96,81,98,68);c.closePath();c.fill();c.strokeStyle=colors[1];c.lineWidth=4;c.beginPath();c.moveTo(91,58);c.lineTo(100,59);c.stroke();}
+ if(r.arrangement==="half_updo"){c.fillStyle=hair;c.beginPath();c.ellipse(66,25,13,9,-.3,0,Math.PI*2);c.fill();c.strokeStyle=colors[1];c.lineWidth=3;c.beginPath();c.moveTo(60,24);c.lineTo(69,24);c.stroke();}
+ if((r.accents||[]).includes("ahoge")){c.strokeStyle=colors[1];c.lineWidth=3;c.beginPath();c.moveTo(62,25);c.bezierCurveTo(54,10,74,5,70,18);c.stroke();}
+ if((r.accents||[]).includes("hair_ribbon")){c.fillStyle="#f2a5ca";c.beginPath();c.moveTo(85,52);c.lineTo(96,45);c.lineTo(94,57);c.closePath();c.moveTo(85,52);c.lineTo(76,44);c.lineTo(77,57);c.closePath();c.fill();}
+ c.fillStyle="#6d7990";c.beginPath();c.moveTo(45,112);c.quadraticCurveTo(64,105,83,112);c.lineTo(103,150);c.lineTo(25,150);c.closePath();c.fill();
+ c.fillStyle="#bfc8d8";c.font="9px system-ui";c.textAlign="center";c.fillText("BOCETO · NO PNG",64,166);
+}
+function renderLibrary(){
+ if(!library)return;
+ const q=$("recipeSearch").value.trim().toLowerCase(),fam=$("recipeFamily").value,len=$("recipeLength").value;
+ const rows=library.recipes.filter(r=>(!fam||r.family===fam)&&(!len||r.length===len)&&(!q||[r.name,r.description,r.family].concat(r.tags||[],r.accents||[]).join(" ").toLowerCase().includes(q)));
+ const a=api(),baseCount=a?a.getCatalogHairCount():0;
+ $("libraryCount").textContent=rows.length+" de "+library.recipes.length+" recetas · "+baseCount+" PNG de cabello candidatos registrados · no son 120 recortes reales.";
+ const root=$("recipeGrid");
+ if(!rows.length){root.innerHTML="<div class='library-empty'>No hay recetas con esos filtros. Probá otro término o quitá un filtro.</div>";return;}
+ root.innerHTML=rows.map(r=>"<article class='recipe-card'><canvas width='128' height='170' data-recipe-thumb='"+r.id+"' aria-label='Boceto esquemático de "+r.name.replace(/&/g,"&amp;").replace(/</g,"&lt;")+"'></canvas><div class='recipe-body'><b>"+r.name+"</b><div class='recipe-tags'>"+r.tags.slice(0,4).map(t=>"<span>"+t.replaceAll("_"," ")+"</span>").join("")+"</div><p>"+r.description+"</p><div class='recipe-meta'>"+r.family+" · "+labelsLen(r.length)+" · receta "+r.id+"</div><button data-try-recipe='"+r.id+"' class='primary'>Probar en el lienzo</button></div></article>").join("");
+ root.querySelectorAll("[data-recipe-thumb]").forEach(canvas=>{const r=library.recipes.find(x=>x.id===canvas.dataset.recipeThumb);if(r)drawThumb(r,canvas);});
+ root.querySelectorAll("[data-try-recipe]").forEach(btn=>btn.addEventListener("click",()=>tryRecipe(btn.dataset.tryRecipe)));
+}
+function componentScore(layer,comp){
+ const tags=(layer.tags||[]).map(t=>String(t).toLowerCase()),wanted=(comp.tags||[]).map(t=>String(t).toLowerCase()),overlap=wanted.filter(t=>tags.includes(t)),lengthTags=["short_hair","medium_hair","long_hair"],specific=wanted.filter(t=>!lengthTags.includes(t)),sp=specific.filter(t=>tags.includes(t));
+ return {score:overlap.length,specific:sp.length,exact:specific.length>0&&sp.length>0};
+}
+function tryRecipe(id){
+ const r=library&&library.recipes.find(x=>x.id===id),a=api();if(!r||!a)return;
+ const layers=a.getLayers();a.setActiveRecipe(r);
+ layers.filter(l=>HAIR_CATEGORIES.includes(l.category)).forEach(l=>l.visible=false);
+ const used=new Set(),missing=[],approx=[];
+ r.components.forEach(comp=>{
+  const cand=layers.filter(l=>l.category===comp.slot&&!used.has(l.id)).map(l=>({layer:l,...componentScore(l,comp)})).filter(x=>x.score>0).sort((x,y)=>y.specific-x.specific||y.score-x.score);
+  const hit=cand[0];
+  if(!hit){if(["haircut","bangs","sidelocks","tie","ahoge","accessory"].includes(comp.slot))missing.push(comp.description+" ["+comp.tags.join(", ")+"]");return;}
+  hit.layer.visible=true;used.add(hit.layer.id);
+  if(comp.slot==="haircut"&&!hit.exact)approx.push(hit.layer.name+" (silueta aproximada; no es "+r.name+")");
+ });
+ a.setStyleName(r.name);a.render();closeLibrary();
+ const note=[];
+ if(approx.length)note.push("La base disponible es aproximada: "+approx.join("; ")+".");
+ if(missing.length)note.push("Faltan recortes independientes: "+missing.join("; ")+". Importalos como PNG transparente y etiquetá cada pieza.");
+ if(!missing.length&&!approx.length){a.say("La receta se compuso con piezas etiquetadas coincidentes. Guardala como variante para conservarla.","ok");a.setStatus("Receta "+r.id+" aplicada con coincidencias etiquetadas.");}
+ else {a.say("Receta conceptual "+r.id+" seleccionada. "+note.join(" ")+(used.size?" Se activaron "+used.size+" pieza(s) coincidentes.":" No se encontraron piezas coincidentes; el cabello previo quedó desactivado."),"");a.setStatus("Idea "+r.id+" · "+used.size+" coincidencias · "+missing.length+" componentes pendientes.");}
+}
+function renderCombiner(){
+ const root=$("combinationTray"),status=$("combinationStatus"),a=api();if(!root||!a)return;
+ const layers=a.getLayers().filter(l=>HAIR_CATEGORIES.includes(l.category));
+ if(!layers.length){status.textContent="Aún no hay piezas de cabello.";root.innerHTML="<p class='combo-note'>Importá PNG separados como corte, flequillo, mechón lateral, coleta/trenza, ahoge o accesorio. Cargá la muestra para ver cinco cortes de prueba.</p>";return;}
+ status.textContent=layers.length+" pieza(s) de cabello disponibles · cambios en vivo.";
+ root.innerHTML=layers.slice().sort((x,y)=>(x.order||0)-(y.order||0)).map(l=>"<label class='combo-option'><input type='checkbox' data-combo='"+l.id+"' "+(l.visible!==false?"checked":"")+"><span><b>"+l.name+"</b><small>"+(l.category||"capa")+" · "+((l.tags||[]).join(", ")||"sin etiquetas")+(l.status==="pending_visual_review"?" · pendiente de revisión":"")+"</small></span></label>").join("");
+ root.querySelectorAll("[data-combo]").forEach(input=>input.addEventListener("change",()=>{
+  const l=a.getLayers().find(x=>x.id===input.dataset.combo);if(!l)return;
+  if(input.checked&&l.category==="haircut")a.getLayers().filter(x=>x.category==="haircut"&&x.id!==l.id).forEach(x=>x.visible=false);
+  l.visible=input.checked;a.render();
+ }));
+}
+function init(){
+ installSlot();installUI();
+ const a=api();if(a){a.renderHooks.push(renderCombiner);renderCombiner();}
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
+})();
