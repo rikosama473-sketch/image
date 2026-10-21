@@ -9795,14 +9795,111 @@
       "thumbnail_checked_date": "2026-10-21",
       "thumbnail_status": "Official itch.io cover extracted from page metadata; browser display not visually tested.",
       "ordinal": 234
+    },
+    {
+      "id": "EXT-BOOTH-008",
+      "category": "clothing_accessories",
+      "title": "Miko-san — vestuario tradicional y PSD con piezas faciales",
+      "source_url": "https://booth.pm/en/items/2430742",
+      "thumbnail_url": "https://booth.pximg.net/c/620x620/129f34f2-3eb4-4912-81fe-4b8ed035473f/i/2430742/02751d83-89fc-4150-8386-97504928d1eb_base_resized.jpg",
+      "creator": "RA-STUDIO",
+      "source_platform": "BOOTH",
+      "thumbnail_kind": "official_store_preview",
+      "asset_type": "full female character sprite with facial-expression PSD variants",
+      "price_current": "Free PNG ZIP (12 MB) / paid PSD ¥300",
+      "file_format": "PNG full-body 1000×2400; PSD at 350 dpi",
+      "claimed_content": "Free PNG edition has 17 image variants. Paid PSD contains 6 eye parts, 4 mouth parts, 3 eyebrow parts plus sweat, blush and shadow/illness effects.",
+      "target_traits": [
+        "miko shrine-maiden outfit silhouette",
+        "traditional white/red garment structure",
+        "separate eye/mouth/brow variants",
+        "expression/effect layers"
+      ],
+      "extras_red": [
+        "full character illustration",
+        "face/hair/body/costume and props together",
+        "the PSD layer separation applies mainly to face/expression variants; most other layers are merged"
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "full-color character/PSD expression reference, not a square monochrome component plate",
+      "license_status": "Personal/doujin project use allowed for paid or free works; corporate use requires contacting creator. Cropping/resize/silhouette conversion permitted, but redistributing/reselling the source is prohibited; R18/R18G prohibited.",
+      "license_evidence": "BOOTH product page terms",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official BOOTH store preview URL extracted from product page; browser load not individually verified.",
+      "ordinal": 235
+    },
+    {
+      "id": "EXT-BOOTH-009",
+      "category": "eyes",
+      "title": "Dragon Girl — PSD de expresiones con ojos/boca/cejas separadas",
+      "source_url": "https://booth.pm/ja/items/3668928",
+      "thumbnail_url": "https://booth.pximg.net/c/620x620/3ba05c78-61c3-42dd-9a3b-def3fd63ce94/i/3668928/8a6de726-f1a7-4f97-93c7-86dfe0ffb182_base_resized.jpg",
+      "creator": "けものしゅがー / 葉中",
+      "source_platform": "BOOTH",
+      "thumbnail_kind": "official_store_preview",
+      "asset_type": "female dragon-girl character sprite variants, not isolated eye assets",
+      "price_current": "Free bust-up PNG ZIP (3.74 MB); paid PNG ¥300; paid PSD ¥300",
+      "file_format": "PNG bust 1135×1058; full body 1400×2300; PSD face-layer version",
+      "claimed_content": "Free bust-up version has 4 expressions. Paid PSD separates 13 eye parts, 10 mouth parts, 4 eyebrow parts and 4 effects.",
+      "target_traits": [
+        "eye-shape variations",
+        "mouth-shape variants",
+        "brow variants",
+        "expression overlays/effects",
+        "layer separation for a single female character"
+      ],
+      "extras_red": [
+        "full dragon-girl character and face",
+        "hair/ears, body, clothes and expression are part of one design",
+        "the layers are expression components, not a generic eye catalog"
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "colored sprite PSD, not square monochrome eye-design plate",
+      "license_status": "Commercial/noncommercial use and minor crop/resize/silhouette changes permitted, but redistribution/resale of the asset files is forbidden; copyright remains with creator.",
+      "license_evidence": "BOOTH product page terms",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official BOOTH product cover extracted from page metadata; browser load not individually verified.",
+      "ordinal": 236
+    },
+    {
+      "id": "EXT-BOOTH-010",
+      "category": "eyes",
+      "title": "Usuhoso Sister — PSD con ojos, boca, cejas y efectos",
+      "source_url": "https://booth.pm/ja/items/8826602",
+      "thumbnail_url": "https://booth.pximg.net/c/620x620/6bb50521-c435-4279-8f56-eb585bd7aa62/i/8826602/c1dffa5a-1a27-41c1-ae9d-d6f7894465d8_base_resized.jpg",
+      "creator": "ねぎま💐",
+      "source_platform": "BOOTH",
+      "thumbnail_kind": "official_store_preview",
+      "asset_type": "female sister character sprite with expression variants",
+      "price_current": "PNG ¥300 / PSD ¥500 / PNG+PSD set ¥800",
+      "file_format": "PNG 1600×2700, 350 dpi; PSD expression parts",
+      "claimed_content": "10 PNG expression variants; PSD has 10 mouth parts, 11 eye parts, 3 eyebrow parts and blush/sweat/decorative effects.",
+      "target_traits": [
+        "11 eye variants",
+        "10 mouth variants",
+        "3 brow variants",
+        "blush/sweat effect toggles",
+        "expression layer structure"
+      ],
+      "extras_red": [
+        "full adult female character illustration, hair, face/body, clothing and pose",
+        "expression parts are associated with the creator's complete character design"
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "colored layered character material, not a licensed monochrome square component sheet",
+      "license_status": "Personal/commercial use permitted; credit required for commercial use. Cropping/resize/color changes/additions allowed, but redistribution/resale of the material, AI training and merch sales are prohibited without permission.",
+      "license_evidence": "BOOTH product page terms",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official BOOTH product preview URL extracted from product page metadata; browser load not individually verified.",
+      "ordinal": 237
     }
   ],
   "statistics": {
-    "canonical_url_records": 234,
-    "structured_entries": 234,
-    "index_entries_with_thumbnail": 234,
+    "canonical_url_records": 237,
+    "structured_entries": 237,
+    "index_entries_with_thumbnail": 237,
     "index_entries_without_thumbnail": 0,
-    "direct_image_preview_candidates": 229,
+    "direct_image_preview_candidates": 232,
     "pixiv_embed_previews": 5,
     "pixai_source_entries": 40,
     "research_report_categorized_records": 160,
@@ -9818,9 +9915,9 @@
     "category_record_counts": {
       "hair": 32,
       "clothing": 13,
-      "eyes": 7,
+      "eyes": 9,
       "accessories": 18,
-      "clothing_accessories": 8,
+      "clothing_accessories": 9,
       "eyes_hair": 1,
       "hair_accessories": 3,
       "hair_eyes": 1,
@@ -9847,7 +9944,7 @@
       "SKIMA": 2,
       "Seitosha book sample": 1,
       "AnimeOutline": 5,
-      "BOOTH": 7,
+      "BOOTH": 10,
       "Pixiv/Pixivision": 1,
       "Syntelligence": 3,
       "Rehost candidate": 1,
@@ -9878,7 +9975,7 @@
       "editorial_collection_preview": 3,
       "pixiv_embed_preview": 5,
       "official_marketplace_preview": 4,
-      "official_store_preview": 6,
+      "official_store_preview": 9,
       "tutorial_preview": 1,
       "source_page_metadata_preview_candidate": 147,
       "official_itch_asset_page_cover": 8,
@@ -9886,9 +9983,15 @@
     },
     "verified_clean_square_plates": 0,
     "index_note": "This is a 234-record index of source URLs and storefront pages; it is not a library of 234 unique images or licensed PNG assets. Build-up: 75 curated records + 151 new deep-census URLs after two matches merged + 4 accessory/clothing supplements + 4 modular asset listings = 234. The core deep-research body has 160 categorized rows and 153 normalized URL records; it notes four underlying-artwork duplicate pairs across different URLs, so no unique-image count is claimed.",
-    "thumbnail_status_note": "All 234 source records have thumbnail_url fields. 229 are direct image/preview URL candidates; 5 are Pixiv artwork.php/decorate.php embed endpoints. None of the 234 has been visually confirmed one-by-one in the final browser UI because the preview service failed to render through the available network. A recorded preview URL does not guarantee it will load for every user.",
+    "thumbnail_status_note": "All 237 source records have thumbnail URLs. 232 are direct image/preview candidates; 5 use Pixiv embed endpoints. URLs were extracted from page metadata or visible image links and have not all been loaded inside the final browser UI.",
     "deduplication_note": "Source URL normalization only. The report flags four pairs as duplicate underlying artwork under different URLs, and one creator/product has two store pages recorded as alternate_source_urls. No cross-platform perceptual/image-hash deduplication has been done.",
-    "license_note": "Publicly viewable and commercial-use-allowed are not equivalent to permission to repackage source files inside a distributed editor. Terms may forbid redistribution even when commercial use in an end product is permitted. The four newly indexed asset listings are research candidates only; no source file was copied into IMAGE."
+    "license_note": "These BOOTH entries show complete character sprites and expression layers. They are helpful for learning how to model eyes/mouth/brows as toggles, but their individual terms prohibit redistribution of the source assets. Do not package them into IMAGE without written permission.",
+    "layered_facial_component_records_added_oct21": 3,
+    "latest_additions": [
+      "EXT-BOOTH-008",
+      "EXT-BOOTH-009",
+      "EXT-BOOTH-010"
+    ]
   },
   "pixai_tag_browsers": [
     {
