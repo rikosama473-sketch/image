@@ -31,3 +31,18 @@ El vocabulario estructurado se encuentra en [hair-style-taxonomy.json](hair-styl
 ## Derechos de uso
 
 El editor no transforma un archivo en material libre de derechos. Registrá URL, autor, licencia y permiso de uso de cada recurso. Revisá los permisos antes de redistribuir ilustraciones o incorporarlas a paquetes públicos.
+
+## Biblioteca visual de 120 diseños y combinador
+
+El botón **Visor de 120 diseños** abre una biblioteca con búsqueda por nombre, rasgos, familia y largo. Cada receta combina una silueta conceptual con variaciones de flequillo, mechones, coleta lateral o semirrecogido, ahoge y adornos. Las miniaturas se dibujan como bocetos vectoriales dentro del navegador para comparar ideas; **no son 120 PNG de cabello ni ilustraciones finales**.
+
+Al pulsar **Probar en el lienzo**, el editor activa las piezas reales que puede emparejar por categoría y etiquetas. Si no existe un recorte exacto, la interfaz marca la base como aproximada e informa los PNG que faltan. Así no presenta una receta textual como si ya existiera el recurso visual.
+
+### Construir combinaciones exactas
+
+1. Importá cada recurso como PNG/WebP con transparencia: una silueta posterior/base, flequillo, mechón lateral largo, coleta o trenza parcial, ahoge y accesorio. Los recursos recortados sobre el mismo lienzo y con el mismo origen de coordenadas se alinean mejor.
+2. Elegí para cada pieza su categoría y añadí etiquetas coherentes. Para el ejemplo **cabello corto + mechón largo + coleta lateral + ahoge**, usá etiquetas como `short_hair`, `long_sidelocks`, `side_ponytail` y `ahoge` en las piezas que correspondan. El corte base debe etiquetarse por separado.
+3. Marcá las capas deseadas en **Combinador manual de piezas**. El editor permite varias piezas parciales; al activar otro corte completo desactiva el corte base anterior.
+4. Guardá la combinación como variante y exportá el proyecto JSON para conservar posiciones, etiquetas y PNG importados. El PNG exportado refleja solo las piezas que realmente estén cargadas.
+
+El catálogo de bocetos sirve como explorador de diseño. La disponibilidad y calidad de un peinado real depende de tener el recorte PNG correcto, la transparencia limpia, las proporciones alineadas y la revisión visual del recurso. Las máscaras candidatas existentes continúan marcadas como pendientes hasta revisarlas.
