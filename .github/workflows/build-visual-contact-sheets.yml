@@ -3,8 +3,8 @@ on:
   push:
     branches: [work/easy-avatar-maker-2026-10, main]
     paths:
-      - "tools/visual-reference-library/**"
       - "tools/avatar-maker/assets/image-library.json"
+      - "**/*.png"
       - "scripts/build_visual_contact_sheets.py"
       - ".github/workflows/build-visual-contact-sheets.yml"
   workflow_dispatch:
