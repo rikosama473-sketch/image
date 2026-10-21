@@ -308,7 +308,7 @@ La idea es que cada imagen funcione como un mapa. Se conserva la plancha complet
 
 <a href="https://jp.pinterest.com/pin/395542779792570224/"><img src="https://i.pinimg.com/736x/b5/d5/e7/b5d5e76ccb2447c49a7e10c4ce196fc3.jpg" alt="Plancha con 20 estilos de cabello, numerados por posición" width="560"></a>
 
-<text>La imagen original no tiene números impresos. Esta guía les asigna números por posición: fila 1 = 1–4, fila 2 = 5–8, fila 3 = 9–12, fila 4 = 13–16, fila 5 = 17–20. La identificación es descriptiva y sirve como índice; no pretende ser el nombre oficial del ilustrador.</text>
+La imagen original no tiene números impresos. Esta guía les asigna números por posición: fila 1 = 1–4, fila 2 = 5–8, fila 3 = 9–12, fila 4 = 13–16, fila 5 = 17–20. La identificación es descriptiva y sirve como índice; no pretende ser el nombre oficial del ilustrador.
 
 | Nº | Nombre para el catálogo | Rasgos visuales que conviene nombrar |
 |---:|---|---|
