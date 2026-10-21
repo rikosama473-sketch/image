@@ -11,6 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "tools/visual-reference-library/index.html"
+AVATAR_PAGE = ROOT / "tools/avatar-maker/index.html"
 CATALOG = ROOT / "tools/visual-reference-library/reference-library.json"
 ANNOTATIONS = ROOT / "tools/visual-reference-library/annotations.json"
 CONTACT_SHEETS = ROOT / "scripts/build_visual_contact_sheets.py"
@@ -22,7 +23,7 @@ def fail(message: str) -> None:
 
 
 def main() -> None:
-    for path in (PAGE, CATALOG, ANNOTATIONS, CONTACT_SHEETS, ANNOTATION_APPLIER):
+    for path in (PAGE, AVATAR_PAGE, CATALOG, ANNOTATIONS, CONTACT_SHEETS, ANNOTATION_APPLIER):
         if not path.is_file():
             fail(f"Missing required file: {path.relative_to(ROOT)}")
 
@@ -31,6 +32,10 @@ def main() -> None:
         "reference-library.json",
         "annotations.json",
         "apply_visual_reference_annotations.py",
+        "bulkSources",
+        "importBulkSources",
+        "Probar en editor IA",
+        "visualPrompt=",
         "../avatar-maker/assets/image-library.json",
         "../avatar-maker/assets/catalog.json",
         "data-tab=\"web\"",
@@ -59,6 +64,11 @@ def main() -> None:
             fail("Inline JavaScript syntax error: " + (result.stderr.strip() or result.stdout.strip()))
     finally:
         temp_js.unlink(missing_ok=True)
+
+    avatar_html = AVATAR_PAGE.read_text(encoding="utf-8")
+    for marker in ("new URLSearchParams(window.location.search)", "visualPrompt", "visualBackground", "aiNextResultMeta"):
+        if marker not in avatar_html:
+            fail(f"Character Creator is missing the visual recipe handoff marker: {marker}")
 
     try:
         data = json.loads(CATALOG.read_text(encoding="utf-8"))
