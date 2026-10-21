@@ -2,8 +2,9 @@
 
 **Fecha:** 2026-10-21  
 **Estado:** ejecución real aprobada por las comprobaciones técnicas; calidad visual pendiente de aprobación humana.  
-**Ejecución:** [GitHub Actions #6](https://github.com/rikosama473-sketch/image/actions/runs/39556952780)  
-**Artefacto PNG/máscara/previsualización:** [Descargar paquete de revisión](https://github.com/rikosama473-sketch/image/actions/runs/39556952780/artifacts/12325649602)  
+**Ejecución de prueba ampliada:** [GitHub Actions #15](https://github.com/rikosama473-sketch/image/actions/runs/39557772418)  
+**Artefactos:** [Descargar PNG, máscara alfa, cuatro vistas de borde y métricas](https://github.com/rikosama473-sketch/image/actions/runs/39557772418/artifacts/12325464762)  
+**Primera ejecución real:** [GitHub Actions #6](https://github.com/rikosama473-sketch/image/actions/runs/39556952780)  
 **Fuente del arte:** `from-PixAI-2034984086876227343-0.png`, hash SHA-256 `f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0`.
 
 ## Ejecución
@@ -33,7 +34,7 @@ La salida tiene transparencia alfa real y conserva las dimensiones originales; e
 
 ## Revisión visual
 
-Se inspeccionó el recorte real en el tablero de transparencia y sobre fondos oscuros y magenta:
+Se inspeccionó el recorte real sobre tablero de transparencia y tres superficies planas (oscuro, magenta y blanco); las cuatro vistas se incluyen en el artefacto de la ejecución #15:
 
 - El fondo claro principal se elimina y la silueta general del personaje queda conservada.
 - La pose, el color, los detalles de ojos, ropa y dibujo se conservan: se usó segmentación local, no regeneración.
