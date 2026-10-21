@@ -2,7 +2,7 @@
 "use strict";
 const $=id=>document.getElementById(id);
 const HAIR_CATEGORIES=["haircut","bangs","sidelocks","tie","ahoge","accessory"];
-let library=null,webReferences=null,activeViewerTab="recipes";
+let library=null,webReferences=null,activeViewerTab="references";
 const css=[
 ".library-btn{border-color:#8a5572!important;background:#392638!important;font-weight:800}",
 ".combo-note{font-size:10px;line-height:1.5;color:#9eacc3;margin:7px 0}",
@@ -60,7 +60,7 @@ function installUI(){
  }
  if(!$("libraryOverlay")){
   const modal=document.createElement("div");modal.id="libraryOverlay";modal.className="library-overlay";modal.setAttribute("role","dialog");modal.setAttribute("aria-modal","true");modal.setAttribute("aria-labelledby","libraryTitle");
-  modal.innerHTML="<div class='library-panel'><div class='library-header'><div class='library-heading'><h2 id='libraryTitle'>Biblioteca de diseños de cabello anime</h2><p>120 recetas conceptuales más una colección de referencias visuales reales encontradas en la web y paquetes descargables con licencias registradas. Las referencias no verificadas son solo para estudiar estilos: no son recursos autorizados para copiar.</p></div><button id='closeLibraryBtn' aria-label='Cerrar visor'>Cerrar ✕</button></div><div class='viewer-tabs'><button id='recipesTab' class='active' type='button'>120 recetas conceptuales</button><button id='referencesTab' type='button'>Referencias web y recursos</button></div><div class='library-controls'><div class='field' style='margin:0'><label for='recipeSearch'>Buscar corte, rasgo o etiqueta</label><input id='recipeSearch' type='search' placeholder='Ej. bob, mechón largo, side_ponytail'></div><div class='field' style='margin:0'><label for='recipeFamily'>Familia</label><select id='recipeFamily'><option value=''>Todas las familias</option><option value='Corto'>Cortes cortos</option><option value='Medio'>Cortes medios</option><option value='Largo'>Cortes largos</option></select></div><div class='field' style='margin:0'><label for='recipeLength'>Largo</label><select id='recipeLength'><option value=''>Todos los largos</option><option value='short'>Corto</option><option value='medium'>Medio</option><option value='long'>Largo</option></select></div></div><div id='libraryCount' class='library-count'>Cargando catálogos…</div><div class='library-scroll'><div id='recipeGrid' class='recipe-grid'></div><div id='referenceGrid' class='reference-grid' hidden></div></div></div>";
+  modal.innerHTML="<div class='library-panel'><div class='library-header'><div class='library-heading'><h2 id='libraryTitle'>Referencias de cabello · anime 2D de producción</h2><p>Prioridad: lenguaje de dibujo anime televisivo/producción, con referencias Madhouse y Trigger. El color es opcional: se priorizan hojas monocromáticas, vistas de modelo y siluetas de mechones. Las referencias protegidas se enlazan para estudio visual, no como recortes descargables.</p></div><button id='closeLibraryBtn' aria-label='Cerrar visor'>Cerrar ✕</button></div><div class='viewer-tabs'><button id='referencesTab' class='active' type='button'>Mi estilo · line art anime</button><button id='recipesTab' type='button'>120 recetas conceptuales</button></div><div class='library-controls'><div class='field' style='margin:0'><label for='recipeSearch'>Buscar corte, rasgo o etiqueta</label><input id='recipeSearch' type='search' placeholder='Ej. bob, mechón largo, side_ponytail'></div><div class='field' style='margin:0'><label for='recipeFamily'>Estilo visual</label><select id='recipeFamily'><option value='matching'>Solo mi estilo</option><option value='target_style'>Anclas Madhouse / Trigger</option><option value='compatible'>Line art anime compatible</option><option value='all'>Mostrar también otros estilos</option></select></div><div class='field' style='margin:0' id='lengthField'><label for='recipeLength'>Largo</label><select id='recipeLength'><option value=''>Todos los largos</option><option value='short'>Corto</option><option value='medium'>Medio</option><option value='long'>Largo</option></select></div></div><div id='libraryCount' class='library-count'>Cargando referencias…</div><div class='library-scroll'><div id='recipeGrid' class='recipe-grid' hidden></div><div id='referenceGrid' class='reference-grid'></div></div></div>";
   document.body.appendChild(modal);
   $("closeLibraryBtn").addEventListener("click",closeLibrary);
   modal.addEventListener("click",e=>{if(e.target===modal)closeLibrary();});
@@ -75,7 +75,7 @@ function installUI(){
 function api(){return window.HairWorkbenchAPI;}
 function allLayers(){return api()?api().getLayers():[];}
 function openLibrary(){
- if(library&&webReferences){$("libraryOverlay").classList.add("open");$("recipeSearch").focus();return;}
+ if(library&&webReferences){switchViewerTab("references");$("libraryOverlay").classList.add("open");$("recipeSearch").focus();return;}
  Promise.all([
   fetch("./hairstyle-library.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("No se pudo cargar hairstyle-library.json");return r.json();}),
   fetch("./hairstyle-web-references.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("No se pudo cargar hairstyle-web-references.json");return r.json();})
@@ -83,7 +83,7 @@ function openLibrary(){
   library=recipes;webReferences=refs;
   if(!Array.isArray(library.recipes))throw new Error("La biblioteca no contiene recetas válidas");
   if(!Array.isArray(webReferences.items))throw new Error("El catálogo web no contiene referencias válidas");
-  renderLibrary();renderWebReferences();$("libraryOverlay").classList.add("open");$("recipeSearch").focus();
+  renderLibrary();switchViewerTab("references");$("libraryOverlay").classList.add("open");$("recipeSearch").focus();
  }).catch(e=>{if(api())api().say("No se pudo abrir el visor: "+e.message,"error");});
 }
 function switchViewerTab(tab){
@@ -92,27 +92,32 @@ function switchViewerTab(tab){
  $("recipesTab").classList.toggle("active",recipes);$("referencesTab").classList.toggle("active",!recipes);
  $("recipeGrid").hidden=!recipes;$("referenceGrid").hidden=recipes;
  $("recipeLength").parentElement.style.display=recipes?"flex":"none";
+ $("libraryTitle").textContent=recipes?"120 recetas conceptuales de peinados":"Referencias de cabello · anime 2D de producción";
  $("recipeFamily").innerHTML=recipes?
   "<option value=''>Todas las familias</option><option value='Corto'>Cortes cortos</option><option value='Medio'>Cortes medios</option><option value='Largo'>Cortes largos</option>":
-  "<option value=''>Todas las categorías</option><option value='female'>Cabello femenino</option><option value='male'>Cabello masculino</option><option value='short'>Cortes cortos / cortos en capas</option><option value='editable'>Paquetes descargables</option>";
- $("recipeFamily").value="";$("recipeLength").value="";
- $("recipeSearch").placeholder=recipes?"Ej. bob, mechón largo, side_ponytail":"Ej. coleta, masculino, CC0, PNG, mechón";
+  "<option value='matching'>Solo mi estilo</option><option value='target_style'>Anclas Madhouse / Trigger</option><option value='compatible'>Line art anime compatible</option><option value='all'>Mostrar también otros estilos</option>";
+ $("recipeFamily").value=recipes?"":"matching";$("recipeLength").value="";
+ $("recipeSearch").placeholder=recipes?"Ej. bob, mechón largo, side_ponytail":"Ej. Kill la Kill, Perfect Blue, mechón, trenza";
  recipes?renderLibrary():renderWebReferences();
 }
 function escapeHtml(value){return String(value==null?"":value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
 function renderWebReferences(){
  if(!webReferences)return;
- const q=$("recipeSearch").value.trim().toLowerCase(),fam=$("recipeFamily").value;
- const rows=webReferences.items.filter(r=>(!fam||r.family===fam)&&(!q||[r.title,r.source_name,r.license_status,r.description,r.notes].concat(r.tags||[]).join(" ").toLowerCase().includes(q)));
- $("libraryCount").textContent=rows.length+" de "+webReferences.items.length+" fuentes web · "+webReferences.items.filter(r=>r.usable_asset).length+" fuentes con paquetes/archivos descargables y licencia declarada.";
+ const q=$("recipeSearch").value.trim().toLowerCase(),fam=$("recipeFamily").value||"matching";
+ const relevant=webReferences.items.filter(r=>r.style_fit==="target"||r.style_fit==="compatible");
+ const base=fam==="all"?webReferences.items:fam==="target_style"?webReferences.items.filter(r=>r.style_fit==="target"):fam==="compatible"?webReferences.items.filter(r=>r.style_fit==="compatible"):relevant;
+ const rows=base.filter(r=>!q||[r.title,r.source_name,r.license_status,r.description,r.notes,r.studio_anchor||"",r.style_fit||""].concat(r.tags||[]).join(" ").toLowerCase().includes(q));
+ $("libraryCount").textContent=rows.length+" de "+base.length+" referencias visibles · "+relevant.length+" del lenguaje de dibujo elegido · color no requerido.";
  const root=$("referenceGrid");
  if(!rows.length){root.innerHTML="<div class='library-empty'>No hay resultados. Probá otra búsqueda o limpiá el filtro de categoría.</div>";return;}
  root.innerHTML=rows.map(r=>{
   const safeTitle=escapeHtml(r.title),safeUrl=escapeHtml(r.source_url),safeDownload=escapeHtml(r.asset_download_url||r.source_url),safeImage=escapeHtml(r.image_url||"");
   const media=r.image_url?"<img class='reference-image' loading='lazy' src='"+safeImage+"' alt='Referencia visual: "+safeTitle+"' onerror=\"this.style.display='none';this.nextElementSibling.hidden=false\"><div class='reference-placeholder' hidden>Vista previa externa no disponible.<br>Usá el enlace a la fuente para ver la imagen.</div>":"<div class='reference-placeholder'>Paquete de recursos<br>Consultá la fuente y descarga disponible.</div>";
   const cls=r.usable_asset?"license-flag open":"license-flag";
+  const fit=r.style_fit==="target"?"Ancla de estilo · "+(r.studio_anchor||"anime 2D"):r.style_fit==="compatible"?"Line art anime compatible":"Fuera del estilo elegido";
+  const fitClass=r.style_fit==="compatible"?"style-fit-pill compatible":"style-fit-pill";
   const buttons=r.usable_asset?"<a href='"+safeUrl+"' target='_blank' rel='noopener noreferrer'>Fuente / licencia</a><a href='"+safeDownload+"' target='_blank' rel='noopener noreferrer'>Abrir descarga</a>":"<a href='"+safeUrl+"' target='_blank' rel='noopener noreferrer'>Ver referencia original</a>";
-  return "<article class='reference-card'>"+media+"<div class='reference-body'><b>"+safeTitle+"</b><div class='"+cls+"'>"+escapeHtml(r.license_status)+"</div><p>"+escapeHtml(r.description)+"</p><div class='reference-meta'>"+escapeHtml(r.source_name)+" · "+escapeHtml((r.tags||[]).slice(0,6).join(", "))+"</div><div class='reference-actions'>"+buttons+"</div><p>"+escapeHtml(r.notes)+"</p></div></article>";
+  return "<article class='reference-card'>"+media+"<div class='reference-body'><b>"+safeTitle+"</b><div class='"+fitClass+"'>"+escapeHtml(fit)+"</div><div class='"+cls+"'>"+escapeHtml(r.license_status)+"</div><p>"+escapeHtml(r.description)+"</p><div class='reference-meta'>"+escapeHtml(r.source_name)+" · "+escapeHtml((r.tags||[]).slice(0,6).join(", "))+"</div><div class='reference-actions'>"+buttons+"</div><p>"+escapeHtml(r.notes)+"</p></div></article>";
  }).join("");
 }
 function closeLibrary(){const m=$("libraryOverlay");if(m)m.classList.remove("open");}
