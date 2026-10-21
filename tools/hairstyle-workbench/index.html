@@ -169,7 +169,7 @@ function saveNewStyle(copyFrom){
 }
 function loadStyleFromCurrent(){const s=styles.find(x=>x.id===activeStyle);if(!s){saveNewStyle(null);return;}s.name=$("styleName").value.trim()||s.name;s.states=captureStates();setStatus("Actualizada la variante: "+s.name);render();}
 function duplicateStyle(){const s=styles.find(x=>x.id===activeStyle);if(!s){say("Primero seleccioná o guardá una variante.","error");return;}const requested=$("styleName").value.trim();const copy=JSON.parse(JSON.stringify(s));copy.id=uid("style");copy.name=requested&&requested!==s.name?requested:s.name+" — copia";copy.description="Copia independiente; editable";styles.push(copy);activeStyle=copy.id;$("styleName").value=copy.name;setStatus("Variante duplicada. Es un registro independiente aunque sea visualmente igual.");render();}
-function deleteStyle(){if(!activeStyle)return;s=styles.find(x=>x.id===activeStyle);if(!s)return;styles=styles.filter(x=>x.id!==activeStyle);activeStyle=styles.length?styles[0].id:null;if(activeStyle)applyStyle(activeStyle);else render();setStatus("Variante eliminada; no se eliminaron las imágenes originales.");}
+function deleteStyle(){if(!activeStyle)return;const s=styles.find(x=>x.id===activeStyle);if(!s)return;styles=styles.filter(x=>x.id!==activeStyle);activeStyle=styles.length?styles[0].id:null;if(activeStyle)applyStyle(activeStyle);else render();setStatus("Variante eliminada; no se eliminaron las imágenes originales.");}
 function uniqueStyleForHair(hairId){
  const hair=layers.find(l=>l.id===hairId);if(!hair)return;
  layers.forEach(l=>{if(l.category==="haircut")l.visible=l.id===hairId;});
