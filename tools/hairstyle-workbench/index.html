@@ -52,6 +52,7 @@ header{padding:13px 17px;display:flex;gap:12px;align-items:center;flex-wrap:wrap
     </div>
     <div class="field"><label for="pieceName">Nombre de la pieza PNG</label><input id="pieceName" placeholder="Ej. flequillo cortina largo" maxlength="100"></div>
     <div class="field"><label for="pieceType">Clasificación de la pieza</label><select id="pieceType"><option value="haircut">Corte completo / silueta</option><option value="bangs">Flequillo</option><option value="sidelocks">Mechones laterales</option><option value="tie">Coleta, moño o trenza</option><option value="accessory">Accesorio</option><option value="face">Rostro</option><option value="body">Cuerpo</option><option value="clothes">Ropa</option><option value="other">Otra capa</option></select></div>
+    <div class="field"><label for="pieceTags">Etiquetas / rasgos (separados por coma)</label><input id="pieceTags" placeholder="bob_cut, blunt_bangs, side_ponytail" maxlength="500"></div>
     <button id="importPieceBtn" class="primary" style="width:100%">Importar pieza PNG transparente</button>
     <input id="pieceFile" type="file" accept="image/png,image/webp">
     <p class="help">Para alinear con precisión, exportá cada pieza en el mismo lienzo de la base y conservá su posición original. Si el PNG está recortado al borde del objeto, podrás colocarlo y escalarlo manualmente.</p>
@@ -129,7 +130,7 @@ function thumbSrc(l){return layerUrl(l);}
 function renderLayerList(){
  const root=$("layerList");
  if(!layers.length){root.innerHTML='<div class="help">Todavía no hay piezas. Importá un PNG o cargá la muestra.</div>';return;}
- root.innerHTML=layers.slice().sort((a,b)=>(b.order||0)-(a.order||0)).map(l=>'<div class="layer '+(l.id===selectedLayer?"active":"")+'" data-layer="'+esc(l.id)+'"><img alt="" src="'+esc(thumbSrc(l))+'"><div class="layerName"><b>'+esc(l.name)+'</b><small>'+esc(slotLabels[l.category]||l.category||"Capa")+(l.status==="pending_visual_review"?" · pendiente":"")+'</small></div><button class="eye" data-eye="'+esc(l.id)+'" title="Mostrar u ocultar">'+(l.visible===false?"○":"◉")+'</button></div>').join("");
+ root.innerHTML=layers.slice().sort((a,b)=>(b.order||0)-(a.order||0)).map(l=>'<div class="layer '+(l.id===selectedLayer?"active":"")+'" data-layer="'+esc(l.id)+'"><img alt="" src="'+esc(thumbSrc(l))+'"><div class="layerName"><b>'+esc(l.name)+'</b><small>'+esc(slotLabels[l.category]||l.category||"Capa")+(l.status==="pending_visual_review"?" · pendiente":"")+(l.tags&&l.tags.length?" · "+l.tags.join(", "):"")+'</small></div><button class="eye" data-eye="'+esc(l.id)+'" title="Mostrar u ocultar">'+(l.visible===false?"○":"◉")+'</button></div>').join("");
  root.querySelectorAll("[data-layer]").forEach(el=>el.addEventListener("click",e=>{if(e.target.closest("[data-eye]"))return;selectedLayer=el.dataset.layer;render();}));
  root.querySelectorAll("[data-eye]").forEach(el=>el.addEventListener("click",e=>{e.stopPropagation();const l=layers.find(x=>x.id===el.dataset.eye);if(l){l.visible=l.visible===false;render();}}));
 }
@@ -150,7 +151,7 @@ async function drawStylePreview(style,target){
 function renderAdjust(){
  const root=$("adjustBody"),l=layers.find(x=>x.id===selectedLayer);
  if(!l){root.textContent="Elegí una capa de la lista para ajustar su posición, tamaño, giro y opacidad.";return;}
- root.innerHTML='<div class="field"><label>Posición X</label><input data-prop="x" type="number" value="'+Math.round(l.x||0)+'" min="-1200" max="1200"></div><div class="field"><label>Posición Y</label><input data-prop="y" type="number" value="'+Math.round(l.y||0)+'" min="-1600" max="1600"></div><div class="field"><label>Tamaño</label><div class="rangeRow"><input data-prop="scale" type="range" min="0.1" max="2.5" step="0.01" value="'+(Number(l.w||1)/(Number(l.sourceW||l.w||1)))+'"><output>'+Math.round((l.scale||1)*100)+'%</output></div></div><div class="field"><label>Giro</label><div class="rangeRow"><input data-prop="rotation" type="range" min="-180" max="180" step="1" value="'+(l.rotation||0)+'"><output>'+Math.round(l.rotation||0)+'°</output></div></div><div class="field"><label>Opacidad</label><div class="rangeRow"><input data-prop="opacity" type="range" min="0" max="1" step="0.01" value="'+(l.opacity==null?1:l.opacity)+'"><output>'+Math.round((l.opacity==null?1:l.opacity)*100)+'%</output></div></div><div class="twoCols"><button data-reset>Restablecer</button><button data-remove class="subtle">Quitar capa</button></div><p class="help">Si la imagen tiene el mismo lienzo 768×1280 que el resto, X e Y pueden permanecer en 0 para alinear las piezas.</p>';
+ root.innerHTML='<div class="field"><label>Posición X</label><input data-prop="x" type="number" value="'+Math.round(l.x||0)+'" min="-1200" max="1200"></div><div class="field"><label>Posición Y</label><input data-prop="y" type="number" value="'+Math.round(l.y||0)+'" min="-1600" max="1600"></div><div class="field"><label>Tamaño</label><div class="rangeRow"><input data-prop="scale" type="range" min="0.1" max="2.5" step="0.01" value="'+(Number(l.w||1)/(Number(l.sourceW||l.w||1)))+'"><output>'+Math.round((l.scale||1)*100)+'%</output></div></div><div class="field"><label>Giro</label><div class="rangeRow"><input data-prop="rotation" type="range" min="-180" max="180" step="1" value="'+(l.rotation||0)+'"><output>'+Math.round(l.rotation||0)+'°</output></div></div><div class="field"><label>Opacidad</label><div class="rangeRow"><input data-prop="opacity" type="range" min="0" max="1" step="0.01" value="'+(l.opacity==null?1:l.opacity)+'"><output>'+Math.round((l.opacity==null?1:l.opacity)*100)+'%</output></div></div><div class="field"><label>Etiquetas de esta pieza</label><input data-tags value="'+esc((l.tags||[]).join(", "))+'" placeholder="bob_cut, blunt_bangs"></div><div class="twoCols"><button data-reset>Restablecer</button><button data-remove class="subtle">Quitar capa</button></div><p class="help">Si la imagen tiene el mismo lienzo 768×1280 que el resto, X e Y pueden permanecer en 0 para alinear las piezas.</p>';
  root.querySelectorAll("[data-prop]").forEach(input=>input.addEventListener("input",()=>{
   const key=input.dataset.prop;
   if(key==="scale"){
@@ -160,6 +161,7 @@ function renderAdjust(){
   if(input.type==="range"){const o=input.parentElement.querySelector("output");if(o)o.value=key==="opacity"?Math.round(l.opacity*100)+"%":key==="rotation"?Math.round(l.rotation)+"°":Math.round(l.scale*100)+"%";}
   drawCanvasOnly();
  }));
+ root.querySelector("[data-tags]").addEventListener("change",e=>{l.tags=e.target.value.split(/[,;]/).map(t=>t.trim()).filter(Boolean);renderLayerList();});
  root.querySelector("[data-reset]").addEventListener("click",()=>{const imSize={w:l.sourceW||W,h:l.sourceH||H};l.x=(W-imSize.w)/2;l.y=(H-imSize.h)/2;l.w=imSize.w;l.h=imSize.h;l.scale=1;l.rotation=0;l.opacity=1;render();});
  root.querySelector("[data-remove]").addEventListener("click",()=>removeLayer(l.id));
 }
@@ -204,7 +206,8 @@ async function loadDemo(){
   if(!chosen.length||!hair.length)throw new Error("La muestra necesita piezas base y variantes de cabello en assets/catalog.json.");
   layers=[];styles=[];activeStyle=null;selectedLayer=null;imageCache.clear();nextId=1;
   chosen.forEach((item,index)=>addLayer({id:item.id,catalogId:item.id,name:item.label,category:item.category==="clothes"?"clothes":item.category,repoPath:item.repo_path,x:0,y:0,w:W,h:H,sourceW:W,sourceH:H,scale:1,rotation:0,opacity:1,order:index,visible:true,status:item.status}));
-  hair.forEach((item,index)=>addLayer({id:item.id,catalogId:item.id,name:item.label,category:"haircut",repoPath:item.repo_path,x:0,y:0,w:W,h:H,sourceW:W,sourceH:H,scale:1,rotation:0,opacity:1,order:chosen.length+index,visible:index===0,status:item.status,description:item.review}));
+  const sampleTags={"hair-bob":["bob_cut","short_hair","blunt_bangs"],"hair-long":["long_hair","straight_hair"],"hair-ponytail":["high_ponytail","updo"],"hair-twintails":["twintails","long_hair"],"hair-braid":["side_braid","long_hair"]};
+  hair.forEach((item,index)=>addLayer({id:item.id,catalogId:item.id,name:item.label,category:"haircut",repoPath:item.repo_path,x:0,y:0,w:W,h:H,sourceW:W,sourceH:H,scale:1,rotation:0,opacity:1,order:chosen.length+index,visible:index===0,status:item.status,description:item.review,tags:sampleTags[item.id]||[]}));
   selectedLayer=hair[0].id;$("characterName").value="Pibara · muestra técnica";$("styleName").value=hair[0].label;
   hair.forEach(item=>{const states={};layers.forEach(l=>states[l.id]={visible:l.category==="haircut"?l.catalogId===item.id:l.visible!==false,x:l.x,y:l.y,w:l.w,h:l.h,scale:l.scale,rotation:l.rotation,opacity:l.opacity,order:l.order});styles.push({id:uid("style"),name:item.label,description:"Máscara candidata · revisión pendiente",states});});
   activeStyle=styles[0].id;
@@ -220,8 +223,8 @@ async function importPiece(file){
  if(type==="haircut")layers.filter(l=>l.category==="haircut").forEach(l=>l.visible=false);
  const x=im.naturalWidth===W&&im.naturalHeight===H?0:(W-im.naturalWidth)/2;
  const y=im.naturalWidth===W&&im.naturalHeight===H?0:(H-im.naturalHeight)/2;
- const l=addLayer({name:name,category:type,dataUrl:data,x:x,y:y,w:im.naturalWidth,h:im.naturalHeight,sourceW:im.naturalWidth,sourceH:im.naturalHeight,scale:1,rotation:0,opacity:1,order:layers.length,visible:true,status:"user_imported",sourceName:file.name});
- selectedLayer=l.id;$("styleName").value=name;$("pieceName").value="";imageCache.set(data,Promise.resolve(im));render();
+ const l=addLayer({name:name,category:type,dataUrl:data,x:x,y:y,w:im.naturalWidth,h:im.naturalHeight,sourceW:im.naturalWidth,sourceH:im.naturalHeight,scale:1,rotation:0,opacity:1,order:layers.length,visible:true,status:"user_imported",sourceName:file.name,tags:$("pieceTags").value.split(/[,;]/).map(t=>t.trim()).filter(Boolean)});
+ selectedLayer=l.id;$("styleName").value=name;$("pieceName").value="";$("pieceTags").value="";imageCache.set(data,Promise.resolve(im));render();
  setStatus("Pieza importada: "+name+" ("+im.naturalWidth+"×"+im.naturalHeight+"). Guardá una variante para conservar esta combinación.");
  say("Pieza incorporada manualmente. La herramienta no ha redibujado ni enviado la imagen a ningún servicio.","ok");
 }
