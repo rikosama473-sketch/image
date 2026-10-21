@@ -77,3 +77,12 @@ Equipo objetivo declarado: AMD Ryzen 5 5600G, 16 GB RAM y gráficos Radeon integ
 ## Siguiente tarea concreta
 
 Abrir el taller en navegador con el lanzador local y probar el filtro «Uso como capa»: comprobar que el paquete HMLF001 y los paquetes con licencia declarada aparecen en las categorías correctas, que las vistas de referencia no se presentan como recortes aprobados y que los dos enlaces Pinterest quedan pendientes. A continuación, ejecutar el recorrido visual Constructor/Taller → Editor manual, guardar/reabrir y exportar PNG transparente. No fusionar automáticamente el PR ni recomendar un checkpoint local sin una medición real.
+
+## Continuación verificada — 2026-10-21
+
+- Se corrigió `tools/avatar-maker/index.html`: el botón **Centrar capa** antes forzaba cada capa seleccionada a ocupar todo el lienzo (`w=W`, `h=H`), deformando recursos importados y eliminando su escala. Ahora centra por desplazamiento (`x=(W-w)/2`, `y=(H-h)/2`) y conserva ancho, alto y proporción.
+- Commit de la corrección: `1629783844ffc6bc50436738fee66fcd710cbe69` en `work/easy-avatar-maker-2026-10`.
+- Verificación local del cambio: se comprobó que el handler antiguo existía exactamente una vez y se sustituyó por el nuevo. **Las pruebas automatizadas/CI de este commit todavía no se han confirmado**, por lo que no se declara el cambio validado integralmente.
+- La PR #19 sigue siendo la vía de integración; no se modificó `main` ni se fusionaron ramas.
+- Generación visual pendiente: el paquete anatómico de Pibara registrado en `run-39500149462` produjo 3/4 vistas, con deriva de identidad y una vista frontal recortada; no son capas semánticas aprobadas. El workflow documenta que la cuota pública ZeroGPU se agotó y admite un secreto `HF_TOKEN` para aumentar cuota; no se afirma que ese secreto esté configurado.
+- Próxima tarea prioritaria: añadir una prueba de regresión para que centrar una capa conserve `w/h` y calcular los offsets correctos; después validar el recorrido del constructor y el editor manual. Para nuevos assets, reanudar una generación controlada de un único paquete de cabello de Pibara y revisar visualmente cada salida antes de incorporarla como pieza reutilizable.
