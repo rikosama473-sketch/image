@@ -50,34 +50,44 @@ def alpha_metrics(image: Image.Image) -> dict:
     hist = alpha.histogram()
     total = image.width * image.height
     transparent = hist[0]
-    semi = sum(hist[1:255])
+    near_transparent = sum(hist[1:9])
+    low_alpha = sum(hist[9:65])
+    transition = sum(hist[65:250])
+    near_opaque = sum(hist[250:255])
+    partial = sum(hist[1:255])
     opaque = hist[255]
+    foreground = total - transparent
     bbox = alpha.point(lambda value: 255 if value > 8 else 0).getbbox()
+    percent = lambda count: round(100 * count / total, 5)
     return {
         "width": image.width,
         "height": image.height,
         "pixels": total,
         "transparent_pixels": transparent,
-        "semi_transparent_pixels": semi,
+        "partial_alpha_pixels": partial,
+        "near_transparent_1_8_pixels": near_transparent,
+        "low_alpha_9_64_pixels": low_alpha,
+        "transition_alpha_65_249_pixels": transition,
+        "near_opaque_250_254_pixels": near_opaque,
         "opaque_pixels": opaque,
-        "transparent_percent": round(100 * transparent / total, 5),
-        "semi_transparent_percent": round(100 * semi / total, 5),
-        "opaque_percent": round(100 * opaque / total, 5),
+        "transparent_percent": percent(transparent),
+        "partial_alpha_percent": percent(partial),
+        "near_transparent_1_8_percent": percent(near_transparent),
+        "low_alpha_9_64_percent": percent(low_alpha),
+        "transition_alpha_65_249_percent": percent(transition),
+        "near_opaque_250_254_percent": percent(near_opaque),
+        "opaque_percent": percent(opaque),
+        "foreground_percent_alpha_gt_0": percent(foreground),
         "foreground_bbox_alpha_gt_8": list(bbox) if bbox else None,
-        "alpha_is_non_binary": semi > 0,
+        "alpha_is_non_binary": partial > 0,
         "alpha_has_transparency": transparent > 0,
     }
 
 
-def checkerboard(image: Image.Image, cell: int = 24) -> Image.Image:
+def composite_on(image: Image.Image, color: tuple[int, int, int]) -> Image.Image:
     rgba = image.convert("RGBA")
-    board = Image.new("RGBA", rgba.size, (232, 232, 232, 255))
-    draw = ImageDraw.Draw(board)
-    for y in range(0, rgba.height, cell):
-        for x in range(0, rgba.width, cell):
-            if ((x // cell) + (y // cell)) % 2:
-                draw.rectangle((x, y, min(x + cell - 1, rgba.width - 1), min(y + cell - 1, rgba.height - 1)), fill=(190, 190, 190, 255))
-    return Image.alpha_composite(board, rgba).convert("RGB")
+    background = Image.new("RGBA", rgba.size, (*color, 255))
+    return Image.alpha_composite(background, rgba).convert("RGB")
 
 
 def main() -> int:
@@ -104,16 +114,20 @@ def main() -> int:
         fail("source image is fully transparent; choose a visible anime illustration.")
 
     try:
+        from io import BytesIO
         import rembg
         from rembg import new_session, remove
     except ImportError:
         fail("install dependencies with: python -m pip install -r requirements-avatar-cutout.txt")
 
+    normalized_buffer = BytesIO()
+    source.save(normalized_buffer, format="PNG", optimize=True)
+    normalized_source_bytes = normalized_buffer.getvalue()
     print(f"Running REAL inference: {input_path.relative_to(ROOT)} ({width}x{height}), model={args.model}", flush=True)
-    # The same model and processing flags as the local API endpoint are used here.
+    # Reuse the same orientation-normalized PNG and edge decontamination as the local endpoint.
     session = new_session(args.model)
     output_bytes = remove(
-        source_bytes,
+        normalized_source_bytes,
         session=session,
         alpha_matting=False,
         post_process_mask=False,
@@ -146,11 +160,17 @@ def main() -> int:
     cutout_output = output_path / "cutout.png"
     mask_output = output_path / "alpha-mask.png"
     preview_output = output_path / "checkerboard-preview.jpg"
+    dark_preview_output = output_path / "dark-background-preview.jpg"
+    vivid_preview_output = output_path / "magenta-background-preview.jpg"
+    white_preview_output = output_path / "white-background-preview.jpg"
     report_output = output_path / "metrics.json"
     source.save(source_output, format="PNG", optimize=True)
     cutout.save(cutout_output, format="PNG", optimize=True)
     cutout.getchannel("A").save(mask_output, format="PNG", optimize=True)
     checkerboard(cutout).save(preview_output, format="JPEG", quality=92, optimize=True)
+    composite_on(cutout, (20, 20, 26)).save(dark_preview_output, format="JPEG", quality=92, optimize=True)
+    composite_on(cutout, (235, 25, 125)).save(vivid_preview_output, format="JPEG", quality=92, optimize=True)
+    composite_on(cutout, (255, 255, 255)).save(white_preview_output, format="JPEG", quality=92, optimize=True)
 
     report = {
         "schema_version": 1,
@@ -182,6 +202,9 @@ def main() -> int:
             "cutout": cutout_output.name,
             "alpha_mask": mask_output.name,
             "checkerboard_preview": preview_output.name,
+            "dark_background_preview": dark_preview_output.name,
+            "magenta_background_preview": vivid_preview_output.name,
+            "white_background_preview": white_preview_output.name,
         },
         "limitations": [
             "Automated metrics do not certify visual quality of fine hair, line art, halos, or shadow details.",
@@ -190,7 +213,12 @@ def main() -> int:
         ],
     }
     report_output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"status": "PASS_REAL_INFERENCE", "report": str(report_output.relative_to(ROOT)), "preview": str(preview_output.relative_to(ROOT)), "result": metrics}, ensure_ascii=False, indent=2), flush=True)
+    print(json.dumps({
+        "status": "PASS_REAL_INFERENCE",
+        "report": str(report_output.relative_to(ROOT)),
+        "previews": [str(path.relative_to(ROOT)) for path in (preview_output, dark_preview_output, vivid_preview_output, white_preview_output)],
+        "result": metrics,
+    }, ensure_ascii=False, indent=2), flush=True)
     return 0
 
 
