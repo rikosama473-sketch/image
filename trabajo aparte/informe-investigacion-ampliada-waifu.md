@@ -957,3 +957,18 @@ El atlas HTML tiene miniaturas pequeñas al lado de los nombres de referencia, 2
 - [Expanded JSON source index (226 normalized URL records)](./indice-visual-componentes.json)
 
 The preview images are remote URLs extracted from page metadata and image links. They are identification thumbnails, not cached/owned assets, and not every URL has been visually validated inside the final HTML. Four Itch.io event records were resolved to canonical product pages while retaining their event page as an alias.
+
+
+## Supplemento de fuentes específicas — accesorios, pestañas y prendas con hojas de detalle (21/10/2026)
+
+Esta ampliación cubre algunas categorías que la auditoría inicial había marcado como débiles: tiaras/coronas, pestañas, detalles de vestuario y mangas/guantes en hojas de diseño.
+
+| ID de índice | Fuente | Aporte de referencia | Elementos extra / estado |
+|---|---|---|---|
+| PX-CLT-015 | [PixAI — turnaround de hanfu con paneles de detalle](https://pixai.art/en/artwork/2030382830012815414) | La descripción del prompt indica una mujer adulta de 30 años y pide vistas frontal/trasera/lateral, con detalles de cintura, corpiño, guante, espalda, lazo del pelo, calzado y joyería. Es útil como hoja de construcción de ropa y accesorios. | 🔴 La página también contiene cabello negro, rostro, proporciones y medias/zapatos; cada detalle debe catalogarse por separado. Miniatura PixAI registrada en el JSON. La obra original no se considera recurso reutilizable. |
+| EXT-CLT-002 | [SKIMA — hoja de diseño de vestuario](https://skima.jp/gallery?id=223959) | Preview de una hoja con vestuario y llamadas de detalle; sirve para estudiar cómo presentar ropa y piezas en una ficha técnica. | 🔴 Incluye un personaje completo; autor/licencia no quedó confirmado en la captura. Dejar como referencia pendiente de permisos. |
+| EXT-ACC-004 | [Pinterest — índice de búsqueda de coronas anime](https://www.pinterest.com/ideas/anime-crown-drawing/893994423745/) | Abre una página de descubrimiento con ejemplos de coronas/tiaras, incluidos dibujos monocromos. Puede usarse para encontrar variantes de puntas, gemas, bandas y altura. | No es una sola lámina original: el preview corresponde a un resultado que Pinterest muestra en el índice, y el autor y permiso de reutilización no se han confirmado. No contarlo como una placa verificada. |
+| EXT-EYE-004 | [Syntelligence — guía visual de pestañas suaves](https://syntelligence.jp/article/57481) | Describe pestañas finas y afiladas, agrupación ligera y distribución irregular para una apariencia suave. Útil para etiquetar pestañas por grosor, longitud, densidad y curvatura. | La ilustración sigue dentro de una página tutorial; no se ha verificado licencia para aislarla como asset ni una placa cuadrada autónoma. |
+
+**Resultado de esta ampliación:** el índice pasó de 226 a **230 registros normalizados**, y el visor se sincronizó con la misma cantidad. Hay URL de vista previa registrada en los 230 casos, pero las vistas remotas no se han cargado individualmente en el navegador final. Esto es más estricto que llamar “miniaturas verificadas” a todos los enlaces.
+
