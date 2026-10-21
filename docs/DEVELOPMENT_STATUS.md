@@ -34,10 +34,10 @@ Equipo objetivo declarado: AMD Ryzen 5 5600G, 16 GB RAM y gráficos Radeon integ
 
 ## Validación
 
-- Commit de código validado: `846d2eb89c4ac128e4a3f2472eebd2b90dceb313`.
-- GitHub Actions: [ejecución 39624819395](https://github.com/rikosama473-sketch/image/actions/runs/39624819395), conclusión `success`.
-- La ejecución aprobó los validadores del constructor, taller manual de peinados y biblioteca visual, el test de navegación integrada, la validación del puente de IA, la sintaxis y los diagnósticos de recorte.
-- La prueba `tests/test_studio_navigation.py` se ejecuta ahora desde `.github/workflows/validate-avatar-maker.yml`; las rutas forman parte de las condiciones de activación del workflow.
+- Navegación integrada: commit `846d2eb89c4ac128e4a3f2472eebd2b90dceb313`; [CI 39624819395](https://github.com/rikosama473-sketch/image/actions/runs/39624819395) = `success`.
+- Transferencia JSON entre módulos: commit `5b23e11660e8e9bd1a47cdb879bb6bad42e9568a`; [CI 39627167742](https://github.com/rikosama473-sketch/image/actions/runs/39627167742) = `success`.
+- Pasaron validadores del constructor, taller de peinados y biblioteca; sintaxis del editor y puente de IA; diagnósticos de recorte; y las regresiones `tests/test_studio_navigation.py` y `tests/test_project_handoff.py`.
+- La prueba de transferencia actual verifica estructura del JSON, despacho entre formatos, límites de importación y metadatos mediante tests de contrato/sintaxis. Todavía no se ha ejecutado una prueba visual interactiva del lienzo para abrir y exportar un proyecto real en el navegador.
 - No se ejecutó una generación real de difusión ni se midió RAM/tiempo/VRAM en el Ryzen 5 5600G durante este bloque.
 
 ## Estado de integración con `main`
