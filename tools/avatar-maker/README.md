@@ -4,7 +4,7 @@ Editor visual guiado por la referencia compartida: navegación lateral, ilustrac
 
 ## Abrir
 
-- Windows: ejecutá \`start-avatar-maker.bat\` para servir el repositorio localmente y abrir \`http://127.0.0.1:8766/tools/avatar-maker/index.html\`.
+- Windows: ejecutá \`tools/avatar-maker/start-avatar-maker.bat\` para servir el repositorio localmente y abrir \`http://127.0.0.1:8766/tools/avatar-maker/index.html\`.
 - También podés servir la raíz del repositorio con Python y abrir \`tools/avatar-maker/index.html\`.
 - [Catálogo de imágenes, fuentes y licencias](assets/catalog.json).
 
@@ -24,7 +24,7 @@ Después de escoger una muestra, probá también **Exportar PNG**, **Guardar pro
 
 ### Recorte de fondo local (sin regeneración del personaje)
 
-La acción **Quitar fondo sin redibujar el personaje** usa `rembg` con `isnet-anime`, una segmentación especializada para personajes anime. La alternativa `birefnet-portrait` sirve como comparación. El resultado debe tener canal alfa real, mantener las dimensiones del lienzo y pasa como capa candidata sin destruir la base. El servicio es local y no envía la imagen a una API generativa. La máscara y la geometría se preservan; la decontaminación puede ajustar el color RGB de los bordes para reducir halos. La primera ejecución descarga los pesos del modelo y los guarda en la caché local. El backend reutiliza la sesión y rechaza salidas que cambien las dimensiones o no tengan transparencia. La dependencia fijada requiere Python 3.11, 3.12 o 3.13; el instalador selecciona una versión disponible.
+La acción **Quitar fondo sin redibujar el personaje** usa `rembg` con `isnet-anime`, una segmentación especializada para personajes anime. La alternativa `birefnet-portrait` sirve como comparación. El resultado debe tener canal alfa real, mantener las dimensiones del lienzo y pasa como capa candidata sin destruir la base. El servicio es local y no envía la imagen a una API generativa. La máscara y la geometría se preservan; la decontaminación puede ajustar el color RGB de los bordes para reducir halos. La primera ejecución descarga los pesos del modelo y los guarda en la caché local. El backend reutiliza la sesión y rechaza salidas que cambien las dimensiones o no tengan transparencia. La biblioteca `rembg` es MIT, pero los pesos de cada modelo tienen sus propias condiciones: revisalas antes de cualquier uso comercial. La dependencia fijada requiere Python 3.11, 3.12 o 3.13; el instalador selecciona una versión disponible.
 
 Al aplicar este recorte, la base opaca se oculta automáticamente para que su fondo no tape el alfa; el control ◉ de la barra del lienzo permite mostrarla de nuevo y la preferencia se conserva en el JSON.
 
