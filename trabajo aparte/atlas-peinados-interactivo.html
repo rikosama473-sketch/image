@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Atlas interactivo de peinados anime · IMAGE</title>
+<style>
+:root{color-scheme:light;--ink:#202638;--muted:#687087;--paper:#f7f8fc;--card:#fff;--line:#e2e6f0;--accent:#6655d9;--soft:#eeebff}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:28px clamp(16px,4vw,52px);background:#fff;border-bottom:1px solid var(--line)}h1{font-size:clamp(24px,4vw,38px);line-height:1.1;margin:0 0 10px}h2{font-size:20px;margin:0 0 12px}p{margin:6px 0 12px}.muted{color:var(--muted)}.wrap{max-width:1450px;margin:auto;padding:22px clamp(12px,3vw,36px)}.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,.8fr);gap:18px;align-items:start}.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 4px 18px #20263808}.filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px}select,input{width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);font:inherit}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.style{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:white;display:flex;flex-direction:column}.style img{width:100%;height:142px;object-fit:contain;background:#f2f3f8;padding:5px}.style .body{padding:10px;display:flex;flex-direction:column;gap:5px;flex:1}.style h3{font-size:14px;line-height:1.3;margin:0}.tag{font-size:11px;color:#5142b8;background:var(--soft);border-radius:99px;padding:3px 7px;display:inline-block;width:max-content}.style button,button{cursor:pointer;border:0;border-radius:9px;padding:10px 12px;background:var(--accent);color:#fff;font-weight:700}.style button{margin-top:auto}.secondary{background:#edf0f7;color:var(--ink)}.actions{display:flex;gap:8px;flex-wrap:wrap}.sticky{position:sticky;top:12px}.prompt{width:100%;min-height:170px;resize:vertical;padding:12px;border:1px solid var(--line);border-radius:10px;font:13px/1.5 ui-monospace,monospace}.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.refgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.ref{border:1px solid var(--line);border-radius:10px;overflow:hidden}.ref img{width:100%;height:125px;object-fit:contain;background:#f2f3f8}.ref div{padding:9px;font-size:12px}.ref a{color:var(--accent);font-weight:700}.status{font-size:12px;color:var(--muted);margin:10px 0}.notice{border-left:3px solid #e1b54c;background:#fff9e8;padding:10px 12px;font-size:12px;border-radius:6px}.empty{padding:24px;text-align:center;color:var(--muted);grid-column:1/-1}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.sticky{position:static}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.filters,.fields{grid-template-columns:1fr 1fr}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.style img{height:112px}.panel{padding:13px}}
+</style></head>
+<body>
+<header><div class="muted">IMAGE · BIBLIOTECA DE DISEÑO</div><h1>Atlas interactivo de peinados anime</h1><p>Busca por silueta y por partes del cabello. Elige una receta para construir un prompt PixAI sin mezclar rasgos contradictorios.</p></header>
+<main class="wrap">
+<div class="layout">
+<section class="panel"><h2>Explorar peinados</h2><p class="muted">Las recetas se generan combinando rasgos catalogados; no se presentan como cientos de imágenes originales verificadas. Las referencias visuales externas están enlazadas a sus fuentes.</p>
+<div class="filters">
+<div><label for="q">Buscar nombre o rasgo</label><input id="q" placeholder="ej. flequillo cortina, bob…"></div>
+<div><label for="family">Silueta principal</label><select id="family"><option value="">Todas</option></select></div>
+<div><label for="length">Largo</label><select id="length"><option value="">Todos</option><option>Corto</option><option>Medio</option><option>Largo</option><option>Extralargo</option></select></div>
+<div><label for="bangs">Flequillo / frente</label><select id="bangs"><option value="">Todos</option></select></div>
+<div><label for="texture">Textura</label><select id="texture"><option value="">Todas</option></select></div>
+<div><label for="sort">Orden</label><select id="sort"><option value="name">Nombre A–Z</option><option value="simple">Más fáciles de reconocer</option></select></div>
+</div>
+<div class="status" id="count" aria-live="polite"></div><div class="grid" id="catalog"></div>
+</section>
+<aside class="panel sticky"><h2>Constructor de prompt</h2><p class="muted">Selecciona una receta y ajusta las partes. El prompt usa términos ingleses habituales en generadores de imagen.</p>
+<div class="fields">
+<div><label for="pickLength">Largo</label><select id="pickLength"><option>short</option><option>medium-length</option><option selected>long</option><option>waist-length</option><option>thigh-length</option></select></div>
+<div><label for="pickColor">Color (opcional)</label><input id="pickColor" placeholder="black hair, silver hair…"></div>
+<div><label for="view">Vista</label><select id="view"><option>front view</option><option>three-quarter view</option><option>side view</option><option>back view</option></select></div>
+<div><label for="style">Acabado</label><select id="style"><option>clean anime lineart</option><option>crisp 2D anime production lineart</option><option>simple black line art, white background</option></select></div>
+</div>
+<p><label for="chosen">Receta seleccionada</label><input id="chosen" readonly placeholder="Elige una tarjeta de la biblioteca"></p>
+<p><label for="prompt">Prompt positivo</label><textarea id="prompt" class="prompt" spellcheck="false"></textarea></p>
+<p><label for="negative">Negative prompt</label><textarea id="negative" class="prompt" style="min-height:100px" spellcheck="false">blurry, unreadable hair silhouette, fused hair masses, extra ponytails, extra buns, extra braids, unwanted hair accessories, contradictory bangs, cropped head, cropped hair tips, collage, text, watermark, logo</textarea></p>
+<div class="actions"><button id="copy">Copiar prompt</button><button class="secondary" id="copyBoth">Copiar ambos</button><button class="secondary" id="reset">Restablecer</button></div><p class="status" id="feedback" aria-live="polite"></p>
+<div class="notice">Nota de uso: las imágenes de referencia pertenecen a sus autores. Este atlas enlaza fuentes; no implica permiso para entrenar modelos, redistribuir imágenes o incorporarlas como assets del proyecto.</div>
+</aside>
+</div>
+<section class="panel" style="margin-top:18px"><h2>Referencias visuales claras para identificar formas</h2><p class="muted">Empieza por estas páginas que muestran el peinado con ángulos y rasgos explícitos. Abre la fuente si la miniatura no carga.</p><div class="refgrid" id="refs"></div></section>
+</main>
+<script>
+const families=[
+{name:"Bob recto",family:"Bob",length:"Corto",prompt:"straight blunt bob cut, jaw-length hair, clean rounded silhouette",bangs:"blunt bangs",texture:"liso",difficulty:1},
+{name:"Bob asimétrico",family:"Bob",length:"Corto",prompt:"asymmetrical bob cut, one side longer than the other, sharp clean silhouette",bangs:"side-swept bangs",texture:"liso",difficulty:2},
+{name:"Pixie en capas",family:"Corto",length:"Corto",prompt:"layered pixie cut, short nape, textured crown, separated tapered locks",bangs:"side-swept bangs",texture:"despeinado",difficulty:2},
+{name:"Corte garçon",family:"Corto",length:"Corto",prompt:"short garçon haircut, close nape, soft side locks, compact silhouette",bangs:"wispy bangs",texture:"liso",difficulty:1},
+{name:"Wolf cut",family:"Capas",length:"Medio",prompt:"layered wolf cut, shaggy crown volume, long tapered side layers, textured ends",bangs:"curtain bangs",texture:"despeinado",difficulty:3},
+{name:"Shag en capas",family:"Capas",length:"Medio",prompt:"medium shag haircut, choppy layers, airy crown, feathered ends",bangs:"wispy bangs",texture:"despeinado",difficulty:2},
+{name:"Hime cut",family:"Hime",length:"Largo",prompt:"hime cut, long straight back hair, blunt cheek-length sidelocks, straight fringe",bangs:"blunt bangs",texture:"liso",difficulty:1},
+{name:"Cabello largo liso",family:"Suelto",length:"Largo",prompt:"long straight hair, smooth continuous locks, tapered ends, balanced silhouette",bangs:"center-parted bangs",texture:"liso",difficulty:1},
+{name:"Largo con ondas",family:"Suelto",length:"Largo",prompt:"long flowing wavy hair, broad S-shaped waves, layered tapered ends",bangs:"curtain bangs",texture:"ondulado",difficulty:2},
+{name:"Rizos espirales",family:"Rizos",length:"Largo",prompt:"long spiral curls, distinct ringlets, rounded curl volume, separated curl groups",bangs:"curly bangs",texture:"rizado",difficulty:3},
+{name:"Coleta alta",family:"Coleta",length:"Largo",prompt:"single high ponytail attached at the crown, pulled-back sides, one flowing tapered tail",bangs:"forehead exposed",texture:"liso",difficulty:1},
+{name:"Coleta baja",family:"Coleta",length:"Medio",prompt:"single low ponytail tied near the nape, relaxed gathered hair, soft loose strands",bangs:"curtain bangs",texture:"liso",difficulty:1},
+{name:"Coleta lateral",family:"Coleta",length:"Largo",prompt:"single side ponytail over one shoulder, asymmetrical silhouette, visible tie point",bangs:"side-swept bangs",texture:"ondulado",difficulty:1},
+{name:"Coletas dobles altas",family:"Twin tails",length:"Largo",prompt:"high twin tails, two symmetrical ponytails attached high on both sides, clear separation",bangs:"blunt bangs",texture:"liso",difficulty:2},
+{name:"Coletas dobles bajas",family:"Twin tails",length:"Medio",prompt:"low twin tails tied near the nape, two separated side ponytails, soft natural fall",bangs:"curtain bangs",texture:"liso",difficulty:1},
+{name:"Coletas tipo burbuja",family:"Twin tails",length:"Largo",prompt:"bubble twin ponytails, two ponytails divided into rounded segments by small elastics",bangs:"wispy bangs",texture:"liso",difficulty:3},
+{name:"Trenzas dobles",family:"Trenzas",length:"Largo",prompt:"two separate three-strand braids, one on each side, visible braid crossings and tied ends",bangs:"center-parted bangs",texture:"trenzado",difficulty:2},
+{name:"Trenza corona",family:"Trenzas",length:"Medio",prompt:"crown braid wrapping around the head, braided band clearly visible above the forehead",bangs:"forehead exposed",texture:"trenzado",difficulty:3},
+{name:"Moños dobles",family:"Moños",length:"Medio",prompt:"two symmetrical space buns high on the head, rounded bun shapes, clear separation",bangs:"wispy bangs",texture:"liso",difficulty:2},
+{name:"Semirrecogido",family:"Semirrecogido",length:"Largo",prompt:"half-up half-down hairstyle, upper section tied at the crown, lower hair left loose",bangs:"curtain bangs",texture:"ondulado",difficulty:1},
+{name:"Undercut lateral",family:"Undercut",length:"Corto",prompt:"side undercut, one closely cropped side, longer swept-over top, strong asymmetry",bangs:"side-swept bangs",texture:"despeinado",difficulty:2},
+{name:"Pelo levantado en picos",family:"Spiky",length:"Corto",prompt:"short spiky anime hair, distinct upward-pointing locks, separated angular clumps",bangs:"jagged bangs",texture:"despeinado",difficulty:1},
+{name:"Flequillo sobre un ojo",family:"Asimétrico",length:"Medio",prompt:"medium layered hair with one long fringe covering one eye, asymmetric face framing",bangs:"one-eye-covering fringe",texture:"liso",difficulty:1},
+{name:"Pelo hacia atrás",family:"Peinado hacia atrás",length:"Medio",prompt:"slicked-back hair, forehead fully exposed, hair swept away from the face",bangs:"forehead exposed",texture:"liso",difficulty:1},
+{name:"Ahoge y capas",family:"Capas",length:"Medio",prompt:"layered medium anime hair with one distinct ahoge cowlick rising from the crown",bangs:"wispy bangs",texture:"liso",difficulty:1}
+];
+const lengths=["Corto","Medio","Largo","Extralargo"], bangs=["blunt bangs","curtain bangs","side-swept bangs","wispy bangs","jagged bangs","center-parted bangs","forehead exposed","one-eye-covering fringe","no bangs"], textures=["liso","ondulado","rizado","despeinado","trenzado"];
+// 25 explicit bases plus controlled combinations = 125 recipes. A generated recipe is a prompt recipe, not a separate verified image.
+const combos=[];
+families.forEach((f,i)=>combos.push({...f,id:"HAI-"+String(i+1).padStart(4,"0"),base:true}));
+let n=26;
+for(let i=0;i<families.length;i++){
+ const f=families[i];
+ if(i%2===0){
+  const b=bangs[(i+2)%bangs.length], tx=textures[(i+1)%textures.length];
+  combos.push({...f,id:"HAI-"+String(n++).padStart(4,"0"),name:f.name+" · "+b.replaceAll("-"," "),prompt:f.prompt+", "+b+", "+tx+" texture",bangs:b,texture:tx,base:false});
+  const l=lengths[(i+1)%lengths.length];
+  combos.push({...f,id:"HAI-"+String(n++).padStart(4,"0"),name:f.name+" · "+l.toLowerCase(),length:l,prompt:f.prompt+", "+l.toLowerCase()+" hair length, clearly readable silhouette",base:false});
+  combos.push({...f,id:"HAI-"+String(n++).padStart(4,"0"),name:f.name+" · textura "+tx,texture:tx,prompt:f.prompt+", "+tx+" hair texture, separated readable locks",base:false});
+  combos.push({...f,id:"HAI-"+String(n++).padStart(4,"0"),name:f.name+" · frente despejada",bangs:"forehead exposed",prompt:f.prompt+", forehead fully exposed, hairline visible",base:false});
+ }
+}
+const reference=[
+{title:"Coleta alta · frente",url:"https://animefacelab.com/references/hair-ref-025/",img:"https://animefacelab.com/references/hair-ref-025/"},
+{title:"Coleta alta · perfil",url:"https://animefacelab.com/references/hair-ref-027/",img:"https://animefacelab.com/references/hair-ref-027/"},
+{title:"Plancha de 30 bocetos anime",url:"https://ensviale-ers.infd.edu.ar/sitio/wp-content/uploads/2020/10/3er-a%C3%B1o-Artes-visuales-Colliard-Lescano.pdf",img:"https://i.pinimg.com/originals/73/7f/f0/737ff0f5af49749be0b6ba4460d503af.jpg"},
+{title:"Guía ilustrada de coleta anime",url:"https://www.animeoutline.com/how-to-draw-anime-ponytail-hair/",img:"https://www.animeoutline.com/wp-content/uploads/2017/01/anime-ponytail-hair.png"},
+{title:"Guía de peinados anime",url:"https://shazvlog.com/anime-hair/",img:"https://shazvlog.com/wp-content/uploads/2026/07/anime-hair-styles.jpg"},
+{title:"Referencia de peinados estilizados",url:"https://posemy.art/anime-hair-drawing-reference/",img:"https://posemy.art/wp-content/uploads/2021/07/anime-hair-drawing-reference.jpg"}
+];
+const $=id=>document.getElementById(id);let selected=combos[0];
+function fillSelect(id,values){const el=$(id);values.forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;el.append(o)})}
+fillSelect("family",[...new Set(combos.map(x=>x.family))]);fillSelect("bangs",bangs);fillSelect("texture",textures);
+function render(){let list=combos.filter(x=>(!$("q").value|| (x.name+" "+x.prompt+" "+x.family).toLowerCase().includes($("q").value.toLowerCase()))&&(!$("family").value||x.family===$("family").value)&&(!$("length").value||x.length===$("length").value)&&(!$("bangs").value||x.bangs===$("bangs").value)&&(!$("texture").value||x.texture===$("texture").value));if($("sort").value==="simple")list.sort((a,b)=>a.difficulty-b.difficulty);else list.sort((a,b)=>a.name.localeCompare(b.name));$("count").textContent=list.length+" recetas visibles · "+combos.length+" recetas en total (las combinaciones no equivalen a imágenes verificadas).";$("catalog").innerHTML="";if(!list.length){$("catalog").innerHTML='<div class="empty">No hay resultados. Prueba quitar algún filtro.</div>';return}list.forEach(x=>{const el=document.createElement("article");el.className="style";el.innerHTML='<div style="height:92px;display:grid;place-items:center;background:#f2f3f8;font-size:30px;color:#c0c5d7">✳</div><div class="body"><span class="tag">'+x.id+'</span><h3>'+x.name+'</h3><div class="muted" style="font-size:11px">'+x.family+' · '+x.length+' · '+x.texture+'</div><div style="font-size:12px">'+x.prompt+'</div><button type="button">Usar esta receta</button></div>';el.querySelector("button").onclick=()=>choose(x);$("catalog").append(el)})}
+function choose(x){selected=x;$("chosen").value=x.id+" · "+x.name;updatePrompt();$("feedback").textContent="Receta seleccionada: "+x.name}
+function updatePrompt(){if(!selected)return;const color=$("pickColor").value.trim();$("prompt").value="masterpiece, best quality, anime character design, "+$("style").value+", "+(color?color+", ":"")+selected.prompt+", "+$("pickLength").value+" hair, "+selected.bangs+", coherent roots and strand flow, clearly separated hair locks, readable silhouette, head and shoulders, "+$("view").value+", plain light background, single character, no text"}
+["q","family","length","bangs","texture","sort"].forEach(id=>$(id).addEventListener(id==="q"?"input":"change",render));["pickLength","pickColor","view","style"].forEach(id=>$(id).addEventListener("input",updatePrompt));$("copy").onclick=async()=>{await navigator.clipboard.writeText($("prompt").value);$("feedback").textContent="Prompt copiado."};$("copyBoth").onclick=async()=>{await navigator.clipboard.writeText("POSITIVE:\n"+$("prompt").value+"\n\nNEGATIVE:\n"+$("negative").value);$("feedback").textContent="Prompt positivo y negative prompt copiados."};$("reset").onclick=()=>{["q","family","length","bangs","texture"].forEach(id=>$(id).value="");$("pickColor").value="";$("pickLength").value="long";$("view").value="front view";$("style").value="clean anime lineart";selected=combos[0];$("chosen").value="";render();updatePrompt();$("feedback").textContent="Filtros y prompt restablecidos."};
+$("refs").innerHTML=reference.map(r=>'<article class="ref"><a href="'+r.url+'" target="_blank" rel="noopener"><img loading="lazy" src="'+r.img+'" alt="'+r.title+'" onerror="this.style.display=\'none\'"></a><div><strong>'+r.title+'</strong><br><a href="'+r.url+'" target="_blank" rel="noopener">Abrir fuente original ↗</a></div></article>').join("");
+render();choose(selected);
+</script></body></html>
