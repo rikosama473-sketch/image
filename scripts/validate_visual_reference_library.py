@@ -6,6 +6,7 @@ import ast
 import json
 import re
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
@@ -109,10 +110,51 @@ def main() -> None:
             ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
         except SyntaxError as exc:
             fail(f"{label} script syntax error: {exc}")
+    # Execute the importer in a temporary directory to verify merging and stable IDs,
+    # not merely Python syntax. The temp output stays under ROOT for the path safety check.
+    with tempfile.TemporaryDirectory(prefix=".visual-reference-test-", dir=ROOT) as temp_dir:
+        temp_root = Path(temp_dir)
+        output_path = temp_root / "annotations.json"
+        bundle_path = temp_root / "export.json"
+        output_path.write_text(
+            json.dumps({
+                "schema_version": 1,
+                "project": "IMAGE visual reference library",
+                "annotations": {"asset-1": {"tags": ["old"]}},
+                "user_references": [{"id": "ref-1", "title": "Old title", "source_url": "https://www.pinterest.com/pin/123/"}],
+                "style_recipes": [{"id": "style-1", "name": "Old recipe"}],
+            }),
+            encoding="utf-8",
+        )
+        bundle_path.write_text(
+            json.dumps({
+                "schema_version": 1,
+                "annotations": {"asset-1": {"tags": ["reviewed"]}, "asset-2": {"label": "Ojos rasgados"}},
+                "references_added_by_user": [{"id": "ref-1", "title": "Updated title", "source_url": "https://www.pinterest.com/pin/123/"}],
+                "style_recipes": [{"id": "style-1", "name": "Updated recipe"}],
+            }),
+            encoding="utf-8",
+        )
+        imported = subprocess.run(
+            [sys.executable, str(ANNOTATION_APPLIER), str(bundle_path), "--output", str(output_path), "--no-backup"],
+            cwd=ROOT, text=True, capture_output=True, check=False,
+        )
+        if imported.returncode:
+            fail("Annotation importer self-test failed: " + (imported.stderr.strip() or imported.stdout.strip()))
+        merged = json.loads(output_path.read_text(encoding="utf-8"))
+        if merged["annotations"].get("asset-1", {}).get("tags") != ["reviewed"] or "asset-2" not in merged["annotations"]:
+            fail("Annotation importer did not merge and overwrite annotation records correctly.")
+        refs = merged.get("user_references", [])
+        styles = merged.get("style_recipes", [])
+        if len(refs) != 1 or refs[0].get("title") != "Updated title":
+            fail("Annotation importer did not deduplicate the reference by stable ID.")
+        if len(styles) != 1 or styles[0].get("name") != "Updated recipe":
+            fail("Annotation importer did not deduplicate the recipe by stable ID.")
+
     print(
         "PASS: visual reference browser syntax; "
         f"{len(items)} seeded web references; persistent annotation schema; "
-        "contact-sheet and annotation-importer syntax."
+        "contact-sheet syntax; annotation importer merge self-test."
     )
 
 
