@@ -13,7 +13,7 @@ const css=[
 ".library-overlay{display:none;position:fixed;inset:0;z-index:40;background:#070910ed;padding:clamp(8px,2vw,24px);align-items:center;justify-content:center}",
 ".library-overlay.open{display:flex}.library-panel{width:min(1320px,100%);height:min(94vh,1100px);background:#151a25;border:1px solid #48546a;border-radius:16px;box-shadow:0 25px 80px #000b;display:flex;flex-direction:column;min-height:0;overflow:hidden}",
 ".library-header{display:flex;gap:12px;align-items:flex-start;padding:16px 18px;border-bottom:1px solid #354156;background:#1b202d}.library-heading{min-width:0;flex:1}.library-heading h2{font-size:18px;margin:0 0 5px}.library-heading p{font-size:11px;color:#9eacc3;max-width:820px;margin:0;line-height:1.55}",
-".library-controls{display:grid;grid-template-columns:minmax(180px,2fr) repeat(2,minmax(130px,1fr));gap:8px;padding:12px 16px;border-bottom:1px solid #354156;background:#121722}.library-count{font-size:11px;color:#9eacc3;padding:10px 17px}",
+".library-controls{display:grid;grid-template-columns:minmax(180px,2fr) repeat(3,minmax(130px,1fr));gap:8px;padding:12px 16px;border-bottom:1px solid #354156;background:#121722}.library-count{font-size:11px;color:#9eacc3;padding:10px 17px}",
 ".library-scroll{flex:1;overflow:auto;padding:0 16px 18px;min-height:0}.recipe-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}",
 ".recipe-card{min-width:0;border:1px solid #394358;border-radius:11px;overflow:hidden;background:#10151f;display:flex;flex-direction:column}.recipe-card canvas{width:100%;height:150px;display:block;background:radial-gradient(ellipse at center,#252c3b,#151a25 72%)}",
 ".recipe-body{padding:9px;display:flex;flex:1;flex-direction:column;gap:6px}.recipe-body b{font-size:12px;line-height:1.35;min-height:31px}.recipe-body p{font-size:10px;color:#9eacc3;line-height:1.45;margin:0;min-height:43px}",
@@ -34,7 +34,12 @@ const css=[
 "@media(max-width:650px){.library-controls{grid-template-columns:1fr 1fr}.library-controls .field:first-child{grid-column:1/-1}.recipe-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.library-header{padding:12px}.recipe-card canvas{height:130px}.recipe-body p{min-height:0}}",
 "@media(max-width:390px){.recipe-grid{gap:7px}.recipe-card canvas{height:110px}.recipe-body{padding:7px}}",
 ".style-fit-pill{display:inline-block;font-size:9px;padding:4px 6px;border:1px solid #7a4968;border-radius:5px;color:#ffb6d4;line-height:1.3}",
-".style-fit-pill.compatible{border-color:#4a668e;color:#b8d7ff}"
+".style-fit-pill.compatible{border-color:#4a668e;color:#b8d7ff}",
+".overlay-fit-pill{display:inline-block;max-width:100%;font-size:9px;padding:4px 6px;border:1px solid #6f6547;border-radius:5px;color:#ffe3a3;line-height:1.35;overflow-wrap:anywhere}",
+".overlay-fit-pill.parts{border-color:#376b56;color:#b3f0d0}",
+".overlay-fit-pill.realign{border-color:#4a668e;color:#b8d7ff}",
+".overlay-explainer{font-size:10px;line-height:1.45;color:#d2dbea;background:#1b2432;border-bottom:1px solid #354156;padding:9px 16px}",
+".overlay-explainer b{color:#fff}"
 ].join("");
 const style=document.createElement("style");style.textContent=css;document.head.appendChild(style);
 function installSlot(){
@@ -62,7 +67,7 @@ function installUI(){
  }
  if(!$("libraryOverlay")){
   const modal=document.createElement("div");modal.id="libraryOverlay";modal.className="library-overlay";modal.setAttribute("role","dialog");modal.setAttribute("aria-modal","true");modal.setAttribute("aria-labelledby","libraryTitle");
-  modal.innerHTML="<div class='library-panel'><div class='library-header'><div class='library-heading'><h2 id='libraryTitle'>Referencias de cabello · anime 2D de producción</h2><p>Prioridad: lenguaje de dibujo anime televisivo/producción, con referencias Madhouse y Trigger. El color es opcional: se priorizan hojas monocromáticas, vistas de modelo y siluetas de mechones. Las referencias protegidas se enlazan para estudio visual, no como recortes descargables.</p></div><button id='closeLibraryBtn' aria-label='Cerrar visor'>Cerrar ✕</button></div><div class='viewer-tabs'><button id='referencesTab' class='active' type='button'>Mi estilo · line art anime</button><button id='recipesTab' type='button'>120 recetas conceptuales</button></div><div class='library-controls'><div class='field' style='margin:0'><label for='recipeSearch'>Buscar corte, rasgo o etiqueta</label><input id='recipeSearch' type='search' placeholder='Ej. bob, mechón largo, side_ponytail'></div><div class='field' style='margin:0'><label for='recipeFamily'>Estilo visual</label><select id='recipeFamily'><option value='matching'>Solo mi estilo</option><option value='target_style'>Anclas Madhouse / Trigger</option><option value='compatible'>Line art anime compatible</option><option value='all'>Mostrar también otros estilos</option></select></div><div class='field' style='margin:0' id='lengthField'><label for='recipeLength'>Largo</label><select id='recipeLength'><option value=''>Todos los largos</option><option value='short'>Corto</option><option value='medium'>Medio</option><option value='long'>Largo</option></select></div></div><div id='libraryCount' class='library-count'>Cargando referencias…</div><div class='library-scroll'><div id='recipeGrid' class='recipe-grid' hidden></div><div id='referenceGrid' class='reference-grid'></div></div></div>";
+  modal.innerHTML="<div class='library-panel'><div class='library-header'><div class='library-heading'><h2 id='libraryTitle'>Biblioteca visual de peinados · anime 2D</h2><p>Busca por corte, flequillo, trenza o recogido. El catálogo separa paquetes con PNG por capas de las hojas que solo sirven como referencia; las referencias de arte no se presentan como assets listos para superponer.</p></div><button id='closeLibraryBtn' aria-label='Cerrar visor'>Cerrar ✕</button></div><div class='viewer-tabs'><button id='referencesTab' class='active' type='button'>Hojas y piezas visuales</button><button id='recipesTab' type='button'>120 recetas conceptuales</button></div><div class='overlay-explainer'><b>Para montar sobre una base plana:</b> un PNG separado solo encaja automáticamente con la plantilla para la que se dibujó. Para otra cabeza, alinea una vez la coronilla, los ojos y las orejas, guarda cada pieza en un lienzo común y conserva sus coordenadas. Una hoja con varias cabezas no equivale a una capa de cabello.</div><div class='library-controls'><div class='field' style='margin:0'><label for='recipeSearch'>Buscar corte, rasgo o etiqueta</label><input id='recipeSearch' type='search' placeholder='Ej. bob, mechón largo, side_ponytail'></div><div class='field' style='margin:0'><label for='recipeFamily'>Estilo visual</label><select id='recipeFamily'><option value='matching'>Anime line art compatible</option><option value='target_style'>Anclas Madhouse / Trigger</option><option value='compatible'>Line art compatible</option><option value='all'>Mostrar también otros estilos</option></select></div><div class='field' style='margin:0' id='overlayModeField'><label for='overlayMode'>Uso como capa</label><select id='overlayMode'><option value='all'>Todo: piezas y referencias</option><option value='layerable'>Paquetes de piezas separadas</option><option value='parts_same_base'>Requiere base compatible</option><option value='parts_realignable'>Alinear manualmente</option><option value='reference_only'>Solo referencia</option></select></div><div class='field' style='margin:0' id='lengthField'><label for='recipeLength'>Largo</label><select id='recipeLength'><option value=''>Todos los largos</option><option value='short'>Corto</option><option value='medium'>Medio</option><option value='long'>Largo</option></select></div></div><div id='libraryCount' class='library-count'>Cargando referencias…</div><div class='library-scroll'><div id='recipeGrid' class='recipe-grid' hidden></div><div id='referenceGrid' class='reference-grid'></div></div></div>";
   document.body.appendChild(modal);
   $("closeLibraryBtn").addEventListener("click",closeLibrary);
   modal.addEventListener("click",e=>{if(e.target===modal)closeLibrary();});
@@ -70,6 +75,7 @@ function installUI(){
   $("recipeSearch").addEventListener("input",()=>activeViewerTab==="recipes"?renderLibrary():renderWebReferences());
   $("recipeFamily").addEventListener("change",()=>activeViewerTab==="recipes"?renderLibrary():renderWebReferences());
   $("recipeLength").addEventListener("change",()=>activeViewerTab==="recipes"?renderLibrary():renderWebReferences());
+  $("overlayMode").addEventListener("change",()=>activeViewerTab==="recipes"?null:renderWebReferences());
   $("recipesTab").addEventListener("click",()=>switchViewerTab("recipes"));
   $("referencesTab").addEventListener("click",()=>switchViewerTab("references"));
  }
@@ -93,7 +99,7 @@ function switchViewerTab(tab){
  const recipes=tab==="recipes";
  $("recipesTab").classList.toggle("active",recipes);$("referencesTab").classList.toggle("active",!recipes);
  $("recipeGrid").hidden=!recipes;$("referenceGrid").hidden=recipes;
- $("recipeLength").parentElement.style.display=recipes?"flex":"none";
+ $("recipeLength").parentElement.style.display=recipes?"flex":"none";$("overlayModeField").style.display=recipes?"none":"flex";
  $("libraryTitle").textContent=recipes?"120 recetas conceptuales de peinados":"Referencias de cabello · anime 2D de producción";
  $("recipeFamily").innerHTML=recipes?
   "<option value=''>Todas las familias</option><option value='Corto'>Cortes cortos</option><option value='Medio'>Cortes medios</option><option value='Largo'>Cortes largos</option>":
@@ -105,21 +111,29 @@ function switchViewerTab(tab){
 function escapeHtml(value){return String(value==null?"":value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
 function renderWebReferences(){
  if(!webReferences)return;
- const q=$("recipeSearch").value.trim().toLowerCase(),fam=$("recipeFamily").value||"matching";
+ const q=$("recipeSearch").value.trim().toLowerCase(),fam=$("recipeFamily").value||"matching",mode=$("overlayMode").value||"all";
  const relevant=webReferences.items.filter(r=>r.style_fit==="target"||r.style_fit==="compatible");
  const base=fam==="all"?webReferences.items:fam==="target_style"?webReferences.items.filter(r=>r.style_fit==="target"):fam==="compatible"?webReferences.items.filter(r=>r.style_fit==="compatible"):relevant;
- const rows=base.filter(r=>!q||[r.title,r.source_name,r.license_status,r.description,r.notes,r.studio_anchor||"",r.style_fit||""].concat(r.tags||[]).join(" ").toLowerCase().includes(q));
- $("libraryCount").textContent=rows.length+" de "+base.length+" referencias visibles · "+relevant.length+" del lenguaje de dibujo elegido · color no requerido.";
+ const layerMode=r=>r.overlay_mode||(r.usable_asset?"parts_same_base":"reference_only");
+ const modeMatches=r=>mode==="all"||(mode==="layerable"&&["parts_same_base","parts_realignable"].includes(layerMode(r)))||layerMode(r)===mode;
+ const rows=base.filter(r=>modeMatches(r)&&(!q||[r.title,r.source_name,r.license_status,r.description,r.notes,r.overlay_label||"",r.overlay_notes||"",r.studio_anchor||"",r.style_fit||""].concat(r.tags||[],r.part_types||[]).join(" ").toLowerCase().includes(q)));
+ const countLayerable=base.filter(r=>["parts_same_base","parts_realignable"].includes(layerMode(r))).length;
+ $("libraryCount").textContent=rows.length+" de "+base.length+" fichas · "+countLayerable+" ofrecen paquetes/piezas separadas; las demás son hojas de referencia. El encaje en otra base requiere revisar y alinear.";
  const root=$("referenceGrid");
  if(!rows.length){root.innerHTML="<div class='library-empty'>No hay resultados. Probá otra búsqueda o limpiá el filtro de categoría.</div>";return;}
  root.innerHTML=rows.map(r=>{
   const safeTitle=escapeHtml(r.title),safeUrl=escapeHtml(r.source_url),safeDownload=escapeHtml(r.asset_download_url||r.source_url),safeImage=escapeHtml(r.image_url||"");
   const media=r.image_url?"<img class='reference-image' loading='lazy' src='"+safeImage+"' alt='Referencia visual: "+safeTitle+"' onerror=\"this.style.display='none';this.nextElementSibling.hidden=false\"><div class='reference-placeholder' hidden>Vista previa externa no disponible.<br>Usá el enlace a la fuente para ver la imagen.</div>":"<div class='reference-placeholder'>Paquete de recursos<br>Consultá la fuente y descarga disponible.</div>";
   const cls=r.usable_asset?"license-flag open":"license-flag";
-  const fit=r.style_fit==="target"?"Ancla de estilo · "+(r.studio_anchor||"anime 2D"):r.style_fit==="compatible"?"Line art anime compatible":"Fuera del estilo elegido";
-  const fitClass=r.style_fit==="compatible"?"style-fit-pill compatible":"style-fit-pill";
-  const buttons=r.usable_asset?"<a href='"+safeUrl+"' target='_blank' rel='noopener noreferrer'>Fuente / licencia</a><a href='"+safeDownload+"' target='_blank' rel='noopener noreferrer'>Abrir descarga</a>":"<a href='"+safeUrl+"' target='_blank' rel='noopener noreferrer'>Ver referencia original</a>";
-  return "<article class='reference-card'>"+media+"<div class='reference-body'><b>"+safeTitle+"</b><div class='"+fitClass+"'>"+escapeHtml(fit)+"</div><div class='"+cls+"'>"+escapeHtml(r.license_status)+"</div><p>"+escapeHtml(r.description)+"</p><div class='reference-meta'>"+escapeHtml(r.source_name)+" · "+escapeHtml((r.tags||[]).slice(0,6).join(", "))+"</div><div class='reference-actions'>"+buttons+"</div><p>"+escapeHtml(r.notes)+"</p></div></article>";
+  const fit=r.visual_review==="pending"?"Pendiente de revisión visual":r.style_fit==="target"?"Ancla de estilo · "+(r.studio_anchor||"anime 2D"):r.style_fit==="compatible"?"Line art anime compatible":"Fuera del estilo seleccionado";
+  const fitClass=r.visual_review==="pending"?"style-fit-pill compatible":r.style_fit==="compatible"?"style-fit-pill compatible":"style-fit-pill";
+  const modeKey=r.overlay_mode||(r.usable_asset?"parts_same_base":"reference_only");
+  const overlayLabels={parts_same_base:"Piezas separadas · requiere base compatible",parts_realignable:"Piezas editables · alinear sobre otra base",reference_only:"Solo referencia · no es una capa PNG"};
+  const overlayText=escapeHtml(r.overlay_label||overlayLabels[modeKey]||overlayLabels.reference_only);
+  const overlayClass=modeKey==="parts_same_base"?"overlay-fit-pill parts":modeKey==="parts_realignable"?"overlay-fit-pill realign":"overlay-fit-pill";
+  const detail=escapeHtml(r.overlay_notes||"Verifica transparencia, alineación, procedencia y licencia antes de usarlo como pieza.");
+  const buttons=r.usable_asset?"<a href='"+safeUrl+"' target='_blank' rel='noopener noreferrer'>Fuente / licencia</a><a href='"+safeDownload+"' target='_blank' rel='noopener noreferrer'>Ver paquete</a>":"<a href='"+safeUrl+"' target='_blank' rel='noopener noreferrer'>Ver fuente</a>";
+  return "<article class='reference-card'>"+media+"<div class='reference-body'><b>"+safeTitle+"</b><div class='"+fitClass+"'>"+escapeHtml(fit)+"</div><div class='overlay-fit-pill "+overlayClass+"'>"+overlayText+"</div><div class='"+cls+"'>"+escapeHtml(r.license_status)+"</div><p>"+escapeHtml(r.description)+"</p><div class='reference-meta'>"+escapeHtml(r.source_name)+" · "+escapeHtml((r.tags||[]).slice(0,6).join(", "))+"</div><div class='reference-actions'>"+buttons+"</div><p>"+detail+"</p><p>"+escapeHtml(r.notes)+"</p></div></article>";
  }).join("");
 }
 function closeLibrary(){const m=$("libraryOverlay");if(m)m.classList.remove("open");}

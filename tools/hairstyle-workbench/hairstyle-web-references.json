@@ -2,7 +2,7 @@
   "schema_version": 1,
   "title": "Colección web de referencias y recursos de peinados",
   "updated": "2026-10-21",
-  "purpose": "Coleccionar referencias visuales reales de cortes anime y paquetes de piezas descargables. La referencia visual no concede permiso para reutilizar una ilustración; los paquetes reutilizables tienen su licencia declarada individualmente.",
+  "purpose": "Coleccionar y clasificar hojas visuales de peinados y paquetes de piezas por capas. Cada registro declara si es solo referencia, un paquete por capas para una base compatible o una pieza que exige alineación manual. Una hoja de referencia no cuenta como PNG independiente ni como permiso para reutilizarla.",
   "items": [
     {
       "id": "web-001",
@@ -29,7 +29,11 @@
         "hair_bun"
       ],
       "description": "Una misma identidad en 15 variantes: largos, flequillos, coleta, coletas dobles, trenza, semirrecogido y moño.",
-      "notes": "Ideal para estudiar cómo cambia el pelo sin alterar la identidad facial. No copiar ni redistribuir la lámina sin permiso."
+      "notes": "Ideal para estudiar cómo cambia el pelo sin alterar la identidad facial. No copiar ni redistribuir la lámina sin permiso.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "web-002",
@@ -50,7 +54,11 @@
         "long_sidelocks"
       ],
       "description": "Muestra comparativa de siluetas y mechones característicos.",
-      "notes": "Útil para ampliar nomenclatura y buscar variantes relacionadas."
+      "notes": "Útil para ampliar nomenclatura y buscar variantes relacionadas.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "web-003",
@@ -73,7 +81,11 @@
         "hair_ribbon"
       ],
       "description": "Normal, coleta, coletas dobles, moños, trenzas, ondas, frente descubierta y accesorios.",
-      "notes": "La imagen enlaza a la página de referencia; no equivale a un recorte PNG utilizable."
+      "notes": "La imagen enlaza a la página de referencia; no equivale a un recorte PNG utilizable.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "web-004",
@@ -98,7 +110,11 @@
       "notes": "Muy útil como índice para rastrear cortes individuales. Permiso de reutilización no verificado.",
       "style_fit": "compatible",
       "studio_anchor": "ANIME LINE ART",
-      "color_required": false
+      "color_required": false,
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "web-005",
@@ -120,7 +136,11 @@
         "undercut"
       ],
       "description": "Peinados cortos, laterales rapados, flequillo y volumen ondulado, manteniendo el personaje reconocible.",
-      "notes": "Usar para idear familias de corte, no como recurso PNG libre."
+      "notes": "Usar para idear familias de corte, no como recurso PNG libre.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "web-006",
@@ -142,7 +162,11 @@
         "side_view"
       ],
       "description": "Variantes tipo bob, coleta, ondas y clips, con vistas auxiliares para entender el volumen.",
-      "notes": "Referencia para exigir vistas frontal/lateral y encaje de los recortes."
+      "notes": "Referencia para exigir vistas frontal/lateral y encaje de los recortes.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "web-007",
@@ -166,7 +190,11 @@
       "notes": "Referencia de construcción de volumen y contorno de cabeza.",
       "style_fit": "compatible",
       "studio_anchor": "ANIME LINE ART",
-      "color_required": false
+      "color_required": false,
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "asset-cc0-portraits",
@@ -176,7 +204,7 @@
       "image_url": "",
       "source_url": "https://opengameart.org/content/anime-girl-and-boy-portraits",
       "source_name": "OpenGameArt / stevenburrow",
-      "license_status": "CC0 / dominio público declarado por el autor",
+      "license_status": "CC0 declarado en OpenGameArt; fuente y formato revisados el 2026-10-21.",
       "usable_asset": true,
       "asset_download_url": "https://opengameart.org/sites/default/files/allanime-11-28-2020.zip",
       "tags": [
@@ -187,7 +215,21 @@
         "hair_color"
       ],
       "description": "Paquete con archivo XCF de GIMP con capas editables, dos cortes femeninos y dos masculinos, más variantes de coleta y piezas recoloreables.",
-      "notes": "Es una fuente inicial real para extraer piezas. Descargar el ZIP y exportar las capas de cabello por separado; luego alinear y revisar bordes en IMAGE."
+      "notes": "Es una fuente inicial real para extraer piezas. Descargar el ZIP y exportar las capas de cabello por separado; luego alinear y revisar bordes en IMAGE.",
+      "overlay_mode": "parts_same_base",
+      "overlay_label": "XCF/PNG por capas · base del paquete",
+      "overlay_notes": "OpenGameArt declara CC0. El autor incluye un archivo XCF por capas y señala dos cortes femeninos y dos masculinos, con coletas/barba posibles. Extrae las capas con GIMP y conserva el tamaño y la alineación de la plantilla original; para otra cabeza hay que recolocar y revisar.",
+      "visual_review": "license_checked",
+      "part_types": [
+        "haircut",
+        "ponytail",
+        "beard",
+        "eyes",
+        "mouth"
+      ],
+      "source_format": "XCF en capas + muestras PNG",
+      "alignment_note": "La alineación original corresponde a las bases incluidas; no es universal para otra cabeza.",
+      "style_fit": "compatible"
     },
     {
       "id": "asset-cc0-hair-animation",
@@ -208,7 +250,11 @@
         "hair_strands"
       ],
       "description": "Recurso con PSD editables para cabello corto y cabello largo en diferentes colores, más GIF de muestra.",
-      "notes": "El estilo no garantiza coincidencia con la meta anime de IMAGE; revisar y extraer solamente las piezas que encajen."
+      "notes": "El estilo no garantiza coincidencia con la meta anime de IMAGE; revisar y extraer solamente las piezas que encajen.",
+      "overlay_mode": "parts_realignable",
+      "overlay_label": "Pieza o sprite que requiere recorte/alineación manual sobre la nueva base.",
+      "overlay_notes": "La fuente publica un paquete o recurso con licencia declarada; verifica proporciones, transparencia y alineación antes de combinarlo con otra base.",
+      "visual_review": "pending"
     },
     {
       "id": "asset-cc0-24x32",
@@ -229,7 +275,11 @@
         "haircut"
       ],
       "description": "Paquete pequeño de nueve peinados de sprite, incluye rizado y trenzas.",
-      "notes": "Pixel art diminuto; sirve como vocabulario/complemento, no como ilustración final de anime moderno."
+      "notes": "Pixel art diminuto; sirve como vocabulario/complemento, no como ilustración final de anime moderno.",
+      "overlay_mode": "parts_same_base",
+      "overlay_label": "Piezas separadas, pero diseñadas para una base compatible.",
+      "overlay_notes": "La fuente publica un paquete o recurso con licencia declarada; verifica proporciones, transparencia y alineación antes de combinarlo con otra base.",
+      "visual_review": "pending"
     },
     {
       "id": "asset-cc-by-messy",
@@ -248,7 +298,11 @@
         "layered_hair"
       ],
       "description": "Pieza PNG de cabello estilo sprite/LPC, compartida para personalización.",
-      "notes": "Conservar autor, enlace de origen y licencia CC-BY 3.0 al incorporarlo a la biblioteca."
+      "notes": "Conservar autor, enlace de origen y licencia CC-BY 3.0 al incorporarlo a la biblioteca.",
+      "overlay_mode": "parts_realignable",
+      "overlay_label": "Pieza o sprite que requiere recorte/alineación manual sobre la nueva base.",
+      "overlay_notes": "La fuente publica un paquete o recurso con licencia declarada; verifica proporciones, transparencia y alineación antes de combinarlo con otra base.",
+      "visual_review": "pending"
     },
     {
       "id": "asset-cc-male-female",
@@ -268,7 +322,11 @@
         "sprite_hair"
       ],
       "description": "Muestra de pelo para bases de sprites anime masculinas y femeninas.",
-      "notes": "La página exige atribución y las licencias disponibles tienen condiciones distintas. No tratar como CC0."
+      "notes": "La página exige atribución y las licencias disponibles tienen condiciones distintas. No tratar como CC0.",
+      "overlay_mode": "parts_same_base",
+      "overlay_label": "Piezas separadas, pero diseñadas para una base compatible.",
+      "overlay_notes": "La fuente publica un paquete o recurso con licencia declarada; verifica proporciones, transparencia y alineación antes de combinarlo con otra base.",
+      "visual_review": "pending"
     },
     {
       "id": "web-008",
@@ -295,7 +353,11 @@
         "ahoge"
       ],
       "description": "Lámina con 24 ejemplos etiquetados: buzz cut, mohawk, bob, pixie, moños, trenzas, coletas, flequillos y ahoge.",
-      "notes": "La lámina sirve para inventariar más categorías y rasgos; no autoriza extraer ni redistribuir los recortes."
+      "notes": "La lámina sirve para inventariar más categorías y rasgos; no autoriza extraer ni redistribuir los recortes.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "web-009",
@@ -318,7 +380,11 @@
         "layered_hair"
       ],
       "description": "Colección numerosa de siluetas con nombres/arquetipos, incluidos hime, coletas, trenzas y mechones laterales.",
-      "notes": "Úsese para detectar diseños distintos; comprobar derechos con el autor original antes de copiar."
+      "notes": "Úsese para detectar diseños distintos; comprobar derechos con el autor original antes de copiar.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "web-010",
@@ -339,7 +405,11 @@
         "medium_hair"
       ],
       "description": "Variantes de cabello corto y medio con distintos flequillos, puntas y volumen.",
-      "notes": "Referencia rápida para ampliar el catálogo masculino. No reutilizar la ilustración sin permiso."
+      "notes": "Referencia rápida para ampliar el catálogo masculino. No reutilizar la ilustración sin permiso.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "web-011",
@@ -361,7 +431,11 @@
         "layered_hair"
       ],
       "description": "Nueve bocetos de cortes oscuros cortos para comparar silueta, mechones y flequillos.",
-      "notes": "Para estudio de forma; permisos de copia y adaptación no comprobados."
+      "notes": "Para estudio de forma; permisos de copia y adaptación no comprobados.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "web-012",
@@ -382,7 +456,11 @@
         "half_updo"
       ],
       "description": "Página de muestra de un libro profesional de 250 estilos masculinos; enseña largos, ondas, recogidos y vistas laterales.",
-      "notes": "Es una vista previa de una publicación comercial; no descargar ni recortar para redistribuir."
+      "notes": "Es una vista previa de una publicación comercial; no descargar ni recortar para redistribuir.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "web-013",
@@ -404,7 +482,11 @@
         "long_sidelocks"
       ],
       "description": "Ficha técnica de trenzas dobles desde atrás en tres cuartos, con divisiones de volumen y mechones frontales.",
-      "notes": "Útil para tomar en cuenta la orientación y los volúmenes al separar piezas; abrir fuente para consultar la imagen."
+      "notes": "Útil para tomar en cuenta la orientación y los volúmenes al separar piezas; abrir fuente para consultar la imagen.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "web-014",
@@ -424,7 +506,11 @@
         "parted_bangs"
       ],
       "description": "Referencia lateral para estudiar cómo se conectan el volumen posterior, la raya y las trenzas.",
-      "notes": "Abrir la página para ver la referencia; no se considera un PNG descargado al repositorio."
+      "notes": "Abrir la página para ver la referencia; no se considera un PNG descargado al repositorio.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "web-015",
@@ -450,7 +536,11 @@
         "twin_braids"
       ],
       "description": "Anuncio de paquete comercial de 300 bocetos de peinados femeninos, incluyendo pixie, trenzas, coletas, buns y cabello rizado.",
-      "notes": "Lo registro como posible ampliación comercial; no lo marco como recurso local ni gratis."
+      "notes": "Lo registro como posible ampliación comercial; no lo marco como recurso local ni gratis.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "style-trigger-killlakill",
@@ -477,7 +567,11 @@
         "production_lineart"
       ],
       "description": "Lámina monocromática de producción con flequillos angulares, mechones con dirección y siluetas que se mantienen legibles en poses intensas.",
-      "notes": "Ancla de estilo Trigger: líneas expresivas, mechones separados en grupos claros, contorno dinámico. No copiar ni redistribuir la lámina."
+      "notes": "Ancla de estilo Trigger: líneas expresivas, mechones separados en grupos claros, contorno dinámico. No copiar ni redistribuir la lámina.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "style-trigger-lwa-akko",
@@ -504,7 +598,11 @@
         "production_lineart"
       ],
       "description": "Hoja de modelo en blanco y negro con vistas frontal, lateral y trasera. Muy útil para estudiar cómo se conectan coronilla, laterales y nuca.",
-      "notes": "Ancla de estilo Trigger: masas de pelo simplificadas y contornos con energía; usar para estructura, no para calcar."
+      "notes": "Ancla de estilo Trigger: masas de pelo simplificadas y contornos con energía; usar para estructura, no para calcar.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "style-trigger-lwa-diana",
@@ -531,7 +629,11 @@
         "production_lineart"
       ],
       "description": "Referencia de cabello largo ondulado desde varias direcciones, con mechones grandes y curvas organizadas.",
-      "notes": "Ancla de estilo Trigger; ideal para extraer principios de caída y volumen de cabello largo."
+      "notes": "Ancla de estilo Trigger; ideal para extraer principios de caída y volumen de cabello largo.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "style-madhouse-perfectblue",
@@ -559,7 +661,11 @@
         "production_lineart"
       ],
       "description": "Hoja de modelo monocromática con cabello corto y largo en distintas vistas, dibujada para conservar proporciones y continuidad en animación.",
-      "notes": "Ancla de estilo Madhouse: lectura de silueta desde varios ángulos y mechones subordinados a la forma general. No redistribuir."
+      "notes": "Ancla de estilo Madhouse: lectura de silueta desde varios ángulos y mechones subordinados a la forma general. No redistribuir.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "style-clean-50-hairstyles",
@@ -588,7 +694,11 @@
         "lineart"
       ],
       "description": "Lámina monocromática con alrededor de 50 siluetas: cortes, bucles, trenzas, recogidos y distintos tipos de flequillo.",
-      "notes": "Complementa las referencias de producción con variedad de cortes. Estudiar diseños; no reutilizar la imagen sin permiso."
+      "notes": "Complementa las referencias de producción con variedad de cortes. Estudiar diseños; no reutilizar la imagen sin permiso.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "style-clean-8-portraits",
@@ -600,7 +710,7 @@
       "image_url": "https://d2o4rrq92x9csx.cloudfront.net/articles/hairstyle-illustration_4-7-1-28.webp",
       "source_url": "https://syntelligence.jp/article/57539",
       "source_name": "Syntelligence · Hairstyle comparison",
-      "license_status": "Autoría/licencia por comprobar; solo referencia visual",
+      "license_status": "El sitio declara uso gratuito personal y comercial de sus ilustraciones IA; revisa los términos antes de redistribuir la hoja.",
       "usable_asset": false,
       "asset_download_url": "",
       "color_required": false,
@@ -614,7 +724,11 @@
         "lineart"
       ],
       "description": "Comparación en blanco y negro que cambia el peinado sobre cabezas consistentes, sin depender del color.",
-      "notes": "Buena referencia de catálogo para que el visor priorice la forma y no la paleta."
+      "notes": "Buena referencia de catálogo para que el visor priorice la forma y no la paleta.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja de comparación · no son capas independientes",
+      "overlay_notes": "La página indica que sus ilustraciones generadas por IA se ofrecen para uso personal y comercial gratuito. Es una lámina con cabezas completas, no 8 PNG de cabello separados; usa la hoja para elegir forma, no la importes como una única capa de pelo.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "style-clean-hair-50-panel",
@@ -642,7 +756,11 @@
         "lineart"
       ],
       "description": "Una página con unas 30 siluetas: cortes cortos, largos rectos, capas, trenzas y coletas.",
-      "notes": "Abrir el PDF en la página de referencia; las imágenes del documento no se copian al repositorio."
+      "notes": "Abrir el PDF en la página de referencia; las imágenes del documento no se copian al repositorio.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "style-trigger-settei-archive",
@@ -667,7 +785,11 @@
         "character_turnaround"
       ],
       "description": "Punto de entrada a hojas de modelo de animación que muestran cómo separar cabello en formas legibles y mantener continuidad entre ángulos.",
-      "notes": "El criterio es arte 2D de producción. No se incluyen sprites, renders 3D ni catálogos de peinados realistas en el conjunto principal."
+      "notes": "El criterio es arte 2D de producción. No se incluyen sprites, renders 3D ni catálogos de peinados realistas en el conjunto principal.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "pending"
     },
     {
       "id": "style-trigger-bna",
@@ -693,7 +815,11 @@
         "production_design"
       ],
       "description": "Hoja de modelo de cabello corto con vistas frontal, lateral y trasera. La referencia está en color, pero sirve por sus contornos y el agrupamiento de mechones.",
-      "notes": "Ancla visual de Trigger. Se acepta color cuando el lenguaje de diseño coincide; el color de pelo no se usa como filtro."
+      "notes": "Ancla visual de Trigger. Se acepta color cuando el lenguaje de diseño coincide; el color de pelo no se usa como filtro.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "style-compatible-railgun",
@@ -719,7 +845,11 @@
         "production_lineart"
       ],
       "description": "Hoja monocromática de anime televisivo; varias vistas del cabello largo recogido con mechones frontales y laterales.",
-      "notes": "Compatible por la claridad de silueta y la construcción por grupos de mechones; no es una afirmación de que lo haya producido Madhouse o Trigger."
+      "notes": "Compatible por la claridad de silueta y la construcción por grupos de mechones; no es una afirmación de que lo haya producido Madhouse o Trigger.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "style-compatible-girls-und-panzer",
@@ -745,7 +875,11 @@
         "production_lineart"
       ],
       "description": "Hoja de modelo limpia en blanco y negro que compara flequillo, contorno de mandíbula y volumen posterior.",
-      "notes": "Referencia útil para piezas cortas y para mantener el corte estable en vistas frontal/lateral."
+      "notes": "Referencia útil para piezas cortas y para mantener el corte estable en vistas frontal/lateral.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "style-compatible-bloodc",
@@ -771,7 +905,11 @@
         "production_lineart"
       ],
       "description": "Hoja monocromática de dibujo de producción con vistas y variaciones del cabello largo, capas y caída lateral.",
-      "notes": "Se usa por estructura y línea de modelo, no para copiar la identidad del personaje."
+      "notes": "Se usa por estructura y línea de modelo, no para copiar la identidad del personaje.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
     },
     {
       "id": "style-compatible-nana",
@@ -797,7 +935,270 @@
         "production_lineart"
       ],
       "description": "Bocetos de producción en blanco y negro que muestran cabello medio, mechones despeinados y volumen desde varios ángulos.",
-      "notes": "Complemento para cabello masculino y cortes asimétricos; es una referencia de construcción, no una pieza que se pueda extraer y redistribuir."
+      "notes": "Complemento para cabello masculino y cortes asimétricos; es una referencia de construcción, no una pieza que se pueda extraer y redistribuir.",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja o vista de referencia; no equivale a una capa PNG lista para superponer.",
+      "overlay_notes": "Referencia enlazada, no confirmada como pieza transparente independiente. No tratar la vista previa completa como una capa lista para usar.",
+      "visual_review": "reviewed_reference"
+    },
+    {
+      "id": "asset-hmlf001-layered-png",
+      "title": "HMLF001 — paquete anime modular con PNG separados",
+      "kind": "downloadable_asset",
+      "family": "male",
+      "style_fit": "compatible",
+      "studio_anchor": "ANIME VISUAL NOVEL ASSET",
+      "image_url": "https://img.itch.zone/aW1nLzI2NjExOTk3LmpwZw%3D%3D/original/ZtKt0n.jpg",
+      "source_url": "https://linxuelian.itch.io/customchar-hmlf001-malebust",
+      "source_name": "LinXueLian / itch.io",
+      "creator": "LinXueLian",
+      "license_status": "CC BY-SA 4.0 declarada en la página; requiere atribución y respetar ShareAlike.",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "usable_asset": true,
+      "asset_download_url": "https://linxuelian.itch.io/customchar-hmlf001-malebust#download",
+      "overlay_mode": "parts_same_base",
+      "overlay_label": "PNG separados · requiere base compatible",
+      "overlay_notes": "La página describe carpetas PNG numeradas con base corporal, cabello, ojos, cejas, ropa y accesorios. Los componentes pueden mezclarse entre paquetes que compartan la misma base. Las piezas están diseñadas para el lienzo de origen de 600×800; para cualquier otro modelo plano hay que realinear los elementos.",
+      "part_types": [
+        "hair_front",
+        "hair_back",
+        "eyes",
+        "eyebrows",
+        "clothes",
+        "accessories"
+      ],
+      "source_format": "ZIP de PNG transparentes por carpetas/capas",
+      "alignment_note": "Plantilla de origen de 600×800; no se garantiza encaje universal.",
+      "visual_review": "license_checked",
+      "tags": [
+        "anime",
+        "layered_png",
+        "hair_front",
+        "hair_back",
+        "same_base",
+        "editable_parts",
+        "attribution_required"
+      ],
+      "description": "Ejemplo real de un paquete anime con piezas en PNG y carpetas ordenadas por capas. Es el mejor ejemplo encontrado de componentes separados, aunque requiere la misma base o alineación manual al migrarlo a otro modelo.",
+      "notes": "Fuente/licencia comprobada desde la página del autor. IMAGE solo enlaza el paquete; no descarga ni incorpora sus archivos automáticamente."
+    },
+    {
+      "id": "guide-airyonline-modular-bangs-side-back",
+      "title": "Guía modular de peinados: flequillo, laterales y cabello posterior",
+      "kind": "modular_layer_guide",
+      "family": "compatible",
+      "style_fit": "compatible",
+      "studio_anchor": "ANIME AVATAR LAYER GUIDE",
+      "image_url": "https://storage.ko-fi.com/cdn/useruploads/post/b78be6fa-6429-4d49-995a-9d3ccfd3d5c5_etsy5.png",
+      "source_url": "https://ko-fi.com/s/4e91f1cc07",
+      "source_name": "AiryOnline / Ko-fi",
+      "creator": "AiryOnline",
+      "license_status": "Vista previa de un modelo concreto; la reutilización del arte requiere revisar los términos de la creadora.",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Guía de montaje · no son PNG descargables",
+      "overlay_notes": "La guía separa flequillo frontal, flequillo lateral y dos grupos de cabello posterior, y explica cómo combinarlos. Úsala como modelo de la interfaz de capas; no extraigas la guía completa como si fueran assets transparentes.",
+      "part_types": [
+        "front_bangs",
+        "side_bangs",
+        "back_hair_1",
+        "back_hair_2"
+      ],
+      "source_format": "Imagen de guía / hoja explicativa",
+      "alignment_note": "Describe un avatar específico; las piezas de la guía no tienen coordenadas universales.",
+      "visual_review": "reviewed_reference",
+      "tags": [
+        "bangs",
+        "side_hair",
+        "back_hair",
+        "layer_combinations",
+        "hair_guide",
+        "reference_only"
+      ],
+      "description": "Una de las referencias más claras para organizar el cabello en componentes delanteros, laterales y posteriores que se puedan intercambiar.",
+      "notes": "La imagen es una guía de presentación, no el paquete de piezas. Se mantiene como referencia enlazada."
+    },
+    {
+      "id": "guide-paperdoll-modular-parts-preview",
+      "title": "Paper doll anime: vista de cabello, rostros, ropa y accesorios por piezas",
+      "kind": "modular_asset_preview",
+      "family": "other",
+      "style_fit": "other",
+      "studio_anchor": "PAPER DOLL LAYER GUIDE",
+      "image_url": "https://storage.ko-fi.com/cdn/useruploads/display/69d313d5-81b9-424b-9f54-08e46c60929f_luckystarpngmodelpreview.png",
+      "source_url": "https://ko-fi.com/s/7ee3550dbe",
+      "source_name": "bk / Ko-fi",
+      "creator": "bk",
+      "license_status": "Términos de uso/licencia del paquete no confirmados; no redistribuir ni extraer desde la vista previa.",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Muestra de piezas · licencia por verificar",
+      "overlay_notes": "La vista previa enseña grupos separados de flequillos, cabello posterior, extras, bases y ropa. Sirve como referencia de organización modular, pero el paquete tiene una base/estilo propio y los permisos no se han verificado.",
+      "part_types": [
+        "bangs",
+        "back_hair",
+        "hair_extras",
+        "body_base",
+        "eyes",
+        "clothes"
+      ],
+      "source_format": "Vista previa de paquete paper-doll",
+      "alignment_note": "No asumir compatibilidad con bases de proporción distinta; la vista previa tampoco son archivos independientes.",
+      "visual_review": "pending",
+      "tags": [
+        "modular",
+        "paper_doll",
+        "hair_parts",
+        "body_base",
+        "needs_license_review",
+        "reference_only"
+      ],
+      "description": "Ejemplo visual de cómo mantener el cabello y los elementos faciales en grupos separados para poder activar y quitar piezas.",
+      "notes": "Incluido solo como referencia. No se marca como recurso gratuito o reutilizable."
+    },
+    {
+      "id": "ref-pngegg-transparent-hair-sheet",
+      "title": "Hoja de cuatro siluetas de cabello anime con fondo transparente",
+      "kind": "hair_sheet",
+      "family": "compatible",
+      "style_fit": "compatible",
+      "studio_anchor": "ANIME HAIR SHEET",
+      "image_url": "https://e7.pngegg.com/pngimages/656/35/png-clipart-female-hair-anime-hair-design-line-art-women.png",
+      "source_url": "https://www.pngegg.com/en/png-vesfj",
+      "source_name": "PNGEgg",
+      "creator": "Fuente original/licencia no confirmada",
+      "license_status": "Licencia y autoría no verificadas; referencia visual únicamente.",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja compuesta · no son cuatro archivos independientes",
+      "overlay_notes": "La vista muestra cuatro siluetas de peinado en un mismo gráfico. Aunque el fondo parezca transparente, el catálogo no contiene cada corte como archivo independiente y no se ha verificado permiso de adaptación. No usar la imagen completa como un solo peinado.",
+      "part_types": [
+        "bob_cut",
+        "twin_ponytails",
+        "long_wavy_hair",
+        "side_braid"
+      ],
+      "source_format": "Una sola hoja compuesta",
+      "alignment_note": "Se necesitarían recortes individuales, revisión del alfa y ajuste a los puntos de anclaje.",
+      "visual_review": "pending",
+      "tags": [
+        "transparent_preview",
+        "bob_cut",
+        "twin_ponytails",
+        "long_hair",
+        "braid",
+        "needs_license_review"
+      ],
+      "description": "Buena referencia para comparar cuatro siluetas con poco ruido visual; cada corte necesitaría aislarse por separado antes de probarlo sobre una cabeza.",
+      "notes": "No incorporado como asset. Los permisos deben verificarse antes de extraer o reutilizar el arte."
+    },
+    {
+      "id": "user-pin-hairstyle-reference-a",
+      "title": "Referencia aportada por el usuario A — pendiente de inspección",
+      "kind": "user_provided_reference",
+      "family": "compatible",
+      "style_fit": "compatible",
+      "studio_anchor": "USER PROVIDED",
+      "image_url": "https://i.pinimg.com/originals/1e/d0/bb/1ed0bbc0af9dff6094d70868a7be3e0d.jpg",
+      "source_url": "https://i.pinimg.com/originals/1e/d0/bb/1ed0bbc0af9dff6094d70868a7be3e0d.jpg",
+      "source_name": "Referencia aportada por el usuario · Pinterest CDN",
+      "creator": "Pendiente de identificar la fuente original",
+      "license_status": "Referencia visual aportada por el usuario; autoría y permisos originales no verificados.",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Pendiente de inspección · no es capa aprobada",
+      "overlay_notes": "La URL fue aportada como ejemplo. Falta inspeccionar la imagen y localizar la publicación/autor original antes de clasificar sus peinados o reutilizar el arte.",
+      "part_types": [
+        "needs_visual_review"
+      ],
+      "source_format": "Enlace de imagen externo",
+      "alignment_note": "Sin inspección ni coordenadas de capa.",
+      "visual_review": "pending",
+      "tags": [
+        "user_provided",
+        "pinterest",
+        "needs_visual_review",
+        "hair_reference",
+        "rights_unverified"
+      ],
+      "description": "Referencia señalada por el usuario como ejemplo del resultado deseado. La clasificación de rasgos sigue pendiente.",
+      "notes": "Se conserva el enlace, no se copia la imagen al repositorio. Si el CDN bloquea la vista previa, abrir la fuente original manualmente."
+    },
+    {
+      "id": "user-pin-hairstyle-reference-b",
+      "title": "Referencia aportada por el usuario B — pendiente de inspección",
+      "kind": "user_provided_reference",
+      "family": "compatible",
+      "style_fit": "compatible",
+      "studio_anchor": "USER PROVIDED",
+      "image_url": "https://i.pinimg.com/736x/0e/4a/1f/0e4a1f022115f3cc5372d653043ebd31.jpg",
+      "source_url": "https://i.pinimg.com/736x/0e/4a/1f/0e4a1f022115f3cc5372d653043ebd31.jpg",
+      "source_name": "Referencia aportada por el usuario · Pinterest CDN",
+      "creator": "Pendiente de identificar la fuente original",
+      "license_status": "Referencia visual aportada por el usuario; autoría y permisos originales no verificados.",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Pendiente de inspección · no es capa aprobada",
+      "overlay_notes": "La URL fue aportada como ejemplo. Falta inspeccionar la imagen y localizar la publicación/autor original antes de clasificar sus peinados o reutilizar el arte.",
+      "part_types": [
+        "needs_visual_review"
+      ],
+      "source_format": "Enlace de imagen externo",
+      "alignment_note": "Sin inspección ni coordenadas de capa.",
+      "visual_review": "pending",
+      "tags": [
+        "user_provided",
+        "pinterest",
+        "needs_visual_review",
+        "hair_reference",
+        "rights_unverified"
+      ],
+      "description": "Segunda referencia indicada por el usuario. Se mantiene separada y pendiente de identificar, sin inventar nombre de corte ni licencia.",
+      "notes": "Se conserva el enlace, no se copia la imagen al repositorio. Si el CDN bloquea la vista previa, abrir la fuente original manualmente."
+    },
+    {
+      "id": "style-syntelligence-layered-ponytail",
+      "title": "Coleta y cabello por capas: vistas posterior y lateral",
+      "kind": "lineart_reference_sheet",
+      "family": "compatible",
+      "style_fit": "compatible",
+      "studio_anchor": "SYNTHETIC ANIME REFERENCE",
+      "image_url": "https://d2o4rrq92x9csx.cloudfront.net/articles/hair-illustration_4-7-0-7.webp",
+      "source_url": "https://syntelligence.jp/article/57529",
+      "source_name": "Syntelligence",
+      "creator": "Imagen generada por IA según la nota del sitio",
+      "license_status": "El sitio declara uso gratuito personal y comercial de sus ilustraciones IA; revisar los términos antes de redistribuir la hoja.",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "overlay_mode": "reference_only",
+      "overlay_label": "Hoja de vistas · no son capas separadas",
+      "overlay_notes": "La imagen permite estudiar la caída posterior, la coleta y el perfil. Incluye cabeza/cuerpo y no entrega el cabello como PNG transparente independiente, por lo que debe usarse para estudiar el volumen y volver a construir la pieza.",
+      "part_types": [
+        "ponytail",
+        "layered_hair",
+        "side_view",
+        "back_view",
+        "hair_flow"
+      ],
+      "source_format": "Hoja de referencia con varias vistas",
+      "alignment_note": "No aporta piezas alineadas para una cabeza genérica.",
+      "visual_review": "reviewed_reference",
+      "tags": [
+        "ponytail",
+        "layered_hair",
+        "side_view",
+        "back_view",
+        "hair_flow",
+        "lineart",
+        "ai_generated_reference"
+      ],
+      "description": "Complementa la hoja de flequillos/coletas con orientación lateral y posterior para planificar la silueta detrás de la cabeza.",
+      "notes": "La página declara que sus imágenes se generan con IA y que ofrece uso gratuito personal/comercial; comprobar sus términos antes de redistribuir material."
     }
   ],
   "item_count": 33,
@@ -824,6 +1225,6 @@
       "ilustración occidental genérica",
       "miniaturas chibi no alineadas"
     ],
-    "note": "El color es opcional. Se aceptan hojas monocromáticas y bocetos de producción cuando el lenguaje de línea encaja. Las imágenes protegidas se usan como enlaces de referencia, no como assets redistribuibles."
+    "note": "La galería distingue el lenguaje visual anime de la utilidad técnica del recurso. Los paquetes por capas pueden ayudar a estudiar composición aunque no encajen con una base distinta; licencia y compatibilidad se revisan por separado."
   }
 }

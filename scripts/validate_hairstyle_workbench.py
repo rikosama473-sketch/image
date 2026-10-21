@@ -58,7 +58,7 @@ def main() -> None:
     if found:
         fail("The no-AI workbench contains provider/API code: " + ", ".join(found))
     viewer = LIBRARY_JS.read_text(encoding="utf-8")
-    for marker in ("hairstyle-web-references.json", "function renderWebReferences", "referencesTab"):
+    for marker in ("hairstyle-web-references.json", "function renderWebReferences", "referencesTab", "overlayModeField", "overlayMode", "parts_same_base", "parts_realignable"):
         if marker not in viewer:
             fail("The web-reference gallery is missing integration marker: " + marker)
     viewer_forbidden = [marker for marker in forbidden if marker in viewer]
@@ -121,7 +121,7 @@ def main() -> None:
     except json.JSONDecodeError as exc:
         fail(f"Web reference catalogue JSON is invalid: {exc}")
     web_items = web_references.get("items")
-    if web_references.get("schema_version") != 1 or not isinstance(web_items, list) or len(web_items) < 10:
+    if web_references.get("schema_version") != 1 or not isinstance(web_items, list) or len(web_items) < 40:
         fail("Web reference catalogue must have schema version 1 and at least 10 records.")
     web_ids = [item.get("id") for item in web_items]
     if len(web_ids) != len(set(web_ids)):
@@ -130,11 +130,21 @@ def main() -> None:
     references_only = [item for item in web_items if item.get("usable_asset") is False]
     if not downloadable or not references_only:
         fail("The web catalogue must separate usable-asset records from visual references.")
+    allowed_overlay_modes = {"parts_same_base", "parts_realignable", "reference_only"}
     for item in web_items:
         if not item.get("source_url", "").startswith("https://") or not item.get("license_status"):
             fail("Every web record must include an HTTPS source and explicit license status.")
         if item.get("usable_asset") and not item.get("asset_download_url"):
             fail("Every usable-asset record must include a downloadable asset URL or source page.")
+        if item.get("overlay_mode") not in allowed_overlay_modes or not item.get("overlay_notes"):
+            fail(f"Record {item.get('id')} must explicitly classify how it can be mounted over a base.")
+    by_id = {item.get("id"): item for item in web_items}
+    if by_id.get("asset-hmlf001-layered-png", {}).get("overlay_mode") != "parts_same_base":
+        fail("The layered HMLF001 pack must be marked as compatible-base-only, not universal.")
+    if by_id.get("asset-cc0-portraits", {}).get("overlay_mode") != "parts_same_base":
+        fail("The CC0 XCF portrait pack must be marked as base-specific.")
+    if any(by_id.get(ref_id, {}).get("visual_review") != "pending" for ref_id in ("user-pin-hairstyle-reference-a", "user-pin-hairstyle-reference-b")):
+        fail("User-provided Pinterest images must remain pending visual and rights review.")
 
     # The selected art direction is anime production line art inspired by Madhouse
     # and Trigger. Color is deliberately not a requirement; style fit is.
@@ -176,7 +186,7 @@ def main() -> None:
     print(
         "PASS: manual hairstyle workbench, inline JavaScript, local-only behavior, "
         f"{len(tags)} taxonomy tags, {len(recipes)} unique recipes, "
-        f"{len(web_items)} web references ({len(downloadable)} asset sources), and valid viewer JavaScript."
+        f"{len(web_items)} web references ({len(downloadable)} asset sources), explicit layer-compatibility labels, and valid viewer JavaScript."
     )
 
 

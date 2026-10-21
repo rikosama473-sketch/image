@@ -22,6 +22,10 @@ Equipo objetivo declarado: AMD Ryzen 5 5600G, 16 GB RAM y gráficos Radeon integ
 - `data/training-labels.csv` y la documentación de `docs/`: registro de metadatos, procedencia y estrategia para seleccionar/validar un dataset. No entrenar automáticamente con la colección completa ni adivinar modelos/LoRAs a partir del nombre de archivo.
 
 ## Cambios realizados en este bloque
+- Biblioteca de peinados: añadidas fichas que distinguen `parts_same_base`, `parts_realignable` y `reference_only`; el visor dispone de un filtro de montaje y una explicación de alineación sobre bases planas.
+- Añadidas las dos referencias de Pinterest aportadas por el usuario como pendientes de inspección/licencia; registradas la guía de AiryOnline, la hoja compuesta de PNGEgg, la referencia de Syntelligence sobre coleta y el paquete modular HMLF001 con licencia CC BY-SA 4.0 declarada.
+- Enriquecido el recurso CC0 de OpenGameArt con su formato XCF, clases de componentes y advertencia de que sus piezas se corresponden con su propia base. Los paquetes base-específicos no se etiquetan como universales.
+- El validador del taller exige metadatos de compatibilidad en cada referencia, comprueba los dos paquetes de capas y mantiene las referencias Pinterest en revisión pendiente.
 - El importador limita también la memoria estimada: no permite más de 80 millones de píxeles agregados entre las capas que crea (cada una con su respaldo), además de los límites por imagen y por archivo.
 
 - Añadida navegación compartida entre constructor, biblioteca, taller de peinados, editor manual y generador local opcional.
@@ -69,4 +73,4 @@ Equipo objetivo declarado: AMD Ryzen 5 5600G, 16 GB RAM y gráficos Radeon integ
 
 ## Siguiente tarea concreta
 
-Ejecutar y documentar un recorrido E2E en navegador: exportar JSON desde Character Creator y Hairstyle Workbench, importarlo en el Editor manual, verificar alineación/visibilidad/opacidad, guardar y reabrir el proyecto, exportar PNG transparente y comparar dimensiones/píxeles. Luego evaluar el motor local en el Ryzen 5 5600G con un solo modelo moderado y registrar memoria/tiempo/calidad antes de recomendar cualquier checkpoint. No fusionar el PR automáticamente ni ampliar la matriz de modelos IA antes de esa prueba.
+Comprobar el workflow de esta tanda visual. Después ejecutar una prueba visual en navegador para revisar las nuevas imágenes, comprobar filtros de montaje y probar la transferencia de piezas a una base plana. Revisar visualmente los recortes antes de aprobarlos. Mantener el PR abierto y no descargar modelos grandes hasta cerrar las pruebas prácticas.

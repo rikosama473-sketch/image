@@ -1,5 +1,23 @@
 # IMAGE — Taller manual de peinados
 
+## Elegir imágenes que puedan ponerse encima de una base plana
+
+El visor de referencias diferencia tres casos en **Uso como capa**:
+
+- **Piezas separadas · requiere base compatible:** paquetes de PNG/XCF con cabello en capas. Empiezan alineados a la plantilla original del recurso; no son universales.
+- **Piezas editables · alinear sobre otra base:** sprites o recortes que requieren ajustar tamaño, posición y puntos de unión para otra cabeza.
+- **Solo referencia · no es una capa PNG:** hojas con varias cabezas, guías de peinado o vistas previas comerciales. Ayudan a elegir el diseño, pero no se deben importar como un único mechón ni se consideran recortes independientes.
+
+### Fuentes añadidas y límites comprobados
+
+- [HMLF001 de LinXueLian](https://linxuelian.itch.io/customchar-hmlf001-malebust): PNG por carpetas/capas, licencia CC BY-SA 4.0 declarada. Se marca como **base compatible requerida**; sus piezas de 600×800 no encajan automáticamente en toda cabeza.
+- [Anime Girl and Boy Portraits — OpenGameArt](https://opengameart.org/content/anime-girl-and-boy-portraits): licencia CC0 declarada y proyecto XCF por capas; el autor menciona dos cortes femeninos y dos masculinos. El paquete sirve como base modular pequeña, no como biblioteca de cientos de cortes.
+- [AiryOnline — guía de cabello](https://ko-fi.com/s/4e91f1cc07): separa flequillo frontal, lateral y cabello posterior en variantes. La imagen es una guía de un modelo concreto, no un conjunto de PNG de cabello listo para reutilizar.
+- [Syntelligence — coleta y cabello por capas](https://syntelligence.jp/article/57529): la página declara uso gratuito personal/comercial de sus ilustraciones IA. La hoja se clasifica como referencia, porque presenta varias vistas completas y no entrega capas capilares independientes.
+- Las dos imágenes Pinterest aportadas por el usuario quedan registradas como referencias pendientes: no se ha verificado su autoría original ni sus permisos.
+
+La biblioteca no descarga automáticamente assets protegidos ni convierte hojas de referencia en capas. Para adaptar un corte a una nueva base plana, hay que aislar el cabello en una pieza transparente, eliminar restos de la cabeza anterior, verificar el alfa, alinear coronilla/ojos/orejas y guardar las coordenadas del recorte. IMAGE no etiquetará ese recorte como aprobado hasta que se revise visualmente.
+
 Esta herramienta existe para construir **varios looks del mismo personaje** sin sustituir su rostro, ojos, cuerpo o vestuario cada vez que cambia el pelo.
 
 ## Biblioteca visual compartida de IMAGE
