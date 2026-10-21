@@ -249,7 +249,7 @@ function starterWorkspace(root){
  root.innerHTML=
   '<div class="library-hero"><strong>▶ Prueba inicial con imágenes internas</strong><p>Este banco usa ilustraciones que ya están dentro del repositorio. Cada muestra es un retrato completo de prueba, no una capa de cabello, ojos o ropa. La procedencia y la licencia siguen sin verificarse individualmente.</p></div>'+
   '<div class="plain"><b>Prueba inicial:</b> carga retratos internos para comprobar composición, capas y exportación. Son ilustraciones completas; ninguna se etiqueta falsamente como cabello u ojos ya recortados.</div>'+
-  '<section class="ai-mask-panel"><div class="ai-mask-head"><strong>✦ Recorte profesional asistido por IA</strong><span>PNG alfa · 768×1280</span></div><p>Selecciona un retrato de abajo y elige qué pieza extraer. Se genera una capa candidata con transparencia y alineación del lienzo; debes revisar el resultado. Requiere el lanzador local y OPENAI_API_KEY; la API puede generar cargos.</p><div class="actions ai-cutout-actions">'+Object.entries(AI_CUTOUT_TARGETS).map(([id,t])=>'<button type="button" class="btn" data-ai-cutout="'+id+'">✦ '+safe(t.label)+'</button>').join("")+'</div><div class="actions" style="margin-top:7px"><a class="linkbtn" href="https://github.com/rikosama473-sketch/image/actions/workflows/generate-hairstyle-variants.yml" target="_blank" rel="noopener">Generar paquetes IA de 5–6 peinados →</a></div><p class="tiny">La generación por paquetes usa los estilos core, cortes cortos, recogidos, flequillos y ondas/trenzas. Ejecutar la generación también requiere la clave del proveedor en GitHub Actions.</p></section>'+
+  '<section class="ai-mask-panel"><div class="ai-mask-head"><strong>✦ Recorte profesional asistido por IA</strong><span>PNG alfa · 768×1280</span></div><p>Hay dos operaciones distintas: el recorte local elimina el fondo conservando el dibujo original; los botones de categoría usan edición generativa y pueden reconstruir detalles. Todo resultado queda pendiente de revisión.</p><div class="ai-control-grid"><label>Motor de recorte local<select id="localCutoutModel" class="ai-select"><option value="isnet-anime" selected>ISNet Anime · recomendado</option><option value="birefnet-portrait">BiRefNet Portrait · alternativa</option></select></label><div><span class="ai-label">Sin coste por llamada de IA</span><button id="localAnimeCutout" type="button" class="btn primary" data-local-cutout="anime">✂ Eliminar fondo conservando píxeles</button><small class="tiny">La primera ejecución descarga el modelo; trabaja localmente.</small></div></div><p class="tiny">Requiere instalar rembg localmente. Para extraer cabello, ojos, rostro, ropa o accesorios como piezas semánticas separadas, usa los recortes generativos y revisa su fidelidad.</p><div class="actions ai-cutout-actions">'+Object.entries(AI_CUTOUT_TARGETS).map(([id,t])=>'<button type="button" class="btn" data-ai-cutout="'+id+'">✦ '+safe(t.label)+'</button>').join("")+'</div><div class="actions" style="margin-top:7px"><a class="linkbtn" href="https://github.com/rikosama473-sketch/image/actions/workflows/generate-hairstyle-variants.yml" target="_blank" rel="noopener">Generar paquetes IA de 5–6 peinados →</a></div><p class="tiny">La generación por paquetes usa los estilos core, cortes cortos, recogidos, flequillos y ondas/trenzas. Ejecutar la generación también requiere la clave del proveedor en GitHub Actions.</p></section>'+
   '<div class="library-actions"><span id="starterCount" class="tiny">Cargando imágenes internas…</span><button id="starterReload" class="btn">Recargar</button></div>'+
   '<div id="starterGrid" class="library-grid"></div><div class="library-actions"><span id="starterMoreStatus" class="tiny"></span><button id="starterMore" class="btn primary">Cargar 24 imágenes más</button></div>'+
   '<div id="starterTestStatus" class="notice" role="status"><b>Prueba de funcionamiento</b>“Probar PNG” comprueba carga, renderizado y conversión. “Añadir capa de prueba” valida opacidad, orden, posición y visibilidad.</div>';
@@ -286,6 +286,7 @@ function starterWorkspace(root){
  $("starterReload").onclick=()=>{imageLibraryCache=null;imageLibraryPromise=null;shownStarterCount=24;load();};
  $("starterMore").onclick=()=>{shownStarterCount=Math.min(shownStarterCount+24,allStarterSamples.length);renderStarterSamples();};
  root.querySelectorAll("[data-ai-cutout]").forEach(b=>b.onclick=()=>startAICutout(b.dataset.aiCutout));
+ const localCutoutButton=$("localAnimeCutout");if(localCutoutButton)localCutoutButton.onclick=()=>startLocalAnimeCutout();
  load();
 }
 async function runStarterSmokeTest(id){
@@ -340,6 +341,30 @@ async function startAICutout(targetId){
  state.category="ai";state.pill="Todos";renderNav();gallery();
  toast("Preparando el recorte IA de "+target.label+". Se enviará el retrato base seleccionado a la API.");
  await runAIEdit();
+}
+async function startLocalAnimeCutout(){
+ const button=$("localAnimeCutout"),modelSelect=$("localCutoutModel");
+ if(aiBusy){toast("Esperá a que termine la otra tarea de imagen.");return;}
+ aiBusy=true;if(button)button.disabled=true;
+ status("Eliminando el fondo en local con segmentación anime; no se usa la API generativa…",false);
+ try{
+  const imageDataUrl=await baseImageDataUrl();
+  const model=modelSelect?modelSelect.value:"isnet-anime";
+  const response=await fetch("/api/remove-background",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({image_data_url:imageDataUrl,model})});
+  const result=await response.json().catch(()=>({error:"El servicio local devolvió una respuesta que no es JSON."}));
+  if(!response.ok)throw Error(result.error||"No se pudo recortar el fondo en local.");
+  if(!result.image_base64||result.width!==W||result.height!==H||Number(result.transparent_pixels)<=0)throw Error("El recorte no supera la validación de transparencia y alineación.");
+  const data="data:image/png;base64,"+result.image_base64;
+  aiResults=[data];aiSelectedIndex=0;aiResult=data;
+  aiResultMeta={kind:"ai_cutout",name:"Personaje sin fondo · "+result.model,baseName:"Personaje sin fondo",category:"ai",group:"ai-cutout-background",targetId:"background",pixelPreserving:true};
+  aiNextResultMeta=null;cache.set(data,Promise.resolve(await img(data)));
+  state.category="ai";state.pill="Todos";renderNav();gallery();aiWorkspace($("content"));
+  const count=Number(result.transparent_pixels).toLocaleString("es-AR");
+  status("Recorte local listo: "+result.width+"×"+result.height+", "+count+" píxeles transparentes. Candidato sin aprobar.",false);
+  toast("Fondo eliminado en local. El dibujo original permanece intacto; revisá cabello y bordes antes de aplicar.");
+ }catch(e){
+  const message=String(e&&e.message||e);status("Recorte local no completado: "+message,true);toast("No se aplicó ningún cambio: "+message.slice(0,160));
+ }finally{aiBusy=false;if(button)button.disabled=false;}
 }
 function libraryWorkspace(root){
  root.innerHTML=
