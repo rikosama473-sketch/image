@@ -1,5 +1,11 @@
 # IMAGE Character Creator
 
+## Biblioteca visual de ojos y cabello
+
+Abrí la [Biblioteca visual](../visual-reference-library/index.html) después de iniciar el servidor local. Reúne referencias web de ojos y cabello, las 764 ilustraciones indexadas del repositorio y las capas candidatas existentes. Podés clasificar fichas, añadir etiquetas/notas, crear recetas visuales y exportar anotaciones JSON. Las recetas describen diseños; no son imágenes generadas. Las referencias web siguen enlazadas a sus fuentes y no se convierten en assets libres por estar catalogadas.
+
+Para crear hojas de contacto de todas las imágenes locales y detectar duplicados exactos por contenido: `python scripts/build_visual_contact_sheets.py`. El informe y las hojas se guardan en `generated/visual-reference-contact-sheets/`. También existe el workflow manual **Build IMAGE visual contact sheets** en GitHub Actions.
+
 ## Taller manual de peinados sin IA
 
 Para mantener el mismo rostro y cambiar solo el pelo, abrí el [Taller manual de peinados](../hairstyle-workbench/index.html). Permite alternar variantes guardadas, combinar piezas PNG transparentes, conservar los cortes parecidos como diseños independientes y exportar PNG/JSON. No usa generación ni APIs externas. Su muestra integrada es experimental y sus máscaras siguen pendientes de revisión visual.
