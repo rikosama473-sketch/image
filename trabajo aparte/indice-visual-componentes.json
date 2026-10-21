@@ -900,15 +900,253 @@
       "red_warning_required": false,
       "ordinal": 31,
       "monochrome_query_url": null
+    },
+    {
+      "id": "EXT-HIR-010",
+      "category": "hair",
+      "title": "AnaisKalinin — 50 Female Anime Hairstyles (pendiente de verificar)",
+      "source_url": "https://www.deviantart.com/anaiskalinin/art/50-Female-Anime-Hairstyles-308941397",
+      "thumbnail_url": "https://fc02.deviantart.net/fs70/f/2012/169/8/c/50_female_anime_hairstyles_by_miriamdreesbach-d53xoph.jpg",
+      "creator": "AnaisKalinin (page attribution pending: thumbnail filename suggests a different author)",
+      "target_traits": [
+        "50 hairstyles per title",
+        "female hairstyle variations",
+        "updos",
+        "braids",
+        "bangs"
+      ],
+      "extras_red": [
+        "exact image attribution and page content not confirmed"
+      ],
+      "monochrome_plate_status": "candidate_pending_verification",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=AnaisKalinin+50+Female+Anime+Hairstyles",
+      "license_status": "reference_only_attribution_pending",
+      "ordinal": 32,
+      "source_platform": "DeviantArt",
+      "thumbnail_kind": "external_page_or_artwork_preview",
+      "red_warning_required": false
+    },
+    {
+      "id": "EXT-HIR-011",
+      "category": "hair",
+      "title": "Variantes femeninas en line art — 20 bocetos",
+      "source_url": "https://www.pinterest.com/pin/pelo--2322237300007652/",
+      "thumbnail_url": "https://i.pinimg.com/736x/eb/ac/9f/ebac9fddc46b6afbae297acea9952aa2.jpg",
+      "creator": "Pinterest mirror; original creator not confirmed",
+      "target_traits": [
+        "female hairstyle sketches",
+        "bang variation",
+        "short to long lengths",
+        "side locks"
+      ],
+      "extras_red": [
+        "source creator not confirmed"
+      ],
+      "monochrome_plate_status": "source_is_monochrome_reference_sheet",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+hair+sketches+bang+variations+line+art",
+      "license_status": "reference_only_source_pending",
+      "ordinal": 33,
+      "source_platform": "Pinterest",
+      "thumbnail_kind": "external_page_or_artwork_preview",
+      "red_warning_required": false
+    },
+    {
+      "id": "EXT-HIR-012",
+      "category": "hair",
+      "title": "Pelo liso frente a twintails — 8 variantes",
+      "source_url": "https://syntelligence.jp/article/57539",
+      "thumbnail_url": "https://d2o4rrq92x9csx.cloudfront.net/articles/hairstyle-illustration_4-7-1-28.webp",
+      "creator": "Syntelligence page",
+      "target_traits": [
+        "8 hairstyle examples",
+        "long and short hair",
+        "straight hair",
+        "wavy twin tails",
+        "same facial base"
+      ],
+      "extras_red": [
+        "face and eye shapes",
+        "page branding",
+        "hair color"
+      ],
+      "monochrome_plate_status": "source_is_monochrome_reference",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+hairstyle+comparison+twintails+black+white+line+art",
+      "license_status": "reference_only_check_source_terms",
+      "ordinal": 34,
+      "source_platform": "Syntelligence",
+      "thumbnail_kind": "external_page_or_artwork_preview",
+      "red_warning_required": false
+    },
+    {
+      "id": "EXT-HIR-013",
+      "category": "hair",
+      "title": "Bob y largos cortos/medios — comparativa",
+      "source_url": "https://syntelligence.jp/article/11011",
+      "thumbnail_url": "https://d2o4rrq92x9csx.cloudfront.net/articles/4-7-3-5.webp",
+      "creator": "Syntelligence page",
+      "target_traits": [
+        "bob",
+        "short and medium lengths",
+        "bang variants",
+        "parting",
+        "hair volume"
+      ],
+      "extras_red": [
+        "face and eye shapes",
+        "page branding"
+      ],
+      "monochrome_plate_status": "source_is_monochrome_reference",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+bob+hair+styles+comparison+lineart",
+      "license_status": "reference_only_check_source_terms",
+      "ordinal": 35,
+      "source_platform": "Syntelligence",
+      "thumbnail_kind": "external_page_or_artwork_preview",
+      "red_warning_required": false
+    },
+    {
+      "id": "EXT-HIR-014",
+      "category": "hair",
+      "title": "Cuatro variaciones de coleta — vista 3/4",
+      "source_url": "https://www.pinterest.com/pin/1001417667137969213/",
+      "thumbnail_url": "https://i.pinimg.com/originals/52/0d/9d/520d9d6988c3584ed5297ac51067606d.jpg",
+      "creator": "Pinterest mirror; source author not confirmed",
+      "target_traits": [
+        "high ponytail",
+        "side ponytail",
+        "curled ponytail",
+        "low ponytail",
+        "three-quarter angle"
+      ],
+      "extras_red": [
+        "head/face and other visual details",
+        "author and license pending"
+      ],
+      "monochrome_plate_status": "candidate_reference_chart",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+ponytail+variations+front+three+quarter+lineart",
+      "license_status": "reference_only_source_pending",
+      "ordinal": 36,
+      "source_platform": "Pinterest",
+      "thumbnail_kind": "external_page_or_artwork_preview",
+      "red_warning_required": false
+    },
+    {
+      "id": "EXT-HIR-015",
+      "category": "hair",
+      "title": "Anime Outline — guía de peinados femeninos",
+      "source_url": "https://www.animeoutline.com/how-to-draw-anime-and-manga-hair-female/",
+      "thumbnail_url": null,
+      "creator": "AnimeOutline",
+      "target_traits": [
+        "female anime hair construction",
+        "bangs",
+        "hair volume",
+        "front and side structure",
+        "tutorial examples"
+      ],
+      "extras_red": [
+        "tutorial branding",
+        "full head/face",
+        "multiple styles in instructional context"
+      ],
+      "monochrome_plate_status": "tutorial_no_standalone_asset_verified",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+hair+reference+sheet+black+white+line+art",
+      "license_status": "reference_only_tutorial",
+      "ordinal": 37,
+      "source_platform": "AnimeOutline",
+      "thumbnail_kind": "no_thumbnail_available",
+      "red_warning_required": false
+    },
+    {
+      "id": "EXT-HIR-016",
+      "category": "hair",
+      "title": "Zefirka — 40 peinados en boceto numerado (hoja mixta)",
+      "source_url": "https://zefirka.club/wallpapers/4130-pricheski-sketch.html",
+      "thumbnail_url": "https://zefirka.club/wallpapers/uploads/posts/2023-03/1679059459_zefirka-club-p-pricheski-sketch-23.jpg",
+      "creator": "Rehost page; original creator not verified",
+      "target_traits": [
+        "numbered hair sketches",
+        "ponytails",
+        "braids",
+        "curls",
+        "bang variations"
+      ],
+      "extras_red": [
+        "mixed male/female styles; filter female styles only",
+        "rehost and watermark/source license pending"
+      ],
+      "monochrome_plate_status": "mixed_sheet_female_subset_pending",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=numbered+anime+girl+hairstyle+sketch+sheet+black+white",
+      "license_status": "reference_only_original_source_pending",
+      "ordinal": 38,
+      "source_platform": "Rehost candidate",
+      "thumbnail_kind": "external_page_or_artwork_preview",
+      "red_warning_required": false
+    },
+    {
+      "id": "EXT-HIR-017",
+      "category": "hair",
+      "title": "Mapa de 9 familias de peinados femeninos",
+      "source_url": "https://www.pinterest.com/ideas/anime-female-ponytail-hairstyles/944451166577/",
+      "thumbnail_url": "https://i.pinimg.com/originals/cb/c4/4f/cbc44f57d587d6afe46d25c133982c12.jpg?nii=t",
+      "creator": "Pinterest ideas page; source artist not confirmed",
+      "target_traits": [
+        "ponytails",
+        "twin tails",
+        "buns",
+        "braids",
+        "waves/curls",
+        "hair down",
+        "forehead exposure",
+        "length groupings"
+      ],
+      "extras_red": [
+        "category index rather than 9 unique images",
+        "author pending"
+      ],
+      "monochrome_plate_status": "category_map_not_individual_assets",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+hairstyle+families+chart+line+art",
+      "license_status": "reference_only_source_pending",
+      "ordinal": 39,
+      "source_platform": "Pinterest",
+      "thumbnail_kind": "external_page_or_artwork_preview",
+      "red_warning_required": false
+    },
+    {
+      "id": "EXT-HIR-018",
+      "category": "hair",
+      "title": "30 nombres de peinados femeninos (rehost, autoría pendiente)",
+      "source_url": "https://hairstyle.udlvirtual.edu.pe/view/female-anime-hairstyles-drawing.html",
+      "thumbnail_url": "https://4.bp.blogspot.com/-yHf5jYiYi6s/VqYRVPzBLpI/AAAAAAAAATU/gidYPYkFhjU/s1600/anime-girl-hairstyles-drawings-best-decorations.png",
+      "creator": "Rehost page; original creator not verified",
+      "target_traits": [
+        "labeled hair style names",
+        "Princess",
+        "Romantic",
+        "Curly Twin",
+        "Cheerleader",
+        "Bob"
+      ],
+      "extras_red": [
+        "possible third-party image repost",
+        "original author not found"
+      ],
+      "monochrome_plate_status": "candidate_rehost_pending_verification",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+girl+hairstyles+drawings+named+styles+black+white",
+      "license_status": "reference_only_original_source_pending",
+      "ordinal": 40,
+      "source_platform": "external",
+      "thumbnail_kind": "external_page_or_artwork_preview",
+      "red_warning_required": false
     }
   ],
   "statistics": {
     "pixai_entries": 16,
-    "external_reference_sheets": 15,
-    "combined_index_entries": 31,
+    "external_reference_entries": 24,
+    "combined_index_entries": 40,
     "pixai_entries_with_thumbnail": 16,
-    "external_entries_with_thumbnail": 15,
+    "external_entries_with_thumbnail": 23,
     "verified_clean_square_plates": 0,
-    "note": "Counts distinguish source-platform PixAI artworks from external reference sheets. Index thumbnails are for visual identification only and do not indicate reuse permission. Search URLs are not confirmed clean square plates."
+    "source_status_note": "Counts describe index records/candidates, not unique extracted PNGs. Pinterest mirrors and rehosts can duplicate original works; candidate entries stay marked until authorship and originality are checked.",
+    "monochrome_status_note": "Search links are queries, not confirmed plates. For a component-specific square monochrome sheet, use the direct clean source if one has been verified, otherwise retain search_pending."
   }
 }
