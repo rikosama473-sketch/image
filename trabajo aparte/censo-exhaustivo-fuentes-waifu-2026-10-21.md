@@ -1,11 +1,11 @@
 # Female Anime/Waifu Character-Editor Reference Atlas
-## Research census — 157 indexed records; 153 unique canonical source pages after duplicate review
+## Research census — 160 categorized entries; 153 distinct normalized source URLs in the base list
 
 ---
 
 ## EXECUTIVE SUMMARY
 
-This atlas indexes **157 categorized source records corresponding to 153 unique canonical source URLs after removing four duplicate pairs**, covering all major target component families grouped into sections A–N for a female anime/waifu character editor: hairstyles/hair parts, clothing styles (gothic/sweet/classic lolita, school/sailor uniforms, kimono/yukata/hakama/miko, maid, magical girl, fantasy mage/armor, casual/street/cyberpunk, idol), anime eye anatomy, and accessories (bows, tiaras, earrings, glasses, chokers, brooches, belts, gloves, socks/stockings, shoes). Sources span DeviantArt, Pixiv/Pixivision, PixAI, ArtStation Marketplace, BOOTH.pm, Itch.io, AnimeOutline, Clip Studio Tips, Anime Art Magazine, and other tutorial/reference platforms, in English and Japanese.
+This report contains **160 categorized records** across sections A–N. Of these, 154 records include a URL and one URL is repeated across two category records, leaving **153 distinct normalized URL records** in the base list. Separately, the audit notes four pairs of different source URLs that appear to point to the same underlying artwork. URL deduplication therefore does not establish a count of unique visual works; that requires source-page/manual image comparison. for a female anime/waifu character editor: hairstyles/hair parts, clothing styles (gothic/sweet/classic lolita, school/sailor uniforms, kimono/yukata/hakama/miko, maid, magical girl, fantasy mage/armor, casual/street/cyberpunk, idol), anime eye anatomy, and accessories (bows, tiaras, earrings, glasses, chokers, brooches, belts, gloves, socks/stockings, shoes). Sources span DeviantArt, Pixiv/Pixivision, PixAI, ArtStation Marketplace, BOOTH.pm, Itch.io, AnimeOutline, Clip Studio Tips, Anime Art Magazine, and other tutorial/reference platforms, in English and Japanese.
 
 **Critical metadata standards applied throughout:**
 - No source is claimed to be downloaded, cropped, licensed, or complete unless verified in evidence
@@ -17,7 +17,7 @@ This atlas indexes **157 categorized source records corresponding to 153 unique 
 
 ---
 
-## SECTION 1 — IMAGE INDEX: ALL 157 SOURCES
+## SECTION 1 — IMAGE INDEX: 160 CATEGORIZED RECORDS (153 DISTINCT NORMALIZED SOURCE URLS IN THE BASE LIST)
 
 Each record follows this schema:
 > **ID | Title | Creator | Source URL | Platform/Language | Target Component & Traits | Irrelevant Elements (🔴 flag) | Prompt Visibility | Reference vs. Asset | Price/License (if verified) | B&W Clean Plate Confirmed**
@@ -2680,7 +2680,7 @@ Each record follows this schema:
 2. **Fan art IP restrictions**: Multiple sources (C-03, C-04, C-05, H-05, H-06, G-09) involve copyrighted anime franchises (Akebi-chan no Sailor-fuku, Blue Archive, Cyberpunk: Edgerunners, Silent Witch). These are NOT licensed for commercial character editor use without IP holder permission.
 3. **Pixiv full-resolution access**: Pixiv requires an account and may require age verification or premium membership for full resolution. Thumbnail caching violates Pixiv Terms of Service.
 4. **BOOTH product completeness**: Evidence source [137] only shows page 2 of at least 6 pages of the Tinela-kun storefront. Individual product prices and licenses for pages 1, 3–6 were NOT captured.
-5. **Deduplicated entries**: Evidence records [51] and [77] are the same Pixiv artwork (100143795); [52] and [88] are the same artwork (130361522); [69] and [110] are the same artwork (146683920); [70] and [111] are the same artwork (130142890). Net unique canonical pages: 153.
+5. **Deduplicated entries**: Evidence records [51] and [77] are the same Pixiv artwork (100143795); [52] and [88] are the same artwork (130361522); [69] and [110] are the same artwork (146683920); [70] and [111] are the same artwork (130142890). Base-list URL records: 153 after exact/normalized URL deduplication; four additional pairs are suspected duplicate artworks under different URLs and have not been perceptually deduplicated.
 
 ---
 
@@ -2702,7 +2702,7 @@ Each record follows this schema:
 ## AUDIT HEADER — generated 2026-10-21
 
 - Research run completed after 1,128 seconds of deep research; do not interpret that runtime as a guarantee of every page being manually inspected.
-- Report body: 157 categorized records, 153 unique canonical URLs after four duplicate pairs were identified.
-- The separate IMAGE machine-readable index is currently smaller and more detailed on per-record thumbnail/red-warning metadata; the count there is not interchangeable with this report's 153 source URLs.
+- Report body: 160 categorized records; 154 records have a URL, with one exact URL repeated across two categories, resulting in 153 normalized URL records in the base list.
+- The separate IMAGE machine-readable index now combines the base source list, earlier curated references and four later accessory/clothing supplements, for 230 URL-normalized records. Its count is not interchangeable with the base report's 153 normalized URLs.
 - This is a research catalogue, not a downloaded image library. No thousands of assets were downloaded; no perceptual/image-hash deduplication was performed; no licensed clean square monochrome component plates were verified.
 - Each source page still needs direct image inspection before using its preview as a dependable style exemplar. License terms must be rechecked at the item level before any redistribution or bundling in IMAGE.
