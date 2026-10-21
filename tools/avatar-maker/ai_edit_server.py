@@ -13,8 +13,12 @@ import json
 import os
 import re
 import sys
+import threading
+from io import BytesIO
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+
+from PIL import Image, ImageOps
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
@@ -32,6 +36,10 @@ PREMIUM_QUALITY_MODELS = {"gpt-image-2.5-sunburst", "gpt-image-2.5-flare"}
 ALLOWED_BACKGROUNDS = {"auto", "opaque", "transparent"}
 MAX_BODY_BYTES = 42 * 1024 * 1024
 MAX_DATA_URL_CHARS = 20_000_000
+MAX_CUTOUT_PIXELS = 20_000_000
+ALLOWED_CUTOUT_MODELS = {"isnet-anime", "birefnet-portrait"}
+_CUTOUT_SESSIONS = {}
+_CUTOUT_LOCK = threading.Lock()
 DATA_URL_PATTERN = re.compile(r"^data:image/(png|jpeg|webp);base64,([A-Za-z0-9+/=\r\n]+)$")
 
 
@@ -55,6 +63,13 @@ def validate_data_url(value: object, label: str) -> str:
     }
     if not signatures.get(image_type, False):
         raise ValueError(f"{label}: el contenido no coincide con el formato declarado.")
+    return value
+
+
+def validate_cutout_model(value: object) -> str:
+    """Only local segmentation models are accepted; no image is sent to a cloud service."""
+    if not isinstance(value, str) or value not in ALLOWED_CUTOUT_MODELS:
+        raise ValueError("Elegí el modelo local isnet-anime o birefnet-portrait.")
     return value
 
 
@@ -98,16 +113,118 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self) -> None:
         if urlsplit(self.path).path == "/api/status":
+            try:
+                import importlib.util
+                cutout_available = importlib.util.find_spec("rembg") is not None
+            except (ImportError, ValueError):
+                cutout_available = False
             self.send_json(200, {
                 "service": "IMAGE local AI edit bridge",
                 "api_key_configured": bool(os.environ.get("OPENAI_API_KEY", "").strip()),
                 "models": sorted(ALLOWED_MODELS),
+                "local_cutout_available": cutout_available,
+                "local_cutout_models": sorted(ALLOWED_CUTOUT_MODELS),
                 "key_storage": "environment_only",
             })
             return
         super().do_GET()
 
+    def do_remove_background(self) -> None:
+        """Pixel-preserving, local anime cutout with cached model sessions."""
+        host = self.headers.get("Host", "")
+        if not (host.startswith("127.0.0.1:") or host.startswith("localhost:")):
+            self.send_json(403, {"error": "El servicio solo acepta conexiones locales."})
+            return
+        origin = self.headers.get("Origin")
+        if origin:
+            try:
+                if urlsplit(origin).netloc != host:
+                    self.send_json(403, {"error": "Origen rechazado por seguridad."})
+                    return
+            except ValueError:
+                self.send_json(403, {"error": "Origen inválido."})
+                return
+        try:
+            size_header = self.headers.get("Content-Length", "")
+            if not size_header.isdigit():
+                raise ValueError("La petición no tiene un tamaño válido.")
+            size = int(size_header)
+            if size <= 0 or size > MAX_BODY_BYTES:
+                raise ValueError("La petición supera el límite local de 42 MiB.")
+            body = json.loads(self.rfile.read(size).decode("utf-8"))
+            if not isinstance(body, dict):
+                raise ValueError("El contenido de la petición no es válido.")
+            model = validate_cutout_model(body.get("model", "isnet-anime"))
+            input_url = validate_data_url(body.get("image_data_url"), "Imagen del lienzo")
+            encoded = input_url.split(",", 1)[1]
+            raw = base64.b64decode(encoded, validate=True)
+            with Image.open(BytesIO(raw)) as source:
+                source = ImageOps.exif_transpose(source)
+                source.load()
+                width, height = source.size
+                if width < 64 or height < 64:
+                    raise ValueError("La imagen debe medir al menos 64×64 píxeles.")
+                if width * height > MAX_CUTOUT_PIXELS:
+                    raise ValueError("La imagen supera el límite de 20 megapíxeles para recorte local.")
+                original_size = (width, height)
+                normalized = source.convert("RGBA")
+            normalized_buffer = BytesIO()
+            normalized.save(normalized_buffer, format="PNG", optimize=True)
+            try:
+                from rembg import new_session, remove
+            except ImportError:
+                self.send_json(503, {
+                    "error": "El recorte local para anime no está instalado. Ejecutá: python -m pip install -r requirements-avatar-cutout.txt. No se enviaron imágenes a la nube."
+                })
+                return
+            with _CUTOUT_LOCK:
+                session = _CUTOUT_SESSIONS.get(model)
+                if session is None:
+                    session = new_session(model)
+                    _CUTOUT_SESSIONS[model] = session
+                output = remove(
+                    normalized_buffer.getvalue(),
+                    session=session,
+                    alpha_matting=False,
+                    post_process_mask=False,
+                    decontaminate=True,
+                    force_return_bytes=True,
+                )
+            if not isinstance(output, (bytes, bytearray)) or not output:
+                raise ValueError("El motor local no devolvió una imagen PNG válida.")
+            with Image.open(BytesIO(bytes(output))) as cutout:
+                cutout.load()
+                if cutout.size != original_size:
+                    raise ValueError("El motor cambió las dimensiones; se rechazó el recorte para evitar desalineación.")
+                rgba = cutout.convert("RGBA")
+            alpha_histogram = rgba.getchannel("A").histogram()
+            transparent_pixels = sum(alpha_histogram[:255])
+            if transparent_pixels <= 0:
+                self.send_json(422, {"error": "El modelo no encontró píxeles transparentes. Probá otra referencia o ajustá la selección manual."})
+                return
+            result_buffer = BytesIO()
+            rgba.save(result_buffer, format="PNG", optimize=True)
+            result_bytes = result_buffer.getvalue()
+            self.send_json(200, {
+                "image_base64": base64.b64encode(result_bytes).decode("ascii"),
+                "model": model,
+                "width": rgba.width,
+                "height": rgba.height,
+                "transparent_pixels": transparent_pixels,
+                "engine": "rembg-local",
+                "pixel_preserving": True,
+                "review_status": "pending_visual_review",
+            })
+        except ValueError as exc:
+            self.send_json(400, {"error": str(exc)[:1200]})
+        except Exception as exc:
+            # Avoid returning request/provider internals or local paths to the browser.
+            self.send_json(502, {"error": "El recorte local falló (" + type(exc).__name__ + "). Revisá la imagen o el modelo instalado; el original no se modificó."})
+
     def do_POST(self) -> None:
+        if urlsplit(self.path).path == "/api/remove-background":
+            self.do_remove_background()
+            return
         if urlsplit(self.path).path != "/api/ai-edit":
             self.send_json(404, {"error": "Ruta no encontrada."})
             return
