@@ -34,7 +34,7 @@ Instalación opcional: ejecutá `tools/avatar-maker/install-avatar-cutout.bat` e
 python -m pip install -r requirements-avatar-cutout.txt
 ```
 
-Reiniciá `tools/avatar-maker/start-avatar-maker.bat` después de instalar. El modelo puede descargar cientos de MB y el primer uso puede tardar; no se instala automáticamente. Si el motor no está disponible, el editor muestra cómo habilitarlo y conserva el original.
+Reiniciá `tools/avatar-maker/start-avatar-maker.bat` después de instalar. `isnet-anime` puede descargar aproximadamente 1 GB de pesos en el primer uso y tardar; no se instala automáticamente. La alternativa que elijas puede tener un tamaño diferente. Si el motor no está disponible, el editor muestra cómo habilitarlo y conserva el original.
 
 La calidad real se comprobó con una imagen del repositorio usando el modelo local (sin API de pago). Consulta las [métricas, máscaras y cuatro vistas de revisión de bordes](REAL_CUTOUT_REVIEW_2026-10.md) antes de aprobar un recorte.
 
