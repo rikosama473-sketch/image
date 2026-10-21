@@ -163,8 +163,8 @@ def main() -> None:
         fail("Color must not be required for any style-matched reference.")
     if not any(item.get("image_url") for item in target) or not any(item.get("image_url") for item in compatible):
         fail("Both anchor and compatible style groups must have image previews.")
-    if 'activeViewerTab="references"' not in viewer or "Mi estilo · line art anime" not in viewer:
-        fail("The viewer must open directly on the selected anime line-art gallery.")
+    if 'activeViewerTab="references"' not in viewer or "Hojas y piezas visuales" not in viewer or "Para montar sobre una base plana" not in viewer:
+        fail("The viewer must open directly on the visual references gallery and explain overlay compatibility.")
 
     try:
         taxonomy = json.loads(TAXONOMY.read_text(encoding="utf-8"))

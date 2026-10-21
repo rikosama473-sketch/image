@@ -22,6 +22,7 @@ Equipo objetivo declarado: AMD Ryzen 5 5600G, 16 GB RAM y gráficos Radeon integ
 - `data/training-labels.csv` y la documentación de `docs/`: registro de metadatos, procedencia y estrategia para seleccionar/validar un dataset. No entrenar automáticamente con la colección completa ni adivinar modelos/LoRAs a partir del nombre de archivo.
 
 ## Cambios realizados en este bloque
+- Ajustada una aserción del validador que aún esperaba el título antiguo del visor; la prueba ahora comprueba el título actual y la explicación de compatibilidad de capas. El primer CI reportó ese desajuste y no se rebajó la validación funcional.
 - Biblioteca de peinados: añadidas fichas que distinguen `parts_same_base`, `parts_realignable` y `reference_only`; el visor dispone de un filtro de montaje y una explicación de alineación sobre bases planas.
 - Añadidas las dos referencias de Pinterest aportadas por el usuario como pendientes de inspección/licencia; registradas la guía de AiryOnline, la hoja compuesta de PNGEgg, la referencia de Syntelligence sobre coleta y el paquete modular HMLF001 con licencia CC BY-SA 4.0 declarada.
 - Enriquecido el recurso CC0 de OpenGameArt con su formato XCF, clases de componentes y advertencia de que sus piezas se corresponden con su propia base. Los paquetes base-específicos no se etiquetan como universales.
