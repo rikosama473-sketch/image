@@ -136,6 +136,26 @@ def main() -> None:
         if item.get("usable_asset") and not item.get("asset_download_url"):
             fail("Every usable-asset record must include a downloadable asset URL or source page.")
 
+    # The selected art direction is anime production line art inspired by Madhouse
+    # and Trigger. Color is deliberately not a requirement; style fit is.
+    art_direction = web_references.get("art_direction", {})
+    if art_direction.get("id") != "anime-tv-production-lineart" or art_direction.get("color_required") is not False:
+        fail("The art direction must prioritize anime production line art and allow monochrome references.")
+    matching = [item for item in web_items if item.get("style_fit") in {"target", "compatible"}]
+    target = [item for item in matching if item.get("style_fit") == "target"]
+    compatible = [item for item in matching if item.get("style_fit") == "compatible"]
+    if len(matching) < 12 or not target or not compatible:
+        fail("The gallery needs at least 12 style-matched records, including anchor and compatible references.")
+    studios = {item.get("studio_anchor") for item in target}
+    if "MADHOUSE" not in studios or "TRIGGER" not in studios:
+        fail("The matched collection must include both Madhouse and Trigger visual anchors.")
+    if any(item.get("color_required") is True for item in matching):
+        fail("Color must not be required for any style-matched reference.")
+    if not any(item.get("image_url") for item in target) or not any(item.get("image_url") for item in compatible):
+        fail("Both anchor and compatible style groups must have image previews.")
+    if 'activeViewerTab="references"' not in viewer or "Mi estilo · line art anime" not in viewer:
+        fail("The viewer must open directly on the selected anime line-art gallery.")
+
     try:
         taxonomy = json.loads(TAXONOMY.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
