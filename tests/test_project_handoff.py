@@ -56,5 +56,12 @@ class ImageProjectHandoffTests(unittest.TestCase):
         self.assertIn("styles:styles.map(serialStyle)", self.workbench)
 
 
+    def test_center_layer_preserves_imported_dimensions_and_centers_offsets(self) -> None:
+        self.assertIn('l.x=Math.round((W-l.w)/2)', self.avatar)
+        self.assertIn('l.y=Math.round((H-l.h)/2)', self.avatar)
+        self.assertIn('Capa centrada sin cambiar su tamaño ni proporción', self.avatar)
+        self.assertNotIn('if(l){l.x=0;l.y=0;l.w=W;l.h=H;render();}', self.avatar)
+
+
 if __name__ == "__main__":
     unittest.main()
