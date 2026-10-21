@@ -9976,10 +9976,10 @@
     "pixai_tag_browsers": 8,
     "category_record_counts": {
       "hair": 32,
-      "clothing": 13,
+      "clothing": 14,
       "eyes": 9,
       "accessories": 18,
-      "clothing_accessories": 9,
+      "clothing_accessories": 10,
       "eyes_hair": 1,
       "hair_accessories": 3,
       "hair_eyes": 1,
@@ -10028,7 +10028,8 @@
       "Thousand Lashes": 1,
       "CharacterGen": 1,
       "BOOTH.pm": 2,
-      "Itch.io": 11
+      "Itch.io": 11,
+      "X": 2
     },
     "thumbnail_kinds": {
       "official_platform_preview": 33,
@@ -10041,13 +10042,14 @@
       "tutorial_preview": 1,
       "source_page_metadata_preview_candidate": 147,
       "official_itch_asset_page_cover": 8,
-      "external_search_result_preview": 1
+      "external_search_result_preview": 1,
+      "official_x_post_media_preview": 2
     },
     "verified_clean_square_plates": 0,
-    "index_note": "This is a 239-record index of source URLs/store pages, not a library of 239 unique images or licensed assets. Build-up: 75 curated records + 151 new deep-census URLs after two matches merged + 4 accessory/clothing supplements + 4 modular asset listings + 3 facial-variant listings + 2 X costume-design posts = 239. The core deep-research body has 160 categorized rows, 154 URL fields including one repeated URL, and 153 distinct normalized URL records. Four pairs are flagged as likely duplicate underlying artworks across different URL IDs.",
-    "thumbnail_status_note": "All 239 source records have thumbnail URLs. 234 are direct image/preview candidates and 5 are Pixiv embed endpoints. X pbs.twimg.com previews and the other remote thumbnails have not all been individually checked in the final browser UI.",
+    "index_note": "This is a 239-record index of source URLs/store pages, not a library of 239 unique images or licensed assets. Build-up: 75 curated entries + 151 new core deep-census URLs (two matches merged) + 4 accessory/clothing supplements + 4 modular asset listings + 3 facial-variant listings + 2 X costume-design posts. The core deep-research body has 160 categorized rows and 153 distinct normalized URL records after a repeated URL is removed. Four pairs are flagged as likely duplicate underlying artworks across distinct URL paths.",
+    "thumbnail_status_note": "All 239 source records have thumbnail URLs; 234 are direct image/preview candidates and 5 are Pixiv embed endpoints. Source metadata/preview URLs are recorded, but every thumbnail has not been successfully rendered and visually checked in the final browser UI.",
     "deduplication_note": "Source URL normalization only. The report flags four pairs as duplicate underlying artwork under different URLs, and one creator/product has two store pages recorded as alternate_source_urls. No cross-platform perceptual/image-hash deduplication has been done.",
-    "license_note": "BOOTH and Itch.io layered-character entries help document how to separate eye/mouth/brow and hair/clothing variants. Most explicitly prohibit redistribution/resale of original asset files, even when personal/commercial project use is permitted. Written clearance is needed before packaging these component files with IMAGE.",
+    "license_note": "The source index supports research and identification. Public previews, free downloads and commercial-use permission do not imply permission to redistribute individual PNG/PSD source layers inside IMAGE. Follow each item-level license; ask creators where an editor distribution would expose source parts.",
     "layered_facial_component_records_added_oct21": 3,
     "latest_additions": [
       "EXT-BOOTH-008",
