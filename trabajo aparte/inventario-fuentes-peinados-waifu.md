@@ -11,7 +11,7 @@ La investigación ampliada y las referencias verificadas están enlazadas aquí:
 
 - [Informe ampliado y suplemento de auditoría](./informe-investigacion-ampliada-waifu.md): vocabulario de 117 estilos (30 cabello, 30 ropa, 30 ojos y 27 accesorios), fuente base de 70 URLs citadas, evidencia adicional de PixAI/Pixiv/BOOTH/ArtStation, precios y condiciones de uso comprobadas.
 - [Índice JSON de referencias visuales](./indice-visual-componentes.json): **71 registros de URL** (29 obras individuales de PixAI y 42 recursos/páginas externos), con 71 miniaturas, URL de origen, componente objetivo, extras rojos, tipo de recurso, estado de placa monocroma y situación de licencia.
-- [Atlas HTML interactivo](./atlas-peinados-interactivo.html): 26 fichas PixAI con miniaturas y avisos rojos, filtros de componente, vistas previas de colecciones de cabello y 9 tarjetas de productos modulares/de referencia con precio y licencia verificados.
+- [Atlas HTML interactivo](./atlas-peinados-interactivo.html): 29 fichas PixAI con miniaturas y avisos rojos, filtros de componente, vistas previas de colecciones de cabello y 9 tarjetas de productos modulares/de referencia con precio y licencia verificados.
 
 **Cómo leer las cifras:** 71 significa registros de origen en el índice; no son 71 PNG únicos, 71 cortes aislados ni 71 assets libres. Incluye obras individuales, páginas de colección, tutoriales y anuncios de packs. Se quitaron duplicados por URL canónica dentro del índice, pero **todavía no se ejecutó comparación de hashes ni deduplicación perceptual de las imágenes**; una lámina espejo podría representar la misma obra que otra página.
 
