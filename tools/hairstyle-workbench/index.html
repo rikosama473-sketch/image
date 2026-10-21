@@ -169,7 +169,7 @@ function renderAdjust(){
 function addLayer(raw){const l=Object.assign({id:uid("layer"),name:"Pieza importada",category:activeSlot,visible:true,x:0,y:0,w:W,h:H,sourceW:W,sourceH:H,scale:1,rotation:0,opacity:1,order:layers.length,status:"imported"},raw||{});if(l.repoPath)l.src=ROOT+l.repoPath;layers.push(l);selectedLayer=l.id;return l;}
 function removeLayer(id){layers=layers.filter(l=>l.id!==id);if(selectedLayer===id)selectedLayer=layers.length?layers[layers.length-1].id:null;Object.keys(styles).forEach(i=>{const s=styles[i];if(s.states)delete s.states[id];});render();setStatus("Capa quitada de la composición. Las otras piezas permanecen intactas.");}
 function captureStates(){const o={};layers.forEach(l=>o[l.id]={visible:l.visible!==false,x:l.x||0,y:l.y||0,w:l.w||W,h:l.h||H,scale:l.scale||1,rotation:l.rotation||0,opacity:l.opacity==null?1:l.opacity,order:l.order||0});return o;}
-function applyStyle(id){const s=styles.find(x=>x.id===id);if(!s)return;activeRecipe=null;const states=s.states||{};layers.forEach(l=>{const st=states[l.id];if(st){Object.assign(l,st);}else if(HAIR_CATEGORIES.includes(l.category))l.visible=false;});activeStyle=id;$("styleName").value=s.name;setStatus("Variante aplicada: "+s.name+". Las capas base conservan su identidad.");render();}
+function applyStyle(id){const s=styles.find(x=>x.id===id);if(!s)return;activeRecipe=s.recipe_id?{id:s.recipe_id,name:s.name}:null;const states=s.states||{};layers.forEach(l=>{const st=states[l.id];if(st){Object.assign(l,st);}else if(HAIR_CATEGORIES.includes(l.category))l.visible=false;});activeStyle=id;$("styleName").value=s.name;setStatus("Variante aplicada: "+s.name+". Las capas base conservan su identidad.");render();}
 function saveNewStyle(copyFrom){
  const name=$("styleName").value.trim()||("Look "+(styles.length+1));
  const s={id:uid("style"),name:name,description:"Variante manual"+(activeRecipe?" · receta "+activeRecipe.id:"")+" · "+new Date().toLocaleDateString("es-AR"),recipe_id:activeRecipe&&activeRecipe.id||null,states:copyFrom?JSON.parse(JSON.stringify(copyFrom.states||{})):captureStates()};
@@ -209,7 +209,7 @@ async function loadDemo(){
   const chosen=[byId("body"),byId("clothing"),byId("face")].filter(Boolean);
   const hair=items.filter(x=>x.category==="hair");
   if(!chosen.length||!hair.length)throw new Error("La muestra necesita piezas base y variantes de cabello en assets/catalog.json.");
-  layers=[];styles=[];activeStyle=null;selectedLayer=null;imageCache.clear();nextId=1;
+  layers=[];styles=[];activeStyle=null;activeRecipe=null;selectedLayer=null;imageCache.clear();nextId=1;
   chosen.forEach((item,index)=>addLayer({id:item.id,catalogId:item.id,name:item.label,category:item.category==="clothes"?"clothes":item.category,repoPath:item.repo_path,x:0,y:0,w:W,h:H,sourceW:W,sourceH:H,scale:1,rotation:0,opacity:1,order:index,visible:true,status:item.status}));
   const sampleTags={"hair-bob":["bob_cut","short_hair","blunt_bangs"],"hair-long":["long_hair","straight_hair"],"hair-ponytail":["high_ponytail","updo"],"hair-twintails":["twintails","long_hair"],"hair-braid":["side_braid","long_hair"]};
   hair.forEach((item,index)=>addLayer({id:item.id,catalogId:item.id,name:item.label,category:"haircut",repoPath:item.repo_path,x:0,y:0,w:W,h:H,sourceW:W,sourceH:H,scale:1,rotation:0,opacity:1,order:chosen.length+index,visible:index===0,status:item.status,description:item.review,tags:sampleTags[item.id]||[]}));
