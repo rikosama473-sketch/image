@@ -66,6 +66,46 @@ No se considera que estos ejemplos sean diez “peinados únicos verificados”:
 - **Textura/volumen:** straight, wavy, loose curls, spiral curls, fluffy volume, sleek, tapered ends, choppy layers.
 - **Negativos de control:** extra ponytails, extra buns, fused braids, contradictory bangs, unwanted hair accessories, hair covering both eyes, tangled hair masses, cropped hair tips.
 
+## B2. PixAI por componentes: qué conservar y qué marcar en rojo
+
+La alerta roja es obligatoria en el atlas: una imagen de PixAI suele mezclar pelo, ojos, ropa, accesorios, pose y escena. Cada ficha debe decir qué elemento se está investigando y qué más aparece en la obra original.
+
+| Componente objetivo | Referencia pública PixAI | Rasgos concretos para extraer | ALERTA ROJA: otros elementos de la obra |
+|---|---|---|---|
+| **Cabello** | [Mostima — pelo largo azul en capas](https://pixai.art/artwork/2068523186486809301) | very long layered hair, messy layered bangs, long asymmetrical fringe, curved side bangs, long thin sidelocks, feathered ends, loose floating strands, thick silky volume. | Ojos cyan, orejas puntiagudas, cuernos, halo, marca brillante en el pelo, uniforme académico con escudo y fondo negro. |
+| **Ropa** | [Kanzaki Ranko — uniforme académico gótico](https://pixai.art/artwork/2067278425733525427) | black tailored blazer, structured shoulders, burgundy ribbon tie, high-collar white blouse, lace trim, charcoal pleated skirt, silver buttons, black embroidery, cross brooch, belt, ankle boots. | Pelo plateado, ojos rojos, expresión/personaje existente, giro corporal, libros, biblioteca antigua y luz cinematográfica. |
+| **Ojos** | [Heterocromía rosa/cyan](https://pixai.art/artwork/2066833884447729584) | left iris pink, right iris aqua blue, heterochromia, very long eyelashes, defined upper eyelids, almond-shaped gaze. | Wolf cut verde con mechón interior rojo, flequillo largo, vestido gótico rojo/negro, mangas separadas, lazos, uñas, mano extendida y ciudad nocturna. |
+| **Accesorios de cabello** | [Twin tails con clips temáticos](https://pixai.art/artwork/1975861057626129555) | blue bow hair ties, panda-head hair clips, cookie-shaped hair clips, black mechanical hairpins, tiny eye decorations. Cada adorno debe ser ficha independiente. | Twin tails blancas esponjosas, ojos gris-negro/delineado, blusa marinera, chaqueta techwear, falda con lunares/encaje, mochila, consola y objetos flotantes. |
+| **Ropa + adornos** | [Vestido gothic lolita detallado](https://pixai.art/artwork/2023390201162778455) | blouse with puff sleeves, ruffled cuffs, black corset vest, front zipper, silver buttons, white jabot collar, tiered skirt, sheer overlay, white ruffle trim. Separar bow, cross brooch y cadenas en su propia ficha. | Cabello oscuro rizado, ojos violetas, rostro/manos/pose, fondo morado-negro e iluminación de estudio. |
+| **Ojos** | [Ojos violetas redondos y pestañas](https://pixai.art/artwork/2068118178282481862) | large round pale-violet eyes, iris and pupil visible, defined upper lashes, soft lower lashes, rounded eyelids. El color debe ser un atributo modificable. | Pelo blanco a cintura, mechones laterales, túnica/capa de maga, lazos lavanda, broche de cristal, mano sobre manga y círculo mágico. |
+| **Uniforme** | [Camisa, blazer y falda plisada](https://pixai.art/artwork/1951943022458520065) | navy blazer, white shirt, red ribbon tie, pleated skirt, visible seams and blazer fabric. Guardar cada prenda por separado. | Pelo negro ondulado, expresión tímida, pose completa, parque, flores de cerezo y efectos de luz/fondo. |
+| **Accesorios góticos** | [Diadema, cruz, cinta y anillos](https://pixai.art/artwork/2056733953910257401) | frilled headband, silver cross necklace, black ribbon, rings, black nail polish with white cross. Separar headband, necklace, ribbon, rings y nail art. | Hime cut bicolor, ojos plateados, vestido/mangas, botas, uñas largas, postura y escenario de castillo. |
+
+### De una imagen llena de detalles a una placa cuadrada monocroma
+
+El atlas contiene enlaces de búsqueda de imágenes con consultas concretas para cada componente. La placa buscada debe ser una **referencia de estudio**, no una supuesta copia autorizada del arte de PixAI:
+
+- **Cabello:** [buscar en imágenes — female hairstyle, head only, front view, black ink line art, white background, square](https://www.google.com/search?tbm=isch&q=anime+female+hairstyle+reference+front+view+head+only+black+ink+line+art+white+background+square).
+- **Ropa:** [buscar — female outfit design sheet, blank mannequin, front view, monochrome line art](https://www.google.com/search?tbm=isch&q=anime+female+outfit+design+sheet+faceless+mannequin+front+view+black+white+lineart+square).
+- **Ojos:** [buscar — anime eye design chart, paired eyes, iris and eyelashes, line art](https://www.google.com/search?tbm=isch&q=anime+eyes+design+chart+female+paired+eyes+black+white+lineart+white+background).
+- **Accesorios:** [buscar — hair clips, ribbons, tiara, earrings, brooch, isolated line-art asset sheet](https://www.google.com/search?tbm=isch&q=anime+female+accessories+asset+sheet+hair+clips+ribbons+tiara+earrings+brooch+black+white+lineart+white+background).
+
+Estas consultas abren resultados; no significan que ya exista una placa cuadrada perfecta para cada referencia. Si no se encuentra una hoja limpia, la ficha debe quedar como “pendiente de referencia monocroma”. No indicar que el arte original está separado, recortado o autorizado si no se verificó.
+
+### Qué va en la ficha de cada componente
+
+Cada registro debería guardar:
+
+- `target_component`: hair / garment / eyes / accessory.
+- `target_traits`: rasgos exactos observables o escritos en el prompt.
+- `extra_elements_red`: todos los elementos ajenos presentes en la obra original.
+- `square_reference_url`: enlace a referencia neutral 1:1; vacío si aún no se encuentra.
+- `author_url`, `license_status`, `source_artwork_url`.
+- `prompt_positive` y `prompt_negative`.
+- `asset_status`: `reference_only`, `license_verified`, `clean_plate_found` o `pending`.
+
+**Importante:** color del iris, forma del ojo, largo del cabello y accesorios deben ser atributos separados. Por ejemplo, “ojos rosa/cyan” define color/heterocromía; no obliga a mantener el flequillo, vestido y pose de la imagen de referencia.
+
 ## C. Pixiv / BOOTH — referencias del editor por capas
 
 No apareció una única lámina de cientos de cortes individuales en los resultados directos indexados de Pixiv. Sí aparecieron recursos en BOOTH (ecosistema de creadores asociado a Pixiv) que son valiosos para comprender el editor modular:
