@@ -765,6 +765,9 @@ $("exportBtn").onclick=exportPng;$("saveBtn").onclick=save;$("loadBtn").onclick=
 document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>{if(b.dataset.view==="background"){state.category="background";renderNav();gallery();}else if(b.dataset.view==="lighting"){state.category="background";renderNav();gallery();}else if(b.dataset.view==="camera"){toast("Elegí una vista de la galería para cambiar el retrato.");}else{toast("Vista previa lista para exportar.");}});
 $("charName").ondblclick=()=>{const n=prompt("Nombre del personaje",state.name);if(n!==null){state.name=n.trim()||"Pibara";$("charName").textContent=state.name;}};
 $("stage").querySelector(".nameplate").title="Doble clic en el nombre para editarlo";
+const visualParams=new URLSearchParams(window.location.search);
+const visualPrompt=visualParams.get("visualPrompt");
+if(visualPrompt){aiSettings.prompt=visualPrompt.slice(0,3000);const requestedBackground=visualParams.get("visualBackground");if(["auto","opaque","transparent"].includes(requestedBackground))aiSettings.background=requestedBackground;state.category="ai";state.pill="Todos";}
 all();
 })();
 </script>
