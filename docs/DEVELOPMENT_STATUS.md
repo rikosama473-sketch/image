@@ -23,11 +23,14 @@ Equipo objetivo declarado: AMD Ryzen 5 5600G, 16 GB RAM y gráficos Radeon integ
 
 ## Cambios realizados en este bloque
 
-- Añadida navegación compartida en el constructor, biblioteca, taller de peinados, editor manual y generador local.
-- Añadidos enlaces del generador local (puerto 8765) hacia los módulos servidos en el puerto 8766; el enlace indica que se trata de otro servidor.
-- Ajustado el lanzador Python del editor manual para servir desde la raíz local del repositorio, de forma que sus enlaces relativos a los otros módulos resuelvan también en modo independiente. Sigue vinculado únicamente a loopback.
-- Actualizado el comienzo del README para expresar la identidad modular actual y describir cómo abrir los módulos sin presentar la IA como requisito.
-- Añadida una prueba estática de navegación que comprueba la presencia de los cinco módulos, la resolución de rutas locales y las rutas de vuelta desde la UI de inferencia.
+- Añadida navegación compartida entre constructor, biblioteca, taller de peinados, editor manual y generador local opcional.
+- Ajustado el lanzador independiente del editor manual para servir la raíz del repositorio y resolver enlaces a otros módulos.
+- Añadida una prueba de navegación al workflow de validación.
+- El JSON nuevo del Constructor registra la ruta, etiqueta y estado de revisión de la ilustración base y su filtro de visualización.
+- El Editor manual abre proyectos propios y JSON de Character Creator/Hairstyle Workbench. Compone cada pieza en una capa rasterizada editable y conserva su procedencia, categoría, estado, ruta y transformación de origen. Si existe una máscara dibujada en el Constructor, se importa como selección.
+- La transferencia admite imágenes PNG/WebP/JPEG incrustadas o rutas locales seguras; rechaza URLs externas, rutas con traversal, JSON mayores de 120 MB, imágenes mayores de 8192 px por lado/40 MP y proyectos con más de 200 capas.
+- Añadida la regresión `tests/test_project_handoff.py` al workflow de validación.
+- Límite explícito: las variantes adicionales del Taller permanecen en su JSON original; la imagen base se identifica como ilustración completa y no se inventan capas semánticas ni píxeles ocultos.
 
 ## Validación
 
@@ -63,4 +66,4 @@ Equipo objetivo declarado: AMD Ryzen 5 5600G, 16 GB RAM y gráficos Radeon integ
 
 ## Siguiente tarea concreta
 
-Revisar el diff de integración del PR #19 contra el estado más reciente de `main`, resolver las causas de `mergeable=false` por archivos/funcionalidad (sin merge automático), y ejecutar el recorrido de aceptación del editor en CI: importar PNG → editar/transformar capas → guardar y reabrir JSON → crear variante → exportar PNG transparente. En paralelo, añadir pruebas de regresión para persistencia/errores, no ampliar aún la matriz de modelos IA.
+Reconciliar semánticamente los cinco commits que existen solo en `main` y los cambios solapados de `data/character-prompt-registry.json`, sin borrar los assets y notas que solo están en `main`. Después probar en navegador la transferencia Constructor → Editor manual y Taller de peinados → Editor manual, incluyendo guardar/reabrir y exportar PNG transparente. No ampliar aún la matriz de modelos IA.

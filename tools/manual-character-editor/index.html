@@ -29,13 +29,13 @@ aside{background:var(--panel);padding:14px;border-right:1px solid var(--line);mi
 <body>
 <header>
   <div class="brand"><em>IMAGE</em> / EDITOR MANUAL</div>
-  <div class="header-sub">Recortes precisos, máscaras manuales y PNG con transparencia</div>
+  <div class="header-sub">Recortes precisos · Importa JSON del Constructor y Taller de peinados</div>
   <nav class="studio-module-nav" data-image-studio-nav aria-label="Navegación del estudio IMAGE"><a href="../avatar-maker/index.html">Constructor</a><a href="../visual-reference-library/index.html">Biblioteca visual</a><a href="../hairstyle-workbench/index.html">Taller de peinados</a><a href="http://127.0.0.1:8765/" target="_blank" rel="noopener noreferrer">Generador local IA ↗</a></nav>
   <div class="header-spacer"></div>
   <div class="header-actions">
     <button id="openImageBtn" class="primary">Abrir imagen</button>
     <button id="sampleBtn">Ejemplo Pibara</button>
-    <button id="openProjectBtn">Abrir proyecto</button>
+    <button id="openProjectBtn">Abrir proyecto / importar módulo</button>
     <button id="saveProjectBtn">Guardar proyecto</button>
     <button id="exportCompositeBtn">Exportar composición PNG</button>
   </div>
@@ -173,7 +173,7 @@ function newLayer(name, sourceCanvas){
   const id="layer-"+(nextLayerId++);
   const c=sourceCanvas?cloneCanvas(sourceCanvas):makeCanvas(doc.width,doc.height);
   const backup=cloneCanvas(c);
-  const layer={id:id,name:name||("Capa "+nextLayerId),canvas:c,backup:backup,visible:true,opacity:1};
+  const layer={id:id,name:name||("Capa "+nextLayerId),canvas:c,backup:backup,visible:true,opacity:1,sourceApp:null,sourceLayerId:null,sourceCategory:null,sourceStatus:null,sourceTags:[],sourcePath:null,sourceTransform:null};
   doc.layers.push(layer);activeId=id;return layer;
 }
 function resizeMask(w,h){maskCanvas.width=w;maskCanvas.height=h;mctx=maskCanvas.getContext("2d",{willReadFrequently:true});}
@@ -190,7 +190,7 @@ function snapshot(){
   if(!canEdit())return null;
   return {
     width:doc.width,height:doc.height,activeId:activeId,nextLayerId:nextLayerId,
-    layers:doc.layers.map(function(l){return {id:l.id,name:l.name,visible:l.visible,opacity:l.opacity,png:l.canvas.toDataURL("image/png"),backup:l.backup.toDataURL("image/png")};}),
+    layers:doc.layers.map(function(l){return {id:l.id,name:l.name,visible:l.visible,opacity:l.opacity,sourceApp:l.sourceApp||null,sourceLayerId:l.sourceLayerId||null,sourceCategory:l.sourceCategory||null,sourceStatus:l.sourceStatus||null,sourceTags:Array.isArray(l.sourceTags)?l.sourceTags.slice():[],sourcePath:l.sourcePath||null,sourceTransform:l.sourceTransform?Object.assign({},l.sourceTransform):null,png:l.canvas.toDataURL("image/png"),backup:l.backup.toDataURL("image/png")};}),
     selection:maskCanvas.toDataURL("image/png"),rectangle:rectangle?Object.assign({},rectangle):null,tool:tool
   };
 }
@@ -204,9 +204,168 @@ function loadCanvasUrl(url){
     const img=new Image();img.onload=function(){const c=makeCanvas(img.naturalWidth,img.naturalHeight);c.getContext("2d").drawImage(img,0,0);resolve(c);};img.onerror=function(){reject(new Error("No se pudo leer una imagen guardada en el proyecto."));};img.src=url;
   });
 }
+
+const MAX_IMPORTED_PROJECT_BYTES=120*1024*1024;
+const MAX_IMPORTED_PROJECT_EDGE=8192;
+const MAX_IMPORTED_PROJECT_PIXELS=40000000;
+function checkedImportedDimensions(width,height){
+ const w=Number(width),h=Number(height);
+ if(!Number.isInteger(w)||!Number.isInteger(h)||w<1||h<1||w>MAX_IMPORTED_PROJECT_EDGE||h>MAX_IMPORTED_PROJECT_EDGE||w*h>MAX_IMPORTED_PROJECT_PIXELS){
+  throw new Error("Dimensiones no válidas o demasiado grandes. Se admite hasta 8192 px por lado y 40 megapíxeles por proyecto.");
+ }
+ return {width:w,height:h};
+}
+function projectImageSource(layer,app){
+ if(!layer||typeof layer!=="object")throw new Error("Una capa no contiene información de imagen.");
+ let source=typeof layer.dataUrl==="string"&&layer.dataUrl?layer.dataUrl:(typeof layer.src==="string"&&layer.src?layer.src:"");
+ if(!source&&app==="IMAGE Hairstyle Workbench"&&typeof layer.repoPath==="string"&&layer.repoPath){
+  source="../../"+layer.repoPath.replace(/^\.\//,"");
+ }
+ if(typeof source!=="string"||!source)throw new Error("Una capa no tiene PNG/WebP incrustado ni ruta local.");
+ if(/^data:image\/(?:png|webp|jpeg);base64,/i.test(source))return source;
+ if(/^data:/i.test(source))throw new Error("El proyecto contiene un formato de imagen incrustado no admitido; usa PNG o WebP.");
+ if(!source.startsWith("../../"))throw new Error("Por seguridad, el editor solo acepta imágenes incrustadas o rutas locales del repositorio; descarga la referencia externa como PNG y vuelve a guardar el proyecto.");
+ let relative=source.slice(6),decoded;
+ try{decoded=decodeURIComponent(relative);}catch(_){throw new Error("La ruta de una imagen contiene una codificación inválida.");}
+ if(!decoded||decoded.startsWith("/")||decoded.split(/[\\/]/).some(part=>!part||part==="."||part==="..")){
+  throw new Error("La ruta local de una imagen no es segura.");
+ }
+ return source;
+}
+function loadProjectImageCanvas(source){
+ return new Promise(function(resolve,reject){
+  const img=new Image();
+  img.onload=function(){
+   const w=img.naturalWidth,h=img.naturalHeight;
+   if(!w||!h||w>MAX_IMPORTED_PROJECT_EDGE||h>MAX_IMPORTED_PROJECT_EDGE||w*h>MAX_IMPORTED_PROJECT_PIXELS){
+    reject(new Error("Una imagen fuente supera el límite de 8192 px por lado o 40 megapíxeles."));return;
+   }
+   const canvas=makeCanvas(w,h),ctx=canvas.getContext("2d");
+   if(!ctx){reject(new Error("No se pudo crear el lienzo para una imagen fuente."));return;}
+   ctx.drawImage(img,0,0);resolve(canvas);
+  };
+  img.onerror=function(){reject(new Error("No se pudo cargar una imagen local del proyecto: "+source.slice(0,140)));};
+  img.src=source;
+ });
+}
+function projectNumber(value,fallback,min,max,label){
+ if(value===undefined||value===null||value==="")return fallback;
+ const number=Number(value);
+ if(!Number.isFinite(number)||number<min||number>max)throw new Error("El valor "+label+" está fuera de rango.");
+ return number;
+}
+async function rasterizeImportedProjectLayer(layer,app,width,height,index){
+ const source=projectImageSource(layer,app);
+ const image=await loadProjectImageCanvas(source);
+ const defaultW=app==="IMAGE Character Creator"?width:image.width;
+ const defaultH=app==="IMAGE Character Creator"?height:image.height;
+ const x=projectNumber(layer.x,0,-32768,32768,"X");
+ const y=projectNumber(layer.y,0,-32768,32768,"Y");
+ const w=projectNumber(layer.w||defaultW,defaultW,1,32768,"ancho");
+ const h=projectNumber(layer.h||defaultH,defaultH,1,32768,"alto");
+ const rotation=projectNumber(layer.rotation,0,-36000,36000,"rotación");
+ const hue=app==="IMAGE Character Creator"?projectNumber(layer.hue,0,-360,360,"tono"):0;
+ const opacity=projectNumber(layer.opacity,1,0,1,"opacidad");
+ const output=makeCanvas(width,height),ctx=output.getContext("2d");
+ ctx.save();
+ if(hue)ctx.filter="hue-rotate("+hue+"deg)";
+ ctx.translate(x+w/2,y+h/2);
+ ctx.rotate(rotation*Math.PI/180);
+ ctx.drawImage(image,-w/2,-h/2,w,h);
+ ctx.restore();
+ const tags=Array.isArray(layer.tags)?layer.tags.slice(0,100).map(function(t){return String(t).slice(0,120);}):[];
+ const name=String(layer.name||layer.label||layer.filename||("Capa importada "+(index+1))).slice(0,160);
+ const sourcePath=source.startsWith("data:")?"imagen incrustada ("+source.slice(5,source.indexOf(";"))+")":source;
+ return {
+  id:"layer-"+(index+1),name:name,canvas:output,backup:cloneCanvas(output),
+  visible:layer.visible!==false,opacity:opacity,
+  sourceApp:app,sourceLayerId:String(layer.id||layer.assetId||("source-"+index)).slice(0,160),
+  sourceCategory:String(layer.category||layer.kind||layer.type||"unclassified").slice(0,120),
+  sourceStatus:String(layer.status||layer.sourceReview||"not-reviewed").slice(0,120),
+  sourceTags:tags,sourcePath:sourcePath,
+  sourceTransform:{x:x,y:y,width:w,height:h,rotation:rotation,hue:hue}
+ };
+}
+function finishImportedProject(width,height,layers,maskStrokes,maskSourceWidth,maskSourceHeight,message){
+ doc={width:width,height:height,layers:layers};
+ nextLayerId=layers.length+1;
+ activeId=layers.length?layers[layers.length-1].id:null;
+ rectangle=null;polygonPoints=[];pointerDown=false;lastPoint=null;dragStart=null;strokeSnapshot=null;
+ undoStack=[];redoStack=[];
+ setupCanvasSize(width,height);
+ if(Array.isArray(maskStrokes)&&maskStrokes.length&&maskSourceWidth>0&&maskSourceHeight>0){
+  const sx=width/maskSourceWidth,sy=height/maskSourceHeight;
+  mctx.save();mctx.scale(sx,sy);mctx.strokeStyle="#fff";mctx.fillStyle="#fff";mctx.lineCap="round";mctx.lineJoin="round";
+  for(const stroke of maskStrokes){
+   if(!stroke||!Array.isArray(stroke.points)||!stroke.points.length)continue;
+   const points=stroke.points.filter(function(p){return p&&Number.isFinite(Number(p.x))&&Number.isFinite(Number(p.y));});
+   if(!points.length)continue;
+   const size=projectNumber(stroke.size,18,1,256,"tamaño de máscara");
+   mctx.lineWidth=size;mctx.beginPath();mctx.moveTo(Number(points[0].x),Number(points[0].y));
+   if(points.length===1){mctx.arc(Number(points[0].x),Number(points[0].y),size/2,0,Math.PI*2);mctx.fill();}
+   else{for(let i=1;i<points.length;i++)mctx.lineTo(Number(points[i].x),Number(points[i].y));mctx.stroke();}
+  }
+  mctx.restore();
+ }
+ renderLayers();fitView();redraw();updateHistoryButtons();setStatus(message,"ok");
+}
+async function importCharacterCreatorProject(data){
+ const sourceLayersRaw=Array.isArray(data.layers)?data.layers:(Array.isArray(data.overlays)?data.overlays:null);
+ if(!data.canvas||!sourceLayersRaw)throw new Error("El JSON del Constructor no contiene lienzo y capas válidos.");
+ if(typeof data.baseSource!=="string"||!data.baseSource)throw new Error("Este proyecto del Constructor es antiguo y no registra la imagen base. Ábrelo en Constructor y vuelve a guardarlo con esta versión para habilitar la importación.");
+ const dimensions=checkedImportedDimensions(data.canvas.width||768,data.canvas.height||1280);
+ const app=data.app==="KIRA Avatar Maker"?"KIRA Avatar Maker":"IMAGE Character Creator";
+ const baseSource=projectImageSource({src:data.baseSource},app);
+ const baseImage=await loadProjectImageCanvas(baseSource);
+ const base=makeCanvas(dimensions.width,dimensions.height),ctx=base.getContext("2d");
+ const scale=Math.min(dimensions.width/baseImage.width,dimensions.height/baseImage.height);
+ const dw=baseImage.width*scale,dh=baseImage.height*scale;
+ const filter=typeof data.baseFilter==="string"&&data.baseFilter.length<=160&&/^[A-Za-z0-9\s().,%+-]+$/.test(data.baseFilter)?data.baseFilter:"none";
+ ctx.save();ctx.filter=filter;ctx.drawImage(baseImage,(dimensions.width-dw)/2,(dimensions.height-dh)/2,dw,dh);ctx.restore();
+ const layers=[{
+  id:"layer-1",name:("Ilustración base · "+String(data.baseLabel||data.name||"personaje")).slice(0,160),
+  canvas:base,backup:cloneCanvas(base),visible:data.baseVisible!==false,opacity:1,
+  sourceApp:app,sourceLayerId:"base",sourceCategory:"full_illustration",
+  sourceStatus:String(data.baseSourceReview||"not-reviewed").slice(0,120),
+  sourceTags:[],sourcePath:baseSource,
+  sourceTransform:{fit:"contain",width:baseImage.width,height:baseImage.height,filter:filter}
+ }];
+ if(sourceLayersRaw.length>200)throw new Error("El proyecto supera el límite de 200 capas importables.");
+ const sourceLayers=sourceLayersRaw.map(function(layer,index){
+  if(!layer||typeof layer!=="object")throw new Error("El proyecto contiene una capa con formato inválido.");
+  return {layer:layer,index:index};
+ });
+ sourceLayers.sort(function(a,b){return projectNumber(a.layer.order,a.index,-100000,100000,"orden")-projectNumber(b.layer.order,b.index,-100000,100000,"orden");});
+ for(let i=0;i<sourceLayers.length;i++){
+  const result=await rasterizeImportedProjectLayer(sourceLayers[i].layer,app,dimensions.width,dimensions.height,i+1);
+  result.id="layer-"+(layers.length+1);layers.push(result);
+ }
+ const maskW=Number(data.canvas.width)||768,maskH=Number(data.canvas.height)||1280;
+ finishImportedProject(dimensions.width,dimensions.height,layers,data.aiMaskStrokes,maskW,maskH,
+  "Proyecto del Constructor importado. La ilustración base sigue siendo una imagen completa; no se inventaron capas semánticas.");
+}
+async function importHairstyleWorkbenchProject(data){
+ const character=data.character||{};
+ const dimensions=checkedImportedDimensions(character.width||768,character.height||1280);
+ if(!Array.isArray(data.layers)||!data.layers.length)throw new Error("El proyecto del Taller no contiene piezas para importar.");
+ if(data.layers.length>200)throw new Error("El proyecto supera el límite de 200 capas importables.");
+ const sourceLayers=data.layers.map(function(layer,index){
+  if(!layer||typeof layer!=="object")throw new Error("El proyecto contiene una capa con formato inválido.");
+  return {layer:layer,index:index};
+ });
+ sourceLayers.sort(function(a,b){return projectNumber(a.layer.order,a.index,-100000,100000,"orden")-projectNumber(b.layer.order,b.index,-100000,100000,"orden");});
+ const layers=[];
+ for(let i=0;i<sourceLayers.length;i++){
+  const result=await rasterizeImportedProjectLayer(sourceLayers[i].layer,data.app,dimensions.width,dimensions.height,i);
+  result.id="layer-"+(layers.length+1);layers.push(result);
+ }
+ finishImportedProject(dimensions.width,dimensions.height,layers,[],dimensions.width,dimensions.height,
+  "Composición del Taller importada. Las variantes adicionales siguen en el JSON original; las capas importadas conservan su procedencia.");
+}
+
 async function restoreSnapshot(snap){
   doc={width:snap.width,height:snap.height,layers:[]};nextLayerId=snap.nextLayerId||1;
-  for(const l of snap.layers){doc.layers.push({id:l.id,name:l.name,visible:l.visible,opacity:l.opacity,canvas:await loadCanvasUrl(l.png),backup:await loadCanvasUrl(l.backup)});}
+  for(const l of snap.layers){doc.layers.push({id:l.id,name:l.name,visible:l.visible,opacity:l.opacity,sourceApp:l.sourceApp||null,sourceLayerId:l.sourceLayerId||null,sourceCategory:l.sourceCategory||null,sourceStatus:l.sourceStatus||null,sourceTags:Array.isArray(l.sourceTags)?l.sourceTags.slice():[],sourcePath:l.sourcePath||null,sourceTransform:l.sourceTransform?Object.assign({},l.sourceTransform):null,canvas:await loadCanvasUrl(l.png),backup:await loadCanvasUrl(l.backup)});}
   activeId=snap.activeId;rectangle=snap.rectangle;tool=snap.tool||"rect";polygonPoints=[];
   const mask=await loadCanvasUrl(snap.selection);resizeMask(snap.width,snap.height);mctx.drawImage(mask,0,0);
   setupCanvasSize(snap.width,snap.height);setTool(tool);renderLayers();redraw();
@@ -389,19 +548,30 @@ async function loadSample(){
 }
 async function saveProject(){
   if(!canEdit())return;
-  const data={app:"IMAGE Manual Character Editor",version:1,width:doc.width,height:doc.height,activeId:activeId,nextLayerId:nextLayerId,rectangle:rectangle,layers:doc.layers.map(function(l){return{id:l.id,name:l.name,visible:l.visible,opacity:l.opacity,png:l.canvas.toDataURL("image/png"),backup:l.backup.toDataURL("image/png")};}),selection:maskCanvas.toDataURL("image/png")};
+  const data={app:"IMAGE Manual Character Editor",version:1,width:doc.width,height:doc.height,activeId:activeId,nextLayerId:nextLayerId,rectangle:rectangle,layers:doc.layers.map(function(l){return{id:l.id,name:l.name,visible:l.visible,opacity:l.opacity,sourceApp:l.sourceApp||null,sourceLayerId:l.sourceLayerId||null,sourceCategory:l.sourceCategory||null,sourceStatus:l.sourceStatus||null,sourceTags:Array.isArray(l.sourceTags)?l.sourceTags.slice():[],sourcePath:l.sourcePath||null,sourceTransform:l.sourceTransform?Object.assign({},l.sourceTransform):null,png:l.canvas.toDataURL("image/png"),backup:l.backup.toDataURL("image/png")};}),selection:maskCanvas.toDataURL("image/png")};
   const blob=new Blob([JSON.stringify(data)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="image-character-edit-project.json";a.click();URL.revokeObjectURL(url);setStatus("Proyecto guardado. Abrí el JSON más adelante para continuar editando.","ok");
 }
 async function openProject(file){
-  if(!file)return;
-  try{
-    const data=JSON.parse(await file.text());if(data.app!=="IMAGE Manual Character Editor"||!Array.isArray(data.layers)||!data.width||!data.height)throw new Error("Ese archivo no parece un proyecto válido de IMAGE Editor.");
-    doc={width:data.width,height:data.height,layers:[]};nextLayerId=data.nextLayerId||1;
-    for(const l of data.layers){doc.layers.push({id:l.id,name:l.name,visible:l.visible!==false,opacity:typeof l.opacity==="number"?l.opacity:1,canvas:await loadCanvasUrl(l.png),backup:await loadCanvasUrl(l.backup||l.png)});}
-    activeId=data.activeId|| (doc.layers[0]&&doc.layers[0].id);setupCanvasSize(doc.width,doc.height);
-    if(data.selection){const mask=await loadCanvasUrl(data.selection);mctx.drawImage(mask,0,0);}
-    rectangle=data.rectangle||null;undoStack=[];redoStack=[];polygonPoints=[];renderLayers();fitView();redraw();setStatus("Proyecto cargado. Las capas y la selección se recuperaron.","ok");
-  }catch(err){setStatus("No se pudo abrir el proyecto: "+err.message,"danger-note");}
+ if(!file)return;
+ try{
+  if(file.size>MAX_IMPORTED_PROJECT_BYTES)throw new Error("El JSON supera 120 MB. Reduce la cantidad de imágenes incrustadas y vuelve a exportar.");
+  const data=JSON.parse(await file.text());
+  if(!data||typeof data!=="object"||Array.isArray(data))throw new Error("El archivo no contiene un objeto de proyecto válido.");
+  if(data.app==="IMAGE Character Creator"||data.app==="KIRA Avatar Maker"){
+   await importCharacterCreatorProject(data);return;
+  }
+  if(data.app==="IMAGE Hairstyle Workbench"){
+   await importHairstyleWorkbenchProject(data);return;
+  }
+  if(data.app!=="IMAGE Manual Character Editor"||!Array.isArray(data.layers)||!data.width||!data.height)throw new Error("Formato no compatible. Se admiten proyectos de IMAGE Editor, Character Creator y Hairstyle Workbench.");
+  doc={width:data.width,height:data.height,layers:[]};nextLayerId=data.nextLayerId||1;
+  for(const l of data.layers){
+   doc.layers.push({id:l.id,name:l.name,visible:l.visible!==false,opacity:typeof l.opacity==="number"?l.opacity:1,sourceApp:l.sourceApp||null,sourceLayerId:l.sourceLayerId||null,sourceCategory:l.sourceCategory||null,sourceStatus:l.sourceStatus||null,sourceTags:Array.isArray(l.sourceTags)?l.sourceTags.slice():[],sourcePath:l.sourcePath||null,sourceTransform:l.sourceTransform?Object.assign({},l.sourceTransform):null,canvas:await loadCanvasUrl(l.png),backup:await loadCanvasUrl(l.backup||l.png)});
+  }
+  activeId=data.activeId||(doc.layers[0]&&doc.layers[0].id);setupCanvasSize(doc.width,doc.height);
+  if(data.selection){const mask=await loadCanvasUrl(data.selection);mctx.drawImage(mask,0,0);}
+  rectangle=data.rectangle||null;undoStack=[];redoStack=[];polygonPoints=[];renderLayers();fitView();redraw();setStatus("Proyecto cargado. Las capas, la selección y su procedencia se recuperaron.","ok");
+ }catch(err){setStatus("No se pudo abrir el proyecto: "+err.message,"danger-note");}
 }
 function pointerDownHandler(evt){
   if(!canEdit())return;const p=getPoint(evt);
