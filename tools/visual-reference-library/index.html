@@ -84,7 +84,7 @@ dialog{width:min(760px,calc(100% - 20px));max-height:92vh;overflow:auto;border:1
 
   <div class="section-head"><div><h2 id="listTitle">Referencias web</h2><p id="listSubtitle">Referencias externas enlazadas; abrí cada fuente para comprobar autor, contexto y permisos.</p></div><div class="meta" id="resultCount"></div></div>
   <section class="grid" id="grid" aria-live="polite"><div class="empty">Cargando los catálogos de IMAGE…</div></section>
-  <div class="footer-note">La vista local toma las 764 entradas indexadas en <code>tools/avatar-maker/assets/image-library.json</code> y las capas de <code>catalog.json</code>. Los nombres genéricos no se convierten automáticamente en etiquetas confirmadas: la clasificación visual se guarda como anotación hasta que se revise cada archivo. Para producir hojas de contacto locales, ejecutá <code>python scripts/build_visual_contact_sheets.py</code> desde la raíz del repositorio.</div>
+  <div class="footer-note">La vista local toma las 764 entradas indexadas en <code>tools/avatar-maker/assets/image-library.json</code> y las capas de <code>catalog.json</code>. Los nombres genéricos no se convierten automáticamente en etiquetas confirmadas: la clasificación visual se guarda como anotación hasta que se revise cada archivo. Para aplicar al repositorio las anotaciones exportadas, ejecutá <code>python scripts/apply_visual_reference_annotations.py image-visual-reference-library-export.json</code>. Para producir hojas de contacto locales, ejecutá <code>python scripts/build_visual_contact_sheets.py</code> desde la raíz del repositorio.</div>
 </main>
 
 <dialog id="editDialog">
@@ -110,7 +110,7 @@ dialog{width:min(760px,calc(100% - 20px));max-height:92vh;overflow:auto;border:1
 "use strict";
 const $=id=>document.getElementById(id);
 const STORAGE_KEY="image.visual-reference-library.v1";
-let referenceCatalog=null, imageLibrary=null, assetCatalog=null, activeTab="web", cardIndex=new Map();
+let referenceCatalog=null, imageLibrary=null, assetCatalog=null, annotationCatalog=null, activeTab="web", cardIndex=new Map();
 let state={annotations:{},userReferences:[],styles:[],selectedIds:[]};
 const categoryNames={eyes:"Ojos",hair:"Cabello",bangs:"Flequillos",eyelashes:"Pestañas",iris:"Iris",pupils:"Pupilas",accessories:"Accesorios",face:"Rostro",mixed:"Mixto",full_character:"Personaje completo",body:"Cuerpo",clothes:"Ropa",other:"Otro"};
 const statusNames={unreviewed:"Sin revisar",reviewed_reference:"Referencia revisada",candidate_for_cutout:"Candidato a recorte",approved_for_internal_use:"Aprobado para uso interno",rejected:"Descartado",pending_visual_review:"Pendiente de revisión visual"};
@@ -121,6 +121,7 @@ function notice(msg){const el=document.createElement("div");el.className="notice
 function getAnnotation(id){return state.annotations[id]||{};}
 function normalizeTag(x){return String(x||"").trim().toLowerCase().replace(/\s+/g,"_");}
 function parseTags(s){return String(s||"").split(",").map(x=>x.trim()).filter(Boolean).map(normalizeTag);}
+function mergeById(base,overlay){const result=new Map();(base||[]).forEach(x=>{if(x&&x.id)result.set(x.id,x);});(overlay||[]).forEach(x=>{if(x&&x.id)result.set(x.id,x);});return Array.from(result.values());}
 function allCards(){
  const cards=[];
  (referenceCatalog?.items||[]).concat(state.userReferences||[]).forEach(x=>cards.push({id:x.id,type:"web",title:x.title||x.id,category:x.category||"mixed",image:x.image_url||"",sourceUrl:x.source_url||"",creator:x.creator||x.source_name||"",license:x.license_status||"reference_only_unverified",review:x.review_status||"unreviewed",tags:x.tags||[],description:x.description||x.usage||"",raw:x}));
@@ -218,7 +219,7 @@ function makeVariation(){
  persist();setActiveTab("styles");notice("Receta creada. Es una especificación de diseño, no una imagen generada."); 
 }
 function exportBundle(){
- const bundle={schema_version:1,project:"IMAGE visual reference library",exported_at:new Date().toISOString(),source_catalog:"tools/visual-reference-library/reference-library.json",references_added_by_user:state.userReferences,annotations:state.annotations,style_recipes:state.styles,selected_ids:state.selectedIds,notice:"Annotations and recipe specs only. Original web images are linked, not bundled. Recipes are not generated image files."};
+ const bundle={schema_version:1,project:"IMAGE visual reference library",exported_at:new Date().toISOString(),source_catalog:"tools/visual-reference-library/reference-library.json",persistent_store_format:"tools/visual-reference-library/annotations.json",references_added_by_user:state.userReferences,annotations:state.annotations,style_recipes:state.styles,selected_ids:state.selectedIds,notice:"Annotations and recipe specs only. Original web images are linked, not bundled. Recipes are not generated image files. Apply to the repo with python scripts/apply_visual_reference_annotations.py image-visual-reference-library-export.json."};
  const blob=new Blob([JSON.stringify(bundle,null,2)+"\n"],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="image-visual-reference-library-export.json";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);notice("Exportado JSON con "+Object.keys(state.annotations).length+" fichas anotadas y "+state.styles.length+" recetas.");
 }
 function importBundle(file){
@@ -242,8 +243,20 @@ function bindEvents(){
 async function load(){
  loadState();bindEvents();
  const loadJson=async path=>{const r=await fetch(path,{cache:"no-store"});if(!r.ok)throw new Error(path+" HTTP "+r.status);return r.json();};
- try{const [refs,images,catalog]=await Promise.all([loadJson("./reference-library.json"),loadJson("../avatar-maker/assets/image-library.json"),loadJson("../avatar-maker/assets/catalog.json")]);referenceCatalog=refs;imageLibrary=images;assetCatalog=catalog;updateStats();setActiveTab("web");}
- catch(e){$("grid").innerHTML='<div class="empty">No se pudieron leer los catálogos. Abrí la página a través del servidor local IMAGE, no con file://.<br><br>Ruta esperada: <code>http://127.0.0.1:8766/tools/visual-reference-library/index.html</code><br><br>'+ $esc(String(e.message||e))+'</div>';}
+ try{
+  const [refs,annotations,images,catalog]=await Promise.all([
+   loadJson("./reference-library.json"),
+   loadJson("./annotations.json"),
+   loadJson("../avatar-maker/assets/image-library.json"),
+   loadJson("../avatar-maker/assets/catalog.json")
+  ]);
+  referenceCatalog=refs;annotationCatalog=annotations;imageLibrary=images;assetCatalog=catalog;
+  const localAnnotations={...state.annotations},localReferences=state.userReferences.slice(),localStyles=state.styles.slice();
+  state.annotations={...(annotationCatalog.annotations||{}),...localAnnotations};
+  state.userReferences=mergeById(annotationCatalog.user_references||[],localReferences);
+  state.styles=mergeById(annotationCatalog.style_recipes||[],localStyles);
+  updateStats();persist();setActiveTab("web");
+ }catch(e){$("grid").innerHTML='<div class="empty">No se pudieron leer los catálogos. Abrí la página a través del servidor local IMAGE, no con file://.<br><br>Ruta esperada: <code>http://127.0.0.1:8766/tools/visual-reference-library/index.html</code><br><br>'+ $esc(String(e.message||e))+'</div>';}
 }
 load();
 })();
