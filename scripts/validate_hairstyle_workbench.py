@@ -48,12 +48,12 @@ def main() -> None:
     if found:
         fail("The no-AI workbench contains provider/API code: " + ", ".join(found))
 
-    scripts = re.findall(r"<script>([\\s\\S]*?)</script>", html)
+    scripts = re.findall(r"<script>([\s\S]*?)</script>", html)
     if not scripts:
         fail("No inline JavaScript block was found.")
     with tempfile.NamedTemporaryFile("w", suffix=".js", encoding="utf-8", delete=False) as handle:
         temporary_script = Path(handle.name)
-        handle.write("\\n".join(scripts))
+        handle.write("\n".join(scripts))
     try:
         result = subprocess.run(
             ["node", "--check", str(temporary_script)],
