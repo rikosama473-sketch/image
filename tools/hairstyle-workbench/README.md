@@ -46,3 +46,23 @@ Al pulsar **Probar en el lienzo**, el editor activa las piezas reales que puede 
 4. Guardá la combinación como variante y exportá el proyecto JSON para conservar posiciones, etiquetas y PNG importados. El PNG exportado refleja solo las piezas que realmente estén cargadas.
 
 El catálogo de bocetos sirve como explorador de diseño. La disponibilidad y calidad de un peinado real depende de tener el recorte PNG correcto, la transparencia limpia, las proporciones alineadas y la revisión visual del recurso. Las máscaras candidatas existentes continúan marcadas como pendientes hasta revisarlas.
+
+## Colección de referencias reales encontradas en la web
+
+El visor ahora tiene dos pestañas: **120 recetas conceptuales** y **Referencias web y recursos**. Esta segunda pestaña registra 12 fuentes localizadas en la web: siete láminas de referencia visual y cinco fuentes de recursos descargables. Las láminas se muestran desde sus URL originales y se enlazan con la página de origen; no se copian al repositorio ni se presentan como libres de derechos.
+
+### Fuentes con archivos/licencias declaradas
+
+- [Anime Girl and Boy Portraits — OpenGameArt](https://opengameart.org/content/anime-girl-and-boy-portraits): el autor declara CC0 y describe un XCF de GIMP con capas editables, dos cortes femeninos y dos masculinos, y opciones de coleta. [ZIP](https://opengameart.org/sites/default/files/allanime-11-28-2020.zip).
+- [Hair Animation — OpenGameArt](https://opengameart.org/content/hair-animation): CC0 declarado; contiene PSD y GIF de muestras de cabello corto/largo.
+- [Hair for 24x32 bases — OpenGameArt](https://opengameart.org/content/hair-for-24x32-bases): CC0 declarado; nueve peinados de sprite, incluidos rizado y trenza. Es pixel art pequeño, no una pieza anime HD.
+- [Anime LPC Hair — OpenGameArt](https://opengameart.org/content/anime-lpc-hair): CC-BY 3.0; conservar atribución.
+- [Hair for male and female anime base sprites — OpenGameArt](https://lpc.opengameart.org/content/hair-for-male-and-female-anime-base-sprites): la página enumera GPL-2.0, GPL-3.0, CC-BY-3.0 y CC-BY-SA-3.0. Revisar la licencia elegida y atribuir al autor antes de redistribuir.
+
+Estos son puntos de partida para importar y separar capas, no una afirmación de que todos los archivos ya están extraídos, alineados o aprobados para el estilo final. La pestaña identifica cada recurso, su licencia declarada, URL de origen y si es una referencia o un archivo descargable.
+
+### Referencias visuales sin permiso de reutilización confirmado
+
+La colección incluye láminas de variantes femeninas, masculinas, cortes cortos, mechones, coletas, trenzas y bob/hime/wolf cut. Sus miniaturas son enlaces de referencia remotos; la etiqueta **No verificada; referencia visual únicamente** significa que se pueden estudiar para descubrir diseños, pero no deben copiarse, descargarse para redistribución o transformarse en recortes integrados sin verificar permisos con quien tenga los derechos.
+
+El próximo paso de la colección real es descargar los paquetes que permiten reutilización, extraer sus capas de cabello, normalizar transparencia y pivote, hacer control visual y convertir cada pieza aprobada a un asset individual con su licencia y atribución preservadas.
