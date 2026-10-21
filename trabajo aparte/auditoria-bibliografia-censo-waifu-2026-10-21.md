@@ -182,3 +182,10 @@ These sources were added during the follow-up category/asset audit on 21 October
 - [Itch.io — Pung Lone Wolf layered female character sprite alternate storefront](https://punglonewolf.itch.io/girl-sprite-psd-1)
 
 **Warning:** this appendix provides source traceability, not blanket reuse permission. Any downloadable asset must be checked against its exact item license and redistribution conditions before being included in a distributable editor.
+
+
+## Additional BOOTH expression-layer references added in the latest pass
+
+- [BOOTH — RA-STUDIO Miko-san layered expression PSD](https://booth.pm/en/items/2430742)
+- [BOOTH — Dragon Girl layered facial parts PSD](https://booth.pm/ja/items/3668928)
+- [BOOTH — Usuhoso Sister layered eyes/mouth/brow PSD](https://booth.pm/ja/items/8826602)
