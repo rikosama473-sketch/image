@@ -12,14 +12,14 @@ Se completó una ampliación del censo de fuentes de cabello, ropa, ojos y acces
 - [**Censo visual interactivo — 226 fichas con miniatura**](./censo-visual-interactivo.html): búsqueda libre por rasgos, filtro por componente y plataforma, aviso rojo de elementos ajenos, enlace a fuente original y estado de licencia.
 - [**Censo exhaustivo — 153 URLs canónicas únicas**](./censo-exhaustivo-fuentes-waifu-2026-10-21.md): informe profundo con fichas categorizadas, elementos a marcar en rojo, visibilidad de prompts, precio/licencia solo cuando la fuente lo indicó, brechas y recomendaciones.
 - [Bibliografía del censo](./auditoria-bibliografia-censo-waifu-2026-10-21.md): URLs de fuente para auditar el informe.
-- [Índice JSON de referencias](./indice-visual-componentes.json): **226 registros de URL normalizada**, con 226 URLs de miniatura capturadas de páginas/fuentes, componentes objetivo y campos sobre elementos ajenos, licencia y estado de placa monocroma.
+- [Índice JSON de referencias](./indice-visual-componentes.json): **230 registros de URL normalizada**, con 230 URLs de miniatura capturadas de páginas/fuentes, componentes objetivo y campos sobre elementos ajenos, licencia y estado de placa monocroma.
 - [Atlas de peinados y prompts](./atlas-peinados-interactivo.html): primera interfaz de recetas de peinado, filtros y fichas PixAI con alertas rojas.
 
 ### Cómo leer los números
 
-El informe de investigación profunda contiene **160 registros categorizados**, 154 con URL y seis alias/cross-references que remiten a registros existentes. Entre los que tienen URL se detectó un duplicado entre categorías, resultando en **153 URLs canónicas únicas** en ese censo. El índice de IMAGE combina esas fuentes con el índice visual previo: 75 fichas iniciales + 151 registros nuevos de fuente, con dos coincidencias absorbidas en lugar de duplicarlas = **226 registros en total**.
+El informe de investigación profunda contiene **160 registros categorizados**, 154 con URL y seis alias/cross-references que remiten a registros existentes. Entre los que tienen URL se detectó un duplicado entre categorías, resultando en **153 URLs canónicas únicas** en ese censo. El índice de IMAGE combina esas fuentes con el índice visual previo: 75 fichas iniciales + 151 registros nuevos de fuente, con dos coincidencias absorbidas en lugar de duplicarlas = **230 registros en total**.
 
-Las 226 vistas previas se extrajeron de metadata o enlaces visibles de las páginas fuente. **Todavía no se verificó visualmente que todas carguen en el HTML final** y algunas URLs de CDN pueden cambiar o bloquearse. La interfaz tiene un fallback de “vista previa no disponible” y permite abrir la fuente original. No se descargaron los 226 archivos completos.
+Las 230 vistas previas se extrajeron de metadata o enlaces visibles de las páginas fuente. **Todavía no se verificó visualmente que todas carguen en el HTML final** y algunas URLs de CDN pueden cambiar o bloquearse. La interfaz tiene un fallback de “vista previa no disponible” y permite abrir la fuente original. No se descargaron los 226 archivos completos.
 
 **Deduplicación:** se normalizaron las URLs canónicas. No se ejecutó comparación de hashes ni deduplicación perceptual entre sitios distintos, de modo que una ilustración subida en dos plataformas podría aparecer como dos fuentes. Los registros de censo preservan alias cuando la fuente inicial era un evento/listado en vez de la página de producto.
 
