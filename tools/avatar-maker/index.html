@@ -260,7 +260,7 @@ function starterWorkspace(root){
   grid.innerHTML=samples.map(a=>
    '<article class="starter-card"><img loading="lazy" src="'+safe(url(a.src))+'" alt="Vista previa de '+safe(a.label)+'"><b>'+safe(a.label)+'</b><small>'+safe(a.path)+'</small><span class="library-status">RETRATO COMPLETO · LICENCIA POR REVISAR</span><div class="actions"><button type="button" class="btn primary" data-starter-base="'+safe(a.id)+'">Usar como base</button><button type="button" class="btn" data-starter-test="'+safe(a.id)+'">Probar PNG</button><button type="button" class="btn" data-starter-overlay="'+safe(a.id)+'">Añadir capa de prueba</button></div></article>'
   ).join("");
-  $("starterCount").textContent=samples.length+" visibles · "+allStarterSamples.length+" retratos internos · "+(imageLibraryCache?imageLibraryCache.assets.length:0)+" recursos indexados.";
+  $("starterCount").textContent=samples.length+" visibles · "+allStarterSamples.length+" retratos completos · "+(imageLibraryCache?imageLibraryCache.assets.length:0)+" recursos indexados.;
   $("starterMoreStatus").textContent="Mostrando "+samples.length+" de "+allStarterSamples.length+" retratos.";
   $("starterMore").classList.toggle("hidden",samples.length>=allStarterSamples.length);
   grid.querySelectorAll("[data-starter-base]").forEach(b=>b.onclick=()=>useLibraryAsset(b.dataset.starterBase,"starter"));
@@ -273,8 +273,7 @@ function starterWorkspace(root){
    const data=await loadImageLibrary();
    if(state.category!=="starter")return;
    const all=Array.isArray(data.assets)?data.assets:[];
-   const internal=all.filter(a=>a&&a.kind==="full_illustration"&&/^from-PixAI-/i.test(String(a.path||"")));
-   allStarterSamples=internal.length?internal:all.filter(a=>a&&a.kind==="full_illustration");
+   allStarterSamples=all.filter(a=>a&&a.kind==="full_illustration").slice().sort((a,b)=>{const aPix=/^from-PixAI-/i.test(String(a.path||""))?0:1;const bPix=/^from-PixAI-/i.test(String(b.path||""))?0:1;return aPix-bPix||String(a.path||"").localeCompare(String(b.path||""));});
    shownStarterCount=Math.min(24,allStarterSamples.length);
    if(!allStarterSamples.length)throw Error("El catálogo no contiene imágenes internas de ilustración completa.");
    renderStarterSamples();
