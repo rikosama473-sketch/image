@@ -17,6 +17,10 @@
 6. **Composición no destructiva.** La base se puede ocultar independientemente; su estado persiste en JSON. Al aplicar el recorte de fondo, se oculta automáticamente la base opaca para que no vuelva a cubrir la salida alfa; se puede restaurar en cualquier momento.
 7. **Revisión de capas.** Ninguna salida de segmentación se aprueba automáticamente. Deben revisarse el canal alfa, cabello fino, halos, bordes, identidad y alineación. Mantener este estado de candidato protege contra errores de capas y composiciones que se desincronizan.
 
+## Comprobación con inferencia real
+
+La primera inferencia real sobre `from-PixAI-2034984086876227343-0.png` terminó correctamente con `isnet-anime`, conservó 768×1280 y devolvió un canal alfa verificable. La revisión visual encontró un borde claro tenue en algunos mechones sobre fondos muy contrastados, así que el resultado sigue pendiente de aprobación. La matriz de alfa, el análisis visual y el artefacto descargable están documentados en [REAL_CUTOUT_REVIEW_2026-10.md](REAL_CUTOUT_REVIEW_2026-10.md). El flujo mejorado ahora genera previsualizaciones sobre tablero, negro, blanco y magenta y reporta bandas de alfa más útiles.
+
 ## Referencias técnicas contrastadas
 
 - [rembg — repositorio upstream](https://github.com/danielgatis/rembg): modelos `isnet-anime` / `birefnet-portrait`, sesiones reutilizables y segmentación local. La licencia de la biblioteca no certifica por sí sola los derechos de cada peso del modelo ni de las imágenes de entrada.
