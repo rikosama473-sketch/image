@@ -10108,16 +10108,281 @@
       "thumbnail_checked_date": "2026-10-21",
       "thumbnail_status": "Official page preview GIF extracted from source image links; not visually checked in final browser.",
       "ordinal": 244
+    },
+    {
+      "id": "PX-HIR-011",
+      "category": "hair_clothing_accessories",
+      "title": "Office casual woman: wavy hair, colored inner strands and business-casual outfit",
+      "source_url": "https://pixai.art/artwork/2064910704538338660",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/a3bd5f64-0340-4bd3-9894-882a2c0509b1",
+      "creator": "악어개",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public; prompt explicitly says adult 30-year-old woman and multiple casual-hair ideas",
+      "target_traits": [
+        "wavy hair",
+        "colored inner-hair strands",
+        "casual/business hair variations",
+        "black shirt",
+        "white jacket",
+        "white tie",
+        "earrings and bracelet",
+        "business female styling"
+      ],
+      "extras_red": [
+        "full adult character/face",
+        "white business jacket and tie are outfit, not hair",
+        "handbag and bracelet are separate accessory records",
+        "street background, pose and skin/highlight rendering"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+adult+female+wavy+hair+inner+color+front+head+only+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "PixAI stillThumb recovered from official metadata; not visually checked in final browser.",
+      "ordinal": 245
+    },
+    {
+      "id": "PX-CLT-016",
+      "category": "clothing_accessories",
+      "title": "Perlica (Arknights: Endfield) — white futuristic outfit and cat-ear silhouette",
+      "source_url": "https://pixai.art/artwork/1973230158341989818",
+      "thumbnail_url": "https://images-ng.pixai.art/images/stillThumb/f34b7db7-884b-4a1a-9af0-ff3d66f15828",
+      "creator": "JesusitoCaro99",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "source page text describes the character; full prompt not extracted in this pass",
+      "target_traits": [
+        "white futuristic clothing silhouette",
+        "cat-ear/kemonomimi head silhouette",
+        "character-specific outfit structure"
+      ],
+      "extras_red": [
+        "named Arknights: Endfield character",
+        "complete hair/face/ears/body/pose in one source",
+        "page tags include bare feet; footwear/feet are not clothing-layer sprites"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=futuristic+female+anime+white+outfit+front+back+design+sheet+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official PixAI thumbnail endpoint captured; image load not individually verified.",
+      "ordinal": 246
+    },
+    {
+      "id": "PX-CLT-017",
+      "category": "clothing",
+      "title": "Norma Hollowell (Zenless Zone Zero) — white outfit reference",
+      "source_url": "https://pixai.art/artwork/2007781220998646215",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/41fca93e-c8a2-4605-a3b8-576df7aea95e",
+      "creator": "賢い緑魔法使いちゃん",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "prompt not visible in the returned text; visual description says white background, long hair and white outfit",
+      "target_traits": [
+        "white outfit silhouette",
+        "long hair as secondary reference",
+        "white-background character presentation"
+      ],
+      "extras_red": [
+        "full named franchise character",
+        "hair, eyes and face are part of the character",
+        "straps/garters described in the page summary need separate records from the base clothing"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+white+outfit+turnaround+flat+lineart+front+back+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official PixAI stillThumb recovered from metadata; not visually checked in final browser.",
+      "ordinal": 247
+    },
+    {
+      "id": "PX-CLT-018",
+      "category": "clothing_accessories",
+      "title": "Maid Nilou / Vill-V — black-and-white maid dress, tights and heels",
+      "source_url": "https://pixai.art/artwork/1941541744659320850-Maid-Nilou-VillV",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/8a4caf16-069d-431c-bb32-d9a847152666",
+      "creator": "SPer",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public but short; tags identify maid outfit, high heels and black thigh-highs",
+      "target_traits": [
+        "black/white maid dress",
+        "apron/headpiece as separate garment/accessory",
+        "high heels",
+        "black thigh-high stockings"
+      ],
+      "extras_red": [
+        "Nilou/Vill-V franchise character identity",
+        "red hair and full hairstyle/circlet or horns belong in hair/accessory records",
+        "face, body, pose and background"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+maid+dress+white+frilled+apron+headband+front+view+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official PixAI preview endpoint captured; not visually checked in final browser.",
+      "ordinal": 248
+    },
+    {
+      "id": "PX-CLT-019",
+      "category": "clothing_accessories",
+      "title": "Skirkk — white/blue-haired fantasy maid outfit",
+      "source_url": "https://pixai.art/artwork/1884638682013484320",
+      "thumbnail_url": "https://images-ng.pixai.art/images/stillThumb/615c28a7-8a28-4668-b593-34ebaa336fa1",
+      "creator": "whatever",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "creator hid the prompt; do not infer invisible tags as confirmed prompt text",
+      "target_traits": [
+        "maid outfit silhouette",
+        "blue/white hair color blocking as a separate hairstyle attribute"
+      ],
+      "extras_red": [
+        "Genshin Impact character/fandom identity",
+        "hair/eyes/face/body mixed with costume",
+        "prompt is hidden; garment details must be visually inspected in source before transcribing"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+fantasy+maid+outfit+flat+front+view+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work_prompt_hidden",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official PixAI preview endpoint captured; prompt hidden and thumbnail not checked in final browser.",
+      "ordinal": 249
+    },
+    {
+      "id": "PX-CLT-020",
+      "category": "clothing_accessories",
+      "title": "Ante — long maid dress, black headdress and hair bows",
+      "source_url": "https://pixai.art/artwork/2064035602168045556",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/3cc6b7db-7841-44c1-9c66-8704e8985565",
+      "creator": "Ante",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "prompt not visible in the returned metadata; details are reported as tags/page preview cues and need direct visual confirmation",
+      "target_traits": [
+        "long maid dress",
+        "black maid headdress",
+        "hair bows",
+        "apron/garment silhouette if visible in source"
+      ],
+      "extras_red": [
+        "whole character hairstyle/face/body and pose",
+        "hair bows and headdress are independent accessory fiches, not part of the dress asset",
+        "interior/background and lighting"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+long+maid+dress+black+headdress+isolated+front+view+monochrome+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work_prompt_visibility_pending",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official PixAI preview endpoint captured; not visually checked in final browser.",
+      "ordinal": 250
+    },
+    {
+      "id": "PX-HIR-EYE-002",
+      "category": "hair_eyes",
+      "title": "Hime cut and jewel-like eyes — anime line-art/color study",
+      "source_url": "https://pixai.art/artwork/2021627996146360932",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/fc57e3a8-a381-426d-bb6a-847f69d8891a",
+      "creator": "Gerii4",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public; prompt includes hime cut, bangs, sparkling jewel-like eyes, colorful fantasy effects",
+      "target_traits": [
+        "hime cut",
+        "straight fringe",
+        "large expressive eyes",
+        "jewel-like catchlights",
+        "anime line art"
+      ],
+      "extras_red": [
+        "full female character and fantasy scenery/terrain",
+        "crystals/glow/colorful background are visual effects not eye components",
+        "clothing and body are mixed into full-body scene"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+hime+cut+hair+and+female+eye+design+chart+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official PixAI stillThumb endpoint captured; not visually checked in final browser.",
+      "ordinal": 251
+    },
+    {
+      "id": "PX-EYE-005",
+      "category": "eyes",
+      "title": "Adult woman — sharp almond/cat-shaped brown eyes and long lashes",
+      "source_url": "https://pixai.art/artwork/1995739974579293034",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/abfa3ede-04ee-4741-be10-26b4f712a3b3",
+      "creator": "Bonus30148",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public; explicitly states woman in her 20s and SFW",
+      "target_traits": [
+        "deep brown almond-shaped eyes",
+        "sharp cat-eye outer corner",
+        "long lashes",
+        "aegyo-sal under-eye highlight",
+        "straight black hair without bangs"
+      ],
+      "extras_red": [
+        "full face and entire adult female character",
+        "black casual clothing",
+        "watercolor/semi-realistic rendering and light/background styling"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+almond+cat+eyes+long+lashes+eye+design+sheet+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official PixAI stillThumb endpoint captured; not visually checked in final browser.",
+      "ordinal": 252
+    },
+    {
+      "id": "PX-ACC-008",
+      "category": "hair_accessories",
+      "title": "Lilithea — ahoge, bow, brooch and boots",
+      "source_url": "https://pixai.art/artwork/2010426180967797569",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/b16e7719-7d9e-468c-97f7-f8f3511426b6",
+      "creator": "axel g",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "prompt hidden in the fetched source; source tags mention ahoge, dress, boots, bow, brooch and bow tie",
+      "target_traits": [
+        "ahoge",
+        "bow",
+        "brooch",
+        "bow tie",
+        "boots"
+      ],
+      "extras_red": [
+        "full character including hair, eyes, face/body and outfit",
+        "source prompt hidden; exact garment/accessory placement requires direct image inspection",
+        "colors/effects may be part of entire illustration"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+ahoge+bow+brooch+bow+tie+boots+accessory+sheet+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work_prompt_hidden",
+      "thumbnail_checked_date": "2026-10-21",
+      "thumbnail_status": "Official PixAI stillThumb endpoint captured; prompt hidden and thumbnail not visually checked in final browser.",
+      "ordinal": 253
     }
   ],
   "statistics": {
-    "canonical_url_records": 244,
-    "structured_entries": 244,
-    "index_entries_with_thumbnail": 244,
+    "canonical_url_records": 253,
+    "structured_entries": 253,
+    "index_entries_with_thumbnail": 253,
     "index_entries_without_thumbnail": 0,
-    "direct_image_preview_candidates": 239,
+    "direct_image_preview_candidates": 248,
     "pixiv_embed_previews": 5,
-    "pixai_source_entries": 40,
+    "pixai_source_entries": 49,
     "research_report_categorized_records": 160,
     "research_records_with_url": 154,
     "research_base_distinct_normalized_urls": 153,
@@ -10130,13 +10395,13 @@
     "pixai_tag_browsers": 8,
     "category_record_counts": {
       "hair": 34,
-      "clothing": 14,
-      "eyes": 9,
+      "clothing": 15,
+      "eyes": 10,
       "accessories": 18,
-      "clothing_accessories": 10,
+      "clothing_accessories": 14,
       "eyes_hair": 1,
-      "hair_accessories": 3,
-      "hair_eyes": 1,
+      "hair_accessories": 4,
+      "hair_eyes": 2,
       "character_reference": 9,
       "accessories_clothing": 1,
       "female_hair": 28,
@@ -10151,10 +10416,10 @@
       "multi_component_reference": 18,
       "booth_products": 2,
       "itch_io_assets": 7,
-      "hair_clothing_accessories": 2
+      "hair_clothing_accessories": 3
     },
     "platform_record_counts": {
-      "PixAI": 40,
+      "PixAI": 49,
       "DeviantArt": 52,
       "Pinterest": 11,
       "SKIMA": 2,
@@ -10202,17 +10467,21 @@
       "official_x_post_media_preview": 2
     },
     "verified_clean_square_plates": 0,
-    "index_note": "This is a source URL/store/page index, not a pack of downloaded assets. CC0 and CC BY-SA candidates are tracked separately with source license evidence; mixed contributor packs need item-level checks. The 239 base entries plus these five license-oriented sources now give 244 indexed source URLs.",
-    "thumbnail_status_note": "All 244 source records have preview URLs; 239 direct image/preview candidates and 5 Pixiv embed endpoints. URL capture does not prove browser loading; individual thumbnails remain pending visual UI validation.",
+    "index_note": "The index records original source pages and preview URLs. It is not a downloaded pack or count of visually unique artworks; duplicate artwork across platforms remains possible without image hashing. The latest 8 new PixAI cards are individual SFW/general character-design examples, with prompt visibility and full-character extras recorded.",
+    "thumbnail_status_note": "All 253 source records have preview URLs; 248 are direct image/preview candidates and 5 are Pixiv embed endpoints. Source metadata URLs have not all been visually loaded in the final browser UI.",
     "deduplication_note": "Source URL normalization only. The report flags four pairs as duplicate underlying artwork under different URLs, and one creator/product has two store pages recorded as alternate_source_urls. No cross-platform perceptual/image-hash deduplication has been done.",
-    "license_note": "The CC0 / CC BY-SA records offer more permissive routes for original work or derived work when conditions are obeyed, but the generic/pixel-art packs are not equivalent to high-quality anime line art. For any redistribution in IMAGE, retain the license URL, author/credit requirements and any per-asset license differences.",
+    "license_note": "The eight latest PixAI sources are reference-only. Visible artwork and a public prompt do not grant the right to redistribute the original image. All clean square monochrome component plates with reuse permission remain unverified.",
     "layered_facial_component_records_added_oct21": 3,
     "latest_additions": [
-      "EXT-HIR-019",
-      "EXT-HIR-020",
-      "EXT-CC0-001",
-      "EXT-CC0-002",
-      "EXT-OGA-001"
+      "PX-HIR-011",
+      "PX-CLT-016",
+      "PX-CLT-017",
+      "PX-CLT-018",
+      "PX-CLT-019",
+      "PX-CLT-020",
+      "PX-HIR-EYE-002",
+      "PX-EYE-005",
+      "PX-ACC-008"
     ],
     "x_source_records": 2,
     "last_extension": "Two canonical X posts added to the clothing category on 2026-10-21; public descriptions/thumbnail endpoints verified, reuse rights unverified.",
