@@ -14,6 +14,7 @@ PAGE = ROOT / "tools" / "hairstyle-workbench" / "index.html"
 TAXONOMY = ROOT / "tools" / "hairstyle-workbench" / "hair-style-taxonomy.json"
 LIBRARY_JSON = ROOT / "tools" / "hairstyle-workbench" / "hairstyle-library.json"
 LIBRARY_JS = ROOT / "tools" / "hairstyle-workbench" / "hairstyle-library.js"
+WEB_REFERENCES = ROOT / "tools" / "hairstyle-workbench" / "hairstyle-web-references.json"
 
 
 def fail(message: str) -> None:
@@ -29,6 +30,8 @@ def main() -> None:
         fail(f"Missing recipe library: {LIBRARY_JSON}")
     if not LIBRARY_JS.is_file():
         fail(f"Missing recipe viewer script: {LIBRARY_JS}")
+    if not WEB_REFERENCES.is_file():
+        fail(f"Missing web reference catalog: {WEB_REFERENCES}")
 
     html = PAGE.read_text(encoding="utf-8")
     required = (
@@ -55,6 +58,9 @@ def main() -> None:
     if found:
         fail("The no-AI workbench contains provider/API code: " + ", ".join(found))
     viewer = LIBRARY_JS.read_text(encoding="utf-8")
+    for marker in ("hairstyle-web-references.json", "function renderWebReferences", "referencesTab"):
+        if marker not in viewer:
+            fail("The web-reference gallery is missing integration marker: " + marker)
     viewer_forbidden = [marker for marker in forbidden if marker in viewer]
     if viewer_forbidden:
         fail("The recipe viewer contains provider/API code: " + ", ".join(viewer_forbidden))
@@ -111,6 +117,26 @@ def main() -> None:
         fail("The example combination short hair + long side lock + side ponytail + ahoge is missing.")
 
     try:
+        web_references = json.loads(WEB_REFERENCES.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        fail(f"Web reference catalogue JSON is invalid: {exc}")
+    web_items = web_references.get("items")
+    if web_references.get("schema_version") != 1 or not isinstance(web_items, list) or len(web_items) < 10:
+        fail("Web reference catalogue must have schema version 1 and at least 10 records.")
+    web_ids = [item.get("id") for item in web_items]
+    if len(web_ids) != len(set(web_ids)):
+        fail("Web reference IDs must be unique.")
+    downloadable = [item for item in web_items if item.get("usable_asset") is True]
+    references_only = [item for item in web_items if item.get("usable_asset") is False]
+    if not downloadable or not references_only:
+        fail("The web catalogue must separate usable-asset records from visual references.")
+    for item in web_items:
+        if not item.get("source_url", "").startswith("https://") or not item.get("license_status"):
+            fail("Every web record must include an HTTPS source and explicit license status.")
+        if item.get("usable_asset") and not item.get("asset_download_url"):
+            fail("Every usable-asset record must include a downloadable asset URL or source page.")
+
+    try:
         taxonomy = json.loads(TAXONOMY.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
         fail(f"Taxonomy JSON is invalid: {exc}")
@@ -129,7 +155,8 @@ def main() -> None:
 
     print(
         "PASS: manual hairstyle workbench, inline JavaScript, local-only behavior, "
-        f"{len(tags)} taxonomy tags, {len(recipes)} unique recipes, and valid viewer JavaScript."
+        f"{len(tags)} taxonomy tags, {len(recipes)} unique recipes, "
+        f"{len(web_items)} web references ({len(downloadable)} asset sources), and valid viewer JavaScript."
     )
 
 
