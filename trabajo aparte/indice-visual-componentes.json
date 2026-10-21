@@ -9668,8 +9668,8 @@
     "structured_entries": 230,
     "index_entries_with_thumbnail": 230,
     "index_entries_without_thumbnail": 0,
-    "direct_image_preview_candidates": 211,
-    "pixiv_embed_previews": 19,
+    "direct_image_preview_candidates": 225,
+    "pixiv_embed_previews": 5,
     "pixai_source_entries": 40,
     "research_report_categorized_records": 160,
     "research_records_with_source_url": 154,
@@ -9748,9 +9748,9 @@
       "external_search_result_preview": 1
     },
     "verified_clean_square_plates": 0,
-    "index_note": "The structured index combines 75 curated records and 151 new source records from the deep research, with two matches merged into existing records, plus four later supplement sources, for 230 entries. The deep research report contains 160 category records, 154 source URL fields and 153 distinct normalized URL paths after one exact URL repeated across categories. Six further records are explicitly aliases/cross-references with no URL. The report flags four pairs as duplicate underlying artworks hosted/recorded under different identifiers; URL uniqueness is not artwork uniqueness.",
-    "thumbnail_status_note": "All 230 records have a thumbnail URL or preview/embed URL from original page metadata or visible image links. 225 are direct image candidates and 5 use Pixiv embed endpoints. The URLs have not all been visually checked in the final browser UI because both public HTML preview attempts failed on network/interstitial access. Preview URL present does not mean loaded/visually validated.",
-    "deduplication_note": "URL-level normalization only. The long-form report flags four duplicate underlying artwork pairs; no image-hash or perceptual-deduplication pass was completed across platforms. Do not report 230 records as 230 unique pictures.",
+    "index_note": "The structured index combines 75 curated entries, 151 new source URLs from the deep-research census (two matched existing entries and were merged), and four later supplement sources, for 230 entries. The deep-research body has 160 categorized records, 154 URL fields (including one URL that occurs twice across categories), 153 distinct normalized URLs, and six cross-reference/alias rows without their own URL. Four pairs are separately flagged as the same underlying artwork under different identifiers/URLs.",
+    "thumbnail_status_note": "All 230 records have thumbnail URLs. 225 are direct image/preview URLs, including static Pixivision cover images, and 5 use Pixiv artwork.php/decorate.php embed endpoints. The URLs have not all been visually loaded inside the final HTML browser; preview URLs can expire or be blocked. A URL is not proof of a successful visual render.",
+    "deduplication_note": "URL-level normalization only. The deep-research report flags four pairs as duplicate underlying artworks, so 230 source records are not necessarily 230 distinct pictures. No cross-platform image-hash or perceptual deduplication pass has been completed.",
     "license_note": "Preview URLs are for identifying and opening the source. They do not authorize downloading, cropping, redistributing or using the art as editor assets. Free-to-view, free-to-download, and commercial-use permission are different license scopes."
   },
   "pixai_tag_browsers": [
