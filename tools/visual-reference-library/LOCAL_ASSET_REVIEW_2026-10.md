@@ -16,6 +16,7 @@ El generador `scripts/build_visual_contact_sheets.py` se ejecutó con los archiv
 | Hojas de contacto producidas | 16 |
 | Grupos de duplicados exactos por hash | 1 |
 | Archivos sobrantes dentro de esos grupos | 1 |
+| Revisión adicional de casi duplicados | Ahora se genera una cola de candidatos por hash perceptual (distancia ≤ 3); cada pareja requiere comprobación visual y nunca se elimina automáticamente. |
 
 La revisión en hojas de contacto muestra que el catálogo local está formado principalmente por ilustraciones completas de personajes, a menudo con variaciones de pose, encuadre o peinado. No corresponde marcar esas ilustraciones como recortes de ojos o cabello listos para combinar. En el inventario inicial, los assets también están clasificados como `full_illustration`; los nombres genéricos no permiten saber qué forma de ojo o corte tiene cada personaje.
 
