@@ -32,7 +32,9 @@ const css=[
 "@media(max-width:650px){.reference-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.reference-image{height:140px}.reference-body{padding:7px}.reference-actions{flex-direction:column}}",
 "@media(max-width:980px){.recipe-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}",
 "@media(max-width:650px){.library-controls{grid-template-columns:1fr 1fr}.library-controls .field:first-child{grid-column:1/-1}.recipe-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.library-header{padding:12px}.recipe-card canvas{height:130px}.recipe-body p{min-height:0}}",
-"@media(max-width:390px){.recipe-grid{gap:7px}.recipe-card canvas{height:110px}.recipe-body{padding:7px}}"
+"@media(max-width:390px){.recipe-grid{gap:7px}.recipe-card canvas{height:110px}.recipe-body{padding:7px}}",
+".style-fit-pill{display:inline-block;font-size:9px;padding:4px 6px;border:1px solid #7a4968;border-radius:5px;color:#ffb6d4;line-height:1.3}",
+".style-fit-pill.compatible{border-color:#4a668e;color:#b8d7ff}"
 ].join("");
 const style=document.createElement("style");style.textContent=css;document.head.appendChild(style);
 function installSlot(){
@@ -65,8 +67,8 @@ function installUI(){
   $("closeLibraryBtn").addEventListener("click",closeLibrary);
   modal.addEventListener("click",e=>{if(e.target===modal)closeLibrary();});
   document.addEventListener("keydown",e=>{if(e.key==="Escape")closeLibrary();});
-  $("recipeSearch").addEventListener("input",renderLibrary);
-  $("recipeFamily").addEventListener("change",renderLibrary);
+  $("recipeSearch").addEventListener("input",()=>activeViewerTab==="recipes"?renderLibrary():renderWebReferences());
+  $("recipeFamily").addEventListener("change",()=>activeViewerTab==="recipes"?renderLibrary():renderWebReferences());
   $("recipeLength").addEventListener("change",()=>activeViewerTab==="recipes"?renderLibrary():renderWebReferences());
   $("recipesTab").addEventListener("click",()=>switchViewerTab("recipes"));
   $("referencesTab").addEventListener("click",()=>switchViewerTab("references"));
