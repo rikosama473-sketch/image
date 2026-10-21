@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "title": "Colección web de referencias y recursos de peinados",
+  "updated": "2026-10-21",
+  "purpose": "Coleccionar referencias visuales reales de cortes anime y paquetes de piezas descargables. La referencia visual no concede permiso para reutilizar una ilustración; los paquetes reutilizables tienen su licencia declarada individualmente.",
+  "items": [
+    {
+      "id": "web-001",
+      "title": "Catálogo de 15 variantes sobre el mismo personaje",
+      "kind": "reference_sheet",
+      "family": "female",
+      "image_url": "https://assets.st-note.com/img/1777374887-CZYwTLvKrH4PUtenWMJiqoNR.png",
+      "source_url": "https://note.com/anirole/n/n0d66bcd65b31",
+      "source_name": "Anirole / note.com",
+      "license_status": "No verificada; referencia visual únicamente",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "tags": [
+        "long_hair",
+        "medium_hair",
+        "short_hair",
+        "bob_cut",
+        "blunt_bangs",
+        "parted_bangs",
+        "ponytail",
+        "twintails",
+        "braid",
+        "half_updo",
+        "hair_bun"
+      ],
+      "description": "Una misma identidad en 15 variantes: largos, flequillos, coleta, coletas dobles, trenza, semirrecogido y moño.",
+      "notes": "Ideal para estudiar cómo cambia el pelo sin alterar la identidad facial. No copiar ni redistribuir la lámina sin permiso."
+    },
+    {
+      "id": "web-002",
+      "title": "Lámina de cortes anime: hime, wolf, bob y mechón lateral",
+      "kind": "reference_sheet",
+      "family": "female",
+      "image_url": "https://pbs.twimg.com/media/G5_HtXzWEAAQWcK.jpg",
+      "source_url": "https://x.com/ai_manga_/status/1990529959144862111",
+      "source_name": "X / @ai_manga_",
+      "license_status": "No verificada; referencia visual únicamente",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "tags": [
+        "hime_cut",
+        "wolf_cut",
+        "bob_cut",
+        "flipped_hair",
+        "long_sidelocks"
+      ],
+      "description": "Muestra comparativa de siluetas y mechones característicos.",
+      "notes": "Útil para ampliar nomenclatura y buscar variantes relacionadas."
+    },
+    {
+      "id": "web-003",
+      "title": "Guía de nueve arreglos femeninos",
+      "kind": "reference_sheet",
+      "family": "female",
+      "image_url": "https://i.pinimg.com/originals/cb/c4/4f/cbc44f57d587d6afe46d25c133982c12.jpg",
+      "source_url": "https://www.pinterest.com/ideas/anime-female-ponytail-hairstyles/944451166577/",
+      "source_name": "Pinterest / Anime Female Hairstyle Guide",
+      "license_status": "No verificada; referencia visual únicamente",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "tags": [
+        "ponytail",
+        "twintails",
+        "hair_bun",
+        "braid",
+        "wavy_hair",
+        "long_hair",
+        "hair_ribbon"
+      ],
+      "description": "Normal, coleta, coletas dobles, moños, trenzas, ondas, frente descubierta y accesorios.",
+      "notes": "La imagen enlaza a la página de referencia; no equivale a un recorte PNG utilizable."
+    },
+    {
+      "id": "web-004",
+      "title": "50 siluetas de cabello anime masculino",
+      "kind": "reference_sheet",
+      "family": "male",
+      "image_url": "https://i.pinimg.com/originals/f6/74/29/f67429af6745a41a88e5cd0738d7ab42.jpg",
+      "source_url": "https://www.pinterest.com/pin/365213851010016701/",
+      "source_name": "Pinterest / 50 Anime Male Hairstyles",
+      "license_status": "No verificada; referencia visual únicamente",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "tags": [
+        "short_hair",
+        "spiky_hair",
+        "messy_hair",
+        "long_hair",
+        "layered_hair",
+        "swept_bangs"
+      ],
+      "description": "Lámina numerada con 50 siluetas distintas sin depender de un color o rostro concretos.",
+      "notes": "Muy útil como índice para rastrear cortes individuales. Permiso de reutilización no verificado."
+    },
+    {
+      "id": "web-005",
+      "title": "Nueve diseños de cabello masculino con textura y volumen",
+      "kind": "reference_sheet",
+      "family": "male",
+      "image_url": "https://i.pinimg.com/originals/8d/de/d6/8dded6307d9125d175949d844895a53e.png",
+      "source_url": "https://in.pinterest.com/srivastavadivyansh986/my-comic/",
+      "source_name": "Pinterest / Hair with Yuhai",
+      "license_status": "No verificada; referencia visual únicamente",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "tags": [
+        "short_hair",
+        "spiky_hair",
+        "swept_bangs",
+        "curly_hair",
+        "hair_bun",
+        "undercut"
+      ],
+      "description": "Peinados cortos, laterales rapados, flequillo y volumen ondulado, manteniendo el personaje reconocible.",
+      "notes": "Usar para idear familias de corte, no como recurso PNG libre."
+    },
+    {
+      "id": "web-006",
+      "title": "Variaciones del mismo personaje en vista frontal y lateral",
+      "kind": "reference_sheet",
+      "family": "female",
+      "image_url": "https://i.pinimg.com/736x/3c/9d/62/3c9d62c866a11e2a0a5881e46474ec57.jpg",
+      "source_url": "https://jp.pinterest.com/pin/girl-sailor-uniform-black-sailor-uniform-pixiv--834151162230763735/",
+      "source_name": "Pinterest / Manaka hairstyle variations",
+      "license_status": "No verificada; referencia visual únicamente",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "tags": [
+        "short_hair",
+        "bob_cut",
+        "ponytail",
+        "hairclip",
+        "wavy_hair",
+        "side_view"
+      ],
+      "description": "Variantes tipo bob, coleta, ondas y clips, con vistas auxiliares para entender el volumen.",
+      "notes": "Referencia para exigir vistas frontal/lateral y encaje de los recortes."
+    },
+    {
+      "id": "web-007",
+      "title": "Peinados anime cortos con mechones y capas",
+      "kind": "reference_sheet",
+      "family": "short",
+      "image_url": "https://pbs.twimg.com/media/FUopDFsakAEQOEN.jpg",
+      "source_url": "https://x.com/fujirin555_/status/1534083761545314306",
+      "source_name": "X / @fujirin555_",
+      "license_status": "No verificada; referencia visual únicamente",
+      "usable_asset": false,
+      "asset_download_url": "",
+      "tags": [
+        "short_hair",
+        "wolf_cut",
+        "layered_hair",
+        "sidelocks",
+        "asymmetrical_bob"
+      ],
+      "description": "Diseños cortos con capas, laterales, perfil y mechones que rompen la silueta.",
+      "notes": "Referencia de construcción de volumen y contorno de cabeza."
+    },
+    {
+      "id": "asset-cc0-portraits",
+      "title": "Anime Girl and Boy Portraits — paquete modular CC0",
+      "kind": "downloadable_asset",
+      "family": "editable",
+      "image_url": "",
+      "source_url": "https://opengameart.org/content/anime-girl-and-boy-portraits",
+      "source_name": "OpenGameArt / stevenburrow",
+      "license_status": "CC0 / dominio público declarado por el autor",
+      "usable_asset": true,
+      "asset_download_url": "https://opengameart.org/sites/default/files/allanime-11-28-2020.zip",
+      "tags": [
+        "haircut",
+        "ponytail",
+        "character_layers",
+        "xcf",
+        "hair_color"
+      ],
+      "description": "Paquete con archivo XCF de GIMP con capas editables, dos cortes femeninos y dos masculinos, más variantes de coleta y piezas recoloreables.",
+      "notes": "Es una fuente inicial real para extraer piezas. Descargar el ZIP y exportar las capas de cabello por separado; luego alinear y revisar bordes en IMAGE."
+    },
+    {
+      "id": "asset-cc0-hair-animation",
+      "title": "Hair Animation — cabello corto y largo en PSD",
+      "kind": "downloadable_asset",
+      "family": "editable",
+      "image_url": "https://opengameart.org/sites/default/files/hair-short-color.gif",
+      "source_url": "https://opengameart.org/content/hair-animation",
+      "source_name": "OpenGameArt / zonked",
+      "license_status": "CC0 declarado en OpenGameArt",
+      "usable_asset": true,
+      "asset_download_url": "https://opengameart.org/content/hair-animation",
+      "tags": [
+        "short_hair",
+        "long_hair",
+        "animated_hair",
+        "psd",
+        "hair_strands"
+      ],
+      "description": "Recurso con PSD editables para cabello corto y cabello largo en diferentes colores, más GIF de muestra.",
+      "notes": "El estilo no garantiza coincidencia con la meta anime de IMAGE; revisar y extraer solamente las piezas que encajen."
+    },
+    {
+      "id": "asset-cc0-24x32",
+      "title": "Nueve peinados para sprites 24×32 — CC0",
+      "kind": "downloadable_asset",
+      "family": "editable",
+      "image_url": "",
+      "source_url": "https://opengameart.org/content/hair-for-24x32-bases",
+      "source_name": "OpenGameArt / diamonddmgirl",
+      "license_status": "CC0 declarado en OpenGameArt",
+      "usable_asset": true,
+      "asset_download_url": "https://opengameart.org/sites/default/files/24x32%20hair.zip",
+      "tags": [
+        "curly_hair",
+        "braid",
+        "afro",
+        "sprite_hair",
+        "haircut"
+      ],
+      "description": "Paquete pequeño de nueve peinados de sprite, incluye rizado y trenzas.",
+      "notes": "Pixel art diminuto; sirve como vocabulario/complemento, no como ilustración final de anime moderno."
+    },
+    {
+      "id": "asset-cc-by-messy",
+      "title": "Anime LPC Hair — mechón despeinado",
+      "kind": "downloadable_asset",
+      "family": "editable",
+      "image_url": "https://opengameart.org/sites/default/files/messy.png",
+      "source_url": "https://opengameart.org/content/anime-lpc-hair",
+      "source_name": "OpenGameArt / BlueVortexGames (Cobra Hubbard)",
+      "license_status": "CC-BY 3.0; requiere atribución",
+      "usable_asset": true,
+      "asset_download_url": "https://opengameart.org/sites/default/files/messy.png",
+      "tags": [
+        "messy_hair",
+        "red_hair",
+        "layered_hair"
+      ],
+      "description": "Pieza PNG de cabello estilo sprite/LPC, compartida para personalización.",
+      "notes": "Conservar autor, enlace de origen y licencia CC-BY 3.0 al incorporarlo a la biblioteca."
+    },
+    {
+      "id": "asset-cc-male-female",
+      "title": "Hair for male and female anime base sprites",
+      "kind": "downloadable_asset",
+      "family": "editable",
+      "image_url": "https://opengameart.org/sites/default/files/hair2.gif",
+      "source_url": "https://lpc.opengameart.org/content/hair-for-male-and-female-anime-base-sprites",
+      "source_name": "OpenGameArt / Mandi Paugh",
+      "license_status": "GPL-2.0, GPL-3.0, CC-BY-3.0 y CC-BY-SA-3.0 declaradas; revisar condiciones",
+      "usable_asset": true,
+      "asset_download_url": "https://opengameart.org/sites/default/files/hair2.gif",
+      "tags": [
+        "haircut",
+        "male_hair",
+        "female_hair",
+        "sprite_hair"
+      ],
+      "description": "Muestra de pelo para bases de sprites anime masculinas y femeninas.",
+      "notes": "La página exige atribución y las licencias disponibles tienen condiciones distintas. No tratar como CC0."
+    }
+  ]
+}
