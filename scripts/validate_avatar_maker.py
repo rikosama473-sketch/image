@@ -10,8 +10,9 @@ HTML_PATH = ROOT / "tools" / "avatar-maker" / "index.html"
 CATALOG_PATH = ROOT / "tools" / "avatar-maker" / "assets" / "catalog.json"
 LIBRARY_PATH = ROOT / "tools" / "avatar-maker" / "assets" / "image-library.json"
 SERVER_PATH = ROOT / "tools" / "avatar-maker" / "ai_edit_server.py"
+CUTOUT_REQUIREMENTS_PATH = ROOT / "requirements-avatar-cutout.txt"
 REQUIRED_IDS = {"nav","canvas","maskOverlay","stage","stageNote","miniLooks","layerTabs","layerList","layerCount","catIcon","catTitle","pills","content","styles","saveBtn","loadBtn","exportBtn","jsonFile","imageFile","comboCount","candidateDialog","cancelCandidate","confirmCandidate","toast"}
-REQUIRED_FEATURES = ("async function render(", "function gallery(", "function addMask(", "function importFiles(", "function save(", "function load(", "function exportPng(", "pending_visual_review", "character-layers/pibara", "image/png", "IMAGE Character Creator", "function starterWorkspace(root)", "function runStarterSmokeTest(id)", "function addLibraryAssetAsTestLayer(id)", "shownStarterCount=24", "allStarterSamples=all.filter", "starterMore", "AI_CUTOUT_TARGETS", "function startAICutout(targetId)", "function aiCutoutPromptForUser(text)", "function baseImageDataUrl()", "pending_ai_cutout_review", "ai-cutout-hair", "generate-hairstyle-variants.yml", "internal_test_overlay", "function useLibraryAsset(id,returnCategory=", "function aiWorkspace(root)", "function runAIEdit()", "function syncAIQuality()", "ai-variant-strip", "data-ai-result-index", "aiVariants", "variants:aiSettings.variants", "/api/ai-edit", "OPENAI_API_KEY", "ai_result", "function createAIMaskDataUrl()", "aiMaskStrokes", "mask_data_url", "function anatomyWorkspace(root)", "function requestAnatomyGuide(type)", "function createCutoutLayer()", "function exportSelectedLayerPng()", "function libraryWorkspace(root)", "image-library.json")
+REQUIRED_FEATURES = ("async function render(", "function gallery(", "function addMask(", "function importFiles(", "function save(", "function load(", "function exportPng(", "pending_visual_review", "character-layers/pibara", "image/png", "IMAGE Character Creator", "function starterWorkspace(root)", "function runStarterSmokeTest(id)", "function addLibraryAssetAsTestLayer(id)", "shownStarterCount=24", "allStarterSamples=all.filter", "starterMore", "AI_CUTOUT_TARGETS", "function startAICutout(targetId)", "function aiCutoutPromptForUser(text)", "function baseImageDataUrl()", "pending_ai_cutout_review", "ai-cutout-hair", "generate-hairstyle-variants.yml", "internal_test_overlay", "function useLibraryAsset(id,returnCategory=", "function aiWorkspace(root)", "function runAIEdit()", "function syncAIQuality()", "ai-variant-strip", "data-ai-result-index", "aiVariants", "variants:aiSettings.variants", "/api/ai-edit", "OPENAI_API_KEY", "ai_result", "function createAIMaskDataUrl()", "aiMaskStrokes", "mask_data_url", "function anatomyWorkspace(root)", "function requestAnatomyGuide(type)", "function createCutoutLayer()", "function exportSelectedLayerPng()", "function libraryWorkspace(root)", "image-library.json", "full_illustration", "data-local-cutout", "startLocalAnimeCutout", "localCutoutModel", "/api/remove-background")
 class Inspector(HTMLParser):
     def __init__(self): super().__init__(convert_charrefs=True); self.ids=[]; self.inline=0
     def handle_starttag(self,tag,attrs):
@@ -20,13 +21,13 @@ class Inspector(HTMLParser):
         if tag.lower()=="script" and "src" not in a: self.inline+=1
 
 def main():
-    if not HTML_PATH.is_file() or not CATALOG_PATH.is_file() or not LIBRARY_PATH.is_file() or not SERVER_PATH.is_file():
+    if not HTML_PATH.is_file() or not CATALOG_PATH.is_file() or not LIBRARY_PATH.is_file() or not SERVER_PATH.is_file() or not CUTOUT_REQUIREMENTS_PATH.is_file():
         print("Missing avatar maker HTML/catalog/library/AI bridge.",file=sys.stderr); return 1
     html=HTML_PATH.read_text(encoding="utf-8"); parser=Inspector(); parser.feed(html)
     dup=sorted({x for x in parser.ids if parser.ids.count(x)>1}); missing=sorted(REQUIRED_IDS-set(parser.ids))
     absent=[x for x in REQUIRED_FEATURES if x not in html]
     server=SERVER_PATH.read_text(encoding="utf-8")
-    server_required=("def validate_mask_data_url(", "def validate_quality(", "def validate_variants(", 'payload["mask"] = mask_payload', '"n": variants', "OPENAI_API_KEY")
+    server_required=("def validate_mask_data_url(", "def validate_quality(", "def validate_variants(", "def validate_cutout_model(", "def do_remove_background(", "ALLOWED_CUTOUT_MODELS", "_CUTOUT_SESSIONS", 'payload["mask"] = mask_payload', '"n": variants', "OPENAI_API_KEY", "rembg-local")
     absent.extend("server: "+x for x in server_required if x not in server)
     if re.search(r"<\s*svg\b|renderSvg\s*\(",html,re.I): absent.append("No geometrically drawn SVG avatar is allowed")
     if dup or missing or absent:
@@ -48,6 +49,12 @@ def main():
         print("Unsupported or invalid image library schema.",file=sys.stderr); return 1
     if library.get("asset_count")!=len(assets) or len(assets)<1:
         print("Image library asset_count does not match its assets array.",file=sys.stderr); return 1
+    requirements = CUTOUT_REQUIREMENTS_PATH.read_text(encoding="utf-8")
+    if "rembg[cpu]==2.0.82" not in requirements:
+        print("Local anime-cutout dependency is missing or not pinned.", file=sys.stderr); return 1
+    full_illustrations = sum(1 for item in assets if isinstance(item, dict) and item.get("kind") == "full_illustration")
+    if full_illustrations < 24:
+        print(f"Expected at least 24 full illustration samples, found {full_illustrations}.", file=sys.stderr); return 1
     for asset in assets:
         relative=asset.get("path","") if isinstance(asset,dict) else ""
         path=Path(relative)
@@ -67,6 +74,6 @@ def main():
     with tempfile.TemporaryDirectory(prefix="image-avatar-maker-") as temp:
         f=Path(temp)/"app.js"; f.write_text(js,encoding="utf-8"); p=subprocess.run([node,"--check",str(f)],capture_output=True,text=True)
     if p.returncode: print(p.stdout+p.stderr,file=sys.stderr); return p.returncode
-    print(f"PASS: image-based avatar maker; {len(parser.ids)} IDs; {len(catalog['base_illustrations'])} base illustrations; {len(catalog['candidate_layers'])} pending masks; {len(assets)} indexed library images; JS syntax valid.")
+    print(f"PASS: image-based avatar maker; {len(parser.ids)} IDs; {len(catalog['base_illustrations'])} base illustrations; {len(catalog['candidate_layers'])} pending masks; {full_illustrations} full illustrations; {len(assets)} indexed library images; local anime cutout dependency pinned; JS syntax valid.")
     return 0
 if __name__=="__main__": raise SystemExit(main())
