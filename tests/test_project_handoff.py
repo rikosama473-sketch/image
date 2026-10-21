@@ -62,6 +62,31 @@ class ImageProjectHandoffTests(unittest.TestCase):
         self.assertIn('Capa centrada sin cambiar su tamaño ni proporción', self.avatar)
         self.assertNotIn('if(l){l.x=0;l.y=0;l.w=W;l.h=H;render();}', self.avatar)
 
+    def test_manual_editor_round_trips_editable_layers_and_provenance(self) -> None:
+        self.assertIn('async function saveProject()', self.manual)
+        self.assertIn('app:"IMAGE Manual Character Editor"', self.manual)
+        self.assertIn('png:l.canvas.toDataURL("image/png")', self.manual)
+        self.assertIn('backup:l.backup.toDataURL("image/png")', self.manual)
+        self.assertIn('sourceTransform:l.sourceTransform?Object.assign({},l.sourceTransform):null', self.manual)
+        self.assertIn('async function openProject(file)', self.manual)
+        self.assertIn('canvas:await loadCanvasUrl(l.png)', self.manual)
+        self.assertIn('backup:await loadCanvasUrl(l.backup||l.png)', self.manual)
+        self.assertIn('mctx.drawImage(mask,0,0)', self.manual)
+        self.assertIn('Las capas, la selección y su procedencia se recuperaron.', self.manual)
+
+    def test_manual_composite_export_keeps_alpha_and_uses_png(self) -> None:
+        self.assertIn('function makeComposite(){const c=makeCanvas(doc.width,doc.height)', self.manual)
+        self.assertIn('if(l.visible){ctx.save();ctx.globalAlpha=l.opacity;ctx.drawImage(l.canvas,0,0);ctx.restore();}', self.manual)
+        self.assertIn('function exportCanvas(canvas,name,trim)', self.manual)
+        self.assertIn('},"image/png")', self.manual)
+        self.assertIn('exportCanvas(makeComposite(),"composicion-image.png",false)', self.manual)
+
+    def test_constructor_and_manual_editor_have_project_save_open_controls(self) -> None:
+        self.assertIn('function save(){const data={schemaVersion:2,app:"IMAGE Character Creator"', self.avatar)
+        self.assertIn('function load(file){const r=new FileReader()', self.avatar)
+        self.assertIn('$(\"saveProjectBtn\").addEventListener("click",saveProject)', self.manual)
+        self.assertIn('$(\"openProjectBtn\").addEventListener("click",function(){$("projectFile").click();})', self.manual)
+
 
 if __name__ == "__main__":
     unittest.main()
