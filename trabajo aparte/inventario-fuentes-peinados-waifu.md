@@ -4,6 +4,19 @@
 **Alcance:** solo peinados femeninos de anime/waifus; prioridad a line art, siluetas comparables, fichas numeradas y piezas/capas que ayuden a un editor.  
 **Estado:** investigación inicial; referencias enlazadas, no descargadas en lote ni incorporadas como assets.
 
+
+## Estado de la investigación ampliada — 21 de octubre de 2026
+
+El informe de investigación multi-fuente está disponible aquí:
+
+- [Informe ampliado: 70 fuentes citadas, estilos de cabello, ropa, ojos, accesorios, etiquetas PixAI y permisos](./informe-investigacion-ampliada-waifu.md).
+- [Índice JSON de referencias visuales](./indice-visual-componentes.json): 40 registros indexados, con 16 obras de PixAI y 24 recursos externos/candidatos. Las fichas guardan miniatura, fuente, componente objetivo, elementos ajenos que deben marcarse en rojo, estado de referencia monocroma y situación de licencia.
+- [Atlas HTML interactivo](./atlas-peinados-interactivo.html): miniaturas pequeñas junto al nombre, avisos rojos, filtros interactivos por componente y enlaces de búsqueda para referencias cuadradas en blanco y negro.
+
+**Cómo leer las cifras:** el informe ampliado incluye 70 fuentes citadas y un vocabulario/atlas de 117 estilos de cuatro componentes (30 cabello, 30 ropa, 30 ojos y 27 accesorios). El índice visual del editor es un conjunto menor de 40 registros seleccionados para navegación con miniaturas. Ninguna de estas cifras equivale a 40, 117 o 140 assets con licencia libre ya descargados. También hay páginas de etiquetas y duplicados; por ejemplo, un mismo tablero espejado por distintos sitios no se cuenta como dos láminas únicas.
+
+**Estado de las referencias monocromas cuadradas:** las miniaturas oficiales de PixAI se verificaron como vistas previas y están al lado del título; son imágenes originales a color y muestran otros componentes. Para esos casos, el índice guarda búsquedas precisas de placas cuadradas en blanco y negro y los mantiene como pendientes hasta verificar una hoja limpia que se pueda usar según sus condiciones. El atlas no presenta las imágenes completas de PixAI como recortes limpios ni como assets con licencia.
+
 ## Criterio de selección
 
 1. La silueta se entiende incluso en miniatura.
