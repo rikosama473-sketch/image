@@ -2,6 +2,10 @@
 
 Esta herramienta existe para construir **varios looks del mismo personaje** sin sustituir su rostro, ojos, cuerpo o vestuario cada vez que cambia el pelo.
 
+## Biblioteca visual compartida de IMAGE
+
+Usá también la [Biblioteca visual de ojos y cabello](../visual-reference-library/index.html) para revisar referencias externas, etiquetar las ilustraciones locales y documentar qué máscaras se pueden separar. Las recetas guardadas son especificaciones; no se presentan como PNG finales. El generador de hojas de contacto es `python scripts/build_visual_contact_sheets.py`.
+
 ## Abrir
 
 1. Desde la raíz del repositorio, iniciá `tools/avatar-maker/start-avatar-maker.bat`.
