@@ -212,7 +212,8 @@ class Handler(SimpleHTTPRequestHandler):
                 "height": rgba.height,
                 "transparent_pixels": transparent_pixels,
                 "engine": "rembg-local",
-                "pixel_preserving": True,
+                "source_artwork_preserved": True,
+                "edge_decontamination": True,
                 "review_status": "pending_visual_review",
             })
         except ValueError as exc:
