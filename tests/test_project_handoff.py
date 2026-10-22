@@ -177,6 +177,7 @@ class ImageProjectHandoffTests(unittest.TestCase):
             'async function checkInternetConnection()',
             'function setInternetMode(enabled)',
             'navigator.onLine',
+            'isLoopbackHost=host=>',
             'localStorage.setItem(INTERNET_MODE_KEY',
             'https://api.github.com/repos/rikosama473-sketch/image',
             'internet-blocked',
