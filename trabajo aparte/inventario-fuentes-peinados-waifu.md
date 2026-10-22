@@ -5,33 +5,23 @@
 **Estado:** investigación inicial; referencias enlazadas, no descargadas en lote ni incorporadas como assets.
 
 
-## Estado de la investigación ampliada — actualización del 22 de octubre de 2026
+## Estado de la investigación ampliada — 22 de octubre de 2026
 
-La investigación ahora está organizada en un censo visual navegable, dos informes de investigación profunda y un índice de datos. **El objetivo de esta revisión es que cada fuente pueda localizarse por miniatura y evaluarse sin confundir inspiración, asset 2D, producto 3D o permiso de redistribución.**
+Para no mezclar hitos, hay cuatro cifras distintas:
 
-- [**Censo visual interactivo — 339 registros**](./censo-visual-interactivo.html): busca por título, autor, rasgo, componente o plataforma. Muestra una miniatura pequeña, fuente, objetivo, elementos ajenos en rojo, tipo de recurso, licencia y compatibilidad con una biblioteca 2D.
-- [**Índice JSON de componentes — 339 URL registradas**](./indice-visual-componentes.json): metadatos por ficha, URL original, miniatura registrada cuando existe, rasgos objetivo, extras rojos, notas de derechos y estado de placa monocroma.
-- [**Censo exhaustivo — 153 URL maestras del estudio profundo**](./censo-exhaustivo-153-fuentes.md): investigación categorizada en A–N, con fuentes, prompts cuando están visibles, precio/licencia cuando la fuente lo indica y brechas.
-- [**Auditoría dedicada de accesorios — 44 URL citadas, 31–32 páginas individuales estimadas**](./auditoria-accesorios-44-fuentes.md): tiaras/coronas, pendientes, chokers, broches, cinturones, guantes, medias, zapatos, lazos y gafas.
-- [Informe amplio con suplementos y criterios de decisión](./informe-investigacion-ampliada-waifu.md).
-- [Atlas de peinados y prompts de PixAI](./atlas-peinados-interactivo.html): primera interfaz de recetas de peinado con filtros y avisos rojos.
+- **339 registros de URL** en el índice consolidado; 315 con una URL de vista previa registrada. El censo incluye obra individual, tutorial, colección editorial, producto descargable y algunas páginas de búsqueda/categoría. No son 339 imágenes necesariamente distintas.
+- **153 URLs maestras canónicas** en la primera investigación profunda, ampliada después con nuevas categorías y páginas adicionales. Se conserva el recuento base separado en el [censo inicial](./censo-exhaustivo-153-fuentes.md).
+- **58 páginas fuente de PixAI** indexadas y un lote adicional de etiquetas de búsqueda, para investigar el prompt y el componente visual por separado.
+- **0 placas cuadradas monocromas con licencia de reutilización confirmada.** Hay láminas/tutoriales B/N y PSD/PNG por capas, pero ninguno se ha aprobado como asset 1:1 reutilizable para la distribución prevista de IMAGE.
 
-### Recuento correcto y límites
+**Índice principal:** [censo visual interactivo — 339 registros / 315 vistas previas](./censo-visual-interactivo.html).
+**Datos estructurados:** [índice JSON consolidado](./indice-visual-componentes.json).
+**Investigación extensa:** [censo de 153 URLs base, con actualizaciones](./censo-exhaustivo-fuentes-waifu-2026-10-21.md).
+**Auditoría de accesorios:** [44 URLs revisadas específicamente para tiaras, pendientes, chokers, broches, cinturones, clips, gafas, guantes, medias y zapatos](./auditoria-accesorios-44-fuentes.md).
+**Atlas de tarjetas PixAI:** [miniaturas, alertas rojas y búsquedas monocromas por componente](./atlas-peinados-interactivo.html).
 
-El índice integrado tiene **339 URL canónicas registradas**: cada URL se normaliza y no hay claves duplicadas por esa regla en el JSON actual. **315 fichas tienen URL de previsualización registrada y 24 no**. Hay 58 páginas de PixAI en el índice, además de tutoriales, colecciones editoriales, tiendas, referencias individuales, productos y hubs de etiquetas. Una previsualización registrada no significa que haya sido cargada y comprobada una por una en el navegador final.
+El censo interactivo tiene filtros por componente, plataforma, disponibilidad de vista previa, presencia de notas/licencia y elementos extra para marcar en rojo; también incorpora fallback cuando una imagen remota no carga. El JavaScript pasó comprobación de sintaxis. No se han probado las 315 miniaturas individualmente en el navegador del usuario, y no se ejecutó la deduplicación perceptual contra archivos originales. Los contadores de etiquetas de PixAI son instantáneas con fecha y pueden cambiar.
 
-El primer estudio profundo entregó **153 URL maestras canónicas**; sus 160 IDs de narración incluyen alias/referencias cruzadas y no deben presentarse como 160 imágenes únicas. La auditoría de accesorios citó 44 URLs y estima 31–32 páginas individuales; algunas de sus entradas son índices, hubs o productos 3D/MMD y se clasifican como descubrimiento o referencia, no como una lámina 2D independiente. La suma del JSON actual **no es un conteo de dibujos únicos**: no se ejecutó comparación perceptual/hash entre ilustraciones alojadas en diferentes sitios y un artículo puede contener muchas imágenes.
-
-### Estado de imágenes monocromas y derechos
-
-- **Placas cuadradas en blanco y negro con licencia de reutilización confirmada: 0.** Las búsquedas por componente son pistas, no placas que podamos declarar terminadas. Para aprobar una placa hay que verificar encuadre 1:1, fondo claro, una sola pieza o piezas claramente separadas, lectura en miniatura y permiso para el uso propuesto.
-- Las miniaturas son vistas previas vinculadas a fuentes, no assets propios. Algunas URLs son portadas editoriales o embeds de Pixiv/Pixivision. Todas las miniaturas necesitan carga visual real antes de asumir que están disponibles en cualquier entorno.
-- Una página pública no autoriza descargar, recortar, reempaquetar ni redistribuir su imagen. Un pack puede permitir uso comercial final y prohibir la redistribución del PSD/PNG; los recursos 3D/MMD/VRChat tampoco se vuelven recursos 2D por aparecer en el catálogo.
-- El registro en rojo indica elementos que no pertenecen al objetivo de la ficha —cara, ojos, cabello, ropa, pose, objeto sostenido, fondo, franquicia, etc.— y que deben excluirse o documentarse aparte.
-
-### Brechas que siguen abiertas
-
-La segunda auditoría encontró más tutoriales y colecciones específicas para coronas/tiaras, chokers, collares, pendientes y ligas; también recursos para gafas, lazos, guantes y cinturones. Aun así, **no apareció una placa cuadrada monocroma que reúna licencia de reutilización y aislamiento limpio**. Los broches siguen especialmente débiles en material tutorial 2D; buena parte de las referencias de broches/tiaras son de productos 3D. Las restantes tareas de calidad son revisar visualmente todas las miniaturas, confirmar autoría de espejos/reposts, ejecutar deduplicación perceptual y revisar los términos de cada producto antes de usar cualquier archivo.
 
 ## Criterio de selección
 
