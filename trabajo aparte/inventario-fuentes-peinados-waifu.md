@@ -12,14 +12,14 @@ Se completó una ampliación del censo de fuentes de cabello, ropa, ojos y acces
 - [**Censo visual interactivo — 244 fichas con miniatura**](./censo-visual-interactivo.html): búsqueda libre por rasgos, filtro por componente y plataforma, aviso rojo de elementos ajenos, enlace a fuente original y estado de licencia.
 - [**Censo exhaustivo — 153 URLs canónicas únicas**](./censo-exhaustivo-fuentes-waifu-2026-10-21.md): informe profundo con fichas categorizadas, elementos a marcar en rojo, visibilidad de prompts, precio/licencia solo cuando la fuente lo indicó, brechas y recomendaciones.
 - [Bibliografía del censo](./auditoria-bibliografia-censo-waifu-2026-10-21.md): URLs de fuente para auditar el informe.
-- [Índice JSON de referencias](./indice-visual-componentes.json): **244 registros de URL normalizada**, con 244 URLs de miniatura capturadas de páginas/fuentes, componentes objetivo y campos sobre elementos ajenos, licencia y estado de placa monocroma.
+- [Índice JSON de referencias](./indice-visual-componentes.json): **258 registros de URL normalizada**, con 258 URLs de miniatura capturadas de páginas/fuentes, componentes objetivo y campos sobre elementos ajenos, licencia y estado de placa monocroma.
 - [Atlas de peinados y prompts](./atlas-peinados-interactivo.html): primera interfaz de recetas de peinado, filtros y fichas PixAI con alertas rojas.
 
 ### Cómo leer los números
 
-El informe de investigación profunda contiene **160 registros categorizados**, 154 con URL y seis alias/cross-references que remiten a registros existentes. En la lista base hay **153 URL normalizadas distintas** después de resolver una URL repetida entre categorías; cuatro pares adicionales de URLs fueron señalados como posibles duplicados de la misma obra. No se cuenta cada par como imagen única sin revisión perceptual. El índice de IMAGE combina esas fuentes con el índice visual previo: 75 fichas iniciales + 151 URL nuevas del censo profundo (dos coincidencias se absorbieron en fichas existentes) + 4 suplementos de accesorios/ropa + 4 listados de packs modulares + 3 referencias de capas faciales + 2 posts de vestuario en X = **244 registros en total**.
+El informe de investigación profunda contiene **160 registros categorizados**, 154 con URL y seis alias/cross-references que remiten a registros existentes. En la lista base hay **153 URL normalizadas distintas** después de resolver una URL repetida entre categorías; cuatro pares adicionales de URLs fueron señalados como posibles duplicados de la misma obra. No se cuenta cada par como imagen única sin revisión perceptual. El índice de IMAGE combina esas fuentes con el índice visual previo: 75 fichas iniciales + 151 URL nuevas del censo profundo (dos coincidencias se absorbieron en fichas existentes) + 4 suplementos de accesorios/ropa + 4 listados de packs modulares + 3 referencias de capas faciales + 2 posts de vestuario en X = **258 registros en total**.
 
-Las 244 vistas previas se extrajeron de metadata o enlaces visibles de las páginas fuente. **Todavía no se verificó visualmente que todas carguen en el HTML final** y algunas URLs de CDN pueden cambiar o bloquearse. La interfaz tiene un fallback de “vista previa no disponible” y permite abrir la fuente original. No se descargaron los 244 archivos completos.
+Las 258 vistas previas se extrajeron de metadata o enlaces visibles de las páginas fuente. **Todavía no se verificó visualmente que todas carguen en el HTML final** y algunas URLs de CDN pueden cambiar o bloquearse. La interfaz tiene un fallback de “vista previa no disponible” y permite abrir la fuente original. No se descargaron los archivos completos de las referencias no se descargaron.
 
 **Deduplicación:** se normalizaron las URLs canónicas. No se ejecutó comparación de hashes ni deduplicación perceptual entre sitios distintos, de modo que una ilustración subida en dos plataformas podría aparecer como dos fuentes. Los registros de censo preservan alias cuando la fuente inicial era un evento/listado en vez de la página de producto.
 
@@ -183,3 +183,9 @@ X y algunas páginas de Pixiv no devolvieron resultados suficientemente verifica
 3. Usar PixAI solo para extraer términos/prompts y ejemplos; no convertir imágenes del sitio en assets reutilizables automáticamente.
 4. En el atlas visible, separar tres cosas: **referencia visual**, **receta de prompt** y **asset con licencia verificable**.
 5. No afirmar “300 imágenes encontradas” hasta tener 300 referencias únicas verificadas. Un título comercial de 300 sirve de objetivo de variedad, no acredita que una búsqueda abierta ya consiguió 300 assets reutilizables.
+
+### Última sincronización del censo — 22/10/2026
+
+El índice JSON y la página HTML se sincronizaron con **258 registros**: **253 URLs de vista previa de imagen directa candidata y 5 endpoints de embed de Pixiv**. El navegador del entorno no consiguió renderizar el HTML publicado por restricciones de red, por lo que no puedo afirmar que las 258 miniaturas carguen correctamente dentro del visor. La prueba de sintaxis JavaScript sí pasó.
+
+**La cifra no equivale a 258 imágenes visualmente únicas ni 258 assets reutilizables.** La deduplicación entre URLs normalizadas está hecha en el índice; la deduplicación perceptual/hash de imágenes sigue pendiente. Las placas cuadradas monocromas con licencia de reutilización confirmada continúan en **0**.
