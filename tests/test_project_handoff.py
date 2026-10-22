@@ -87,6 +87,18 @@ class ImageProjectHandoffTests(unittest.TestCase):
         self.assertIn('$(\"saveProjectBtn\").addEventListener("click",saveProject)', self.manual)
         self.assertIn('$(\"openProjectBtn\").addEventListener("click",function(){$("projectFile").click();})', self.manual)
 
+    def test_ai_workspace_explains_the_no_key_hair_generation_path_and_branch_safety(self) -> None:
+        ai_workspace = self.avatar.split("function aiWorkspace(root){", 1)[1].split(
+            "function anatomyWorkspace(root){", 1
+        )[0]
+        self.assertIn("Abrir generador IA gratuito", ai_workspace)
+        self.assertIn("generate-character-assets-free.yml", ai_workspace)
+        self.assertIn("cuota pública compartida", ai_workspace)
+        self.assertIn("work/easy-avatar-maker-2026-10", ai_workspace)
+        self.assertIn("hair-core-5", ai_workspace)
+        self.assertIn("no ejecutes el proceso sobre main", ai_workspace)
+        self.assertNotIn("generate-hairstyle-variants.yml", ai_workspace)
+
 
 if __name__ == "__main__":
     unittest.main()
