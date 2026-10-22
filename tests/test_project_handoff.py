@@ -183,13 +183,13 @@ class ImageProjectHandoffTests(unittest.TestCase):
             'data-requires-internet="true" id="aiRun"',
             'data-requires-internet="true" id="anatomyGenerate"',
             'data-requires-internet="true" id="anatomyPose"',
-            'Las funciones online quedan inactivas',
+            'Los enlaces y acciones online quedan inactivos',
         ):
             with self.subTest(feature=feature):
                 self.assertIn(feature, self.avatar)
         self.assertIn('document.addEventListener("click",event=>', self.avatar)
         self.assertIn("internetModeEnabled", self.avatar)
-        self.assertIn("Las capas y la exportación siguen siendo locales", self.avatar)
+        self.assertIn("las capas y la exportación siguen siendo locales", self.avatar)
 
 
 if __name__ == "__main__":
