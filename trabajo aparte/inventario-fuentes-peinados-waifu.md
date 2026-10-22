@@ -16,7 +16,7 @@ Para no mezclar hitos, hay cuatro cifras distintas:
 
 **Índice principal:** [censo visual interactivo — 339 registros / 315 vistas previas](./censo-visual-interactivo.html).
 **Datos estructurados:** [índice JSON consolidado](./indice-visual-componentes.json).
-**Investigación extensa:** [censo de 153 URLs base, con actualizaciones](./censo-exhaustivo-fuentes-waifu-2026-10-21.md).
+**Investigación extensa:** [censo de 160 fichas / 153 URLs maestras](./censo-exhaustivo-fuentes-waifu-2026-10-21.md); [censo inicial de 153 URLs](./censo-exhaustivo-153-fuentes.md).
 **Auditoría de accesorios:** [44 URLs revisadas específicamente para tiaras, pendientes, chokers, broches, cinturones, clips, gafas, guantes, medias y zapatos](./auditoria-accesorios-44-fuentes.md).
 **Atlas de tarjetas PixAI:** [miniaturas, alertas rojas y búsquedas monocromas por componente](./atlas-peinados-interactivo.html).
 
@@ -196,3 +196,6 @@ El índice JSON y la página HTML se sincronizaron con **284 registros**: **253 
 
 
 **Última actualización (22/10/2026):** el índice consolidado incluye **284 registros normalizados**, con **279 URLs candidatas a imagen directa y 5 embeds Pixiv**. Se añadieron colecciones de lazos/flor/diademas, tacones, botas altas, zapatos de plataforma/Mary Jane, y dos fuentes de arquitectura de creadores modulares. El total no representa dibujos únicos ni assets con permiso de redistribución. La deduplicación perceptual por hash sigue pendiente; placas cuadradas B/N con licencia confirmada: **0**.
+
+**QA de identificadores — 22/10/2026:** revisé la coherencia entre el JSON y el HTML. Los 339 registros se alinean por URL de origen y ahora tienen **339 IDs únicos** después de corregir cinco colisiones de identificadores; las URLs canónicas exactas duplicadas son 0. La deduplicación visual entre plataformas sigue pendiente.
+**Auditoría de calidad:** [ver tabla de recuentos y vacíos de calidad](./auditoria-calidad-censo-339-registros.md).
