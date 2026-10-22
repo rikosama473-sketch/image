@@ -99,12 +99,33 @@
 .ai-cutout-actions .btn{font-size:10px;padding:8px 4px}
 @media(max-width:830px){#starterGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:520px){#starterGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.starter-card img{height:115px}.ai-cutout-actions{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Internet mode: orange on, deep violet off, gray when unavailable. */
+.internet-panel{margin:10px 2px 12px;padding:8px;border:1px solid #2d4260;border-radius:10px;background:linear-gradient(145deg,#0e2037,#0a1729);box-shadow:0 5px 18px #0002}
+.internet-toggle{width:100%;display:flex;align-items:center;gap:9px;text-align:left;border:1px solid #65508b;border-radius:8px;padding:9px;background:linear-gradient(135deg,#302047,#211731);color:#f6efff;transition:background .18s ease,border-color .18s ease,filter .18s ease}
+.internet-toggle:hover{filter:brightness(1.09)}
+.internet-symbol{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:8px;background:#171124;border:1px solid #836ba8;font-size:17px}
+.internet-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:2px}.internet-copy b{font-size:10px;letter-spacing:.035em}.internet-copy small{font-size:9px;opacity:.9;line-height:1.3}
+.internet-led{width:9px;height:9px;flex:none;border-radius:50%;background:#b3a7c8;box-shadow:0 0 0 3px #ffffff18}
+.internet-toggle[data-state=on]{color:#251426;border-color:#ffbc7f;background:linear-gradient(135deg,#ffad56,#f4772b);box-shadow:0 4px 15px #f4772b26}.internet-toggle[data-state=on] .internet-symbol{background:#ffe1bf;border-color:#c8662b}.internet-toggle[data-state=on] .internet-led{background:#3e7138}
+.internet-toggle[data-state=off]{color:#f0e5ff;border-color:#6d5594;background:linear-gradient(135deg,#382451,#211530)}.internet-toggle[data-state=off] .internet-led{background:#a98bd5}
+.internet-toggle[data-state=unavailable]{color:#e0e4eb;border-color:#626b79;background:linear-gradient(135deg,#59616e,#383f49);box-shadow:none}.internet-toggle[data-state=unavailable] .internet-symbol{background:#3f4651;border-color:#89919d}.internet-toggle[data-state=unavailable] .internet-led{background:#d4d8de}
+.internet-status{margin:7px 2px 0;color:#9aabc5;font-size:9px;line-height:1.45}.internet-blocked{filter:grayscale(1)!important;opacity:.43!important;border-color:#66707d!important;cursor:not-allowed!important;box-shadow:none!important}.internet-blocked:hover{filter:grayscale(1)!important;opacity:.43!important}
+@media(max-width:830px){.internet-panel{padding:4px;margin:8px 1px}.internet-toggle{justify-content:center;padding:5px 1px}.internet-copy,.internet-led,.internet-status{display:none}.internet-symbol{width:31px;height:31px}}
+@media(max-width:520px){.internet-panel{padding:3px}.internet-symbol{width:27px;height:28px;font-size:15px}}
 </style>
 </head>
 <body>
 <div class="app">
 <aside class="sidebar">
  <div class="brand"><div class="mark">✦</div><div class="brandcopy"><strong>IMAGE<small>Character Creator</small></strong><div class="tagline">Tu personaje, en tus reglas</div></div></div>
+ <div class="internet-panel">
+  <button id="internetModeToggle" class="internet-toggle" type="button" data-state="unavailable" aria-pressed="true" aria-describedby="internetModeStatus" title="Activa o desactiva las funciones que dependen de Internet">
+   <span class="internet-symbol" aria-hidden="true">◎</span>
+   <span class="internet-copy"><b>MODO INTERNET</b><small id="internetModeLabel">Comprobando conexión…</small></span>
+   <span class="internet-led" aria-hidden="true"></span>
+  </button>
+  <p id="internetModeStatus" class="internet-status" role="status" aria-live="polite">El editor y las capas locales funcionan aunque Internet no esté disponible.</p>
+ </div>
  <nav id="nav" class="nav" aria-label="Categorías"></nav><div class="nav-sep"></div>
  <nav class="nav" aria-label="Vista"><button class="navbtn" data-view="preview"><span class="ico">◩</span><span class="label">Vista previa</span></button><button class="navbtn" data-view="camera"><span class="ico">◎</span><span class="label">Cámara</span></button><button class="navbtn" data-view="lighting"><span class="ico">☼</span><span class="label">Luz</span></button><button class="navbtn" data-view="background"><span class="ico">◉</span><span class="label">Fondo</span></button></nav>
  <div class="sidebar-footer"><p>Las ilustraciones completas son estilos base. Las capas extraídas se pueden probar y ajustar; las máscaras automáticas no se consideran finales hasta revisar sus bordes.</p><strong style="font-size:9px;letter-spacing:.08em;color:var(--muted)">MÓDULOS DEL ESTUDIO</strong><nav class="studio-module-nav" data-image-studio-nav aria-label="Navegación del estudio IMAGE"><a href="../visual-reference-library/index.html">Biblioteca visual</a><a href="../hairstyle-workbench/index.html">Taller de peinados</a><a href="../manual-character-editor/index.html">Editor de capas</a><a href="http://127.0.0.1:8765/" target="_blank" rel="noopener noreferrer">Generador local IA ↗</a></nav><p>El generador local de imágenes funciona por separado en el puerto 8765; inicia <code>python ml/local_server.py</code> para usarlo.</p></div>
@@ -127,6 +148,38 @@
 "use strict";
 (function(){
 const $=id=>document.getElementById(id),W=768,H=1280;
+const INTERNET_MODE_KEY="image-internet-mode-v1";
+let internetModeEnabled=true;
+try{const savedInternetMode=localStorage.getItem(INTERNET_MODE_KEY);if(savedInternetMode==="on"||savedInternetMode==="off")internetModeEnabled=savedInternetMode==="on";}catch(_){}
+let internetStatus=navigator.onLine?"unknown":"offline";let internetProbeSequence=0;
+function isExternalHttpLink(element){if(!element||!element.getAttribute)return false;const href=element.getAttribute("href");if(!href)return false;try{const target=new URL(href,window.location.href);return (target.protocol==="https:"||target.protocol==="http:")&&target.origin!==window.location.origin;}catch(_){return false;}}
+function internetModeUsable(){return internetModeEnabled&&navigator.onLine&&internetStatus==="online";}
+function syncInternetUI(){
+ const button=$("internetModeToggle"),label=$("internetModeLabel"),help=$("internetModeStatus");
+ const unavailable=!navigator.onLine||(internetModeEnabled&&internetStatus!=="online");const visualState=unavailable?"unavailable":internetModeEnabled?"on":"off";
+ if(button){button.dataset.state=visualState;button.setAttribute("aria-pressed",String(internetModeEnabled));button.title=visualState==="on"?"Modo Internet activo: se habilitan las funciones externas.":"Modo Internet desactivado o no disponible; las funciones locales siguen habilitadas.";}
+ if(label)label.textContent=visualState==="on"?"ACTIVO · CONECTADO":visualState==="off"?"DESACTIVADO":!navigator.onLine?"SIN CONEXIÓN":internetStatus==="checking"?"COMPROBANDO…":"INTERNET NO VERIFICADO";
+ if(help)help.textContent=visualState==="on"?"Servicios externos habilitados. El editor, las capas y la exportación siguen siendo locales.":visualState==="off"?"Modo Internet apagado por vos. Los enlaces y acciones online quedan inactivos; el trabajo local continúa.":!navigator.onLine?"Sin conexión de red: las funciones online se muestran en gris. El editor y la biblioteca local siguen disponibles.":"No se pudo verificar Internet. Las funciones online quedan en gris hasta recuperar la conexión.";
+ document.querySelectorAll("a[href],button[data-requires-internet]").forEach(control=>{
+  if(control.tagName==="A"&&isExternalHttpLink(control))control.dataset.requiresInternet="true";
+  if(control.dataset.requiresInternet!=="true")return;const locked=!internetModeUsable();control.classList.toggle("internet-blocked",locked);control.setAttribute("aria-disabled",String(locked));
+  if(locked)control.title=!internetModeEnabled?"Activa Modo Internet para usar este servicio.":"Servicio online no disponible: la conexión no está verificada.";else if(control.dataset.internetOriginalTitle)control.title=control.dataset.internetOriginalTitle;
+ });
+}
+async function checkInternetConnection(){
+ const sequence=++internetProbeSequence;
+ if(!internetModeEnabled){internetStatus=navigator.onLine?"unknown":"offline";syncInternetUI();return;}
+ if(!navigator.onLine){internetStatus="offline";syncInternetUI();return;}
+ internetStatus="checking";syncInternetUI();const controller=new AbortController();const timeout=window.setTimeout(()=>controller.abort(),4500);
+ try{await fetch("https://api.github.com/repos/rikosama473-sketch/image",{method:"GET",cache:"no-store",headers:{"Accept":"application/vnd.github+json"},signal:controller.signal});if(sequence===internetProbeSequence)internetStatus="online";}
+ catch(_){if(sequence===internetProbeSequence)internetStatus="offline";}
+ finally{window.clearTimeout(timeout);if(sequence===internetProbeSequence)syncInternetUI();}
+}
+function setInternetMode(enabled){internetModeEnabled=Boolean(enabled);try{localStorage.setItem(INTERNET_MODE_KEY,internetModeEnabled?"on":"off");}catch(_){}if(!internetModeEnabled){internetStatus=navigator.onLine?"unknown":"offline";syncInternetUI();toast("Modo Internet desactivado. El editor, la biblioteca local y la exportación siguen disponibles.");return;}internetStatus="checking";syncInternetUI();toast("Modo Internet activado. Comprobando disponibilidad de servicios externos…");checkInternetConnection();}
+document.addEventListener("click",event=>{const target=event.target instanceof Element?event.target.closest("a[href],button[data-requires-internet]"):null;if(!target)return;const required=target.dataset.requiresInternet==="true"||(target.tagName==="A"&&isExternalHttpLink(target));if(required&&!internetModeUsable()){event.preventDefault();event.stopImmediatePropagation();toast(!internetModeEnabled?"Modo Internet está apagado. Encendelo para usar este servicio.":"Internet no está disponible o no se pudo verificar; esta función permanece desactivada.");}},true);
+window.addEventListener("online",()=>{if(internetModeEnabled)checkInternetConnection();else{internetStatus="unknown";syncInternetUI();}});
+window.addEventListener("offline",()=>{internetProbeSequence++;internetStatus="offline";syncInternetUI();});
+const internetControlObserver=new MutationObserver(()=>syncInternetUI());internetControlObserver.observe(document.body,{childList:true,subtree:true});
 const cats=[
 {id:"starter",label:"Prueba inicial",icon:"▶",pills:["Imágenes internas"]},
 {id:"hair",label:"Cabello",icon:"♧",pills:["Todos","Cortos","Medios","Largos","Recogidos","Accesorios"]},
@@ -439,7 +492,7 @@ function anatomyWorkspace(root){
  root.innerHTML=
   '<div class="anatomy-hero"><strong>♙ Taller anatómico · '+safe(state.name)+'</strong><p>Usá tus propios diseños como referencia para obtener una guía de cuerpo completo. Después separá pelo, cara, torso, brazos, piernas o accesorios pintando cada región y exportándola como PNG transparente con el mismo lienzo y coordenadas.</p></div>'+
   '<div class="anatomy-step"><span class="anatomy-num">1</span><div><b>Generar y guardar dentro del repositorio</b><p>La tarea del repositorio toma la referencia confirmada de Pibara y genera una lámina de cuerpo entero. PNG, recorte transparente, manifiesto e índice de biblioteca quedan guardados en la rama de la PR. No necesita la clave de OpenAI; depende de la cuota del generador público.</p><div class="actions" style="margin-top:8px"><a class="btn primary" href="https://github.com/rikosama473-sketch/image/actions/workflows/generate-character-assets-free.yml" target="_blank" rel="noopener">✦ Generar desde GitHub Actions →</a><button id="anatomyOpenLibrary" class="btn">Ver imágenes del repositorio</button></div><p style="margin-top:7px">En la acción: Personaje <b>Pibara</b>, referencia <code>from-PixAI-2034984086876227343-0.png</code>, paquete <code>anatomy-guide-1</code>, fondo <b>transparent</b>.</p></div></div>'+
-  '<div class="anatomy-step"><span class="anatomy-num">1b</span><div><b>Alternativa: generación directa desde el editor</b><p>Usa la API configurada localmente. No es necesaria si lanzás el generador del repositorio.</p><div class="actions" style="margin-top:8px"><button id="anatomyGenerate" class="btn">Generar guía con API local</button><button id="anatomyPose" class="btn">Crear maniquí con API local</button></div></div></div>'+
+  '<div class="anatomy-step"><span class="anatomy-num">1b</span><div><b>Alternativa: generación directa desde el editor</b><p>Usa la API configurada localmente. No es necesaria si lanzás el generador del repositorio.</p><div class="actions" style="margin-top:8px"><button data-requires-internet="true" id="anatomyGenerate" class="btn">Generar guía con API local</button><button data-requires-internet="true" id="anatomyPose" class="btn">Crear maniquí con API local</button></div></div></div>'+
   '<div class="anatomy-step"><span class="anatomy-num">2</span><div><b>Separar una región del dibujo</b><p>Activá el pincel y pintá el interior de la pieza que querés extraer. Usa trazos pequeños cerca del contorno y evita pintar el fondo. La pieza se crea como PNG transparente alineado al lienzo.</p><div class="actions" style="margin-top:8px"><button id="anatomyMaskToggle" class="btn">✎ Pintar pieza</button><button id="anatomyMaskClear" class="btn">Limpiar selección</button><button id="anatomyCut" class="btn primary">Crear capa separada</button></div><label class="ai-mask-brush" for="anatomyBrushSize">Tamaño del pincel<input id="anatomyBrushSize" type="range" min="8" max="150" step="2" value="'+aiBrushSize+'"><output id="anatomyBrushValue">'+aiBrushSize+' px</output></label><span id="anatomyMaskCount" class="tiny">0 trazos</span></div></div>'+
   '<div class="anatomy-step"><span class="anatomy-num">3</span><div><b>Exportar y reutilizar cada pieza</b><p>La capa mantiene las coordenadas del lienzo. Exportala como PNG o guardala en la biblioteca personal de este navegador para volver a agregarla a otros personajes sin buscar el archivo de nuevo.</p><div class="actions" style="margin-top:8px"><button id="anatomyExport" class="btn">↓ Exportar capa seleccionada</button><button id="anatomySavePiece" class="btn primary">Guardar capa en mi biblioteca</button><button id="anatomySaveProject" class="btn">Guardar proyecto JSON</button></div></div></div>'+
   '<section class="library-hero"><strong>▦ Mi biblioteca personal de piezas</strong><p>Se guarda en el almacenamiento local de este navegador mediante IndexedDB. Las imágenes no se suben a GitHub ni a una nube; podés volver a agregarlas a otra composición en esta PC.</p><div class="library-actions"><span id="localPartsCount" class="tiny">Leyendo biblioteca local…</span><button type="button" id="localPartsReload" class="btn">Actualizar</button></div><div id="localPartsGrid" class="assetgrid"></div></section>'+
@@ -742,7 +795,7 @@ function aiWorkspace(root){
   '<div class="ai-ref"><button type="button" id="aiRefBtn" class="btn">＋ Añadir imagen de referencia</button><input id="aiReference" type="file" accept="image/png,image/jpeg,image/webp" hidden><span id="aiRefName" class="tiny">'+(aiReferenceName?safe(aiReferenceName):"Sin referencia adicional")+'</span>'+(aiReferenceDataUrl?'<button type="button" id="aiClearRef" class="btn">Quitar referencia</button>':'')+'</div>'+
   '<div id="aiServiceStatus" class="ai-status">Comprobando servicio local de IA…</div>'+
   '<div class="ai-note"><strong>Control profesional y privacidad</strong><br>El lienzo actual se envía al proveedor elegido para editarse. La solicitud puede generar cargos en la cuenta API. La clave se lee desde una variable de entorno local; no se introduce en esta página ni se guarda en el proyecto. Usa una imagen de referencia solo si tienes derecho a utilizarla.</div>'+
-  '<button type="button" id="aiRun" class="btn primary" '+(aiBusy?"disabled":"")+'>'+ (aiBusy?"Generando edición…":"✦ Generar edición")+'</button>'+
+  '<button type="button" data-requires-internet="true" id="aiRun" class="btn primary" '+(aiBusy?"disabled":"")+'>'+ (aiBusy?"Generando edición…":"✦ Generar edición")+'</button>'+
   resultHtml;
  $("aiPrompt").oninput=e=>aiSettings.prompt=e.target.value;
  $("aiModel").onchange=e=>{aiSettings.model=e.target.value;syncAIQuality();};
@@ -917,7 +970,8 @@ $("stage").querySelector(".nameplate").title="Doble clic en el nombre para edita
 const visualParams=new URLSearchParams(window.location.search);
 const visualPrompt=visualParams.get("visualPrompt");
 if(visualPrompt){aiSettings.prompt=visualPrompt.slice(0,3000);const requestedBackground=visualParams.get("visualBackground");if(["auto","opaque","transparent"].includes(requestedBackground))aiSettings.background=requestedBackground;const visualName=visualParams.get("visualName");if(visualName)aiNextResultMeta={kind:"ai_result",name:"Variante visual · "+visualName.slice(0,100)};state.category="ai";state.pill="Todos";}
-all();
+$("internetModeToggle").addEventListener("click",()=>setInternetMode(!internetModeEnabled));
+all();syncInternetUI();if(internetModeEnabled)checkInternetConnection();
 })();
 </script>
 </body>
