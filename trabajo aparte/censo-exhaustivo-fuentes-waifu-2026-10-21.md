@@ -2762,3 +2762,10 @@ These links are important for the production pipeline because IMAGE needs a clea
 
 **Selection result:** keep the CC BY-SA female-hair guide in the “potentially derivable with attribution/share-alike” lane; keep the CC BY-NC-SA sheet as noncommercial inspiration only; keep Kenney/Fumiko/LPC as generic modular source architecture and per-file-license research. None of these five is counted as a verified high-quality anime square black-and-white plate with a blanket reuse grant for every component.
 
+
+
+## Current consolidated visual-index status — 22 October 2026
+
+This report's base deep-research census remains **160 categorized records, 154 with a source URL, 153 normalized unique source URLs** before later curated index additions. The consolidated IMAGE index and the interactive census now contain **258 normalized source URL records** (253 direct image-preview candidates, 5 Pixiv embed endpoints). The HTML was synchronized from the current JSON, and its JavaScript syntax passed validation; the remote browser could not render the HTML due to network restrictions, so individual preview loading has not been verified there.
+
+The consolidated total is a source-record count, not a count of unique pictures. Hash/perceptual deduplication across platforms remains pending. Confirmed licensed square monochrome component plates: **0**.
