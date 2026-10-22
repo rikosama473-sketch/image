@@ -7,6 +7,7 @@
 | Medida | Recuento |
 |---|---:|
 | Registros / URL canónicas exactas en JSON | 339 |
+| Identificadores internos de ficha únicos (tras corrección) | 339 |
 | URLs de vista previa registradas | 315 |
 | Registros sin URL de vista previa | 24 |
 | Registros con título | 339 |
@@ -19,6 +20,7 @@
 | Placas cuadradas monocromas con permiso de reutilización confirmado | 0 |
 | Páginas fuente PixAI registradas según la estadística global | 58 |
 | URLs exactas duplicadas en el índice | 0 |
+| IDs internos reutilizados que se corrigieron durante QA | 5 |
 
 **Importante:** las vistas previas son URL registradas, no imágenes que se hayan cargado y revisado una por una en el navegador final. El censo visual tiene un fallback de carga; no hubo una prueba real individual de todas las miniaturas. La deduplicación exacta por URL da cero duplicados, pero aún puede haber obras iguales en diferentes plataformas, variaciones del mismo dibujo o varias vistas de una hoja. No se ejecutó hash/perceptual matching de los ficheros originales.
 
@@ -58,3 +60,7 @@ No son recuentos de imágenes únicas ni assets recortados. Los hubs de etiqueta
 ## Regla de cierre por ficha
 
 Se considerará lista para producción solo cuando tenga: (a) URL original/autor identificables; (b) miniatura que coincida al abrir el origen; (c) componente objetivo claro; (d) extras ajenos marcados en rojo; (e) licencia acorde con el uso concreto de IMAGE; (f) placa cuadrada monocroma y permiso de uso confirmados cuando se requiera; y (g) deduplicación registrada. El censo actual es una base extensa de investigación; no es todavía una biblioteca terminada de assets reutilizables.
+
+## Corrección de identidad de fichas — 22 de octubre de 2026
+
+Una inspección adicional encontró cinco IDs de la combinación de lotes que se habían reutilizado para páginas distintas. Se cambiaron a identificadores únicos con sufijo `-ALT1`; el JSON conserva `legacy_merged_id` para trazabilidad y el HTML interactivo se sincronizó por URL de origen. Ahora hay **339 registros y 339 IDs internos únicos**, con 0 duplicados exactos de URL. Esto no sustituye la deduplicación visual: páginas distintas todavía pueden mostrar la misma obra o variaciones de una misma hoja.
