@@ -2774,3 +2774,10 @@ The consolidated total is a source-record count, not a count of unique pictures.
 ## Consolidated index extension — 22 October 2026
 
 Seven accessory/clothing references were appended after the base deep-research report was closed, targeting shoes/boots, tiaras, general accessory drawing, kanzashi, belts and chokers. The consolidated IMAGE index and interactive HTML now contain **265 normalized source URL records** (260 direct-image preview candidates and 5 Pixiv embed endpoints). The base report's 153 unique URLs remain the count for that research run, not the total of the expanded curated index. Perceptual image deduplication and confirmation of per-item licenses remain open.
+
+
+## Later accessory and modular-creator leads — 22 October 2026
+
+Seven more focused references were added to the consolidated index: [400 Jewelry Image References](https://www.artstation.com/marketplace/p/OOqn2/400-jewelry-image-references-vol-01), [Pixivision earrings collection](https://www.pixivision.net/en/a/7616), [Awfully Sweet character sprite](https://butterymilk.itch.io/awfully-sweet), [Customize Your Waifu](https://kikeluzi.itch.io/cyw), [Character Creator VN](https://yuripourre.itch.io/character-creator-sutemo), [Valkyria HolyKnight modular outfit](https://booth.pm/ja/items/4040173) and [Alice 55-part PSD](https://booth.pm/ja/items/4047084). Their conditions vary: some allow use in projects but prohibit reselling source sprites or PSDs, while the Kikeluzi page labels its asset license CC BY 4.0. Each resource has been recorded with its own terms and should not be treated as a single interchangeable “free” class.
+
+The consolidated index now contains **272 normalized source records**, including 267 direct-image preview candidates and 5 Pixiv embeds. The base deep-research run still stands at 160 categorized records and 153 normalized URLs. No perceptual deduplication or final visual thumbnail-load test has been completed; licensed clean square monochrome plates confirmed: **0**.
