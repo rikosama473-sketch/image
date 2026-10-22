@@ -2769,3 +2769,8 @@ These links are important for the production pipeline because IMAGE needs a clea
 This report's base deep-research census remains **160 categorized records, 154 with a source URL, 153 normalized unique source URLs** before later curated index additions. The consolidated IMAGE index and the interactive census now contain **258 normalized source URL records** (253 direct image-preview candidates, 5 Pixiv embed endpoints). The HTML was synchronized from the current JSON, and its JavaScript syntax passed validation; the remote browser could not render the HTML due to network restrictions, so individual preview loading has not been verified there.
 
 The consolidated total is a source-record count, not a count of unique pictures. Hash/perceptual deduplication across platforms remains pending. Confirmed licensed square monochrome component plates: **0**.
+
+
+## Consolidated index extension — 22 October 2026
+
+Seven accessory/clothing references were appended after the base deep-research report was closed, targeting shoes/boots, tiaras, general accessory drawing, kanzashi, belts and chokers. The consolidated IMAGE index and interactive HTML now contain **265 normalized source URL records** (260 direct-image preview candidates and 5 Pixiv embed endpoints). The base report's 153 unique URLs remain the count for that research run, not the total of the expanded curated index. Perceptual image deduplication and confirmation of per-item licenses remain open.
