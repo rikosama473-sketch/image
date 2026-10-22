@@ -152,7 +152,7 @@ const INTERNET_MODE_KEY="image-internet-mode-v1";
 let internetModeEnabled=true;
 try{const savedInternetMode=localStorage.getItem(INTERNET_MODE_KEY);if(savedInternetMode==="on"||savedInternetMode==="off")internetModeEnabled=savedInternetMode==="on";}catch(_){}
 let internetStatus=navigator.onLine?"unknown":"offline";let internetProbeSequence=0;
-function isExternalHttpLink(element){if(!element||!element.getAttribute)return false;const href=element.getAttribute("href");if(!href)return false;try{const target=new URL(href,window.location.href);return (target.protocol==="https:"||target.protocol==="http:")&&target.origin!==window.location.origin;}catch(_){return false;}}
+function isExternalHttpLink(element){if(!element||!element.getAttribute)return false;const href=element.getAttribute("href");if(!href)return false;try{const target=new URL(href,window.location.href);const isLoopbackHost=host=>host==="localhost"||host==="127.0.0.1"||host==="[::1]"||host.endsWith(".localhost");return (target.protocol==="https:"||target.protocol==="http:")&&target.origin!==window.location.origin&&!isLoopbackHost(target.hostname);}catch(_){return false;}}
 function internetModeUsable(){return internetModeEnabled&&navigator.onLine&&internetStatus==="online";}
 function syncInternetUI(){
  const button=$("internetModeToggle"),label=$("internetModeLabel"),help=$("internetModeStatus");
