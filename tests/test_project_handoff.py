@@ -107,7 +107,7 @@ class ImageProjectHandoffTests(unittest.TestCase):
         self.assertIn('data-ai-free-asset-id', self.avatar)
         self.assertIn('kind==="generated_full_illustration"', self.avatar)
         self.assertIn('useLibraryAsset(button.dataset.aiFreeAssetId,"ai")', self.avatar)
-        self.assertIn("no como capa aislada", self.avatar)
+        self.assertIn("no recortes de cabello aislados", self.avatar)
 
     def test_existing_free_generated_variants_are_indexed_and_review_pending(self) -> None:
         library = json.loads(
