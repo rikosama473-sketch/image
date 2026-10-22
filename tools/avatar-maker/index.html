@@ -591,6 +591,7 @@ function aiWorkspace(root){
  root.innerHTML=
   '<div class="ai-intro"><strong>✧ CREADOR DE PERSONAJES CON IA</strong><p>Generá variaciones de personajes, cambiá peinados, ropa y detalles con instrucciones, y conservá cada resultado como una capa reversible. El editor por piezas sigue disponible aunque la IA no esté conectada.</p></div>'+
   '<section class="library-hero"><strong>Generación con IA sin clave propia</strong><p>El generador gratuito usa cuota pública compartida y puede estar temporalmente saturado. En GitHub Actions, elegí la rama <code>work/easy-avatar-maker-2026-10</code> para mantener los resultados fuera de main; seleccioná el personaje, una referencia verificada y el paquete <code>hair-core-5</code> para solicitar cinco propuestas de peinado. No pegues claves API aquí.</p><div class="actions"><a class="btn primary" href="https://github.com/rikosama473-sketch/image/actions/workflows/generate-character-assets-free.yml" target="_blank" rel="noopener">✦ Abrir generador IA gratuito →</a></div><p class="tiny">Importante: seleccioná la rama de trabajo antes de ejecutar. Este flujo guarda los resultados en la rama seleccionada; no ejecutes el proceso sobre main.</p></section>'+
+  '<section class="plain"><div class="sectionhead"><b>Peinados gratuitos ya guardados</b><button type="button" id="aiFreeVariantsReload" class="btn">Actualizar catálogo</button></div><p>Esta galería lee los paquetes de peinado generados y registrados en la rama actual. Son retratos completos con el pelo editado, no recortes de cabello aislados; al elegir uno, pasa a ser el retrato base. Todo sigue pendiente de revisión visual.</p><div id="aiFreeVariantsStatus" class="tiny">Buscando variantes…</div><div id="aiFreeVariantsGrid" class="assetgrid"></div></section>'+
   '<div><label class="ai-label" for="aiPrompt">¿Qué querés cambiar?</label><textarea id="aiPrompt" class="ai-prompt" maxlength="3000" placeholder="Ej.: Conserva el rostro y la identidad; cambia únicamente el cabello a una coleta alta con mechones sueltos.">'+safe(aiSettings.prompt)+'</textarea><div class="tiny" style="margin-top:5px">Una instrucción concreta da más control. No se prometen recortes perfectos de una sola pasada.</div></div>'+
   '<section class="ai-mask-panel"><div class="ai-mask-head"><strong>Máscara de edición localizada</strong><span id="aiMaskCount">0 trazos</span></div><p>Pintá sobre el personaje en el lienzo central para delimitar la zona que querés cambiar. Lo marcado en rosa es editable; lo que quede fuera se protege en la medida de lo posible.</p><div class="ai-mask-actions"><button type="button" id="aiMaskToggle" class="btn">✎ Pintar zona</button><button type="button" id="aiMaskClear" class="btn">Limpiar máscara</button></div><label class="ai-mask-brush" for="aiBrushSize">Tamaño del pincel<input id="aiBrushSize" type="range" min="12" max="180" step="2" value="'+aiBrushSize+'"><output id="aiBrushValue">'+aiBrushSize+' px</output></label><div class="ai-mask-legend"><span class="ai-mask-dot"></span>Zona pintada: la IA puede editarla · sin trazos: edición global</div></section>'+
   '<div><div class="sectionhead"><b>Ediciones rápidas</b><span>Completá o reemplazá la instrucción</span></div><div class="actions ai-presets">'+presetHtml+'</div></div>'+
@@ -654,6 +655,8 @@ function aiWorkspace(root){
  if($("aiClearRef"))$("aiClearRef").onclick=()=>{aiReferenceDataUrl="";aiReferenceName="";aiWorkspace($("content"));};
  if($("aiApply"))$("aiApply").onclick=applyAIResult;
  if($("aiDiscard"))$("aiDiscard").onclick=()=>{aiResult=null;aiResults=[];aiSelectedIndex=0;aiWorkspace($("content"));toast("Resultado descartado; el original no cambió.");};
+ if($("aiFreeVariantsReload"))$("aiFreeVariantsReload").onclick=()=>refreshAIFreeVariants(true);
+ refreshAIFreeVariants(false);
  refreshAIStatus();
 }
 function syncAIQuality(){
@@ -668,6 +671,36 @@ function refreshAIStatus(){
   const current=$("aiServiceStatus");if(!current)return;
   current.textContent=d.api_key_configured?"Servicio local disponible. La clave se encuentra solo en el entorno; elegí el modelo y generá una edición.":"Servicio local disponible, pero falta OPENAI_API_KEY. Configurala en la terminal siguiendo AI_EDITING.md; el editor manual seguirá funcionando.";
  }).catch(()=>{const current=$("aiServiceStatus");if(current)current.textContent="Puente de IA no detectado. Abrí el editor con start-avatar-maker.bat y revisá AI_EDITING.md. No pegues tu clave API en la página.";});
+}
+async function refreshAIFreeVariants(force=false){
+ const statusEl=$("aiFreeVariantsStatus"),grid=$("aiFreeVariantsGrid");
+ if(!statusEl||!grid)return;
+ statusEl.textContent="Buscando variantes guardadas…";
+ try{
+  let data=imageLibraryCache;
+  if(force||!data){
+   const response=await fetch("assets/image-library.json?refresh="+Date.now(),{cache:"no-store"});
+   if(!response.ok)throw Error("No se pudo actualizar assets/image-library.json.");
+   data=await response.json();
+   if(!data||!Array.isArray(data.assets))throw Error("El catálogo de imágenes no tiene un formato válido.");
+   imageLibraryCache=data;
+   imageLibraryPromise=Promise.resolve(data);
+  }
+  const variants=data.assets.filter(a=>a&&a.kind==="generated_full_illustration"&&a.pack==="hair-core-5"&&String(a.origin_hint||"").includes("public image-edit Space"));
+  variants.sort((a,b)=>String(b.path||"").localeCompare(String(a.path||"")));
+  const visible=variants.slice(0,8);
+  if(!visible.length){
+   grid.innerHTML="";
+   statusEl.textContent="Todavía no hay peinados del generador gratuito indexados en esta rama. Ejecutá hair-core-5 y pulsá Actualizar catálogo.";
+   return;
+  }
+  grid.innerHTML=visible.map(a=>'<button type="button" class="asset" data-ai-free-asset-id="'+safe(a.id)+'"><span class="tag candidate">IA · REVISAR</span><div class="thumb checker"><img loading="lazy" alt="'+safe(a.label)+'" src="'+safe(url(a.src))+'"></div><b>'+safe(a.label)+'</b><small>Retrato completo · revisión pendiente</small></button>').join("");
+  statusEl.textContent="Mostrando "+visible.length+" de "+variants.length+" retratos con peinado generado. Seleccionar uno lo carga como retrato base, no como capa aislada.";
+  grid.querySelectorAll("[data-ai-free-asset-id]").forEach(button=>{button.onclick=()=>useLibraryAsset(button.dataset.aiFreeAssetId,"ai");});
+ }catch(error){
+  grid.innerHTML="";
+  statusEl.textContent="No se pudo actualizar la galería: "+String(error&&error.message||error);
+ }
 }
 async function baseImageDataUrl(){
  const can=document.createElement("canvas");can.width=W;can.height=H;
