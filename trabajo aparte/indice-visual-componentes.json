@@ -16101,7 +16101,7 @@
       "atlas_ordinal": 274
     },
     {
-      "id": "EXT-BOOTH-009",
+      "id": "EXT-BOOTH-009-ALT1",
       "category": "clothing",
       "categories": [
         "clothing",
@@ -16135,10 +16135,11 @@
       "thumbnail_status": "Official BOOTH product thumbnail URL extracted from the listing; not visually verified in the final browser.",
       "ordinal": 271,
       "research_batch": "prior-index-2026-10-21",
-      "atlas_ordinal": 275
+      "atlas_ordinal": 275,
+      "legacy_merged_id": "EXT-BOOTH-009"
     },
     {
-      "id": "EXT-BOOTH-010",
+      "id": "EXT-BOOTH-010-ALT1",
       "category": "multi_component_reference",
       "categories": [
         "products",
@@ -16174,7 +16175,8 @@
       "thumbnail_status": "Official BOOTH store thumbnail URL extracted from the product listing; not visually verified in final browser.",
       "ordinal": 272,
       "research_batch": "prior-index-2026-10-21",
-      "atlas_ordinal": 276
+      "atlas_ordinal": 276,
+      "legacy_merged_id": "EXT-BOOTH-010"
     },
     {
       "id": "EXT-PXV-012",
@@ -16794,7 +16796,7 @@
       "thumbnail_checked_date": "2026-10-22"
     },
     {
-      "id": "PX-ACC-008",
+      "id": "PX-ACC-008-ALT1",
       "category": "accessories",
       "title": "Tiara Starlumos — tiara and headpiece reference",
       "source_url": "https://pixai.art/artwork/1953849701550899383",
@@ -16815,10 +16817,11 @@
       "license_status": "reference_only_pixai_creator_work_ip_risk",
       "ordinal": 295,
       "thumbnail_status": "Preview URL found from source page metadata/snippet; browser load not individually validated.",
-      "thumbnail_checked_date": "2026-10-22"
+      "thumbnail_checked_date": "2026-10-22",
+      "legacy_merged_id": "PX-ACC-008"
     },
     {
-      "id": "PX-ACC-009",
+      "id": "PX-ACC-009-ALT1",
       "category": "accessories_clothing",
       "title": "Elaine (Pokémon) — crown, hair bow, necklace and floral bouquet",
       "source_url": "https://pixai.art/artwork/2020164389518909695",
@@ -16843,10 +16846,11 @@
       "license_status": "reference_only_pixai_creator_work_ip_risk",
       "ordinal": 296,
       "thumbnail_status": "Preview URL found from source page metadata/snippet; browser load not individually validated.",
-      "thumbnail_checked_date": "2026-10-22"
+      "thumbnail_checked_date": "2026-10-22",
+      "legacy_merged_id": "PX-ACC-009"
     },
     {
-      "id": "PX-ACC-010",
+      "id": "PX-ACC-010-ALT1",
       "category": "accessories_clothing",
       "title": "Renaissance anime character — flower brooch, hair flowers, bow and gloves",
       "source_url": "https://pixai.art/artwork/2029481777955285226",
@@ -16871,7 +16875,8 @@
       "license_status": "reference_only_pixai_creator_work",
       "ordinal": 297,
       "thumbnail_status": "Preview URL found from source page metadata/snippet; browser load not individually validated.",
-      "thumbnail_checked_date": "2026-10-22"
+      "thumbnail_checked_date": "2026-10-22",
+      "legacy_merged_id": "PX-ACC-010"
     },
     {
       "id": "PX-ACC-011",
@@ -18061,7 +18066,12 @@
     "records_without_registered_preview": 24,
     "licensed_clean_square_monochrome_plates_verified": 0,
     "note": "These are canonical URL records and editorial/tutorial/product pages, not perceptually unique images or extracted assets. Tag indexes are indexed for discovery but not counted as individual image assets. Thumbnail URLs are registered source previews; individual browser load has not been verified for every URL.",
-    "accessory_gap_note": "The dedicated accessory audit confirms tutorial/collection coverage and labels 3D/MMD-only product pages as not directly compatible with a 2D PNG layer atlas. It still found no licensed clean square monochrome component plate."
+    "accessory_gap_note": "The dedicated accessory audit confirms tutorial/collection coverage and labels 3D/MMD-only product pages as not directly compatible with a 2D PNG layer atlas. It still found no licensed clean square monochrome component plate.",
+    "unique_record_ids": 339,
+    "record_id_reuse_fixed": 5,
+    "exact_duplicate_source_urls": 0,
+    "record_id_audit_date": "2026-10-22",
+    "record_id_audit_note": "Five reused IDs from merged source batches were renamed with -ALT suffixes; legacy_merged_id preserves traceability. Source URLs were not changed."
   },
   "pixai_tag_browsers": [
     {
