@@ -492,3 +492,5 @@ Cuando se añada otra referencia, no dejarla como un enlace suelto. Usar esta fi
 
 - [Plancha A — 20 peinados, Pinterest](https://jp.pinterest.com/pin/395542779792570224/)
 - [Plancha de inspiración para personajes OC, Pinterest](https://jp.pinterest.com/pin/1137299712187575540/)
+
+**Última sincronización (22/10/2026):** el censo visual y el índice JSON contienen 258 registros, 253 candidatos de imagen directa y 5 vistas de embed de Pixiv. No se pudo renderizar el HTML mediante el visor remoto de solo lectura del entorno, de modo que las miniaturas aún no se consideran validadas una por una en el navegador final. La sintaxis JavaScript del visor fue comprobada. La deduplicación perceptual y las placas cuadradas monocromas con licencia siguen pendientes.
