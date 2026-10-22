@@ -1020,3 +1020,10 @@ Five more sources were verified specifically for license terms, not merely image
 - [OpenGameArt — LPC Expanded](https://opengameart.org/content/lpc-expanded-sit-run-jump-more), modular hair/clothing/body/shoe assets. Overall pack has OGA-BY 3.0/4.0 and mixed contributor terms; some hair assets are marked CC0, but not the whole pack.
 
 The five new license-oriented pages raise the index to **244 source records**. They help identify a reuse pathway, but do not remove the need to document individual file provenance, author, exact license and any attribution/share-alike requirements. There are still **zero verified high-quality anime square monochrome component plates with a confirmed blanket redistribution license**.
+
+
+## Current consolidated index status — 22 October 2026
+
+The separate machine-readable index and interactive HTML census now contain **258 normalized source URL records**. The index lists **253 direct image-preview candidates and 5 Pixiv embed endpoints**. These URLs were harvested from source metadata or visible image links and are not all visually verified in the rendered end-user browser: the read-only browser could not reach either the HTML preview service or the raw HTML source due to network restrictions. JavaScript syntax validation passed. This index count is different from the base research report's 160 categorized records / 153 distinct canonical source URLs; later curated/product/PixAI sources were added to the consolidated index.
+
+No licensed clean square monochrome component plates have been confirmed (**0**). URL uniqueness is not image uniqueness; perceptual/hash deduplication across different hosting URLs remains open. No claim is made that all images have been downloaded, cleanly cropped, or licensed for redistribution.
