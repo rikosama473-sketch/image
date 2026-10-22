@@ -11053,14 +11053,459 @@
       "thumbnail_checked_date": "2026-10-22",
       "thumbnail_status": "Official BOOTH store thumbnail URL extracted from the product listing; not visually verified in final browser.",
       "ordinal": 272
+    },
+    {
+      "id": "EXT-PXV-012",
+      "category": "hair_accessories",
+      "categories": [
+        "hair",
+        "accessories"
+      ],
+      "title": "Pixivision — lazos en el cabello (girl-focused collection)",
+      "source_url": "https://www.pixivision.net/en/a/8806",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/8806/ogimage.jpg",
+      "creator": "Pixivision editorial collection, multiple artists",
+      "source_platform": "Pixivision",
+      "source_language": "English/Japanese",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_component": "Lazos de pelo sobre coleta, twintails y otros recogidos.",
+      "target_traits": [
+        "thin silk ribbon",
+        "wide bow",
+        "frilled bow",
+        "ponytail tie",
+        "pigtail bows",
+        "patterned ribbons"
+      ],
+      "extras_red": [
+        "Colección editorial de ilustraciones completas; pelo, rostro y ropa aparecen en cada ejemplo. Separar la cinta del peinado base y abrir la obra individual para autor/licencia."
+      ],
+      "prompt_visibility": "No unified prompt; original artwork prompts/metadata may vary.",
+      "resource_type": "Curated reference collection, not a downloadable asset pack.",
+      "price_license_claim": "Public page; individual artwork rights remain with each original artist.",
+      "license_status": "reference_only_follow_original_work_terms",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+hair+ribbon+bow+types+isolated+black+white+lineart+sheet+square",
+      "monochrome_plate_status": "editorial_cover_not_clean_component_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixivision cover preview endpoint extracted from original page metadata; not loaded individually in final HTML.",
+      "ordinal": 273
+    },
+    {
+      "id": "EXT-PXV-013",
+      "category": "hair_accessories",
+      "categories": [
+        "hair",
+        "clothing",
+        "accessories"
+      ],
+      "title": "Pixivision — cintas decorativas para cabello y vestuario",
+      "source_url": "https://www.pixivision.net/en/a/10450",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/10450/ogimage.jpg",
+      "creator": "Pixivision editorial collection, multiple artists",
+      "source_platform": "Pixivision",
+      "source_language": "English/Japanese",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_component": "Cintas de pelo y cintas de adorno en prendas.",
+      "target_traits": [
+        "ribbon tied as a bow",
+        "long trailing ribbon ends",
+        "ribbon trim on clothing",
+        "thin and wide ribbons",
+        "repeating decorative ribbon patterns"
+      ],
+      "extras_red": [
+        "La colección mezcla cintas de accesorios y ropa, además de personajes completos; guardar tipo, ancho, nudo y ubicación en campos independientes."
+      ],
+      "prompt_visibility": "No unified prompt.",
+      "resource_type": "Editorial inspiration collection.",
+      "price_license_claim": "Public page only; linked artwork remains creator-owned.",
+      "license_status": "reference_only_follow_original_work_terms",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+ribbon+design+sheet+bow+knot+trailing+ends+black+white+lineart+square",
+      "monochrome_plate_status": "editorial_collection_not_clean_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixivision Open Graph preview; visual rendering not tested in final HTML.",
+      "ordinal": 274
+    },
+    {
+      "id": "EXT-PXV-014",
+      "category": "accessories",
+      "categories": [
+        "hair",
+        "accessories"
+      ],
+      "title": "Pixivision — diademas con orejas de animales",
+      "source_url": "https://www.pixivision.net/en/a/11679",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/11679/ogimage.jpg",
+      "creator": "Pixivision editorial collection, multiple artists",
+      "source_platform": "Pixivision",
+      "source_language": "English/Japanese",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_component": "Diademas con orejas de conejo, gato, perro y otros animales.",
+      "target_traits": [
+        "animal-ear headband",
+        "faux fur",
+        "inner ear shape",
+        "headband base",
+        "separate ear ornaments"
+      ],
+      "extras_red": [
+        "La ilustración completa puede mostrar cabello, rostro, orejas reales/kemonomimi y ropa de cosplay; distinguir diadema física de orejas que forman parte del personaje."
+      ],
+      "prompt_visibility": "No single AI prompt.",
+      "resource_type": "Editorial visual collection.",
+      "price_license_claim": "Source page public; individual artwork rights are separate.",
+      "license_status": "reference_only_follow_original_work_terms",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+animal+ear+headband+accessory+design+sheet+black+white+isolated+square",
+      "monochrome_plate_status": "editorial_cover_not_clean_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixivision OG cover preview endpoint.",
+      "ordinal": 275
+    },
+    {
+      "id": "EXT-PXV-015",
+      "category": "hair_accessories",
+      "categories": [
+        "hair",
+        "accessories"
+      ],
+      "title": "Pixivision — adornos florales para cabello",
+      "source_url": "https://www.pixivision.net/en/a/11540",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/11540/ogimage.jpg",
+      "creator": "Pixivision editorial collection, multiple artists",
+      "source_platform": "Pixivision",
+      "source_language": "English/Japanese",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_component": "Flores individuales, agrupaciones florales, pasadores y adornos sobre oreja/corona.",
+      "target_traits": [
+        "single flower behind ear",
+        "multiple flower clusters",
+        "floral hairpin",
+        "flower crown",
+        "small and large floral ornaments"
+      ],
+      "extras_red": [
+        "Personaje completo, peinado base, color del pelo, ojos y ropa aparecen en las obras individuales; una corona floral debe ser distinta de una flor sobre horquilla."
+      ],
+      "prompt_visibility": "No unified prompt.",
+      "resource_type": "Editorial collection of original artworks.",
+      "price_license_claim": "Individual source artworks have separate rights; no general reuse licence.",
+      "license_status": "reference_only_follow_original_work_terms",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+flower+hair+accessory+types+hairpin+flower+crown+black+white+lineart+sheet+square",
+      "monochrome_plate_status": "editorial_cover_not_clean_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixivision OG cover thumbnail extracted from original page.",
+      "ordinal": 276
+    },
+    {
+      "id": "EXT-PXV-016",
+      "category": "accessories",
+      "categories": [
+        "clothing",
+        "accessories"
+      ],
+      "title": "Pixivision — tacones altos",
+      "source_url": "https://www.pixivision.net/en/a/10953",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/10953/ogimage.jpg",
+      "creator": "Pixivision editorial collection, multiple artists",
+      "source_platform": "Pixivision",
+      "source_language": "English/Japanese",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_component": "Tacones: stiletto, plataforma, tacón ancho, forma del empeine y punta.",
+      "target_traits": [
+        "high heel silhouette",
+        "stiletto heel",
+        "platform heel",
+        "toe shape",
+        "ankle strap"
+      ],
+      "extras_red": [
+        "Obras editoriales de personaje completo; calzado, pierna, medias y falda pueden estar conectados visualmente. Registrar zapato separado de pierna/stockings y no contar colores como nuevos diseños."
+      ],
+      "prompt_visibility": "No common prompt.",
+      "resource_type": "Curated art collection.",
+      "price_license_claim": "Individual artwork licenses vary; public collection is not a redistributable asset pack.",
+      "license_status": "reference_only_follow_original_work_terms",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+high+heel+shoe+design+sheet+stiletto+platform+black+white+lineart+square",
+      "monochrome_plate_status": "editorial_cover_not_clean_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixivision OG cover preview.",
+      "ordinal": 277
+    },
+    {
+      "id": "EXT-PXV-017",
+      "category": "accessories",
+      "categories": [
+        "clothing",
+        "accessories"
+      ],
+      "title": "Pixivision — botas por encima del muslo",
+      "source_url": "https://www.pixivision.net/en/a/8443",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/8443/ogimage.jpg",
+      "creator": "Pixivision editorial collection, multiple artists",
+      "source_platform": "Pixivision",
+      "source_language": "English/Japanese",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_component": "Botas altas: altura de caña, borde superior, cordones, tacón y suela.",
+      "target_traits": [
+        "thigh-high boot",
+        "over-knee boot",
+        "upper cuff",
+        "lace-up panel",
+        "heel variation",
+        "sole and shaft shape"
+      ],
+      "extras_red": [
+        "Las obras muestran personajes y piernas completas, a menudo ropa/medias. Separar la silueta de bota de medias y pierna; cada obra individual conserva sus derechos."
+      ],
+      "prompt_visibility": "No common prompt.",
+      "resource_type": "Editorial discovery collection.",
+      "price_license_claim": "Individual artworks remain creator-owned; no reuse grant for the entire collection.",
+      "license_status": "reference_only_follow_original_work_terms",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+thigh+high+boots+design+sheet+side+front+black+white+lineart+square",
+      "monochrome_plate_status": "editorial_cover_not_clean_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixivision OG cover image URL extracted from the source.",
+      "ordinal": 278
+    },
+    {
+      "id": "EXT-PXV-018",
+      "category": "accessories",
+      "categories": [
+        "clothing",
+        "accessories"
+      ],
+      "title": "Pixivision — accesorios de moda para personajes",
+      "source_url": "https://www.pixivision.net/en/a/9967",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/9967/ogimage.jpg",
+      "creator": "Pixivision editorial collection, multiple artists",
+      "source_platform": "Pixivision",
+      "source_language": "English/Japanese",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_component": "Descubrimiento de accesorios como zapatos, medias, sombreros, gafas y manicura.",
+      "target_traits": [
+        "fashion accessory ideas",
+        "shoes",
+        "socks",
+        "hats",
+        "glasses",
+        "nail art and small decorations"
+      ],
+      "extras_red": [
+        "Colección heterogénea de ilustraciones completas; cada objeto debe tener ficha y fuente de artista propia antes de tratarlo como estilo o asset."
+      ],
+      "prompt_visibility": "No unified prompt.",
+      "resource_type": "Editorial curated collection.",
+      "price_license_claim": "Individual images have separate creator licenses; no blanket reuse.",
+      "license_status": "reference_only_follow_original_work_terms",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+fashion+accessories+sheet+hat+glasses+socks+shoes+nails+black+white+lineart",
+      "monochrome_plate_status": "editorial_cover_not_clean_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixivision original cover preview endpoint.",
+      "ordinal": 279
+    },
+    {
+      "id": "EXT-PXV-019",
+      "category": "accessories",
+      "categories": [
+        "clothing",
+        "accessories"
+      ],
+      "title": "Pixivision — zapatos de plataforma",
+      "source_url": "https://www.pixivision.net/en/a/8667",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/8667/ogimage.jpg",
+      "creator": "Pixivision editorial collection, multiple artists",
+      "source_platform": "Pixivision",
+      "source_language": "English/Japanese",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_component": "Calzado de plataforma: botas, zapatillas, pumps y suelas gruesas.",
+      "target_traits": [
+        "platform shoe",
+        "platform boot",
+        "platform sneaker",
+        "platform pump",
+        "thick sole geometry"
+      ],
+      "extras_red": [
+        "Las ilustraciones muestran vestuario y personajes completos; separar zapato de pierna, medias y falda. La colección puede incluir fandom IP."
+      ],
+      "prompt_visibility": "No unified prompt.",
+      "resource_type": "Editorial visual collection.",
+      "price_license_claim": "Public collection page, original works remain individually copyrighted.",
+      "license_status": "reference_only_follow_original_work_terms",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+platform+shoes+boots+sneakers+design+sheet+black+white+lineart+square",
+      "monochrome_plate_status": "editorial_cover_not_clean_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixivision OG cover thumbnail.",
+      "ordinal": 280
+    },
+    {
+      "id": "EXT-PXV-020",
+      "category": "accessories",
+      "categories": [
+        "clothing",
+        "accessories"
+      ],
+      "title": "Pixivision — zapatos Mary Jane",
+      "source_url": "https://www.pixivision.net/en/a/11510",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/11510/ogimage.jpg",
+      "creator": "Pixivision editorial collection, multiple artists",
+      "source_platform": "Pixivision",
+      "source_language": "English/Japanese",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_component": "Mary Jane: punta redondeada, tira sobre empeine, hebilla, altura de tacón y plataforma.",
+      "target_traits": [
+        "rounded toe box",
+        "single instep strap",
+        "buckle",
+        "low heel",
+        "retro silhouette"
+      ],
+      "extras_red": [
+        "Personajes completos con medias/falda; la correa del zapato es parte del zapato, la media y la pierna no."
+      ],
+      "prompt_visibility": "No common prompt.",
+      "resource_type": "Editorial collection.",
+      "price_license_claim": "Individual artwork terms apply; not a bundle of downloadable shoe assets.",
+      "license_status": "reference_only_follow_original_work_terms",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+Mary+Jane+shoes+front+side+design+sheet+black+white+lineart+square",
+      "monochrome_plate_status": "editorial_cover_not_clean_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixivision OG preview endpoint.",
+      "ordinal": 281
+    },
+    {
+      "id": "EXT-TOOL-001",
+      "category": "character_reference",
+      "categories": [
+        "products",
+        "hair",
+        "clothing",
+        "eyes",
+        "accessories"
+      ],
+      "title": "Mannequin Character Generator — AR14 (tool/architecture reference)",
+      "source_url": "https://ar14.itch.io/mannequin",
+      "thumbnail_url": "https://img.itch.zone/aW1nLzE2MTg2MDg3LnBuZw==/original/%2FNbtgi.png",
+      "creator": "AR14",
+      "source_platform": "Itch.io",
+      "source_language": "English",
+      "thumbnail_kind": "official_itch_asset_page_cover",
+      "target_component": "Arquitectura de creador de personajes 2D: variaciones de rostro/ropa, exportación, plantillas y activos por capas.",
+      "target_traits": [
+        "2D portrait/VTuber avatar generator",
+        "PNG and SVG export",
+        "one-click export of variants",
+        "face and clothing templates",
+        "custom templates described as planned feature"
+      ],
+      "extras_red": [
+        "Es un programa/preview de un creador de personajes, no una ficha de un componente de arte. El estilo visual no tiene por qué coincidir con IMAGE; la licencia CC0 que aparece en los metadatos de itch no se debe asumir como permiso para copiar código completo o todo el contenido sin leer el paquete."
+      ],
+      "prompt_visibility": "No AI prompt.",
+      "resource_type": "Paid character-generator software and workflow reference.",
+      "price_license_claim": "Listing price USD $29.99 or more. itch asset license metadata displays CC0, but verify whether that applies to included art assets, exported output, and/or software before reuse.",
+      "license_status": "tool_listing_CC0_metadata_scope_requires_verification",
+      "monochrome_query_url": null,
+      "monochrome_plate_status": "not_a_component_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official itch.io cover image URL extracted from the product metadata; final browser load not individually tested.",
+      "ordinal": 282
+    },
+    {
+      "id": "EXT-TOOL-002",
+      "category": "hair",
+      "categories": [
+        "hair",
+        "accessories",
+        "products"
+      ],
+      "title": "Mannequin v0.3.12 — explicit hairstyle part taxonomy",
+      "source_url": "https://ar14.itch.io/mannequin/devlog/256706/0312-update-reworked-hairstyle-templates",
+      "thumbnail_url": "https://img.itch.zone/aW1nLzYwMzI2MDAucG5n/original/3Lwwl3.png",
+      "creator": "AR14",
+      "source_platform": "Itch.io devlog",
+      "source_language": "English",
+      "thumbnail_kind": "official_itch_devlog_image",
+      "target_component": "Sistema de componentes de cabello separables e intercambiables.",
+      "target_traits": [
+        "Primary Hairstyle",
+        "Bangs",
+        "Sideburns/Wisps",
+        "Facial Hair",
+        "Additional Hair Parts/Accessories",
+        "independent color assignment",
+        "Ahoge and animal ears as additional parts"
+      ],
+      "extras_red": [
+        "Es una captura/ejemplo del editor, no una placa de peinado utilizable como asset. Muy útil como referencia de arquitectura: una base de corte y partes frontales/laterales/adicionales separadas."
+      ],
+      "prompt_visibility": "No AI prompt.",
+      "resource_type": "Developer log/software architecture documentation.",
+      "price_license_claim": "Page explains the Mannequin software update; preview image/code/source licence for redistribution not confirmed from this devlog.",
+      "license_status": "technical_reference_only_asset_license_scope_pending",
+      "monochrome_query_url": null,
+      "monochrome_plate_status": "editor_screenshot_not_monochrome_component_plate",
+      "red_warning_required": false,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Direct itch.io image URL extracted from the devlog content; not loaded individually in final HTML.",
+      "ordinal": 283
+    },
+    {
+      "id": "EXT-TOOL-003",
+      "category": "character_reference",
+      "categories": [
+        "products",
+        "hair",
+        "clothing",
+        "eyes",
+        "accessories"
+      ],
+      "title": "Monster Girl Maker — 1000+ parts character-creator architecture reference",
+      "source_url": "https://ghoulkiss.itch.io/monster-girl-maker",
+      "thumbnail_url": "https://img.itch.zone/aW1hZ2UvMjc5NDEzLzEzNTYxMDguZ2lm/original/60xArw.gif",
+      "creator": "Emmy / GhoulKiss",
+      "source_platform": "Itch.io",
+      "source_language": "English",
+      "thumbnail_kind": "official_itch_game_preview",
+      "target_component": "Flujo modular de creador de retratos: piel, ojos, boca, cejas, cabello, accesorios y ropa.",
+      "target_traits": [
+        "creator says 1000+ parts",
+        "portrait generator",
+        "tabbed component chooser",
+        "save/load panel",
+        "skin, eyes, mouth, eyebrows, hair, accessories, clothing"
+      ],
+      "extras_red": [
+        "El estilo es cute/creepy monster girl y puede no coincidir con la waifu anime objetivo; es una referencia de interacción y amplitud de partes, no un asset descargable sin licencia de reutilización."
+      ],
+      "prompt_visibility": "No AI prompt; HTML5/Unity character-creation game.",
+      "resource_type": "Character-creator app reference.",
+      "price_license_claim": "Original page describes the creator and parts count; licence for reusing its artwork/assets is not confirmed.",
+      "license_status": "tool_reference_only_asset_license_unverified",
+      "monochrome_query_url": null,
+      "monochrome_plate_status": "animated_creator_preview_not_component_plate",
+      "red_warning_required": false,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "itch.io game preview GIF URL extracted from page metadata; final browser load not individually tested.",
+      "ordinal": 284
     }
   ],
   "statistics": {
-    "canonical_url_records": 272,
-    "structured_entries": 272,
-    "index_entries_with_thumbnail": 272,
+    "canonical_url_records": 284,
+    "structured_entries": 284,
+    "index_entries_with_thumbnail": 284,
     "index_entries_without_thumbnail": 0,
-    "direct_image_preview_candidates": 267,
+    "direct_image_preview_candidates": 279,
     "pixiv_embed_previews": 5,
     "pixai_source_entries": 54,
     "research_report_categorized_records": 160,
@@ -11150,9 +11595,9 @@
     },
     "verified_clean_square_plates": 0,
     "index_note": "This is a source URL/store-page index, not a downloaded image library or a count of visually unique pictures. URL normalization does not catch one image mirrored at a different URL; cross-platform perceptual deduplication remains unfinished.",
-    "thumbnail_status_note": "Source-preview URLs were extracted from metadata/image links; individual image loading in the final browser UI has not been confirmed. The read-only preview service failed at the network layer.",
-    "deduplication_note": "Only normalized URL deduplication is performed; image matches across different pages remain possible.",
-    "license_note": "A preview URL is not a reuse permission. Tiaras/chokers/belts/Pinterest discovery pages have been tagged as candidates; item-level licence and original authorship must be checked before cropping, redistributing or bundling in IMAGE.",
+    "thumbnail_status_note": "Preview URLs are extracted from source metadata or visible image links; all remote images are not individually visually validated in the final browser UI.",
+    "deduplication_note": "Only normalized URL deduplication has been performed. Cross-platform artwork/hash deduplication remains undone, especially for Pinterest mirrors and multi-artist editorial collections.",
+    "license_note": "Pixivision/DeviantArt/Pinterest references do not convey a generic redistribution right. Tool metadata such as itch.io's CC0 marker must be scoped to the actual item/file before reuse. Source sprites/PSD from modular creators may have their own restrictions.",
     "layered_facial_component_records_added_oct21": 3,
     "latest_additions": [
       "PX-ACC-009",
@@ -11168,16 +11613,18 @@
     "research_citation_urls_in_core_report": 153,
     "license_oriented_sources_added_oct21": 5,
     "x_costume_posts_added_oct21": 2,
-    "latest_census_total": 272,
-    "current_total_url_normalized_records": 272,
-    "current_total_preview_urls": 272,
-    "current_total_direct_preview_candidates": 267,
+    "latest_census_total": 284,
+    "current_total_url_normalized_records": 284,
+    "current_total_preview_urls": 284,
+    "current_total_direct_preview_candidates": 279,
     "current_total_pixiv_embed_endpoints": 5,
     "clean_square_bnw_plates_with_reuse_license_confirmed": 0,
-    "current_index_note": "Consolidated research index current on 2026-10-22. Source URL count includes discovery pages, tutorials, product listings, game creators and art pages; it is not a count of standalone component images or downloadable licenses.",
+    "current_index_note": "Current consolidated index updated 2026-10-22. Includes 9 new Pixivision category collections and 3 character-creator workflow pages. Counts are normalized source URLs, not visual artwork count or asset-license count. Some editorial collections may include male, fandom, or full-character illustration; inspect individual original work rather than treating collection covers as component plates.",
     "accessory_source_additions_oct22": 7,
     "modular_creator_tools_added_oct22": 2,
-    "license_status_note": "New sources contain different kinds of permission: Kikeluzi page labels its asset license CC BY 4.0; Awfully Sweet allows edited use but prohibits resale of original/edited sprites; Sutemo's sprite terms disallow resale alone; BOOTH modular outfits allow use in permitted end products but prohibit redistributing source files. Do not conflate these."
+    "license_status_note": "New sources contain different kinds of permission: Kikeluzi page labels its asset license CC BY 4.0; Awfully Sweet allows edited use but prohibits resale of original/edited sprites; Sutemo's sprite terms disallow resale alone; BOOTH modular outfits allow use in permitted end products but prohibit redistributing source files. Do not conflate these.",
+    "pixivision_hair_accessory_footwear_collections_added_oct22": 9,
+    "character_creator_tools_added_oct22": 3
   },
   "pixai_tag_browsers": [
     {
