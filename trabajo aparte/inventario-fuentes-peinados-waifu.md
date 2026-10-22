@@ -9,7 +9,7 @@
 
 Se completó una ampliación del censo de fuentes de cabello, ropa, ojos y accesorios femeninos. Los archivos principales están aquí:
 
-- [**Censo visual interactivo — 244 fichas con miniatura**](./censo-visual-interactivo.html): búsqueda libre por rasgos, filtro por componente y plataforma, aviso rojo de elementos ajenos, enlace a fuente original y estado de licencia.
+- [**Censo visual interactivo — 258 fichas con vistas previas registradas**](./censo-visual-interactivo.html): búsqueda libre por rasgos, filtro por componente y plataforma, aviso rojo de elementos ajenos, enlace a fuente original y estado de licencia.
 - [**Censo exhaustivo — 153 URLs canónicas únicas**](./censo-exhaustivo-fuentes-waifu-2026-10-21.md): informe profundo con fichas categorizadas, elementos a marcar en rojo, visibilidad de prompts, precio/licencia solo cuando la fuente lo indicó, brechas y recomendaciones.
 - [Bibliografía del censo](./auditoria-bibliografia-censo-waifu-2026-10-21.md): URLs de fuente para auditar el informe.
 - [Índice JSON de referencias](./indice-visual-componentes.json): **258 registros de URL normalizada**, con 258 URLs de miniatura capturadas de páginas/fuentes, componentes objetivo y campos sobre elementos ajenos, licencia y estado de placa monocroma.
@@ -189,3 +189,6 @@ X y algunas páginas de Pixiv no devolvieron resultados suficientemente verifica
 El índice JSON y la página HTML se sincronizaron con **258 registros**: **253 URLs de vista previa de imagen directa candidata y 5 endpoints de embed de Pixiv**. El navegador del entorno no consiguió renderizar el HTML publicado por restricciones de red, por lo que no puedo afirmar que las 258 miniaturas carguen correctamente dentro del visor. La prueba de sintaxis JavaScript sí pasó.
 
 **La cifra no equivale a 258 imágenes visualmente únicas ni 258 assets reutilizables.** La deduplicación entre URLs normalizadas está hecha en el índice; la deduplicación perceptual/hash de imágenes sigue pendiente. Las placas cuadradas monocromas con licencia de reutilización confirmada continúan en **0**.
+
+
+**Estado actual, 22/10/2026:** el índice consolidado incluye 258 registros normalizados, 253 candidatos de imagen directa y 5 embeds de Pixiv. Se corrigió el visor para incluir los 258 registros. La comprobación de sintaxis JavaScript pasa; el navegador remoto no pudo renderizar la página por un fallo de red, así que no se da por confirmada la carga visual de cada miniatura.
