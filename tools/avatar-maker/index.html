@@ -162,8 +162,8 @@ function syncInternetUI(){
  if(help)help.textContent=visualState==="on"?"Servicios externos habilitados. El editor, las capas y la exportación siguen siendo locales.":visualState==="off"?"Modo Internet apagado por vos. Los enlaces y acciones online quedan inactivos; el trabajo local continúa.":!navigator.onLine?"Sin conexión de red: las funciones online se muestran en gris. El editor y la biblioteca local siguen disponibles.":"No se pudo verificar Internet. Las funciones online quedan en gris hasta recuperar la conexión.";
  document.querySelectorAll("a[href],button[data-requires-internet]").forEach(control=>{
   if(control.tagName==="A"&&isExternalHttpLink(control))control.dataset.requiresInternet="true";
-  if(control.dataset.requiresInternet!=="true")return;const locked=!internetModeUsable();control.classList.toggle("internet-blocked",locked);control.setAttribute("aria-disabled",String(locked));
-  if(locked)control.title=!internetModeEnabled?"Activa Modo Internet para usar este servicio.":"Servicio online no disponible: la conexión no está verificada.";else if(control.dataset.internetOriginalTitle)control.title=control.dataset.internetOriginalTitle;
+  if(control.dataset.requiresInternet!=="true")return;if(!("internetOriginalTitle" in control.dataset))control.dataset.internetOriginalTitle=control.getAttribute("title")||"";const locked=!internetModeUsable();control.classList.toggle("internet-blocked",locked);control.setAttribute("aria-disabled",String(locked));
+  if(locked)control.title=!internetModeEnabled?"Activa Modo Internet para usar este servicio.":"Servicio online no disponible: la conexión no está verificada.";else if(control.dataset.internetOriginalTitle)control.title=control.dataset.internetOriginalTitle;else control.removeAttribute("title");
  });
 }
 async function checkInternetConnection(){
