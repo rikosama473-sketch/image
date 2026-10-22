@@ -10644,7 +10644,13 @@
     "research_citation_urls_in_core_report": 153,
     "license_oriented_sources_added_oct21": 5,
     "x_costume_posts_added_oct21": 2,
-    "latest_census_total": 244
+    "latest_census_total": 258,
+    "current_total_url_normalized_records": 258,
+    "current_total_preview_urls": 258,
+    "current_total_direct_preview_candidates": 253,
+    "current_total_pixiv_embed_endpoints": 5,
+    "clean_square_bnw_plates_with_reuse_license_confirmed": 0,
+    "current_index_note": "Current consolidated state on 2026-10-22: 258 normalized source URL records, 253 direct preview-image candidates and 5 Pixiv embed endpoints. URLs were harvested from source metadata or visible image links; they have not all been visually loaded in the final browser UI. This is not 258 perceptually unique artworks or 258 licensed assets. Four duplicate pairs are flagged in the base research report, and cross-platform perceptual deduplication remains unperformed."
   },
   "pixai_tag_browsers": [
     {
