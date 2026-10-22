@@ -139,6 +139,31 @@ class ImageProjectHandoffTests(unittest.TestCase):
                 self.assertEqual(item["training_permission"], "unreviewed")
                 self.assertTrue((ROOT / item["path"]).is_file(), item["path"])
 
+    def test_ai_generated_hairstyles_can_open_the_extraction_workbench(self) -> None:
+        self.assertIn('data-ai-free-extract-id', self.avatar)
+        self.assertIn("openLibraryAssetForExtraction(button.dataset.aiFreeExtractId)", self.avatar)
+        self.assertIn('state.category="anatomy"', self.avatar)
+        self.assertIn("Pintá únicamente el pelo o la pieza", self.avatar)
+
+    def test_reusable_parts_persist_locally_and_can_be_added_back_as_layers(self) -> None:
+        for feature in (
+            'const LOCAL_PARTS_DB="image-local-parts-v1"',
+            "indexedDB.open(LOCAL_PARTS_DB,1)",
+            "function persistLocalPart(record)",
+            "async function saveSelectedLayerToLocalLibrary()",
+            "async function addLocalPartToCanvas(id)",
+            "async function renderLocalParts()",
+            'id="anatomySavePiece"',
+            'id="localPartsGrid"',
+            'data-local-part-add',
+            'data-local-part-delete',
+            'status:"local_saved_candidate"',
+        ):
+            with self.subTest(feature=feature):
+                self.assertIn(feature, self.avatar)
+        self.assertIn("Las imágenes no se suben a GitHub ni a una nube", self.avatar)
+        self.assertIn("Pieza guardada en la biblioteca local de esta PC.", self.avatar)
+
 
 if __name__ == "__main__":
     unittest.main()
