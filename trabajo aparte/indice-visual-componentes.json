@@ -10529,14 +10529,274 @@
       "thumbnail_checked_date": "2026-10-21",
       "thumbnail_status": "Official PixAI stillThumb URL extracted from page metadata; prompt visibility incomplete and thumbnail not visually checked in final browser.",
       "ordinal": 258
+    },
+    {
+      "id": "EXT-SHOE-001",
+      "category": "accessories",
+      "categories": [
+        "accessories",
+        "tutorials"
+      ],
+      "title": "AnimeOutline — guía visual de seis familias de calzado anime",
+      "source_url": "https://www.animeoutline.com/how-to-draw-anime-shoes-step-by-step/",
+      "thumbnail_url": "https://www.animeoutline.com/wp-content/uploads/2019/09/anime_shoes.png",
+      "creator": "AnimeOutline",
+      "source_platform": "AnimeOutline",
+      "source_language": "English",
+      "thumbnail_kind": "tutorial_sheet_preview",
+      "target_component": "Calzado: zapatillas deportivas, tacones, zapatos escolares, botas, pantuflas y sandalias.",
+      "target_traits": [
+        "running shoes",
+        "high heels",
+        "school shoes",
+        "boots",
+        "slippers",
+        "sandals",
+        "front view",
+        "three-quarter view",
+        "side view"
+      ],
+      "extras_red": [
+        "El tutorial muestra dibujos de calzado aislados, pero cada esquema puede incluir pie/anatomía de apoyo; separar suela, tacón, caña, cordones y adornos si el objetivo es una pieza modular."
+      ],
+      "prompt_visibility": "No AI prompt; drawing tutorial.",
+      "asset_type": "Tutorial/reference, not a downloadable modular asset pack.",
+      "price_license_claim": "Free to view according to the public tutorial page; reuse/redistribution of the tutorial drawings not confirmed.",
+      "license_status": "reference_only_tutorial_reuse_pending",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+shoe+design+sheet+boots+heels+school+shoes+black+white+lineart+square",
+      "monochrome_plate_status": "not_a_confirmed_reusable_square_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Direct image URL exposed by source page metadata/image links; not loaded individually inside final atlas.",
+      "ordinal": 259
+    },
+    {
+      "id": "EXT-ACC-006",
+      "category": "accessories",
+      "categories": [
+        "accessories",
+        "tutorials"
+      ],
+      "title": "Easy Drawing Guides — construcción de tiara por pasos",
+      "source_url": "https://easydrawingguides.com/how-to-draw-a-tiara/",
+      "thumbnail_url": "https://easydrawingguides.com/wp-content/uploads/2025/04/how-to-draw-a-tiara-featured-image-1200.png",
+      "creator": "Easy Drawing Guides",
+      "source_platform": "Easy Drawing Guides",
+      "source_language": "English",
+      "thumbnail_kind": "tutorial_sheet_preview",
+      "target_component": "Tiara: banda base curva, puntas, espirales y gemas/elementos centrales.",
+      "target_traits": [
+        "curved base",
+        "raised central ornament",
+        "symmetrical points",
+        "decorative spirals",
+        "gem placements"
+      ],
+      "extras_red": [
+        "La miniatura es la portada del tutorial, no una lámina de accesorios aislados; revisar las imágenes numeradas del tutorial para separar banda y gemas."
+      ],
+      "prompt_visibility": "No AI prompt; step-by-step drawing instructions.",
+      "asset_type": "Tutorial/reference, not a downloadable asset pack.",
+      "price_license_claim": "Public tutorial; license to crop or redistribute the illustrations not confirmed.",
+      "license_status": "reference_only_tutorial_reuse_pending",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+tiara+crown+ornament+design+sheet+isolated+black+white+lineart+square",
+      "monochrome_plate_status": "not_a_confirmed_reusable_square_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Featured image URL extracted from the tutorial page; the final browser has not individually loaded it.",
+      "ordinal": 260
+    },
+    {
+      "id": "EXT-ACC-007",
+      "category": "accessories",
+      "categories": [
+        "accessories",
+        "tutorials"
+      ],
+      "title": "Drawing Accessories Tutorial! — gafas, pañuelos, coronas, tiaras y más",
+      "source_url": "https://www.youtube.com/watch?v=Zu5oEn34R74",
+      "thumbnail_url": "https://i.ytimg.com/vi/Zu5oEn34R74/maxresdefault.jpg",
+      "creator": "Creator/channel attribution needs review on video page",
+      "source_platform": "YouTube",
+      "source_language": "English",
+      "thumbnail_kind": "official_video_preview",
+      "target_component": "Vocabulario y construcción de accesorios: gafas, pañuelos, bandanas, diademas, sombreros, gorras, coronas, tiaras y auriculares.",
+      "target_traits": [
+        "eyeglass frames",
+        "scarves",
+        "bandannas",
+        "headbands",
+        "hats",
+        "caps",
+        "crowns",
+        "tiaras",
+        "headphones"
+      ],
+      "extras_red": [
+        "La miniatura identifica el video; no es una hoja independiente con piezas separadas. Usar el video para aprender formas, no como asset recortable."
+      ],
+      "prompt_visibility": "Video tutorial; no image-generation prompt.",
+      "asset_type": "Video drawing tutorial.",
+      "price_license_claim": "Public video preview; reuse of video frames/artwork not confirmed.",
+      "license_status": "reference_only_video_reuse_pending",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+accessories+design+sheet+glasses+scarves+headbands+crown+tiara+lineart+square",
+      "monochrome_plate_status": "tutorial_thumbnail_not_component_plate",
+      "red_warning_required": false,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "YouTube max-resolution thumbnail endpoint extracted from the public video URL; image availability not tested in final atlas.",
+      "ordinal": 261
+    },
+    {
+      "id": "EXT-HIR-ACC-014",
+      "category": "accessories",
+      "categories": [
+        "accessories",
+        "hair"
+      ],
+      "title": "Kamicrew — tipos y colocación de kanzashi japoneses",
+      "source_url": "https://kamicrew.com/blog/kanzashi-japanese-hair-ornaments/",
+      "thumbnail_url": "https://kamicrew.com/blog/wp-content/uploads/2026/08/kanzashi-maiko-katsuyama-cover.jpg",
+      "creator": "Kamicrew Experts",
+      "source_platform": "Kamicrew",
+      "source_language": "English",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_component": "Kanzashi: horquillas rígidas largas, peines decorados, pinzas de dos púas, flores tsumami y coleteros textiles.",
+      "target_traits": [
+        "long rigid hairpins",
+        "decorated combs",
+        "two-pronged pins",
+        "folded silk flowers",
+        "seasonal flower ornaments",
+        "fabric hair ties"
+      ],
+      "extras_red": [
+        "La portada muestra una maiko con peinado tradicional y posible kimono; no confundir el ornamento con el peinado base, la ropa ni el rostro."
+      ],
+      "prompt_visibility": "No AI prompt; educational/reference article.",
+      "asset_type": "Tutorial / cultural design reference.",
+      "price_license_claim": "Free to browse; image reuse rights not confirmed.",
+      "license_status": "reference_only_article_license_pending",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=kanzashi+hair+ornament+design+sheet+comb+hairpin+flower+black+white+lineart+square",
+      "monochrome_plate_status": "color_editorial_cover_not_clean_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Cover-image URL extracted from the article page; individual browser load not verified.",
+      "ordinal": 262
+    },
+    {
+      "id": "EXT-CLT-003",
+      "category": "clothing_accessories",
+      "categories": [
+        "clothing",
+        "accessories"
+      ],
+      "title": "Pinterest — seis cinturones/cierres de cintura con hebillas y tiras",
+      "source_url": "https://www.pinterest.com/pin/602004675237215818/",
+      "thumbnail_url": "https://i.pinimg.com/736x/69/aa/6b/69aa6b0eaa4909b99cf889463f652104.jpg",
+      "creator": "Original creator not confirmed from Pinterest mirror",
+      "source_platform": "Pinterest",
+      "source_language": "English",
+      "thumbnail_kind": "external_image_preview",
+      "target_component": "Cinturones femeninos, cierres de cintura y fajas decorativas: hebillas, tiras, solapas y acentos metálicos.",
+      "target_traits": [
+        "six waist-belt designs",
+        "black leather straps",
+        "buckles",
+        "gold accents",
+        "decorative waist seals",
+        "belt with bow"
+      ],
+      "extras_red": [
+        "El pin funciona como mirror y la fuente artística original no quedó confirmada. La imagen es una lámina de diseño de cinturones según la descripción de Pinterest; verificar que se vea en el original antes de etiquetar detalles exactos."
+      ],
+      "prompt_visibility": "No AI prompt verified.",
+      "asset_type": "Visual inspiration pin; no downloadable asset license verified.",
+      "price_license_claim": "Source author/license unverified; do not redistribute based on a Pinterest preview.",
+      "license_status": "reference_only_original_creator_and_license_pending",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=female+anime+belt+waist+seal+buckle+strap+bow+design+sheet+black+white+lineart+square",
+      "monochrome_plate_status": "preview_candidate_only_license_pending",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pinterest preview URL is from the pin metadata; original author/source and final browser image loading remain unchecked.",
+      "ordinal": 263
+    },
+    {
+      "id": "EXT-ACC-008",
+      "category": "accessories",
+      "categories": [
+        "accessories"
+      ],
+      "title": "Pinterest — índice visual de accesorios femeninos",
+      "source_url": "https://www.pinterest.com/ideas/girl-accessories-drawing/951117589560/",
+      "thumbnail_url": "https://i.pinimg.com/736x/b0/d4/48/b0d4483c38143a18ceaf457d60e0eb59.jpg",
+      "creator": "Multiple pins; creator of sample preview not confirmed",
+      "source_platform": "Pinterest",
+      "source_language": "English",
+      "thumbnail_kind": "external_search_result_preview",
+      "target_component": "Descubrimiento de accesorios: pendientes, coronas, lazos, horquillas, gafas y joyería.",
+      "target_traits": [
+        "earring sketches",
+        "crown drawings",
+        "hair accessories",
+        "girl accessory design",
+        "jewellery and small ornament ideas"
+      ],
+      "extras_red": [
+        "Es una página temática/índice, no una única hoja original. Cada pin debe investigarse por separado y eliminarse si es un duplicado de una obra ya indexada."
+      ],
+      "prompt_visibility": "No single prompt; results vary by pin.",
+      "asset_type": "Discovery/search page, not a reusable asset pack.",
+      "price_license_claim": "Licenses vary by original pin; preview page grants no blanket reuse rights.",
+      "license_status": "reference_only_individual_pin_license_pending",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+accessory+design+sheet+earrings+hairpins+crowns+glasses+black+white+lineart+square",
+      "monochrome_plate_status": "search_index_not_component_plate",
+      "red_warning_required": false,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Preview was extracted from the Pinterest index; it may be a general example rather than a clean asset sheet.",
+      "ordinal": 264
+    },
+    {
+      "id": "EXT-ACC-009",
+      "category": "accessories",
+      "categories": [
+        "accessories"
+      ],
+      "title": "Vecteezy — catálogo de collares tipo choker y gargantillas",
+      "source_url": "https://www.vecteezy.com/free-vector/choker-necklace",
+      "thumbnail_url": "https://static.vecteezy.com/system/resources/previews/046/419/888/non_2x/cartoon-women-fashion-jewel-accessories-choker-necklaces-modern-women-jewellery-necklaces-gold-silver-gemstone-choker-pendants-illustration-set-choker-necklaces-vector.jpg",
+      "creator": "Vecteezy contributors; individual author/licence depends on asset",
+      "source_platform": "Vecteezy",
+      "source_language": "English",
+      "thumbnail_kind": "commercial_marketplace_preview",
+      "target_component": "Gargantillas: tiras simples, bandas tipo cinta, collares de encaje, cadenas finas y colgantes/gemas.",
+      "target_traits": [
+        "choker necklace silhouettes",
+        "gold and silver jewellery",
+        "gemstone pendants",
+        "lace or ribbon-style chokers",
+        "modern women's accessory set"
+      ],
+      "extras_red": [
+        "La vista previa es un set de vectores de accesorios, no una pieza anime concreta. No dar por confirmada la licencia de cada archivo por aparecer dentro de una página de búsqueda."
+      ],
+      "prompt_visibility": "No AI prompt verified.",
+      "asset_type": "Commercial/free-vector search catalogue; each asset requires item-level license review.",
+      "price_license_claim": "Landing page advertises free-vector results; terms, attribution and commercial permissions must be checked for the individual vector.",
+      "license_status": "individual_asset_license_pending",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+choker+necklace+design+sheet+bow+lace+chain+pendant+black+white+lineart+square",
+      "monochrome_plate_status": "colored_vector_preview_not_clean_plate",
+      "red_warning_required": false,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Vector preview URL extracted from Vecteezy results page metadata; individual asset licence and image loading not checked.",
+      "ordinal": 265
     }
   ],
   "statistics": {
-    "canonical_url_records": 258,
-    "structured_entries": 258,
-    "index_entries_with_thumbnail": 258,
+    "canonical_url_records": 265,
+    "structured_entries": 265,
+    "index_entries_with_thumbnail": 265,
     "index_entries_without_thumbnail": 0,
-    "direct_image_preview_candidates": 253,
+    "direct_image_preview_candidates": 260,
     "pixiv_embed_previews": 5,
     "pixai_source_entries": 54,
     "research_report_categorized_records": 160,
@@ -10626,9 +10886,9 @@
     },
     "verified_clean_square_plates": 0,
     "index_note": "This is a source URL/store-page index, not a downloaded image library or a count of visually unique pictures. URL normalization does not catch one image mirrored at a different URL; cross-platform perceptual deduplication remains unfinished.",
-    "thumbnail_status_note": "All 258 source records have preview URLs; 253 direct image/preview candidates and 5 Pixiv embed endpoints. URLs are captured from source metadata/image links; they are not individually verified in a working final browser UI.",
-    "deduplication_note": "Source URL normalization only. The report flags four pairs as duplicate underlying artwork under different URLs, and one creator/product has two store pages recorded as alternate_source_urls. No cross-platform perceptual/image-hash deduplication has been done.",
-    "license_note": "The latest PixAI cards are image/prompt references only; they do not grant permission to redistribute source art. Extra components are recorded in red so the target hair/eye/clothing/accessory can be separated for research.",
+    "thumbnail_status_note": "Every indexed source has a preview URL, but none of the 258+ preview URLs has been individually loaded in the final end-user browser UI. Source links and fallback cards remain available. Pixiv embed endpoints should display via iframe rather than <img>.",
+    "deduplication_note": "Basic URL normalization was applied. Cross-platform perceptual/image-hash deduplication remains unfinished; pages mirroring the same underlying illustration may still be present.",
+    "license_note": "A preview URL is not a reuse permission. Tiaras/chokers/belts/Pinterest discovery pages have been tagged as candidates; item-level licence and original authorship must be checked before cropping, redistributing or bundling in IMAGE.",
     "layered_facial_component_records_added_oct21": 3,
     "latest_additions": [
       "PX-ACC-009",
@@ -10644,13 +10904,14 @@
     "research_citation_urls_in_core_report": 153,
     "license_oriented_sources_added_oct21": 5,
     "x_costume_posts_added_oct21": 2,
-    "latest_census_total": 258,
-    "current_total_url_normalized_records": 258,
-    "current_total_preview_urls": 258,
-    "current_total_direct_preview_candidates": 253,
+    "latest_census_total": 265,
+    "current_total_url_normalized_records": 265,
+    "current_total_preview_urls": 265,
+    "current_total_direct_preview_candidates": 260,
     "current_total_pixiv_embed_endpoints": 5,
     "clean_square_bnw_plates_with_reuse_license_confirmed": 0,
-    "current_index_note": "Current consolidated state on 2026-10-22: 258 normalized source URL records, 253 direct preview-image candidates and 5 Pixiv embed endpoints. URLs were harvested from source metadata or visible image links; they have not all been visually loaded in the final browser UI. This is not 258 perceptually unique artworks or 258 licensed assets. Four duplicate pairs are flagged in the base research report, and cross-platform perceptual deduplication remains unperformed."
+    "current_index_note": "Consolidated visual census last updated 2026-10-22. Counts represent normalized source URLs and preview candidates, not perceptually unique illustrations or licensed local assets. Direct previews come from source metadata/visible image links; final browser rendering has not been visually tested due network/preview service failure. Five Pixiv records use embed endpoints.",
+    "accessory_source_additions_oct22": 7
   },
   "pixai_tag_browsers": [
     {
