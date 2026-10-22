@@ -1,6 +1,7 @@
 """Regression checks for project handoff between IMAGE editor modules."""
 from __future__ import annotations
 
+import json
 import unittest
 from pathlib import Path
 
@@ -89,7 +90,7 @@ class ImageProjectHandoffTests(unittest.TestCase):
 
     def test_ai_workspace_explains_the_no_key_hair_generation_path_and_branch_safety(self) -> None:
         ai_workspace = self.avatar.split("function aiWorkspace(root){", 1)[1].split(
-            "function anatomyWorkspace(root){", 1
+            "function syncAIQuality(){", 1
         )[0]
         self.assertIn("Abrir generador IA gratuito", ai_workspace)
         self.assertIn("generate-character-assets-free.yml", ai_workspace)
@@ -98,6 +99,45 @@ class ImageProjectHandoffTests(unittest.TestCase):
         self.assertIn("hair-core-5", ai_workspace)
         self.assertIn("no ejecutes el proceso sobre main", ai_workspace)
         self.assertNotIn("generate-hairstyle-variants.yml", ai_workspace)
+
+    def test_ai_workspace_renders_reusable_free_generated_hairstyle_variants(self) -> None:
+        self.assertIn('id="aiFreeVariantsGrid"', self.avatar)
+        self.assertIn('id="aiFreeVariantsReload"', self.avatar)
+        self.assertIn("async function refreshAIFreeVariants(force=false)", self.avatar)
+        self.assertIn('data-ai-free-asset-id', self.avatar)
+        self.assertIn('kind==="generated_full_illustration"', self.avatar)
+        self.assertIn('useLibraryAsset(button.dataset.aiFreeAssetId,"ai")', self.avatar)
+        self.assertIn("no como capa aislada", self.avatar)
+
+    def test_existing_free_generated_variants_are_indexed_and_review_pending(self) -> None:
+        library = json.loads(
+            (ROOT / "tools/avatar-maker/assets/image-library.json").read_text(encoding="utf-8")
+        )
+        assets = library["assets"]
+        hair = [
+            item for item in assets
+            if item.get("pack") == "hair-core-5"
+            and item.get("origin_hint", "").startswith(
+                "Generated in repository workflow via the public image-edit Space"
+            )
+        ]
+        expressions = [
+            item for item in assets
+            if item.get("pack") == "expressions-core-5"
+            and item.get("origin_hint", "").startswith(
+                "Generated in repository workflow via the public image-edit Space"
+            )
+        ]
+        self.assertEqual(library["asset_count"], len(assets))
+        self.assertEqual(len(hair), 5)
+        self.assertEqual(len(expressions), 3)
+        for item in hair + expressions:
+            with self.subTest(asset=item["id"]):
+                self.assertEqual(item["kind"], "generated_full_illustration")
+                self.assertEqual(item["visual_review"], "needs_visual_identity_review")
+                self.assertEqual(item["license_review"], "unreviewed")
+                self.assertEqual(item["training_permission"], "unreviewed")
+                self.assertTrue((ROOT / item["path"]).is_file(), item["path"])
 
 
 if __name__ == "__main__":
