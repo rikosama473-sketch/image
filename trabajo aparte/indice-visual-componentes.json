@@ -2818,8 +2818,8 @@
       "creator": "Unknown (pixiv artwork)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=100143795&mdate=1659283023",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "female_hair",
       "categories": [
         "female_hair"
@@ -2851,9 +2851,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "original, Hair, arttutorial / Anime Hair Shading Styles - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from source metadata/image links; visual load not yet verified"
+      "thumbnail_page_title": "Anime Hair Shading Styles (Artwork ID 100143795)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-A-13",
@@ -2914,8 +2914,8 @@
       "creator": "Pixivision (tag index)",
       "source_platform": "Pixivision",
       "source_language": "Pixivision / English",
-      "thumbnail_url": "https://s.pximg.net/pixivision/images/p-02.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": null,
+      "thumbnail_kind": "no_specific_preview_available",
       "category": "female_hair",
       "categories": [
         "female_hair"
@@ -2948,8 +2948,8 @@
         }
       ],
       "thumbnail_page_title": "Illustration features tagged how to draw hair - pixivision",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from source metadata/image links; visual load not yet verified"
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixivision tag index supplied only a generic category placeholder rather than a unique artwork thumbnail; removed the placeholder and retained the source link."
     },
     {
       "id": "CENSUS-A-15",
@@ -3490,8 +3490,8 @@
       "creator": "PixAI community (tag index)",
       "source_platform": "PixAI",
       "source_language": "PixAI / English",
-      "thumbnail_url": "https://images-ng.pixai.art/images/thumb/23a78555-1da9-4b2c-9c72-3d44d2316f47",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/thumb/622dd84b-d57c-40dd-8611-1e4f015871ea",
+      "thumbnail_kind": "source_page_result_thumbnail",
       "category": "female_hair",
       "categories": [
         "female_hair"
@@ -3524,8 +3524,8 @@
         }
       ],
       "thumbnail_page_title": "Reference sheet AI Art & Prompts | 8,334 Free on PixAI",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from source metadata/image links; visual load not yet verified"
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Direct thumbnail from an artwork surfaced in PixAI's reference-sheet tag results; represents one result, not the whole tag collection. Image load not verified in final HTML."
     },
     {
       "id": "CENSUS-A-28",
@@ -3634,8 +3634,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=130361522&mdate=1747119995",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "lolita_clothing",
       "categories": [
         "lolita_clothing"
@@ -3667,9 +3667,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "characterdesign, Illustration, gothic lolita / ❤️🖤🎀 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from source metadata/image links; visual load not yet verified"
+      "thumbnail_page_title": "characterdesign, Illustration, gothic lolita / ❤️🖤🎀 (Artwork 130361522)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-B-02",
@@ -3682,8 +3682,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=150667116&mdate=1791594373",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "lolita_clothing",
       "categories": [
         "lolita_clothing"
@@ -3715,9 +3715,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Girl, gothic lolita, butterfly / October 10th, 2026 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from source metadata/image links; visual load not yet verified"
+      "thumbnail_page_title": "Girl, gothic lolita, butterfly (Artwork 150667116)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-B-03",
@@ -3730,8 +3730,8 @@
       "creator": "Unknown (AI-generated, Pixiv)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=150911285&mdate=1792130836",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "lolita_clothing",
       "categories": [
         "lolita_clothing"
@@ -3763,9 +3763,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "gothic lolita, Fantasy, AI / October 16th, 2026 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from source metadata/image links; visual load not yet verified"
+      "thumbnail_page_title": "gothic lolita, Fantasy, AI (Artwork 150911285)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-B-04",
@@ -3778,8 +3778,8 @@
       "creator": "Pixiv tag index",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese (tag: ロリータファッション)",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": null,
+      "thumbnail_kind": "no_specific_preview_available",
       "category": "lolita_clothing",
       "categories": [
         "lolita_clothing"
@@ -3812,8 +3812,8 @@
         }
       ],
       "thumbnail_page_title": "#lolita fashion Pictures, Images on pixiv, Japan",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from source metadata/image links; visual load not yet verified"
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixiv source page exposed only generic service logos, not a source-specific artwork preview; removed the logo so this tag page is text-only and links to the original search page."
     },
     {
       "id": "CENSUS-B-05",
@@ -3826,8 +3826,8 @@
       "creator": "Pixiv tag index",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese (tag: ゴシックロリータ)",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=18946209&mdate=1305564967",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "lolita_clothing",
       "categories": [
         "lolita_clothing"
@@ -3859,9 +3859,10 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Popular illustrations and manga tagged \"ゴシックロリータ\" | pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from source metadata/image links; visual load not yet verified"
+      "thumbnail_page_title": "Popular illustrations tagged \"ゴシックロリータ\" (Gothic Lolita)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixiv tag/search page itself has no whole-page image preview; this official embed shows one artwork surfaced by that page. It is a representative example, not a preview of all search results. Browser loading still unverified.",
+      "thumbnail_representative_work_id": 18946209
     },
     {
       "id": "CENSUS-B-06",
@@ -4019,8 +4020,8 @@
       "creator": "Pixivision tag index",
       "source_platform": "Pixivision",
       "source_language": "Pixivision / English",
-      "thumbnail_url": "https://s.pximg.net/pixivision/images/p-02.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": null,
+      "thumbnail_kind": "no_specific_preview_available",
       "category": "multi_component",
       "categories": [
         "lolita_clothing",
@@ -4069,8 +4070,8 @@
         }
       ],
       "thumbnail_page_title": "Illustration features tagged lolita - pixivision",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from source metadata/image links; visual load not yet verified"
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixivision tag index supplied only a generic category placeholder rather than a unique artwork thumbnail; removed the placeholder and retained the source link."
     },
     {
       "id": "CENSUS-B-10",
@@ -4083,8 +4084,8 @@
       "creator": "Pixivision tag index",
       "source_platform": "Pixivision",
       "source_language": "Pixivision / English",
-      "thumbnail_url": "https://s.pximg.net/pixivision/images/p-02.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": null,
+      "thumbnail_kind": "no_specific_preview_available",
       "category": "lolita_clothing",
       "categories": [
         "lolita_clothing"
@@ -4117,8 +4118,8 @@
         }
       ],
       "thumbnail_page_title": "Illustration features tagged classic lolita - pixivision",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from source metadata/image links; visual load not yet verified"
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixivision tag index supplied only a generic category placeholder rather than a unique artwork thumbnail; removed the placeholder and retained the source link."
     },
     {
       "id": "CENSUS-B-11",
@@ -4131,8 +4132,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=149345051&mdate=1788681119",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "lolita_clothing",
       "categories": [
         "lolita_clothing"
@@ -4164,9 +4165,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "lolita, classical, braid / September 6th, 2026 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from source metadata/image links; visual load not yet verified"
+      "thumbnail_page_title": "lolita, classical, braid (Artwork 149345051)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-B-12",
@@ -4227,8 +4228,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=147658169&mdate=1785057099",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "lolita_clothing",
       "categories": [
         "lolita_clothing"
@@ -4260,9 +4261,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Natsume Ann, Magical Girl Witch Trials, Mano mackerel / 🎀Sweet Lolita - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "🎀Sweet Lolita — Natsume Ann / Magical Girl Witch Trials (Artwork 147658169)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-B-14",
@@ -4275,8 +4276,8 @@
       "creator": "Unknown (AI-generated, Pixiv)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=146159737&mdate=1781782206",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "lolita_clothing",
       "categories": [
         "lolita_clothing"
@@ -4308,9 +4309,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "aI-generated illustration, wearing a kimono, kimono / 【Sweet Lolita × Smurai】 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "【Sweet Lolita × Samurai】 (Artwork 146159737)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-C-01",
@@ -4611,8 +4612,8 @@
       "creator": "Pixiv tag index",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": null,
+      "thumbnail_kind": "no_specific_preview_available",
       "category": "school_uniform",
       "categories": [
         "school_uniform"
@@ -4645,8 +4646,8 @@
         }
       ],
       "thumbnail_page_title": "Popular illustrations and manga tagged \"school uniform\" | pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixiv source page exposed only generic service logos, not a source-specific artwork preview; removed the logo so this tag page is text-only and links to the original search page."
     },
     {
       "id": "CENSUS-C-08",
@@ -4755,8 +4756,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=50649585&mdate=1433053555",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "school_uniform",
       "categories": [
         "school_uniform"
@@ -4788,9 +4789,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Tutorial, high school student, uniform / May 31st, 2015 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Tutorial, high school student, uniform (Artwork 50649585)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-C-11",
@@ -4803,8 +4804,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=148956979&mdate=1787840291",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "school_uniform",
       "categories": [
         "school_uniform"
@@ -4836,9 +4837,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Girl, creation, uniform / August 27th, 2026 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Girl, creation, uniform (Artwork 148956979)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-D-01",
@@ -4851,8 +4852,8 @@
       "creator": "Pixiv tag index",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese (tag: 着物)",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=142610775&mdate=1774167016",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "kimono_yukata_hakama_miko",
       "categories": [
         "kimono_yukata_hakama_miko"
@@ -4884,9 +4885,10 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Popular illustrations and manga tagged \"着物\" | pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Popular illustrations tagged \"着物\" (Kimono)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixiv tag/search page itself has no whole-page image preview; this official embed shows one artwork surfaced by that page. It is a representative example, not a preview of all search results. Browser loading still unverified.",
+      "thumbnail_representative_work_id": 142610775
     },
     {
       "id": "CENSUS-D-02",
@@ -4899,8 +4901,8 @@
       "creator": "Pixiv tag index",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese (tag: 浴衣)",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=64138555&mdate=1501428105",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "kimono_yukata_hakama_miko",
       "categories": [
         "kimono_yukata_hakama_miko"
@@ -4932,9 +4934,10 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Popular illustrations and manga tagged \"浴衣\" | pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Popular illustrations tagged \"浴衣\" (Yukata)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixiv tag/search page itself has no whole-page image preview; this official embed shows one artwork surfaced by that page. It is a representative example, not a preview of all search results. Browser loading still unverified.",
+      "thumbnail_representative_work_id": 64138555
     },
     {
       "id": "CENSUS-D-03",
@@ -4947,8 +4950,8 @@
       "creator": "Pixiv tag index",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese (tag: 和服)",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=115163278&mdate=1705219446",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "kimono_yukata_hakama_miko",
       "categories": [
         "kimono_yukata_hakama_miko"
@@ -4980,9 +4983,10 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Popular illustrations and manga tagged \"和服\" | pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Popular illustrations tagged \"和服\" (Japanese Traditional Clothing)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixiv tag/search page itself has no whole-page image preview; this official embed shows one artwork surfaced by that page. It is a representative example, not a preview of all search results. Browser loading still unverified.",
+      "thumbnail_representative_work_id": 115163278
     },
     {
       "id": "CENSUS-D-04",
@@ -4995,8 +4999,8 @@
       "creator": "Pixiv tag index",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese (tag: 振袖)",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=144017612&mdate=1777193998",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "kimono_yukata_hakama_miko",
       "categories": [
         "kimono_yukata_hakama_miko"
@@ -5028,9 +5032,10 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Popular illustrations and manga tagged \"振袖\" | pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Popular illustrations tagged \"振袖\" (Furisode/Formal Kimono)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixiv tag/search page itself has no whole-page image preview; this official embed shows one artwork surfaced by that page. It is a representative example, not a preview of all search results. Browser loading still unverified.",
+      "thumbnail_representative_work_id": 144017612
     },
     {
       "id": "CENSUS-D-05",
@@ -5235,8 +5240,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=72178103&mdate=1545153879",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "kimono_yukata_hakama_miko",
       "categories": [
         "kimono_yukata_hakama_miko"
@@ -5268,9 +5273,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Shrine, Maiden, virgin / Shrine Maiden - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Shrine Maiden (Artwork 72178103)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-D-10",
@@ -5427,8 +5432,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=130142890&mdate=1746602400",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "kimono_yukata_hakama_miko",
       "categories": [
         "kimono_yukata_hakama_miko"
@@ -5460,9 +5465,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "cheongsam, Original Character, androgynous / May 7th, 2025 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "cheongsam, Original Character, androgynous (Artworks 130142890 / 111)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-E-01",
@@ -5475,8 +5480,8 @@
       "creator": "Pixiv tag index",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": null,
+      "thumbnail_kind": "no_specific_preview_available",
       "category": "maid_clothing",
       "categories": [
         "maid_clothing"
@@ -5509,8 +5514,8 @@
         }
       ],
       "thumbnail_page_title": "Popular illustrations and manga tagged \"Maid\" | pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixiv source page exposed only generic service logos, not a source-specific artwork preview; removed the logo so this tag page is text-only and links to the original search page."
     },
     {
       "id": "CENSUS-E-02",
@@ -5571,8 +5576,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=67356140&mdate=1519023584",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "maid_clothing",
       "categories": [
         "maid_clothing"
@@ -5604,9 +5609,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "original, maid, maid uniform / February 19th, 2018 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "original, maid, maid uniform (Artwork 67356140)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-E-04",
@@ -5619,8 +5624,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=89733132&mdate=1620573469",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "maid_clothing",
       "categories": [
         "maid_clothing"
@@ -5652,9 +5657,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "maid uniform, maid, original / May 10th, 2021 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "maid uniform, maid, original (Artwork 89733132)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-E-05",
@@ -5667,8 +5672,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=81535468&mdate=1589366762",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "maid_clothing",
       "categories": [
         "maid_clothing"
@@ -5700,9 +5705,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "original, maid uniform, maid / May 13th, 2020 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "original, maid uniform, maid (Artwork 81535468)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-E-06",
@@ -5715,8 +5720,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=62902019&mdate=1494766210",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "maid_clothing",
       "categories": [
         "maid_clothing"
@@ -5748,9 +5753,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "original, maid, clip studio paint / May 14th, 2017 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "original, maid, clip studio paint (Artwork 62902019)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-E-07",
@@ -5763,8 +5768,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=142449552&mdate=1773826810",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "maid_clothing",
       "categories": [
         "maid_clothing"
@@ -5796,9 +5801,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "maid uniform, maid, how to draw / March 18th, 2026 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "maid uniform, maid, how to draw (Artwork 142449552)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-F-01",
@@ -5859,8 +5864,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=90813278&mdate=1624666311",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "magical_girl",
       "categories": [
         "magical_girl"
@@ -5892,9 +5897,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Girl, magical girl, creation / June 26th, 2021 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Girl, magical girl, creation (Artwork 90813278)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-F-03",
@@ -5907,8 +5912,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=114138810&mdate=1702281900",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "magical_girl",
       "categories": [
         "magical_girl"
@@ -5940,9 +5945,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Girl, costume, magical girl / December 11th, 2023 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Girl, costume, magical girl (Artwork 114138810)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-F-04",
@@ -6051,8 +6056,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=130991103&mdate=1748618581",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "fantasy_mage_armor",
       "categories": [
         "fantasy_mage_armor"
@@ -6084,9 +6089,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "original, Fantasy, armor / May 31st, 2025 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "original, Fantasy, armor (Artwork 130991103)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-G-03",
@@ -6099,8 +6104,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=103358346&mdate=1670213794",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "fantasy_mage_armor",
       "categories": [
         "fantasy_mage_armor"
@@ -6132,9 +6137,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Armor, Armored_Dress, Paladin / Character Design - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Armor, Armored Dress, Paladin / Character Design (Artwork 103358346)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-G-04",
@@ -6147,8 +6152,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=150126236&mdate=1790402857",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "fantasy_mage_armor",
       "categories": [
         "fantasy_mage_armor"
@@ -6180,9 +6185,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "characterdesign, adoptables, Fantasy / Valkyrie (Adoptable) - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Valkyrie (Adoptable) — characterdesign, Fantasy (Artwork 150126236)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-G-05",
@@ -6195,8 +6200,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=112262660&mdate=1696392684",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "fantasy_mage_armor",
       "categories": [
         "fantasy_mage_armor"
@@ -6228,9 +6233,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "female warrior, female combatant, armor / Death to the Undead - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Death to the Undead — female warrior, armor (Artwork 112262660)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-G-06",
@@ -6243,8 +6248,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=108200977&mdate=1684304060",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "fantasy_mage_armor",
       "categories": [
         "fantasy_mage_armor"
@@ -6276,9 +6281,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "original, original works, Fantasy / Black Knight（Gothic） - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Black Knight (Gothic) — original, Fantasy (Artwork 108200977)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-G-07",
@@ -6291,8 +6296,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=110777217&mdate=1691859681",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "fantasy_mage_armor",
       "categories": [
         "fantasy_mage_armor"
@@ -6324,9 +6329,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "knight, character design, character reference sheet / Arcelia Character Info - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Arcelia Character Info — knight, character design, reference sheet (Artwork 110777217)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-G-08",
@@ -6339,8 +6344,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=150301437&mdate=1790779586",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "fantasy_mage_armor",
       "categories": [
         "fantasy_mage_armor"
@@ -6372,9 +6377,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "mage, magic, wizard / Chai mage concept - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Chai mage concept — mage, magic, wizard (Artwork 150301437)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-G-09",
@@ -6387,8 +6392,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=133654062&mdate=1754684374",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "fantasy_mage_armor",
       "categories": [
         "fantasy_mage_armor"
@@ -6420,9 +6425,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "anime, silentwitch, secretsofthesilentwitch / Monica The Silent Witch - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Monica The Silent Witch (Artwork 133654062)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-G-10",
@@ -6435,8 +6440,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=83350134&mdate=1596197094",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "fantasy_mage_armor",
       "categories": [
         "fantasy_mage_armor"
@@ -6468,9 +6473,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "original character, Sorceress, mage / Juini Jenova - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Juini Jenova — original character, Sorceress, mage (Artwork 83350134)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-G-11",
@@ -6483,8 +6488,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=105754471&mdate=1677457146",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "fantasy_mage_armor",
       "categories": [
         "fantasy_mage_armor"
@@ -6516,9 +6521,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "anime, witch, magic / Witch Girl - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Witch Girl — anime, witch, magic (Artwork 105754471)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-G-12",
@@ -6627,8 +6632,8 @@
       "creator": "Pixiv tag index",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese (tag: アイドル衣装)",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=120189824&mdate=1719933841",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "idol_casual_street_cyberpunk",
       "categories": [
         "idol_casual_street_cyberpunk"
@@ -6660,9 +6665,10 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Popular illustrations and manga tagged \"アイドル衣装\" | pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Popular illustrations tagged \"アイドル衣装\" (Idol Costume)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixiv tag/search page itself has no whole-page image preview; this official embed shows one artwork surfaced by that page. It is a representative example, not a preview of all search results. Browser loading still unverified.",
+      "thumbnail_representative_work_id": 120189824
     },
     {
       "id": "CENSUS-H-02",
@@ -6723,8 +6729,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=142588095&mdate=1774109035",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "idol_casual_street_cyberpunk",
       "categories": [
         "idol_casual_street_cyberpunk"
@@ -6756,9 +6762,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "costume change, Gakuen Idolmaster, The Idolmaster / March 22nd, 2026 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "costume change, Gakuen Idolmaster, The Idolmaster (Artwork 142588095)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-H-04",
@@ -6771,8 +6777,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=146683920&mdate=1782890016",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "idol_casual_street_cyberpunk",
       "categories": [
         "idol_casual_street_cyberpunk"
@@ -6804,9 +6810,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "original character, commission, outfitdesign / July 1st, 2026 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "original character, commission, outfitdesign (Artworks 146683920 / 110)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-H-05",
@@ -6819,8 +6825,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=101818239&mdate=1665366556",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "idol_casual_street_cyberpunk",
       "categories": [
         "idol_casual_street_cyberpunk"
@@ -6852,9 +6858,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "fanart, Girl, Cyberpunk: Edgerunners / Rebecca - Cyberpunk: Edgerunners - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Rebecca — Cyberpunk: Edgerunners (Artwork 101818239)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-H-06",
@@ -6867,8 +6873,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=101121025&mdate=1664685001",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "idol_casual_street_cyberpunk",
       "categories": [
         "idol_casual_street_cyberpunk"
@@ -6900,9 +6906,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Edgerunners, CyberpunkEdgerunners, cyberpunk / Rebecca from Edgerunners - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Rebecca from Edgerunners (Artwork 101121025)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-H-07",
@@ -6915,8 +6921,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=149406148&mdate=1788796052",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "idol_casual_street_cyberpunk",
       "categories": [
         "idol_casual_street_cyberpunk"
@@ -6948,9 +6954,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "art, artwork, anime / Cyberpunk girl - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Cyberpunk girl (Artwork 149406148)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-H-08",
@@ -6963,8 +6969,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / English+Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=137885087&mdate=1764069823",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "idol_casual_street_cyberpunk",
       "categories": [
         "idol_casual_street_cyberpunk"
@@ -6996,9 +7002,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "original, creation, cyberpunk / 【RUN】 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "【RUN】 — original, creation, cyberpunk (Artwork 137885087)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-H-09",
@@ -7779,8 +7785,8 @@
       "creator": "Pixiv tag index",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese (tag: 目の描き方)",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=57604207&mdate=1466944105",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "anime_eyes",
       "categories": [
         "anime_eyes"
@@ -7812,9 +7818,10 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Popular illustrations and manga tagged \"目の描き方\" | pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Popular illustrations tagged \"目の描き方\" (Eye Drawing Methods)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixiv tag/search page itself has no whole-page image preview; this official embed shows one artwork surfaced by that page. It is a representative example, not a preview of all search results. Browser loading still unverified.",
+      "thumbnail_representative_work_id": 57604207
     },
     {
       "id": "CENSUS-I-15",
@@ -8211,8 +8218,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=97554237&mdate=1649634066",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "accessories",
       "categories": [
         "accessories"
@@ -8244,9 +8251,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Skeb, Commission, gloves / April 11th, 2022 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Skeb, Commission, gloves (Artwork 97554237)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-K-01",
@@ -8451,8 +8458,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / French-titled (dessin/lecture)",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/decorate.php?illust_id=27077341&mdate=1336303980",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "multi_component_reference",
       "categories": [
         "multi_component_reference"
@@ -8484,9 +8491,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "Tutorial, dessin, lecture 1000+ bookmarks / May 6th, 2012 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "Tutorial, dessin, lecture 1000+ bookmarks (Artwork 27077341)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-K-06",
@@ -8499,8 +8506,8 @@
       "creator": "Unknown (Pixiv artist)",
       "source_platform": "Pixiv",
       "source_language": "Pixiv / Japanese",
-      "thumbnail_url": "https://s.pximg.net/common/images/services/pixiv20250124.png",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://embed.pixiv.net/artwork.php?illust_id=120929979&mdate=1722070295",
+      "thumbnail_kind": "pixiv_embed_preview",
       "category": "multi_component_reference",
       "categories": [
         "multi_component_reference"
@@ -8532,9 +8539,9 @@
           "bw_clean_plate_claim": "NOT CONFIRMED"
         }
       ],
-      "thumbnail_page_title": "how to draw, Tutorial, Making-of / July 27th, 2024 - pixiv",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_page_title": "how to draw, Tutorial, Making-of (Artwork 120929979)",
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official Pixiv embed URL extracted from source page metadata. This embeds the artwork rather than using the generic Pixiv logo; visual rendering in the final atlas browser remains unverified."
     },
     {
       "id": "CENSUS-K-07",
@@ -8691,8 +8698,8 @@
       "creator": "PixAI platform",
       "source_platform": "PixAI",
       "source_language": "PixAI / English",
-      "thumbnail_url": "https://images-ng.pixai.art/images/thumb/23a78555-1da9-4b2c-9c72-3d44d2316f47",
-      "thumbnail_kind": "source_page_metadata_preview_candidate",
+      "thumbnail_url": "https://images-ng.pixai.art/images/thumb/2761973c-0dd1-465f-bbcb-b94ea7bfbd5c",
+      "thumbnail_kind": "source_page_result_thumbnail",
       "category": "multi_component_reference",
       "categories": [
         "multi_component_reference"
@@ -8725,8 +8732,8 @@
         }
       ],
       "thumbnail_page_title": "AI Character Sheet Generator — Free, No Install | PixAI",
-      "thumbnail_checked_date": "2026-10-21",
-      "thumbnail_status": "URL extracted from page metadata/image links; not independently loaded in end-user browser"
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Direct thumbnail of an example from the PixAI character-sheet generator page; representative example, not the tool's full feature set. Image load not verified."
     },
     {
       "id": "CENSUS-K-11",
@@ -11503,10 +11510,10 @@
   "statistics": {
     "canonical_url_records": 284,
     "structured_entries": 284,
-    "index_entries_with_thumbnail": 284,
-    "index_entries_without_thumbnail": 0,
-    "direct_image_preview_candidates": 279,
-    "pixiv_embed_previews": 5,
+    "index_entries_with_thumbnail": 278,
+    "index_entries_without_thumbnail": 6,
+    "direct_image_preview_candidates": 229,
+    "pixiv_embed_previews": 49,
     "pixai_source_entries": 54,
     "research_report_categorized_records": 160,
     "research_records_with_url": 154,
@@ -11615,16 +11622,22 @@
     "x_costume_posts_added_oct21": 2,
     "latest_census_total": 284,
     "current_total_url_normalized_records": 284,
-    "current_total_preview_urls": 284,
-    "current_total_direct_preview_candidates": 279,
-    "current_total_pixiv_embed_endpoints": 5,
+    "current_total_preview_urls": 278,
+    "current_total_direct_preview_candidates": 229,
+    "current_total_pixiv_embed_endpoints": 49,
     "clean_square_bnw_plates_with_reuse_license_confirmed": 0,
     "current_index_note": "Current consolidated index updated 2026-10-22. Includes 9 new Pixivision category collections and 3 character-creator workflow pages. Counts are normalized source URLs, not visual artwork count or asset-license count. Some editorial collections may include male, fandom, or full-character illustration; inspect individual original work rather than treating collection covers as component plates.",
     "accessory_source_additions_oct22": 7,
     "modular_creator_tools_added_oct22": 2,
     "license_status_note": "New sources contain different kinds of permission: Kikeluzi page labels its asset license CC BY 4.0; Awfully Sweet allows edited use but prohibits resale of original/edited sprites; Sutemo's sprite terms disallow resale alone; BOOTH modular outfits allow use in permitted end products but prohibit redistributing source files. Do not conflate these.",
     "pixivision_hair_accessory_footwear_collections_added_oct22": 9,
-    "character_creator_tools_added_oct22": 3
+    "character_creator_tools_added_oct22": 3,
+    "placeholder_thumbnails_removed": 6,
+    "pixiv_artwork_embeds_recovered": 44,
+    "pixiv_tag_pages_without_specific_preview": 3,
+    "unique_thumbnail_urls": 278,
+    "exact_duplicate_preview_url_groups": [],
+    "thumbnail_quality_audit_note": "Audit 2026-10-22 found a generic Pixiv service logo used as the thumbnail for 47 Pixiv records and a generic Pixivision placeholder used for 3 records. Replaced 44 of those with official Pixiv embed URLs, removed 3 Pixiv tag-page placeholders and 3 Pixivision tag-index placeholders, and changed two PixAI page thumbnails from one shared generic preview to page-specific example previews. Six tag/index records now have no source-specific image preview rather than a misleading logo. Exact thumbnail URL duplicates were rechecked; cross-platform image-hash deduplication remains undone."
   },
   "pixai_tag_browsers": [
     {
