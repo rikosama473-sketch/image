@@ -2786,3 +2786,28 @@ The consolidated index now contains **272 normalized source records**, including
 ## Última expansión del índice visual — 22/10/2026
 
 Se añadieron nueve colecciones editoriales Pixivision para lazos, diademas, flores capilares, tacones, botas y zapatos de plataforma/Mary Jane, más Mannequin como referencia de arquitectura modular de pelo y Monster Girl Maker como referencia de creador de 1.000+ partes. El índice consolidado tiene **284 URLs normalizadas** (279 previews directas candidatas y 5 embeds Pixiv). El censo base de este informe sigue teniendo 153 URLs únicas; las incorporaciones posteriores viven en el índice consolidado. No se han verificado placas cuadradas monocromas con licencia de reutilización ni una deduplicación visual interplataforma.
+
+
+---
+
+## Estado consolidado posterior a las auditorías — 22 de octubre de 2026
+
+El recuento del informe base (**160 fichas narrativas, 153 URLs canónicas**) es una fotografía de la primera investigación profunda, no el total actual del censo. Después se agregaron fichas externas, vistas previas y auditorías especializadas.
+
+- [Censo visual interactivo actualizado](./censo-visual-interactivo.html): **339 registros**, de los cuales **315 tienen URL de vista previa registrada**. Ofrece búsqueda por texto, filtros de componente/plataforma, opción para mostrar solo miniaturas, filtro de elementos extra que deben marcarse en rojo y fallback si una imagen remota no carga.
+- [Índice JSON consolidado](./indice-visual-componentes.json): 339 registros con metadatos de origen, categoría, componente objetivo, extras, miniatura cuando está registrada, estado de licencia y estado de placa monocroma.
+- [Auditoría especializada de accesorios](./auditoria-accesorios-44-fuentes.md): 44 URLs examinadas en la ronda focalizada; la propia auditoría discrimina **31–32 páginas individuales verificadas**, de las cuales cuatro son recursos MMD/3D con poca utilidad para un atlas 2D.
+- [Censo base de 153 URLs maestras](./censo-exhaustivo-153-fuentes.md): se conserva como el informe inicial profundo para no confundir la base con las ampliaciones posteriores.
+- [Atlas de componentes con tarjetas PixAI](./atlas-peinados-interactivo.html): ejemplos con miniaturas originales, advertencias rojas y búsquedas de placas monocromas por componente.
+
+### Recuento correcto y límites de certeza
+
+**339 registros de URL no equivalen a 339 imágenes originales únicas.** El JSON no contiene URLs repetidas en igualdad exacta, pero aún puede haber obras idénticas reflejadas en plataformas distintas, varias vistas de la misma referencia, hojas multipanel o miniaturas de una misma colección. La deduplicación perceptual con los ficheros originales no se ha ejecutado.
+
+**315 URLs de vista previa registradas no equivale a 315 miniaturas cargadas y probadas en navegador.** El censo visual tiene manejo de error y un mensaje alternativo para imágenes no disponibles, pero no se realizó una prueba de carga visual de todas las URL desde el navegador del usuario.
+
+**Placas cuadradas monocromas con permiso de reutilización confirmado: 0.** Algunas fuentes tienen tutoriales monocromos y algunos productos aportan PSD/PNG en capas, pero no se ha confirmado para ellos la combinación exacta de encuadre cuadrado, aislamiento del componente, limpieza visual y permiso para el uso planeado en IMAGE. Las búsquedas externas son pistas de trabajo, no placas terminadas.
+
+### Resultado que sí queda terminado
+
+Hay una base de investigación extensa, un índice de 339 registros, 315 candidatos de vista previa, 58 páginas de origen PixAI registradas y filtros operativos para localizar cabello, ropa, ojos, accesorios, tutoriales y productos. Las licencias se conservan como no verificadas cuando no hay evidencia suficiente. El trabajo pendiente ya está delimitado: inspección/deduplicación visual, pruebas reales de carga de miniaturas, revisión artículo por artículo de licencias que permitan redistribución en una aplicación, y búsqueda o creación autorizada de placas monocromas 1:1.
