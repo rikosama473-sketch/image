@@ -2811,3 +2811,29 @@ El recuento del informe base (**160 fichas narrativas, 153 URLs canónicas**) es
 ### Resultado que sí queda terminado
 
 Hay una base de investigación extensa, un índice de 339 registros, 315 candidatos de vista previa, 58 páginas de origen PixAI registradas y filtros operativos para localizar cabello, ropa, ojos, accesorios, tutoriales y productos. Las licencias se conservan como no verificadas cuando no hay evidencia suficiente. El trabajo pendiente ya está delimitado: inspección/deduplicación visual, pruebas reales de carga de miniaturas, revisión artículo por artículo de licencias que permitan redistribución en una aplicación, y búsqueda o creación autorizada de placas monocromas 1:1.
+
+
+---
+
+# F. Estado operativo actual de IMAGE — 22 de octubre de 2026
+
+El censo profundo de esta investigación se conserva como base de **160 fichas narrativas / 153 URLs maestras normalizadas**. Para la consulta rápida y el descubrimiento visual, el repositorio mantiene ahora un índice consolidado separado:
+
+- **[Censo visual interactivo](./censo-visual-interactivo.html)** — 339 registros de fuente, 315 URLs de vista previa registradas; filtros por categoría/plataforma, alerta roja por elementos ajenos, estado de placa B/N y ficha de licencia. Las vistas previas no se cargaron manualmente todas en un navegador final.
+- **[Índice JSON](./indice-visual-componentes.json)** — el mismo conjunto de 339 registros. Se corrigieron cinco colisiones de identificador; ahora tiene 339 IDs internos únicos y 0 URLs canónicas exactas duplicadas.
+- **[Auditoría de calidad](./auditoria-calidad-censo-339-registros.md)** — distribución por estado de miniatura/licencia, categorías que cubre, identificadores y riesgos pendientes.
+- **[Auditoría de accesorios](./auditoria-accesorios-44-fuentes.md)** — 44 URLs dedicadas a tiaras/coronas, pendientes, chokers, broches, cinturones, pinzas, lazos, gafas, guantes, medias y zapatos.
+
+Los 339 registros y las 315 vistas previas son unidades del índice, **no un recuento probado de imágenes visualmente únicas**. La deduplicación por URL exacta es cero duplicados; la deduplicación visual entre plataformas no se ha ejecutado porque exigiría obtener legalmente las imágenes y comparar sus hashes o perceptualmente las vistas.
+
+## Cierre honesto del objetivo
+
+- **Miniatura junto al nombre:** implementada en el censo visual; cada tarjeta abre la fuente.
+- **Avisos rojos de elementos extra:** implementados; cuando el registro no contiene una descripción completa, la interfaz muestra una advertencia para que se inspeccione la obra original.
+- **Búsqueda por componente:** implementada para cabello, ojos, accesorios, ropa, tutoriales y productos/recursos, además de filtros por plataforma, miniatura, notas de licencia y pendientes de placa monocroma.
+- **Placas cuadradas blanco/negro con licencia confirmada:** 0. El censo incluye enlaces de búsqueda dirigidos a cada componente, pero ninguna búsqueda se cuenta como una placa conseguida hasta verificar la imagen, proporción, limpieza y licencia de uso.
+- **Assets descargables o comprados:** algunos anuncios y formatos se documentan con precio/licencia expresos; la descarga no se ha realizado a escala y los permisos de redistribución de PSD/PNG deben respetarse individualmente.
+- **Compatibilidad:** las imágenes de referencia, PSD por capas, sprites 2D y materiales 3D/MMD/VRoid están separados en el inventario; no son intercambiables automáticamente.
+
+La base de investigación es extensa, pero todavía no equivale a una biblioteca de componentes lista para producción. El próximo criterio de cierre debe ser por registro: fuente original comprobada, miniatura que carga, componente inequívoco, extras rojos, licencia adecuada al uso, placa neutral cuando corresponda y deduplicación anotada.
+
