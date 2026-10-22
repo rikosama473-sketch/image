@@ -16644,19 +16644,275 @@
       "ordinal": 284,
       "research_batch": "prior-index-2026-10-21",
       "atlas_ordinal": 288
+    },
+    {
+      "id": "EXT-PXV-ACC-002",
+      "category": "accessories",
+      "title": "Pixivision — Drawings of Girls With Piercings: Fashionably Me",
+      "source_url": "https://www.pixivision.net/en/a/10083",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/10083/ogimage.jpg",
+      "creator": "Pixivision curation; multiple Pixiv artists",
+      "source_platform": "Pixivision",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_traits": [
+        "earlobe piercings",
+        "multiple ear piercings",
+        "septum and tongue piercings as style details",
+        "edgier/grunge jewelry arrangements"
+      ],
+      "extras_red": [
+        "Full faces, hair, makeup, outfits and other piercings appear in context; each featured artwork has separate creator/license."
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "curated color editorial collection; not isolated B/W plate",
+      "license_status": "reference_only_follow_each_linked_artist_rights",
+      "ordinal": 289,
+      "thumbnail_status": "Preview URL found from source page metadata/snippet; browser load not individually validated.",
+      "thumbnail_checked_date": "2026-10-22"
+    },
+    {
+      "id": "EXT-PXV-ACC-003",
+      "category": "accessories",
+      "title": "Pixivision — Drawings Featuring Necklaces and Pendants: Like Stars Around Your Neck",
+      "source_url": "https://www.pixivision.net/en/a/10349",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/10349/ogimage.jpg",
+      "creator": "Pixivision curation; multiple Pixiv artists",
+      "source_platform": "Pixivision",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_traits": [
+        "fine chain necklaces",
+        "chunky necklaces",
+        "single pendants",
+        "layered necklaces",
+        "neck decoration as focal element"
+      ],
+      "extras_red": [
+        "Full character face, hair, clothing and pose are present; classify pendant/choker/necklace separately from the garment neckline."
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "curated collection; no clean licensed square plate confirmed",
+      "license_status": "reference_only_follow_each_linked_artist_rights",
+      "ordinal": 290,
+      "thumbnail_status": "Preview URL found from source page metadata/snippet; browser load not individually validated.",
+      "thumbnail_checked_date": "2026-10-22"
+    },
+    {
+      "id": "EXT-PXV-ACC-004",
+      "category": "accessories",
+      "title": "Pixivision — Drawings Featuring Crowns: Giving Off a Royal Aura",
+      "source_url": "https://www.pixivision.net/en/a/8518",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/8518/ogimage.jpg",
+      "creator": "Pixivision curation; multiple Pixiv artists",
+      "source_platform": "Pixivision",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_traits": [
+        "crown silhouettes",
+        "jewel-encrusted crowns",
+        "royal headpiece placement"
+      ],
+      "extras_red": [
+        "Complete characters and costumes; some examples are franchise fan art. Crown position, hair overlap and character identity must remain separate records."
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "curated color editorial collection; not isolated B/W plate",
+      "license_status": "reference_only_follow_each_linked_artist_rights",
+      "ordinal": 291,
+      "thumbnail_status": "Preview URL found from source page metadata/snippet; browser load not individually validated.",
+      "thumbnail_checked_date": "2026-10-22"
+    },
+    {
+      "id": "EXT-PXV-ACC-005",
+      "category": "accessories",
+      "title": "Pixivision — Drawings of Crowns: Fit for Royalty",
+      "source_url": "https://www.pixivision.net/en/a/11625",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/11625/ogimage.jpg",
+      "creator": "Pixivision curation; multiple Pixiv artists",
+      "source_platform": "Pixivision",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_traits": [
+        "ornate jeweled crowns",
+        "minimal circlets",
+        "tiara/crown silhouettes"
+      ],
+      "extras_red": [
+        "Full illustrations; hair, faces, ears, clothing and franchise identity are not part of the crown asset."
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "curated color editorial collection; no licensed square B/W component plate confirmed",
+      "license_status": "reference_only_follow_each_linked_artist_rights",
+      "ordinal": 292,
+      "thumbnail_status": "Preview URL found from source page metadata/snippet; browser load not individually validated.",
+      "thumbnail_checked_date": "2026-10-22"
+    },
+    {
+      "id": "EXT-PXV-ACC-006",
+      "category": "accessories",
+      "title": "Pixivision — Drawings of Characters Wearing Long Gloves: The Perfect Fit",
+      "source_url": "https://www.pixivision.net/en/a/9773",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/9773/ogimage.jpg",
+      "creator": "Pixivision curation; multiple Pixiv artists",
+      "source_platform": "Pixivision",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_traits": [
+        "opera gloves past elbow",
+        "upper-arm gloves",
+        "satin and decorative glove styles",
+        "ribbons and ruffle cuff placement"
+      ],
+      "extras_red": [
+        "Full characters/outfits and possibly suggestive fashion contexts; gloves must be separated from sleeves and bodice."
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "curated color collection; no isolated B/W plate confirmed",
+      "license_status": "reference_only_follow_each_linked_artist_rights",
+      "ordinal": 293,
+      "thumbnail_status": "Preview URL found from source page metadata/snippet; browser load not individually validated.",
+      "thumbnail_checked_date": "2026-10-22"
+    },
+    {
+      "id": "EXT-PXV-ACC-007",
+      "category": "accessories",
+      "title": "Pixivision — Drawings Featuring Garter Belts: Dainty, Lacy, and a Little Racy",
+      "source_url": "https://www.pixivision.net/en/a/10348",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/10348/ogimage.jpg",
+      "creator": "Pixivision curation; multiple Pixiv artists",
+      "source_platform": "Pixivision",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_traits": [
+        "garter belts",
+        "stocking straps",
+        "lace, decorative straps and attachments"
+      ],
+      "extras_red": [
+        "Often paired with stockings/shorts/skirts and full character poses; separate belt, thigh strap and stocking components. Image collection tone is somewhat racy; select appropriate entries for the editor."
+      ],
+      "red_warning_required": true,
+      "monochrome_plate_status": "curated color collection; no isolated B/W plate confirmed",
+      "license_status": "reference_only_follow_each_linked_artist_rights",
+      "ordinal": 294,
+      "thumbnail_status": "Preview URL found from source page metadata/snippet; browser load not individually validated.",
+      "thumbnail_checked_date": "2026-10-22"
+    },
+    {
+      "id": "PX-ACC-008",
+      "category": "accessories",
+      "title": "Tiara Starlumos — tiara and headpiece reference",
+      "source_url": "https://pixai.art/artwork/1953849701550899383",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/4df0e324-6da4-43ac-96f4-3a20ff82e714",
+      "creator": "Dark-Fantasy",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public",
+      "target_traits": [
+        "tiara/headpiece is explicitly named in source title/prompt; inspect image for exact points, gems, band width and placement before transcribing detailed shape"
+      ],
+      "extras_red": [
+        "Honkai Gakuen/Starlumos IP reference; multicolor long hair, oversized VR headset/microphone, purple eyes, fingerless gloves, blue swimsuit, blue-pink gamer coat, thigh bracelet, cat robot, sci-fi effects and face/body"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+tiara+headpiece+isolated+front+view+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending; no clean reusable square plate verified",
+      "license_status": "reference_only_pixai_creator_work_ip_risk",
+      "ordinal": 295,
+      "thumbnail_status": "Preview URL found from source page metadata/snippet; browser load not individually validated.",
+      "thumbnail_checked_date": "2026-10-22"
+    },
+    {
+      "id": "PX-ACC-009",
+      "category": "accessories_clothing",
+      "title": "Elaine (Pokémon) — crown, hair bow, necklace and floral bouquet",
+      "source_url": "https://pixai.art/artwork/2020164389518909695",
+      "thumbnail_url": "https://images-ng.pixai.art/gi/stillThumb/e91ab5ed-fd56-4303-b885-a8d1067e0e0f",
+      "creator": "Serena Y",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public",
+      "target_traits": [
+        "crown/tiara",
+        "hair bow",
+        "necklace",
+        "jewelry",
+        "bouquet handling/accessory pose"
+      ],
+      "extras_red": [
+        "Elaine/Pokémon franchise identity, complete pink tulle dress, bare shoulders/arms, lipstick, lace trim, heels, full face/body, bouquet, bed, pillows, curtain and room"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+crown+tiara+hair+bow+necklace+isolated+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work_ip_risk",
+      "ordinal": 296,
+      "thumbnail_status": "Preview URL found from source page metadata/snippet; browser load not individually validated.",
+      "thumbnail_checked_date": "2026-10-22"
+    },
+    {
+      "id": "PX-ACC-010",
+      "category": "accessories_clothing",
+      "title": "Renaissance anime character — flower brooch, hair flowers, bow and gloves",
+      "source_url": "https://pixai.art/artwork/2029481777955285226",
+      "thumbnail_url": "https://images-ng.pixai.art/images/stillThumb/4f71b424-b100-4e41-b08a-0b27bd0ca880",
+      "creator": "Prodigal Sun",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public",
+      "target_traits": [
+        "golden flower brooch",
+        "red flowers in hair",
+        "purple bow",
+        "purple gloves",
+        "epaulettes as clothing hardware"
+      ],
+      "extras_red": [
+        "green Renaissance-style jacket and trousers, high collar, long curtained green hair, hazel eyes, face, confident pose, rapier, cinematic light, bloom and film grain"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+flower+brooch+hair+flowers+bow+gloves+isolated+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "ordinal": 297,
+      "thumbnail_status": "Preview URL found from source page metadata/snippet; browser load not individually validated.",
+      "thumbnail_checked_date": "2026-10-22"
+    },
+    {
+      "id": "PX-ACC-011",
+      "category": "accessories_clothing",
+      "title": "Red long coat, black belt and harness — riinrin",
+      "source_url": "https://pixai.art/artwork/2067743177000279393",
+      "thumbnail_url": "https://images-ng.pixai.art/ji/stillThumb/17798140-6b52-44e7-a980-bb51ab61f3a2",
+      "creator": "りんりん",
+      "source_platform": "PixAI",
+      "thumbnail_kind": "official_platform_preview",
+      "prompt_visibility": "public; Japanese prompt",
+      "target_traits": [
+        "black belt",
+        "black harness",
+        "belt position and closure"
+      ],
+      "extras_red": [
+        "mechanically styled red long coat, white shirt, black tie, black pants, black boots, white braided hair, red eyes, full character and pose"
+      ],
+      "red_warning_required": true,
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+black+belt+harness+isolated+accessory+front+view+black+white+lineart+square",
+      "monochrome_plate_status": "search_pending",
+      "license_status": "reference_only_pixai_creator_work",
+      "ordinal": 298,
+      "thumbnail_status": "Preview URL found from source page metadata/snippet; browser load not individually validated.",
+      "thumbnail_checked_date": "2026-10-22"
     }
   ],
   "statistics": {
-    "total_canonical_url_records": 288,
-    "deep_research_master_unique_urls": 153,
-    "deep_research_unique_url_count": 153,
-    "previous_index_records": 284,
-    "overlap_between_runs": 149,
-    "pixai_source_pages": 54,
-    "pages_with_known_preview_thumbnail": 278,
-    "pages_without_known_preview_thumbnail": 10,
+    "total_canonical_url_records": 298,
+    "full_deep_research_canonical_urls": 153,
+    "prior_index_records": 278,
+    "overlap_with_deep_research": 149,
+    "pixai_source_pages": 58,
+    "pages_with_registered_preview_thumbnail": 288,
+    "pages_without_registered_preview_thumbnail": 10,
     "clean_square_monochrome_plates_with_reuse_license_verified": 0,
-    "note": "Canonical URL count is not a perceptual image count. A single web page may contain a multi-image sheet; multiple pages may mirror one original image. Thumbnail URLs are only preserved where a prior targeted source check found them; deep research pages without verified previews stay blank pending fetch. Licensing and clean B&W plates must be verified separately."
+    "accessory_specific_pixivision_collections": 6,
+    "accessory_specific_pixai_sources": 14,
+    "source_status_note": "Counted canonical URL records, not perceptually unique art or images downloaded. Mirrors and multiple editorial collections may feature the same source image. Thumbnail URLs are previews for navigation, not permissions to reuse source art.",
+    "monochrome_status_note": "No licensed clean square monochrome component plate has been confirmed. Searches and mixed-art references remain discovery leads only."
   },
   "pixai_tag_browsers": [
     {
