@@ -1058,3 +1058,25 @@ Queste nuove fonti sono state aggiunte al JSON consolidato per colmare categorie
 - [Vecteezy — catálogo de chokers](https://www.vecteezy.com/free-vector/choker-necklace): índice de vectores de gargantillas; comprobar la licencia de cada vector individual, porque el término “free” del catálogo no es una licencia global.
 
 **Estado del índice consolidado:** a 22/10/2026 incluye **272 registros normalizados**, 267 candidatos de vista previa directa y 5 endpoints de embed Pixiv. Este número contabiliza páginas fuente/producto y colecciones, no ilustraciones visualmente únicas. No hay 272 recursos descargados ni licenciados. Las placas cuadradas B/N con permiso de reutilización siguen en **0 confirmadas**.
+
+
+## Ampliación de hojas visuales y arquitectura modular — 22/10/2026
+
+Esta tanda añade nueve colecciones curatoriales de Pixivision y tres recursos/herramientas de creación modular al índice general. Son fuentes para encontrar vocabulario y estudiar componentes; las portadas/editorial previews no son assets aislados.
+
+| Fuente | Categoría | Uso práctico | Advertencias |
+|---|---|---|---|
+| [Pixivision — chicas con lazos en el pelo](https://www.pixivision.net/en/a/8806) | Cabello/accesorios | Lazos finos/anchos, extremos colgantes, nudos y colocación en coletas/twintails. | Colección de arte de varios autores; abrir cada ilustración original para comprobar autor y licencia. |
+| [Pixivision — lazos en peinados y prendas](https://www.pixivision.net/en/a/10450) | Accesorios/ropa | Comparar lazos como pieza capilar frente a adorno cosido a una prenda. | No mezclar el lazo con cabello/vestuario; portada no es pieza aislada. |
+| [Pixivision — diademas con orejas de animales](https://www.pixivision.net/en/a/11679) | Accesorios | Comparar diademas con orejas de conejo, gato y otros animales. | Separar la diadema física de orejas/rasgos integrados del personaje; colección multiautor. |
+| [Pixivision — flores para el cabello](https://www.pixivision.net/en/a/11540) | Cabello/accesorios | Una flor, agrupaciones, pasadores, coronas florales. | Distinguir corona floral, flor sobre horquilla y peinado base. |
+| [Pixivision — tacones altos](https://www.pixivision.net/en/a/10953) | Calzado | Punta, empeine, tacón stiletto/ancho, plataforma y tira al tobillo. | Obra completa puede mostrar pierna, medias y falda; derechos individuales. |
+| [Pixivision — botas por encima del muslo](https://www.pixivision.net/en/a/8443) | Calzado | Altura de caña, borde superior, cordones, tacón y suela. | Separar bota de pierna/medias; no asumir licencia colectiva. |
+| [Pixivision — accesorios de moda](https://www.pixivision.net/en/a/9967) | Accesorios | Descubrir zapatos, medias, sombreros, gafas y manicura. | Colección general de personajes completos, requiere pasar de la página editorial a la obra original. |
+| [Pixivision — zapatos de plataforma](https://www.pixivision.net/en/a/8667) | Calzado | Plataformas en botas, sneakers y pumps; geometría de suela. | Las ilustraciones incluyen ropa y personajes; no son PNG aislados. |
+| [Pixivision — zapatos Mary Jane](https://www.pixivision.net/en/a/11510) | Calzado | Punta redondeada, tira con hebilla, tacón bajo y silueta retro. | Separar zapato/hebilla de calcetín y pierna. |
+| [Mannequin — creador de retratos 2D de AR14](https://ar14.itch.io/mannequin) | Arquitectura de editor | Generador de retratos 2D/VTuber, exportación PNG/SVG y variaciones de rostro/ropa. | Listing mostrado a USD 29,99+; metadatos itch señalan licencia CC0, pero hay que verificar qué archivos cubre antes de reutilizarlos. No es una hoja de arte anime. |
+| [Mannequin 0.3.12 — estructura de plantillas de peinado](https://ar14.itch.io/mannequin/devlog/256706/0312-update-reworked-hairstyle-templates) | Arquitectura del cabello | Documenta partes: peinado principal, flequillo, sideburns/wisps, vello facial y piezas/adornos adicionales; cada parte puede colorearse aparte. | Es documentación/captura de software, no un asset de peinado para recortar. Es una referencia especialmente útil para el diseño modular del editor. |
+| [Monster Girl Maker](https://ghoulkiss.itch.io/monster-girl-maker) | Arquitectura de creador | Página afirma más de 1.000 partes para piel, ojos, boca, cejas, pelo, accesorios y ropa. | Herramienta de retratos, estética monster-girl/cute-creepy; no se verificó licencia para reutilizar sus imágenes/partes. Estudiar la navegación, no copiar assets. |
+
+**Estado consolidado:** el índice JSON y el HTML interactivo contienen ahora **284 registros URL normalizados**, **279 candidatos de preview directo y 5 embeds Pixiv**. El número cuenta páginas fuente, colecciones, productos y herramientas, no ilustraciones visualmente únicas. La carga individual de todas las miniaturas en el HTML final sigue sin verificarse por problemas de acceso del navegador remoto; 0 placas cuadradas monocromas con permiso de reutilización han sido confirmadas.
