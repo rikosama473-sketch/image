@@ -924,7 +924,7 @@ Estos recursos son especialmente pertinentes para comparar variedad, tamaño y f
 
 La rama de IMAGE mantiene ahora un índice JSON de **66 registros de fuente**: 26 obras individuales de PixAI y 40 páginas o recursos externos (obras, colecciones curatoriales, tutoriales, páginas de productos y candidatos pendientes). Esto es un recuento de URLs indexadas, no una afirmación de 66 imágenes perceptualmente únicas: no se ejecutó hash/deduplicación visual y pueden existir espejos o estilos similares.
 
-El atlas HTML tiene miniaturas pequeñas al lado de los nombres de referencia, 29 fichas PixAI con advertencias rojas, filtros de categoría y 9 tarjetas visibles de productos 2D/modulares con miniatura, precio y licencia. El JavaScript incorporado pasó comprobación sintáctica. No se afirmó que todas las imágenes remotas cargaran correctamente en un navegador real.
+El atlas HTML tiene miniaturas pequeñas al lado de los nombres de referencia, 32 PixAI cards and 41 additional accessory-census records, with red warnings where identified, filtros de categoría y product cards with thumbnails, prices, and license notes where the source listing provided them. El JavaScript incorporado pasó comprobación sintáctica. No se afirmó que todas las imágenes remotas cargaran correctamente en un navegador real.
 
 **Placas cuadradas monocromas con licencia de reutilización verificada: 0.** Los buscadores por componente apuntan a candidatas; no se debe marcar una placa como terminada hasta verificar que sea de un solo componente, cuadrada, limpia, legible a tamaño pequeño y permitida por su creador/licencia.
 
@@ -1080,3 +1080,21 @@ Esta tanda añade nueve colecciones curatoriales de Pixivision y tres recursos/h
 | [Monster Girl Maker](https://ghoulkiss.itch.io/monster-girl-maker) | Arquitectura de creador | Página afirma más de 1.000 partes para piel, ojos, boca, cejas, pelo, accesorios y ropa. | Herramienta de retratos, estética monster-girl/cute-creepy; no se verificó licencia para reutilizar sus imágenes/partes. Estudiar la navegación, no copiar assets. |
 
 **Estado consolidado:** el índice JSON y el HTML interactivo contienen ahora **284 registros URL normalizados**, **279 candidatos de preview directo y 5 embeds Pixiv**. El número cuenta páginas fuente, colecciones, productos y herramientas, no ilustraciones visualmente únicas. La carga individual de todas las miniaturas en el HTML final sigue sin verificarse por problemas de acceso del navegador remoto; 0 placas cuadradas monocromas con permiso de reutilización han sido confirmadas.
+
+
+---
+
+# Current state reconciliation — 22 October 2026
+
+This final reconciliation supersedes older index totals elsewhere in this report.
+
+- **339 canonical URLs** in the integrated JSON reference index; normalized URL-key duplicates within that index: 0.
+- **315 thumbnail/preview URLs registered**, with 24 source records lacking a preview URL. Browser rendering has not been independently validated for every image.
+- **58 PixAI source pages** in the current index.
+- **153 canonical URLs** in the first deep-research master table; its 160 narrative IDs include aliases/cross-references.
+- A second accessory-focused deep audit returned 44 cited URLs and approximately 31–32 individual pages; 41 new accessory records from that run were added to the integrated source index after tag hubs, duplicate sources, and product pages were classified.
+- **0 clean square black-and-white component plates with reuse permission verified.** Direct image-search URLs, full-character fan art, editorial cover images and 3D/MMD downloads do not satisfy this condition.
+
+The interactive catalogue is at [censo-visual-interactivo.html](./censo-visual-interactivo.html), its data at [indice-visual-componentes.json](./indice-visual-componentes.json), the long source audit at [censo-exhaustivo-153-fuentes.md](./censo-exhaustivo-153-fuentes.md), and the focused accessory gap audit at [auditoria-accesorios-44-fuentes.md](./auditoria-accesorios-44-fuentes.md). The atlas remains on the work branch; it has not been merged to main.
+
+The deep-research jobs together ran for **1,613 seconds (26 minutes 53 seconds)**, 1,128 seconds for the broad survey and 485 seconds for the accessory gap audit. This is the measured research-run time, not a claim that thousands of minutes of human-quality image inspection have occurred. Hash/perceptual deduplication and browser-by-browser thumbnail validation remain unperformed.
