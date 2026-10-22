@@ -426,13 +426,23 @@ function useLibraryAsset(id,returnCategory="hair"){
  renderNav();render();gallery();
  toast("Imagen cargada como retrato base. No se ha certificado su procedencia ni licencia.");
 }
+function openLibraryAssetForExtraction(id){
+ if(!imageLibraryCache){toast("La biblioteca no terminó de cargar. Actualizá el catálogo e intentá otra vez.");return;}
+ const asset=imageLibraryCache.assets.find(x=>x.id===id);if(!asset){toast("No se encontró esa variante en el catálogo.");return;}
+ let look=looks.find(x=>x.id===asset.id);
+ if(!look){look={id:asset.id,label:asset.label,src:asset.src,render:asset.src,tags:["Todos"],libraryPath:asset.path,sourceReview:asset.license_review};looks.push(look);}
+ state.look=look.id;state.selected="base";state.category="anatomy";state.pill="Todos";
+ renderNav();render();gallery();redrawMaskOverlay();
+ toast("Variante cargada en el taller. Pintá únicamente el pelo o la pieza que querés guardar; ocultá antes cualquier capa ajena.");
+}
 function anatomyWorkspace(root){
  root.innerHTML=
   '<div class="anatomy-hero"><strong>♙ Taller anatómico · '+safe(state.name)+'</strong><p>Usá tus propios diseños como referencia para obtener una guía de cuerpo completo. Después separá pelo, cara, torso, brazos, piernas o accesorios pintando cada región y exportándola como PNG transparente con el mismo lienzo y coordenadas.</p></div>'+
   '<div class="anatomy-step"><span class="anatomy-num">1</span><div><b>Generar y guardar dentro del repositorio</b><p>La tarea del repositorio toma la referencia confirmada de Pibara y genera una lámina de cuerpo entero. PNG, recorte transparente, manifiesto e índice de biblioteca quedan guardados en la rama de la PR. No necesita la clave de OpenAI; depende de la cuota del generador público.</p><div class="actions" style="margin-top:8px"><a class="btn primary" href="https://github.com/rikosama473-sketch/image/actions/workflows/generate-character-assets-free.yml" target="_blank" rel="noopener">✦ Generar desde GitHub Actions →</a><button id="anatomyOpenLibrary" class="btn">Ver imágenes del repositorio</button></div><p style="margin-top:7px">En la acción: Personaje <b>Pibara</b>, referencia <code>from-PixAI-2034984086876227343-0.png</code>, paquete <code>anatomy-guide-1</code>, fondo <b>transparent</b>.</p></div></div>'+
   '<div class="anatomy-step"><span class="anatomy-num">1b</span><div><b>Alternativa: generación directa desde el editor</b><p>Usa la API configurada localmente. No es necesaria si lanzás el generador del repositorio.</p><div class="actions" style="margin-top:8px"><button id="anatomyGenerate" class="btn">Generar guía con API local</button><button id="anatomyPose" class="btn">Crear maniquí con API local</button></div></div></div>'+
   '<div class="anatomy-step"><span class="anatomy-num">2</span><div><b>Separar una región del dibujo</b><p>Activá el pincel y pintá el interior de la pieza que querés extraer. Usa trazos pequeños cerca del contorno y evita pintar el fondo. La pieza se crea como PNG transparente alineado al lienzo.</p><div class="actions" style="margin-top:8px"><button id="anatomyMaskToggle" class="btn">✎ Pintar pieza</button><button id="anatomyMaskClear" class="btn">Limpiar selección</button><button id="anatomyCut" class="btn primary">Crear capa separada</button></div><label class="ai-mask-brush" for="anatomyBrushSize">Tamaño del pincel<input id="anatomyBrushSize" type="range" min="8" max="150" step="2" value="'+aiBrushSize+'"><output id="anatomyBrushValue">'+aiBrushSize+' px</output></label><span id="anatomyMaskCount" class="tiny">0 trazos</span></div></div>'+
-  '<div class="anatomy-step"><span class="anatomy-num">3</span><div><b>Exportar cada pieza</b><p>Seleccioná una capa separada y exportala como PNG individual. El archivo mantiene las coordenadas del lienzo para volver a montarlo sin desplazamientos.</p><div class="actions" style="margin-top:8px"><button id="anatomyExport" class="btn">↓ Exportar capa seleccionada</button><button id="anatomySaveProject" class="btn">Guardar proyecto JSON</button></div></div></div>'+
+  '<div class="anatomy-step"><span class="anatomy-num">3</span><div><b>Exportar y reutilizar cada pieza</b><p>La capa mantiene las coordenadas del lienzo. Exportala como PNG o guardala en la biblioteca personal de este navegador para volver a agregarla a otros personajes sin buscar el archivo de nuevo.</p><div class="actions" style="margin-top:8px"><button id="anatomyExport" class="btn">↓ Exportar capa seleccionada</button><button id="anatomySavePiece" class="btn primary">Guardar capa en mi biblioteca</button><button id="anatomySaveProject" class="btn">Guardar proyecto JSON</button></div></div></div>'+
+  '<section class="library-hero"><strong>▦ Mi biblioteca personal de piezas</strong><p>Se guarda en el almacenamiento local de este navegador mediante IndexedDB. Las imágenes no se suben a GitHub ni a una nube; podés volver a agregarlas a otra composición en esta PC.</p><div class="library-actions"><span id="localPartsCount" class="tiny">Leyendo biblioteca local…</span><button type="button" id="localPartsReload" class="btn">Actualizar</button></div><div id="localPartsGrid" class="assetgrid"></div></section>'+
   '<div class="anatomy-tip"><b>Clave para una extracción limpia:</b> para separar una pieza del arte original, ocultá primero las guías y las capas generadas que tapen el dibujo. La guía anatómica sirve para estudiar la pose y proporciones; no sustituye las capas dibujadas originales ni garantiza que la IA reconstruya partes ocultas.</div>'+
   '<section class="ai-mask-panel"><div class="ai-mask-head"><strong>Selección sobre el lienzo central</strong><span id="anatomyMaskMode">'+(aiMaskMode?"Pincel activo":"Pincel apagado")+'</span></div><p>La pintura rosa es solo una superposición de selección: no se imprime en el PNG original ni en la pieza exportada.</p></section>';
  $("anatomyOpenLibrary").onclick=()=>{
@@ -446,8 +456,11 @@ function anatomyWorkspace(root){
  $("anatomyBrushSize").oninput=e=>{aiBrushSize=Number(e.target.value);$("anatomyBrushValue").value=aiBrushSize+" px";};
  $("anatomyCut").onclick=createCutoutLayer;
  $("anatomyExport").onclick=exportSelectedLayerPng;
+ $("anatomySavePiece").onclick=saveSelectedLayerToLocalLibrary;
  $("anatomySaveProject").onclick=save;
+ $("localPartsReload").onclick=()=>renderLocalParts();
  refreshMaskUi();
+ renderLocalParts();
 }
 function requestAnatomyGuide(type){
  aiMaskStrokes=[];aiMaskDrawing=null;setAIMaskMode(false);
@@ -462,6 +475,106 @@ function requestAnatomyGuide(type){
 function anatomyPromptForUser(text,direction){
  const style=direction==="madhouse"?"anime 2D cinematográfico, lineart fino y sombreado por planos":direction==="trigger"?"anime 2D gráfico, silueta dinámica y contorno limpio":"anime 2D coherente con la ilustración de referencia";
  return "Usa la imagen de entrada solo como referencia de identidad y diseño, no copies su recorte ni su pose. "+style+". "+text.trim()+" Debe verse el cuerpo completo entero, desde la parte superior del cabello hasta la suela de ambos pies, sin recortar manos ni pies. Pose A simétrica, plano frontal, una sola figura, anatomía consistente, fondo PNG transparente si se admite. Traje de estudio opaco y no revelador. Sin letras, marcas de agua, marcos, paneles, vistas adicionales ni accesorios flotantes. Conserva los rasgos identificativos y la paleta del personaje cuando sea posible.";
+}
+const LOCAL_PARTS_DB="image-local-parts-v1";
+let localPartsDbPromise=null;
+const localPartObjectUrls=new Map();
+function openLocalPartsDb(){
+ if(!("indexedDB" in window))return Promise.reject(Error("Este navegador no admite una biblioteca local persistente."));
+ if(localPartsDbPromise)return localPartsDbPromise;
+ localPartsDbPromise=new Promise((resolve,reject)=>{
+  const request=indexedDB.open(LOCAL_PARTS_DB,1);
+  request.onupgradeneeded=()=>{const db=request.result;if(!db.objectStoreNames.contains("parts"))db.createObjectStore("parts",{keyPath:"id"});};
+  request.onsuccess=()=>resolve(request.result);
+  request.onerror=()=>{localPartsDbPromise=null;reject(request.error||Error("No se pudo abrir la biblioteca local."));};
+  request.onblocked=()=>{localPartsDbPromise=null;reject(Error("Cerrá otras pestañas de IMAGE para actualizar la biblioteca local."));};
+ });
+ return localPartsDbPromise;
+}
+function readLocalParts(){
+ return openLocalPartsDb().then(db=>new Promise((resolve,reject)=>{
+  const request=db.transaction("parts","readonly").objectStore("parts").getAll();
+  request.onsuccess=()=>resolve(request.result||[]);
+  request.onerror=()=>reject(request.error||Error("No se pudieron leer las piezas guardadas."));
+ }));
+}
+function persistLocalPart(record){
+ return openLocalPartsDb().then(db=>new Promise((resolve,reject)=>{
+  const tx=db.transaction("parts","readwrite");
+  tx.objectStore("parts").put(record);
+  tx.oncomplete=()=>resolve(record);
+  tx.onerror=()=>reject(tx.error||Error("No se pudo guardar la pieza."));
+  tx.onabort=()=>reject(tx.error||Error("Se canceló el guardado de la pieza."));
+ }));
+}
+function blobToDataUrl(blob){
+ return new Promise((resolve,reject)=>{
+  const reader=new FileReader();reader.onload=()=>resolve(String(reader.result));reader.onerror=()=>reject(reader.error||Error("No se pudo leer el PNG local."));reader.readAsDataURL(blob);
+ });
+}
+async function selectedLayerPngBlob(layer){
+ const out=document.createElement("canvas");out.width=W;out.height=H;
+ const ctx=out.getContext("2d",{alpha:true});ctx.clearRect(0,0,W,H);
+ const source=await img(layer.dataUrl||layer.src);
+ ctx.drawImage(source,layer.x||0,layer.y||0,layer.w||W,layer.h||H);
+ return await new Promise((resolve,reject)=>out.toBlob(blob=>blob?resolve(blob):reject(Error("El navegador no pudo codificar el PNG.")),"image/png"));
+}
+async function saveSelectedLayerToLocalLibrary(){
+ const layer=state.layers.find(x=>x.id===state.selected);
+ if(!layer){toast("Seleccioná una capa independiente antes de guardar; el retrato base no se guarda como pieza.");return;}
+ try{
+  const blob=await selectedLayerPngBlob(layer);
+  const safeName=String(layer.name||"pieza anime").trim().slice(0,100)||"pieza anime";
+  await persistLocalPart({
+   id:"local-part-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),
+   name:safeName,category:layer.category||"accessories",character:state.name||"Personaje",
+   mimeType:"image/png",width:W,height:H,blob,createdAt:new Date().toISOString(),
+   sourceKind:layer.kind||"layer",sourceStatus:layer.status||"unreviewed",
+   reviewStatus:"needs_visual_review"
+  });
+  toast("Pieza guardada en la biblioteca local de esta PC.");
+  await renderLocalParts();
+ }catch(error){toast("No se guardó la pieza: "+String(error&&error.message||error));}
+}
+async function addLocalPartToCanvas(id){
+ try{
+  const part=(await readLocalParts()).find(item=>item.id===id);
+  if(!part||!(part.blob instanceof Blob)){toast("No se encontró una pieza local válida.");return;}
+  const dataUrl=await blobToDataUrl(part.blob);
+  const layer={id:"local-import-"+Date.now(),name:part.name||"Pieza local",dataUrl,src:"",kind:"local_library_part",category:part.category||"accessories",group:null,x:0,y:0,w:W,h:H,opacity:1,hue:0,visible:true,order:Math.max(-1,...state.layers.map(x=>Number.isFinite(x.order)?x.order:-1))+1,status:"local_saved_candidate",sourceKind:part.sourceKind,sourceStatus:part.sourceStatus};
+  state.layers.push(layer);cache.set(dataUrl,img(dataUrl));state.selected=layer.id;render();gallery();
+  toast("Pieza agregada como capa independiente. Podés moverla, ocultarla o ajustar su opacidad.");
+ }catch(error){toast("No se pudo agregar la pieza local: "+String(error&&error.message||error));}
+}
+async function deleteLocalPart(id){
+ if(!window.confirm("¿Eliminar esta pieza de tu biblioteca local?"))return;
+ try{
+  const db=await openLocalPartsDb();
+  await new Promise((resolve,reject)=>{
+   const tx=db.transaction("parts","readwrite");tx.objectStore("parts").delete(id);
+   tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error||Error("No se pudo eliminar la pieza."));
+  });
+  await renderLocalParts();
+ }catch(error){toast("No se pudo eliminar la pieza: "+String(error&&error.message||error));}
+}
+async function renderLocalParts(){
+ const grid=$("localPartsGrid"),count=$("localPartsCount");
+ if(!grid||!count)return;
+ for(const value of localPartObjectUrls.values())URL.revokeObjectURL(value);
+ localPartObjectUrls.clear();grid.innerHTML="";
+ try{
+  const parts=await readLocalParts();
+  parts.sort((a,b)=>String(b.createdAt||"").localeCompare(String(a.createdAt||"")));
+  count.textContent=parts.length?parts.length+" pieza"+(parts.length===1?"":"s")+" guardada"+(parts.length===1?"":"s")+" en este navegador.":"Todavía no guardaste piezas. Seleccioná una capa y pulsá ‘Guardar capa en mi biblioteca’.";
+  grid.innerHTML=parts.map(part=>{
+   const preview=URL.createObjectURL(part.blob);localPartObjectUrls.set(part.id,preview);
+   return '<article class="starter-card"><img loading="lazy" alt="'+safe(part.name)+'" src="'+safe(preview)+'"><b>'+safe(part.name)+'</b><small>'+safe(part.category||"pieza")+' · '+safe(part.reviewStatus||"pendiente de revisión")+'</small><div class="actions"><button type="button" class="btn primary" data-local-part-add="'+safe(part.id)+'">Agregar como capa</button><button type="button" class="btn" data-local-part-delete="'+safe(part.id)+'">Eliminar</button></div></article>';
+  }).join("");
+  grid.querySelectorAll("[data-local-part-add]").forEach(button=>button.onclick=()=>addLocalPartToCanvas(button.dataset.localPartAdd));
+  grid.querySelectorAll("[data-local-part-delete]").forEach(button=>button.onclick=()=>deleteLocalPart(button.dataset.localPartDelete));
+ }catch(error){
+  count.textContent="Biblioteca local no disponible: "+String(error&&error.message||error);
+ }
 }
 function createCutoutMaskDataUrl(){
  const mask=document.createElement("canvas");mask.width=W;mask.height=H;
@@ -694,9 +807,10 @@ async function refreshAIFreeVariants(force=false){
    statusEl.textContent="Todavía no hay peinados del generador gratuito indexados en esta rama. Ejecutá hair-core-5 y pulsá Actualizar catálogo.";
    return;
   }
-  grid.innerHTML=visible.map(a=>'<button type="button" class="asset" data-ai-free-asset-id="'+safe(a.id)+'"><span class="tag candidate">IA · REVISAR</span><div class="thumb checker"><img loading="lazy" alt="'+safe(a.label)+'" src="'+safe(url(a.src))+'"></div><b>'+safe(a.label)+'</b><small>Retrato completo · revisión pendiente</small></button>').join("");
-  statusEl.textContent="Mostrando "+visible.length+" de "+variants.length+" retratos con peinado generado. Seleccionar uno lo carga como retrato base, no como capa aislada.";
+  grid.innerHTML=visible.map(a=>'<article class="starter-card"><img loading="lazy" alt="'+safe(a.label)+'" src="'+safe(url(a.src))+'"><b>'+safe(a.label)+'</b><small>Retrato completo · revisión pendiente</small><div class="actions"><button type="button" class="btn" data-ai-free-asset-id="'+safe(a.id)+'">Usar como base</button><button type="button" class="btn primary" data-ai-free-extract-id="'+safe(a.id)+'">Separar una pieza</button></div></article>').join("");
+  statusEl.textContent="Mostrando "+visible.length+" de "+variants.length+" retratos generados. ‘Separar una pieza’ abre el taller con el retrato de base; tendrás que delimitar el pelo a mano antes de guardarlo como recurso local.";
   grid.querySelectorAll("[data-ai-free-asset-id]").forEach(button=>{button.onclick=()=>useLibraryAsset(button.dataset.aiFreeAssetId,"ai");});
+  grid.querySelectorAll("[data-ai-free-extract-id]").forEach(button=>{button.onclick=()=>openLibraryAssetForExtraction(button.dataset.aiFreeExtractId);});
  }catch(error){
   grid.innerHTML="";
   statusEl.textContent="No se pudo actualizar la galería: "+String(error&&error.message||error);
