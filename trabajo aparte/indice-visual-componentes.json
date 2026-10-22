@@ -17746,8 +17746,8 @@
       "creator": "BrightShadowMMD",
       "source_url": "https://www.deviantart.com/brightshadowmmd/art/%5BMMD-DL%5D-Crown-Tiara-%21%5Baccessories-dl%5D-726777653",
       "source_platform": "DeviantArt",
-      "thumbnail_url": "https://images-wixmp-ed30a86c4b.../dc0pd85-a8f61deb-2894-4610-8bf1-56de5dbda86a.jpg",
-      "thumbnail_kind": "source_page_preview",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a17705ec-c163-40a8-b006-d3e95abaad61/dc0pd85-a8f61deb-2894-4610-8bf1-56de5dbda86a.jpg/v1/fill/w_1024,h_1097,q_75,strp/_mmd_dl_crown_tiara_accessories_dl__by_brightshadowmmd_dc0pd85-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTA5NyIsInBhdGgiOiIvZi9hMTc3MDVlYy1jMTYzLTQwYTgtYjAwNi1kM2U5NWFiYWFkNjEvZGMwcGQ4NS1hOGY2MWRlYi0yODk0LTQ2MTAtOGJmMS01NmRlNWRiZGE4NmEuanBnIiwid2lkdGgiOiI8PTEwMjQifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.DfdK_HpsQ9MT8dEKA6SRoGDOYfJ6DA-XuQWq56-U_ys",
+      "thumbnail_kind": "external_page_preview_metadata",
       "source_language": "English",
       "target_component": "Crown/tiara",
       "target_traits": "Crown/tiara",
@@ -17765,7 +17765,8 @@
       "compatibility_flag": "3D/MMD-only or not a direct 2D illustration asset",
       "source_report_record_id": "E1",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
-      "verified_url_in_master_list": true
+      "verified_url_in_master_list": true,
+      "thumbnail_status": "Exact image URL obtained from source page metadata; browser load still not individually validated"
     },
     {
       "id": "ACC-CENSUS-E2",
@@ -17774,8 +17775,8 @@
       "creator": "Esysea",
       "source_url": "https://www.deviantart.com/esysea/art/MMD-Choker-Pack-DL-808006054",
       "source_platform": "DeviantArt",
-      "thumbnail_url": "https://images-wixmp-ed30a86c4b.../ddd2dgm-3c4fdf23-d898-49f3-905e-c122d5d52ee6.png",
-      "thumbnail_kind": "source_page_preview",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/9f78e61f-c2bc-4676-9b31-8cc3a0d79598/ddd2dgm-3c4fdf23-d898-49f3-905e-c122d5d52ee6.png",
+      "thumbnail_kind": "external_page_preview_metadata",
       "source_language": "English",
       "target_component": "Chokers",
       "target_traits": "Chokers",
@@ -17793,7 +17794,8 @@
       "compatibility_flag": "3D/MMD-only or not a direct 2D illustration asset",
       "source_report_record_id": "E2",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
-      "verified_url_in_master_list": true
+      "verified_url_in_master_list": true,
+      "thumbnail_status": "Exact image URL obtained from source page metadata; browser load still not individually validated"
     },
     {
       "id": "ACC-CENSUS-E3",
@@ -17802,8 +17804,8 @@
       "creator": "Shiro-NekoVocaloid",
       "source_url": "https://www.deviantart.com/shiro-nekovocaloid/art/MMD-Accessories-~Pack~-%5BDOWNLOAD%5D-879063746",
       "source_platform": "DeviantArt",
-      "thumbnail_url": "https://images-wixmp-ed30a86c4b.../dejddxe-ee0d042e-47ef-4adc-bd67-26c286bdb2d6.png",
-      "thumbnail_kind": "source_page_preview",
+      "thumbnail_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/15bb7882-f502-4823-b0c6-9550fb8de5e7/dejddxe-ee0d042e-47ef-4adc-bd67-26c286bdb2d6.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiIvZi8xNWJiNzg4Mi1mNTAyLTQ4MjMtYjBjNi05NTUwZmI4ZGU1ZTcvZGVqZGR4ZS1lZTBkMDQyZS00N2VmLTRhZGMtYmQ2Ny0yNmMyODZiZGIyZDYucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.zXIWpZP3-Tj3XK_yn9VgfSqwl197icBNwrhYkfRwzjg",
+      "thumbnail_kind": "external_page_preview_metadata",
       "source_language": "English",
       "target_component": "Multiple accessory types (contents not fully enumerated in evidence)",
       "target_traits": "Multiple accessory types (contents not fully enumerated in evidence)",
@@ -17821,7 +17823,8 @@
       "compatibility_flag": "3D/MMD-only or not a direct 2D illustration asset",
       "source_report_record_id": "E3",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
-      "verified_url_in_master_list": true
+      "verified_url_in_master_list": true,
+      "thumbnail_status": "Exact image URL obtained from source page metadata; browser load still not individually validated"
     },
     {
       "id": "ACC-CENSUS-E4",
