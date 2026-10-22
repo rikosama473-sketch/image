@@ -26,13 +26,13 @@
 
 La biblioteca de IMAGE tiene una segunda vista orientada a búsqueda rápida. El documento de diseño sigue siendo una guía para reconocer las formas; el censo interactivo es el índice de fuentes, previews y permisos.
 
-- [**Censo visual interactivo — 258 fichas con vistas previas registradas**](./censo-visual-interactivo.html): busca por nombre/rasgo y filtra por cabello, ropa, ojos, accesorios, tutoriales, colecciones o packs. Las advertencias rojas indican lo que viene mezclado o lo que necesita revisión.
+- [**Censo visual interactivo — 265 fichas con vistas previas registradas**](./censo-visual-interactivo.html): busca por nombre/rasgo y filtra por cabello, ropa, ojos, accesorios, tutoriales, colecciones o packs. Las advertencias rojas indican lo que viene mezclado o lo que necesita revisión.
 - [Censo exhaustivo de fuentes — 153 URLs canónicas únicas](./censo-exhaustivo-fuentes-waifu-2026-10-21.md): 160 registros categorizados (incluye alias), fuentes de cabello, ropa, ojos, accesorios, tutoriales y packs con estado de licencia.
-- [Índice JSON de referencia](./indice-visual-componentes.json): 258 registros con miniaturas capturadas de metadata/enlaces de fuentes y campos para rasgos objetivo, elementos extra, prompt, tipo de recurso, derechos y estado de placa monocroma.
+- [Índice JSON de referencia](./indice-visual-componentes.json): 265 registros con miniaturas capturadas de metadata/enlaces de fuentes y campos para rasgos objetivo, elementos extra, prompt, tipo de recurso, derechos y estado de placa monocroma.
 - [Auditoría de bibliografía](./auditoria-bibliografia-censo-waifu-2026-10-21.md): URLs de los sitios consultados.
 - [Atlas inicial de peinados y constructor de prompts](./atlas-peinados-interactivo.html): interfaz anterior enfocada en recetas de peinados y prompts para PixAI.
 
-**Control de calidad:** 258 registros tienen URL de preview, pero las miniaturas aún no se han validado una por una dentro del navegador final; algunas URLs remotas podrían caducar o no cargar. La lista de 244 direcciones es única por normalización de URL, no por hash visual: el mismo dibujo alojado en dos plataformas puede seguir apareciendo más de una vez. No se han descargado o recortado las imágenes de todos los sitios.
+**Control de calidad:** 265 registros tienen URL de preview, pero las miniaturas aún no se han validado una por una dentro del navegador final; algunas URLs remotas podrían caducar o no cargar. La lista de 244 direcciones es única por normalización de URL, no por hash visual: el mismo dibujo alojado en dos plataformas puede seguir apareciendo más de una vez. No se han descargado o recortado las imágenes de todos los sitios.
 
 **Placa monocroma:** 0 referencias cuadradas en blanco y negro tienen licencia de reutilización confirmada. Las búsquedas monocromas son candidatas, no assets terminados. Las páginas comerciales pueden permitir el uso de los resultados de arte mientras prohíben redistribuir los PSD/PNG fuente.
 
@@ -493,4 +493,6 @@ Cuando se añada otra referencia, no dejarla como un enlace suelto. Usar esta fi
 - [Plancha A — 20 peinados, Pinterest](https://jp.pinterest.com/pin/395542779792570224/)
 - [Plancha de inspiración para personajes OC, Pinterest](https://jp.pinterest.com/pin/1137299712187575540/)
 
-**Última sincronización (22/10/2026):** el censo visual y el índice JSON contienen 258 registros, 253 candidatos de imagen directa y 5 vistas de embed de Pixiv. No se pudo renderizar el HTML mediante el visor remoto de solo lectura del entorno, de modo que las miniaturas aún no se consideran validadas una por una en el navegador final. La sintaxis JavaScript del visor fue comprobada. La deduplicación perceptual y las placas cuadradas monocromas con licencia siguen pendientes.
+**Última sincronización (22/10/2026):** el censo visual y el índice JSON contienen 265 registros, 253 candidatos de imagen directa y 5 vistas de embed de Pixiv. No se pudo renderizar el HTML mediante el visor remoto de solo lectura del entorno, de modo que las miniaturas aún no se consideran validadas una por una en el navegador final. La sintaxis JavaScript del visor fue comprobada. La deduplicación perceptual y las placas cuadradas monocromas con licencia siguen pendientes.
+
+**Última ampliación de categorías (22/10/2026):** el censo llegó a 265 registros con referencias de calzado anime, tiaras, tutorial de accesorios, kanzashi, cinturones y chokers. Siete nuevas referencias se etiquetaron como candidatas y no como assets reutilizables, porque autoría o licencia aún no se confirmaron.
