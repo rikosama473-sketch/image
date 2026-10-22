@@ -195,3 +195,6 @@ El índice JSON y la página HTML se sincronizaron con **265 registros**: **253 
 
 
 **Última ampliación de categorías, 22/10/2026:** se añadieron siete fuentes específicas de zapatos/botas, tiaras/coronas, accesorios generales, kanzashi, cinturones y gargantillas. El censo consolidado ahora tiene **265 registros**: 260 URLs candidatas de imagen directa y 5 endpoints de embed de Pixiv. Sus licencias y autorías no están confirmadas en siete de las nuevas referencias; se conservan como pistas de investigación, no assets listos para importar.
+
+
+**Última actualización — 22/10/2026:** se ampliaron específicamente accesorios y herramientas modulares (pendientes, joyería, calzado, tiaras, kanzashi, gargantillas y character creators). El índice consolidado contiene **272 registros** con URL de vista previa registrada: **267 candidatos de imagen directa y 5 endpoints Pixiv embed**. El navegador de validación remota no pudo renderizar el HTML debido a red/visor; por tanto la carga visual de cada thumbnail sigue pendiente. Los permisos se registran por fuente y el simple hecho de permitir uso comercial no autoriza redistribuir PSD/PNG fuente. Placas cuadradas monocromas con permiso de reutilización confirmadas: **0**.
