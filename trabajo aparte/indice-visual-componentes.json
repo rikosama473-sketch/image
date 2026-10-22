@@ -16950,7 +16950,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "Covers gem and metal rendering workflow. Choker 3D object used instrumentally, not illustrated in isolation.",
-      "compatibility_flag": "3D/MMD-only or not a direct 2D illustration asset",
+      "compatibility_flag": "3D/MMD/VRChat asset or reference; not directly compatible with a 2D PNG layer atlas",
       "source_report_record_id": "A2",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17174,7 +17174,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "Bidirectional brush (right-side-up and upside-down). Tagged #tiara #crown #princess #royalty.",
-      "compatibility_flag": "reference/tutorial; no isolated reusable plate confirmed",
+      "compatibility_flag": "Clip Studio brush/material asset; not a square isolated PNG plate and external reuse rights are not confirmed",
       "source_report_record_id": "B1",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17202,7 +17202,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "Published 5 years ago. Small/OC-specific scope.",
-      "compatibility_flag": "reference/tutorial; no isolated reusable plate confirmed",
+      "compatibility_flag": "Clip Studio character-exclusive material; external reuse not confirmed",
       "source_report_record_id": "B2",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17230,7 +17230,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "Confirms very large tiara asset supply on CSP Assets.",
-      "compatibility_flag": "Search hub; not an individual component image",
+      "compatibility_flag": "Discovery/tag hub or category directory; not a single accessory illustration or individual asset",
       "source_report_record_id": "B3",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17258,7 +17258,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "Confirms very large belt asset supply.",
-      "compatibility_flag": "Search hub; not an individual component image",
+      "compatibility_flag": "Discovery/tag hub or category directory; not a single accessory illustration or individual asset",
       "source_report_record_id": "B4",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17286,7 +17286,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "Confirms earring assets exist; individual items not verified in evidence.",
-      "compatibility_flag": "Search hub; not an individual component image",
+      "compatibility_flag": "Discovery/tag hub or category directory; not a single accessory illustration or individual asset",
       "source_report_record_id": "B5",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17314,7 +17314,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "Published Apr 15, 2023. Direct tiara asset for CSP 3D layer use.",
-      "compatibility_flag": "3D/MMD-only or not a direct 2D illustration asset",
+      "compatibility_flag": "3D/MMD/VRChat asset or reference; not directly compatible with a 2D PNG layer atlas",
       "source_report_record_id": "B6",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17426,7 +17426,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "Confirms: \"Drawings Featuring Earrings — Ear Candy\" AND \"Drawings of Girls with Earrings — Subtle Or Lavish?\" both exist as separate articles.",
-      "compatibility_flag": "Search hub; not an individual component image",
+      "compatibility_flag": "Discovery/tag hub or category directory; not a single accessory illustration or individual asset",
       "source_report_record_id": "C6",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17454,7 +17454,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "Confirms article \"Drawings Featuring Tiaras — Working Their Sparkly Magic!\" exists.",
-      "compatibility_flag": "Search hub; not an individual component image",
+      "compatibility_flag": "Discovery/tag hub or category directory; not a single accessory illustration or individual asset",
       "source_report_record_id": "C7",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17482,7 +17482,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "26 articles in tag.",
-      "compatibility_flag": "Search hub; not an individual component image",
+      "compatibility_flag": "Discovery/tag hub or category directory; not a single accessory illustration or individual asset",
       "source_report_record_id": "C8",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17510,7 +17510,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "",
-      "compatibility_flag": "Search hub; not an individual component image",
+      "compatibility_flag": "Discovery/tag hub or category directory; not a single accessory illustration or individual asset",
       "source_report_record_id": "C9",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17538,7 +17538,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "Lists individual article titles including \"Drawings of Hair Clips — Clip Art,\" \"Drawings of Glasses — An Eye for Style,\" \"Drawings of Garter Belts — Strap In.\" These are separate countable articles reachable via their own URLs.",
-      "compatibility_flag": "Search hub; not an individual component image",
+      "compatibility_flag": "Discovery/tag hub or category directory; not a single accessory illustration or individual asset",
       "source_report_record_id": "C10",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17566,7 +17566,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "",
-      "compatibility_flag": "Search hub; not an individual component image",
+      "compatibility_flag": "Discovery/tag hub or category directory; not a single accessory illustration or individual asset",
       "source_report_record_id": "C11",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17594,7 +17594,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "**CRITICAL SOURCE:** Single pack covers tiara + earrings + brooch simultaneously. 4 color variants. FBX+GLB+Unity Prefab.",
-      "compatibility_flag": "3D/MMD-only or not a direct 2D illustration asset",
+      "compatibility_flag": "3D/MMD/VRChat asset or reference; not directly compatible with a 2D PNG layer atlas",
       "source_report_record_id": "D1",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17622,7 +17622,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "Earrings: left+right set. Brooch: chest placement. 4 colors: Pearl White×Gold, Midnight Blue×Silver, Pastel Pink×Gold, Mint×Silver.",
-      "compatibility_flag": "3D/MMD-only or not a direct 2D illustration asset",
+      "compatibility_flag": "3D/MMD/VRChat asset or reference; not directly compatible with a 2D PNG layer atlas",
       "source_report_record_id": "D2",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17650,7 +17650,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "68 tiara products confirmed. Shops: なりきり本舗, meron-farm.",
-      "compatibility_flag": "Search hub; not an individual component image",
+      "compatibility_flag": "Discovery/tag hub or category directory; not a single accessory illustration or individual asset",
       "source_report_record_id": "D3",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17678,7 +17678,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "55 tiara 3D accessories.",
-      "compatibility_flag": "3D/MMD-only or not a direct 2D illustration asset",
+      "compatibility_flag": "Discovery/tag hub or category directory; not a single accessory illustration or individual asset",
       "source_report_record_id": "D4",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17706,7 +17706,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "186 brooch 3D models. Shops: Elychiffon, Sweet Serenade.",
-      "compatibility_flag": "3D/MMD-only or not a direct 2D illustration asset",
+      "compatibility_flag": "Discovery/tag hub or category directory; not a single accessory illustration or individual asset",
       "source_report_record_id": "D5",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17734,7 +17734,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "**Closest to 2D illustration clipart** for crowns found. Antique Fantasy style.",
-      "compatibility_flag": "Search hub; not an individual component image",
+      "compatibility_flag": "Discovery/tag hub or category directory; not a single accessory illustration or individual asset",
       "source_report_record_id": "D6",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17762,7 +17762,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "Original design by あまづくし. MMD-only use.",
-      "compatibility_flag": "3D/MMD-only or not a direct 2D illustration asset",
+      "compatibility_flag": "3D/MMD/VRChat asset or reference; not directly compatible with a 2D PNG layer atlas",
       "source_report_record_id": "E1",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true,
@@ -17791,7 +17791,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "First-party MMD choker pack. Multiple choker styles in pack.",
-      "compatibility_flag": "3D/MMD-only or not a direct 2D illustration asset",
+      "compatibility_flag": "3D/MMD/VRChat asset or reference; not directly compatible with a 2D PNG layer atlas",
       "source_report_record_id": "E2",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true,
@@ -17820,7 +17820,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "Creator permits editing and redistribution with credit attribution.",
-      "compatibility_flag": "3D/MMD-only or not a direct 2D illustration asset",
+      "compatibility_flag": "3D/MMD/VRChat asset or reference; not directly compatible with a 2D PNG layer atlas",
       "source_report_record_id": "E3",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true,
@@ -17849,7 +17849,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "**Quality: LOW.** Not a curated reference page; a favourites folder.",
-      "compatibility_flag": "3D/MMD-only or not a direct 2D illustration asset",
+      "compatibility_flag": "Discovery/tag hub or category directory; not a single accessory illustration or individual asset",
       "source_report_record_id": "E4",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -17989,7 +17989,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "Stockings and shoe assets confirmed (130 items + 120 items product lines mentioned).",
-      "compatibility_flag": "reference/tutorial; no isolated reusable plate confirmed",
+      "compatibility_flag": "Discovery/tag hub or category directory; not a single accessory illustration or individual asset",
       "source_report_record_id": "G2",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -18017,7 +18017,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "**Confirmed gap: earring sprite assets on Itch.io are near-absent (1 result).**",
-      "compatibility_flag": "reference/tutorial; no isolated reusable plate confirmed",
+      "compatibility_flag": "Discovery/tag hub or category directory; not a single accessory illustration or individual asset",
       "source_report_record_id": "G3",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
@@ -18045,7 +18045,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "Free choker asset with clean heart design. Useful as visual reference even if not a drawing tutorial.",
-      "compatibility_flag": "reference/tutorial; no isolated reusable plate confirmed",
+      "compatibility_flag": "Free choker asset candidate for VTuber use; full downstream redistribution/modification terms require confirmation",
       "source_report_record_id": "G4",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
