@@ -1006,7 +1006,7 @@ Current combined index count: **244 source URL/store records**, all with a previ
 - [HIROSUMI SAITO — FRUITS ZIPPER costume design](https://x.com/hirosumi_saito/status/1974408214826598690): the post credits costume designer HIROSUMI SAITO and stylist 相澤樹 for a set of female idol costumes. [Source preview](https://pbs.twimg.com/media/G2aBzhUa0AAyXj7?format=webp&name=small). Reference only; rights for reusing/cropping the post artwork were not established.
 - [yochi — commissioned role uniform](https://x.com/yochichan__/status/2024818010834555184): the author says they designed and made a bespoke uniform based on an existing shop uniform, using nudibranch-inspired frills on the chest/front and hem. [Source preview](https://pbs.twimg.com/media/HBmZPbWaoAANCEN?format=webp&name=small). Reference only; no reuse license was stated.
 
-The current expanded index has **244 source records and 244 preview URLs**, including two original X posts. There are 239 direct image preview candidates and five Pixiv embed endpoints. Preview presence is not proof of successful browser loading, distinct underlying artwork, or redistribution rights.
+At the prior expansion milestone, the index had **244 source records and 244 preview URLs**, including two original X posts. There are 239 direct image preview candidates and five Pixiv embed endpoints. Preview presence is not proof of successful browser loading, distinct underlying artwork, or redistribution rights.
 
 
 ## More permissive-source triage (CC0 / Creative Commons)
@@ -1019,7 +1019,7 @@ Five more sources were verified specifically for license terms, not merely image
 - [OpenGameArt — Fumiko Complete Charset](https://opengameart.org/content/fumiko-complete-charset), female warrior sprite. The page describes free commercial/noncommercial use and shows a CC0 marker; verify the bundled readme for the specific files before use.
 - [OpenGameArt — LPC Expanded](https://opengameart.org/content/lpc-expanded-sit-run-jump-more), modular hair/clothing/body/shoe assets. Overall pack has OGA-BY 3.0/4.0 and mixed contributor terms; some hair assets are marked CC0, but not the whole pack.
 
-The five new license-oriented pages raise the index to **244 source records**. They help identify a reuse pathway, but do not remove the need to document individual file provenance, author, exact license and any attribution/share-alike requirements. There are still **zero verified high-quality anime square monochrome component plates with a confirmed blanket redistribution license**.
+The five license-oriented pages raised the index to **244 source records at that milestone**. They help identify a reuse pathway, but do not remove the need to document individual file provenance, author, exact license and any attribution/share-alike requirements. There are still **zero verified high-quality anime square monochrome component plates with a confirmed blanket redistribution license**.
 
 
 ## Current consolidated index status — 22 October 2026
