@@ -165,5 +165,32 @@ class ImageProjectHandoffTests(unittest.TestCase):
         self.assertIn("Pieza guardada en la biblioteca local de esta PC.", self.avatar)
 
 
+    def test_internet_mode_uses_colored_states_and_blocks_unavailable_online_features(self) -> None:
+        for feature in (
+            'id="internetModeToggle"',
+            'id="internetModeLabel"',
+            'id="internetModeStatus"',
+            '.internet-toggle[data-state=on]',
+            '.internet-toggle[data-state=off]',
+            '.internet-toggle[data-state=unavailable]',
+            'function syncInternetUI()',
+            'async function checkInternetConnection()',
+            'function setInternetMode(enabled)',
+            'navigator.onLine',
+            'localStorage.setItem(INTERNET_MODE_KEY',
+            'https://api.github.com/repos/rikosama473-sketch/image',
+            'internet-blocked',
+            'data-requires-internet="true" id="aiRun"',
+            'data-requires-internet="true" id="anatomyGenerate"',
+            'data-requires-internet="true" id="anatomyPose"',
+            'Las funciones online quedan inactivas',
+        ):
+            with self.subTest(feature=feature):
+                self.assertIn(feature, self.avatar)
+        self.assertIn('document.addEventListener("click",event=>', self.avatar)
+        self.assertIn("internetModeEnabled", self.avatar)
+        self.assertIn("Las capas y la exportación siguen siendo locales", self.avatar)
+
+
 if __name__ == "__main__":
     unittest.main()
