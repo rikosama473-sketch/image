@@ -10789,14 +10789,278 @@
       "thumbnail_checked_date": "2026-10-22",
       "thumbnail_status": "Vector preview URL extracted from Vecteezy results page metadata; individual asset licence and image loading not checked.",
       "ordinal": 265
+    },
+    {
+      "id": "EXT-AS-005",
+      "category": "accessories",
+      "categories": [
+        "accessories",
+        "products"
+      ],
+      "title": "400 Jewelry Image References — CreativeAi, Vol. 01",
+      "source_url": "https://www.artstation.com/marketplace/p/OOqn2/400-jewelry-image-references-vol-01",
+      "thumbnail_url": "https://cdna.artstation.com/p/marketplace/presentation_assets/004/121/246/medium/file.jpg?1733641968",
+      "creator": "CreativeAi |Characters|",
+      "source_platform": "ArtStation Marketplace",
+      "source_language": "English",
+      "thumbnail_kind": "official_marketplace_preview",
+      "target_component": "Joyería y accesorios: collares, anillos, pendientes, colgantes, gemas y piezas decorativas.",
+      "target_traits": [
+        "400 jewelry references claimed by seller",
+        "4K JPEG",
+        "AI-generated character/jewelry imagery",
+        "multiple jewellery shapes and presentation styles"
+      ],
+      "extras_red": [
+        "El pack mezcla referencias completas/estilos generados, no una carpeta comprobada de piezas 1:1 aisladas. Extraer el colgante/pendiente/collar objetivo de cada referencia y no adoptar rostro/ropa/fondo."
+      ],
+      "prompt_visibility": "Product listing public; examples/method described as AI-generated images.",
+      "resource_type": "Paid image-reference pack, not isolated vector asset library.",
+      "price_license_claim": "Listing shows USD $4.99 Standard License and USD $14.99 Extended Commercial License. Standard: personal use + one commercial project up to 2,000 sales or 20,000 views. Extended: unlimited commercial projects/sales/views. Seller listing says 5 RAR parts, 500 MB each; do not redistribute source files. Generative AI explicitly disclosed.",
+      "license_status": "paid_reference_pack_listing_verified_not_for_source_redistribution",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=jewelry+earring+necklace+choker+brooch+design+sheet+black+white+lineart+isolated+square",
+      "monochrome_plate_status": "paid_color_reference_pack_not_clean_square_bnw_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official ArtStation marketplace preview URL extracted from the product page; not visually checked in final browser.",
+      "ordinal": 266
+    },
+    {
+      "id": "EXT-PXV-011",
+      "category": "accessories",
+      "categories": [
+        "accessories"
+      ],
+      "title": "Pixivision — ilustraciones de pendientes y piercings",
+      "source_url": "https://www.pixivision.net/en/a/7616",
+      "thumbnail_url": "https://embed.pixiv.net/pixivision/en/a/7616/ogimage.jpg",
+      "creator": "Pixivision editorial collection, multiple Pixiv artists",
+      "source_platform": "Pixivision",
+      "source_language": "English/Japanese",
+      "thumbnail_kind": "editorial_collection_preview",
+      "target_component": "Pendientes y piercings: hoops, studs, colgantes, formas de daga, pendientes largos y adornos de oreja.",
+      "target_traits": [
+        "hoop earrings",
+        "stud earrings",
+        "dagger-shaped earrings",
+        "drop earrings",
+        "ear piercings",
+        "ornate jewel designs"
+      ],
+      "extras_red": [
+        "Es una colección editorial de ilustraciones, no una hoja de pendientes aislados. Las obras individuales incluyen personajes, cabello y vestuario y tienen sus propios derechos."
+      ],
+      "prompt_visibility": "No shared AI prompt; each individual artist/work has its own metadata.",
+      "resource_type": "Editorial discovery/reference collection.",
+      "price_license_claim": "Public page; individual artwork rights remain with the original artists.",
+      "license_status": "reference_only_follow_each_original_work_terms",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+earring+design+sheet+hoop+stud+drop+earrings+black+white+lineart+square",
+      "monochrome_plate_status": "editorial_cover_not_clean_square_bnw_plate",
+      "red_warning_required": false,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Pixivision OG preview endpoint; this is an editorial cover, not an isolated asset plate.",
+      "ordinal": 267
+    },
+    {
+      "id": "EXT-ITCH-009",
+      "category": "multi_component_reference",
+      "categories": [
+        "products",
+        "hair",
+        "eyes",
+        "clothing",
+        "accessories"
+      ],
+      "title": "Awfully Sweet — customizable female character sprite (47 options)",
+      "source_url": "https://butterymilk.itch.io/awfully-sweet",
+      "thumbnail_url": "https://img.itch.zone/aW1nLzk5NTkyNTMucG5n/original/%2FV9MzW.png",
+      "creator": "Butter Milk",
+      "source_platform": "Itch.io",
+      "source_language": "English",
+      "thumbnail_kind": "official_itch_asset_page_cover",
+      "target_component": "Arquitectura modular de personaje: color de piel, ojos, cejas, boca, ropa, pelo y accesorios en un mismo sistema.",
+      "target_traits": [
+        "47 claimed customization options",
+        "5 skin colors",
+        "6 eye colors",
+        "4 eyebrow variants",
+        "7 mouths",
+        "8 outfits",
+        "9 hairstyles",
+        "8 accessories",
+        "free tier includes 21 options"
+      ],
+      "extras_red": [
+        "La preview muestra un personaje completo; categorizar cada parte por separado. No se ha aislado ninguna pieza de su pack."
+      ],
+      "prompt_visibility": "No AI image prompt; sprite pack.",
+      "resource_type": "Name-your-own-price character customization asset pack.",
+      "price_license_claim": "Page says sprites made with the pack may be used in commercial or non-commercial projects and edited; cannot resell sprites themselves or edited versions; NFT projects prohibited. Free tier has 21 options, full pack has 47.",
+      "license_status": "commercial_use_and_editing_allowed_but_source_sprite_redistribution_prohibited",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=female+anime+character+creator+modular+hair+eyes+outfits+accessories+lineart+reference",
+      "monochrome_plate_status": "colored_modular_sprite_pack_not_monochrome_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official itch.io cover URL extracted from the product page. Browser loading in the final atlas not tested.",
+      "ordinal": 268
+    },
+    {
+      "id": "EXT-ITCH-010",
+      "category": "multi_component_reference",
+      "categories": [
+        "products",
+        "hair",
+        "eyes",
+        "clothing",
+        "accessories"
+      ],
+      "title": "Customize Your Waifu — Kikeluzi 2D character creator",
+      "source_url": "https://kikeluzi.itch.io/cyw",
+      "thumbnail_url": "https://img.itch.zone/aW1nLzExNDc0MTYzLnBuZw==/original/IRUt5I.png",
+      "creator": "Kikeluzi",
+      "source_platform": "Itch.io",
+      "source_language": "English",
+      "thumbnail_kind": "official_itch_asset_page_cover",
+      "target_component": "Sistema de creación 2D con selección de ropa, cabello, accesorios y color de ojos; modelo técnico para interacción de vestidor.",
+      "target_traits": [
+        "anime-like 2D character creator",
+        "CSP and Photoshop files included in asset package",
+        "small sample of clothes, hair and accessories at 1280×720",
+        "green-screen background in browser creator",
+        "touchscreen input support"
+      ],
+      "extras_red": [
+        "Preview/game combines all components into a full character; do not treat screenshot as isolated pieces. Itch page states AI-assisted code/graphics."
+      ],
+      "prompt_visibility": "No public prompt; interactive character creator/product.",
+      "resource_type": "Character-creator tool and asset package.",
+      "price_license_claim": "Listing price USD $4.00 or more. Asset license listed as Creative Commons Attribution 4.0 International; attribute Kikeluzi and review package-specific third-party dependencies before redistribution.",
+      "license_status": "CC_BY_4_0_LISTED_CHECK_INCLUDED_THIRD_PARTY_DEPENDENCIES",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+character+creator+hair+eyes+clothes+accessories+modular+asset+sheet+black+white",
+      "monochrome_plate_status": "interactive_creator_preview_not_monochrome_component_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official itch.io image URL extracted from source metadata; the page preview has not been rendered in the final browser.",
+      "ordinal": 269
+    },
+    {
+      "id": "EXT-ITCH-011",
+      "category": "multi_component_reference",
+      "categories": [
+        "products",
+        "clothing",
+        "hair",
+        "eyes",
+        "accessories"
+      ],
+      "title": "Character Creator VN — Sutemo asset-pack desktop creator",
+      "source_url": "https://yuripourre.itch.io/character-creator-sutemo",
+      "thumbnail_url": "https://img.itch.zone/aW1nLzIyMzQxODQ2LnBuZw==/original/zCDtm1.png",
+      "creator": "yuripourre (tool) / Sutemo (original sprites)",
+      "source_platform": "Itch.io",
+      "source_language": "English",
+      "thumbnail_kind": "official_itch_asset_page_cover",
+      "target_component": "Referencia de arquitectura de app: selector de activos, recolor integrado, paquetes de ropa/pelo/ojos, exportación de expresiones en PNG/WebP/PSD.",
+      "target_traits": [
+        "Windows, macOS and Linux tool listing",
+        "built-in asset editor/color change",
+        "pack support for hair/eye/outfit assets",
+        "one-click expression export",
+        "multilingual interface"
+      ],
+      "extras_red": [
+        "Sprites incluidos son obra de terceros, especialmente Sutemo; creator page states some mature packs have incompatible licences. This is a workflow reference, not permission to bundle included sprites."
+      ],
+      "prompt_visibility": "No AI prompt; downloadable desktop tool.",
+      "resource_type": "Name-your-own-price / donation desktop character creator.",
+      "price_license_claim": "Page is name-your-own-price. Says original Sutemo sprites can be used in personal/commercial projects but cannot be resold alone; credit appreciated. Mature packs may have separate incompatible licences. The tool's source assets are third-party, so item-level licence applies.",
+      "license_status": "tool_reference_asset_licenses_vary_by_pack",
+      "monochrome_query_url": null,
+      "monochrome_plate_status": "not_a_monochrome_asset_sheet",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official itch.io product cover URL extracted from metadata; not individually loaded in the final atlas.",
+      "ordinal": 270
+    },
+    {
+      "id": "EXT-BOOTH-009",
+      "category": "clothing",
+      "categories": [
+        "clothing",
+        "products"
+      ],
+      "title": "Valkyria HolyKnight — modular female knight VTuber outfit",
+      "source_url": "https://booth.pm/ja/items/4040173",
+      "thumbnail_url": "https://booth.pximg.net/c/620x620/f2bdbc5e-3037-4486-9ab4-c6d4e12aafe8/i/4040173/58ea563d-0c85-4aa9-8e3e-ce4e6a78804f_base_resized.jpg",
+      "creator": "Vmeee / Usaneko Memory",
+      "source_platform": "BOOTH",
+      "source_language": "Japanese",
+      "thumbnail_kind": "official_store_preview",
+      "target_component": "Ropa modular de caballera sagrada: prendas de estilo knight, top/torso, brazos/sleeves y elementos que combinan con otras prendas PSD.",
+      "target_traits": [
+        "female holy-knight costume",
+        "PNG outfit layers",
+        "PSD outfit layers designed for combining with other clothing PSD",
+        "torso/arms garment layers"
+      ],
+      "extras_red": [
+        "Diseñado como ropa para modelo/figura Live2D, no lineart; el rostro, cuerpo y modelado pueden ir por separado. Vista previa del outfit no es una placa limpia en blanco y negro."
+      ],
+      "prompt_visibility": "No prompt; commercial art asset listing.",
+      "resource_type": "Paid modular 2D clothing asset for VTuber/Live2D.",
+      "price_license_claim": "Listing prices include PNG ¥300 and PSD ¥1,980. Seller terms permit commercial use (corporate users should contact seller) but prohibit reselling/redistributing the source asset or selling/redistributing it incorporated into a different asset pack.",
+      "license_status": "commercial_use_allowed_source_asset_redistribution_prohibited",
+      "monochrome_query_url": "https://www.google.com/search?tbm=isch&q=anime+female+knight+armor+outfit+front+back+design+sheet+black+white+lineart",
+      "monochrome_plate_status": "colored_layered_outfit_not_monochrome_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official BOOTH product thumbnail URL extracted from the listing; not visually verified in the final browser.",
+      "ordinal": 271
+    },
+    {
+      "id": "EXT-BOOTH-010",
+      "category": "multi_component_reference",
+      "categories": [
+        "products",
+        "clothing",
+        "hair",
+        "eyes"
+      ],
+      "title": "Alice — 55-part Live2D female PSD reference",
+      "source_url": "https://booth.pm/ja/items/4047084",
+      "thumbnail_url": "https://booth.pximg.net/c/620x620/b3dd7395-1a9f-4cfa-b67a-4516b8bd1ab2/i/4047084/cc9a7603-5e87-4ce0-8ea1-c8f6e116935a_base_resized.jpg",
+      "creator": "竹光 / Takemitsu (Blue Candy / Aoi Ame)",
+      "source_platform": "BOOTH",
+      "source_language": "Japanese",
+      "thumbnail_kind": "official_store_preview",
+      "target_component": "Ejemplo de estructura por capas para personaje: 55 partes PSD, incluye esquema de organización de ojos y personaje transparente.",
+      "target_traits": [
+        "55 PSD parts",
+        "2200×3000 px at 300 dpi",
+        "eye-layer structure diagram shown in product preview",
+        "transparent full-body PNG included"
+      ],
+      "extras_red": [
+        "Full character illustration and color data are combined in a layered project; license allows only personal/non-commercial uses and prohibits reselling/redistribution and revenue-generating use."
+      ],
+      "prompt_visibility": "No prompt; PSD/Live2D asset listing.",
+      "resource_type": "Paid modular character PSD; architecture reference only.",
+      "price_license_claim": "¥1,000 listed. Seller permits private use and training practice; prohibits re-distribution, resale and monetized use. Not suitable to use as distributable commercial editor asset without written permission.",
+      "license_status": "private_noncommercial_only_source_redistribution_prohibited",
+      "monochrome_query_url": null,
+      "monochrome_plate_status": "layered_color_PSD_not_licensed_clean_monochrome_plate",
+      "red_warning_required": true,
+      "thumbnail_checked_date": "2026-10-22",
+      "thumbnail_status": "Official BOOTH store thumbnail URL extracted from the product listing; not visually verified in final browser.",
+      "ordinal": 272
     }
   ],
   "statistics": {
-    "canonical_url_records": 265,
-    "structured_entries": 265,
-    "index_entries_with_thumbnail": 265,
+    "canonical_url_records": 272,
+    "structured_entries": 272,
+    "index_entries_with_thumbnail": 272,
     "index_entries_without_thumbnail": 0,
-    "direct_image_preview_candidates": 260,
+    "direct_image_preview_candidates": 267,
     "pixiv_embed_previews": 5,
     "pixai_source_entries": 54,
     "research_report_categorized_records": 160,
@@ -10886,8 +11150,8 @@
     },
     "verified_clean_square_plates": 0,
     "index_note": "This is a source URL/store-page index, not a downloaded image library or a count of visually unique pictures. URL normalization does not catch one image mirrored at a different URL; cross-platform perceptual deduplication remains unfinished.",
-    "thumbnail_status_note": "Every indexed source has a preview URL, but none of the 258+ preview URLs has been individually loaded in the final end-user browser UI. Source links and fallback cards remain available. Pixiv embed endpoints should display via iframe rather than <img>.",
-    "deduplication_note": "Basic URL normalization was applied. Cross-platform perceptual/image-hash deduplication remains unfinished; pages mirroring the same underlying illustration may still be present.",
+    "thumbnail_status_note": "Source-preview URLs were extracted from metadata/image links; individual image loading in the final browser UI has not been confirmed. The read-only preview service failed at the network layer.",
+    "deduplication_note": "Only normalized URL deduplication is performed; image matches across different pages remain possible.",
     "license_note": "A preview URL is not a reuse permission. Tiaras/chokers/belts/Pinterest discovery pages have been tagged as candidates; item-level licence and original authorship must be checked before cropping, redistributing or bundling in IMAGE.",
     "layered_facial_component_records_added_oct21": 3,
     "latest_additions": [
@@ -10899,19 +11163,21 @@
     ],
     "x_source_records": 2,
     "last_extension": "Two canonical X posts added to the clothing category on 2026-10-21; public descriptions/thumbnail endpoints verified, reuse rights unverified.",
-    "reusable_license_research_candidates": 4,
+    "reusable_license_research_candidates": 5,
     "later_license_research_sources": 5,
     "research_citation_urls_in_core_report": 153,
     "license_oriented_sources_added_oct21": 5,
     "x_costume_posts_added_oct21": 2,
-    "latest_census_total": 265,
-    "current_total_url_normalized_records": 265,
-    "current_total_preview_urls": 265,
-    "current_total_direct_preview_candidates": 260,
+    "latest_census_total": 272,
+    "current_total_url_normalized_records": 272,
+    "current_total_preview_urls": 272,
+    "current_total_direct_preview_candidates": 267,
     "current_total_pixiv_embed_endpoints": 5,
     "clean_square_bnw_plates_with_reuse_license_confirmed": 0,
-    "current_index_note": "Consolidated visual census last updated 2026-10-22. Counts represent normalized source URLs and preview candidates, not perceptually unique illustrations or licensed local assets. Direct previews come from source metadata/visible image links; final browser rendering has not been visually tested due network/preview service failure. Five Pixiv records use embed endpoints.",
-    "accessory_source_additions_oct22": 7
+    "current_index_note": "Consolidated research index current on 2026-10-22. Source URL count includes discovery pages, tutorials, product listings, game creators and art pages; it is not a count of standalone component images or downloadable licenses.",
+    "accessory_source_additions_oct22": 7,
+    "modular_creator_tools_added_oct22": 2,
+    "license_status_note": "New sources contain different kinds of permission: Kikeluzi page labels its asset license CC BY 4.0; Awfully Sweet allows edited use but prohibits resale of original/edited sprites; Sutemo's sprite terms disallow resale alone; BOOTH modular outfits allow use in permitted end products but prohibit redistributing source files. Do not conflate these."
   },
   "pixai_tag_browsers": [
     {
