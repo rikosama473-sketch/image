@@ -2723,3 +2723,24 @@ También quedan pendientes la deduplicación visual por hash/perceptual matching
 ## Tabla maestra de URLs
 
 La tabla de fuentes de la sección 2 del informe contiene la lista canónica para revisar título, categoría, plataforma y enlace original. Se conserva intacta arriba; los 157 enlaces de citación del trabajo profundo no se presentan como 157 imágenes únicas.
+
+
+---
+
+# Estado del censo integrado — 22 de octubre de 2026
+
+Este archivo conserva la salida de la primera investigación profunda y sus 153 URL maestras originales. **No representa por sí solo la última cifra del índice integrado.** Tras unir fuentes de investigaciones anteriores y añadir el censo de accesorios, el registro estructurado actual quedó en:
+
+| Medida | Estado |
+|---|---:|
+| URLs canónicas en el índice de IMAGE | 339 |
+| URLs con miniatura/vista previa registrada | 315 |
+| Fuentes PixAI | 58 |
+| Fuentes del primer censo profundo | 153 URLs canónicas |
+| Páginas citadas en la auditoría de accesorios | 44 |
+| Nuevos registros aportados por la auditoría de accesorios | 41 |
+| Placas cuadradas monocromas con licencia verificada | **0** |
+
+No mezclar estas unidades. Una página editorial puede mostrar decenas de ilustraciones, un producto puede contener cientos de imágenes y una misma ilustración puede aparecer publicada en varios sitios. No hay deduplicación perceptual por hash en este estado. Tampoco se ha comprobado visualmente en navegador cada miniatura registrada.
+
+Para navegar la unión actual, utiliza [censo-visual-interactivo.html](./censo-visual-interactivo.html) y [indice-visual-componentes.json](./indice-visual-componentes.json). La búsqueda adicional de accesorios está en [auditoria-accesorios-44-fuentes.md](./auditoria-accesorios-44-fuentes.md). El índice sigue en la rama de trabajo; **no está fusionado en main**.
