@@ -16950,7 +16950,7 @@
       "monochrome_plate_status": "not confirmed",
       "monochrome_query_url": null,
       "source_notes": "Covers gem and metal rendering workflow. Choker 3D object used instrumentally, not illustrated in isolation.",
-      "compatibility_flag": "3D/MMD/VRChat asset or reference; not directly compatible with a 2D PNG layer atlas",
+      "compatibility_flag": "Tutorial con una base-objeto 3D de choker usada como demostración; no es un producto 3D-only ni una placa PNG aislada",
       "source_report_record_id": "A2",
       "accessory_gap_run": "01a162d1-3a84-7767-9b74-947d55aa4160",
       "verified_url_in_master_list": true
