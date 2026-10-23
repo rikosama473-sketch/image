@@ -133,3 +133,12 @@ footer { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; justify
 .diagnostic-row[data-kind=error]{border-color:#653f46}.diagnostic-row[data-kind=error] strong{color:#ffb0b0}
 .diagnostics-note{margin:10px 0 0;color:#77869c;font-size:9px;line-height:1.5}
 @media(max-width:520px){.diagnostic-row{grid-template-columns:1fr;gap:4px}}
+
+/* Local model discovery: read-only inventory, no automatic weight downloads. */
+.model-scan-row{display:grid;grid-template-columns:minmax(135px,auto) minmax(130px,1fr) minmax(90px,auto);gap:7px;margin:8px 0 4px}
+.model-scan-row button{min-height:38px;border:1px solid #42516a;border-radius:8px;padding:8px;background:#182131;color:#e3edff;font-size:11px;font-weight:700}
+.model-scan-row button:hover:not(:disabled){border-color:#8ab8ff;background:#202d43}
+.model-scan-row button:disabled{opacity:.45;cursor:not-allowed}
+.model-scan-row select{min-width:0;width:100%;border:1px solid #34445b;border-radius:8px;background:#0b111a;color:#e6edf9;padding:8px;font-size:10px}
+.model-scan-status{margin:4px 0 10px;color:#98a8bf;font-size:10px;line-height:1.5;overflow-wrap:anywhere}
+@media(max-width:560px){.model-scan-row{grid-template-columns:1fr 1fr}.model-scan-row select{grid-column:1/-1;grid-row:2}.model-scan-row button:first-child{grid-column:1}.model-scan-row button:last-child{grid-column:2;grid-row:1}}
