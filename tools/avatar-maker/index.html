@@ -494,7 +494,7 @@ function anatomyWorkspace(root){
   '<div class="anatomy-step"><span class="anatomy-num">1</span><div><b>Generar y guardar dentro del repositorio</b><p>La tarea del repositorio toma la referencia confirmada de Pibara y genera una lámina de cuerpo entero. PNG, recorte transparente, manifiesto e índice de biblioteca quedan guardados en la rama de la PR. No necesita la clave de OpenAI; depende de la cuota del generador público.</p><div class="actions" style="margin-top:8px"><a class="btn primary" href="https://github.com/rikosama473-sketch/image/actions/workflows/generate-character-assets-free.yml" target="_blank" rel="noopener">✦ Generar desde GitHub Actions →</a><button id="anatomyOpenLibrary" class="btn">Ver imágenes del repositorio</button></div><p style="margin-top:7px">En la acción: Personaje <b>Pibara</b>, referencia <code>from-PixAI-2034984086876227343-0.png</code>, paquete <code>anatomy-guide-1</code>, fondo <b>transparent</b>.</p></div></div>'+
   '<div class="anatomy-step"><span class="anatomy-num">1b</span><div><b>Alternativa: generación directa desde el editor</b><p>Usa la API configurada localmente. No es necesaria si lanzás el generador del repositorio.</p><div class="actions" style="margin-top:8px"><button data-requires-internet="true" id="anatomyGenerate" class="btn">Generar guía con API local</button><button data-requires-internet="true" id="anatomyPose" class="btn">Crear maniquí con API local</button></div></div></div>'+
   '<div class="anatomy-step"><span class="anatomy-num">2</span><div><b>Separar una región del dibujo</b><p>Activá el pincel y pintá el interior de la pieza que querés extraer. Usa trazos pequeños cerca del contorno y evita pintar el fondo. La pieza se crea como PNG transparente alineado al lienzo.</p><div class="actions" style="margin-top:8px"><button id="anatomyMaskToggle" class="btn">✎ Pintar pieza</button><button id="anatomyMaskClear" class="btn">Limpiar selección</button><button id="anatomyCut" class="btn primary">Crear capa separada</button></div><label class="ai-mask-brush" for="anatomyBrushSize">Tamaño del pincel<input id="anatomyBrushSize" type="range" min="8" max="150" step="2" value="'+aiBrushSize+'"><output id="anatomyBrushValue">'+aiBrushSize+' px</output></label><span id="anatomyMaskCount" class="tiny">0 trazos</span></div></div>'+
-  '<div class="anatomy-step"><span class="anatomy-num">3</span><div><b>Exportar y reutilizar cada pieza</b><p>La capa mantiene las coordenadas del lienzo. Exportala como PNG o guardala en la biblioteca personal de este navegador para volver a agregarla a otros personajes sin buscar el archivo de nuevo.</p><div class="actions" style="margin-top:8px"><button id="anatomyExport" class="btn">↓ Exportar capa seleccionada</button><button id="anatomySavePiece" class="btn primary">Guardar capa en mi biblioteca</button><button id="anatomySaveProject" class="btn">Guardar proyecto JSON</button></div></div></div>'+
+  '<div class="anatomy-step"><span class="anatomy-num">3</span><div><b>Exportar y reutilizar cada pieza</b><p>La capa mantiene las coordenadas del lienzo. Exportala como PNG o guardala en la biblioteca personal de este navegador para volver a agregarla a otros personajes sin buscar el archivo de nuevo.</p><label class="field" for="anatomyPieceType" style="margin-top:10px"><span>Clasificar la pieza que vas a guardar <b>(obligatorio)</b></span><select id="anatomyPieceType" class="select" style="width:100%;max-width:none" required><option value="" selected>Elegí qué pieza es…</option><option value="hair">Cabello / peinado</option><option value="eyes">Ojos / cejas</option><option value="face">Rostro / expresión</option><option value="body">Cuerpo / anatomía</option><option value="clothes">Ropa / uniforme</option><option value="accessories">Accesorios / joyas</option></select></label><div class="actions" style="margin-top:8px"><button id="anatomyExport" class="btn">↓ Exportar capa seleccionada</button><button id="anatomySavePiece" class="btn primary">Guardar capa en mi biblioteca</button><button id="anatomySaveProject" class="btn">Guardar proyecto JSON</button></div></div></div>'+
   '<section class="library-hero"><strong>▦ Mi biblioteca personal de piezas</strong><p>Se guarda en el almacenamiento local de este navegador mediante IndexedDB. Las imágenes no se suben a GitHub ni a una nube; podés volver a agregarlas a otra composición en esta PC.</p><div class="library-actions"><span id="localPartsCount" class="tiny">Leyendo biblioteca local…</span><button type="button" id="localPartsReload" class="btn">Actualizar</button></div><div id="localPartsGrid" class="assetgrid"></div></section>'+
   '<div class="anatomy-tip"><b>Clave para una extracción limpia:</b> para separar una pieza del arte original, ocultá primero las guías y las capas generadas que tapen el dibujo. La guía anatómica sirve para estudiar la pose y proporciones; no sustituye las capas dibujadas originales ni garantiza que la IA reconstruya partes ocultas.</div>'+
   '<section class="ai-mask-panel"><div class="ai-mask-head"><strong>Selección sobre el lienzo central</strong><span id="anatomyMaskMode">'+(aiMaskMode?"Pincel activo":"Pincel apagado")+'</span></div><p>La pintura rosa es solo una superposición de selección: no se imprime en el PNG original ni en la pieza exportada.</p></section>';
@@ -575,17 +575,25 @@ async function selectedLayerPngBlob(layer){
 async function saveSelectedLayerToLocalLibrary(){
  const layer=state.layers.find(x=>x.id===state.selected);
  if(!layer){toast("Seleccioná una capa independiente antes de guardar; el retrato base no se guarda como pieza.");return;}
+ const categorySelect=$("anatomyPieceType");
+ const allowedCategories=["hair","eyes","face","body","clothes","accessories"];
+ const category=categorySelect?categorySelect.value:"";
+ if(!allowedCategories.includes(category)){toast("Elegí el tipo de pieza antes de guardarla en la biblioteca.");if(categorySelect)categorySelect.focus();return;}
  try{
   const blob=await selectedLayerPngBlob(layer);
   const safeName=String(layer.name||"pieza anime").trim().slice(0,100)||"pieza anime";
+  const sourceCategory=layer.category||"anatomy";
   await persistLocalPart({
    id:"local-part-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),
-   name:safeName,category:layer.category||"accessories",character:state.name||"Personaje",
+   name:safeName,category,sourceCategory,character:state.name||"Personaje",
    mimeType:"image/png",width:W,height:H,blob,createdAt:new Date().toISOString(),
    sourceKind:layer.kind||"layer",sourceStatus:layer.status||"unreviewed",
    reviewStatus:"needs_visual_review"
   });
-  toast("Pieza guardada en la biblioteca local de esta PC.");
+  layer.sourceCategory=sourceCategory;layer.category=category;
+  if(categorySelect)categorySelect.value="";
+  render();gallery();
+  toast("Pieza guardada como "+({hair:"cabello",eyes:"ojos",face:"rostro",body:"cuerpo",clothes:"ropa",accessories:"accesorios"}[category])+" en la biblioteca local.");
   await renderLocalParts();
  }catch(error){toast("No se guardó la pieza: "+String(error&&error.message||error));}
 }
