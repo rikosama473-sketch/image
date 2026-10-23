@@ -205,14 +205,15 @@ try {
   await hairstylePage.locator("#demoBtn").click();
   await hairstylePage.waitForFunction(() => window.HairWorkbenchAPI &&
     window.HairWorkbenchAPI.getLayers().length >= 7 &&
-    window.HairWorkbenchAPI.getCatalogHairCount() >= 5);
+    window.HairWorkbenchAPI.getCatalogHairCount() >= 5 &&
+    document.querySelectorAll("#styleList [data-style]").length >= 5);
   const workbenchLayers = await hairstylePage.evaluate(() => window.HairWorkbenchAPI.getLayers());
   assert.ok(workbenchLayers.some((layer) => layer.category === "face"), "The workbench should use a face from the repository catalog");
   assert.ok(workbenchLayers.some((layer) => layer.category === "body"), "The workbench should use a body/base layer");
   assert.ok(workbenchLayers.filter((layer) => layer.category === "haircut").length >= 5, "The five candidate cuts must remain separate");
   assert.match(await hairstylePage.locator("#layerCount").innerText(), /capas/);
   const originalVariantCount = await hairstylePage.locator("#styleList [data-style]").count();
-  assert.ok(originalVariantCount >= 5, "The initial looks should be distinct variants");
+  assert.ok(originalVariantCount >= 5, "The initial looks should be distinct variants; found " + originalVariantCount);
   await hairstylePage.locator("#styleName").fill("E2E · variante independiente");
   await hairstylePage.locator("#duplicateStyleBtn").click();
   await hairstylePage.waitForFunction((count) => document.querySelectorAll("#styleList [data-style]").length === count + 1, originalVariantCount);
