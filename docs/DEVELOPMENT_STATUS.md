@@ -104,3 +104,5 @@ Abrir el taller en navegador con el lanzador local y probar el filtro «Uso como
 - Añadidas pruebas para resultados anidados, generación parcial, fallo del motor con resultados existentes, ausencia de salida y validación del payload. El workflow principal ejecuta estas pruebas y el contrato del motor.
 - Estado: la implementación está comprometida en la rama de trabajo; falta confirmar el resultado de CI de esta tanda antes de contabilizar la corrección como validada.
 - La generación real mediante Diffusers continúa sin calificarse como validada para el hardware objetivo mientras no se prueben un modelo compatible y una inferencia real. No se presume que el motor genere imágenes sin un modelo suministrado.
+
+- Añadida comprobación preliminar desde la interfaz local: botón **Comprobar requisitos del motor**, endpoint `/api/diagnostics`, comprobación de paquetes Python sin importar el runtime de ML, verificación de `model_index.json`, estado de LoRA y aviso explícito de que la prueba no descarga pesos ni ejecuta inferencia. El botón no aprueba calidad o rendimiento; solo reduce errores de configuración evitables.
