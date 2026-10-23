@@ -241,7 +241,7 @@ try {
   const visualPage = await context.newPage();
   visualPage.on("pageerror", (error) => pageErrors.push("visual reference library: " + error.message));
   await visualPage.goto(baseUrl + "/tools/visual-reference-library/index.html", { waitUntil: "domcontentloaded" });
-  await visualPage.waitForFunction(() => /\\d+/.test(document.querySelector("#resultCount")?.textContent || "") &&
+  await visualPage.waitForFunction(() => /\d+/.test(document.querySelector("#resultCount")?.textContent || "") &&
     Number(document.querySelector("#statAssets")?.textContent || 0) > 0);
   await visualPage.waitForFunction(() => document.querySelectorAll("#grid [data-card]").length > 0);
   const refsBefore = Number(await visualPage.locator("#statRefs").innerText());
