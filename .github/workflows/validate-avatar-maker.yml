@@ -37,6 +37,10 @@ on:
       - "tools/visual-reference-library/**"
       - "tools/manual-character-editor/**"
       - "tools/image-creator/**"
+      - "ml/local_server.py"
+      - "ml/generate_diffusion.py"
+      - "tests/test_local_generator_server.py"
+      - "tests/test_diffusion_engine_contract.py"
       - "tests/test_studio_navigation.py"
       - "tests/test_project_handoff.py"
       - "scripts/validate_manual_character_editor.py"
@@ -69,6 +73,8 @@ jobs:
           node-version: "22"
       - name: Validate illustration assets and inline JavaScript
         run: python scripts/validate_avatar_maker.py
+      - name: Validate local generator browser script syntax
+        run: node --check tools/image-creator/app.js
       - name: Validate manual hairstyle workbench without AI or external API
         run: python scripts/validate_hairstyle_workbench.py
       - name: Validate visual reference library and contact-sheet tooling
