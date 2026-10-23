@@ -125,6 +125,9 @@ def run_generation_batch(
             stem = f"image-{index + 1:03d}-seed-{image_seed}"
             image_path = run_dir / f"{stem}.png"
             image.save(image_path)
+            # Count the image once it exists on disk. A sidecar failure must not
+            # make the UI hide a valid PNG; the batch itself can still be partial.
+            saved.append({"seed": image_seed, "image_path": image_path.name})
             metadata = {
                 "model": args.model, "lora": args.lora,
                 "lora_weight_name": args.lora_weight_name,
@@ -139,7 +142,6 @@ def run_generation_batch(
                 "allow_download": args.allow_download, "image_path": image_path.name,
             }
             (run_dir / f"{stem}.json").write_text(json.dumps(metadata, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-            saved.append({"seed": image_seed, "image_path": image_path.name})
             print(f"Saved {image_path}")
         except Exception as exc:
             failure = {"seed": image_seed, "error": f"{type(exc).__name__}: {exc}"}
