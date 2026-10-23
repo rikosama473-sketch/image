@@ -248,6 +248,59 @@
     }
   }
 
+
+  const scanModelsButton = $("scan-models-button");
+  const modelPicker = $("local-model-picker");
+  const useModelButton = $("use-model-button");
+  const modelScanStatus = $("model-scan-status");
+  const modelOptions = $("local-model-options");
+
+  async function scanLocalModels() {
+    scanModelsButton.disabled = true;
+    useModelButton.disabled = true;
+    scanModelsButton.textContent = "Buscando…";
+    modelScanStatus.textContent = "Inspeccionando carpetas de modelos existentes sin cargar pesos ni descargar archivos.";
+    modelPicker.replaceChildren(new Option("Buscando modelos…", ""));
+    modelPicker.disabled = true;
+    modelOptions.replaceChildren();
+    try {
+      const result = await api("/api/models");
+      modelPicker.replaceChildren();
+      modelOptions.replaceChildren();
+      if (!Array.isArray(result.models) || result.models.length === 0) {
+        modelPicker.add(new Option("No se encontraron modelos", ""));
+        modelScanStatus.textContent = "No encontré carpetas con model_index.json en las ubicaciones locales inspeccionadas. No se descargó nada; podés especificar manualmente una carpeta compatible.";
+        return;
+      }
+      modelPicker.add(new Option("Elegí un modelo detectado…", ""));
+      for (const model of result.models) {
+        const option = new Option(model.label + " · " + model.pipeline_class, model.path);
+        modelPicker.add(option);
+        modelOptions.append(new Option(model.label, model.path));
+      }
+      modelPicker.disabled = false;
+      modelScanStatus.textContent = "Detectados " + result.count + " pipelines locales en " + result.scanned_directories + " carpetas inspeccionadas." + (result.truncated ? " Búsqueda limitada por seguridad; hay más carpetas que revisar." : "") + " No se cargaron pesos ni se hicieron descargas.";
+    } catch (error) {
+      modelPicker.replaceChildren(new Option("No se pudo escanear", ""));
+      modelScanStatus.textContent = "No se pudo leer el inventario local: " + error.message;
+    } finally {
+      scanModelsButton.disabled = false;
+      scanModelsButton.textContent = "Volver a buscar";
+      useModelButton.disabled = !modelPicker.value;
+    }
+  }
+
+  modelPicker.addEventListener("change", () => {
+    useModelButton.disabled = !modelPicker.value;
+  });
+  useModelButton.addEventListener("click", () => {
+    const selectedPath = modelPicker.value;
+    if (!selectedPath) return;
+    $("model").value = selectedPath;
+    setStatus("idle", "Modelo local seleccionado", "Se eligió una carpeta que contiene model_index.json. Ejecutá el diagnóstico antes de generar; la compatibilidad de inferencia aún debe comprobarse.");
+  });
+  scanModelsButton.addEventListener("click", scanLocalModels);
+
   diagnoseButton.addEventListener("click", runDiagnostics);
 
   refreshButton.addEventListener("click", refreshGallery);
