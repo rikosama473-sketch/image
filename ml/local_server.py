@@ -208,23 +208,38 @@ def _run_job(job_id: str, config: dict[str, Any], job_dir: Path) -> None:
         )
         summary = (result.stdout or "")[-12000:]
         error = (result.stderr or "")[-12000:]
+        # The diffusion engine creates a timestamped run directory inside job_dir.
+        # Search recursively or successful generations appear to fail in the UI.
         images = []
         if job_dir.exists():
             images = [
                 "/generated/" + file.relative_to(OUTPUT_ROOT).as_posix()
-                for file in sorted(job_dir.glob("*.png"))
+                for file in sorted(job_dir.rglob("*.png"))
+                if file.is_file()
             ]
+        expected = int(config.get("count", 1))
+        succeeded = bool(images) and result.returncode == 0
+        complete = succeeded and len(images) >= expected
+        partial = bool(images) and not complete
+        if complete:
+            state = "completed"
+            public_error = ""
+        elif partial:
+            state = "partial"
+            public_error = f"El motor guardó {len(images)} de {expected} imágenes solicitadas. Revisá el registro para conocer los fallos."
+        else:
+            state = "failed"
+            public_error = error or summary or "El motor terminó sin producir imágenes."
         with JOBS_LOCK:
             JOBS[job_id].update({
-                "status": "completed" if result.returncode == 0 and images else "failed",
+                "status": state,
                 "return_code": result.returncode,
                 "stdout": summary,
                 "stderr": error,
                 "images": images,
+                "requested_count": expected,
                 "finished_at": time.time(),
-                "error": "" if result.returncode == 0 and images else (
-                    error or summary or "El motor terminó sin producir imágenes."
-                ),
+                "error": public_error,
             })
     except subprocess.TimeoutExpired:
         with JOBS_LOCK:
