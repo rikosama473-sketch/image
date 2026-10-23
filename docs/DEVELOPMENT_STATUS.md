@@ -94,3 +94,13 @@ Abrir el taller en navegador con el lanzador local y probar el filtro «Uso como
 - La exportación de composición se verifica por contrato: `makeComposite()` parte de un canvas nuevo, dibuja solo capas visibles respetando opacidad y `exportCanvas()` codifica `image/png`. Esto no sustituye una inspección de los píxeles del archivo exportado.
 - Estado honesto: el nuevo test y el test de centrado están escritos en la rama; la ejecución de la suite y la prueba visual E2E siguen pendientes de confirmación. No se ha modificado `main` ni fusionado el PR #19.
 - Próximo paso: obtener el resultado de CI de estos commits; si la suite falla, corregir el fallo real. Luego realizar la prueba interactiva Constructor → guardar JSON → Editor manual → guardar/reabrir → exportar PNG transparente, antes de aprobar assets modulares de Pibara.
+
+
+## Continuación prioritaria — corrección del generador local (2026-10-22)
+
+- Detectado un defecto en el flujo del generador local: `generate_diffusion.py` guarda cada imagen dentro de un subdirectorio `run-...`, mientras que el servidor de interfaz buscaba PNG solo en el nivel inmediato del trabajo. Eso podía marcar como fallida una generación aunque existieran PNG válidos.
+- Se corrigió el descubrimiento recursivo de PNG dentro de cada trabajo, conservando la ruta relativa segura bajo `outputs/generated`.
+- El ciclo de trabajo distingue resultados completos, parciales y fallidos. Si se guardan algunas imágenes pero falla el resto, la interfaz conserva las imágenes válidas e informa cuántas produjo de las solicitadas.
+- Añadidas pruebas para resultados anidados, generación parcial, fallo del motor con resultados existentes, ausencia de salida y validación del payload. El workflow principal ejecuta estas pruebas y el contrato del motor.
+- Estado: la implementación está comprometida en la rama de trabajo; falta confirmar el resultado de CI de esta tanda antes de contabilizar la corrección como validada.
+- La generación real mediante Diffusers continúa sin calificarse como validada para el hardware objetivo mientras no se prueben un modelo compatible y una inferencia real. No se presume que el motor genere imágenes sin un modelo suministrado.
