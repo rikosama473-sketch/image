@@ -602,7 +602,7 @@ async function addLocalPartToCanvas(id){
   const part=(await readLocalParts()).find(item=>item.id===id);
   if(!part||!(part.blob instanceof Blob)){toast("No se encontró una pieza local válida.");return;}
   const dataUrl=await blobToDataUrl(part.blob);
-  const layer={id:"local-import-"+Date.now(),name:part.name||"Pieza local",dataUrl,src:"",kind:"local_library_part",category:part.category||"accessories",group:null,x:0,y:0,w:W,h:H,opacity:1,hue:0,visible:true,order:Math.max(-1,...state.layers.map(x=>Number.isFinite(x.order)?x.order:-1))+1,status:"local_saved_candidate",sourceKind:part.sourceKind,sourceStatus:part.sourceStatus};
+  const layer={id:"local-import-"+Date.now(),name:part.name||"Pieza local",dataUrl,src:"",kind:"local_library_part",category:part.category||"accessories",sourceCategory:part.sourceCategory||"anatomy",group:null,x:0,y:0,w:W,h:H,opacity:1,hue:0,visible:true,order:Math.max(-1,...state.layers.map(x=>Number.isFinite(x.order)?x.order:-1))+1,status:"local_saved_candidate",sourceKind:part.sourceKind,sourceStatus:part.sourceStatus};
   state.layers.push(layer);cache.set(dataUrl,img(dataUrl));state.selected=layer.id;render();gallery();
   toast("Pieza agregada como capa independiente. Podés moverla, ocultarla o ajustar su opacidad.");
  }catch(error){toast("No se pudo agregar la pieza local: "+String(error&&error.message||error));}
@@ -629,7 +629,10 @@ async function renderLocalParts(){
   count.textContent=parts.length?parts.length+" pieza"+(parts.length===1?"":"s")+" guardada"+(parts.length===1?"":"s")+" en este navegador.":"Todavía no guardaste piezas. Seleccioná una capa y pulsá ‘Guardar capa en mi biblioteca’.";
   grid.innerHTML=parts.map(part=>{
    const preview=URL.createObjectURL(part.blob);localPartObjectUrls.set(part.id,preview);
-   return '<article class="starter-card"><img loading="lazy" alt="'+safe(part.name)+'" src="'+safe(preview)+'"><b>'+safe(part.name)+'</b><small>'+safe(part.category||"pieza")+' · '+safe(part.reviewStatus||"pendiente de revisión")+'</small><div class="actions"><button type="button" class="btn primary" data-local-part-add="'+safe(part.id)+'">Agregar como capa</button><button type="button" class="btn" data-local-part-delete="'+safe(part.id)+'">Eliminar</button></div></article>';
+   const categoryLabels={hair:"Cabello",eyes:"Ojos / cejas",face:"Rostro",body:"Cuerpo",clothes:"Ropa",accessories:"Accesorios"};
+   const categoryLabel=categoryLabels[part.category]||part.category||"Pieza";
+   const sourceCategoryLabel=categoryLabels[part.sourceCategory]||part.sourceCategory||"sin origen categorizado";
+   return '<article class="starter-card"><img loading="lazy" alt="'+safe(part.name)+'" src="'+safe(preview)+'"><b>'+safe(part.name)+'</b><small>'+safe(categoryLabel)+' · origen: '+safe(sourceCategoryLabel)+' · '+safe(part.reviewStatus||"pendiente de revisión")+'</small><div class="actions"><button type="button" class="btn primary" data-local-part-add="'+safe(part.id)+'">Agregar como capa</button><button type="button" class="btn" data-local-part-delete="'+safe(part.id)+'">Eliminar</button></div></article>';
   }).join("");
   grid.querySelectorAll("[data-local-part-add]").forEach(button=>button.onclick=()=>addLocalPartToCanvas(button.dataset.localPartAdd));
   grid.querySelectorAll("[data-local-part-delete]").forEach(button=>button.onclick=()=>deleteLocalPart(button.dataset.localPartDelete));
