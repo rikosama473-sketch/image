@@ -203,7 +203,7 @@ try {
   await remoteLink.waitFor();
   const constructorUrl = page.url();
   assert.equal(await remoteLink.getAttribute("aria-disabled"), "true");
-  await remoteLink.click();
+  await remoteLink.dispatchEvent("click");
   await page.waitForFunction(() => /Modo Internet está apagado/.test(document.querySelector("#toast")?.textContent || ""));
   assert.equal(page.url(), constructorUrl, "A blocked Internet link must not navigate away");
   await page.evaluate(() => {
