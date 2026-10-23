@@ -104,7 +104,7 @@ try {
   assert.ok(projectStat.size > 50, "The project JSON should not be empty");
   const project = JSON.parse(await readFile(projectPath, "utf8"));
   assert.equal(project.app, "IMAGE Character Creator");
-  assert.ok(Array.isArray(project.layers) && project.layers.length >= 3);
+  assert.ok(Array.isArray(project.layers) && project.layers.length >= 2, "Constructor JSON stores independent layers; the base illustration is described separately");
   assert.ok(project.layers.some((layer) => layer.category === "hair" && layer.sourceCategory === "test"));
 
   const beforeReload = await page.locator("#layerList [data-layer]").count();
