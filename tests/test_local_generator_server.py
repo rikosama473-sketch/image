@@ -117,11 +117,12 @@ class LocalGeneratorPayloadTests(unittest.TestCase):
 
 
     def test_diagnostics_recognizes_a_diffusers_folder_without_loading_it(self) -> None:
-        model_dir = Path(self.tempdir.name) / "fixture-model"
-        model_dir.mkdir()
-        (model_dir / "model_index.json").write_text(json.dumps({"_class_name": "TestPipeline"}), encoding="utf-8")
-        with mock.patch.object(server.importlib.util, "find_spec", side_effect=lambda name: object() if name in {"torch", "diffusers", "safetensors"} else None):
-            report = server._diagnose_environment(str(model_dir), device="cpu")
+        with tempfile.TemporaryDirectory() as tempdir:
+            model_dir = Path(tempdir) / "fixture-model"
+            model_dir.mkdir()
+            (model_dir / "model_index.json").write_text(json.dumps({"_class_name": "TestPipeline"}), encoding="utf-8")
+            with mock.patch.object(server.importlib.util, "find_spec", side_effect=lambda name: object() if name in {"torch", "diffusers", "safetensors"} else None):
+                report = server._diagnose_environment(str(model_dir), device="cpu")
         self.assertTrue(report["dependencies_ready"])
         self.assertEqual(report["model"]["state"], "local_directory_ready")
         self.assertTrue(report["model"]["ready_to_try"])
