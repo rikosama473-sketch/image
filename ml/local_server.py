@@ -6,6 +6,7 @@ subprocess; the UI does not upload images or contact a remote inference API.
 """
 from __future__ import annotations
 
+import importlib.util
 import json
 import mimetypes
 import os
@@ -18,7 +19,7 @@ import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
-from urllib.parse import unquote, urlparse
+from urllib.parse import parse_qs, unquote, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 UI_ROOT = ROOT / "tools" / "image-creator"
@@ -78,6 +79,67 @@ def _list_outputs(limit: int = 30) -> list[dict[str, Any]]:
         except OSError:
             continue
     return results
+
+
+def _module_available(name: str) -> bool:
+    """Check dependencies without importing a large machine-learning runtime."""
+    try:
+        return importlib.util.find_spec(name) is not None
+    except (ImportError, ValueError, AttributeError):
+        return False
+
+
+def _diagnose_environment(model: str = "", lora: str = "", device: str = "auto", allow_download: bool = False) -> dict[str, Any]:
+    """Inspect prerequisites without loading weights, generating or downloading."""
+    dependencies = {name: _module_available(name) for name in ("torch", "diffusers", "safetensors")}
+    if device not in {"auto", "cpu", "cuda", "mps"}:
+        device = "auto"
+    model_value = model.strip()
+    model_path = Path(model_value).expanduser() if model_value else None
+    if not model_value:
+        model_state, model_ready = "missing", False
+        model_message = "Indicá una carpeta local de Diffusers o un identificador de modelo."
+    elif model_path and model_path.is_absolute() and model_path.is_file():
+        model_state, model_ready = "single_file_unsupported", False
+        model_message = "Elegí una carpeta de pipeline Diffusers; un checkpoint suelto no se acepta como carpeta de modelo."
+    elif model_path and model_path.is_dir():
+        if (model_path / "model_index.json").is_file():
+            model_state, model_ready = "local_directory_ready", True
+            model_message = "La carpeta contiene model_index.json; está lista para intentar cargarla."
+        else:
+            model_state, model_ready = "directory_without_pipeline_config", False
+            model_message = "La carpeta no contiene model_index.json; puede no ser un pipeline Diffusers completo."
+    elif model_value.startswith((".", "~")) or Path(model_value).suffix:
+        model_state, model_ready = "path_not_found", False
+        model_message = "No existe esa ruta local. Si usás un identificador de Hub, escribilo como organización/modelo."
+    elif allow_download:
+        model_state, model_ready = "hub_identifier_download_enabled", True
+        model_message = "Se intentará resolver el identificador y descargar pesos porque habilitaste esa opción."
+    else:
+        model_state, model_ready = "hub_identifier_or_cached_model", False
+        model_message = "No se encontró una carpeta local. Un identificador de Hub podría funcionar si ya está en caché; no se descargará nada."
+    lora_value = lora.strip()
+    if not lora_value:
+        lora_state, lora_message = "not_configured", "La LoRA es opcional y no está configurada."
+    else:
+        lora_path = Path(lora_value).expanduser()
+        if lora_path.is_file():
+            lora_state, lora_message = "local_file", "Archivo LoRA local encontrado; su compatibilidad se revisa al cargar."
+        elif lora_path.is_dir():
+            lora_state, lora_message = "local_directory", "Carpeta LoRA local encontrada; su compatibilidad se revisa al cargar."
+        else:
+            lora_state, lora_message = "not_found_or_hub_id", "No se encontró una ruta local para la LoRA; revisá caché y descargas si usás un identificador remoto."
+    engine_exists = ENGINE.is_file()
+    return {
+        "python_version": sys.version.split()[0], "platform": sys.platform,
+        "engine_exists": engine_exists, "dependencies": dependencies,
+        "dependencies_ready": all(dependencies.values()) and engine_exists,
+        "model": {"state": model_state, "ready_to_try": model_ready, "message": model_message},
+        "lora": {"state": lora_state, "message": lora_message},
+        "device_requested": device,
+        "device_note": "La disponibilidad CUDA/MPS y el consumo de memoria no se miden aquí; el motor los verifica al iniciar.",
+        "allow_download": bool(allow_download), "downloads_default_off": True, "inference_started": False,
+    }
 
 
 def _validate_payload(data: Any) -> dict[str, Any]:
@@ -275,6 +337,13 @@ class CreatorHandler(BaseHTTPRequestHandler):
             return self._serve_file(UI_ROOT / "index.html")
         if parsed.path in {"/app.js", "/app.css"}:
             return self._serve_file(UI_ROOT / parsed.path.lstrip("/"))
+        if parsed.path == "/api/diagnostics":
+            query = parse_qs(parsed.query)
+            model = query.get("model", [""])[0][:2048]
+            lora = query.get("lora", [""])[0][:2048]
+            device = query.get("device", ["auto"])[0]
+            allow_download = query.get("allow_download", ["false"])[0].lower() in {"1", "true", "yes"}
+            return _json_response(self, 200, _diagnose_environment(model, lora, device, allow_download))
         if parsed.path == "/api/runs":
             return _json_response(self, 200, {"runs": _list_outputs()})
         if parsed.path.startswith("/api/jobs/"):
