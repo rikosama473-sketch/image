@@ -17,6 +17,14 @@ const serverPort = await new Promise((resolve, reject) => {
     probe.close((error) => error ? reject(error) : resolve(address.port));
   });
 });
+const generatorPort = await new Promise((resolve, reject) => {
+  const probe = createServer();
+  probe.once("error", reject);
+  probe.listen(0, "127.0.0.1", () => {
+    const address = probe.address();
+    probe.close((error) => error ? reject(error) : resolve(address.port));
+  });
+});
 
 const env = { ...process.env };
 delete env.OPENAI_API_KEY;
@@ -28,6 +36,15 @@ const server = spawn(
 let serverOutput = "";
 server.stdout.on("data", (chunk) => { serverOutput += chunk.toString(); });
 server.stderr.on("data", (chunk) => { serverOutput += chunk.toString(); });
+
+const generatorServer = spawn(
+  process.env.PYTHON || "python",
+  ["ml/local_server.py", "--host", "127.0.0.1", "--port", String(generatorPort)],
+  { cwd: root, env, stdio: ["ignore", "pipe", "pipe"] }
+);
+let generatorOutput = "";
+generatorServer.stdout.on("data", (chunk) => { generatorOutput += chunk.toString(); });
+generatorServer.stderr.on("data", (chunk) => { generatorOutput += chunk.toString(); });
 let browser;
 const pageErrors = [];
 
@@ -46,6 +63,23 @@ async function waitForHttp(url) {
     await delay(250);
   }
   throw new Error("IMAGE server did not start. " + String(lastError || "") + "\n" + serverOutput);
+}
+
+async function waitForGeneratorHttp(url) {
+  let lastError;
+  for (let attempt = 0; attempt < 60; attempt += 1) {
+    try {
+      const response = await fetch(url, { signal: AbortSignal.timeout(1200) });
+      if (response.ok) return response;
+    } catch (error) {
+      lastError = error;
+    }
+    if (generatorServer.exitCode !== null) {
+      throw new Error("IMAGE local generator exited early. " + generatorOutput);
+    }
+    await delay(250);
+  }
+  throw new Error("IMAGE local generator did not start. " + String(lastError || "") + "\n" + generatorOutput);
 }
 
 try {
@@ -163,8 +197,33 @@ try {
   await page.waitForFunction(() => document.querySelector("#internetModeToggle")?.dataset.state === "off");
   assert.equal(await internetToggle.getAttribute("aria-pressed"), "false");
 
+  // The local generation tool must guide model discovery and preflight without starting inference.
+  const generatorUrl = "http://127.0.0.1:" + generatorPort;
+  await waitForGeneratorHttp(generatorUrl + "/api/models");
+  const generatorPage = await context.newPage();
+  generatorPage.on("pageerror", (error) => pageErrors.push("local generator: " + error.message));
+  await generatorPage.goto(generatorUrl + "/", { waitUntil: "domcontentloaded" });
+  await generatorPage.waitForSelector("#scan-models-button");
+  await generatorPage.locator("#scan-models-button").click();
+  await generatorPage.waitForFunction(() => {
+    const button = document.querySelector("#scan-models-button");
+    return button && !button.disabled && document.querySelector("#model-scan-status")?.textContent?.trim().length > 0;
+  });
+  const scanStatus = await generatorPage.locator("#model-scan-status").innerText();
+  assert.match(scanStatus, /No encontré|Detectados/);
+  const picker = generatorPage.locator("#local-model-picker");
+  if (await picker.isEnabled()) {
+    assert.ok((await picker.locator("option").count()) >= 2, "Detected models should be selectable");
+  } else {
+    assert.match(scanStatus, /No encontré/, "An empty model search must explain that no weights were downloaded");
+  }
+  await generatorPage.locator("#diagnose-button").click();
+  await generatorPage.waitForFunction(() => (document.querySelectorAll("#diagnostics-list .diagnostic-row").length >= 6) &&
+    /REQUISITOS BÁSICOS DETECTADOS|REVISAR ANTES DE GENERAR/.test(document.querySelector("#diagnostics-summary")?.textContent || ""));
+  assert.match(await generatorPage.locator("#diagnostics-summary").innerText(), /REQUISITOS BÁSICOS DETECTADOS|REVISAR ANTES DE GENERAR/);
+  assert.match(await generatorPage.locator(".diagnostics-note").innerText(), /No genera imágenes/);
   assert.deepEqual(pageErrors, [], "Unexpected browser runtime errors: " + pageErrors.join("; "));
-  console.log("PASS: real Chromium E2E — internal asset layer, required category, IndexedDB save/reuse, project JSON save/reopen, PNG signature/size, Internet toggle, zero page errors.");
+  console.log("PASS: Chromium E2E — constructor, reusable layer library, cross-editor handoff, project save/reopen, PNG exports, Internet toggle, local model picker/preflight, zero JS errors.");
   await context.close();
 } catch (error) {
   console.error("FAIL: IMAGE Character Creator browser E2E");
@@ -174,10 +233,11 @@ try {
 } finally {
   if (browser) await browser.close().catch(() => {});
   server.kill("SIGTERM");
-  await new Promise((resolve) => {
-    if (server.exitCode !== null) return resolve();
-    server.once("exit", resolve);
+  generatorServer.kill("SIGTERM");
+  await Promise.all([server, generatorServer].map((child) => new Promise((resolve) => {
+    if (child.exitCode !== null) return resolve();
+    child.once("exit", resolve);
     setTimeout(resolve, 1500).unref();
-  });
+  })));
   await rm(tempDir, { recursive: true, force: true });
 }
