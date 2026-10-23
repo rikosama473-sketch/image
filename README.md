@@ -1,5 +1,10 @@
 # IMAGE — estudio modular de creación de personajes e ilustración anime
 
+> **AVISO: el proyecto principal ahora es [KIRA Atelier — Anime Character Studio](https://github.com/rikosama473-sketch/KIRA-Atelier).**
+>
+> La edición actual, el Atlas visual, el taller de peinados, la preparación de capas y los módulos auxiliares se centralizan en **KIRA Atelier**. Este repositorio se conserva temporalmente como **archivo de origen y respaldo**, no como destino principal de nuevas funciones. Los originales aquí guardados no se borraron; cualquier trabajo nuevo debe comenzar en KIRA Atelier y cualquier transferencia adicional debe verificarse antes de retirar este respaldo.
+
+
 IMAGE es un estudio local y modular para **buscar referencias, componer personajes anime, separar y editar capas, guardar proyectos, crear variantes y, de forma opcional, generar o editar imágenes mediante IA**. La biblioteca, el constructor, el editor 2D y el motor de generación son módulos relacionados de un mismo producto; ninguno sustituye a los demás.
 
 La identidad del proyecto no es la de un simple generador ni la de un archivador. Las funciones manuales deben seguir disponibles aunque no haya modelos de IA instalados, conexión remota o GPU dedicada.
