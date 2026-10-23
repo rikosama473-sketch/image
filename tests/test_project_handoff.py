@@ -165,6 +165,16 @@ class ImageProjectHandoffTests(unittest.TestCase):
         self.assertIn("Pieza guardada en la biblioteca local de esta PC.", self.avatar)
 
 
+    def test_saved_anatomy_pieces_require_semantic_category_and_keep_source_category(self) -> None:
+        self.assertIn('id="anatomyPieceType"', self.avatar)
+        self.assertIn('const allowedCategories=["hair","eyes","face","body","clothes","accessories"]', self.avatar)
+        self.assertIn('if(!allowedCategories.includes(category))', self.avatar)
+        self.assertIn('name:safeName,category,sourceCategory,character:', self.avatar)
+        self.assertIn('layer.sourceCategory=sourceCategory;layer.category=category;', self.avatar)
+        for category in ("hair", "eyes", "face", "body", "clothes", "accessories"):
+            with self.subTest(category=category):
+                self.assertIn('value="'+category+'"', self.avatar)
+
     def test_internet_mode_uses_colored_states_and_blocks_unavailable_online_features(self) -> None:
         for feature in (
             'id="internetModeToggle"',
