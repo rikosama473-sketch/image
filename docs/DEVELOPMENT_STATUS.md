@@ -108,3 +108,5 @@ Abrir el taller en navegador con el lanzador local y probar el filtro «Uso como
 - Añadida comprobación preliminar desde la interfaz local: botón **Comprobar requisitos del motor**, endpoint `/api/diagnostics`, comprobación de paquetes Python sin importar el runtime de ML, verificación de `model_index.json`, estado de LoRA y aviso explícito de que la prueba no descarga pesos ni ejecuta inferencia. El botón no aprueba calidad o rendimiento; solo reduce errores de configuración evitables.
 
 - Se amplió la prueba del servidor local para recorrer por HTTP real la interfaz, sus archivos JS/CSS y `/api/diagnostics`, además de verificar la respuesta a un identificador de trabajo inválido. Se añadió comprobación de sintaxis del JavaScript independiente al workflow; estas pruebas deben terminar en verde antes de considerar cerrada la tanda.
+
+- Se terminó el flujo de clasificación de piezas: la biblioteca local muestra categorías en español y conserva tanto la categoría reutilizable elegida como la categoría de origen de la extracción. Al volver a añadir una pieza, su procedencia categórica viaja con la capa y se conserva en el JSON del Constructor.
