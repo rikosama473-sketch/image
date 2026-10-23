@@ -85,6 +85,12 @@
               </div>
             </details>
 
+            <button id="diagnose-button" type="button">Comprobar requisitos del motor</button>
+            <section id="diagnostics-panel" class="diagnostics-panel" hidden aria-live="polite">
+              <div class="diagnostics-heading"><strong>Estado de preparación</strong><span id="diagnostics-summary"></span></div>
+              <div id="diagnostics-list" class="diagnostics-list"></div>
+              <p class="diagnostics-note">No genera imágenes, no descarga pesos y no garantiza la compatibilidad visual del modelo.</p>
+            </section>
             <button id="generate-button" type="submit"><span>Generar imágenes</span><span aria-hidden="true">↗</span></button>
             <p class="privacy-note"><span class="lock">◇</span> No se envían prompts ni imágenes a una API remota. Solo se descargan pesos si activás la opción anterior.</p>
           </form>
