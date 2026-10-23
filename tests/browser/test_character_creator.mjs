@@ -197,6 +197,92 @@ try {
   await page.waitForFunction(() => document.querySelector("#internetModeToggle")?.dataset.state === "off");
   assert.equal(await internetToggle.getAttribute("aria-pressed"), "false");
 
+  // The hair workbench must compose real repository parts, keep variants distinct, and export a valid project/PNG.
+  const hairstylePage = await context.newPage();
+  hairstylePage.on("pageerror", (error) => pageErrors.push("hairstyle workbench: " + error.message));
+  await hairstylePage.goto(baseUrl + "/tools/hairstyle-workbench/index.html", { waitUntil: "domcontentloaded" });
+  await hairstylePage.locator("#demoBtn").waitFor();
+  await hairstylePage.locator("#demoBtn").click();
+  await hairstylePage.waitForFunction(() => window.HairWorkbenchAPI &&
+    window.HairWorkbenchAPI.getLayers().length >= 7 &&
+    window.HairWorkbenchAPI.getCatalogHairCount() >= 5);
+  const workbenchLayers = await hairstylePage.evaluate(() => window.HairWorkbenchAPI.getLayers());
+  assert.ok(workbenchLayers.some((layer) => layer.category === "face"), "The workbench should use a face from the repository catalog");
+  assert.ok(workbenchLayers.some((layer) => layer.category === "body"), "The workbench should use a body/base layer");
+  assert.ok(workbenchLayers.filter((layer) => layer.category === "haircut").length >= 5, "The five candidate cuts must remain separate");
+  assert.match(await hairstylePage.locator("#layerCount").innerText(), /capas/);
+  const originalVariantCount = await hairstylePage.locator("#styleList [data-style]").count();
+  assert.ok(originalVariantCount >= 5, "The initial looks should be distinct variants");
+  await hairstylePage.locator("#styleName").fill("E2E · variante independiente");
+  await hairstylePage.locator("#duplicateStyleBtn").click();
+  await hairstylePage.waitForFunction((count) => document.querySelectorAll("#styleList [data-style]").length === count + 1, originalVariantCount);
+  const workbenchSavePromise = hairstylePage.waitForEvent("download");
+  await hairstylePage.locator("#saveProjectBtn").click();
+  const workbenchProjectDownload = await workbenchSavePromise;
+  const workbenchProjectPath = await workbenchProjectDownload.path();
+  assert.ok(workbenchProjectPath, "The hairstyle workbench should export a project JSON");
+  const workbenchProject = JSON.parse(await readFile(workbenchProjectPath, "utf8"));
+  assert.equal(workbenchProject.app, "IMAGE Hairstyle Workbench");
+  assert.ok(workbenchProject.layers.length >= 7);
+  assert.ok(workbenchProject.styles.length >= originalVariantCount + 1);
+  await hairstylePage.locator("#projectFile").setInputFiles(workbenchProjectPath);
+  await hairstylePage.waitForFunction(() => /Proyecto abierto/.test(document.querySelector("#notice")?.textContent || ""));
+  assert.ok(await hairstylePage.locator("#layerCount").innerText().then(text => /capas/.test(text)));
+  const workbenchPngPromise = hairstylePage.waitForEvent("download");
+  await hairstylePage.locator("#exportBtn").click();
+  const workbenchPngDownload = await workbenchPngPromise;
+  const workbenchPngPath = await workbenchPngDownload.path();
+  assert.ok(workbenchPngPath);
+  const workbenchPng = await readFile(workbenchPngPath);
+  assert.deepEqual([...workbenchPng.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+
+  // The visual library must save a new reference, annotate it, build a recipe, and export its data.
+  const visualPage = await context.newPage();
+  visualPage.on("pageerror", (error) => pageErrors.push("visual reference library: " + error.message));
+  await visualPage.goto(baseUrl + "/tools/visual-reference-library/index.html", { waitUntil: "domcontentloaded" });
+  await visualPage.waitForFunction(() => /\\d+/.test(document.querySelector("#resultCount")?.textContent || "") &&
+    Number(document.querySelector("#statAssets")?.textContent || 0) > 0);
+  await visualPage.waitForFunction(() => document.querySelectorAll("#grid [data-card]").length > 0);
+  const refsBefore = Number(await visualPage.locator("#statRefs").innerText());
+  await visualPage.locator("#newTitle").fill("E2E referencia ocular");
+  await visualPage.locator("#newCategory").selectOption("eyes");
+  await visualPage.locator("#newCreator").fill("Prueba automatizada");
+  await visualPage.locator("#newSource").fill("https://www.pinterest.com/pin/123456789012345678/");
+  await visualPage.locator("#newTags").fill("anime, iris radial, prueba e2e");
+  await visualPage.locator("#addReferenceForm button[type=submit]").click();
+  await visualPage.waitForFunction((before) => Number(document.querySelector("#statRefs")?.textContent || 0) === before + 1, refsBefore);
+  await visualPage.locator("#search").fill("E2E referencia ocular");
+  await visualPage.waitForFunction(() => document.querySelector('#grid [data-card*="user-ref-"]')?.textContent?.includes("E2E referencia ocular"));
+  const e2eReference = visualPage.locator('#grid [data-card*="user-ref-"]').first();
+  const e2eReferenceId = await e2eReference.getAttribute("data-card");
+  await e2eReference.locator("[data-edit]").click();
+  await visualPage.locator("#editName").fill("E2E referencia ocular anotada");
+  await visualPage.locator("#editStatus").selectOption("reviewed_reference");
+  await visualPage.locator("#editLicense").selectOption("reference_only_unverified");
+  await visualPage.locator("#editNotes").fill("La prueba valida el flujo; los derechos siguen sin verificarse.");
+  await visualPage.locator('#editForm button[type=submit]').click();
+  await visualPage.waitForFunction(() => !document.querySelector("#editDialog")?.open);
+  await visualPage.waitForFunction(() => document.querySelector('#grid [data-card*="user-ref-"] h3')?.textContent === "E2E referencia ocular anotada");
+  const savedCard = visualPage.locator('#grid [data-card*="user-ref-"]').first();
+  await savedCard.locator('input[data-select]').check();
+  await visualPage.locator("#styleFamily").selectOption("eyes");
+  await visualPage.locator("#styleName").fill("E2E receta de ojos");
+  await visualPage.locator("#styleMood").selectOption("sharp");
+  const stylesBefore = Number(await visualPage.locator("#statStyles").innerText());
+  await visualPage.locator("#makeVariationBtn").click();
+  await visualPage.waitForFunction((before) => Number(document.querySelector("#statStyles")?.textContent || 0) === before + 1, stylesBefore);
+  const visualExportPromise = visualPage.waitForEvent("download");
+  await visualPage.locator("#exportBtn").click();
+  const visualExport = await visualExportPromise;
+  const visualExportPath = await visualExport.path();
+  assert.ok(visualExportPath, "The visual reference library should export a JSON bundle");
+  const visualBundle = JSON.parse(await readFile(visualExportPath, "utf8"));
+  assert.equal(visualBundle.project, "IMAGE visual reference library");
+  assert.ok(visualBundle.references_added_by_user.some((reference) => reference.id === e2eReferenceId));
+  assert.ok(visualBundle.annotations[e2eReferenceId], "The user annotation should be in the export");
+  assert.ok(visualBundle.style_recipes.some((recipe) => recipe.name === "E2E receta de ojos"));
+  assert.ok(visualBundle.selected_ids.includes(e2eReferenceId));
+
   // The switch must actually prevent remote navigation, not simply recolor links.
   await page.locator('#nav [data-cat="anatomy"]').click();
   const remoteLink = page.locator('#content a[href^="https://github.com"]').first();
@@ -238,7 +324,7 @@ try {
   assert.match(await generatorPage.locator("#diagnostics-summary").innerText(), /REQUISITOS BÁSICOS DETECTADOS|REVISAR ANTES DE GENERAR/);
   assert.match(await generatorPage.locator(".diagnostics-note").innerText(), /No genera imágenes/);
   assert.deepEqual(pageErrors, [], "Unexpected browser runtime errors: " + pageErrors.join("; "));
-  console.log("PASS: Chromium E2E — constructor, reusable layer library, cross-editor handoff, project save/reopen, PNG exports, Internet toggle, local model picker/preflight, zero JS errors.");
+  console.log("PASS: Chromium E2E — constructor, reusable pieces, manual editor handoff, hairstyle variants and export, visual-reference annotations/recipes/export, Internet guard, local model discovery/preflight, zero JS errors.");
   await context.close();
 } catch (error) {
   console.error("FAIL: IMAGE Character Creator browser E2E");
