@@ -151,9 +151,14 @@
       activeJobId = null;
       setBusy(false);
       showLog(job);
-      if (job.status === "completed") {
+      if (job.status === "completed" || job.status === "partial") {
         const count = Array.isArray(job.images) ? job.images.length : 0;
-        setStatus("success", "Generación terminada", count + " " + (count === 1 ? "imagen guardada" : "imágenes guardadas") + ". Los parámetros se conservaron junto a los archivos.");
+        const requested = Number(job.requested_count || (job.config && job.config.count) || count);
+        if (job.status === "partial") {
+          setStatus("error", "Generación parcial", count + " de " + requested + " imágenes guardadas. " + (job.error || "Revisá el registro del motor."));
+        } else {
+          setStatus("success", "Generación terminada", count + " " + (count === 1 ? "imagen guardada" : "imágenes guardadas") + ". Los parámetros se conservaron junto a los archivos.");
+        }
       } else {
         setStatus("error", "No se pudo completar la generación", job.error || "Revisá la salida del motor y la ruta del modelo/LoRA.");
       }
