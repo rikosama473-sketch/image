@@ -131,6 +131,19 @@
           "pack_completed_count": 5,
           "pack_total": 5,
           "status": "complete_pending_visual_review"
+        },
+        {
+          "run_id": "39975454308",
+          "date": "2026-10-23",
+          "pack": "anatomy-sheet-4",
+          "source_path": "from-PixAI-2034984086876227343-0.png",
+          "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+          "manifest_path": "generated/character-assets/pibara/2026-10-23/run-39975454308/manifest.json",
+          "contact_sheet_path": "generated/character-assets/pibara/2026-10-23/run-39975454308/contact-sheet.jpg",
+          "assets_added_this_run": 1,
+          "pack_completed_count": 4,
+          "pack_total": 4,
+          "status": "complete_pending_visual_review"
         }
       ]
     },

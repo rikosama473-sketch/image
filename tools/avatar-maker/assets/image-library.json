@@ -3,7 +3,7 @@
   "project": "IMAGE Character Creator",
   "title": "Biblioteca local de ilustraciones",
   "generated_from": "data/training-labels.csv and files present in the repository tree",
-  "asset_count": 772,
+  "asset_count": 773,
   "notice": "This library indexes existing raster files in this repository for personal browsing. Filename hints do not prove authorship, franchise identity, license, or permission to redistribute/train. Items remain unreviewed until their source and rights are confirmed.",
   "filters": [
     "Todos",
@@ -11715,7 +11715,30 @@
       "character_id": "pibara",
       "pack": "expressions-core-5",
       "manifest_status": "needs_visual_identity_review"
+    },
+    {
+      "id": "generated-pibara-anatomy-sheet-4-batch-joint-guide-f3777be4",
+      "catalog_id": "GEN-F3777BE4-BATCH-JOINT-GUIDE",
+      "label": "Guía anatómica — batch-joint-guide — Pibara",
+      "path": "generated/character-assets/pibara/2026-10-23/run-39975454308/transparent/04-batch-joint-guide.png",
+      "src": "../../generated/character-assets/pibara/2026-10-23/run-39975454308/transparent/04-batch-joint-guide.png",
+      "kind": "anatomy_guide",
+      "origin_hint": "Generated in repository workflow via the public image-edit Space; source: from-PixAI-2034984086876227343-0.png; run: 39975454308",
+      "visual_review": "needs_visual_identity_review",
+      "license_review": "unreviewed",
+      "training_permission": "unreviewed",
+      "tags": [
+        "Anatomía",
+        "Cuerpo completo"
+      ],
+      "size_bytes": 496233,
+      "sha256_git_blob": "",
+      "sha256": "aa86c8ef416df5bdde1b23bc43f9c1e79533d80100b78982156aadfcb1023b9a",
+      "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+      "character_id": "pibara",
+      "pack": "anatomy-sheet-4",
+      "manifest_status": "needs_visual_identity_review"
     }
   ],
-  "updated_at_utc": "2026-10-22T08:19:58.655Z"
+  "updated_at_utc": "2026-10-23T15:08:54.929129+00:00"
 }

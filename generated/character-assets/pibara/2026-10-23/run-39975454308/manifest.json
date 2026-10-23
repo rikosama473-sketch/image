@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "character_id": "pibara",
+  "pack": "anatomy-sheet-4",
+  "pack_status": "complete",
+  "created_at_utc": "2026-10-23T15:07:27.253469+00:00",
+  "source": {
+    "repository": "rikosama473-sketch/image",
+    "ref": "3f5868708b51e3fc8f3ac87348bfc7e9cf6e2234",
+    "path": "from-PixAI-2034984086876227343-0.png",
+    "url": "https://raw.githubusercontent.com/rikosama473-sketch/image/3f5868708b51e3fc8f3ac87348bfc7e9cf6e2234/from-PixAI-2034984086876227343-0.png",
+    "sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+    "dimensions": [
+      768,
+      1280
+    ]
+  },
+  "generator": {
+    "space_id": "conradlocke/krea2-identity-edit",
+    "space_url": "https://huggingface.co/spaces/conradlocke/krea2-identity-edit",
+    "api_name": "/edit",
+    "openai_api_key_used": false,
+    "inference_api_paid_by_openai": false,
+    "ref_boost": 4.0,
+    "grounding_px": 768,
+    "lora_scale": 1.0,
+    "steps": 12,
+    "guidance_scale": 0.0,
+    "background_removed": true
+  },
+  "required_asset_ids": [
+    "batch-front-a-pose",
+    "batch-side-profile",
+    "batch-back-view",
+    "batch-joint-guide"
+  ],
+  "completed_asset_ids": [
+    "batch-front-a-pose",
+    "batch-side-profile",
+    "batch-back-view",
+    "batch-joint-guide"
+  ],
+  "variants": [
+    {
+      "index": 1,
+      "asset_id": "batch-front-a-pose",
+      "change": "Front view: full body from hair top to soles, neutral symmetric A-pose, hands and feet visible. Preserve exact hairstyle silhouette, bangs, tied sections, loose strands, hair/highlight pattern, iris color, face, accessories and costume color blocking. Extend only hidden parts consistently. Single figure, plain light background, clean anime line art, no labels.",
+      "prompt": "Identity-guided anime character model-sheet reconstruction from the supplied image. Unlike a normal local edit, do not preserve the input crop or bust framing: extend/recompose the composition into a complete full-body figure from the highest hair strand to both soles. Preserve the source face, exact hairstyle and silhouette, bangs, tied sections, loose strands, hair color/highlight pattern, iris color, signature accessories and visible costume details. Do not redesign the hairstyle or change the hair/iris colors. Keep the recognizable source outfit, palette and color blocking; extend only hidden lower-body clothing consistently with the design. If coverage must change, retain the source silhouette and signature details rather than inventing a generic unrelated outfit. Show clear anime body construction with a symmetric neutral A-pose, arms slightly separated from torso, hands, fingers and both feet visible, balanced proportions, clean 2D line art and cel shading. Subtle joint landmarks for shoulders, elbows, wrists, pelvis, knees and ankles are acceptable; avoid labels or writing. One figure only, use the orientation and pose specified by the requested anatomy view, centered portrait canvas, no panels, no extra poses, no added character, no text, no watermark, no photorealism. The output is a reference guide for later manual component separation, not a claim that individual body parts are already segmented. Requested anatomy model-sheet result: Front view: full body from hair top to soles, neutral symmetric A-pose, hands and feet visible. Preserve exact hairstyle silhouette, bangs, tied sections, loose strands, hair/highlight pattern, iris color, face, accessories and costume color blocking. Extend only hidden parts consistently. Single figure, plain light background, clean anime line art, no labels.",
+      "requested_seed": 1201,
+      "returned_seed": 1201,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39500149462/renders/01-batch-front-a-pose.png",
+        "sha256": "68b995f7706a1ebc6111586b7026653e18e8102eb7631c75d2e01324b6c463a9",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/01-batch-front-a-pose.png",
+        "sha256": "37846f3f750031a1d6682fda472d4a298593be21f38557a419e48b8d7e14b060",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.2956,
+        "opaque_pixel_ratio": 0.59853,
+        "quality_warning": null
+      },
+      "visual_review_status": "rejected_for_pose_and_crop",
+      "visual_review_note": "Cropped at thighs with a raised arm; not a full-body A-pose."
+    },
+    {
+      "index": 2,
+      "asset_id": "batch-side-profile",
+      "change": "Strict 90-degree left-facing side profile of this same character, full body from hair top to soles, neutral standing pose adapted to profile. Preserve exact hair silhouette, hair color/highlights, face profile, accessories and outfit motifs from the reference. Show torso, pelvis, arms, hands, legs and feet clearly in profile. Single figure, plain light background, no labels or text.",
+      "prompt": "Identity-guided anime character model-sheet reconstruction from the supplied image. Unlike a normal local edit, do not preserve the input crop or bust framing: extend/recompose the composition into a complete full-body figure from the highest hair strand to both soles. Preserve the source face, exact hairstyle and silhouette, bangs, tied sections, loose strands, hair color/highlight pattern, iris color, signature accessories and visible costume details. Do not redesign the hairstyle or change the hair/iris colors. Keep the recognizable source outfit, palette and color blocking; extend only hidden lower-body clothing consistently with the design. If coverage must change, retain the source silhouette and signature details rather than inventing a generic unrelated outfit. Show clear anime body construction with a symmetric neutral A-pose, arms slightly separated from torso, hands, fingers and both feet visible, balanced proportions, clean 2D line art and cel shading. Subtle joint landmarks for shoulders, elbows, wrists, pelvis, knees and ankles are acceptable; avoid labels or writing. One figure only, use the orientation and pose specified by the requested anatomy view, centered portrait canvas, no panels, no extra poses, no added character, no text, no watermark, no photorealism. The output is a reference guide for later manual component separation, not a claim that individual body parts are already segmented. Requested anatomy model-sheet result: Strict 90-degree left-facing side profile of this same character, full body from hair top to soles, neutral standing pose adapted to profile. Preserve exact hair silhouette, hair color/highlights, face profile, accessories and outfit motifs from the reference. Show torso, pelvis, arms, hands, legs and feet clearly in profile. Single figure, plain light background, no labels or text.",
+      "requested_seed": 1202,
+      "returned_seed": 1202,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39500149462/renders/02-batch-side-profile.png",
+        "sha256": "d8e837f6eafeab605b8ec87c408d795dcce5affaf13b6782403f6a3b15e6e0ff",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/02-batch-side-profile.png",
+        "sha256": "8566d9c2aeadf6e483f44e44a758edc56770f1670fa13bd3bb2622453554ea09",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.75384,
+        "opaque_pixel_ratio": 0.1956,
+        "quality_warning": null
+      },
+      "visual_review_status": "provisional_reference_only",
+      "visual_review_note": "Full-body side view, but hair/iris colors and outfit drift from Pibara."
+    },
+    {
+      "index": 3,
+      "asset_id": "batch-back-view",
+      "change": "Direct rear view of this same character, full body from hair top to soles, neutral symmetric A-pose, arms slightly away from torso. Preserve the source's rear hair silhouette, tied sections, loose strands, hair colors/highlights, jacket/back seams, belt and accessories. Do not redesign the character. Single figure, plain light background, no labels or text.",
+      "prompt": "Identity-guided anime character model-sheet reconstruction from the supplied image. Unlike a normal local edit, do not preserve the input crop or bust framing: extend/recompose the composition into a complete full-body figure from the highest hair strand to both soles. Preserve the source face, exact hairstyle and silhouette, bangs, tied sections, loose strands, hair color/highlight pattern, iris color, signature accessories and visible costume details. Do not redesign the hairstyle or change the hair/iris colors. Keep the recognizable source outfit, palette and color blocking; extend only hidden lower-body clothing consistently with the design. If coverage must change, retain the source silhouette and signature details rather than inventing a generic unrelated outfit. Show clear anime body construction with a symmetric neutral A-pose, arms slightly separated from torso, hands, fingers and both feet visible, balanced proportions, clean 2D line art and cel shading. Subtle joint landmarks for shoulders, elbows, wrists, pelvis, knees and ankles are acceptable; avoid labels or writing. One figure only, use the orientation and pose specified by the requested anatomy view, centered portrait canvas, no panels, no extra poses, no added character, no text, no watermark, no photorealism. The output is a reference guide for later manual component separation, not a claim that individual body parts are already segmented. Requested anatomy model-sheet result: Direct rear view of this same character, full body from hair top to soles, neutral symmetric A-pose, arms slightly away from torso. Preserve the source's rear hair silhouette, tied sections, loose strands, hair colors/highlights, jacket/back seams, belt and accessories. Do not redesign the character. Single figure, plain light background, no labels or text.",
+      "requested_seed": 1203,
+      "returned_seed": 1203,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39500149462/renders/03-batch-back-view.png",
+        "sha256": "b3c75fd683029e15449eafc7cd2f4b2678457d35dd99707c2fd5db7fde00d072",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39500149462/transparent/03-batch-back-view.png",
+        "sha256": "562bbce399d3e7b32536c3e3e7a740822a9c820b9dcaac70f4f4a7e363b2183d",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.63681,
+        "opaque_pixel_ratio": 0.29971,
+        "quality_warning": null
+      },
+      "visual_review_status": "provisional_reference_only",
+      "visual_review_note": "Full-body rear view, but hair and outfit drift from Pibara."
+    },
+    {
+      "index": 4,
+      "asset_id": "batch-joint-guide",
+      "change": "Front-view full-body anime character study in a neutral A-pose, hair top to soles, hands and feet visible. Preserve identity and costume. Add very faint construction marks for shoulders, ribcage, spine centerline, pelvis, elbows, wrists, knees and ankles without obscuring the art. Polished anime production illustration, not a medical skeleton. Plain light background, no labels or words.",
+      "prompt": "Identity-guided anime character model-sheet reconstruction from the supplied image. Unlike a normal local edit, do not preserve the input crop or bust framing: extend/recompose the composition into a complete full-body figure from the highest hair strand to both soles. Preserve the source face, exact hairstyle and silhouette, bangs, tied sections, loose strands, hair color/highlight pattern, iris color, signature accessories and visible costume details. Do not redesign the hairstyle or change the hair/iris colors. Keep the recognizable source outfit, palette and color blocking; extend only hidden lower-body clothing consistently with the design. If coverage must change, retain the source silhouette and signature details rather than inventing a generic unrelated outfit. Show clear anime body construction with a symmetric neutral A-pose, arms slightly separated from torso, hands, fingers and both feet visible, balanced proportions, clean 2D line art and cel shading. Subtle joint landmarks for shoulders, elbows, wrists, pelvis, knees and ankles are acceptable; avoid labels or writing. One figure only, use the orientation and pose specified by the requested anatomy view, centered portrait canvas, no panels, no extra poses, no added character, no text, no watermark, no photorealism. The output is a reference guide for later manual component separation, not a claim that individual body parts are already segmented. Requested anatomy model-sheet result: Front-view full-body anime character study in a neutral A-pose, hair top to soles, hands and feet visible. Preserve identity and costume. Add very faint construction marks for shoulders, ribcage, spine centerline, pelvis, elbows, wrists, knees and ankles without obscuring the art. Polished anime production illustration, not a medical skeleton. Plain light background, no labels or words.",
+      "requested_seed": 1204,
+      "returned_seed": 1204,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-23/run-39975454308/renders/04-batch-joint-guide.png",
+        "sha256": "b8900690342545fb0b7203a77be99b96e092a36fc3a6c4b0f17a7386dc4f4847",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-23/run-39975454308/transparent/04-batch-joint-guide.png",
+        "sha256": "aa86c8ef416df5bdde1b23bc43f9c1e79533d80100b78982156aadfcb1023b9a",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.63988,
+        "opaque_pixel_ratio": 0.29142,
+        "quality_warning": null
+      }
+    }
+  ],
+  "last_error": null,
+  "review_status": "needs_visual_identity_review",
+  "warning": "Generated renders and automated transparent cutouts require review of likeness and hair/accessory edges."
+}
