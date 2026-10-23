@@ -1,6 +1,11 @@
 name: Generate character assets without an API key
 
 on:
+  push:
+    branches:
+      - work/easy-avatar-maker-2026-10
+    paths:
+      - data/anatomy-generation-queue.json
   schedule:
     # Resume the oldest incomplete asset pack once per day. The free public
     # ZeroGPU Space currently permits only a small anonymous inference quota.
@@ -32,6 +37,12 @@ on:
           - eyes-4
           - accessories-4
           - face-details-4
+          - anatomy-guide-1
+          - anatomy-front-v2-1
+          - anatomy-side-1
+          - anatomy-back-1
+          - anatomy-joint-guide-1
+          - anatomy-sheet-4
       background:
         description: Also produce transparent PNG cutouts
         type: choice
@@ -71,6 +82,7 @@ jobs:
             tests
             data
             docs
+            tools/avatar-maker/assets
             generated/character-assets
           sparse-checkout-cone-mode: true
 
@@ -84,6 +96,17 @@ jobs:
           MANUAL_BASE_SEED: ${{ inputs.base_seed || '1201' }}
         run: |
           set -euo pipefail
+          if [ "$EVENT_NAME" = "push" ]; then
+            {
+              printf 'run=true\n'
+              printf 'character_id=pibara\n'
+              printf 'reference_image=from-PixAI-2034984086876227343-0.png\n'
+              printf 'asset_pack=anatomy-sheet-4\n'
+              printf 'reason=explicit anatomy batch queue marker\n'
+            } >> "$GITHUB_OUTPUT"
+            echo "Queued four-view Pibara anatomy sheet from branch-only marker."
+            exit 0
+          fi
           if [ "$EVENT_NAME" = "schedule" ]; then
             python scripts/select_next_character_asset_task.py --root "$GITHUB_WORKSPACE" >> "$GITHUB_OUTPUT"
             exit 0
@@ -122,7 +145,7 @@ jobs:
               raise SystemExit(f"Reference image does not exist in this revision: {source}")
           if cid in {"sunna", "chie"} and source == "from-PixAI-2034984086876227343-0.png":
               raise SystemExit("This file is confirmed as Pibara. Refusing to mix character identities; select a verified reference for Sunna/Chie.")
-          if os.environ["ASSET_PACK"] not in {"hair-core-5", "expressions-core-5", "eyes-4", "accessories-4", "face-details-4"}:
+          if os.environ["ASSET_PACK"] not in {"hair-core-5", "expressions-core-5", "eyes-4", "accessories-4", "face-details-4", "anatomy-guide-1", "anatomy-front-v2-1", "anatomy-side-1", "anatomy-back-1", "anatomy-joint-guide-1", "anatomy-sheet-4"}:
               raise SystemExit("Unsupported asset pack.")
           if os.environ["BACKGROUND"] not in {"transparent", "keep"}:
               raise SystemExit("Unsupported background mode.")
@@ -144,6 +167,7 @@ jobs:
         env:
           REPOSITORY: ${{ github.repository }}
           SOURCE_REF: ${{ github.sha }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
           CHARACTER_ID: ${{ steps.task.outputs.character_id }}
           REFERENCE_IMAGE: ${{ steps.task.outputs.reference_image }}
           ASSET_PACK: ${{ steps.task.outputs.asset_pack }}
@@ -177,8 +201,8 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
-      - name: Commit generated assets and resumable progress to main
-        if: always() && steps.generate_assets.outcome != 'skipped' && github.ref == 'refs/heads/main' && steps.task.outputs.run == 'true'
+      - name: Commit generated anatomy/assets and library to the triggering branch
+        if: always() && steps.generate_assets.outcome != 'skipped' && steps.task.outputs.run == 'true'
         env:
           CHARACTER_ID: ${{ steps.task.outputs.character_id }}
           ASSET_PACK: ${{ steps.task.outputs.asset_pack }}
@@ -191,9 +215,12 @@ jobs:
           if [ -d generated/character-assets ]; then
             git add -A -- generated/character-assets
           fi
+          if [ -f tools/avatar-maker/assets/image-library.json ]; then
+            git add -A -- tools/avatar-maker/assets/image-library.json
+          fi
           if git diff --cached --quiet; then
             echo "No generated files or registry changes to commit."
             exit 0
           fi
           git commit -m "Save ${CHARACTER_ID} ${ASSET_PACK} asset progress (run ${GITHUB_RUN_ID})"
-          git push origin HEAD:main
+          git push origin "HEAD:${GITHUB_REF_NAME}"

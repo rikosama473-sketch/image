@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#091225">
+<title>IMAGE — Biblioteca visual de ojos y cabello</title>
+<style>
+:root{color-scheme:dark;--bg:#090f1e;--panel:#111b2d;--panel2:#17253a;--line:#31425d;--text:#eef3ff;--muted:#a6b4ca;--pink:#f15a9d;--gold:#f0ca77;--green:#8de0b8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 Inter,system-ui,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;color:inherit}a{color:#ffc4df}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #ff9cca;outline-offset:2px}
+header{display:flex;align-items:center;gap:16px;padding:19px clamp(14px,3vw,34px);border-bottom:1px solid var(--line);background:linear-gradient(120deg,#111b2e,#19152b)}.brand{min-width:0;flex:1}.brand h1{font-size:clamp(20px,3vw,29px);margin:0 0 4px;letter-spacing:.02em}.brand p{margin:0;color:var(--muted);font-size:12px;max-width:900px}.header-actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}.studio-module-nav{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.studio-module-nav a{white-space:nowrap}.btn{border:1px solid #465a78;background:#1c2a42;border-radius:8px;padding:9px 12px;font-weight:750;font-size:11px}.btn:hover{border-color:var(--pink);background:#302137}.btn.primary{background:#963964;border-color:#e36aab}.btn.warn{background:#3a2b1c;border-color:#82683a;color:#ffe2a5}.btn.subtle{background:transparent}.btn:disabled{opacity:.45;cursor:not-allowed}
+main{max-width:1680px;margin:0 auto;padding:18px clamp(10px,2vw,28px) 32px}.notice{border:1px solid #5a4b2d;background:#282316;color:#f9e4b2;border-radius:10px;padding:11px 13px;margin-bottom:14px;font-size:11px;line-height:1.55}.notice strong{color:#fff0c3}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:15px}.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px}.stat b{display:block;font-size:22px;line-height:1.1}.stat span{display:block;font-size:10px;color:var(--muted);margin-top:4px}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 12px}.tab{background:#101a2b;border:1px solid var(--line);border-radius:8px;padding:10px 13px;color:#bac7dc;font-weight:800;font-size:11px}.tab.active{background:#3b2337;border-color:var(--pink);color:#fff}.controls{display:grid;grid-template-columns:minmax(180px,2fr) minmax(130px,1fr) minmax(130px,1fr) auto;gap:8px;padding:12px;background:var(--panel);border:1px solid var(--line);border-radius:11px;margin-bottom:12px}.field{display:flex;flex-direction:column;gap:5px;min-width:0}.field label{font-size:10px;color:var(--muted);font-weight:800}.field input,.field select,.field textarea{min-width:0;width:100%;padding:9px 10px;border-radius:7px;background:#0b1424;border:1px solid #3a4c68;color:var(--text);font-size:11px}.field textarea{min-height:78px;resize:vertical}.control-actions{display:flex;align-items:end;gap:7px;flex-wrap:wrap}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:15px 2px 10px}.section-head h2{margin:0;font-size:16px}.section-head p{margin:3px 0 0;font-size:10px;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.card{display:flex;flex-direction:column;min-width:0;border:1px solid #30425d;background:var(--panel);border-radius:10px;overflow:hidden}.card:hover{border-color:#aa5e8a}.preview{position:relative;height:210px;background:repeating-conic-gradient(#1a2639 0% 25%,#222f43 0% 50%) 50% / 18px 18px;display:flex;align-items:center;justify-content:center;overflow:hidden}.preview img{display:block;width:100%;height:100%;object-fit:contain}.placeholder{display:none;align-items:center;justify-content:center;text-align:center;color:#9bacbf;font-size:11px;padding:16px;position:absolute;inset:0;background:linear-gradient(135deg,#19263b,#121927)}.local-image{object-fit:contain!important}.select-card{position:absolute;top:8px;right:8px;background:#08111fe8;border:1px solid #7383a0;border-radius:7px;padding:6px 7px;font-size:10px}.select-card input{accent-color:var(--pink);vertical-align:middle}.card-body{padding:10px;display:flex;flex-direction:column;gap:7px;flex:1}.card h3{font-size:12px;line-height:1.4;margin:0;overflow-wrap:anywhere}.meta{font-size:9px;color:var(--muted);line-height:1.45}.tags{display:flex;gap:4px;flex-wrap:wrap}.tag{background:#202d42;border:1px solid #415472;border-radius:5px;padding:3px 5px;font-size:9px;color:#d9e3f5;overflow-wrap:anywhere}.status{align-self:flex-start;border-radius:5px;padding:4px 6px;font-size:9px;font-weight:850;border:1px solid #7b6338;background:#332919;color:#ffe1a0}.status.good{border-color:#36765e;background:#173b30;color:#b9f0d7}.status.bad{border-color:#8a4b5a;background:#3c202c;color:#ffb8c8}.card-actions{display:flex;gap:6px;margin-top:auto}.card-actions .btn{flex:1;padding:7px 6px;font-size:10px}.empty{border:1px dashed #42526e;border-radius:10px;text-align:center;padding:32px;color:var(--muted);grid-column:1/-1}.subpanel{border:1px solid var(--line);border-radius:11px;background:var(--panel);padding:13px;margin:12px 0}.subpanel h2{font-size:15px;margin:0 0 9px}.subpanel p{color:var(--muted);font-size:11px;line-height:1.55}.form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.form-grid .wide{grid-column:1/-1}.form-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.style-card{border:1px solid #53617a;border-radius:10px;background:#121d30;padding:13px;display:flex;flex-direction:column;gap:9px}.style-card h3{font-size:14px;margin:0}.style-images{display:flex;gap:7px;overflow:auto}.style-images img{width:80px;height:80px;object-fit:contain;background:#1d2b40;border-radius:6px;border:1px solid #3a4b65}.prompt{font:11px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;border:1px solid #3b4d67;border-radius:7px;background:#091321;color:#d7e4f6;padding:9px;white-space:pre-wrap;overflow-wrap:anywhere}
+dialog{width:min(760px,calc(100% - 20px));max-height:92vh;overflow:auto;border:1px solid #566784;border-radius:13px;background:#101a2b;color:var(--text);padding:0;box-shadow:0 20px 80px #000b}dialog::backdrop{background:#050916d9}.dialog-head{display:flex;justify-content:space-between;align-items:start;gap:10px;padding:15px;border-bottom:1px solid var(--line)}.dialog-head h2{font-size:16px;margin:0}.dialog-body{padding:15px}.dialog-grid{display:grid;grid-template-columns:210px minmax(0,1fr);gap:13px}.dialog-preview{width:100%;height:240px;object-fit:contain;background:#18263b;border-radius:8px}.dialog-body .field{margin-bottom:10px}.footer-note{font-size:10px;color:var(--muted);line-height:1.55;margin-top:18px}
+@media(max-width:1200px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.preview{height:185px}}@media(max-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.controls{grid-template-columns:1fr 1fr}.controls .field:first-child{grid-column:1/-1}.form-grid{grid-template-columns:1fr 1fr}.header-actions{max-width:220px}}@media(max-width:620px){header{align-items:flex-start;flex-direction:column}.header-actions{max-width:none}.stats{grid-template-columns:1fr 1fr}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.preview{height:158px}.card-body{padding:8px}.dialog-grid{grid-template-columns:1fr}.dialog-preview{height:190px}.controls{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr}.form-grid .wide{grid-column:auto}.tab{flex:1;min-width:calc(50% - 7px)}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <h1>IMAGE / Biblioteca visual</h1>
+    <p>Referencias reales → ficha visual → revisión de piezas → recetas de estilos. Empezamos por los ojos y el cabello.</p>
+  </div>
+  <div class="header-actions">
+    <nav class="studio-module-nav" data-image-studio-nav aria-label="Navegación del estudio IMAGE"><a class="btn subtle" href="../avatar-maker/index.html">Constructor</a><a class="btn subtle" href="../hairstyle-workbench/index.html">Taller de peinados</a><a class="btn subtle" href="../manual-character-editor/index.html">Editor de capas</a><a class="btn subtle" href="http://127.0.0.1:8765/" target="_blank" rel="noopener noreferrer">Generador local IA ↗</a></nav>
+    <button class="btn" id="exportBtn">Exportar biblioteca JSON</button><a class="btn subtle" href="./LOCAL_ASSET_REVIEW_2026-10.md">Informe visual ↗</a><a class="btn subtle" href="https://github.com/rikosama473-sketch/image/actions/runs/39607079312/artifacts/12349350592" target="_blank" rel="noopener noreferrer">Descargar 16 hojas ↗</a>
+    <label class="btn" for="importFile">Importar anotaciones</label><input id="importFile" type="file" accept="application/json" hidden>
+  </div>
+</header>
+<main>
+  <div class="notice"><strong>Regla de procedencia:</strong> los pins e imágenes web se muestran como referencias externas; no son assets propios ni permisos de reutilización. Las ilustraciones locales y las máscaras se clasifican por separado. Las etiquetas, revisiones y recetas hechas en este visor se guardan en este navegador; exportá el JSON para conservarlas o llevarlas al repositorio. Las recetas describen variaciones: no son PNG nuevos ni implican que una IA haya dibujado una pieza.</div>
+  <section class="stats" aria-label="Resumen de biblioteca">
+    <div class="stat"><b id="statRefs">—</b><span>Referencias web iniciales</span></div>
+    <div class="stat"><b id="statAssets">—</b><span>Ilustraciones locales indexadas</span></div>
+    <div class="stat"><b id="statLayers">—</b><span>Capas / máscaras por revisar</span></div>
+    <div class="stat"><b id="statStyles">0</b><span>Recetas creadas en este navegador</span></div>
+  </section>
+
+  <nav class="tabs" aria-label="Secciones de la biblioteca">
+    <button class="tab active" data-tab="web">Referencias web / Pinterest</button>
+    <button class="tab" data-tab="local">Imágenes del repositorio</button>
+    <button class="tab" data-tab="layers">Piezas candidatas</button>
+    <button class="tab" data-tab="styles">Recetas de estilos</button>
+  </nav>
+
+  <section id="controls" class="controls">
+    <div class="field"><label for="search">Buscar por nombre, etiqueta o nota</label><input id="search" type="search" placeholder="ej. iris concéntrico, flequillo abierto, coleta..."></div>
+    <div class="field"><label for="category">Categoría</label><select id="category"><option value="">Todas</option><option value="eyes">Ojos</option><option value="hair">Cabello</option><option value="bangs">Flequillos</option><option value="eyelashes">Pestañas</option><option value="iris">Iris</option><option value="pupils">Pupilas</option><option value="face">Rostro</option><option value="accessories">Accesorios</option><option value="full_character">Personajes completos</option><option value="mixed">Mixto</option></select></div>
+    <div class="field"><label for="statusFilter">Estado de revisión</label><select id="statusFilter"><option value="">Todos los estados</option><option value="unreviewed">Sin revisar</option><option value="reviewed_reference">Referencia revisada</option><option value="candidate_for_cutout">Candidato a recorte</option><option value="approved_for_internal_use">Aprobado para uso interno</option><option value="rejected">Descartado</option><option value="pending_visual_review">Capa pendiente</option></select></div>
+    <div class="control-actions"><button class="btn" id="clearFilters">Limpiar filtros</button></div>
+  </section>
+
+  <section id="addReferencePanel" class="subpanel">
+    <h2>+ Añadir referencia visual</h2>
+    <p>Pegá el enlace del pin y, si está disponible, la URL directa de la imagen para verla como miniatura. No descargamos pins ni quitamos sus marcas de agua. El estado inicial es “sin revisar” y “derechos sin verificar”.</p>
+    <form id="addReferenceForm">
+      <div class="form-grid">
+        <div class="field"><label for="newTitle">Nombre descriptivo</label><input id="newTitle" required placeholder="Ej. Ojos estrechos con iris radial"></div>
+        <div class="field"><label for="newCategory">Categoría</label><select id="newCategory"><option value="eyes">Ojos</option><option value="hair">Cabello</option><option value="bangs">Flequillos</option><option value="eyelashes">Pestañas</option><option value="iris">Iris</option><option value="pupils">Pupilas</option><option value="accessories">Accesorios</option><option value="face">Rostro</option><option value="mixed">Mixto</option></select></div>
+        <div class="field"><label for="newCreator">Autor / cuenta (si se conoce)</label><input id="newCreator" placeholder="Pendiente de verificar"></div>
+        <div class="field wide"><label for="newSource">URL de Pinterest o fuente original</label><input id="newSource" type="url" required placeholder="https://www.pinterest.com/pin/..."></div>
+        <div class="field wide"><label for="newImage">URL directa de imagen (opcional)</label><input id="newImage" type="url" placeholder="https://i.pinimg.com/...jpg"></div>
+        <div class="field wide"><label for="newTags">Etiquetas separadas por coma</label><input id="newTags" placeholder="lineart, pestañas largas, iris radial, blanco y negro"></div>
+        <div class="field wide"><label for="newDescription">Qué rasgos querés estudiar</label><textarea id="newDescription" placeholder="Forma exterior, inclinación, agrupación de mechones, detalles del iris..."></textarea></div>
+      </div>
+      <div class="form-actions"><button class="btn primary" type="submit">Guardar referencia</button><button class="btn" type="reset">Vaciar campos</button></div>
+    </form>
+  </section>
+  <section class="subpanel">
+    <h2>+ Importar muchos enlaces de Pinterest de una vez</h2>
+    <p>Pegá URLs HTTPS de pins o tableros, una por línea. Se crea una ficha provisional por enlace para abrirla, nombrarla y clasificarla. No se simula que las imágenes ya fueron analizadas; la vista previa solo aparece si el catálogo ya tiene una URL directa de imagen.</p>
+    <div class="form-grid">
+      <div class="field"><label for="bulkCategory">Categoría inicial de este lote</label><select id="bulkCategory"><option value="eyes">Ojos</option><option value="hair">Cabello</option><option value="bangs">Flequillos</option><option value="eyelashes">Pestañas</option><option value="iris">Iris</option><option value="pupils">Pupilas</option><option value="accessories">Accesorios</option><option value="mixed">Mixto / por clasificar</option></select></div>
+      <div class="field wide"><label for="bulkSources">Enlaces (uno por línea)</label><textarea id="bulkSources" rows="4" placeholder="https://www.pinterest.com/pin/...&#10;https://ar.pinterest.com/usuario/tablero/"></textarea></div>
+    </div>
+    <div class="form-actions"><button class="btn primary" id="importBulkBtn" type="button">Importar enlaces</button><span id="bulkStatus" class="meta">0 enlaces importados</span></div>
+  </section>
+
+  <section class="subpanel" id="variationPanel">
+    <h2>Crear variación a partir de referencias seleccionadas</h2>
+    <p>Marcá 1 o más fichas de una misma familia visual en la galería. Esto crea una receta descriptiva, no un PNG. Después pulsá “Probar en editor IA” para pasar la instrucción al editor existente; la generación requiere que su servicio local y la clave del proveedor estén configurados. Los enlaces de Pinterest no se cargan como imágenes de referencia automáticamente: subí la referencia manualmente en el editor.</p>
+    <div class="form-grid">
+      <div class="field"><label for="styleName">Nombre de la variante</label><input id="styleName" placeholder="Ej. Ojo rasgado con iris radial"></div>
+      <div class="field"><label for="styleFamily">Familia</label><select id="styleFamily"><option value="eyes">Diseño de ojos</option><option value="hair">Diseño de cabello</option><option value="mixed">Kit mixto de personaje</option></select></div>
+      <div class="field"><label for="styleMood">Intención visual</label><select id="styleMood"><option value="neutral">Neutral / base adaptable</option><option value="soft">Suave / dulce</option><option value="sharp">Afilado / desafiante</option><option value="dramatic">Dramático / alto contraste</option><option value="mysterious">Misterioso / sobrenatural</option><option value="simple">Simplificado para animación</option></select></div>
+      <div class="field wide"><label for="styleNotes">Rasgos que querés conservar o combinar</label><textarea id="styleNotes" placeholder="Ej. conservar la silueta exterior del ref A y el patrón del iris del ref B; evitar detalle excesivo"></textarea></div>
+    </div>
+    <div class="form-actions"><button class="btn primary" id="makeVariationBtn" type="button">Crear receta desde selección</button><button class="btn" id="clearSelection" type="button">Quitar selección</button><span id="selectionStatus" class="meta">0 referencias seleccionadas</span></div>
+  </section>
+
+  <div class="section-head"><div><h2 id="listTitle">Referencias web</h2><p id="listSubtitle">Referencias externas enlazadas; abrí cada fuente para comprobar autor, contexto y permisos.</p></div><div class="meta" id="resultCount"></div></div>
+  <section class="grid" id="grid" aria-live="polite"><div class="empty">Cargando los catálogos de IMAGE…</div></section>
+  <div class="footer-note">La vista local toma las 764 entradas indexadas en <code>tools/avatar-maker/assets/image-library.json</code> y las capas de <code>catalog.json</code>. Los nombres genéricos no se convierten automáticamente en etiquetas confirmadas: la clasificación visual se guarda como anotación hasta que se revise cada archivo. Para aplicar al repositorio las anotaciones exportadas, ejecutá <code>python scripts/apply_visual_reference_annotations.py image-visual-reference-library-export.json</code>. Para producir hojas de contacto locales, ejecutá <code>python scripts/build_visual_contact_sheets.py</code> desde la raíz del repositorio.</div>
+</main>
+
+<dialog id="editDialog">
+  <div class="dialog-head"><div><h2 id="editTitle">Editar ficha visual</h2><div id="editSub" class="meta"></div></div><button class="btn" id="closeDialog">Cerrar ✕</button></div>
+  <form id="editForm" class="dialog-body">
+    <div class="dialog-grid">
+      <div><img id="editPreview" class="dialog-preview" alt="Vista previa de la ficha"><p id="editSourceNote" class="meta"></p></div>
+      <div>
+        <input id="editId" type="hidden">
+        <div class="field"><label for="editName">Nombre descriptivo</label><input id="editName" required></div>
+        <div class="field"><label for="editCategory">Categoría</label><select id="editCategory"><option value="eyes">Ojos</option><option value="hair">Cabello</option><option value="bangs">Flequillos</option><option value="eyelashes">Pestañas</option><option value="iris">Iris</option><option value="pupils">Pupilas</option><option value="face">Rostro</option><option value="accessories">Accesorios</option><option value="full_character">Personaje completo</option><option value="mixed">Mixto</option><option value="body">Cuerpo</option><option value="clothes">Ropa</option></select></div>
+        <div class="field"><label for="editTags">Etiquetas (separadas por coma)</label><input id="editTags" placeholder="forma, volumen, pestañas, proporciones"></div>
+        <div class="field"><label for="editStatus">Revisión visual</label><select id="editStatus"><option value="unreviewed">Sin revisar</option><option value="reviewed_reference">Referencia revisada</option><option value="candidate_for_cutout">Candidato a recorte</option><option value="approved_for_internal_use">Aprobado para uso interno</option><option value="rejected">Descartado</option></select></div>
+        <div class="field"><label for="editLicense">Derechos / licencia</label><select id="editLicense"><option value="unreviewed">Sin revisar</option><option value="reference_only_unverified">Referencia visual solamente; derechos no verificados</option><option value="license_checked">Licencia revisada</option><option value="permission_confirmed">Permiso confirmado</option><option value="user_created">Creado por el usuario / proyecto</option><option value="do_not_reuse">No reutilizar como asset</option></select></div>
+        <div class="field"><label for="editNotes">Descripción / decisión de recorte</label><textarea id="editNotes" placeholder="Qué se ve, qué piezas separables hay, qué falta comprobar..."></textarea></div>
+      </div>
+    </div>
+    <div class="form-actions"><button class="btn primary" type="submit">Guardar anotación</button><button class="btn warn" id="resetAnnotation" type="button">Borrar mis anotaciones</button></div>
+  </form>
+</dialog>
+<script>
+(function(){
+"use strict";
+const $=id=>document.getElementById(id);
+const STORAGE_KEY="image.visual-reference-library.v1";
+let referenceCatalog=null, imageLibrary=null, assetCatalog=null, annotationCatalog=null, activeTab="web", cardIndex=new Map(), visibleCount=60;
+let state={annotations:{},userReferences:[],styles:[],selectedIds:[]};
+const categoryNames={eyes:"Ojos",hair:"Cabello",bangs:"Flequillos",eyelashes:"Pestañas",iris:"Iris",pupils:"Pupilas",accessories:"Accesorios",face:"Rostro",mixed:"Mixto",full_character:"Personaje completo",body:"Cuerpo",clothes:"Ropa",other:"Otro"};
+const statusNames={unreviewed:"Sin revisar",reviewed_reference:"Referencia revisada",candidate_for_cutout:"Candidato a recorte",approved_for_internal_use:"Aprobado para uso interno",rejected:"Descartado",pending_visual_review:"Pendiente de revisión visual"};
+const $esc=s=>String(s==null?"":s).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+function loadState(){try{const x=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}");state={annotations:x.annotations||{},userReferences:x.userReferences||[],styles:x.styles||[],selectedIds:x.selectedIds||[]};}catch(e){state={annotations:{},userReferences:[],styles:[],selectedIds:[]};}}
+function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){notice("No se pudo guardar en almacenamiento local. Exportá el JSON para no perder los cambios.");}updateStats();}
+function notice(msg){const el=document.createElement("div");el.className="notice";el.textContent=msg;$("grid").prepend(el);window.setTimeout(()=>el.remove(),5000);}
+function getAnnotation(id){return state.annotations[id]||{};}
+function normalizeTag(x){return String(x||"").trim().toLowerCase().replace(/\s+/g,"_");}
+function parseTags(s){return String(s||"").split(",").map(x=>x.trim()).filter(Boolean).map(normalizeTag);}
+function mergeById(base,overlay){const result=new Map();(base||[]).forEach(x=>{if(x&&x.id)result.set(x.id,x);});(overlay||[]).forEach(x=>{if(x&&x.id)result.set(x.id,x);});return Array.from(result.values());}
+function allCards(){
+ const cards=[];
+ (referenceCatalog?.items||[]).concat(state.userReferences||[]).forEach(x=>cards.push({id:x.id,type:"web",title:x.title||x.id,category:x.category||"mixed",image:x.image_url||"",sourceUrl:x.source_url||"",creator:x.creator||x.source_name||"",license:x.license_status||"reference_only_unverified",review:x.review_status||"unreviewed",tags:x.tags||[],description:x.description||x.usage||"",raw:x}));
+ (imageLibrary?.assets||[]).forEach(x=>{const a=getAnnotation(x.id);cards.push({id:x.id,type:"local",title:a.label||x.label||x.id,category:a.category||"other",image:x.src||"",sourceUrl:"",creator:x.origin_hint||"Procedencia pendiente",license:a.license_status||x.license_review||"unreviewed",review:a.review_status||x.visual_review||"unreviewed",tags:[...(x.tags||[]),...(a.tags||[])],description:a.notes||x.origin_hint||"",path:x.path,sha:x.sha256_git_blob,raw:x});});
+ (assetCatalog?.candidate_layers||[]).forEach(x=>{const a=getAnnotation("layer-"+x.id);cards.push({id:"layer-"+x.id,type:"layer",title:a.label||x.label,category:a.category||x.category,image:"../../"+x.repo_path,sourceUrl:"",creator:"IMAGE / máscara candidata",license:"user_created",review:a.review_status||x.status||"pending_visual_review",tags:[x.category,...(a.tags||[])],description:a.notes||x.review||"",path:x.repo_path,raw:x});});
+ (assetCatalog?.base_illustrations||[]).forEach(x=>{const a=getAnnotation("base-"+x.id);cards.push({id:"base-"+x.id,type:"base",title:a.label||x.label,category:"full_character",image:"../../"+x.repo_path,sourceUrl:"",creator:"IMAGE / ilustración completa",license:a.license_status||"unreviewed",review:a.review_status||x.status||"unreviewed",tags:["full_character",...(a.tags||[])],description:a.notes||x.warning||"",path:x.repo_path,raw:x});});
+ return cards;
+}
+function tabCards(){
+ const list=allCards();
+ if(activeTab==="web")return list.filter(x=>x.type==="web");
+ if(activeTab==="local")return list.filter(x=>x.type==="local");
+ if(activeTab==="layers")return list.filter(x=>x.type==="layer"||x.type==="base");
+ return [];
+}
+function updateStats(){ $("statRefs").textContent=(referenceCatalog?.items||[]).length+(state.userReferences||[]).length;$("statAssets").textContent=(imageLibrary?.assets||[]).length;$("statLayers").textContent=(assetCatalog?.candidate_layers||[]).length;$("statStyles").textContent=(state.styles||[]).length;$("selectionStatus").textContent=state.selectedIds.length+" referencias seleccionadas"; }
+function currentCategory(card){return getAnnotation(card.id).category||card.category;}
+function currentTitle(card){return getAnnotation(card.id).label||card.title;}
+function currentReview(card){return getAnnotation(card.id).review_status||card.review;}
+function currentTags(card){return Array.from(new Set([...(card.tags||[]),...(getAnnotation(card.id).tags||[])]));}
+function statusClass(s){return s==="approved_for_internal_use"||s==="reviewed_reference"||s==="license_checked"||s==="permission_confirmed"||s==="user_created"?"good":s==="rejected"||s==="do_not_reuse"?"bad":"";}
+function buildCard(card){
+ const tags=currentTags(card).slice(0,7), ann=getAnnotation(card.id), img=card.image;
+ const src=img?'<img loading="lazy" class="'+(card.type==="local"?"local-image":"")+'" alt="'+$esc(currentTitle(card))+'" src="'+$esc(img)+'" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"><div class="placeholder">Sin vista previa disponible<br>abrí la fuente para inspeccionarla</div>':'<div class="placeholder" style="display:flex">Referencia enlazada<br>abrí la fuente para ver el original</div>';
+ const picked=state.selectedIds.includes(card.id);
+ const review=currentReview(card);
+ const typeLabel=card.type==="local"?(card.raw.kind==="full_illustration"?"Ilustración completa · referencia":"Imagen local"):card.type==="layer"?"Capa separable candidata":card.type==="base"?"Ilustración completa":"Referencia externa";
+ const srcLink=card.sourceUrl?'<a href="'+$esc(card.sourceUrl)+'" target="_blank" rel="noopener noreferrer">Abrir fuente ↗</a>':'';
+ const pathMeta=card.path?'<div class="meta">'+$esc(card.path)+'</div>':'';
+ return '<article class="card" data-card="'+$esc(card.id)+'"><div class="preview">'+src+'<label class="select-card" title="Seleccionar para una receta"><input type="checkbox" data-select="'+$esc(card.id)+'" '+(picked?"checked":"")+'> Elegir</label></div><div class="card-body"><h3>'+$esc(currentTitle(card))+'</h3><div class="meta">'+$esc(typeLabel)+' · '+$esc(categoryNames[currentCategory(card)]||currentCategory(card)||"Sin clasificar")+'</div><span class="status '+statusClass(review)+'">'+$esc(statusNames[review]||review)+'</span><div class="tags">'+tags.map(t=>'<span class="tag">#'+$esc(t)+'</span>').join("")+'</div><div class="meta">'+$esc((ann.notes||card.description||"Sin nota editorial.").slice(0,180))+'</div>'+pathMeta+'<div class="card-actions"><button class="btn" data-edit="'+$esc(card.id)+'">Clasificar / revisar</button>'+(srcLink?'<a class="btn" href="'+$esc(card.sourceUrl)+'" target="_blank" rel="noopener noreferrer">Fuente ↗</a>':'<button class="btn" data-edit="'+$esc(card.id)+'">Añadir notas</button>')+'</div></div></article>';
+}
+function render(){
+ cardIndex=new Map(allCards().map(x=>[x.id,x]));
+ if(activeTab==="styles"){renderStyles();return;}
+ let cards=tabCards();
+ const q=$("search").value.trim().toLowerCase(), cat=$("category").value, stat=$("statusFilter").value;
+ cards=cards.filter(c=>{
+  const title=currentTitle(c), review=currentReview(c), tags=currentTags(c).join(" "), blob=(title+" "+c.id+" "+c.description+" "+tags+" "+(c.path||"")).toLowerCase();
+  if(q&&!blob.includes(q))return false;
+  if(cat&&currentCategory(c)!==cat&&!currentTags(c).includes(cat))return false;
+  if(stat&&review!==stat)return false;
+  return true;
+ });
+ const titles={web:["Referencias web / Pinterest","Fuentes externas enlazadas; las licencias no están asumidas."],local:["Imágenes existentes del repositorio","Las imágenes no se clasificaron automáticamente por lo que parecen: todas siguen disponibles para revisión visual."],layers:["Piezas separables y variantes completas","Las máscaras candidatas son experimentales. Una ilustración completa no es un recorte de ojos o cabello." ]};
+ $("listTitle").textContent=titles[activeTab][0];$("listSubtitle").textContent=titles[activeTab][1];$("resultCount").textContent=cards.length+" resultados";
+ const shown=cards.slice(0,visibleCount);
+ $("grid").innerHTML=cards.length?shown.map(buildCard).join(""):'<div class="empty">No hay resultados con esos filtros.</div>';
+ if(cards.length>visibleCount){const wrap=document.createElement("div");wrap.className="empty";const more=document.createElement("button");more.id="loadMoreBtn";more.className="btn";more.type="button";more.textContent="Cargar 60 más ("+(cards.length-visibleCount)+" restantes)";wrap.appendChild(more);$("grid").appendChild(wrap);}
+ $("statStyles").textContent=state.styles.length;
+}
+function renderStyles(){
+ $("listTitle").textContent="Recetas de estilos guardadas";$("listSubtitle").textContent="Cada receta guarda referencias, etiquetas y dirección artística. No afirma que exista un dibujo final."; $("resultCount").textContent=state.styles.length+" recetas";
+ if(!state.styles.length){$("grid").innerHTML='<div class="empty">Todavía no hay recetas. Volvé a Referencias, seleccioná fichas y pulsá “Crear receta desde selección”.</div>';return;}
+ $("grid").innerHTML=state.styles.map((s,i)=>{
+  const sourceCards=(s.source_ids||[]).map(id=>cardIndex.get(id)).filter(Boolean);
+  const pics=sourceCards.map(c=>c.image?'<img loading="lazy" src="'+$esc(c.image)+'" alt="'+$esc(currentTitle(c))+'">':'').join("");
+  const prompt=(s.prompt_spec||"");
+  return '<article class="style-card"><span class="status">'+$esc(s.category||"mixed")+' · RECETA, NO IMAGEN</span><h3>'+$esc(s.name)+'</h3><div class="meta">Creada '+$esc(s.created_at||"")+' · '+(s.source_ids||[]).length+' fuentes vinculadas</div><div class="style-images">'+pics+'</div><div class="tags">'+(s.tags||[]).map(t=>'<span class="tag">#'+$esc(t)+'</span>').join("")+'</div><div class="meta">'+$esc(s.notes||"Sin notas.")+'</div><div class="prompt">'+$esc(prompt)+'</div><div class="card-actions"><a class="btn primary" href="../avatar-maker/index.html?visualPrompt='+encodeURIComponent(prompt)+'&visualBackground=transparent&visualCategory='+encodeURIComponent(s.category||"mixed")+'&visualName='+encodeURIComponent(s.name)+'" target="_blank" rel="noopener noreferrer">Probar en editor IA ↗</a><button class="btn" data-copy-style="'+i+'">Copiar especificación</button><button class="btn warn" data-delete-style="'+i+'">Eliminar receta</button></div></article>';
+ }).join("");
+}
+function openEdit(id){
+ const c=cardIndex.get(id);if(!c)return;
+ const a=getAnnotation(id);
+ $("editId").value=id;$("editTitle").textContent=currentTitle(c);$("editSub").textContent=c.type+" · "+id;
+ $("editPreview").src=c.image||"";$("editPreview").style.display=c.image?"block":"none";
+ $("editSourceNote").innerHTML=(c.sourceUrl?'<a href="'+$esc(c.sourceUrl)+'" target="_blank" rel="noopener noreferrer">Abrir fuente original ↗</a>':'')+(c.path?'<br>Ruta: '+$esc(c.path):"");
+ $("editName").value=a.label||c.title;const wantedCategory=a.category||c.category||"mixed";$("editCategory").value=Array.from($("editCategory").options).some(o=>o.value===wantedCategory)?wantedCategory:"mixed";$("editTags").value=(a.tags||c.tags||[]).join(", ");$("editStatus").value=a.review_status||((c.review==="pending_visual_review")?"unreviewed":c.review||"unreviewed");$("editLicense").value=a.license_status||c.license||"unreviewed";$("editNotes").value=a.notes||c.description||"";
+ $("editDialog").showModal();
+}
+function addReference(e){
+ e.preventDefault();
+ const title=$("newTitle").value.trim(), source=$("newSource").value.trim(), image=$("newImage").value.trim();
+ const tags=parseTags($("newTags").value);
+ if(!title||!source){notice("Completá el nombre y la URL de origen.");return;}
+ const id="user-ref-"+Date.now().toString(36);
+ state.userReferences.push({id,title,kind:"user_reference",category:$("newCategory").value,image_url:image,source_url:source,creator:$("newCreator").value.trim()||"Pendiente de confirmar",license_status:"reference_only_unverified",usage:"Referencia externa; permisos todavía no verificados.",tags,description:$("newDescription").value.trim(),review_status:"unreviewed"});
+ persist();$("addReferenceForm").reset();activeTab="web";setActiveTab("web");render();notice("Referencia guardada en este navegador. Exportá el JSON para conservarla fuera de él.");
+}
+function importBulkSources(){
+ const lines=$("bulkSources").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean),category=$("bulkCategory").value;
+ const seen=new Set([...(referenceCatalog?.items||[]),...state.userReferences].map(x=>x.source_url).filter(Boolean));
+ let added=0,duplicates=0,invalid=0;
+ for(const raw of lines){
+  let parsed;try{parsed=new URL(raw);}catch(_){invalid++;continue;}
+  if(parsed.protocol!=="https:"||!(parsed.hostname==="pinterest.com"||parsed.hostname.endsWith(".pinterest.com"))){invalid++;continue;}
+  const source=parsed.href;if(seen.has(source)){duplicates++;continue;}
+  seen.add(source);
+  const parts=parsed.pathname.split("/").filter(Boolean);
+  const pinIndex=parts.indexOf("pin");
+  const isPin=pinIndex>=0&&parts[pinIndex+1];
+  const slug=isPin?parts[pinIndex+1]:parts[parts.length-1]||"tablero";
+  const friendly=decodeURIComponent(slug).replace(/[-_]+/g," ").replace(/\s+/g," ").trim();
+  const id="bulk-ref-"+Date.now().toString(36)+"-"+String(added+1).padStart(3,"0");
+  state.userReferences.push({id,title:(isPin?"Pin pendiente · ":"Tablero de referencia · ")+(friendly||"sin título"),kind:isPin?"pinterest_reference":"pinterest_board",category,image_url:"",source_url:source,creator:"Pendiente de identificar en la fuente original",license_status:"reference_only_unverified",usage:"Enlace importado por lote. No extraer ni redistribuir la imagen hasta comprobar la fuente original y sus permisos.",tags:[category,"needs_visual_review","bulk_import"],description:"Ficha provisional: abrir el enlace, revisar visualmente el contenido, sustituir el título provisional por un nombre de rasgos observables, añadir etiquetas y verificar autor/licencia. No hubo análisis visual automático.",review_status:"unreviewed"});
+  added++;
+ }
+ persist();$("bulkStatus").textContent=added+" importados · "+duplicates+" repetidos · "+invalid+" enlaces inválidos";
+ if(added){$("bulkSources").value="";activeTab="web";setActiveTab("web");render();}
+ else notice("No se importó ningún enlace. Usá URLs HTTPS de pinterest.com, una por línea.");
+}
+function setActiveTab(tab){visibleCount=60;activeTab=tab;document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));$("category").value="";$("statusFilter").value="";$("search").value="";$("addReferencePanel").style.display=tab==="web"?"block":"none";$("variationPanel").style.display=tab==="styles"?"none":"block";$("controls").style.display=tab==="styles"?"none":"grid";render();}
+function makeVariation(){
+ const selected=state.selectedIds.map(id=>cardIndex.get(id)).filter(Boolean);
+ if(!selected.length){notice("Elegí al menos una referencia con la casilla “Elegir”.");return;}
+ const family=$("styleFamily").value;
+ const allowed=family==="mixed"?selected:selected.filter(c=>family==="eyes"?["eyes","eyelashes","iris","pupils","face","mixed"].includes(currentCategory(c)):["hair","bangs","accessories","mixed"].includes(currentCategory(c)));
+ if(!allowed.length){notice("La selección no coincide con la familia elegida. Cambiá la familia o elegí referencias compatibles.");return;}
+ const tags=Array.from(new Set(allowed.flatMap(currentTags)));
+ const modifiers={
+  eyes:{neutral:["contorno exterior limpio","iris de detalle medio","reflejos controlados"],soft:["curva superior suave","pestañas ligeras","brillos pequeños"],sharp:["esquinas afiladas","párpado superior de alto contraste","pupila compacta"],dramatic:["tramas negras densas","contraste fuerte","reflejos de alto impacto"],mysterious:["iris segmentado","reflejo irregular","sombra superior profunda"],simple:["contorno uniforme","iris simplificado","máximo tres masas de detalle"]},
+  hair:{neutral:["silueta legible","mechones principales agrupados","volumen equilibrado"],soft:["curvas amplias","puntas suaves","volumen ligero"],sharp:["puntas definidas","dirección diagonal","contraste de mechones"],dramatic:["silueta marcada","masas negras controladas","mechones de gran longitud"],mysterious:["asimetría controlada","mechones sobre el rostro","silueta quebrada"],simple:["grupos de mechones grandes","pocos trazos interiores","silueta clara"]}
+ };
+ const mood=$("styleMood").value, extras=(modifiers[family==="hair"?"hair":"eyes"][mood]||modifiers.eyes.neutral);
+ const name=$("styleName").value.trim()||((family==="eyes"?"Ojos":family==="hair"?"Cabello":"Kit visual")+" · variante "+String(state.styles.length+1).padStart(3,"0"));
+ const category=family;
+ const description=(family==="eyes"?"Diseño ocular anime 2D en blanco y negro, fondo transparente, line art limpio. ":"Cabello anime 2D en blanco y negro, fondo transparente, capas separables y silueta limpia. ");
+ const targetInstruction=family==="eyes"?"Edita únicamente el diseño de ojos del personaje base: forma exterior, párpados, pestañas, iris, pupila y reflejos. Conserva identidad, pose, ropa, proporciones y encuadre; no alteres el resto del dibujo. Si necesitás un recorte aislado, ejecutá después la extracción de ojos y revisá el alfa.":"Edita únicamente la estructura del cabello del personaje base: silueta, flequillo, mechones, largo y recogidos. Conserva rostro, ojos, identidad, pose y ropa. Si necesitás una pieza suelta, ejecutá después la extracción de cabello y revisá el alfa.";
+ const sourceList=allowed.map(c=>currentTitle(c)+(c.sourceUrl?" — "+c.sourceUrl:"")).join(" | ");
+ const promptSpec=description+targetInstruction+" Familia/intención: "+categoryNames[category]+" / "+mood+". Rasgos de referencia: "+(tags.length?tags.join(", "):"por clasificar")+". Dirección propuesta: "+extras.join("; ")+". Referencias registradas: "+(sourceList||"ninguna")+". El editor no carga automáticamente los enlaces de referencia: subí manualmente una imagen de referencia si necesitás comparar formas concretas. No copies las imágenes fuente literalmente. Requiere generación real en el editor IA y revisión posterior.";
+ state.styles.unshift({id:"style-"+Date.now().toString(36),name,category,mood,source_ids:allowed.map(c=>c.id),tags:[...tags,...extras.map(normalizeTag)],notes:$("styleNotes").value.trim(),prompt_spec:promptSpec,created_at:new Date().toISOString().slice(0,10),recipe_status:"concept_only",image_generated:false});
+ persist();setActiveTab("styles");notice("Receta creada. Es una especificación de diseño, no una imagen generada."); 
+}
+function exportBundle(){
+ const bundle={schema_version:1,project:"IMAGE visual reference library",exported_at:new Date().toISOString(),source_catalog:"tools/visual-reference-library/reference-library.json",persistent_store_format:"tools/visual-reference-library/annotations.json",references_added_by_user:state.userReferences,annotations:state.annotations,style_recipes:state.styles,selected_ids:state.selectedIds,notice:"Annotations and recipe specs only. Original web images are linked, not bundled. Recipes are not generated image files. Apply to the repo with python scripts/apply_visual_reference_annotations.py image-visual-reference-library-export.json."};
+ const blob=new Blob([JSON.stringify(bundle,null,2)+"\n"],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="image-visual-reference-library-export.json";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);notice("Exportado JSON con "+Object.keys(state.annotations).length+" fichas anotadas y "+state.styles.length+" recetas.");
+}
+function importBundle(file){
+ const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);state.annotations={...state.annotations,...(x.annotations||{})};state.userReferences=[...state.userReferences,...(x.references_added_by_user||[])].filter((v,i,a)=>a.findIndex(z=>z.id===v.id)===i);state.styles=[...(x.style_recipes||[]),...state.styles].filter((v,i,a)=>a.findIndex(z=>z.id===v.id)===i);state.selectedIds=Array.from(new Set([...(state.selectedIds||[]),...(x.selected_ids||[])]));persist();render();notice("Anotaciones importadas. Se conservaron las fichas locales existentes.");}catch(e){notice("El JSON no tiene un formato de biblioteca compatible.");}};r.readAsText(file);}
+function selectCard(id,checked){state.selectedIds=checked?Array.from(new Set([...state.selectedIds,id])):state.selectedIds.filter(x=>x!==id);persist();$("selectionStatus").textContent=state.selectedIds.length+" referencias seleccionadas";}
+function bindEvents(){
+ document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>setActiveTab(b.dataset.tab)));
+ const rerenderFromStart=()=>{visibleCount=60;render();};
+ ["search","category","statusFilter"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",rerenderFromStart));
+ $("clearFilters").addEventListener("click",()=>{$("search").value="";$("category").value="";$("statusFilter").value="";render();});
+ $("addReferenceForm").addEventListener("submit",addReference);
+ $("importBulkBtn").addEventListener("click",importBulkSources);
+ $("makeVariationBtn").addEventListener("click",makeVariation);
+ $("clearSelection").addEventListener("click",()=>{state.selectedIds=[];persist();render();});
+ $("exportBtn").addEventListener("click",exportBundle);
+ $("importFile").addEventListener("change",e=>{if(e.target.files&&e.target.files[0])importBundle(e.target.files[0]);e.target.value="";});
+ $("closeDialog").addEventListener("click",()=>$("editDialog").close());
+ $("editForm").addEventListener("submit",e=>{e.preventDefault();const id=$("editId").value;state.annotations[id]={label:$("editName").value.trim(),category:$("editCategory").value,tags:parseTags($("editTags").value),review_status:$("editStatus").value,license_status:$("editLicense").value,notes:$("editNotes").value.trim(),updated_at:new Date().toISOString()};persist();$("editDialog").close();render();notice("Ficha anotada en este navegador; exportá el JSON para respaldarla.");});
+ $("resetAnnotation").addEventListener("click",()=>{delete state.annotations[$("editId").value];persist();$("editDialog").close();render();});
+ $("grid").addEventListener("change",e=>{const id=e.target.dataset.select;if(id)selectCard(id,e.target.checked);});
+ $("grid").addEventListener("click",e=>{const more=e.target.closest("#loadMoreBtn");if(more){visibleCount+=60;render();return;}const edit=e.target.closest("[data-edit]");if(edit){openEdit(edit.dataset.edit);return;}const copy=e.target.closest("[data-copy-style]");if(copy){const item=state.styles[Number(copy.dataset.copyStyle)];if(item)navigator.clipboard?.writeText(item.prompt_spec).then(()=>notice("Especificación copiada."),()=>notice("No se pudo copiar automáticamente. Seleccioná el texto del bloque."));return;}const del=e.target.closest("[data-delete-style]");if(del){const ix=Number(del.dataset.deleteStyle);state.styles.splice(ix,1);persist();render();}});
+}
+async function load(){
+ loadState();bindEvents();
+ const loadJson=async path=>{const r=await fetch(path,{cache:"no-store"});if(!r.ok)throw new Error(path+" HTTP "+r.status);return r.json();};
+ try{
+  const [refs,annotations,images,catalog]=await Promise.all([
+   loadJson("./reference-library.json"),
+   loadJson("./annotations.json"),
+   loadJson("../avatar-maker/assets/image-library.json"),
+   loadJson("../avatar-maker/assets/catalog.json")
+  ]);
+  referenceCatalog=refs;annotationCatalog=annotations;imageLibrary=images;assetCatalog=catalog;
+  const localAnnotations={...state.annotations},localReferences=state.userReferences.slice(),localStyles=state.styles.slice();
+  state.annotations={...(annotationCatalog.annotations||{}),...localAnnotations};
+  state.userReferences=mergeById(annotationCatalog.user_references||[],localReferences);
+  state.styles=mergeById(annotationCatalog.style_recipes||[],localStyles);
+  updateStats();persist();setActiveTab("web");
+ }catch(e){$("grid").innerHTML='<div class="empty">No se pudieron leer los catálogos. Abrí la página a través del servidor local IMAGE, no con file://.<br><br>Ruta esperada: <code>http://127.0.0.1:8766/tools/visual-reference-library/index.html</code><br><br>'+ $esc(String(e.message||e))+'</div>';}
+}
+load();
+})();
+</script>
+</body>
+</html>

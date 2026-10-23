@@ -45,6 +45,15 @@ PACKS: dict[str, dict[str, Any]] = {
         "expected_bytes": 252884,
         "purpose": "Modular GIMP source and 16 sample characters at 64x96; pixel/cartoon style, useful for alignment tests.",
     },
+    "visual-novel-characters": {
+        "title": "Visual Novel Style Characters — madameberry",
+        "url": "https://opengameart.org/sites/default/files/VisualNovel_Set1_MadameBerry.zip",
+        "source_page": "https://opengameart.org/node/54368",
+        "license": "CC0 as declared on the original OpenGameArt source page",
+        "archive_name": "VisualNovel_Set1_MadameBerry.zip",
+        "expected_bytes": None,
+        "purpose": "Visual-novel-style characters with layered PSD and exported PNG files; review each layer before mixing.",
+    }
 }
 
 
@@ -133,7 +142,7 @@ def download_pack(pack_id: str, output_root: Path, force: bool = False) -> dict[
 
     if archive_path.exists():
         if not force:
-            if archive_path.stat().st_size != pack["expected_bytes"]:
+            if pack.get("expected_bytes") is not None and archive_path.stat().st_size != pack["expected_bytes"]:
                 raise ValueError(
                     f"{archive_path} exists but size differs from the reviewed archive. "
                     "Inspect it manually or rerun with --force."
@@ -160,7 +169,7 @@ def download_pack(pack_id: str, output_root: Path, force: bool = False) -> dict[
                     if downloaded > MAX_ARCHIVE_BYTES:
                         raise ValueError(f"Download exceeded {MAX_ARCHIVE_BYTES} bytes.")
                     output.write(block)
-            if downloaded != pack["expected_bytes"]:
+            if pack.get("expected_bytes") is not None and downloaded != pack["expected_bytes"]:
                 raise ValueError(
                     f"Downloaded {downloaded} bytes, expected {pack['expected_bytes']}. "
                     "The publisher may have changed the archive; do not extract until reviewed."
@@ -175,7 +184,7 @@ def download_pack(pack_id: str, output_root: Path, force: bool = False) -> dict[
 
     if not zipfile.is_zipfile(archive_path):
         raise ValueError(f"{archive_path} is not a valid ZIP archive.")
-    if archive_path.stat().st_size != pack["expected_bytes"]:
+    if pack.get("expected_bytes") is not None and archive_path.stat().st_size != pack["expected_bytes"]:
         raise ValueError("Archive size differs from the recorded source snapshot.")
 
     if extract_path.exists():

@@ -1,0 +1,3 @@
+# Optional local AI background removal for anime illustrations.
+# CPU backend; model weights are downloaded on first use and cached under the user's home directory.
+rembg[cpu]==2.0.85

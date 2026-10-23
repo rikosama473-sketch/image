@@ -1,0 +1,993 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#071426">
+<title>IMAGE — Character Creator</title>
+<style>
+:root{--bg:#071426;--panel:#0b1b30;--panel2:#10233d;--line:#2b4260;--text:#f2f5ff;--muted:#9aabc5;--pink:#f13e8b;--pink2:#ff6caf;--gold:#e9c16b}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font:14px/1.4 Inter,system-ui,"Segoe UI",sans-serif}button,input,select{font:inherit}button{cursor:pointer;color:inherit}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #ffacd1;outline-offset:2px}.app{display:grid;grid-template-columns:230px minmax(390px,1fr) minmax(400px,470px);height:100dvh;min-height:650px;overflow:hidden}.sidebar{background:#08162a;border-right:1px solid var(--line);padding:15px 12px;display:flex;flex-direction:column;overflow:auto}.brand{display:flex;align-items:center;gap:10px;padding:2px 8px 17px;border-bottom:1px solid var(--line)}.mark{font-size:35px;color:#ffb6d9}.brand strong{font-size:22px;letter-spacing:2px;display:block}.brand small{font-size:13px;letter-spacing:0;font-weight:600}.tagline{font-size:10px;color:var(--muted);margin-top:4px}.nav{display:grid;gap:5px;margin-top:15px}.navbtn{border:1px solid transparent;background:transparent;border-radius:8px;padding:11px 10px;display:flex;gap:12px;align-items:center;text-align:left;color:#e1e9f8}.navbtn .ico{font-size:20px;width:24px;text-align:center}.navbtn .chev{margin-left:auto;color:#9db0cc}.navbtn.active{background:linear-gradient(95deg,#f03d8c,#d83283);font-weight:800}.navbtn:not(.active):hover{background:#142743;border-color:#314766}.nav-sep{height:1px;background:var(--line);margin:14px 0 8px}.sidebar-footer{margin-top:auto;border-top:1px solid var(--line);padding-top:12px}.sidebar-footer p{font-size:10px;color:var(--muted);line-height:1.55}.sidebar-footer a{color:#ffc7e1}.studio-module-nav{display:flex;flex-direction:column;gap:6px;margin-top:10px}.studio-module-nav a{display:block;border:1px solid #2b4260;border-radius:6px;padding:7px;text-decoration:none;font-size:10px;color:#ffc7e1;background:#0e2036}.studio-module-nav a:hover{border-color:var(--pink);background:#142743}.studio-module-nav strong{font-size:9px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}.work{min-width:0;display:grid;grid-template-rows:minmax(0,1fr) 203px;background:#071426}.stage-layout{min-height:0;display:grid;grid-template-columns:45px minmax(0,1fr);padding-right:8px}.tools{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 4px}.tool{width:35px;height:36px;border:1px solid #314967;border-radius:8px;background:#0c1c31;font-size:17px}.tool.active,.tool:hover{border-color:var(--pink);color:#ff9ac8}.stage{position:relative;min-height:0;min-width:0;display:flex;align-items:center;justify-content:center;overflow:hidden;border-left:1px solid #44566c;border-right:1px solid #44566c;background:#e8e4e5}.checker{background-color:#ece9eb;background-image:linear-gradient(45deg,#d8d4d7 25%,transparent 25%),linear-gradient(-45deg,#d8d4d7 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#d8d4d7 75%),linear-gradient(-45deg,transparent 75%,#d8d4d7 75%);background-size:22px 22px;background-position:0 0,0 11px,11px -11px,-11px 0}.stage canvas{display:block;height:100%;width:auto;max-width:100%;object-fit:contain;touch-action:none}.badge{position:absolute;top:10px;left:10px;background:#071426d9;border:1px solid #ffffff4a;border-radius:6px;padding:6px 8px;font-size:9px;letter-spacing:.05em;font-weight:800}.badge span{color:#ff86ba}.stage-note{position:absolute;left:10px;top:49px;max-width:65%;border:1px solid #586a83;border-radius:6px;padding:5px 7px;background:#0b1b30d9;color:#f8f8ff;font-size:9px;pointer-events:none}.stage-note.warn{border-color:#d4a74e;color:#ffe1a0}.stage-mini{position:absolute;right:9px;top:10px;display:flex;flex-direction:column;gap:6px}.minilook{width:42px;height:55px;overflow:hidden;background:#13243d;border:1px solid #526581;border-radius:7px;padding:2px}.minilook img{width:100%;height:100%;object-fit:cover;object-position:top}.minilook.active{border:2px solid var(--pink)}.nameplate{position:absolute;left:9px;bottom:10px;background:#fffffff0;color:#16253b;border-radius:5px;padding:8px 10px;width:135px;box-shadow:0 4px 18px #0002}.nameplate strong{font-size:17px;display:block}.nameplate small{font-size:10px;color:#53657b;display:block;margin-top:2px}.nameplate p{font-size:9px;line-height:1.4;margin:8px 0 0}.layers{border-top:1px solid var(--line);padding:10px 12px;background:#08172a;display:flex;flex-direction:column;gap:8px;overflow:hidden}.layerbar{display:flex;align-items:center;gap:12px;border-bottom:1px solid #293f5b;padding-bottom:6px}.layerbar strong{font-size:11px;white-space:nowrap}.layertabs{display:flex;gap:13px;overflow:auto}.layertab{border:0;border-bottom:2px solid transparent;background:none;color:#a8b9d4;padding:6px 0;font-size:10px;white-space:nowrap}.layertab.active{color:#ff89bd;border-color:var(--pink)}.layerlist{display:flex;gap:7px;overflow:auto;padding-bottom:3px}.layercard{position:relative;flex:0 0 86px;width:86px;height:131px;border:1px solid #334d6b;border-radius:7px;background:#11243c;text-align:left;padding:4px;overflow:hidden}.layercard.active{border:2px solid var(--pink);padding:3px}.layercard img{width:100%;height:95px;object-fit:contain;background:#192d46;border-radius:4px}.layercard b{display:block;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:4px}.layercard small{display:block;color:#acbdd5;font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.visibility{position:absolute;right:6px;top:6px;background:#071426d9;border:0;border-radius:4px;padding:2px;font-size:10px}.layer-empty{color:var(--muted);font-size:11px;border:1px dashed #314967;border-radius:7px;padding:14px}.right{min-width:0;display:flex;flex-direction:column;overflow:auto;border-left:1px solid var(--line);background:linear-gradient(180deg,#0b1b2e,#081628)}.righthead{position:sticky;top:0;background:#0b1b2ef5;backdrop-filter:blur(12px);z-index:3;padding:18px 17px 0;border-bottom:1px solid var(--line)}.heading{display:flex;gap:10px;align-items:center;font-size:18px;font-weight:850;margin-bottom:16px}.heading .ico{font-size:22px}.pills{display:flex;gap:5px;overflow:auto}.pill{border:0;border-radius:8px 8px 0 0;padding:10px 11px;background:transparent;color:#b9c7dc;white-space:nowrap;font-size:10px}.pill.active{background:var(--pink);color:white;font-weight:800}.content{padding:14px 17px 19px;display:flex;flex-direction:column;gap:13px}.filterrow{display:flex;gap:7px}.search{flex:1;min-width:0;background:#0e223b;border:1px solid #304968;color:white;border-radius:7px;padding:9px;font-size:11px}.select{width:auto;max-width:115px;background:#0e223b;border:1px solid #304968;color:white;border-radius:7px;padding:8px;font-size:10px}.sectionhead{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}.sectionhead b{font-size:11px}.sectionhead span{font-size:9px;color:var(--muted)}.assetgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.asset{min-width:0;padding:4px;border:1px solid #2e4563;background:#10223b;border-radius:7px;text-align:left;position:relative;overflow:hidden}.asset:hover{border-color:#839ab9;background:#162b48}.asset.selected{padding:2px;border:3px solid var(--pink)}.thumb{height:104px;border-radius:4px;background:#1a2d46;overflow:hidden;display:grid;place-items:center}.thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 10%}.thumb.checker img{object-fit:contain}.asset b{display:block;margin:5px 1px 2px;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.asset small{display:block;margin:0 1px 2px;color:#a6b8d1;font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tag{position:absolute;top:7px;right:6px;background:#17443f;color:#adf2db;border:1px solid #39786d;padding:2px 3px;border-radius:3px;font-size:7px;font-weight:900}.tag.candidate{background:#5b431b;color:#ffe4a2;border-color:#a27d38}.notice{background:#2d2718;border:1px solid #6b5930;color:#f2dca4;border-radius:7px;padding:9px;font-size:10px;line-height:1.5}.notice b{display:block;color:#ffe8ad;margin-bottom:3px}.plain{border:1px solid #2d4563;background:#0d2039;border-radius:8px;padding:10px;color:#b9c9df;font-size:10px;line-height:1.55}.plain a{color:#ffc6df}.links{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.linkbtn{display:inline-block;border:1px solid #4a3c5e;border-radius:6px;padding:7px;background:#221d39;color:#ffc9e2!important;text-decoration:none;font-size:9px}.palette{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px}.swatch{aspect-ratio:1;border:3px solid #0b1b30;border-radius:50%;padding:0;box-shadow:0 0 0 1px #52647d}.swatch.active{box-shadow:0 0 0 3px var(--pink)}.field{display:flex;align-items:center;gap:9px;margin:8px 0}.field label{width:78px;color:#b9c8dc;font-size:10px}.field input[type=range]{flex:1;min-width:0;accent-color:var(--pink)}.field output{width:39px;text-align:right;color:#ffafd0;font-size:9px}.actions{display:flex;gap:6px;flex-wrap:wrap}.btn{border:1px solid #334d6b;background:#10243e;border-radius:6px;padding:8px 10px;font-size:10px}.btn:hover{border-color:#829aba}.btn.primary{background:var(--pink);border-color:var(--pink);font-weight:800;color:white}.stylegrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.stylecard{border:1px solid #314967;border-radius:6px;background:#10223a;text-align:center;padding:4px;font-size:9px}.stylecard.active{border:2px solid var(--pink);padding:3px}.stylecard img{width:100%;height:65px;object-fit:cover;object-position:top;border-radius:4px;display:block;margin-bottom:4px}.rightfoot{border-top:1px solid var(--line);padding:12px 17px 16px;margin-top:auto}.foothead{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.foothead b{font-size:11px}.foothead span{font-size:9px;color:var(--muted)}.status{border-top:1px solid #263c58;padding:8px 16px;color:#93a7c4;font-size:9px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}.status strong{color:#ffa5cb}.hidden{display:none!important}dialog{background:#0b1b30;color:var(--text);border:1px solid #536b8a;border-radius:12px;width:min(430px,calc(100% - 24px));padding:20px;box-shadow:0 20px 75px #000a}dialog::backdrop{background:#0009}dialog h3{margin:0 0 8px}dialog p{font-size:12px;line-height:1.6;color:#bccbe0}.toast{position:fixed;z-index:10;left:50%;bottom:16px;transform:translateX(-50%);max-width:92vw;background:#f4f6ff;color:#152039;border-radius:8px;padding:10px 14px;box-shadow:0 8px 35px #0008;font-size:11px;font-weight:800}.tiny{font-size:9px;color:var(--muted)}.bottom-actions{display:flex;gap:5px;flex-wrap:wrap}
+@media(max-width:1120px){.app{grid-template-columns:200px minmax(310px,1fr) minmax(345px,390px)}.sidebar{padding:12px 8px}.assetgrid{grid-template-columns:repeat(3,minmax(0,1fr))}.righthead,.content,.rightfoot{padding-left:12px;padding-right:12px}.thumb{height:112px}}
+@media(max-width:830px){.app{height:auto;min-height:100dvh;grid-template-columns:58px minmax(0,1fr);grid-template-rows:minmax(590px,68dvh) minmax(500px,auto)}.sidebar{grid-row:1/3;padding:8px 4px}.brand{justify-content:center;padding:0 0 9px}.brandcopy,.navbtn .label,.navbtn .chev,.nav-sep,.sidebar-footer{display:none}.navbtn{justify-content:center;padding:11px 2px}.navbtn .ico{width:auto}.work{grid-column:2;grid-row:1;grid-template-rows:minmax(0,1fr) 155px}.right{grid-column:2;grid-row:2;border-left:0;border-top:1px solid var(--line)}.stage-layout{grid-template-columns:36px minmax(0,1fr);padding-right:0}.tools{padding:10px 2px}.tool{width:29px;height:31px}.layercard{flex-basis:69px;width:69px;height:112px}.layercard img{height:77px}.assetgrid{grid-template-columns:repeat(4,minmax(0,1fr))}.thumb{height:125px}}
+@media(max-width:520px){.app{grid-template-columns:45px minmax(0,1fr);grid-template-rows:minmax(520px,64dvh) minmax(520px,auto)}.mark{font-size:27px}.navbtn{padding:10px 1px}.navbtn .ico{font-size:17px}.work{grid-template-rows:minmax(0,1fr) 140px}.stage-layout{grid-template-columns:30px minmax(0,1fr)}.tool{width:25px;height:29px;font-size:13px}.badge{top:5px;left:5px;font-size:7px}.stage-note{top:37px;left:5px;font-size:8px;max-width:62%}.stage-mini{top:5px;right:4px}.minilook{width:30px;height:42px}.nameplate{left:4px;bottom:4px;width:95px;padding:5px}.nameplate strong{font-size:12px}.nameplate p{display:none}.layers{padding:7px}.layerbar{gap:6px}.layerbar strong{font-size:9px}.layertabs{gap:7px}.layertab{font-size:8px}.layercard{flex-basis:58px;width:58px;height:100px;padding:3px}.layercard img{height:68px}.righthead{padding:10px 9px 0}.heading{font-size:15px;margin-bottom:10px}.pill{padding:8px;font-size:9px}.content,.rightfoot{padding:10px}.assetgrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.thumb{height:100px}.asset b{font-size:8px}.asset small{font-size:7px}.stylecard img{height:52px}.status{padding:8px 10px;flex-direction:column}}
+
+
+.stage #maskOverlay{display:none;pointer-events:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2}
+.starter-card{min-width:0;background:#10223b;border:1px solid #304765;border-radius:8px;padding:7px;display:flex;flex-direction:column;gap:6px;overflow:hidden}
+.starter-card img{width:100%;height:150px;object-fit:contain;background:#0a192d;border-radius:5px}
+.starter-card b{font-size:10px;overflow-wrap:anywhere}
+.starter-card small{font-size:8px;color:#a6b8d1;overflow-wrap:anywhere}
+.starter-card .actions{display:grid;grid-template-columns:1fr;gap:5px}
+.starter-card .btn{font-size:9px;padding:7px}
+@media(max-width:520px){.starter-card img{height:120px}}
+.stage #maskOverlay.visible{display:block}
+.stage #maskOverlay.painting{pointer-events:auto;cursor:crosshair;touch-action:none}
+.ai-mask-panel{display:flex;flex-direction:column;gap:9px;border:1px solid #72516d;background:#171b30;border-radius:9px;padding:11px}
+.ai-mask-head{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.ai-mask-head strong{font-size:11px;color:#ffd2e5}
+.ai-mask-head span{font-size:9px;color:#b5c6dd}
+.ai-mask-panel p{margin:0;font-size:10px;line-height:1.55;color:#c0cde0}
+.ai-mask-actions{display:flex;gap:6px;flex-wrap:wrap}
+.ai-mask-actions .btn{flex:1}
+.ai-mask-brush{display:flex;align-items:center;gap:9px;font-size:10px;color:#c0cde0}
+.ai-mask-brush input{flex:1;min-width:0;accent-color:var(--pink)}
+.ai-mask-brush output{min-width:33px;text-align:right;color:#ffb2d1}
+.ai-mask-legend{display:flex;gap:7px;align-items:center;font-size:9px;line-height:1.5;color:#aebed6}
+.ai-mask-dot{width:11px;height:11px;border-radius:50%;background:#fa4f9c;border:1px solid #ffc7e1;flex:none}
+
+
+.library-hero,.anatomy-hero{border:1px solid #425575;background:linear-gradient(145deg,#10233d,#15192e);border-radius:10px;padding:13px;line-height:1.55}
+.library-hero strong,.anatomy-hero strong{display:block;font-size:14px;color:#ffd1e5;margin-bottom:4px}
+.library-hero p,.anatomy-hero p{margin:0;color:#c2cde0;font-size:10px}
+.library-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.library-card{min-width:0;background:#10223b;border:1px solid #304765;border-radius:7px;padding:4px;text-align:left;overflow:hidden}
+.library-card:hover{border-color:#ff8cbd}
+.library-card img{width:100%;height:114px;display:block;object-fit:contain;object-position:center;background:#0a192d;border-radius:4px}
+.library-card b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:9px;margin:5px 1px 2px}
+.library-card small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:8px;color:#b5c5dc}
+.library-status{display:inline-block;border-radius:4px;background:#4a391f;border:1px solid #7c6237;color:#f4dca8;padding:2px 4px;font-size:7px;font-weight:800;margin:3px 0}
+.library-status.reviewed{background:#164239;border-color:#327866;color:#b8f3dd}
+.library-actions{display:flex;justify-content:space-between;gap:7px;align-items:center;flex-wrap:wrap}
+.anatomy-step{display:grid;grid-template-columns:28px minmax(0,1fr);gap:9px;border:1px solid #2e4563;background:#0e2038;border-radius:8px;padding:10px}
+.anatomy-num{display:grid;place-items:center;width:27px;height:27px;border-radius:7px;background:#f13e8b;font-weight:900;font-size:12px}
+.anatomy-step b{font-size:10px;display:block;margin:1px 0 4px}
+.anatomy-step p{font-size:9px;line-height:1.5;color:#b8c8dd;margin:0}
+.anatomy-tip{border:1px solid #665431;background:#2c261a;border-radius:7px;padding:9px;color:#ead7aa;font-size:9px;line-height:1.55}
+.anatomy-tip b{color:#ffe6aa}
+@media(max-width:1120px){.library-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.library-card img{height:105px}}
+@media(max-width:520px){.library-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.library-card img{height:95px}}
+
+.ai-intro{border:1px solid #594263;background:linear-gradient(145deg,#21192f,#10233d);border-radius:10px;padding:13px;line-height:1.55}
+.ai-intro strong{display:block;font-size:15px;color:#ffd0e4;margin-bottom:5px}
+.ai-intro p{margin:0;color:#c3cfe1;font-size:10px}
+.ai-label{display:block;color:#e7edf8;font-size:11px;font-weight:800;margin-bottom:6px}
+.ai-prompt{width:100%;min-height:130px;resize:vertical;background:#07172b;color:#f3f6ff;border:1px solid #405779;border-radius:8px;padding:11px;font:12px/1.55 system-ui,sans-serif;outline-offset:2px}
+.ai-prompt:focus,.ai-select:focus{border-color:#ff8cbd;outline:2px solid #ff8cbd44}
+.ai-select{width:100%;max-width:none;background:#0d2039;color:#f1f5ff;border:1px solid #304968;border-radius:7px;padding:9px;font-size:11px}
+.ai-control-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.ai-control-grid label{display:flex;flex-direction:column;gap:5px;color:#b6c7de;font-size:10px}
+.ai-presets{gap:6px}
+.ai-preset{font-size:9px;padding:7px}
+.ai-note{background:#171f31;border:1px solid #364967;border-radius:7px;color:#bac8dd;font-size:10px;line-height:1.55;padding:10px}
+.ai-note strong{color:#f9d3e5}
+.ai-status{font-size:10px;color:#b4c6df;line-height:1.55;border-left:3px solid #9a78b9;padding:7px 9px;background:#101d32}
+.ai-ref{display:flex;align-items:center;flex-wrap:wrap;gap:7px}
+.ai-result{border:1px solid #a85c87;background:#171b31;border-radius:9px;padding:10px;display:flex;flex-direction:column;gap:9px}
+.ai-result img{width:100%;max-height:420px;object-fit:contain;background-color:#25364b;background-image:linear-gradient(45deg,#35465a 25%,transparent 25%),linear-gradient(-45deg,#35465a 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#35465a 75%),linear-gradient(-45deg,transparent 75%,#35465a 75%);background-size:18px 18px;background-position:0 0,0 9px,9px -9px,-9px 0;border-radius:6px}
+.ai-result-title{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11px;font-weight:800;color:#ffcbe3}
+.ai-result small{font-size:9px;color:#bac7db;line-height:1.5}
+.ai-actions{display:flex;gap:6px;flex-wrap:wrap}
+.ai-actions button{flex:1}
+.btn:disabled{opacity:.55;cursor:wait}
+@media(max-width:520px){.ai-control-grid{grid-template-columns:1fr}.ai-prompt{min-height:115px}.ai-result img{max-height:320px}}
+
+
+.ai-variant-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0}
+.ai-variant{min-width:0;padding:4px;border:1px solid #314967;border-radius:7px;background:#10223a;color:var(--text);text-align:center;cursor:pointer}
+.ai-variant:hover{border-color:#ff8cbd}
+.ai-variant.active{border:2px solid var(--pink);padding:3px;box-shadow:0 0 0 1px #f13e8b40}
+.ai-variant img{display:block;width:100%;aspect-ratio:3/4;object-fit:contain;background:#09172a;border-radius:4px}
+.ai-variant span{display:block;padding:5px 0 2px;font-size:10px;font-weight:800}
+.ai-control-grid .tiny{display:block;margin-top:4px;line-height:1.4}
+@media(max-width:520px){.ai-variant-strip{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.ai-variant{padding:3px}.ai-variant span{font-size:8px}}
+
+#starterGrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.starter-card img{height:105px}
+.starter-card .actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+.starter-card .actions button:first-child{grid-column:1/-1}
+.starter-card .btn{font-size:9px;padding:6px 5px}
+.ai-cutout-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.ai-cutout-actions .btn{font-size:10px;padding:8px 4px}
+@media(max-width:830px){#starterGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:520px){#starterGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.starter-card img{height:115px}.ai-cutout-actions{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Internet mode: orange on, deep violet off, gray when unavailable. */
+.internet-panel{margin:10px 2px 12px;padding:8px;border:1px solid #2d4260;border-radius:10px;background:linear-gradient(145deg,#0e2037,#0a1729);box-shadow:0 5px 18px #0002}
+.internet-toggle{width:100%;display:flex;align-items:center;gap:9px;text-align:left;border:1px solid #65508b;border-radius:8px;padding:9px;background:linear-gradient(135deg,#302047,#211731);color:#f6efff;transition:background .18s ease,border-color .18s ease,filter .18s ease}
+.internet-toggle:hover{filter:brightness(1.09)}
+.internet-symbol{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:8px;background:#171124;border:1px solid #836ba8;font-size:17px}
+.internet-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:2px}.internet-copy b{font-size:10px;letter-spacing:.035em}.internet-copy small{font-size:9px;opacity:.9;line-height:1.3}
+.internet-led{width:9px;height:9px;flex:none;border-radius:50%;background:#b3a7c8;box-shadow:0 0 0 3px #ffffff18}
+.internet-toggle[data-state=on]{color:#251426;border-color:#ffbc7f;background:linear-gradient(135deg,#ffad56,#f4772b);box-shadow:0 4px 15px #f4772b26}.internet-toggle[data-state=on] .internet-symbol{background:#ffe1bf;border-color:#c8662b}.internet-toggle[data-state=on] .internet-led{background:#3e7138}
+.internet-toggle[data-state=off]{color:#f0e5ff;border-color:#6d5594;background:linear-gradient(135deg,#382451,#211530)}.internet-toggle[data-state=off] .internet-led{background:#a98bd5}
+.internet-toggle[data-state=unavailable]{color:#e0e4eb;border-color:#626b79;background:linear-gradient(135deg,#59616e,#383f49);box-shadow:none}.internet-toggle[data-state=unavailable] .internet-symbol{background:#3f4651;border-color:#89919d}.internet-toggle[data-state=unavailable] .internet-led{background:#d4d8de}
+.internet-status{margin:7px 2px 0;color:#9aabc5;font-size:9px;line-height:1.45}.internet-blocked{filter:grayscale(1)!important;opacity:.43!important;border-color:#66707d!important;cursor:not-allowed!important;box-shadow:none!important}.internet-blocked:hover{filter:grayscale(1)!important;opacity:.43!important}
+@media(max-width:830px){.internet-panel{padding:4px;margin:8px 1px}.internet-toggle{justify-content:center;padding:5px 1px}.internet-copy,.internet-led,.internet-status{display:none}.internet-symbol{width:31px;height:31px}}
+@media(max-width:520px){.internet-panel{padding:3px}.internet-symbol{width:27px;height:28px;font-size:15px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+ <div class="brand"><div class="mark">✦</div><div class="brandcopy"><strong>IMAGE<small>Character Creator</small></strong><div class="tagline">Tu personaje, en tus reglas</div></div></div>
+ <div class="internet-panel">
+  <button id="internetModeToggle" class="internet-toggle" type="button" data-state="unavailable" aria-pressed="true" aria-describedby="internetModeStatus" title="Activa o desactiva las funciones que dependen de Internet">
+   <span class="internet-symbol" aria-hidden="true">◎</span>
+   <span class="internet-copy"><b>MODO INTERNET</b><small id="internetModeLabel">Comprobando conexión…</small></span>
+   <span class="internet-led" aria-hidden="true"></span>
+  </button>
+  <p id="internetModeStatus" class="internet-status" role="status" aria-live="polite">El editor y las capas locales funcionan aunque Internet no esté disponible.</p>
+ </div>
+ <nav id="nav" class="nav" aria-label="Categorías"></nav><div class="nav-sep"></div>
+ <nav class="nav" aria-label="Vista"><button class="navbtn" data-view="preview"><span class="ico">◩</span><span class="label">Vista previa</span></button><button class="navbtn" data-view="camera"><span class="ico">◎</span><span class="label">Cámara</span></button><button class="navbtn" data-view="lighting"><span class="ico">☼</span><span class="label">Luz</span></button><button class="navbtn" data-view="background"><span class="ico">◉</span><span class="label">Fondo</span></button></nav>
+ <div class="sidebar-footer"><p>Las ilustraciones completas son estilos base. Las capas extraídas se pueden probar y ajustar; las máscaras automáticas no se consideran finales hasta revisar sus bordes.</p><strong style="font-size:9px;letter-spacing:.08em;color:var(--muted)">MÓDULOS DEL ESTUDIO</strong><nav class="studio-module-nav" data-image-studio-nav aria-label="Navegación del estudio IMAGE"><a href="../visual-reference-library/index.html">Biblioteca visual</a><a href="../hairstyle-workbench/index.html">Taller de peinados</a><a href="../manual-character-editor/index.html">Editor de capas</a><a href="http://127.0.0.1:8765/" target="_blank" rel="noopener noreferrer">Generador local IA ↗</a></nav><p>El generador local de imágenes funciona por separado en el puerto 8765; inicia <code>python ml/local_server.py</code> para usarlo.</p></div>
+</aside>
+<main class="work">
+ <div class="stage-layout"><div class="tools"><button id="checkerBtn" class="tool active" title="Alternar transparencia">▦</button><button id="baseToggleBtn" class="tool active" title="Ocultar ilustración base" aria-pressed="true">◉</button><button id="centerBtn" class="tool" title="Centrar capa">⊙</button><button id="fitBtn" class="tool" title="Ajustar vista">⤢</button></div>
+ <div id="stage" class="stage checker"><canvas id="canvas" width="768" height="1280" aria-label="Vista previa del personaje"></canvas><canvas id="maskOverlay" width="768" height="1280" aria-label="Pincel de máscara de IA" aria-hidden="true"></canvas><div class="badge">VISTA PREVIA <span>● EN VIVO</span></div><div id="stageNote" class="stage-note">Cargando ilustración...</div><div id="miniLooks" class="stage-mini"></div><div class="nameplate"><strong id="charName">Pibara</strong><small>ID: PB-001 · ilustración</small><p>Una chica enérgica y curiosa, con identidad visual propia.</p></div></div></div>
+ <section class="layers"><div class="layerbar"><strong>Capas activas</strong><div id="layerTabs" class="layertabs"></div><span id="layerCount" class="tiny">1 capa</span></div><div id="layerList" class="layerlist"></div></section>
+</main>
+<aside class="right">
+ <div class="righthead"><div class="heading"><span id="catIcon" class="ico">♧</span><span id="catTitle">Cabello</span></div><div id="pills" class="pills"></div></div>
+ <div id="content" class="content"></div>
+ <div class="rightfoot"><div class="foothead"><b>Filtros de presentación</b><span>No redibujan el arte</span></div><div id="styles" class="stylegrid"></div><div class="actions" style="margin-top:11px"><button id="newBtn" class="btn">＋ Nuevo</button><button id="saveBtn" class="btn">▣ Guardar</button><button id="loadBtn" class="btn">↥ Cargar</button><button id="exportBtn" class="btn primary">↓ Exportar PNG</button></div><input id="jsonFile" type="file" accept="application/json,.json" hidden><input id="imageFile" type="file" accept="image/png,image/webp" multiple hidden></div>
+ <div class="status"><span id="statusText">Biblioteca preparada</span><span>Combinaciones teóricas: <strong id="comboCount">—</strong></span></div>
+</aside>
+</div>
+<dialog id="candidateDialog"><h3>Capa automática pendiente de revisión</h3><p>La máscara se conservó en el lienzo completo, pero no se aprobó visualmente. Puede incluir cara, ropa, mechones del peinado anterior o cortes defectuosos. Podés probarla, cambiar opacidad/posición y eliminarla; no se considera recurso final.</p><div class="actions"><button id="cancelCandidate" class="btn">Cancelar</button><button id="confirmCandidate" class="btn primary">Probar capa</button></div></dialog>
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+<script>
+"use strict";
+(function(){
+const $=id=>document.getElementById(id),W=768,H=1280;
+const INTERNET_MODE_KEY="image-internet-mode-v1";
+let internetModeEnabled=true;
+try{const savedInternetMode=localStorage.getItem(INTERNET_MODE_KEY);if(savedInternetMode==="on"||savedInternetMode==="off")internetModeEnabled=savedInternetMode==="on";}catch(_){}
+let internetStatus=navigator.onLine?"unknown":"offline";let internetProbeSequence=0;
+function isExternalHttpLink(element){if(!element||!element.getAttribute)return false;const href=element.getAttribute("href");if(!href)return false;try{const target=new URL(href,window.location.href);const isLoopbackHost=host=>host==="localhost"||host==="127.0.0.1"||host==="[::1]"||host.endsWith(".localhost");return (target.protocol==="https:"||target.protocol==="http:")&&target.origin!==window.location.origin&&!isLoopbackHost(target.hostname);}catch(_){return false;}}
+function internetModeUsable(){return internetModeEnabled&&navigator.onLine&&internetStatus==="online";}
+function syncInternetUI(){
+ const button=$("internetModeToggle"),label=$("internetModeLabel"),help=$("internetModeStatus");
+ const unavailable=!navigator.onLine||(internetModeEnabled&&internetStatus!=="online");const visualState=unavailable?"unavailable":internetModeEnabled?"on":"off";
+ if(button){button.dataset.state=visualState;button.setAttribute("aria-pressed",String(internetModeEnabled));button.title=visualState==="on"?"Modo Internet activo: se habilitan las funciones externas.":"Modo Internet desactivado o no disponible; las funciones locales siguen habilitadas.";}
+ const labelText=visualState==="on"?"ACTIVO · CONECTADO":visualState==="off"?"DESACTIVADO":!navigator.onLine?"SIN CONEXIÓN":internetStatus==="checking"?"COMPROBANDO…":"INTERNET NO VERIFICADO";
+ const helpText=visualState==="on"?"Servicios externos habilitados. El editor, las capas y la exportación siguen siendo locales.":visualState==="off"?"Modo Internet apagado por vos. Los enlaces y acciones online quedan inactivos; el trabajo local continúa.":!navigator.onLine?"Sin conexión de red: las funciones online se muestran en gris. El editor y la biblioteca local siguen disponibles.":"No se pudo verificar Internet. Las funciones online quedan en gris hasta recuperar la conexión.";
+ // Updating textContent unconditionally replaces child text nodes. Since a MutationObserver
+ // watches new controls, that would trigger itself forever and freeze initial page load.
+ if(label&&label.textContent!==labelText)label.textContent=labelText;
+ if(help&&help.textContent!==helpText)help.textContent=helpText;
+ document.querySelectorAll("a[href],button[data-requires-internet]").forEach(control=>{
+  if(control.tagName==="A"&&isExternalHttpLink(control))control.dataset.requiresInternet="true";
+  if(control.dataset.requiresInternet!=="true")return;if(!("internetOriginalTitle" in control.dataset))control.dataset.internetOriginalTitle=control.getAttribute("title")||"";const locked=!internetModeUsable();control.classList.toggle("internet-blocked",locked);control.setAttribute("aria-disabled",String(locked));
+  if(locked)control.title=!internetModeEnabled?"Activa Modo Internet para usar este servicio.":"Servicio online no disponible: la conexión no está verificada.";else if(control.dataset.internetOriginalTitle)control.title=control.dataset.internetOriginalTitle;else control.removeAttribute("title");
+ });
+}
+async function checkInternetConnection(){
+ const sequence=++internetProbeSequence;
+ if(!internetModeEnabled){internetStatus=navigator.onLine?"unknown":"offline";syncInternetUI();return;}
+ if(!navigator.onLine){internetStatus="offline";syncInternetUI();return;}
+ internetStatus="checking";syncInternetUI();const controller=new AbortController();const timeout=window.setTimeout(()=>controller.abort(),4500);
+ try{await fetch("https://api.github.com/repos/rikosama473-sketch/image",{method:"GET",cache:"no-store",headers:{"Accept":"application/vnd.github+json"},signal:controller.signal});if(sequence===internetProbeSequence)internetStatus="online";}
+ catch(_){if(sequence===internetProbeSequence)internetStatus="offline";}
+ finally{window.clearTimeout(timeout);if(sequence===internetProbeSequence)syncInternetUI();}
+}
+function setInternetMode(enabled){internetModeEnabled=Boolean(enabled);try{localStorage.setItem(INTERNET_MODE_KEY,internetModeEnabled?"on":"off");}catch(_){}if(!internetModeEnabled){internetStatus=navigator.onLine?"unknown":"offline";syncInternetUI();toast("Modo Internet desactivado. El editor, la biblioteca local y la exportación siguen disponibles.");return;}internetStatus="checking";syncInternetUI();toast("Modo Internet activado. Comprobando disponibilidad de servicios externos…");checkInternetConnection();}
+document.addEventListener("click",event=>{const target=event.target instanceof Element?event.target.closest("a[href],button[data-requires-internet]"):null;if(!target)return;const required=target.dataset.requiresInternet==="true"||(target.tagName==="A"&&isExternalHttpLink(target));if(required&&!internetModeUsable()){event.preventDefault();event.stopImmediatePropagation();toast(!internetModeEnabled?"Modo Internet está apagado. Encendelo para usar este servicio.":"Internet no está disponible o no se pudo verificar; esta función permanece desactivada.");}},true);
+window.addEventListener("online",()=>{if(internetModeEnabled)checkInternetConnection();else{internetStatus="unknown";syncInternetUI();}});
+window.addEventListener("offline",()=>{internetProbeSequence++;internetStatus="offline";syncInternetUI();});
+const internetControlObserver=new MutationObserver(()=>syncInternetUI());internetControlObserver.observe(document.body,{childList:true,subtree:true});
+const cats=[
+{id:"starter",label:"Prueba inicial",icon:"▶",pills:["Imágenes internas"]},
+{id:"hair",label:"Cabello",icon:"♧",pills:["Todos","Cortos","Medios","Largos","Recogidos","Accesorios"]},
+{id:"face",label:"Cara",icon:"☻",pills:["Todos","Rostro","Forma","Detalles"]},
+{id:"eyes",label:"Ojos",icon:"◉",pills:["Todos","Expresión","Estilo","Color"]},
+{id:"brows",label:"Cejas",icon:"⌒",pills:["Todos","Suaves","Rectas","Intensas"]},
+{id:"mouth",label:"Boca",icon:"⌣",pills:["Todos","Sonrisa","Seria","Expresión"]},
+{id:"body",label:"Cuerpo",icon:"♟",pills:["Todos","Base","Proporciones"]},
+{id:"clothes",label:"Ropa",icon:"♜",pills:["Todos","Casual","Uniformes","Fantasía"]},
+{id:"accessories",label:"Accesorios",icon:"◇",pills:["Todos","Cabeza","Joyas","Otros"]},
+{id:"color",label:"Color",icon:"◉",pills:["Todos","Cabello","Piel","Ojos","Ropa"]},
+{id:"background",label:"Fondo",icon:"◌",pills:["Todos","Color","Transparencia"]},{id:"anatomy",label:"Anatomía",icon:"♙",pills:["Crear guía","Separar piezas"]},{id:"library",label:"Biblioteca",icon:"▦",pills:["Todos","Procedencia pendiente","Licencia revisada"]},{id:"ai",label:"IA Studio",icon:"✧",pills:[]}];
+const looks=[
+{id:"bob",label:"Bob recto",src:"../../generated/character-assets/pibara/2026-10-20/run-39427500253/transparent/01-blunt-bob.png",render:"../../generated/character-assets/pibara/2026-10-20/run-39427500253/renders/01-blunt-bob.png",tags:["Cortos"]},
+{id:"long",label:"Largo liso",src:"../../generated/character-assets/pibara/2026-10-20/run-39427500253/transparent/02-long-straight.png",render:"../../generated/character-assets/pibara/2026-10-20/run-39427500253/renders/02-long-straight.png",tags:["Largos"]},
+{id:"ponytail",label:"Coleta alta",src:"../../generated/character-assets/pibara/2026-10-20/run-39427500253/transparent/03-high-ponytail.png",render:"../../generated/character-assets/pibara/2026-10-20/run-39427500253/renders/03-high-ponytail.png",tags:["Recogidos"]},
+{id:"twintails",label:"Coletas dobles",src:"../../generated/character-assets/pibara/2026-10-20/run-39445227631/transparent/04-twin-tails.png",render:"../../generated/character-assets/pibara/2026-10-20/run-39445227631/renders/04-twin-tails.png",tags:["Recogidos"]},
+{id:"braid",label:"Trenza lateral",src:"../../generated/character-assets/pibara/2026-10-20/run-39445227631/transparent/05-side-braid.png",render:"../../generated/character-assets/pibara/2026-10-20/run-39445227631/renders/05-side-braid.png",tags:["Medios","Recogidos"]},
+{id:"original",label:"Imagen original",src:"../../from-PixAI-2034984086876227343-0.png",render:"../../from-PixAI-2034984086876227343-0.png",tags:["Todos"]}
+];
+const masks=[
+{id:"hair-bob",label:"Cabello bob",category:"hair",group:"hair",src:"../../generated/character-layers/pibara/39474458754/hair/variants/blunt-bob.png",detail:"Máscara automática",tags:["Cortos"]},
+{id:"hair-long",label:"Cabello largo",category:"hair",group:"hair",src:"../../generated/character-layers/pibara/39474458754/hair/variants/long-straight.png",detail:"Máscara automática",tags:["Largos"]},
+{id:"hair-ponytail",label:"Pelo recogido",category:"hair",group:"hair",src:"../../generated/character-layers/pibara/39474458754/hair/variants/high-ponytail.png",detail:"Máscara automática",tags:["Recogidos"]},
+{id:"hair-twintails",label:"Coletas dobles",category:"hair",group:"hair",src:"../../generated/character-layers/pibara/39474458754/hair/variants/twin-tails.png",detail:"Máscara automática",tags:["Recogidos"]},
+{id:"hair-braid",label:"Trenza lateral",category:"hair",group:"hair",src:"../../generated/character-layers/pibara/39474458754/hair/variants/side-braid.png",detail:"Máscara automática",tags:["Medios","Recogidos"]},
+{id:"face",label:"Rostro candidato",category:"face",group:"face",src:"../../generated/character-layers/pibara/39474458754/model/face-candidate.png",detail:"Máscara semántica"},
+{id:"head-face",label:"Cabeza y rostro",category:"face",group:"face",src:"../../generated/character-layers/pibara/39474458754/model/head-face-candidate.png",detail:"Máscara semántica"},
+{id:"body",label:"Cuerpo sin cabeza",category:"body",group:"body",src:"../../generated/character-layers/pibara/39474458754/model/body-without-head-candidate.png",detail:"Máscara semántica"},
+{id:"clothing",label:"Ropa candidata",category:"clothes",group:"clothes",src:"../../generated/character-layers/pibara/39474458754/model/outfit-candidate.png",detail:"Máscara semántica"}
+];
+const backgrounds=[["Noche","#071426"],["Grafito","#263346"],["Pizarra","#526178"],["Rosa pálido","#f0d5e2"],["Lavanda","#dad1f4"],["Celeste","#c7dff6"],["Crema","#f8efd9"],["Verde suave","#c9e6d7"],["Blanco","#ffffff"],["Gris claro","#e8e4e5"],["Transparente","transparent"]];
+const styles=[{id:"trigger",label:"Trigger",filter:"none"},{id:"madhouse",label:"Madhouse",filter:"saturate(.94) contrast(1.04)"},{id:"classic",label:"Clásico",filter:"saturate(.78)"},{id:"chibi",label:"Chibi",filter:"saturate(1.1) brightness(1.04)"}];
+let state={look:"ponytail",category:"ai",pill:"Todos",background:"#e8e4e5",transparent:false,checker:true,style:"trigger",name:"Pibara",layers:[],selected:"base",lighting:1,baseVisible:true};
+let pending=null,to=null,drag=null;
+let aiResult=null,aiResults=[],aiSelectedIndex=0,aiBusy=false,aiReferenceDataUrl="",aiReferenceName="";
+let aiSettings={prompt:"",model:"gpt-image-2.5-sunburst",quality:"medium",variants:1,background:"auto",direction:"preserve"};
+let aiMaskStrokes=[],aiMaskMode=false,aiMaskDrawing=null,aiBrushSize=64;
+let aiNextResultMeta=null,aiResultMeta={kind:"ai_result",name:"Edición IA"};
+let imageLibraryCache=null,imageLibraryPromise=null,libraryPageSize=48;
+const cache=new Map();
+const url=path=>new URL(path,document.baseURI).href;
+function img(path){if(cache.has(path))return cache.get(path);const p=new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=()=>no(Error(path));if(/^https?:/i.test(url(path))&&!String(path).startsWith('data:'))i.crossOrigin='anonymous';i.src=url(path);});cache.set(path,p);return p;}
+function activeLook(){return looks.find(x=>x.id===state.look)||looks[2];}
+function safe(x){return String(x).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function toast(m){$("toast").textContent=m;$("toast").classList.remove("hidden");clearTimeout(to);to=setTimeout(()=>$("toast").classList.add("hidden"),2600);}
+function status(m,warn){$("stageNote").textContent=m;$("stageNote").classList.toggle("warn",!!warn);$("statusText").textContent=m;}
+function combos(){const imports=state.layers.filter(x=>x.kind==="import").length;const choices=looks.length*backgrounds.length*styles.length*6*3*2*2*Math.pow(361,4)*Math.pow(2,Math.min(imports,40));$("comboCount").textContent=new Intl.NumberFormat("es-AR",{notation:choices>999999?"compact":"standard",maximumFractionDigits:1}).format(choices);$("layerCount").textContent=(1+state.layers.length)+" capa"+(state.layers.length===0?"":"s");}
+function contain(ctx,i){const sc=Math.min(W/i.naturalWidth,H/i.naturalHeight);ctx.drawImage(i,(W-i.naturalWidth*sc)/2,(H-i.naturalHeight*sc)/2,i.naturalWidth*sc,i.naturalHeight*sc);}
+async function drawCanvas(){
+ const can=$("canvas"),ctx=can.getContext("2d",{alpha:true});ctx.clearRect(0,0,W,H);if(!state.transparent){ctx.fillStyle=state.background;ctx.fillRect(0,0,W,H);}
+ if(state.baseVisible!==false){
+  try{const base=await img(activeLook().src),sty=styles.find(x=>x.id===state.style);ctx.save();ctx.filter=(sty.filter==="none"?"":sty.filter+" ")+"brightness("+state.lighting+")";if(base.naturalWidth===W&&base.naturalHeight===H)ctx.drawImage(base,0,0);else contain(ctx,base);ctx.restore();status("Ilustración base visible · "+activeLook().label,false);}
+  catch(e){status("No se pudo cargar la imagen: abre mediante el lanzador local.",true);}
+ }else status("Ilustración base oculta · las capas activas siguen visibles.",false);
+ for(const l of state.layers.slice().sort((a,b)=>(a.order||0)-(b.order||0))){if(!l.visible)continue;try{const i=l.dataUrl?await img(l.dataUrl):await img(l.src);ctx.save();ctx.globalAlpha=l.opacity===undefined?1:l.opacity;ctx.filter="hue-rotate("+(l.hue||0)+"deg)";ctx.drawImage(i,l.x||0,l.y||0,l.w||W,l.h||H);ctx.restore();}catch(e){}}
+ $("stage").classList.toggle("checker",state.transparent||state.checker);$("checkerBtn").classList.toggle("active",state.checker);
+}
+function syncBaseToggle(){
+ const b=$("baseToggleBtn");if(!b)return;const visible=state.baseVisible!==false;
+ b.classList.toggle("active",visible);b.title=visible?"Ocultar ilustración base":"Mostrar ilustración base";b.setAttribute("aria-pressed",String(visible));b.textContent=visible?"◉":"◌";
+}
+async function render(){await drawCanvas();syncBaseToggle();renderMini();renderLayers();combos();redrawMaskOverlay();$("charName").textContent=state.name;}
+function renderMini(){const mini=[activeLook(),...looks.filter(x=>x.id!==activeLook().id)].slice(0,5);$("miniLooks").innerHTML=mini.map(l=>'<button class="minilook '+(l.id===state.look?"active":"")+'" data-mini="'+l.id+'" title="'+safe(l.label)+'"><img alt="" src="'+url(l.src)+'"></button>').join("");$("miniLooks").querySelectorAll("[data-mini]").forEach(b=>b.onclick=()=>chooseLook(b.dataset.mini));}
+function chooseLook(id){state.look=id;state.selected="base";render();gallery();}
+function renderNav(){$("nav").innerHTML=cats.map(c=>'<button class="navbtn '+(c.id===state.category?"active":"")+'" data-cat="'+c.id+'"><span class="ico">'+c.icon+'</span><span class="label">'+c.label+'</span><span class="chev">›</span></button>').join("");$("nav").querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{state.category=b.dataset.cat;state.pill="Todos";if(state.category!=="ai"&&state.category!=="anatomy")setAIMaskMode(false);renderNav();gallery();redrawMaskOverlay();});}
+function header(){const c=cats.find(x=>x.id===state.category)||cats[0];$("catTitle").textContent=c.label;$("catIcon").textContent=c.icon;$("pills").innerHTML=c.pills.map(p=>'<button class="pill '+(p===state.pill?"active":"")+'" data-pill="'+safe(p)+'">'+safe(p)+'</button>').join("");$("pills").querySelectorAll("[data-pill]").forEach(b=>b.onclick=()=>{state.pill=b.dataset.pill;header();gallery();});}
+function card(a,kind){const full=kind==="look",sel=full?state.look===a.id:state.layers.some(x=>x.assetId===a.id&&x.visible);return '<button class="asset '+(sel?"selected":"")+'" data-'+kind+'="'+a.id+'"><span class="tag '+(full?"":"candidate")+'">'+(full?"RETRATO":"CANDIDATA")+'</span><div class="thumb '+(full?"":"checker")+'"><img loading="lazy" alt="" src="'+url(a.src)+'"></div><b>'+safe(a.label)+'</b><small>'+safe(full?"Ilustración completa":a.detail)+'</small></button>';}
+function gallery(){
+ header();const root=$("content");root.innerHTML="";
+ if(state.category==="ai"){aiWorkspace(root);return;}
+ if(state.category==="anatomy"){anatomyWorkspace(root);return;}
+ if(state.category==="starter"){starterWorkspace(root);return;}
+ if(state.category==="library"){libraryWorkspace(root);return;}
+  if(state.category==="color"||state.category==="background"){colors(root);if(state.category==="background")root.insertAdjacentHTML("beforeend",'<div class="field"><label for="lightRange">Iluminación</label><input id="lightRange" type="range" min=".65" max="1.3" step=".01" value="'+state.lighting+'"><output>'+Math.round(state.lighting*100)+'%</output></div>');if($("lightRange"))$("lightRange").oninput=e=>{state.lighting=Number(e.target.value);e.target.nextElementSibling.value=Math.round(state.lighting*100)+"%";render();};return;}
+ if(state.category==="hair"){
+  const L=state.pill==="Todos"?looks:looks.filter(x=>x.tags.includes(state.pill)),M=masks.filter(x=>x.category==="hair"&&(state.pill==="Todos"||x.tags.includes(state.pill)));
+  root.innerHTML='<div class="filterrow"><input id="search" class="search" placeholder="Buscar peinado..." aria-label="Buscar peinado"><select id="mode" class="select"><option value="all">Todo</option><option value="full">Retratos</option><option value="parts">Capas beta</option></select></div><section id="fullSection"><div class="sectionhead"><b>Peinados ilustrados</b><span>'+L.length+' variantes completas</span></div><div class="assetgrid">'+L.map(x=>card(x,"look")).join("")+'</div></section><div class="notice"><b>Estas son ilustraciones completas</b>Elegir una cambia el retrato base entero. No se presenta como un recorte independiente del pelo.</div><section id="maskSection"><div class="sectionhead"><b>Capas de cabello extraídas</b><span>'+M.length+' candidatas · lienzo alineado</span></div><div class="assetgrid">'+M.map(x=>card(x,"mask")).join("")+'</div></section><div class="notice"><b>Máscaras pendientes de revisión</b>Se pueden probar, mover, escalar, ocultar y corregir. Antes de marcarlas definitivas hay que limpiar restos del peinado anterior y revisar el borde anime.</div><div class="plain"><b>Bibliotecas de la web con capas fuente y licencia CC0 declarada:</b><div class="links"><a class="linkbtn" href="https://opengameart.org/content/anime-girl-and-boy-portraits" target="_blank" rel="noopener">Retratos anime CC0</a><a class="linkbtn" href="https://opengameart.org/node/54368" target="_blank" rel="noopener">Personajes novela visual CC0</a></div><p>Descargá el pack de PSD y exportá sus capas conservando el lienzo y las coordenadas de origen. El catálogo registra autor, licencia y archivo fuente.</p></div>';
+  $("mode").onchange=e=>{$("fullSection").classList.toggle("hidden",e.target.value==="parts");$("maskSection").classList.toggle("hidden",e.target.value==="full");};$("search").oninput=e=>{const q=e.target.value.toLowerCase();root.querySelectorAll("[data-look],[data-mask]").forEach(b=>b.classList.toggle("hidden",!b.textContent.toLowerCase().includes(q)));};root.querySelectorAll("[data-look]").forEach(b=>b.onclick=()=>{chooseLook(b.dataset.look);toast("Retrato base cambiado.");});bindMasks(root);return;
+ }
+ const M=masks.filter(x=>x.category===state.category);
+ root.innerHTML='<div class="plain"><b>'+safe((cats.find(x=>x.id===state.category)||cats[0]).label)+'</b><br>Solo se muestran piezas ilustradas que ya existen en el catálogo. No agrego dibujos vectoriales falsos en categorías que aún no tengan assets recortados.</div>';
+ if(M.length){root.insertAdjacentHTML("beforeend",'<div class="sectionhead"><b>Capas candidatas</b><span>'+M.length+' piezas</span></div><div class="assetgrid">'+M.map(x=>card(x,"mask")).join("")+'</div>');bindMasks(root);}
+ else root.insertAdjacentHTML("beforeend",'<div class="plain">Todavía no hay recortes finales de esta categoría. Importá una pieza PNG/WebP transparente, o abrí el taller de recortes para extraerla de una ilustración.</div>');
+ root.insertAdjacentHTML("beforeend",'<div class="actions"><button id="importButton" class="btn primary">＋ Importar pieza ilustrada</button><a class="linkbtn" href="../manual-character-editor/index.html">Taller de recortes →</a></div>');$("importButton").onclick=()=>$("imageFile").click();
+}
+function bindMasks(root){root.querySelectorAll("[data-mask]").forEach(b=>b.onclick=()=>{pending=masks.find(x=>x.id===b.dataset.mask);$("candidateDialog").showModal();});}
+function addMask(m){state.layers=state.layers.filter(x=>x.group!==m.group);const l={id:"layer-"+Date.now(),assetId:m.id,name:m.label,category:m.category,group:m.group,src:m.src,kind:"candidate",x:0,y:0,w:W,h:H,opacity:1,hue:0,visible:true,order:state.layers.length,status:"pending_visual_review"};state.layers.push(l);state.selected=l.id;render();gallery();toast("Capa candidata añadida. Revisá sus bordes antes de aprobarla.");}
+function colors(root){root.insertAdjacentHTML("beforeend",'<div class="sectionhead"><b>Color de fondo</b><span>Colores y transparencia</span></div><div class="palette">'+backgrounds.map(([n,v])=>'<button class="swatch '+(state.background===v?"active":"")+'" style="background:'+(v==="transparent"?'conic-gradient(#ccc 25%,#fff 0 50%,#ccc 0 75%,#fff 0) 0/10px 10px':v)+'" data-bg="'+v+'" title="'+n+'"></button>').join("")+'</div><div class="field"><label for="tintRange">Tono de capa</label><input id="tintRange" type="range" min="0" max="360" value="'+(state.layers.find(x=>x.id===state.selected)?.hue||0)+'"><output>°</output></div><div class="plain">El tono se aplica a una capa seleccionada, no solo a una zona reconocida del cabello. Para colorear pelo sin alterar cara/ropa, primero necesitás un recorte de cabello revisado. El contador teórico incluye los 361 estados posibles del tono (0–360°) para cuatro grupos de capa, además de los fondos, filtros y elecciones del catálogo; no garantiza que todas las combinaciones se vean bien.</div>');
+ root.querySelectorAll("[data-bg]").forEach(b=>b.onclick=()=>{state.background=b.dataset.bg;state.transparent=b.dataset.bg==="transparent";gallery();render();});$("tintRange").oninput=e=>{const l=state.layers.find(x=>x.id===state.selected);if(!l){toast("Seleccioná una capa independiente para cambiar su tono.");return;}l.hue=Number(e.target.value);e.target.nextElementSibling.value=l.hue+"°";render();};
+}
+function renderLayers(){
+ const all=[{id:"base",name:activeLook().label,src:activeLook().src,kind:"base",visible:true},...state.layers];$("layerList").innerHTML=all.map(l=>'<button class="layercard '+(l.id===state.selected?"active":"")+'" data-layer="'+l.id+'"><img alt="" src="'+url(l.dataUrl||l.src)+'"><b>'+safe(l.name)+'</b><small>'+safe(l.kind==="base"?"Retrato completo":l.kind==="candidate"?"Máscara beta":l.kind==="ai_result"?"Resultado de IA":l.kind==="anatomy_guide"?"Guía anatómica":l.kind==="manual_mask_layer"?"Pieza separada":l.kind==="ai_cutout"?"Recorte IA pendiente":l.kind==="internal_test_overlay"?"Superposición de prueba":"Pieza importada")+'</small>'+(l.kind==="base"?'':'<span class="visibility" data-visible="'+l.id+'">'+(l.visible?"◉":"○")+'</span>')+'</button>').join("");
+ $("layerTabs").innerHTML='<button class="layertab '+(state.selected==="base"?"active":"")+'" data-base>Retrato</button>'+state.layers.map(l=>'<button class="layertab '+(l.id===state.selected?"active":"")+'" data-tab="'+l.id+'">'+safe(l.name)+'</button>').join("");
+ $("layerList").querySelectorAll("[data-layer]").forEach(b=>b.onclick=e=>{if(e.target.closest("[data-visible]"))return;state.selected=b.dataset.layer;renderLayers();adjust();});
+ $("layerList").querySelectorAll("[data-visible]").forEach(b=>b.onclick=e=>{e.stopPropagation();const l=state.layers.find(x=>x.id===b.dataset.visible);if(l)l.visible=!l.visible;render();});
+ $("layerTabs").querySelector("[data-base]").onclick=()=>{state.selected="base";renderLayers();adjust();};$("layerTabs").querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{state.selected=b.dataset.tab;renderLayers();adjust();});
+ adjust();
+}
+function adjust(){
+ const root=$("content");let box=$("adjustBox");if(box)box.remove();const l=state.layers.find(x=>x.id===state.selected);if(!l)return;
+ box=document.createElement("section");box.id="adjustBox";box.innerHTML='<div class="sectionhead"><b>Ajustes de capa</b><span>'+((l.kind==="candidate"||l.kind==="ai_cutout")?"Pendiente de revisión":"Editable")+'</span></div>'+field("Posición X","posX",-384,384,l.x||0,1)+field("Posición Y","posY",-640,640,l.y||0,1)+field("Tamaño","scale",.1,2.5,l.w/W,.01)+field("Opacidad","opacity",0,1,l.opacity,.01)+'<div class="actions"><button id="centerLayer" class="btn">Centrar</button><button id="frontLayer" class="btn">Traer adelante</button><button id="backLayer" class="btn">Enviar atrás</button><button id="deleteLayer" class="btn">Quitar</button></div>'+((l.kind==="candidate"||l.kind==="ai_cutout")?'<div class="notice" style="margin-top:8px"><b>Recorte pendiente de revisión</b>Conservá el PNG original y revisá la silueta con y sin esta capa.</div>':'');root.prepend(box);
+ [["posX","x"],["posY","y"],["opacity","opacity"]].forEach(([id,key])=>$(id).oninput=e=>{l[key]=Number(e.target.value);e.target.nextElementSibling.value=key==="opacity"?Math.round(l[key]*100)+"%":l[key];drawCanvas();});
+ $("scale").oninput=e=>{const s=Number(e.target.value),cx=l.x+l.w/2,cy=l.y+l.h/2;l.w=W*s;l.h=H*s;l.x=Math.round(cx-l.w/2);l.y=Math.round(cy-l.h/2);e.target.nextElementSibling.value=Math.round(s*100)+"%";drawCanvas();};
+ $("centerLayer").onclick=()=>{l.x=0;l.y=0;l.w=W;l.h=H;render();};$("frontLayer").onclick=()=>{l.order=Math.max(-1,...state.layers.map(x=>x.order||0))+1;render();};$("backLayer").onclick=()=>{l.order=Math.min(0,...state.layers.map(x=>x.order||0))-1;render();};$("deleteLayer").onclick=()=>{state.layers=state.layers.filter(x=>x.id!==l.id);state.selected="base";render();gallery();};
+}
+function field(label,id,min,max,value,step){const show=id==="scale"?Math.round(value*100)+"%":id==="opacity"?Math.round(value*100)+"%":value;return '<div class="field"><label for="'+id+'">'+label+'</label><input id="'+id+'" type="range" min="'+min+'" max="'+max+'" step="'+step+'" value="'+value+'"><output>'+show+'</output></div>';}
+
+
+async function loadImageLibrary(){
+ if(imageLibraryCache)return imageLibraryCache;
+ if(!imageLibraryPromise)imageLibraryPromise=fetch("assets/image-library.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("No se pudo abrir assets/image-library.json");return r.json();}).then(d=>{
+  if(!d||!Array.isArray(d.assets))throw Error("El catálogo de imágenes no tiene un formato válido.");
+  imageLibraryCache=d;return d;
+ });
+ return imageLibraryPromise;
+}
+const AI_CUTOUT_TARGETS={
+ hair:{label:"Cabello",category:"hair",group:"ai-cutout-hair",prompt:"Extrae únicamente el cabello visible, incluyendo pelo posterior, parte superior, flequillo, mechones laterales y coletas o trenzas. Excluye piel, cara, ojos, orejas, cuello, cuerpo y ropa."},
+ eyes:{label:"Ojos",category:"eyes",group:"ai-cutout-eyes",prompt:"Extrae únicamente los dos ojos anime, iris, pupilas, brillos, pestañas y cejas visibles. Excluye toda la piel, rostro, nariz, boca, cabello y fondo."},
+ face:{label:"Rostro",category:"face",group:"ai-cutout-face",prompt:"Extrae la pieza facial: piel de la cara, nariz, boca y orejas visibles. Excluye el cabello, cuello, cuerpo, ropa y fondo. Conserva identidad y expresión."},
+ clothes:{label:"Ropa",category:"clothes",group:"ai-cutout-clothes",prompt:"Extrae únicamente las prendas y los adornos que formen parte de ellas. Excluye rostro, cabello, piel, manos, extremidades descubiertas, accesorios separados y fondo."},
+ accessories:{label:"Accesorios",category:"accessories",group:"ai-cutout-accessories",prompt:"Extrae únicamente accesorios visibles como lazos, horquillas, gafas, pendientes, cintas, broches y joyas. Excluye el resto del personaje y el fondo."}
+};
+function starterWorkspace(root){
+ root.innerHTML=
+  '<div class="library-hero"><strong>▶ Prueba inicial con imágenes internas</strong><p>Este banco usa ilustraciones que ya están dentro del repositorio. Cada muestra es un retrato completo de prueba, no una capa de cabello, ojos o ropa. La procedencia y la licencia siguen sin verificarse individualmente.</p></div>'+
+  '<div class="plain"><b>Prueba inicial:</b> carga retratos internos para comprobar composición, capas y exportación. Son ilustraciones completas; ninguna se etiqueta falsamente como cabello u ojos ya recortados.</div>'+
+  '<section class="ai-mask-panel"><div class="ai-mask-head"><strong>✦ Recorte profesional asistido por IA</strong><span>PNG alfa · 768×1280</span></div><p>Hay dos operaciones distintas: el recorte local elimina el fondo conservando el dibujo original; los botones de categoría usan edición generativa y pueden reconstruir detalles. Todo resultado queda pendiente de revisión.</p><div class="ai-control-grid"><label>Motor de recorte local<select id="localCutoutModel" class="ai-select"><option value="isnet-anime" selected>ISNet Anime · recomendado</option><option value="birefnet-portrait">BiRefNet Portrait · alternativa</option></select></label><div><span class="ai-label">Sin coste por llamada de IA</span><button id="localAnimeCutout" type="button" class="btn primary" data-local-cutout="anime">✂ Quitar fondo sin redibujar el personaje</button><small class="tiny">La primera ejecución descarga el modelo; trabaja localmente.</small></div></div><p class="tiny">Requiere instalar rembg localmente. Para extraer cabello, ojos, rostro, ropa o accesorios como piezas semánticas separadas, usa los recortes generativos y revisa su fidelidad.</p><div class="actions ai-cutout-actions">'+Object.entries(AI_CUTOUT_TARGETS).map(([id,t])=>'<button type="button" class="btn" data-ai-cutout="'+id+'">✦ '+safe(t.label)+'</button>').join("")+'</div><div class="actions" style="margin-top:7px"><a class="linkbtn" href="https://github.com/rikosama473-sketch/image/actions/workflows/generate-hairstyle-variants.yml" target="_blank" rel="noopener">Generar paquetes IA de 5–6 peinados →</a></div><p class="tiny">La generación por paquetes usa los estilos core, cortes cortos, recogidos, flequillos y ondas/trenzas. Ejecutar la generación también requiere la clave del proveedor en GitHub Actions.</p></section>'+
+  '<div class="library-actions"><span id="starterCount" class="tiny">Cargando imágenes internas…</span><button id="starterReload" class="btn">Recargar</button></div>'+
+  '<div id="starterGrid" class="library-grid"></div><div class="library-actions"><span id="starterMoreStatus" class="tiny"></span><button id="starterMore" class="btn primary">Cargar 24 imágenes más</button></div>'+
+  '<div id="starterTestStatus" class="notice" role="status"><b>Prueba de funcionamiento</b>“Probar PNG” comprueba carga, renderizado y conversión. “Añadir capa de prueba” valida opacidad, orden, posición y visibilidad.</div>';
+ const grid=$("starterGrid");
+ let allStarterSamples=[],shownStarterCount=24;
+ const renderStarterSamples=()=>{
+  const samples=allStarterSamples.slice(0,shownStarterCount);
+  grid.innerHTML=samples.map(a=>
+   '<article class="starter-card"><img loading="lazy" src="'+safe(url(a.src))+'" alt="Vista previa de '+safe(a.label)+'"><b>'+safe(a.label)+'</b><small>'+safe(a.path)+'</small><span class="library-status">RETRATO COMPLETO · LICENCIA POR REVISAR</span><div class="actions"><button type="button" class="btn primary" data-starter-base="'+safe(a.id)+'">Usar como base</button><button type="button" class="btn" data-starter-test="'+safe(a.id)+'">Probar PNG</button><button type="button" class="btn" data-starter-overlay="'+safe(a.id)+'">Añadir capa de prueba</button></div></article>'
+  ).join("");
+  $("starterCount").textContent=samples.length+" visibles · "+allStarterSamples.length+" retratos completos · "+(imageLibraryCache?imageLibraryCache.assets.length:0)+" recursos indexados.";
+  $("starterMoreStatus").textContent="Mostrando "+samples.length+" de "+allStarterSamples.length+" retratos.";
+  $("starterMore").classList.toggle("hidden",samples.length>=allStarterSamples.length);
+  grid.querySelectorAll("[data-starter-base]").forEach(b=>b.onclick=()=>useLibraryAsset(b.dataset.starterBase,"starter"));
+  grid.querySelectorAll("[data-starter-test]").forEach(b=>b.onclick=()=>runStarterSmokeTest(b.dataset.starterTest));
+  grid.querySelectorAll("[data-starter-overlay]").forEach(b=>b.onclick=()=>addLibraryAssetAsTestLayer(b.dataset.starterOverlay));
+ };
+ const load=async()=>{
+  grid.innerHTML='<div class="plain">Leyendo imágenes internas…</div>';
+  try{
+   const data=await loadImageLibrary();
+   if(state.category!=="starter")return;
+   const all=Array.isArray(data.assets)?data.assets:[];
+   allStarterSamples=all.filter(a=>a&&a.kind==="full_illustration").slice().sort((a,b)=>{const aPix=/^from-PixAI-/i.test(String(a.path||""))?0:1;const bPix=/^from-PixAI-/i.test(String(b.path||""))?0:1;return aPix-bPix||String(a.path||"").localeCompare(String(b.path||""));});
+   shownStarterCount=Math.min(24,allStarterSamples.length);
+   if(!allStarterSamples.length)throw Error("El catálogo no contiene imágenes internas de ilustración completa.");
+   renderStarterSamples();
+  }catch(e){
+   if(state.category!=="starter")return;
+   grid.innerHTML='<div class="plain">No se pudo cargar el catálogo interno. Abre el editor con start-avatar-maker.bat y vuelve a intentarlo.</div>';
+   $("starterCount").textContent=String(e&&e.message||e);
+  }
+ };
+ $("starterReload").onclick=()=>{imageLibraryCache=null;imageLibraryPromise=null;shownStarterCount=24;load();};
+ $("starterMore").onclick=()=>{shownStarterCount=Math.min(shownStarterCount+24,allStarterSamples.length);renderStarterSamples();};
+ root.querySelectorAll("[data-ai-cutout]").forEach(b=>b.onclick=()=>startAICutout(b.dataset.aiCutout));
+ const localCutoutButton=$("localAnimeCutout");if(localCutoutButton)localCutoutButton.onclick=()=>startLocalAnimeCutout();
+ load();
+}
+async function runStarterSmokeTest(id){
+ const result=$("starterTestStatus");
+ if(result)result.innerHTML='<b>Prueba en curso</b>Decodificando la imagen, dibujando el lienzo y preparando la salida PNG…';
+ try{
+  const data=await loadImageLibrary();
+  const asset=data.assets.find(x=>x.id===id);
+  if(!asset)throw Error("La muestra ya no aparece en el catálogo.");
+  const source=await img(asset.src);
+  if(!source.naturalWidth||!source.naturalHeight)throw Error("La imagen se descargó pero el navegador no pudo decodificarla.");
+  useLibraryAsset(id,"starter");
+  await drawCanvas();
+  const blob=await new Promise((resolve,reject)=>{
+   try{$("canvas").toBlob(b=>b?resolve(b):reject(Error("El navegador no devolvió un PNG.")),"image/png");}
+   catch(e){reject(e);}
+  });
+  if(!blob||blob.type!=="image/png"||blob.size<=0)throw Error("La conversión de lienzo a PNG produjo una salida vacía o inválida.");
+  const msg="PASS · Imagen "+source.naturalWidth+"×"+source.naturalHeight+" cargada; lienzo dibujado; PNG generado ("+Math.max(1,Math.round(blob.size/1024))+" KiB). No se descargó ningún archivo.";
+  const current=$("starterTestStatus");
+  if(current)current.innerHTML='<b>✓ Prueba superada</b>'+safe(msg);
+  status("Prueba interna aprobada: carga, renderizado y exportabilidad PNG.",false);
+  toast("Prueba PNG superada: "+source.naturalWidth+"×"+source.naturalHeight);
+ }catch(e){
+  const msg=String(e&&e.message||e);
+  const current=$("starterTestStatus");
+  if(current)current.innerHTML='<b>✕ Prueba fallida</b>'+safe(msg);
+  status("Prueba interna fallida: "+msg,true);
+  toast("No se completó la prueba: "+msg.slice(0,140));
+ }
+}
+async function addLibraryAssetAsTestLayer(id){
+ try{
+  const data=await loadImageLibrary(),asset=data.assets.find(x=>x.id===id);
+  if(!asset)throw Error("No se encontró la ilustración elegida.");
+  const source=await img(asset.src);
+  if(!source.naturalWidth||!source.naturalHeight)throw Error("No se pudo decodificar la imagen interna.");
+  const scale=Math.min(W*.62/source.naturalWidth,H*.58/source.naturalHeight);
+  const w=Math.round(source.naturalWidth*scale),h=Math.round(source.naturalHeight*scale);
+  const layer={id:"internal-test-"+Date.now(),assetId:asset.id,name:"Prueba completa · "+asset.label,category:"test",group:null,src:asset.src,kind:"internal_test_overlay",x:Math.round((W-w)/2),y:Math.round((H-h)/2),w,h,opacity:.58,hue:0,visible:true,order:state.layers.length,status:"test_full_illustration"};
+  state.layers.push(layer);state.selected=layer.id;state.category="starter";state.pill="Imágenes internas";
+  renderNav();gallery();await render();
+  toast("Superposición de prueba añadida. Probá opacidad, posición, visibilidad, orden y eliminar.");
+ }catch(e){toast("No se pudo añadir la capa de prueba: "+String(e&&e.message||e));}
+}
+async function startAICutout(targetId){
+ const target=AI_CUTOUT_TARGETS[targetId];
+ if(!target){toast("Tipo de recorte desconocido.");return;}
+ aiMaskStrokes=[];aiMaskDrawing=null;setAIMaskMode(false);
+ aiSettings.model="gpt-image-2.5-sunburst";aiSettings.quality="high";aiSettings.variants=2;aiSettings.background="transparent";aiSettings.direction="preserve";aiSettings.prompt=target.prompt;
+ aiNextResultMeta={kind:"ai_cutout",name:"Recorte IA · "+target.label,category:target.category,group:target.group,targetId};
+ state.category="ai";state.pill="Todos";renderNav();gallery();
+ toast("Preparando el recorte IA de "+target.label+". Se enviará el retrato base seleccionado a la API.");
+ await runAIEdit();
+}
+async function startLocalAnimeCutout(){
+ const button=$("localAnimeCutout"),modelSelect=$("localCutoutModel");
+ if(aiBusy){toast("Esperá a que termine la otra tarea de imagen.");return;}
+ aiBusy=true;if(button)button.disabled=true;
+ status("Eliminando el fondo en local con segmentación anime; no se usa la API generativa…",false);
+ try{
+  const imageDataUrl=await baseImageDataUrl();
+  const model=modelSelect?modelSelect.value:"isnet-anime";
+  const response=await fetch("/api/remove-background",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({image_data_url:imageDataUrl,model})});
+  const result=await response.json().catch(()=>({error:"El servicio local devolvió una respuesta que no es JSON."}));
+  if(!response.ok)throw Error(result.error||"No se pudo recortar el fondo en local.");
+  if(!result.image_base64||result.width!==W||result.height!==H||Number(result.transparent_pixels)<=0)throw Error("El recorte no supera la validación de transparencia y alineación.");
+  const data="data:image/png;base64,"+result.image_base64;
+  aiResults=[data];aiSelectedIndex=0;aiResult=data;
+  aiResultMeta={kind:"ai_cutout",name:"Personaje sin fondo · "+result.model,baseName:"Personaje sin fondo",category:"ai",group:"ai-cutout-background",targetId:"background",pixelPreserving:true};
+  aiNextResultMeta=null;cache.set(data,Promise.resolve(await img(data)));
+  state.category="ai";state.pill="Todos";renderNav();gallery();aiWorkspace($("content"));
+  const count=Number(result.transparent_pixels).toLocaleString("es-AR");
+  status("Recorte local listo: "+result.width+"×"+result.height+", "+count+" píxeles transparentes. Candidato sin aprobar.",false);
+  toast("Fondo eliminado en local. El dibujo original permanece intacto; revisá cabello y bordes antes de aplicar.");
+ }catch(e){
+  const message=String(e&&e.message||e);status("Recorte local no completado: "+message,true);toast("No se aplicó ningún cambio: "+message.slice(0,160));
+ }finally{aiBusy=false;if(button)button.disabled=false;}
+}
+function libraryWorkspace(root){
+ root.innerHTML=
+  '<div class="library-hero"><strong>▦ Biblioteca local de ilustraciones</strong><p>Catálogo de imágenes rasterizadas presentes en el repositorio. Buscá por nombre o ruta y cargá una imagen como retrato base. La procedencia y los permisos se muestran por separado: un archivo local no implica licencia confirmada.</p></div>'+
+  '<div class="filterrow"><input id="librarySearch" class="search" placeholder="Buscar nombre, archivo o procedencia…" aria-label="Buscar en biblioteca"><select id="libraryReview" class="select"><option value="all">Todas</option><option value="origin">Procedencia pendiente</option><option value="license">Licencia revisada</option><option value="training">Permiso de entrenamiento</option></select></div>'+
+  '<div class="library-actions"><span id="libraryCount" class="tiny">Cargando biblioteca…</span><button id="libraryReload" class="btn">Actualizar catálogo</button></div>'+
+  '<div id="libraryGrid" class="library-grid"></div><div class="library-actions"><span id="libraryPage" class="tiny"></span><button id="libraryMore" class="btn primary">Cargar más imágenes</button></div>'+
+  '<div class="anatomy-tip"><b>Importante:</b> la biblioteca registra archivos del repositorio, pero las pistas de nombres no certifican a qué anime pertenecen ni sus derechos. No se usa nada como capa independiente ni como material de entrenamiento sin una revisión propia.</div>';
+ const grid=$("libraryGrid");
+ let allAssets=[],filtered=[],page=1;
+ const search=$("librarySearch"),review=$("libraryReview");
+ const renderCards=()=>{
+  const q=search.value.trim().toLocaleLowerCase("es");
+  const mode=review.value;
+  filtered=allAssets.filter(a=>{
+   const text=[a.label,a.path,a.origin_hint,(a.tags||[]).join(" ")].join(" ").toLocaleLowerCase("es");
+   if(q&&!text.includes(q))return false;
+   if(mode==="origin"&&String(a.origin_hint||"").toLowerCase().includes("unknown")===false&&!String(a.origin_hint||"").toLowerCase().includes("not individually verified")&&!String(a.visual_review||"").includes("unreviewed"))return false;
+   if(mode==="license"&&!["reviewed","approved","verified"].includes(String(a.license_review||"").toLowerCase()))return false;
+   if(mode==="training"&&!["allowed","approved","yes"].includes(String(a.training_permission||"").toLowerCase()))return false;
+   if(state.pill==="Procedencia pendiente"&&!(String(a.origin_hint||"").toLowerCase().includes("unknown")||String(a.visual_review||"").includes("unreviewed")||String(a.origin_hint||"").toLowerCase().includes("not individually verified")))return false;
+   if(state.pill==="Licencia revisada"&&!["reviewed","approved","verified"].includes(String(a.license_review||"").toLowerCase()))return false;
+   return true;
+  });
+  const shown=filtered.slice(0,page*libraryPageSize);
+  grid.innerHTML=shown.map(a=>{
+   const reviewed=["reviewed","approved","verified"].includes(String(a.license_review||"").toLowerCase());
+   const badge=reviewed?'<span class="library-status reviewed">LICENCIA REVISADA</span>':'<span class="library-status">DERECHOS PENDIENTES</span>';
+   return '<button type="button" class="library-card" data-library-asset="'+safe(a.id)+'"><img loading="lazy" alt="" src="'+safe(url(a.src))+'"><b>'+safe(a.label)+'</b><small>'+safe(a.path)+'</small>'+badge+'<small>'+safe(a.origin_hint||"Origen sin identificar")+'</small></button>';
+  }).join("");
+  $("libraryCount").textContent=filtered.length.toLocaleString("es-AR")+" imágenes coinciden · "+Math.min(shown.length,filtered.length).toLocaleString("es-AR")+" visibles";
+  $("libraryPage").textContent="Mostrando "+shown.length+" de "+filtered.length;
+  $("libraryMore").classList.toggle("hidden",shown.length>=filtered.length);
+  grid.querySelectorAll("[data-library-asset]").forEach(b=>b.onclick=()=>useLibraryAsset(b.dataset.libraryAsset));
+ };
+ const load=async()=>{
+  grid.innerHTML='<div class="plain">Leyendo el catálogo local…</div>';
+  try{const data=await loadImageLibrary();allAssets=data.assets;renderCards();}
+  catch(e){grid.innerHTML='<div class="plain">No se pudo cargar la biblioteca. Abrí el programa con start-avatar-maker.bat para que las imágenes locales puedan leerse.</div>';$("libraryCount").textContent=String(e.message||e);}
+ };
+ search.oninput=()=>{page=1;if(allAssets.length)renderCards();};
+ review.onchange=()=>{page=1;if(allAssets.length)renderCards();};
+ $("libraryMore").onclick=()=>{page++;renderCards();};
+ $("libraryReload").onclick=()=>{imageLibraryCache=null;imageLibraryPromise=null;load();};
+ load();
+}
+function useLibraryAsset(id,returnCategory="hair"){
+ if(!imageLibraryCache)return;
+ const asset=imageLibraryCache.assets.find(x=>x.id===id);if(!asset)return;
+ let look=looks.find(x=>x.id===asset.id);
+ if(!look){look={id:asset.id,label:asset.label,src:asset.src,render:asset.src,tags:["Todos"],libraryPath:asset.path,sourceReview:asset.license_review};looks.push(look);}
+ state.look=look.id;state.selected="base";state.category=returnCategory;state.pill=returnCategory==="starter"?"Imágenes internas":"Todos";
+ renderNav();render();gallery();
+ toast("Imagen cargada como retrato base. No se ha certificado su procedencia ni licencia.");
+}
+function openLibraryAssetForExtraction(id){
+ if(!imageLibraryCache){toast("La biblioteca no terminó de cargar. Actualizá el catálogo e intentá otra vez.");return;}
+ const asset=imageLibraryCache.assets.find(x=>x.id===id);if(!asset){toast("No se encontró esa variante en el catálogo.");return;}
+ let look=looks.find(x=>x.id===asset.id);
+ if(!look){look={id:asset.id,label:asset.label,src:asset.src,render:asset.src,tags:["Todos"],libraryPath:asset.path,sourceReview:asset.license_review};looks.push(look);}
+ state.look=look.id;state.selected="base";state.category="anatomy";state.pill="Todos";
+ renderNav();render();gallery();redrawMaskOverlay();
+ toast("Variante cargada en el taller. Pintá únicamente el pelo o la pieza que querés guardar; ocultá antes cualquier capa ajena.");
+}
+function anatomyWorkspace(root){
+ root.innerHTML=
+  '<div class="anatomy-hero"><strong>♙ Taller anatómico · '+safe(state.name)+'</strong><p>Usá tus propios diseños como referencia para obtener una guía de cuerpo completo. Después separá pelo, cara, torso, brazos, piernas o accesorios pintando cada región y exportándola como PNG transparente con el mismo lienzo y coordenadas.</p></div>'+
+  '<div class="anatomy-step"><span class="anatomy-num">1</span><div><b>Generar y guardar dentro del repositorio</b><p>La tarea del repositorio toma la referencia confirmada de Pibara y genera una lámina de cuerpo entero. PNG, recorte transparente, manifiesto e índice de biblioteca quedan guardados en la rama de la PR. No necesita la clave de OpenAI; depende de la cuota del generador público.</p><div class="actions" style="margin-top:8px"><a class="btn primary" href="https://github.com/rikosama473-sketch/image/actions/workflows/generate-character-assets-free.yml" target="_blank" rel="noopener">✦ Generar desde GitHub Actions →</a><button id="anatomyOpenLibrary" class="btn">Ver imágenes del repositorio</button></div><p style="margin-top:7px">En la acción: Personaje <b>Pibara</b>, referencia <code>from-PixAI-2034984086876227343-0.png</code>, paquete <code>anatomy-guide-1</code>, fondo <b>transparent</b>.</p></div></div>'+
+  '<div class="anatomy-step"><span class="anatomy-num">1b</span><div><b>Alternativa: generación directa desde el editor</b><p>Usa la API configurada localmente. No es necesaria si lanzás el generador del repositorio.</p><div class="actions" style="margin-top:8px"><button data-requires-internet="true" id="anatomyGenerate" class="btn">Generar guía con API local</button><button data-requires-internet="true" id="anatomyPose" class="btn">Crear maniquí con API local</button></div></div></div>'+
+  '<div class="anatomy-step"><span class="anatomy-num">2</span><div><b>Separar una región del dibujo</b><p>Activá el pincel y pintá el interior de la pieza que querés extraer. Usa trazos pequeños cerca del contorno y evita pintar el fondo. La pieza se crea como PNG transparente alineado al lienzo.</p><div class="actions" style="margin-top:8px"><button id="anatomyMaskToggle" class="btn">✎ Pintar pieza</button><button id="anatomyMaskClear" class="btn">Limpiar selección</button><button id="anatomyCut" class="btn primary">Crear capa separada</button></div><label class="ai-mask-brush" for="anatomyBrushSize">Tamaño del pincel<input id="anatomyBrushSize" type="range" min="8" max="150" step="2" value="'+aiBrushSize+'"><output id="anatomyBrushValue">'+aiBrushSize+' px</output></label><span id="anatomyMaskCount" class="tiny">0 trazos</span></div></div>'+
+  '<div class="anatomy-step"><span class="anatomy-num">3</span><div><b>Exportar y reutilizar cada pieza</b><p>La capa mantiene las coordenadas del lienzo. Exportala como PNG o guardala en la biblioteca personal de este navegador para volver a agregarla a otros personajes sin buscar el archivo de nuevo.</p><label class="field" for="anatomyPieceType" style="margin-top:10px"><span>Clasificar la pieza que vas a guardar <b>(obligatorio)</b></span><select id="anatomyPieceType" class="select" style="width:100%;max-width:none" required><option value="" selected>Elegí qué pieza es…</option><option value="hair">Cabello / peinado</option><option value="eyes">Ojos / cejas</option><option value="face">Rostro / expresión</option><option value="body">Cuerpo / anatomía</option><option value="clothes">Ropa / uniforme</option><option value="accessories">Accesorios / joyas</option></select></label><div class="actions" style="margin-top:8px"><button id="anatomyExport" class="btn">↓ Exportar capa seleccionada</button><button id="anatomySavePiece" class="btn primary">Guardar capa en mi biblioteca</button><button id="anatomySaveProject" class="btn">Guardar proyecto JSON</button></div></div></div>'+
+  '<section class="library-hero"><strong>▦ Mi biblioteca personal de piezas</strong><p>Se guarda en el almacenamiento local de este navegador mediante IndexedDB. Las imágenes no se suben a GitHub ni a una nube; podés volver a agregarlas a otra composición en esta PC.</p><div class="library-actions"><span id="localPartsCount" class="tiny">Leyendo biblioteca local…</span><button type="button" id="localPartsReload" class="btn">Actualizar</button></div><div id="localPartsGrid" class="assetgrid"></div></section>'+
+  '<div class="anatomy-tip"><b>Clave para una extracción limpia:</b> para separar una pieza del arte original, ocultá primero las guías y las capas generadas que tapen el dibujo. La guía anatómica sirve para estudiar la pose y proporciones; no sustituye las capas dibujadas originales ni garantiza que la IA reconstruya partes ocultas.</div>'+
+  '<section class="ai-mask-panel"><div class="ai-mask-head"><strong>Selección sobre el lienzo central</strong><span id="anatomyMaskMode">'+(aiMaskMode?"Pincel activo":"Pincel apagado")+'</span></div><p>La pintura rosa es solo una superposición de selección: no se imprime en el PNG original ni en la pieza exportada.</p></section>';
+ $("anatomyOpenLibrary").onclick=()=>{
+  state.category="library";state.pill="Todos";renderNav();gallery();
+  setTimeout(()=>{const search=$("librarySearch");if(search){search.value="Guía anatómica";search.dispatchEvent(new Event("input"));}},250);
+ };
+ $("anatomyGenerate").onclick=()=>requestAnatomyGuide("character");
+ $("anatomyPose").onclick=()=>requestAnatomyGuide("mannequin");
+ $("anatomyMaskToggle").onclick=()=>setAIMaskMode(!aiMaskMode);
+ $("anatomyMaskClear").onclick=()=>{aiMaskStrokes=[];aiMaskDrawing=null;redrawMaskOverlay();refreshMaskUi();toast("Selección anatómica borrada.");};
+ $("anatomyBrushSize").oninput=e=>{aiBrushSize=Number(e.target.value);$("anatomyBrushValue").value=aiBrushSize+" px";};
+ $("anatomyCut").onclick=createCutoutLayer;
+ $("anatomyExport").onclick=exportSelectedLayerPng;
+ $("anatomySavePiece").onclick=saveSelectedLayerToLocalLibrary;
+ $("anatomySaveProject").onclick=save;
+ $("localPartsReload").onclick=()=>renderLocalParts();
+ refreshMaskUi();
+ renderLocalParts();
+}
+function requestAnatomyGuide(type){
+ aiMaskStrokes=[];aiMaskDrawing=null;setAIMaskMode(false);
+ aiSettings.background="transparent";aiSettings.quality="high";aiSettings.direction="preserve";
+ aiSettings.prompt=type==="mannequin"
+  ?"Crea una lámina de construcción anatómica anime de cuerpo entero basada en el personaje de referencia. Cuerpo completo visible de cabeza a pies, vista frontal, pose A neutra y simétrica, proporciones claras de cabeza, cuello, caja torácica, pelvis, brazos, codos, muñecas, manos, muslos, rodillas, pantorrillas y pies. Traje de estudio entallado, opaco y no revelador en una paleta parecida a la del personaje. Añade pequeñas marcas de articulaciones y líneas guía limpias sin palabras ni números. Fondo transparente, una sola figura centrada, sin paneles ni vistas múltiples. La imagen sirve como guía de proporciones, no como ilustración final."
+  :"Crea una ficha de modelo anime de cuerpo entero basada en la identidad y el diseño del personaje de referencia. Reconstruye una vista frontal de cabeza a pies aunque la imagen original sea un retrato recortado. Pose A neutra y simétrica, silueta clara, proporciones anatómicas anime coherentes, manos y pies visibles, rostro y peinado reconocibles, paleta característica y ropa de estudio entallada, opaca y no reveladora. Señala sutilmente hombros, codos, muñecas, pelvis, rodillas y tobillos mediante marcas de construcción discretas; nada de texto. Fondo transparente, una figura centrada, sin paneles ni personajes extra. Es una referencia de model sheet para separar las piezas después, no reemplaces la ilustración original.";
+ aiNextResultMeta={kind:"anatomy_guide",name:(type==="mannequin"?"Maniquí de proporciones — ":"Guía anatómica — ")+state.name};
+ state.category="ai";state.pill="Todos";renderNav();gallery();
+ setTimeout(()=>runAIEdit(),0);
+}
+function anatomyPromptForUser(text,direction){
+ const style=direction==="madhouse"?"anime 2D cinematográfico, lineart fino y sombreado por planos":direction==="trigger"?"anime 2D gráfico, silueta dinámica y contorno limpio":"anime 2D coherente con la ilustración de referencia";
+ return "Usa la imagen de entrada solo como referencia de identidad y diseño, no copies su recorte ni su pose. "+style+". "+text.trim()+" Debe verse el cuerpo completo entero, desde la parte superior del cabello hasta la suela de ambos pies, sin recortar manos ni pies. Pose A simétrica, plano frontal, una sola figura, anatomía consistente, fondo PNG transparente si se admite. Traje de estudio opaco y no revelador. Sin letras, marcas de agua, marcos, paneles, vistas adicionales ni accesorios flotantes. Conserva los rasgos identificativos y la paleta del personaje cuando sea posible.";
+}
+const LOCAL_PARTS_DB="image-local-parts-v1";
+let localPartsDbPromise=null;
+const localPartObjectUrls=new Map();
+function openLocalPartsDb(){
+ if(!("indexedDB" in window))return Promise.reject(Error("Este navegador no admite una biblioteca local persistente."));
+ if(localPartsDbPromise)return localPartsDbPromise;
+ localPartsDbPromise=new Promise((resolve,reject)=>{
+  const request=indexedDB.open(LOCAL_PARTS_DB,1);
+  request.onupgradeneeded=()=>{const db=request.result;if(!db.objectStoreNames.contains("parts"))db.createObjectStore("parts",{keyPath:"id"});};
+  request.onsuccess=()=>resolve(request.result);
+  request.onerror=()=>{localPartsDbPromise=null;reject(request.error||Error("No se pudo abrir la biblioteca local."));};
+  request.onblocked=()=>{localPartsDbPromise=null;reject(Error("Cerrá otras pestañas de IMAGE para actualizar la biblioteca local."));};
+ });
+ return localPartsDbPromise;
+}
+function readLocalParts(){
+ return openLocalPartsDb().then(db=>new Promise((resolve,reject)=>{
+  const request=db.transaction("parts","readonly").objectStore("parts").getAll();
+  request.onsuccess=()=>resolve(request.result||[]);
+  request.onerror=()=>reject(request.error||Error("No se pudieron leer las piezas guardadas."));
+ }));
+}
+function persistLocalPart(record){
+ return openLocalPartsDb().then(db=>new Promise((resolve,reject)=>{
+  const tx=db.transaction("parts","readwrite");
+  tx.objectStore("parts").put(record);
+  tx.oncomplete=()=>resolve(record);
+  tx.onerror=()=>reject(tx.error||Error("No se pudo guardar la pieza."));
+  tx.onabort=()=>reject(tx.error||Error("Se canceló el guardado de la pieza."));
+ }));
+}
+function blobToDataUrl(blob){
+ return new Promise((resolve,reject)=>{
+  const reader=new FileReader();reader.onload=()=>resolve(String(reader.result));reader.onerror=()=>reject(reader.error||Error("No se pudo leer el PNG local."));reader.readAsDataURL(blob);
+ });
+}
+async function selectedLayerPngBlob(layer){
+ const out=document.createElement("canvas");out.width=W;out.height=H;
+ const ctx=out.getContext("2d",{alpha:true});ctx.clearRect(0,0,W,H);
+ const source=await img(layer.dataUrl||layer.src);
+ ctx.drawImage(source,layer.x||0,layer.y||0,layer.w||W,layer.h||H);
+ return await new Promise((resolve,reject)=>out.toBlob(blob=>blob?resolve(blob):reject(Error("El navegador no pudo codificar el PNG.")),"image/png"));
+}
+async function saveSelectedLayerToLocalLibrary(){
+ const layer=state.layers.find(x=>x.id===state.selected);
+ if(!layer){toast("Seleccioná una capa independiente antes de guardar; el retrato base no se guarda como pieza.");return;}
+ const categorySelect=$("anatomyPieceType");
+ const allowedCategories=["hair","eyes","face","body","clothes","accessories"];
+ const category=categorySelect?categorySelect.value:"";
+ if(!allowedCategories.includes(category)){toast("Elegí el tipo de pieza antes de guardarla en la biblioteca.");if(categorySelect)categorySelect.focus();return;}
+ try{
+  const blob=await selectedLayerPngBlob(layer);
+  const safeName=String(layer.name||"pieza anime").trim().slice(0,100)||"pieza anime";
+  const sourceCategory=layer.category||"anatomy";
+  await persistLocalPart({
+   id:"local-part-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),
+   name:safeName,category,sourceCategory,character:state.name||"Personaje",
+   mimeType:"image/png",width:W,height:H,blob,createdAt:new Date().toISOString(),
+   sourceKind:layer.kind||"layer",sourceStatus:layer.status||"unreviewed",
+   reviewStatus:"needs_visual_review"
+  });
+  layer.sourceCategory=sourceCategory;layer.category=category;
+  if(categorySelect)categorySelect.value="";
+  render();gallery();
+  toast("Pieza guardada como "+({hair:"cabello",eyes:"ojos",face:"rostro",body:"cuerpo",clothes:"ropa",accessories:"accesorios"}[category])+" en la biblioteca local.");
+  await renderLocalParts();
+ }catch(error){toast("No se guardó la pieza: "+String(error&&error.message||error));}
+}
+async function addLocalPartToCanvas(id){
+ try{
+  const part=(await readLocalParts()).find(item=>item.id===id);
+  if(!part||!(part.blob instanceof Blob)){toast("No se encontró una pieza local válida.");return;}
+  const dataUrl=await blobToDataUrl(part.blob);
+  const layer={id:"local-import-"+Date.now(),name:part.name||"Pieza local",dataUrl,src:"",kind:"local_library_part",category:part.category||"accessories",sourceCategory:part.sourceCategory||"anatomy",group:null,x:0,y:0,w:W,h:H,opacity:1,hue:0,visible:true,order:Math.max(-1,...state.layers.map(x=>Number.isFinite(x.order)?x.order:-1))+1,status:"local_saved_candidate",sourceKind:part.sourceKind,sourceStatus:part.sourceStatus};
+  state.layers.push(layer);cache.set(dataUrl,img(dataUrl));state.selected=layer.id;render();gallery();
+  toast("Pieza agregada como capa independiente. Podés moverla, ocultarla o ajustar su opacidad.");
+ }catch(error){toast("No se pudo agregar la pieza local: "+String(error&&error.message||error));}
+}
+async function deleteLocalPart(id){
+ if(!window.confirm("¿Eliminar esta pieza de tu biblioteca local?"))return;
+ try{
+  const db=await openLocalPartsDb();
+  await new Promise((resolve,reject)=>{
+   const tx=db.transaction("parts","readwrite");tx.objectStore("parts").delete(id);
+   tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error||Error("No se pudo eliminar la pieza."));
+  });
+  await renderLocalParts();
+ }catch(error){toast("No se pudo eliminar la pieza: "+String(error&&error.message||error));}
+}
+async function renderLocalParts(){
+ const grid=$("localPartsGrid"),count=$("localPartsCount");
+ if(!grid||!count)return;
+ for(const value of localPartObjectUrls.values())URL.revokeObjectURL(value);
+ localPartObjectUrls.clear();grid.innerHTML="";
+ try{
+  const parts=await readLocalParts();
+  parts.sort((a,b)=>String(b.createdAt||"").localeCompare(String(a.createdAt||"")));
+  count.textContent=parts.length?parts.length+" pieza"+(parts.length===1?"":"s")+" guardada"+(parts.length===1?"":"s")+" en este navegador.":"Todavía no guardaste piezas. Seleccioná una capa y pulsá ‘Guardar capa en mi biblioteca’.";
+  grid.innerHTML=parts.map(part=>{
+   const preview=URL.createObjectURL(part.blob);localPartObjectUrls.set(part.id,preview);
+   const categoryLabels={hair:"Cabello",eyes:"Ojos / cejas",face:"Rostro",body:"Cuerpo",clothes:"Ropa",accessories:"Accesorios"};
+   const categoryLabel=categoryLabels[part.category]||part.category||"Pieza";
+   const sourceCategoryLabel=categoryLabels[part.sourceCategory]||part.sourceCategory||"sin origen categorizado";
+   return '<article class="starter-card"><img loading="lazy" alt="'+safe(part.name)+'" src="'+safe(preview)+'"><b>'+safe(part.name)+'</b><small>'+safe(categoryLabel)+' · origen: '+safe(sourceCategoryLabel)+' · '+safe(part.reviewStatus||"pendiente de revisión")+'</small><div class="actions"><button type="button" class="btn primary" data-local-part-add="'+safe(part.id)+'">Agregar como capa</button><button type="button" class="btn" data-local-part-delete="'+safe(part.id)+'">Eliminar</button></div></article>';
+  }).join("");
+  grid.querySelectorAll("[data-local-part-add]").forEach(button=>button.onclick=()=>addLocalPartToCanvas(button.dataset.localPartAdd));
+  grid.querySelectorAll("[data-local-part-delete]").forEach(button=>button.onclick=()=>deleteLocalPart(button.dataset.localPartDelete));
+ }catch(error){
+  count.textContent="Biblioteca local no disponible: "+String(error&&error.message||error);
+ }
+}
+function createCutoutMaskDataUrl(){
+ const mask=document.createElement("canvas");mask.width=W;mask.height=H;
+ const ctx=mask.getContext("2d",{alpha:true});ctx.clearRect(0,0,W,H);ctx.strokeStyle="#fff";ctx.fillStyle="#fff";ctx.lineCap="round";ctx.lineJoin="round";
+ for(const stroke of aiMaskStrokes){
+  if(!stroke.points||!stroke.points.length)continue;
+  ctx.lineWidth=stroke.size;ctx.beginPath();ctx.moveTo(stroke.points[0].x,stroke.points[0].y);
+  if(stroke.points.length===1){ctx.arc(stroke.points[0].x,stroke.points[0].y,stroke.size/2,0,Math.PI*2);ctx.fill();continue;}
+  for(let i=1;i<stroke.points.length;i++)ctx.lineTo(stroke.points[i].x,stroke.points[i].y);
+  ctx.stroke();
+ }
+ return mask;
+}
+async function createCutoutLayer(){
+ if(!aiMaskStrokes.length){toast("Primero pintá la región que querés separar.");return;}
+ try{
+  await drawCanvas();
+  const mask=createCutoutMaskDataUrl();
+  const out=document.createElement("canvas");out.width=W;out.height=H;
+  const ctx=out.getContext("2d",{alpha:true});ctx.drawImage($("canvas"),0,0);ctx.globalCompositeOperation="destination-in";ctx.drawImage(mask,0,0);
+  const data=out.toDataURL("image/png");
+  const count=state.layers.filter(l=>l.kind==="manual_mask_layer").length+1;
+  const layer={id:"piece-"+Date.now(),name:"Pieza separada "+count,category:"anatomy",group:null,dataUrl:data,src:"",kind:"manual_mask_layer",x:0,y:0,w:W,h:H,opacity:1,hue:0,visible:true,order:Math.max(-1,...state.layers.map(x=>Number.isFinite(x.order)?x.order:-1))+1,status:"manual_mask_selection"};
+  state.layers.push(layer);cache.set(data,img(data));state.selected=layer.id;aiMaskStrokes=[];aiMaskDrawing=null;setAIMaskMode(false);render();gallery();
+  toast("Pieza PNG transparente creada. Exportala individualmente para conservar sus coordenadas.");
+ }catch(e){toast("No se pudo separar la pieza: "+String(e.message||e));}
+}
+async function exportSelectedLayerPng(){
+ const layer=state.layers.find(x=>x.id===state.selected);
+ if(!layer){toast("Seleccioná primero una capa independiente, no el retrato base.");return;}
+ try{
+  const out=document.createElement("canvas");out.width=W;out.height=H;
+  const ctx=out.getContext("2d",{alpha:true});ctx.clearRect(0,0,W,H);
+  const source=await img(layer.dataUrl||layer.src);
+  ctx.drawImage(source,layer.x||0,layer.y||0,layer.w||W,layer.h||H);
+  const blob=await new Promise((resolve,reject)=>out.toBlob(b=>b?resolve(b):reject(Error("El navegador no devolvió el PNG.")),"image/png"));
+  download(blob,(layer.name||"pieza").replace(/[^\w-]+/g,"-").toLowerCase()+"-aligned.png");
+  toast("PNG de la capa exportado con lienzo "+W+"×"+H+".");
+ }catch(e){toast("No se pudo exportar la capa: "+String(e.message||e));}
+}
+
+const aiPresets=[
+ {label:"Nuevo peinado",prompt:"Cambia únicamente el peinado por uno largo, fluido y anime, con mechones y silueta limpios. Conserva el rostro, ojos, expresión, ropa, pose y encuadre."},
+ {label:"Ropa de fantasía",prompt:"Cambia únicamente la ropa por un conjunto de fantasía anime elegante con detalles bien definidos. Conserva rostro, cabello, cuerpo, pose y encuadre."},
+ {label:"Expresión",prompt:"Cambia únicamente la expresión facial a una sonrisa confiada y amable. Conserva identidad, forma del rostro, color de ojos, peinado, ropa y encuadre."},
+ {label:"Fondo",prompt:"Sustituye únicamente el fondo por un escenario anime nocturno con luces suaves. Mantén al personaje intacto y claramente separado del fondo."},
+ {label:"Limpiar dibujo",prompt:"Limpia los bordes, el lineart y el sombreado de la ilustración de forma profesional. No cambies el diseño, la pose, la paleta ni los rasgos del personaje."}
+];
+
+function normalizeAIMaskStrokes(value){
+ if(!Array.isArray(value))return [];
+ return value.slice(0,300).map(stroke=>{
+  if(!stroke||!Array.isArray(stroke.points))return null;
+  const points=stroke.points.slice(0,2000).filter(p=>p&&typeof p==="object").map(p=>({x:Math.max(0,Math.min(W,Number(p.x)||0)),y:Math.max(0,Math.min(H,Number(p.y)||0))}));
+  if(!points.length)return null;
+  return {size:Math.max(4,Math.min(220,Number(stroke.size)||aiBrushSize)),points};
+ }).filter(Boolean);
+}
+function redrawMaskOverlay(){
+ const overlay=$("maskOverlay");if(!overlay)return;
+ overlay.classList.toggle("visible",state.category==="ai"||state.category==="anatomy");
+ overlay.classList.toggle("painting",aiMaskMode&&(state.category==="ai"||state.category==="anatomy"));
+ const ctx=overlay.getContext("2d");ctx.clearRect(0,0,W,H);
+ ctx.save();ctx.strokeStyle="rgba(250,62,139,.62)";ctx.fillStyle="rgba(250,62,139,.62)";ctx.lineCap="round";ctx.lineJoin="round";
+ const visibleStrokes=aiMaskDrawing?aiMaskStrokes.concat([aiMaskDrawing]):aiMaskStrokes;
+ for(const stroke of visibleStrokes){
+  if(!stroke.points||!stroke.points.length)continue;
+  ctx.lineWidth=stroke.size;ctx.beginPath();ctx.moveTo(stroke.points[0].x,stroke.points[0].y);
+  if(stroke.points.length===1){ctx.arc(stroke.points[0].x,stroke.points[0].y,stroke.size/2,0,Math.PI*2);ctx.fill();continue;}
+  for(let i=1;i<stroke.points.length;i++)ctx.lineTo(stroke.points[i].x,stroke.points[i].y);
+  ctx.stroke();
+ }
+ ctx.restore();refreshMaskUi();
+}
+function refreshMaskUi(){
+ const label=aiMaskStrokes.length+" trazo"+(aiMaskStrokes.length===1?"":"s");
+ const count=$("aiMaskCount");if(count)count.textContent=label;
+ const anatomyCount=$("anatomyMaskCount");if(anatomyCount)anatomyCount.textContent=label;
+ const button=$("aiMaskToggle");if(button){button.textContent=aiMaskMode?"✓ Terminar pincel":"✎ Pintar zona";button.classList.toggle("primary",aiMaskMode);}
+ const anatomyButton=$("anatomyMaskToggle");if(anatomyButton){anatomyButton.textContent=aiMaskMode?"✓ Terminar pincel":"✎ Pintar pieza";anatomyButton.classList.toggle("primary",aiMaskMode);}
+ const anatomyMode=$("anatomyMaskMode");if(anatomyMode)anatomyMode.textContent=aiMaskMode?"Pincel activo":"Pincel apagado";
+ const overlay=$("maskOverlay");if(overlay){overlay.classList.toggle("visible",state.category==="ai"||state.category==="anatomy");overlay.classList.toggle("painting",aiMaskMode&&(state.category==="ai"||state.category==="anatomy"));}
+}
+function setAIMaskMode(enabled){
+ aiMaskMode=!!enabled&&(state.category==="ai"||state.category==="anatomy");
+ if(!aiMaskMode)aiMaskDrawing=null;
+ refreshMaskUi();
+ if(aiMaskMode)status("Pincel de máscara activo: pintá la zona del lienzo que querés editar.",false);
+}
+function maskPoint(event){
+ const rect=$("maskOverlay").getBoundingClientRect();
+ return {x:Math.max(0,Math.min(W,(event.clientX-rect.left)*W/rect.width)),y:Math.max(0,Math.min(H,(event.clientY-rect.top)*H/rect.height))};
+}
+function createAIMaskDataUrl(){
+ const mask=document.createElement("canvas");mask.width=W;mask.height=H;
+ const ctx=mask.getContext("2d",{alpha:true});ctx.clearRect(0,0,W,H);ctx.fillStyle="#fff";ctx.fillRect(0,0,W,H);
+ ctx.globalCompositeOperation="destination-out";ctx.lineCap="round";ctx.lineJoin="round";
+ for(const stroke of aiMaskStrokes){
+  if(!stroke.points||!stroke.points.length)continue;
+  ctx.lineWidth=stroke.size;ctx.beginPath();ctx.moveTo(stroke.points[0].x,stroke.points[0].y);
+  if(stroke.points.length===1){ctx.arc(stroke.points[0].x,stroke.points[0].y,stroke.size/2,0,Math.PI*2);ctx.fill();continue;}
+  for(let i=1;i<stroke.points.length;i++)ctx.lineTo(stroke.points[i].x,stroke.points[i].y);
+  ctx.stroke();
+ }
+ return mask.toDataURL("image/png");
+}
+$("maskOverlay").onpointerdown=e=>{
+ if(!aiMaskMode||!(state.category==="ai"||state.category==="anatomy"))return;
+ e.preventDefault();$("maskOverlay").setPointerCapture(e.pointerId);
+ aiMaskDrawing={size:aiBrushSize,points:[maskPoint(e)]};redrawMaskOverlay();
+};
+$("maskOverlay").onpointermove=e=>{
+ if(!aiMaskDrawing||!aiMaskMode)return;
+ aiMaskDrawing.points.push(maskPoint(e));redrawMaskOverlay();
+};
+$("maskOverlay").onpointerup=e=>{
+ if(!aiMaskDrawing)return;
+ if(aiMaskDrawing.points.length)aiMaskStrokes.push(aiMaskDrawing);
+ aiMaskDrawing=null;redrawMaskOverlay();
+};
+$("maskOverlay").onpointercancel=()=>{aiMaskDrawing=null;redrawMaskOverlay();};
+
+function aiWorkspace(root){
+ const presetHtml=aiPresets.map(p=>'<button type="button" class="btn ai-preset" data-ai-preset="'+safe(p.prompt)+'">'+safe(p.label)+'</button>').join("");
+ const variantsHtml=aiResults.length>1?'<div class="ai-variant-strip" aria-label="Variantes generadas">'+aiResults.map((data,index)=>'<button type="button" class="ai-variant '+(index===aiSelectedIndex?"active":"")+'" data-ai-result-index="'+index+'" aria-pressed="'+(index===aiSelectedIndex)+'"><img src="'+safe(data)+'" alt="Vista previa variante '+(index+1)+'"><span>Variante '+(index+1)+'</span></button>').join("")+'</div>':'';
+ const resultHtml=aiResult?'<section class="ai-result"><div class="ai-result-title"><span>✦ '+safe(aiResultMeta.name||"Resultado candidato")+'</span><span>'+(aiResults.length>1?aiResults.length+" variantes · sin aplicar":"Sin aplicar")+'</span></div><img src="'+safe(aiResult)+'" alt="Vista previa del resultado generado por IA"><small>El original sigue detrás. Revisá el detalle y elegí una variante antes de aplicarla como capa independiente y reversible.</small>'+variantsHtml+'<div class="ai-actions"><button type="button" id="aiApply" class="btn primary">Usar como capa</button><button type="button" id="aiDiscard" class="btn">Descartar</button></div></section>':'';
+ root.innerHTML=
+  '<div class="ai-intro"><strong>✧ CREADOR DE PERSONAJES CON IA</strong><p>Generá variaciones de personajes, cambiá peinados, ropa y detalles con instrucciones, y conservá cada resultado como una capa reversible. El editor por piezas sigue disponible aunque la IA no esté conectada.</p></div>'+
+  '<section class="library-hero"><strong>Generación con IA sin clave propia</strong><p>El generador gratuito usa cuota pública compartida y puede estar temporalmente saturado. En GitHub Actions, elegí la rama <code>work/easy-avatar-maker-2026-10</code> para mantener los resultados fuera de main; seleccioná el personaje, una referencia verificada y el paquete <code>hair-core-5</code> para solicitar cinco propuestas de peinado. No pegues claves API aquí.</p><div class="actions"><a class="btn primary" href="https://github.com/rikosama473-sketch/image/actions/workflows/generate-character-assets-free.yml" target="_blank" rel="noopener">✦ Abrir generador IA gratuito →</a></div><p class="tiny">Importante: seleccioná la rama de trabajo antes de ejecutar. Este flujo guarda los resultados en la rama seleccionada; no ejecutes el proceso sobre main.</p></section>'+
+  '<section class="plain"><div class="sectionhead"><b>Peinados gratuitos ya guardados</b><button type="button" id="aiFreeVariantsReload" class="btn">Actualizar catálogo</button></div><p>Esta galería lee los paquetes de peinado generados y registrados en la rama actual. Son retratos completos con el pelo editado, no recortes de cabello aislados; al elegir uno, pasa a ser el retrato base. Todo sigue pendiente de revisión visual.</p><div id="aiFreeVariantsStatus" class="tiny">Buscando variantes…</div><div id="aiFreeVariantsGrid" class="assetgrid"></div></section>'+
+  '<div><label class="ai-label" for="aiPrompt">¿Qué querés cambiar?</label><textarea id="aiPrompt" class="ai-prompt" maxlength="3000" placeholder="Ej.: Conserva el rostro y la identidad; cambia únicamente el cabello a una coleta alta con mechones sueltos.">'+safe(aiSettings.prompt)+'</textarea><div class="tiny" style="margin-top:5px">Una instrucción concreta da más control. No se prometen recortes perfectos de una sola pasada.</div></div>'+
+  '<section class="ai-mask-panel"><div class="ai-mask-head"><strong>Máscara de edición localizada</strong><span id="aiMaskCount">0 trazos</span></div><p>Pintá sobre el personaje en el lienzo central para delimitar la zona que querés cambiar. Lo marcado en rosa es editable; lo que quede fuera se protege en la medida de lo posible.</p><div class="ai-mask-actions"><button type="button" id="aiMaskToggle" class="btn">✎ Pintar zona</button><button type="button" id="aiMaskClear" class="btn">Limpiar máscara</button></div><label class="ai-mask-brush" for="aiBrushSize">Tamaño del pincel<input id="aiBrushSize" type="range" min="12" max="180" step="2" value="'+aiBrushSize+'"><output id="aiBrushValue">'+aiBrushSize+' px</output></label><div class="ai-mask-legend"><span class="ai-mask-dot"></span>Zona pintada: la IA puede editarla · sin trazos: edición global</div></section>'+
+  '<div><div class="sectionhead"><b>Ediciones rápidas</b><span>Completá o reemplazá la instrucción</span></div><div class="actions ai-presets">'+presetHtml+'</div></div>'+
+  '<div class="ai-control-grid">'+
+   '<label>Modelo de imagen<select id="aiModel" class="ai-select">'+
+    '<option value="gpt-image-2.5-sunburst" '+(aiSettings.model==="gpt-image-2.5-sunburst"?"selected":"")+'>GPT Image 2.5 · Sunburst</option>'+
+    '<option value="gpt-image-2.5-flare" '+(aiSettings.model==="gpt-image-2.5-flare"?"selected":"")+'>GPT Image 2.5 · Flare</option>'+
+    '<option value="gpt-image-2" '+(aiSettings.model==="gpt-image-2"?"selected":"")+'>GPT Image 2</option>'+
+    '<option value="gpt-image-1.5" '+(aiSettings.model==="gpt-image-1.5"?"selected":"")+'>GPT Image 1.5</option>'+
+   '</select></label>'+
+   '<label>Calidad de salida<select id="aiQuality" class="ai-select">'+
+    '<option value="low" '+(aiSettings.quality==="low"?"selected":"")+'>Baja · prueba rápida</option>'+
+    '<option value="medium" '+(aiSettings.quality==="medium"?"selected":"")+'>Media · equilibrada</option>'+
+    '<option value="high" '+(aiSettings.quality==="high"?"selected":"")+'>Alta · más detalle</option>'+
+    '<option value="xhigh" '+(aiSettings.quality==="xhigh"?"selected":"")+' >Muy alta · GPT Image 2.5</option>'+
+    '<option value="max" '+(aiSettings.quality==="max"?"selected":"")+' >Máxima · GPT Image 2.5</option>'+
+   '</select></label>'+
+   '<label>Variantes por solicitud<select id="aiVariants" class="ai-select">'+
+    '<option value="1" '+(aiSettings.variants===1?"selected":"")+' >1 · una salida</option>'+
+    '<option value="2" '+(aiSettings.variants===2?"selected":"")+' >2 · comparar</option>'+
+    '<option value="3" '+(aiSettings.variants===3?"selected":"")+' >3 · explorar</option>'+
+    '<option value="4" '+(aiSettings.variants===4?"selected":"")+' >4 · máxima variedad</option>'+
+   '</select><span class="tiny">Más variantes pueden aumentar el costo.</span></label>'+
+   '<label>Dirección artística<select id="aiDirection" class="ai-select">'+
+    '<option value="preserve" '+(aiSettings.direction==="preserve"?"selected":"")+'>Respetar el estilo actual</option>'+
+    '<option value="madhouse" '+(aiSettings.direction==="madhouse"?"selected":"")+'>Anime cinematográfico detallado</option>'+
+    '<option value="trigger" '+(aiSettings.direction==="trigger"?"selected":"")+'>Anime gráfico y dinámico</option>'+
+   '</select></label>'+
+   '<label>Fondo de salida<select id="aiBackground" class="ai-select">'+
+    '<option value="auto" '+(aiSettings.background==="auto"?"selected":"")+'>Automático</option>'+
+    '<option value="opaque" '+(aiSettings.background==="opaque"?"selected":"")+'>Opaco</option>'+
+    '<option value="transparent" '+(aiSettings.background==="transparent"?"selected":"")+'>Transparente · PNG</option>'+
+   '</select></label>'+
+  '</div>'+
+  '<div class="ai-ref"><button type="button" id="aiRefBtn" class="btn">＋ Añadir imagen de referencia</button><input id="aiReference" type="file" accept="image/png,image/jpeg,image/webp" hidden><span id="aiRefName" class="tiny">'+(aiReferenceName?safe(aiReferenceName):"Sin referencia adicional")+'</span>'+(aiReferenceDataUrl?'<button type="button" id="aiClearRef" class="btn">Quitar referencia</button>':'')+'</div>'+
+  '<div id="aiServiceStatus" class="ai-status">Comprobando servicio local de IA…</div>'+
+  '<div class="ai-note"><strong>Control profesional y privacidad</strong><br>El lienzo actual se envía al proveedor elegido para editarse. La solicitud puede generar cargos en la cuenta API. La clave se lee desde una variable de entorno local; no se introduce en esta página ni se guarda en el proyecto. Usa una imagen de referencia solo si tienes derecho a utilizarla.</div>'+
+  '<button type="button" data-requires-internet="true" id="aiRun" class="btn primary" '+(aiBusy?"disabled":"")+'>'+ (aiBusy?"Generando edición…":"✦ Generar edición")+'</button>'+
+  resultHtml;
+ $("aiPrompt").oninput=e=>aiSettings.prompt=e.target.value;
+ $("aiModel").onchange=e=>{aiSettings.model=e.target.value;syncAIQuality();};
+ $("aiQuality").onchange=e=>aiSettings.quality=e.target.value;
+ $("aiVariants").onchange=e=>aiSettings.variants=Number(e.target.value);
+ syncAIQuality();
+ $("aiDirection").onchange=e=>aiSettings.direction=e.target.value;
+ $("aiBackground").onchange=e=>aiSettings.background=e.target.value;
+ $("aiRun").onclick=runAIEdit;
+ root.querySelectorAll("[data-ai-result-index]").forEach(b=>b.onclick=()=>{aiSelectedIndex=Number(b.dataset.aiResultIndex);aiResult=aiResults[aiSelectedIndex];const baseName=aiResultMeta.baseName||aiResultMeta.name||"Edición IA";aiResultMeta={...aiResultMeta,baseName,name:aiResults.length>1?baseName+" · variante "+(aiSelectedIndex+1):baseName};aiWorkspace(root);});
+ $("aiMaskToggle").onclick=()=>setAIMaskMode(!aiMaskMode);
+ $("aiMaskClear").onclick=()=>{aiMaskStrokes=[];aiMaskDrawing=null;redrawMaskOverlay();refreshMaskUi();toast("Máscara borrada; la próxima edición podrá afectar todo el lienzo.");};
+ $("aiBrushSize").oninput=e=>{aiBrushSize=Number(e.target.value);$("aiBrushValue").value=aiBrushSize+" px";};
+ refreshMaskUi();
+ root.querySelectorAll("[data-ai-preset]").forEach(b=>b.onclick=()=>{aiSettings.prompt=b.dataset.aiPreset;$("aiPrompt").value=aiSettings.prompt;$("aiPrompt").focus();});
+ $("aiRefBtn").onclick=()=>$("aiReference").click();
+ $("aiReference").onchange=e=>{
+  const f=e.target.files&&e.target.files[0];if(!f)return;
+  if(!/^image\/(png|jpeg|webp)$/.test(f.type)){toast("La referencia debe ser PNG, JPEG o WebP.");e.target.value="";return;}
+  if(f.size>12*1024*1024){toast("La referencia supera 12 MiB. Elegí una imagen más pequeña.");e.target.value="";return;}
+  const reader=new FileReader();reader.onload=()=>{aiReferenceDataUrl=String(reader.result);aiReferenceName=f.name;aiWorkspace($("content"));};reader.onerror=()=>toast("No se pudo leer la referencia.");reader.readAsDataURL(f);
+ };
+ if($("aiClearRef"))$("aiClearRef").onclick=()=>{aiReferenceDataUrl="";aiReferenceName="";aiWorkspace($("content"));};
+ if($("aiApply"))$("aiApply").onclick=applyAIResult;
+ if($("aiDiscard"))$("aiDiscard").onclick=()=>{aiResult=null;aiResults=[];aiSelectedIndex=0;aiWorkspace($("content"));toast("Resultado descartado; el original no cambió.");};
+ if($("aiFreeVariantsReload"))$("aiFreeVariantsReload").onclick=()=>refreshAIFreeVariants(true);
+ refreshAIFreeVariants(false);
+ refreshAIStatus();
+}
+function syncAIQuality(){
+ const premium=aiSettings.model==="gpt-image-2.5-sunburst"||aiSettings.model==="gpt-image-2.5-flare";
+ const quality=$("aiQuality");if(!quality)return;
+ for(const value of ["xhigh","max"]){const option=quality.querySelector('option[value="'+value+'"]');if(option)option.disabled=!premium;}
+ if(!premium&&(aiSettings.quality==="xhigh"||aiSettings.quality==="max")){aiSettings.quality="high";quality.value="high";}
+}
+function refreshAIStatus(){
+ const el=$("aiServiceStatus");if(!el)return;
+ fetch("/api/status",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Servicio local no disponible");return r.json();}).then(d=>{
+  const current=$("aiServiceStatus");if(!current)return;
+  current.textContent=d.api_key_configured?"Servicio local disponible. La clave se encuentra solo en el entorno; elegí el modelo y generá una edición.":"Servicio local disponible, pero falta OPENAI_API_KEY. Configurala en la terminal siguiendo AI_EDITING.md; el editor manual seguirá funcionando.";
+ }).catch(()=>{const current=$("aiServiceStatus");if(current)current.textContent="Puente de IA no detectado. Abrí el editor con start-avatar-maker.bat y revisá AI_EDITING.md. No pegues tu clave API en la página.";});
+}
+async function refreshAIFreeVariants(force=false){
+ const statusEl=$("aiFreeVariantsStatus"),grid=$("aiFreeVariantsGrid");
+ if(!statusEl||!grid)return;
+ statusEl.textContent="Buscando variantes guardadas…";
+ try{
+  let data=imageLibraryCache;
+  if(force||!data){
+   const response=await fetch("assets/image-library.json?refresh="+Date.now(),{cache:"no-store"});
+   if(!response.ok)throw Error("No se pudo actualizar assets/image-library.json.");
+   data=await response.json();
+   if(!data||!Array.isArray(data.assets))throw Error("El catálogo de imágenes no tiene un formato válido.");
+   imageLibraryCache=data;
+   imageLibraryPromise=Promise.resolve(data);
+  }
+  const variants=data.assets.filter(a=>a&&a.kind==="generated_full_illustration"&&a.pack==="hair-core-5"&&String(a.origin_hint||"").includes("public image-edit Space"));
+  variants.sort((a,b)=>String(b.path||"").localeCompare(String(a.path||"")));
+  const visible=variants.slice(0,8);
+  if(!visible.length){
+   grid.innerHTML="";
+   statusEl.textContent="Todavía no hay peinados del generador gratuito indexados en esta rama. Ejecutá hair-core-5 y pulsá Actualizar catálogo.";
+   return;
+  }
+  grid.innerHTML=visible.map(a=>'<article class="starter-card"><img loading="lazy" alt="'+safe(a.label)+'" src="'+safe(url(a.src))+'"><b>'+safe(a.label)+'</b><small>Retrato completo · revisión pendiente</small><div class="actions"><button type="button" class="btn" data-ai-free-asset-id="'+safe(a.id)+'">Usar como base</button><button type="button" class="btn primary" data-ai-free-extract-id="'+safe(a.id)+'">Separar una pieza</button></div></article>').join("");
+  statusEl.textContent="Mostrando "+visible.length+" de "+variants.length+" retratos generados. ‘Separar una pieza’ abre el taller con el retrato de base; tendrás que delimitar el pelo a mano antes de guardarlo como recurso local.";
+  grid.querySelectorAll("[data-ai-free-asset-id]").forEach(button=>{button.onclick=()=>useLibraryAsset(button.dataset.aiFreeAssetId,"ai");});
+  grid.querySelectorAll("[data-ai-free-extract-id]").forEach(button=>{button.onclick=()=>openLibraryAssetForExtraction(button.dataset.aiFreeExtractId);});
+ }catch(error){
+  grid.innerHTML="";
+  statusEl.textContent="No se pudo actualizar la galería: "+String(error&&error.message||error);
+ }
+}
+async function baseImageDataUrl(){
+ const can=document.createElement("canvas");can.width=W;can.height=H;
+ const ctx=can.getContext("2d",{alpha:true});
+ const base=await img(activeLook().src);
+ // Segmentation must not bake display filters or brightness into the source pixels.
+ if(base.naturalWidth===W&&base.naturalHeight===H)ctx.drawImage(base,0,0);else contain(ctx,base);
+ return can.toDataURL("image/png");
+}
+function aiCutoutPromptForUser(text){
+ return "Actúa como artista técnico senior de producción anime 2D, especializado en capas limpias para un editor de personajes. Instrucción del componente solicitado: "+text.trim()+"\n"+
+ "Entrega una sola pieza, como PNG con transparencia alfa REAL. Mantén el lienzo completo EXACTO de 768×1280 píxeles. Conserva la escala, orientación y coordenadas originales de la pieza; todo píxel fuera de la pieza debe ser transparente. No recortes al borde, no centres, no agrandes, no reduzcas, no gires y no alteres el encuadre. Preserva la identidad visual, el color, el sombreado y el lineart del original. Limpia halos, matte blanco, bordes serrados y restos de las otras categorías. No simules transparencia con un damero ni fondo blanco. No agregues texto, etiquetas, paneles, marcos, personajes, ni sombras externas. Si hay un borde parcialmente oculto, reconstruye solamente lo necesario para conseguir una silueta coherente. El resultado es una capa candidata que se revisará, no un recorte aprobado automáticamente.";
+}
+function aiPromptForUser(text,direction){
+ const directions={
+  preserve:"Dirección artística: conserva el lenguaje visual de la imagen original, el diseño anime 2D, el lineart y el sombreado existentes.",
+  madhouse:"Dirección artística: anime 2D cinematográfico, composición cuidada, sombreado por planos, iluminación dramática controlada y líneas limpias; mantén una ilustración dibujada, no fotorealista.",
+  trigger:"Dirección artística: anime 2D gráfico y enérgico, siluetas legibles, líneas expresivas, color decidido y sensación dinámica; mantén el resultado como ilustración dibujada, no fotorealista."
+ };
+ return "Actúa como editor profesional de ilustración anime. "+directions[direction]+" Edita la imagen de referencia de forma precisa. " +
+  "Instrucción del usuario: "+text.trim()+"\nReglas: cambia únicamente lo que pide la instrucción. Preserva la identidad, la edad aparente, los rasgos faciales, los colores y la pose que no deban cambiar. Respeta anatomía, manos, contorno, lineart, silueta y coherencia de iluminación. No añadas texto, marcas de agua, paneles, marcos ni personajes nuevos salvo que se soliciten. Entrega una sola ilustración final, centrada, a cuerpo/encuadre equivalente al original.";
+}
+async function runAIEdit(){
+ const prompt=$("aiPrompt")?$("aiPrompt").value.trim():aiSettings.prompt.trim();
+ aiSettings.prompt=prompt;
+ if(!prompt){toast("Escribí qué querés editar antes de generar.");$("aiPrompt")?.focus();return;}
+ if(aiBusy)return;
+ const requestMeta=aiNextResultMeta;aiNextResultMeta=null;
+ aiBusy=true;
+ if($("aiRun")){$("aiRun").disabled=true;$("aiRun").textContent="Generando edición…";}
+ status("Preparando el lienzo para la edición con IA…",false);
+ try{
+  await drawCanvas();
+  setAIMaskMode(false);
+  const imageDataUrl=requestMeta&&requestMeta.kind==="ai_cutout"?await baseImageDataUrl():$("canvas").toDataURL("image/png");
+  const maskDataUrl=aiMaskStrokes.length?createAIMaskDataUrl():null;
+  const response=await fetch("/api/ai-edit",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+   image_data_url:imageDataUrl,
+   mask_data_url:maskDataUrl,
+   reference_data_url:aiReferenceDataUrl||null,
+   prompt:requestMeta&&requestMeta.kind==="anatomy_guide"?anatomyPromptForUser(prompt,aiSettings.direction):requestMeta&&requestMeta.kind==="ai_cutout"?aiCutoutPromptForUser(prompt):aiPromptForUser(prompt,aiSettings.direction),
+   model:aiSettings.model,
+   quality:aiSettings.quality,
+   variants:aiSettings.variants,
+   background:aiSettings.background
+  })});
+  const result=await response.json().catch(()=>({error:"El servicio devolvió una respuesta que no es JSON."}));
+  if(!response.ok)throw Error(result.error||"La edición con IA falló.");
+  const generated=Array.isArray(result.images_base64)?result.images_base64:(result.image_base64?[result.image_base64]:[]);
+  if(!generated.length)throw Error("El proveedor no devolvió una imagen utilizable.");
+  aiResults=generated.map(value=>"data:image/png;base64,"+value);aiSelectedIndex=0;aiResult=aiResults[0];
+  const sourceMeta=requestMeta||{kind:"ai_result",name:"Edición IA"};
+  const baseName=sourceMeta.name||"Edición IA";
+  aiResultMeta={...sourceMeta,baseName,name:generated.length>1?baseName+" · variante 1":baseName};
+  aiResults.forEach(data=>cache.set(data,img(data)));
+  aiWorkspace($("content"));
+  status("Edición IA preparada como candidato. Revisala antes de aplicarla.",false);
+  toast("Resultado listo. El diseño original sigue intacto.");
+ }catch(e){
+  const message=String(e&&e.message||e);
+  status("Edición IA no completada: "+message,true);
+  toast("No se generó la edición: "+message.slice(0,180));
+  const el=$("aiServiceStatus");if(el)el.textContent=message;
+ }finally{
+  aiBusy=false;
+  if($("aiRun")){$("aiRun").disabled=false;$("aiRun").textContent="✦ Generar edición";}
+ }
+}
+function applyAIResult(){
+ if(!aiResult){toast("No hay un resultado para aplicar.");return;}
+ const meta={...aiResultMeta};
+ if(meta.kind==="ai_cutout"&&meta.group)state.layers=state.layers.filter(x=>!(x.kind==="ai_cutout"&&x.group===meta.group));
+ const nextOrder=Math.max(-1,...state.layers.map(x=>Number.isFinite(x.order)?x.order:-1))+1;
+ const kind=meta.kind||"ai_result",category=kind==="ai_cutout"?(meta.category||"hair"):kind==="anatomy_guide"?"anatomy":"ai";
+ const l={id:"ai-"+Date.now(),name:meta.name||"Edición IA",category,group:kind==="ai_cutout"?(meta.group||null):null,dataUrl:aiResult,kind,x:0,y:0,w:W,h:H,opacity:1,hue:0,visible:true,order:nextOrder,status:kind==="ai_cutout"?"pending_ai_cutout_review":"unreviewed_ai_result"};
+ if(kind==="ai_cutout"&&meta.targetId==="background")state.baseVisible=false;
+ state.layers.push(l);cache.set(aiResult,img(aiResult));state.selected=l.id;aiResult=null;aiResults=[];aiSelectedIndex=0;aiResultMeta={kind:"ai_result",name:"Edición IA"};
+ if(kind==="ai_cutout"){state.category=category;state.pill="Todos";}
+ renderNav();gallery();render();toast(kind==="ai_cutout"?"Recorte IA añadido como capa candidata. Revisa alfa, contorno y alineación antes de aprobar.":"Edición añadida como capa superior. Ocúltala para volver a ver el original.");
+}
+
+function renderStyles(){$("styles").innerHTML=styles.map(s=>'<button class="stylecard '+(s.id===state.style?"active":"")+'" data-style="'+s.id+'" title="Filtro de color, no cambia el dibujo"><img src="'+url(activeLook().src)+'" alt=""><span>'+s.label+'</span></button>').join("");$("styles").querySelectorAll("[data-style]").forEach(b=>b.onclick=()=>{state.style=b.dataset.style;renderStyles();render();});}
+function all(){renderNav();header();gallery();renderStyles();render();}
+function importFiles(files){Array.from(files).forEach(f=>{if(!/^image\/(png|webp)$/.test(f.type)){toast("Solo se aceptan PNG o WebP.");return;}const reader=new FileReader();reader.onload=()=>{const data=String(reader.result),i=new Image();i.onload=()=>{let w=W,h=H,x=0,y=0;if(i.naturalWidth!==W||i.naturalHeight!==H){const s=Math.min(W*.65/i.naturalWidth,H*.55/i.naturalHeight,1);w=i.naturalWidth*s;h=i.naturalHeight*s;x=(W-w)/2;y=H*.16;}const l={id:"import-"+Date.now()+"-"+Math.random().toString(36).slice(2,6),name:f.name.replace(/\.(png|webp)$/i,""),src:"",dataUrl:data,kind:"import",category:state.category,group:null,x,y,w,h,opacity:1,hue:0,visible:true,order:state.layers.length};state.layers.push(l);state.selected=l.id;cache.set(data,Promise.resolve(i));render();gallery();toast("Pieza agregada. Arrastrala para ajustar la ubicación.");};i.onerror=()=>toast("No se pudo abrir "+f.name);i.src=data;};reader.readAsDataURL(f);});}
+function download(blob,name){const u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500);}
+function exportPng(){render().then(()=>{const canvas=$("canvas");try{canvas.toBlob(b=>{if(!b){toast("El navegador no devolvió el PNG. Recargá el editor con el lanzador local.");status("El navegador bloqueó o no completó la exportación PNG.",true);return;}download(b,(state.name||"pibara").replace(/[^\w-]+/g,"-").toLowerCase()+"-768x1280.png");toast("PNG 768×1280 exportado.");}, "image/png");}catch(e){const message=String(e&&e.message||e);const blocked=/taint|security|cross-origin|cors/i.test(message);toast(blocked?"El servidor de imágenes bloquea la exportación. Abrí el editor desde start-avatar-maker.bat para usar archivos locales.":"No se pudo exportar el PNG: "+message);status(blocked?"Exportación bloqueada por CORS; probá con el lanzador local.":"Falló la exportación PNG.",true);}}).catch(e=>{toast("No se pudo preparar la ilustración para exportar.");status("Error al preparar la exportación.",true);});}
+function currentBaseFilter(){const style=styles.find(x=>x.id===state.style)||styles[0];const lighting=Number.isFinite(Number(state.lighting))?Number(state.lighting):1;return (style&&style.filter!=="none"?style.filter+" ":"")+"brightness("+lighting+")";}
+function save(){const data={schemaVersion:2,app:"IMAGE Character Creator",savedAt:new Date().toISOString(),name:state.name,baseSource:activeLook().src,baseLabel:activeLook().label,baseSourceReview:activeLook().sourceReview||activeLook().license_review||"not-reviewed",baseFilter:currentBaseFilter(),look:state.look,category:state.category,pill:state.pill,background:state.background,transparent:state.transparent,checker:state.checker,style:state.style,lighting:state.lighting,baseVisible:state.baseVisible!==false,layers:state.layers,aiMaskStrokes:aiMaskStrokes,canvas:{width:W,height:H,coordinates:"full-canvas top-left"}};download(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),(state.name||"personaje").replace(/[^\w-]+/g,"-").toLowerCase()+"-design.json");toast("Diseño y posiciones guardados.");}
+function load(file){const r=new FileReader();r.onload=async()=>{try{const d=JSON.parse(String(r.result));if(d.app!=="IMAGE Character Creator"&&d.app!=="KIRA Avatar Maker"&&![1,2].includes(d.schemaVersion))throw Error("Archivo de proyecto incompatible");if(d.look&&!looks.some(x=>x.id===d.look)){try{const library=await loadImageLibrary();const asset=library.assets.find(x=>x.id===d.look);if(asset&&typeof asset.src==="string"&&asset.src.startsWith("../../")&&!/^https?:/i.test(asset.src)){looks.push({id:asset.id,label:asset.label,src:asset.src,render:asset.src,tags:["Todos"],libraryPath:asset.path,sourceReview:asset.license_review});}}catch(_){}}state.look=looks.some(x=>x.id===d.look)?d.look:"ponytail";state.name=String(d.name||"Pibara").slice(0,60);state.category=cats.some(x=>x.id===d.category)?d.category:"hair";state.pill=d.pill||"Todos";state.background=d.background||"#e8e4e5";state.transparent=!!d.transparent;state.checker=d.checker!==false;state.style=styles.some(x=>x.id===d.style)?d.style:"trigger";state.lighting=Number(d.lighting)||1;state.baseVisible=d.baseVisible!==false;state.layers=Array.isArray(d.layers)?d.layers.map((l,i)=>({...l,id:String(l.id||"load-"+i),visible:l.visible!==false,x:Number(l.x)||0,y:Number(l.y)||0,w:Number(l.w)||W,h:Number(l.h)||H,opacity:Number.isFinite(Number(l.opacity))?Number(l.opacity):1,order:Number(l.order)||i})):Array.isArray(d.overlays)?d.overlays:[];state.layers.forEach(l=>{if(l.dataUrl)cache.set(l.dataUrl,img(l.dataUrl));});aiMaskStrokes=normalizeAIMaskStrokes(d.aiMaskStrokes);aiMaskDrawing=null;setAIMaskMode(false);$("charName").textContent=state.name;all();redrawMaskOverlay();toast("Diseño cargado.");}catch(e){toast("No se pudo abrir JSON: "+e.message);}};r.readAsText(file);}
+function reset(){state={look:"ponytail",category:"starter",pill:"Imágenes internas",background:"#e8e4e5",transparent:false,checker:true,style:"trigger",name:"Pibara",layers:[],selected:"base",lighting:1,baseVisible:true};aiMaskStrokes=[];aiMaskDrawing=null;setAIMaskMode(false);$("charName").textContent=state.name;all();redrawMaskOverlay();toast("Diseño nuevo preparado.");}
+function XY(e){const r=$("canvas").getBoundingClientRect();return{x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height};}
+$("canvas").onpointerdown=e=>{const l=state.layers.find(x=>x.id===state.selected);if(!l)return;const p=XY(e);drag={id:l.id,x:p.x,y:p.y,sx:l.x,sy:l.y};$("canvas").setPointerCapture(e.pointerId);};
+$("canvas").onpointermove=e=>{if(!drag)return;const l=state.layers.find(x=>x.id===drag.id);if(!l)return;const p=XY(e);l.x=Math.round(drag.sx+p.x-drag.x);l.y=Math.round(drag.sy+p.y-drag.y);drawCanvas();};$("canvas").onpointerup=()=>drag=null;$("canvas").onpointercancel=()=>drag=null;
+$("confirmCandidate").onclick=()=>{if(pending)addMask(pending);$("candidateDialog").close();pending=null;};$("cancelCandidate").onclick=()=>{$("candidateDialog").close();pending=null;};
+$("baseToggleBtn").onclick=()=>{state.baseVisible=state.baseVisible===false;render();toast(state.baseVisible?"Ilustración base visible.":"Ilustración base oculta; las capas siguen activas.");};$("checkerBtn").onclick=()=>{state.checker=!state.checker;render();};$("centerBtn").onclick=()=>{const l=state.layers.find(x=>x.id===state.selected);if(l){l.x=Math.round((W-l.w)/2);l.y=Math.round((H-l.h)/2);render();toast("Capa centrada sin cambiar su tamaño ni proporción.");}else toast("Seleccioná una capa para centrarla.");};$("fitBtn").onclick=()=>toast("La ilustración se ajusta al lienzo completo.");
+$("exportBtn").onclick=exportPng;$("saveBtn").onclick=save;$("loadBtn").onclick=()=>$("jsonFile").click();$("jsonFile").onchange=e=>{if(e.target.files[0])load(e.target.files[0]);e.target.value="";};$("imageFile").onchange=e=>{if(e.target.files.length)importFiles(e.target.files);e.target.value="";};$("newBtn").onclick=reset;
+document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>{if(b.dataset.view==="background"){state.category="background";renderNav();gallery();}else if(b.dataset.view==="lighting"){state.category="background";renderNav();gallery();}else if(b.dataset.view==="camera"){toast("Elegí una vista de la galería para cambiar el retrato.");}else{toast("Vista previa lista para exportar.");}});
+$("charName").ondblclick=()=>{const n=prompt("Nombre del personaje",state.name);if(n!==null){state.name=n.trim()||"Pibara";$("charName").textContent=state.name;}};
+$("stage").querySelector(".nameplate").title="Doble clic en el nombre para editarlo";
+const visualParams=new URLSearchParams(window.location.search);
+const visualPrompt=visualParams.get("visualPrompt");
+if(visualPrompt){aiSettings.prompt=visualPrompt.slice(0,3000);const requestedBackground=visualParams.get("visualBackground");if(["auto","opaque","transparent"].includes(requestedBackground))aiSettings.background=requestedBackground;const visualName=visualParams.get("visualName");if(visualName)aiNextResultMeta={kind:"ai_result",name:"Variante visual · "+visualName.slice(0,100)};state.category="ai";state.pill="Todos";}
+$("internetModeToggle").addEventListener("click",()=>setInternetMode(!internetModeEnabled));
+all();syncInternetUI();if(internetModeEnabled)checkInternetConnection();
+})();
+</script>
+</body>
+</html>

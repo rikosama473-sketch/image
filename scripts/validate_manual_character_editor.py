@@ -19,7 +19,7 @@ REQUIRED_IDS = {
     "newLayerBtn", "exportLayerBtn", "cropCanvasBtn", "saveProjectBtn", "exportCompositeBtn",
 }
 REQUIRED_FUNCTIONS = (
-    "function extractLayer(", "function removeEdgeBackground(", "function floodMaskFromPixel(",
+    "function extractLayer(", "function importCharacterCreatorProject(", "function importHairstyleWorkbenchProject(", "function projectImageSource(", "function checkImportedLayerBudget(", "function removeEdgeBackground(", "function floodMaskFromPixel(",
     "function cropCanvas(", "function saveProject(", "function exportLayer(",
     'requestedName!==source.name?requestedName:"Recorte "+(doc.layers.length)',
     'const name=requestedName&&(!current||requestedName!==current.name)?requestedName:"Capa nueva "+(doc.layers.length+1)',

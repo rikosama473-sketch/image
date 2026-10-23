@@ -8,8 +8,8 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parent
-INDEX = ROOT / "index.html"
+ROOT = Path(__file__).resolve().parents[2]
+INDEX = ROOT / "tools" / "manual-character-editor" / "index.html"
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -26,7 +26,7 @@ def main() -> int:
         raise SystemExit(f"Editor HTML not found: {INDEX}")
     server = ThreadingHTTPServer(("127.0.0.1", 0), QuietHandler)
     host, port = server.server_address
-    url = f"http://{host}:{port}/index.html"
+    url = f"http://{host}:{port}/tools/manual-character-editor/index.html"
     threading.Timer(0.4, lambda: webbrowser.open(url)).start()
     print("IMAGE Manual Character Editor")
     print(f"URL: {url}")

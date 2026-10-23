@@ -1,0 +1,223 @@
+{
+  "schema_version": 2,
+  "project": "IMAGE Character Creator",
+  "character": {
+    "id": "pibara",
+    "canvas": {
+      "width": 768,
+      "height": 1280
+    },
+    "coordinates": "full canvas, top-left origin; aligned parts preserve original offsets"
+  },
+  "base_illustrations": [
+    {
+      "id": "bob",
+      "label": "Bob recto",
+      "repo_path": "generated/character-assets/pibara/2026-10-20/run-39427500253/transparent/01-blunt-bob.png",
+      "kind": "full_character_render",
+      "status": "available_as_complete_illustration",
+      "license_note": "Generated full-character variation stored in this repository",
+      "warning": "This is a complete character render, not an isolated hair/body part."
+    },
+    {
+      "id": "long",
+      "label": "Largo liso",
+      "repo_path": "generated/character-assets/pibara/2026-10-20/run-39427500253/transparent/02-long-straight.png",
+      "kind": "full_character_render",
+      "status": "available_as_complete_illustration",
+      "license_note": "Generated full-character variation stored in this repository",
+      "warning": "This is a complete character render, not an isolated hair/body part."
+    },
+    {
+      "id": "ponytail",
+      "label": "Coleta alta",
+      "repo_path": "generated/character-assets/pibara/2026-10-20/run-39427500253/transparent/03-high-ponytail.png",
+      "kind": "full_character_render",
+      "status": "available_as_complete_illustration",
+      "license_note": "Generated full-character variation stored in this repository",
+      "warning": "This is a complete character render, not an isolated hair/body part."
+    },
+    {
+      "id": "twintails",
+      "label": "Coletas dobles",
+      "repo_path": "generated/character-assets/pibara/2026-10-20/run-39445227631/transparent/04-twin-tails.png",
+      "kind": "full_character_render",
+      "status": "available_as_complete_illustration",
+      "license_note": "Generated full-character variation stored in this repository",
+      "warning": "This is a complete character render, not an isolated hair/body part."
+    },
+    {
+      "id": "braid",
+      "label": "Trenza lateral",
+      "repo_path": "generated/character-assets/pibara/2026-10-20/run-39445227631/transparent/05-side-braid.png",
+      "kind": "full_character_render",
+      "status": "available_as_complete_illustration",
+      "license_note": "Generated full-character variation stored in this repository",
+      "warning": "This is a complete character render, not an isolated hair/body part."
+    },
+    {
+      "id": "original",
+      "label": "Imagen original",
+      "repo_path": "from-PixAI-2034984086876227343-0.png",
+      "kind": "full_character_render",
+      "status": "original_reference",
+      "license_note": "Existing project image; verify rights before external redistribution",
+      "warning": "This is a complete character render, not an isolated hair/body part."
+    }
+  ],
+  "candidate_layers": [
+    {
+      "id": "hair-bob",
+      "label": "Cabello bob",
+      "category": "hair",
+      "repo_path": "generated/character-layers/pibara/39474458754/hair/variants/blunt-bob.png",
+      "canvas": {
+        "width": 768,
+        "height": 1280
+      },
+      "alignment": "full-canvas-preserved",
+      "kind": "semantic_mask_candidate",
+      "status": "pending_visual_review",
+      "review": "Anime-domain mask accuracy is unvalidated. Inspect hairline, face, neck, line art and clothing before approving."
+    },
+    {
+      "id": "hair-long",
+      "label": "Cabello largo",
+      "category": "hair",
+      "repo_path": "generated/character-layers/pibara/39474458754/hair/variants/long-straight.png",
+      "canvas": {
+        "width": 768,
+        "height": 1280
+      },
+      "alignment": "full-canvas-preserved",
+      "kind": "semantic_mask_candidate",
+      "status": "pending_visual_review",
+      "review": "Anime-domain mask accuracy is unvalidated. Inspect hairline, face, neck, line art and clothing before approving."
+    },
+    {
+      "id": "hair-ponytail",
+      "label": "Pelo recogido",
+      "category": "hair",
+      "repo_path": "generated/character-layers/pibara/39474458754/hair/variants/high-ponytail.png",
+      "canvas": {
+        "width": 768,
+        "height": 1280
+      },
+      "alignment": "full-canvas-preserved",
+      "kind": "semantic_mask_candidate",
+      "status": "pending_visual_review",
+      "review": "Anime-domain mask accuracy is unvalidated. Inspect hairline, face, neck, line art and clothing before approving."
+    },
+    {
+      "id": "hair-twintails",
+      "label": "Coletas dobles",
+      "category": "hair",
+      "repo_path": "generated/character-layers/pibara/39474458754/hair/variants/twin-tails.png",
+      "canvas": {
+        "width": 768,
+        "height": 1280
+      },
+      "alignment": "full-canvas-preserved",
+      "kind": "semantic_mask_candidate",
+      "status": "pending_visual_review",
+      "review": "Anime-domain mask accuracy is unvalidated. Inspect hairline, face, neck, line art and clothing before approving."
+    },
+    {
+      "id": "hair-braid",
+      "label": "Trenza lateral",
+      "category": "hair",
+      "repo_path": "generated/character-layers/pibara/39474458754/hair/variants/side-braid.png",
+      "canvas": {
+        "width": 768,
+        "height": 1280
+      },
+      "alignment": "full-canvas-preserved",
+      "kind": "semantic_mask_candidate",
+      "status": "pending_visual_review",
+      "review": "Anime-domain mask accuracy is unvalidated. Inspect hairline, face, neck, line art and clothing before approving."
+    },
+    {
+      "id": "face",
+      "label": "Rostro candidato",
+      "category": "face",
+      "repo_path": "generated/character-layers/pibara/39474458754/model/face-candidate.png",
+      "canvas": {
+        "width": 768,
+        "height": 1280
+      },
+      "alignment": "full-canvas-preserved",
+      "kind": "semantic_mask_candidate",
+      "status": "pending_visual_review",
+      "review": "Anime-domain mask accuracy is unvalidated. Inspect hairline, face, neck, line art and clothing before approving."
+    },
+    {
+      "id": "head-face",
+      "label": "Cabeza y rostro",
+      "category": "face",
+      "repo_path": "generated/character-layers/pibara/39474458754/model/head-face-candidate.png",
+      "canvas": {
+        "width": 768,
+        "height": 1280
+      },
+      "alignment": "full-canvas-preserved",
+      "kind": "semantic_mask_candidate",
+      "status": "pending_visual_review",
+      "review": "Anime-domain mask accuracy is unvalidated. Inspect hairline, face, neck, line art and clothing before approving."
+    },
+    {
+      "id": "body",
+      "label": "Cuerpo sin cabeza",
+      "category": "body",
+      "repo_path": "generated/character-layers/pibara/39474458754/model/body-without-head-candidate.png",
+      "canvas": {
+        "width": 768,
+        "height": 1280
+      },
+      "alignment": "full-canvas-preserved",
+      "kind": "semantic_mask_candidate",
+      "status": "pending_visual_review",
+      "review": "Anime-domain mask accuracy is unvalidated. Inspect hairline, face, neck, line art and clothing before approving."
+    },
+    {
+      "id": "clothing",
+      "label": "Ropa candidata",
+      "category": "clothes",
+      "repo_path": "generated/character-layers/pibara/39474458754/model/outfit-candidate.png",
+      "canvas": {
+        "width": 768,
+        "height": 1280
+      },
+      "alignment": "full-canvas-preserved",
+      "kind": "semantic_mask_candidate",
+      "status": "pending_visual_review",
+      "review": "Anime-domain mask accuracy is unvalidated. Inspect hairline, face, neck, line art and clothing before approving."
+    }
+  ],
+  "external_libraries": [
+    {
+      "id": "anime-portraits-cc0",
+      "title": "Anime Girl and Boy Portraits",
+      "author": "stevenburrow",
+      "license": "CC0 as declared by source page",
+      "source_page": "https://opengameart.org/content/anime-girl-and-boy-portraits",
+      "download_url": "https://opengameart.org/sites/default/files/allanime-11-28-2020.zip",
+      "purpose": "Layered XCF and anime face/eye/mouth/hair parts; visual style is simpler than Pibara."
+    },
+    {
+      "id": "visual-novel-cc0",
+      "title": "Visual Novel Style Characters",
+      "author": "madameberry",
+      "license": "CC0 as declared by source page",
+      "source_page": "https://opengameart.org/node/54368",
+      "download_url": "https://opengameart.org/sites/default/files/VisualNovel_Set1_MadameBerry.zip",
+      "purpose": "Layered PSD source and PNGs; useful to extract aligned pieces from the source canvas."
+    }
+  ],
+  "policies": [
+    "A complete character render replaces the base illustration; it must not be mislabeled as hair-only.",
+    "Semantic image masks are experimental until their edges and compatibility are visually approved.",
+    "Layered PSD/XCF sources can preserve exact source canvas offsets when each layer is exported to the full canvas.",
+    "A flattened web image cannot reveal pixels hidden behind hair or clothing; masked areas may need to be redrawn manually.",
+    "Track source URL, author, license, source file hash, dimensions, alignment and review status."
+  ]
+}

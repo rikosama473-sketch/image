@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Create identity-preserving visual variants from a real IMAGE repository reference."""
 from __future__ import annotations
-import argparse, hashlib, io, json, re, sys
+import argparse, hashlib, io, json, os, re, sys
 from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
 from urllib.parse import quote
@@ -9,6 +9,18 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 SPACE_ID = "conradlocke/krea2-identity-edit"
 SPACE_URL = "https://huggingface.co/spaces/conradlocke/krea2-identity-edit"
+
+
+def build_space_client(client_class, hf_token):
+    """Authenticate to the public Space when a repository secret is configured."""
+    token = str(hf_token or "").strip()
+    if token:
+        print("Public image Space authentication: HF_TOKEN configured.")
+        return client_class(SPACE_ID, hf_token=token, verbose=True)
+    print("Public image Space authentication: anonymous quota.")
+    return client_class(SPACE_ID, verbose=True)
+
+
 ALLOWED_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
 MAX_SOURCE_BYTES = 20 * 1024 * 1024
 CONFIRMED_PIBARA_REFERENCE = "from-PixAI-2034984086876227343-0.png"
@@ -20,6 +32,16 @@ BASE = (
     "shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region "
     "as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. "
     "Do not turn the anime illustration photorealistic."
+)
+ANATOMY_BASE = (
+    "Identity-guided anime character model-sheet reconstruction from the supplied image. "
+    "Unlike a normal local edit, do not preserve the input crop or bust framing: extend/recompose the composition into a complete full-body figure from the highest hair strand to both soles. "
+    "Preserve the source face, exact hairstyle and silhouette, bangs, tied sections, loose strands, hair color/highlight pattern, iris color, signature accessories and visible costume details. Do not redesign the hairstyle or change the hair/iris colors. " 
+    "Keep the recognizable source outfit, palette and color blocking; extend only hidden lower-body clothing consistently with the design. If coverage must change, retain the source silhouette and signature details rather than inventing a generic unrelated outfit. "
+    "Show clear anime body construction with a symmetric neutral A-pose, arms slightly separated from torso, hands, fingers and both feet visible, balanced proportions, clean 2D line art and cel shading. "
+    "Subtle joint landmarks for shoulders, elbows, wrists, pelvis, knees and ankles are acceptable; avoid labels or writing. "
+    "One figure only, use the orientation and pose specified by the requested anatomy view, centered portrait canvas, no panels, no extra poses, no added character, no text, no watermark, no photorealism. "
+    "The output is a reference guide for later manual component separation, not a claim that individual body parts are already segmented."
 )
 PACKS = {
     "hair-core-5": [
@@ -47,6 +69,27 @@ PACKS = {
         ("hair-clip", "Add one small simple hair clip near the temple, coordinated with the existing palette. Preserve existing accessories; change nothing else."),
         ("star-pin", "Add one tiny star-shaped hair pin near the temple. Preserve existing accessories; change nothing else."),
         ("headband", "Add one slim, simple headband that fits the existing palette without covering the eyes. Preserve existing accessories; change nothing else."),
+    ],
+    "anatomy-guide-1": [
+        ("full-body-anatomy-a-pose", "Reconstruct this exact anime character as a full-body model sheet in a neutral, symmetrical A-pose. Show the entire figure from hair top to soles, with visible hands, fingers, knees, ankles and feet. Preserve recognizable face, signature hairstyle, palette and clothing identity, but adapt clothing into an opaque fitted design suitable for an anatomy reference. Add subtle construction lines for shoulder line, ribcage, pelvis, elbows, wrists, knees and ankles. Clean anime line art and cel shading, single centered figure, no text, no labels, no watermark, no collage."),
+    ],
+    "anatomy-front-v2-1": [
+        ("full-body-front-a-pose-v2", "Front-view full-body anime model sheet in a neutral A-pose, centered and uncropped from the top of the hair to the soles, with both hands and all fingers visible. Treat the source image as the character identity reference, not a loose inspiration. Preserve the exact distinctive hairstyle silhouette, red/black hair pattern if present, eye and iris colors, facial features, accessories, and recognizable outfit details. Fill in only parts hidden by the original crop, using consistent anatomy and the same costume design. Plain light background, clean cel shading, no text, no labels, no watermark."),
+    ],
+    "anatomy-side-1": [
+        ("full-body-side-profile", "Show this same anime character in a strict 90-degree side profile facing left, full body from hair top to both soles, neutral balanced standing A-pose adapted naturally for a side view. Preserve the character's exact hair silhouette, hair color/highlights, face profile, accessories and outfit identity. Keep the torso, pelvis, knees, ankles, hands and feet readable in profile. Single character, plain light background, clean production anime line art and cel shading, no text, no labels, no watermark, no extra views."),
+    ],
+    "anatomy-back-1": [
+        ("full-body-back-view", "Show the same anime character from directly behind, full body from the top of the hair to the soles, standing in a neutral symmetrical A-pose with both arms slightly away from the torso. Prioritize the exact back silhouette of the hairstyle, tied sections and loose strands, hair color/highlights, outfit seams, jacket shape, belt and accessory placement from the source. Use consistent anatomy and matching costume design; do not invent a different character. Plain light background, clean anime model-sheet line art and cel shading, no text, no labels, no watermark, no extra views."),
+    ],
+    "anatomy-joint-guide-1": [
+        ("full-body-joint-guide", "Make a full-body front-view character anatomy study of this same anime character in a neutral A-pose, hair top to soles, hands and feet visible. Preserve her identity and signature design. Add very faint clean construction marks indicating shoulders, ribcage, spine centerline, pelvis, elbows, wrists, knees and ankles, without drawing bones over the face or obscuring costume details. It must remain polished anime production art rather than a medical skeleton. Plain light background, no words, no labels, no watermark."),
+    ],
+    "anatomy-sheet-4": [
+        ("batch-front-a-pose", "Front view: full body from hair top to soles, neutral symmetric A-pose, hands and feet visible. Preserve exact hairstyle silhouette, bangs, tied sections, loose strands, hair/highlight pattern, iris color, face, accessories and costume color blocking. Extend only hidden parts consistently. Single figure, plain light background, clean anime line art, no labels."),
+        ("batch-side-profile", "Strict 90-degree left-facing side profile of this same character, full body from hair top to soles, neutral standing pose adapted to profile. Preserve exact hair silhouette, hair color/highlights, face profile, accessories and outfit motifs from the reference. Show torso, pelvis, arms, hands, legs and feet clearly in profile. Single figure, plain light background, no labels or text."),
+        ("batch-back-view", "Direct rear view of this same character, full body from hair top to soles, neutral symmetric A-pose, arms slightly away from torso. Preserve the source's rear hair silhouette, tied sections, loose strands, hair colors/highlights, jacket/back seams, belt and accessories. Do not redesign the character. Single figure, plain light background, no labels or text."),
+        ("batch-joint-guide", "Front-view full-body anime character study in a neutral A-pose, hair top to soles, hands and feet visible. Preserve identity and costume. Add very faint construction marks for shoulders, ribcage, spine centerline, pelvis, elbows, wrists, knees and ankles without obscuring the art. Polished anime production illustration, not a medical skeleton. Plain light background, no labels or words."),
     ],
     "face-details-4": [
         ("freckles", "Add a very light cluster of tiny freckles across the upper cheeks only. Do not alter face shape, skin tone, expression, eye color, hairstyle or accessories."),
@@ -210,6 +253,9 @@ def ensure_base_character_cutout(root, character_id, source_path, source_path_in
                 existing_mask.verify()
 
     cutout_details["file"] = cutout_path.relative_to(root).as_posix()
+    with Image.open(mask_path) as mask_image:
+        mask_dimensions = list(mask_image.size)
+
     manifest = {
         "schema_version": 1,
         "character_id": character_id,
@@ -227,7 +273,7 @@ def ensure_base_character_cutout(root, character_id, source_path, source_path_in
             "alpha_mask": {
                 "file": mask_path.relative_to(root).as_posix(),
                 "sha256": hashlib.sha256(mask_path.read_bytes()).hexdigest(),
-                "dimensions": list(Image.open(mask_path).size),
+                "dimensions": list(mask_image.size),
                 "mask_semantics": "White/opaque pixels represent the estimated foreground; black/transparent pixels represent the estimated background.",
             },
         },
@@ -310,6 +356,66 @@ def make_contact_sheet(items, target):
         draw.text((x+10,y+cell_h+10), label.replace("-", " "), fill="#202020", font=font)
     target.parent.mkdir(parents=True, exist_ok=True)
     sheet.save(target, format="JPEG", quality=88, optimize=True)
+
+def update_image_library(root, character_id, source_path, source_sha, pack, run_id, records):
+    """Index generated PNG outputs without upgrading their review/license status."""
+    library_path = root / "tools" / "avatar-maker" / "assets" / "image-library.json"
+    if not library_path.is_file():
+        print("WARNING: image-library.json is absent from the workflow checkout; generated PNGs remain in the output manifest.")
+        return
+    try:
+        library = json.loads(library_path.read_text(encoding="utf-8"))
+        assets = library.get("assets")
+        if not isinstance(assets, list):
+            raise ValueError("assets must be a list")
+    except Exception as exc:
+        fail("Could not update the image library safely: " + str(exc))
+
+    existing_paths = {item.get("path") for item in assets if isinstance(item, dict)}
+    for record in records:
+        layer = record.get("transparent_layer") or {}
+        rel = layer.get("file") or (record.get("render") or {}).get("file")
+        if not rel:
+            continue
+        raster = root / str(rel)
+        if not raster.is_file():
+            continue
+        relative = raster.relative_to(root).as_posix()
+        if relative in existing_paths:
+            continue
+        anatomy = pack.startswith("anatomy-")
+        asset_id = "generated-" + character_id + "-" + pack + "-" + str(record.get("asset_id") or "asset") + "-" + source_sha[:8]
+        display_name = ("Guía anatómica — " + str(record.get("asset_id") or "vista")) if anatomy else ("Variante " + str(record.get("asset_id") or "anime"))
+        if character_id:
+            display_name += " — " + character_id.capitalize()
+        if not anatomy:
+            display_name += " — " + pack
+        assets.append({
+            "id": asset_id,
+            "catalog_id": "GEN-" + source_sha[:8].upper() + "-" + str(record.get("asset_id") or "asset").upper(),
+            "label": display_name,
+            "path": relative,
+            "src": "../../" + relative,
+            "kind": "anatomy_guide" if anatomy else "generated_full_illustration",
+            "origin_hint": "Generated in repository workflow via the public image-edit Space; source: " + source_path + "; run: " + str(run_id),
+            "visual_review": "needs_visual_identity_review",
+            "license_review": "unreviewed",
+            "training_permission": "unreviewed",
+            "tags": ["Anatomía", "Cuerpo completo"] if anatomy else ["Generado", pack],
+            "size_bytes": raster.stat().st_size,
+            "sha256_git_blob": "",
+            "sha256": layer.get("sha256") or (record.get("render") or {}).get("sha256"),
+            "source_sha256": source_sha,
+            "character_id": character_id,
+            "pack": pack,
+            "manifest_status": "needs_visual_identity_review",
+        })
+        existing_paths.add(relative)
+    library["assets"] = assets
+    library["asset_count"] = len(assets)
+    library["updated_at_utc"] = datetime.now(timezone.utc).isoformat()
+    library_path.write_text(json.dumps(library, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
 
 def update_registry(path, cid, source, sha, run_record):
     try:
@@ -410,7 +516,7 @@ def main():
     renders.mkdir(parents=True, exist_ok=True)
     try:
         from gradio_client import Client, handle_file
-        client = Client(SPACE_ID, verbose=True)
+        client = build_space_client(Client, os.environ.get("HF_TOKEN"))
         source_input = handle_file(url)
     except Exception as exc:
         fail("Could not connect to the public Gradio Space: " + str(exc))
@@ -445,7 +551,7 @@ def main():
 
     generation_error = None
     for i, slug, change in missing:
-        prompt = BASE + " Requested single change: " + change
+        prompt = (ANATOMY_BASE + " Requested anatomy model-sheet result: " + change) if args.pack.startswith("anatomy-") else (BASE + " Requested single change: " + change)
         seed = max(0, min(2147483647, args.seed + i - 1))
         flat = renders / f"{i:02d}-{slug}.png"
         print(f"Generating {args.character}/{slug} ({len(created)+1}/{len(all_slugs)})", flush=True)
@@ -559,6 +665,7 @@ def main():
         "status": "complete_pending_visual_review" if pack_status == "complete" else "partial_generation_pending_visual_review",
     }
     update_registry(root / "data" / "character-prompt-registry.json", args.character, path, source_sha, run_record)
+    update_image_library(root, args.character, path, source_sha, args.pack, run_id, complete_records)
     print(f"Saved {complete_count}/{len(all_slugs)} assets for {args.character}/{args.pack} in {out.relative_to(root)}.")
     print("The original reference was not modified.")
     if generation_error:

@@ -1,0 +1,38 @@
+name: Build IMAGE visual contact sheets
+on:
+  push:
+    branches: [work/easy-avatar-maker-2026-10, main]
+    paths:
+      - "tools/avatar-maker/assets/image-library.json"
+      - "**/*.png"
+      - "scripts/build_visual_contact_sheets.py"
+      - ".github/workflows/build-visual-contact-sheets.yml"
+  workflow_dispatch:
+    inputs:
+      per_sheet:
+        description: Number of thumbnails per contact sheet (12–120)
+        required: true
+        default: "48"
+        type: string
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Pillow for local raster inspection
+        run: python -m pip install "Pillow>=10.0.0"
+      - name: Generate contact sheets and exact duplicate report
+        env:
+          PER_SHEET: "${{ github.event_name == 'workflow_dispatch' && inputs.per_sheet || '48' }}"
+        run: python scripts/build_visual_contact_sheets.py --per-sheet "$PER_SHEET"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: image-visual-reference-contact-sheets
+          path: generated/visual-reference-contact-sheets/
+          if-no-files-found: error
+          retention-days: 7

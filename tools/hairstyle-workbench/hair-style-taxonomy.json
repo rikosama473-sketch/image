@@ -1,0 +1,438 @@
+{
+  "schema_version": 1,
+  "title": "Vocabulario de peinados para IMAGE",
+  "language": "es",
+  "purpose": "Clasificar piezas y variantes de cabello para un editor manual de personajes. Las etiquetas describen rasgos independientes; no representan una lista de imágenes ni garantizan que cada etiqueta sea un tag oficial de Danbooru.",
+  "retention_policy": {
+    "no_deduplication": "No borrar ni fusionar recursos solo por parecerse. Cada peinado, dibujo, largo, flequillo o cambio de coleta conserva su propio asset_id y variant_id.",
+    "use_multiple_tags": "Un mismo recurso puede tener varias etiquetas de grupos distintos: largo + corte + flequillo + recogido + textura + accesorio.",
+    "synonyms": "Los sinónimos pueden facilitar la búsqueda, pero no deben destruir el registro de origen.",
+    "source_note": "La nomenclatura se inspira en vocabularios públicos de etiquetas de pelo como los árboles de Danbooru; validar cada tag antes de tratarlo como exacto."
+  },
+  "groups": [
+    {
+      "id": "length",
+      "label": "Largo",
+      "tags": [
+        {
+          "tag": "very_short_hair",
+          "label": "Muy corto",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "short_hair",
+          "label": "Corto",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "medium_hair",
+          "label": "Medio",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "long_hair",
+          "label": "Largo",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "very_long_hair",
+          "label": "Muy largo",
+          "kind": "reference_tag"
+        }
+      ]
+    },
+    {
+      "id": "cut",
+      "label": "Silueta o corte",
+      "tags": [
+        {
+          "tag": "bob_cut",
+          "label": "Bob",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "hime_cut",
+          "label": "Corte hime",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "pixie_cut",
+          "label": "Pixie",
+          "kind": "verify_before_query"
+        },
+        {
+          "tag": "asymmetrical_bob",
+          "label": "Bob asimétrico",
+          "kind": "verify_before_query"
+        },
+        {
+          "tag": "layered_hair",
+          "label": "Capas",
+          "kind": "verify_before_query"
+        },
+        {
+          "tag": "shag_cut",
+          "label": "Shag",
+          "kind": "verify_before_query"
+        },
+        {
+          "tag": "wolf_cut",
+          "label": "Wolf cut",
+          "kind": "verify_before_query"
+        },
+        {
+          "tag": "undercut",
+          "label": "Undercut",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "sidecut",
+          "label": "Laterales rapados",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "spiky_hair",
+          "label": "Puntas / pinchos",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "french_bob",
+          "label": "Bob francés",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
+        },
+        {
+          "tag": "micro_bob",
+          "label": "Microbob",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
+        },
+        {
+          "tag": "long_bob",
+          "label": "Long bob / lob",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
+        },
+        {
+          "tag": "u-shaped_hair",
+          "label": "Corte en U",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
+        },
+        {
+          "tag": "v-shaped_hair",
+          "label": "Corte en V",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
+        },
+        {
+          "tag": "androgynous_haircut",
+          "label": "Corte andrógino",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
+        },
+        {
+          "tag": "blunt_ends",
+          "label": "Puntas rectas",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
+        },
+        {
+          "tag": "jaw_length_hair",
+          "label": "Largo a la mandíbula",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
+        }
+      ]
+    },
+    {
+      "id": "bangs",
+      "label": "Flequillo y frente",
+      "tags": [
+        {
+          "tag": "blunt_bangs",
+          "label": "Flequillo recto",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "parted_bangs",
+          "label": "Flequillo abierto",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "swept_bangs",
+          "label": "Flequillo hacia un lado",
+          "kind": "verify_before_query"
+        },
+        {
+          "tag": "curtain_bangs",
+          "label": "Flequillo cortina",
+          "kind": "verify_before_query"
+        },
+        {
+          "tag": "hair_between_eyes",
+          "label": "Mechón entre los ojos",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "hair_over_one_eye",
+          "label": "Pelo sobre un ojo",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "no_bangs",
+          "label": "Frente despejada / sin flequillo",
+          "kind": "design_recipe_tag",
+          "note": "Etiqueta interna del catálogo de recetas; no implica que el término sea un tag oficial verificado."
+        }
+      ]
+    },
+    {
+      "id": "arrangement",
+      "label": "Recogidos y formas",
+      "tags": [
+        {
+          "tag": "ponytail",
+          "label": "Coleta",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "high_ponytail",
+          "label": "Coleta alta",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "low_ponytail",
+          "label": "Coleta baja",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "side_ponytail",
+          "label": "Coleta lateral",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "twintails",
+          "label": "Dos coletas",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "low_twintails",
+          "label": "Dos coletas bajas",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "two_side_up",
+          "label": "Dos secciones recogidas; resto suelto",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "hair_bun",
+          "label": "Moño",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "double_bun",
+          "label": "Dos moños",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "updo",
+          "label": "Recogido",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "half_updo",
+          "label": "Semirrecogido",
+          "kind": "reference_tag"
+        }
+      ]
+    },
+    {
+      "id": "braids",
+      "label": "Trenzas",
+      "tags": [
+        {
+          "tag": "braid",
+          "label": "Trenza",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "single_braid",
+          "label": "Una trenza",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "side_braid",
+          "label": "Trenza lateral",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "twin_braids",
+          "label": "Dos trenzas",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "crown_braid",
+          "label": "Trenza corona",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "braided_ponytail",
+          "label": "Coleta trenzada",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "twintails_with_braided_base",
+          "label": "Dos coletas con base trenzada",
+          "kind": "reference_tag"
+        }
+      ]
+    },
+    {
+      "id": "texture",
+      "label": "Textura",
+      "tags": [
+        {
+          "tag": "straight_hair",
+          "label": "Liso",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "wavy_hair",
+          "label": "Ondulado",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "curly_hair",
+          "label": "Rizado",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "drill_hair",
+          "label": "Rizos tipo taladro",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "messy_hair",
+          "label": "Despeinado",
+          "kind": "reference_tag"
+        }
+      ]
+    },
+    {
+      "id": "face_framing",
+      "label": "Mechones y contorno facial",
+      "tags": [
+        {
+          "tag": "sidelocks",
+          "label": "Mechones laterales",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "long_sidelocks",
+          "label": "Mechones laterales largos",
+          "kind": "verify_before_query"
+        },
+        {
+          "tag": "hair_intakes",
+          "label": "Mechones que se abren hacia fuera",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "ahoge",
+          "label": "Mechón levantado",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "flipped_sidelocks",
+          "label": "Mechones laterales hacia fuera",
+          "kind": "reference_tag"
+        }
+      ]
+    },
+    {
+      "id": "accessories",
+      "label": "Accesorios",
+      "tags": [
+        {
+          "tag": "hair_ornament",
+          "label": "Adorno de cabello",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "hair_bow",
+          "label": "Moño decorativo",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "hair_ribbon",
+          "label": "Cinta",
+          "kind": "reference_tag"
+        },
+        {
+          "tag": "hairclip",
+          "label": "Clip / hebilla",
+          "kind": "verify_before_query"
+        },
+        {
+          "tag": "hair_rings",
+          "label": "Anillos de cabello",
+          "kind": "reference_tag"
+        }
+      ]
+    }
+  ],
+  "record_template": {
+    "asset_id": "hair-piece-unique-id",
+    "variant_id": "character-look-unique-id",
+    "character_id": "stable-character-id",
+    "label": "Nombre visible del look",
+    "tags": [
+      "long_hair",
+      "parted_bangs"
+    ],
+    "parts": [
+      "back_silhouette",
+      "bangs",
+      "sidelocks",
+      "ponytail_or_braid",
+      "ornament"
+    ],
+    "source": {
+      "url": "",
+      "creator": "",
+      "license": "unknown"
+    },
+    "alignment": {
+      "canvas_width": 768,
+      "canvas_height": 1280,
+      "coordinate_system": "full-canvas-top-left"
+    },
+    "visual_review": "pending",
+    "relations": {
+      "alternate_of": "",
+      "same_character_as": "",
+      "notes": ""
+    },
+    "do_not_deduplicate": true
+  },
+  "sources": [
+    {
+      "title": "Árbol de etiquetas de Danbooru",
+      "url": "https://github.com/Jannchie/danbooru-tags-tree/blob/main/data/source/danbooru_tag_tree_v3.yaml",
+      "use": "Referencia para agrupar variantes y descubrir nombres; verificar tag por tag."
+    },
+    {
+      "title": "Wiki de twintails de Safebooru",
+      "url": "https://safebooru.donmai.us/wiki_pages/twintails",
+      "use": "Ejemplo de distinción de dos coletas frente a recogidos parciales."
+    }
+  ],
+  "recipe_library": {
+    "path": "hairstyle-library.json",
+    "entries": 120,
+    "meaning": "Recetas de diseño y bocetos esquemáticos; no equivale a 120 imágenes PNG disponibles.",
+    "deduplication": "Prohibido fusionar o borrar variantes parecidas automáticamente."
+  }
+}

@@ -1,0 +1,105 @@
+name: Validate IMAGE Character Creator
+on:
+  push:
+    branches: [work/easy-avatar-maker-2026-10, main]
+    paths:
+      - "tools/avatar-maker/**"
+      - "tools/hairstyle-workbench/**"
+      - "tools/visual-reference-library/**"
+      - "tools/manual-character-editor/**"
+      - "tools/image-creator/**"
+      - "ml/local_server.py"
+      - "ml/generate_diffusion.py"
+      - "tests/test_studio_navigation.py"
+      - "tests/test_project_handoff.py"
+      - "tests/test_local_generator_server.py"
+      - "tests/test_diffusion_engine_contract.py"
+      - "tests/browser/**"
+      - "scripts/validate_manual_character_editor.py"
+      - "scripts/validate_avatar_maker.py"
+      - "README.md"
+      - "docs/DEVELOPMENT_STATUS.md"
+      - "scripts/validate_visual_reference_library.py"
+      - "scripts/apply_visual_reference_annotations.py"
+      - "scripts/build_visual_contact_sheets.py"
+      - "scripts/validate_avatar_maker.py"
+      - "scripts/validate_hairstyle_workbench.py"
+      - "scripts/run_real_anime_cutout_inference.py"
+      - "tests/test_real_anime_cutout.py"
+      - "scripts/extract_avatar_psd_layers.py"
+      - "requirements-avatar-assets.txt"
+      - "requirements-avatar-cutout.txt"
+      - ".github/workflows/validate-avatar-maker.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "tools/avatar-maker/**"
+      - "tools/hairstyle-workbench/**"
+      - "tools/visual-reference-library/**"
+      - "tools/manual-character-editor/**"
+      - "tools/image-creator/**"
+      - "ml/local_server.py"
+      - "ml/generate_diffusion.py"
+      - "tests/test_local_generator_server.py"
+      - "tests/test_diffusion_engine_contract.py"
+      - "tests/browser/**"
+      - "tests/test_studio_navigation.py"
+      - "tests/test_project_handoff.py"
+      - "scripts/validate_manual_character_editor.py"
+      - "scripts/validate_avatar_maker.py"
+      - "README.md"
+      - "docs/DEVELOPMENT_STATUS.md"
+      - "scripts/validate_visual_reference_library.py"
+      - "scripts/apply_visual_reference_annotations.py"
+      - "scripts/build_visual_contact_sheets.py"
+      - "scripts/validate_avatar_maker.py"
+      - "scripts/validate_hairstyle_workbench.py"
+      - "scripts/run_real_anime_cutout_inference.py"
+      - "tests/test_real_anime_cutout.py"
+      - "scripts/extract_avatar_psd_layers.py"
+      - "requirements-avatar-assets.txt"
+      - "requirements-avatar-cutout.txt"
+      - ".github/workflows/validate-avatar-maker.yml"
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate illustration assets and inline JavaScript
+        run: python scripts/validate_avatar_maker.py
+      - name: Validate local generator browser script syntax
+        run: node --check tools/image-creator/app.js
+      - name: Install Playwright Chromium for real UI tests
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Run real Chromium end-to-end editor workflow
+        run: node tests/browser/test_character_creator.mjs
+      - name: Validate manual hairstyle workbench without AI or external API
+        run: python scripts/validate_hairstyle_workbench.py
+      - name: Validate visual reference library and contact-sheet tooling
+        run: python scripts/validate_visual_reference_library.py
+      - name: Test integrated studio navigation and local module paths
+        run: python -m unittest discover -s tests -p 'test_studio_navigation.py' -v
+      - name: Test project handoff between editor modules
+        run: python -m unittest discover -s tests -p 'test_project_handoff.py' -v
+      - name: Test local diffusion server job lifecycle and output discovery
+        run: python -m unittest discover -s tests -p 'test_local_generator_server.py' -v
+      - name: Test local diffusion engine command contract
+        run: python -m unittest discover -s tests -p 'test_diffusion_engine_contract.py' -v
+      - name: Install image decoder used by cutout regression tests
+        run: python -m pip install "Pillow>=10.0.0"
+      - name: Check PSD extraction and local AI bridge syntax
+        run: python -m py_compile scripts/extract_avatar_psd_layers.py tools/avatar-maker/ai_edit_server.py scripts/run_real_anime_cutout_inference.py
+      - name: Test local AI bridge validation and credential handling
+        run: python -m unittest discover -s tests -p 'test_avatar_ai_bridge.py'
+      - name: Test real cutout diagnostics without invoking the AI model
+        run: python -m unittest discover -s tests -p 'test_real_anime_cutout.py'

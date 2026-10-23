@@ -15,6 +15,12 @@
         <span class="brand-mark">I</span>
         <span><strong>IMAGE</strong><small>LOCAL IMAGE CREATOR</small></span>
       </a>
+      <nav data-image-studio-nav aria-label="Navegación del estudio IMAGE" style="display:flex;flex-wrap:wrap;align-items:center;gap:6px">
+<a href="http://127.0.0.1:8766/tools/avatar-maker/index.html" style="display:inline-block;border:1px solid #354156;border-radius:7px;padding:6px 8px;color:#b9c7dc;text-decoration:none;font-size:11px;white-space:nowrap;background:#151b27">Constructor</a>
+<a href="http://127.0.0.1:8766/tools/visual-reference-library/index.html" style="display:inline-block;border:1px solid #354156;border-radius:7px;padding:6px 8px;color:#b9c7dc;text-decoration:none;font-size:11px;white-space:nowrap;background:#151b27">Biblioteca visual</a>
+<a href="http://127.0.0.1:8766/tools/hairstyle-workbench/index.html" style="display:inline-block;border:1px solid #354156;border-radius:7px;padding:6px 8px;color:#b9c7dc;text-decoration:none;font-size:11px;white-space:nowrap;background:#151b27">Taller de peinados</a>
+<a href="http://127.0.0.1:8766/tools/manual-character-editor/index.html" style="display:inline-block;border:1px solid #354156;border-radius:7px;padding:6px 8px;color:#b9c7dc;text-decoration:none;font-size:11px;white-space:nowrap;background:#151b27">Editor de capas</a>
+</nav>
       <div class="local-pill"><span class="dot"></span> Motor local</div>
     </header>
 
@@ -35,10 +41,17 @@
           <form id="creator-form">
             <label class="field">
               <span>Modelo base <b>*</b></span>
-              <input id="model" name="model" required autocomplete="off" placeholder="models/tu-modelo-diffusers">
+              <input id="model" name="model" list="local-model-options" required autocomplete="off" placeholder="models/tu-modelo-diffusers">
+              <datalist id="local-model-options"></datalist>
               <small>Carpeta local del modelo compatible. No hay un modelo elegido automáticamente.</small>
             </label>
 
+            <div class="model-scan-row">
+              <button id="scan-models-button" type="button">Buscar modelos locales</button>
+              <select id="local-model-picker" aria-label="Modelos locales detectados" disabled><option value="">Todavía no se buscó</option></select>
+              <button id="use-model-button" type="button" disabled>Usar modelo</button>
+            </div>
+            <p id="model-scan-status" class="model-scan-status" role="status" aria-live="polite">La búsqueda solo inspecciona carpetas locales conocidas; no consulta ni descarga modelos de Internet.</p>
             <label class="field">
               <span>LoRA de estilo <i>Opcional</i></span>
               <input id="lora" name="lora" autocomplete="off" placeholder="models/mi-estilo.safetensors">
@@ -79,6 +92,12 @@
               </div>
             </details>
 
+            <button id="diagnose-button" type="button">Comprobar requisitos del motor</button>
+            <section id="diagnostics-panel" class="diagnostics-panel" hidden aria-live="polite">
+              <div class="diagnostics-heading"><strong>Estado de preparación</strong><span id="diagnostics-summary"></span></div>
+              <div id="diagnostics-list" class="diagnostics-list"></div>
+              <p class="diagnostics-note">No genera imágenes, no descarga pesos y no garantiza la compatibilidad visual del modelo.</p>
+            </section>
             <button id="generate-button" type="submit"><span>Generar imágenes</span><span aria-hidden="true">↗</span></button>
             <p class="privacy-note"><span class="lock">◇</span> No se envían prompts ni imágenes a una API remota. Solo se descargan pesos si activás la opción anterior.</p>
           </form>

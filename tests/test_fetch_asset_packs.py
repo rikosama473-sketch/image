@@ -13,11 +13,12 @@ from fetch_asset_packs import PACKS, _validated_members, safe_extract_zip  # noq
 
 class FetchAssetPacksTests(unittest.TestCase):
     def test_only_original_https_sources_are_allowlisted(self) -> None:
-        self.assertEqual(set(PACKS), {"anime-portraits", "modular-64x96"})
+        self.assertEqual(set(PACKS), {"anime-portraits", "modular-64x96", "visual-novel-characters"})
         for pack in PACKS.values():
             self.assertTrue(pack["url"].startswith("https://opengameart.org/"))
-            self.assertTrue(pack["source_page"].startswith("https://opengameart.org/content/"))
-            self.assertGreater(pack["expected_bytes"], 0)
+            self.assertTrue(pack["source_page"].startswith(("https://opengameart.org/content/", "https://opengameart.org/node/")))
+            if pack["expected_bytes"] is not None:
+                self.assertGreater(pack["expected_bytes"], 0)
 
     def test_safe_extraction_preserves_files_in_subdirectories(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

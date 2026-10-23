@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "character_id": "pibara",
+  "pack": "anatomy-front-v2-1",
+  "pack_status": "complete",
+  "created_at_utc": "2026-10-20T21:16:07.272061+00:00",
+  "source": {
+    "repository": "rikosama473-sketch/image",
+    "ref": "10f3e95b59d0843bef2a452e74fb266b40bcbcc5",
+    "path": "from-PixAI-2034984086876227343-0.png",
+    "url": "https://raw.githubusercontent.com/rikosama473-sketch/image/10f3e95b59d0843bef2a452e74fb266b40bcbcc5/from-PixAI-2034984086876227343-0.png",
+    "sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+    "dimensions": [
+      768,
+      1280
+    ]
+  },
+  "generator": {
+    "space_id": "conradlocke/krea2-identity-edit",
+    "space_url": "https://huggingface.co/spaces/conradlocke/krea2-identity-edit",
+    "api_name": "/edit",
+    "openai_api_key_used": false,
+    "inference_api_paid_by_openai": false,
+    "ref_boost": 4.0,
+    "grounding_px": 768,
+    "lora_scale": 1.0,
+    "steps": 12,
+    "guidance_scale": 0.0,
+    "background_removed": true
+  },
+  "required_asset_ids": [
+    "full-body-front-a-pose-v2"
+  ],
+  "completed_asset_ids": [
+    "full-body-front-a-pose-v2"
+  ],
+  "variants": [
+    {
+      "index": 1,
+      "asset_id": "full-body-front-a-pose-v2",
+      "change": "Front-view full-body anime model sheet in a neutral A-pose, centered and uncropped from the top of the hair to the soles, with both hands and all fingers visible. Treat the source image as the character identity reference, not a loose inspiration. Preserve the exact distinctive hairstyle silhouette, red/black hair pattern if present, eye and iris colors, facial features, accessories, and recognizable outfit details. Fill in only parts hidden by the original crop, using consistent anatomy and the same costume design. Plain light background, clean cel shading, no text, no labels, no watermark.",
+      "prompt": "Identity-guided anime character model-sheet reconstruction from the supplied image. Unlike a normal local edit, do not preserve the input crop or bust framing: extend/recompose the composition into a complete full-body figure from the highest hair strand to both soles. Preserve the source face, exact hairstyle and silhouette, bangs, tied sections, loose strands, hair color/highlight pattern, iris color, signature accessories and visible costume details. Do not redesign the hairstyle or change the hair/iris colors. Keep the recognizable source outfit, palette and color blocking; extend only hidden lower-body clothing consistently with the design. If coverage must change, retain the source silhouette and signature details rather than inventing a generic unrelated outfit. Show clear anime body construction with a symmetric neutral A-pose, arms slightly separated from torso, hands, fingers and both feet visible, balanced proportions, clean 2D line art and cel shading. Subtle joint landmarks for shoulders, elbows, wrists, pelvis, knees and ankles are acceptable; avoid labels or writing. One figure only, use the orientation and pose specified by the requested anatomy view, centered portrait canvas, no panels, no extra poses, no added character, no text, no watermark, no photorealism. The output is a reference guide for later manual component separation, not a claim that individual body parts are already segmented. Requested anatomy model-sheet result: Front-view full-body anime model sheet in a neutral A-pose, centered and uncropped from the top of the hair to the soles, with both hands and all fingers visible. Treat the source image as the character identity reference, not a loose inspiration. Preserve the exact distinctive hairstyle silhouette, red/black hair pattern if present, eye and iris colors, facial features, accessories, and recognizable outfit details. Fill in only parts hidden by the original crop, using consistent anatomy and the same costume design. Plain light background, clean cel shading, no text, no labels, no watermark.",
+      "requested_seed": 1201,
+      "returned_seed": 1201,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39498867766/renders/01-full-body-front-a-pose-v2.png",
+        "sha256": "b29431ce889c80dd130af9989c2e10122bc69fd11d1be97813ce14d33a60b8dc",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39498867766/transparent/01-full-body-front-a-pose-v2.png",
+        "sha256": "70bf4673ab4bf4a475baddac4878225707db21c67a04d3a642df8bb382fa0e01",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.29029,
+        "opaque_pixel_ratio": 0.59857,
+        "quality_warning": null
+      }
+    }
+  ],
+  "last_error": null,
+  "review_status": "needs_visual_identity_review",
+  "warning": "Generated renders and automated transparent cutouts require review of likeness and hair/accessory edges."
+}

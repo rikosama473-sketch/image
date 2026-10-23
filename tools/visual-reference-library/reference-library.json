@@ -1,0 +1,342 @@
+{
+  "schema_version": 1,
+  "title": "IMAGE — Biblioteca visual de ojos, cabello y piezas",
+  "updated": "2026-10-21",
+  "purpose": "Catálogo de referencias para clasificación visual y diseño. Las imágenes externas se enlazan desde sus fuentes; no se descargan ni se redistribuyen como assets locales.",
+  "categories": [
+    "eyes",
+    "hair",
+    "eyelashes",
+    "iris",
+    "pupils",
+    "bangs",
+    "sidelocks",
+    "ponytails",
+    "braids",
+    "accessories",
+    "face",
+    "mixed"
+  ],
+  "review_statuses": [
+    "unreviewed",
+    "reviewed_reference",
+    "candidate_for_cutout",
+    "approved_for_internal_use",
+    "rejected"
+  ],
+  "items": [
+    {
+      "id": "ref-eye-001",
+      "title": "Sample Anime Eyes — variación de formas",
+      "kind": "pinterest_reference",
+      "category": "eyes",
+      "image_url": "https://i.pinimg.com/736x/33/47/4f/33474fcdc98b68268c2989650b7b3b88.jpg",
+      "source_url": "https://www.pinterest.com/pin/sample-anime-eyes-by-xxrioxx-on-deviantart--366691594643592511/",
+      "creator": "XXRIOXX (crédito visible en la lámina; verificar fuente original)",
+      "license_status": "reference_only_unverified",
+      "usage": "Visual reference only; do not redistribute or train without verifying original creator permissions.",
+      "tags": [
+        "eyes",
+        "shape_variations",
+        "eyelashes",
+        "iris",
+        "lineart",
+        "monochrome"
+      ],
+      "description": "Hoja monocromática con múltiples siluetas de ojos para clasificar formas exteriores, pestañas y tratamiento de iris.",
+      "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-eye-002",
+      "title": "Colección de ojos con tramas y pupilas",
+      "kind": "pinterest_reference",
+      "category": "eyes",
+      "image_url": "https://i.pinimg.com/736x/9b/e8/c1/9be8c1860740951277a88e2ee9b08fd8.jpg",
+      "source_url": "https://de.pinterest.com/pin/804314814678519468/",
+      "creator": "Fuente original pendiente de confirmar",
+      "license_status": "reference_only_unverified",
+      "usage": "Visual reference only; preserve source link and confirm rights before reuse.",
+      "tags": [
+        "eyes",
+        "crosshatching",
+        "pupil_shapes",
+        "iris_patterns",
+        "reflections",
+        "monochrome"
+      ],
+      "description": "Nueve estudios de ojos con contraste, tramado, reflejos y patrones de iris diferentes.",
+      "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-eye-003",
+      "title": "How To Draw Anime Eyes — 6 estilos",
+      "kind": "pinterest_reference",
+      "category": "eyes",
+      "image_url": "",
+      "source_url": "https://ar.pinterest.com/pin/481744491405804985/",
+      "creator": "TsuDrawing / atribución del pin; verificar publicación original",
+      "license_status": "reference_only_unverified",
+      "usage": "Referencia enlazada; no se almacena la imagen en IMAGE.",
+      "tags": [
+        "eyes",
+        "six_styles",
+        "shape",
+        "iris",
+        "eyelashes"
+      ],
+      "description": "Pin de tutorial que reúne seis estilos de ojos; útil como punto de partida para clasificar rasgos sin copiar la lámina.",
+      "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-eye-004",
+      "title": "Different Style Male Anime & Manga Eyes",
+      "kind": "pinterest_reference",
+      "category": "eyes",
+      "image_url": "",
+      "source_url": "https://www.pinterest.com/pin/simple-style-male-anime-eyes--379076493635845198/",
+      "creator": "AnimeOutline / autor de la fuente original por verificar",
+      "license_status": "reference_only_unverified",
+      "usage": "Referencia enlazada; no se almacena la imagen en IMAGE.",
+      "tags": [
+        "eyes",
+        "masculine_design",
+        "simple_eyes",
+        "shape_variations"
+      ],
+      "description": "Referencia para ampliar la biblioteca de ojos masculinos y estilos simplificados.",
+      "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-hair-001",
+      "title": "Bangs / flequillos anime — lámina de line art",
+      "kind": "pinterest_reference",
+      "category": "bangs",
+      "image_url": "https://i.pinimg.com/474x/55/4a/c2/554ac27641aed4c9f0bac36dcfe35f29.jpg?nii=t",
+      "source_url": "https://www.pinterest.com/ideas/anime-hairstyles-bangs/900134594030/",
+      "creator": "Fuente original pendiente de confirmar",
+      "license_status": "reference_only_unverified",
+      "usage": "Visual reference only; source page does not automatically grant reuse rights.",
+      "tags": [
+        "hair",
+        "bangs",
+        "blunt_bangs",
+        "side_swept_bangs",
+        "layered_bangs",
+        "lineart",
+        "monochrome"
+      ],
+      "description": "Variantes de flequillo y mechones frontales en blanco y negro; útil para distinguir silueta, dirección y longitud.",
+      "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-hair-002",
+      "title": "Anime hairstyle reference sketch — pin",
+      "kind": "pinterest_reference",
+      "category": "hair",
+      "image_url": "",
+      "source_url": "https://es.pinterest.com/pin/596938125605856878/",
+      "creator": "Fuente original pendiente de confirmar",
+      "license_status": "reference_only_unverified",
+      "usage": "Referencia enlazada; abrir el pin para inspeccionar imagen, creador y derechos.",
+      "tags": [
+        "hair",
+        "hairstyle_sheet",
+        "sketch",
+        "silhouette"
+      ],
+      "description": "Pin de referencia para revisar e identificar siluetas de peinado.",
+      "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-hair-003",
+      "title": "Anime hair reference — tablero",
+      "kind": "pinterest_board",
+      "category": "hair",
+      "image_url": "",
+      "source_url": "https://www.pinterest.com/oopsydizzy/anime-hair-ref/",
+      "creator": "Varios creadores; revisar pin por pin",
+      "license_status": "reference_only_unverified",
+      "usage": "Tablero de descubrimiento; cada pin necesita registro de su autor y permiso por separado.",
+      "tags": [
+        "hair",
+        "discovery_board",
+        "variety",
+        "silhouette"
+      ],
+      "description": "Tablero para descubrir más referencias. No tratar el tablero completo como un paquete descargable.",
+      "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-hair-004",
+      "title": "Anime Hairstyle Reference — tablero",
+      "kind": "pinterest_board",
+      "category": "hair",
+      "image_url": "",
+      "source_url": "https://ar.pinterest.com/anabelag1991/anime-hairstyle-reference/",
+      "creator": "Varios creadores; revisar pin por pin",
+      "license_status": "reference_only_unverified",
+      "usage": "Tablero de descubrimiento; registra una ficha nueva por cada pin útil.",
+      "tags": [
+        "hair",
+        "discovery_board",
+        "bangs",
+        "cut",
+        "ponytail",
+        "braid"
+      ],
+      "description": "Colección de pins para clasificar cortes y accesorios de cabello.",
+      "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-hair-005",
+      "title": "Diseño de peinado anime masculino — pin",
+      "kind": "pinterest_reference",
+      "category": "hair",
+      "image_url": "",
+      "source_url": "https://ar.pinterest.com/pin/1025835621345385084/",
+      "creator": "Fuente original pendiente de confirmar",
+      "license_status": "reference_only_unverified",
+      "usage": "Referencia enlazada; verificar autor y permisos antes de extraer o reutilizar.",
+      "tags": [
+        "hair",
+        "masculine_design",
+        "short_hair",
+        "spiky_hair",
+        "silhouette"
+      ],
+      "description": "Punto de partida para clasificar cortes cortos y diseños masculinos.",
+      "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-hair-006",
+      "title": "Comparación de peinados anime en line art",
+      "kind": "web_reference",
+      "category": "hair",
+      "image_url": "https://d2o4rrq92x9csx.cloudfront.net/articles/hairstyle-illustration_4-7-1-28.webp",
+      "source_url": "https://syntelligence.jp/article/57539",
+      "creator": "Syntelligence (fuente editorial; artista original por verificar)",
+      "license_status": "reference_only_unverified",
+      "usage": "Referencia visual enlazada; no redistribuir la ilustración sin verificar permiso.",
+      "tags": [
+        "hair",
+        "short_hair",
+        "long_straight",
+        "twintails",
+        "waves",
+        "lineart",
+        "monochrome"
+      ],
+      "description": "Comparación monocromática de varias siluetas en personajes de diseño similar; útil para clasificar corte, largo y volumen.",
+      "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-hair-007",
+      "title": "Various Male Anime/Manga Hairstyles",
+      "kind": "web_reference",
+      "category": "hair",
+      "image_url": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/080f21c0-1fe1-4422-8905-549bb71f5a4f/d5ippid-2b3d4474-a54c-4d1f-a459-881b30843a44.jpg",
+      "source_url": "https://www.deviantart.com/elythe/art/Various-Male-Anime-Manga-Hairstyles-333763429",
+      "creator": "Elythe (atribución en la lámina)",
+      "license_status": "reference_only_unverified",
+      "usage": "Referencia para estudio; verificar la licencia de la obra original antes de reutilizarla.",
+      "tags": [
+        "hair",
+        "masculine_design",
+        "short_hair",
+        "spiky_hair",
+        "silhouette",
+        "hairstyle_sheet"
+      ],
+      "description": "Lámina de múltiples siluetas de cabello masculino identificadas con números; conviene registrar cada corte como una ficha independiente tras revisar la lámina.",
+      "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-board-hair-008",
+      "title": "Hair references — tablero Pinterest",
+      "kind": "pinterest_board",
+      "category": "hair",
+      "image_url": "",
+      "source_url": "https://ar.pinterest.com/spacegirl707/hair-references/",
+      "creator": "spacegirl707 (tablero de varios autores)",
+      "license_status": "reference_only_unverified",
+      "usage": "Usar para descubrir imágenes. Abrir cada pin y comprobar el autor original y la licencia antes de extraer una pieza.",
+      "tags": [
+        "hair",
+        "discovery_board",
+        "hair_reference",
+        "sketch",
+        "silhouette"
+      ],
+      "description": "Tablero de Pinterest con ideas de referencia de cabello y dibujo; cada pin debe tener su propia ficha y procedencia.",
+      "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-board-hair-009",
+      "title": "Referencia anime cabello — 100 ideas",
+      "kind": "pinterest_board",
+      "category": "hair",
+      "image_url": "",
+      "source_url": "https://ar.pinterest.com/viktorsuarez9/referencia-anime-cabello/",
+      "creator": "viktorsuarez9 (tablero de varios autores)",
+      "license_status": "reference_only_unverified",
+      "usage": "Tablero de descubrimiento, no paquete de assets descargable. Las fuentes originales se registran por pin.",
+      "tags": [
+        "hair",
+        "anime_hair",
+        "bangs",
+        "cut",
+        "style_discovery"
+      ],
+      "description": "Colección amplia de referencias de cabello anime. Revisar por separado cortes, flequillos y mechones.",
+      "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-board-mixed-010",
+      "title": "Bases, ojos y cabello anime — tablero",
+      "kind": "pinterest_board",
+      "category": "mixed",
+      "image_url": "",
+      "source_url": "https://ar.pinterest.com/nemurin15/bases-ojos-cabello-anime-y-mas/",
+      "creator": "nemurin15 (tablero de varios autores)",
+      "license_status": "reference_only_unverified",
+      "usage": "Descubrimiento de referencias. No asumir que cada pin está autorizado para redistribución, extracción o entrenamiento.",
+      "tags": [
+        "eyes",
+        "hair",
+        "face",
+        "bases",
+        "discovery_board"
+      ],
+      "description": "Tablero mixto para encontrar ojos, bases faciales y cabello. Separar cada imagen útil en su propia ficha visual.",
+      "review_status": "unreviewed"
+    },
+    {
+      "id": "ref-board-hair-011",
+      "title": "Pelo — referencia para dibujos",
+      "kind": "pinterest_board",
+      "category": "hair",
+      "image_url": "",
+      "source_url": "https://ar.pinterest.com/marysoldelpilarrodriguez/pelo-referencia-para-dibujos/",
+      "creator": "marysoldelpilarrodriguez (tablero de varios autores)",
+      "license_status": "reference_only_unverified",
+      "usage": "Referencia de descubrimiento; verificar autor original y permiso de uso por cada imagen.",
+      "tags": [
+        "hair",
+        "drawing_reference",
+        "hair_shapes",
+        "silhouette"
+      ],
+      "description": "Tablero de referencias para dibujo de cabello, útil para ampliar futuras categorías visuales.",
+      "review_status": "unreviewed"
+    }
+  ],
+  "rules": [
+    "A pin or reference image is not a reusable asset by default.",
+    "Do not mark a design as visually inspected until a human has opened and checked the image.",
+    "Keep complete illustrations, references, and isolated cutout candidates as separate kinds.",
+    "Use stable IDs and preserve source URL, creator, license status, tags, and review status.",
+    "Generated style records are recipes, not generated image files."
+  ],
+  "contact_sheet_generator": "scripts/build_visual_contact_sheets.py",
+  "library_ui": "tools/visual-reference-library/index.html"
+}

@@ -1,9 +1,12 @@
 import hashlib
 import importlib.util
+import io
 import json
 from pathlib import Path
 import tempfile
 import unittest
+from contextlib import redirect_stdout
+from unittest.mock import Mock
 
 from PIL import Image
 
@@ -21,6 +24,12 @@ class CharacterAssetFactoryTests(unittest.TestCase):
             "eyes-4": 4,
             "accessories-4": 4,
             "face-details-4": 4,
+            "anatomy-guide-1": 1,
+            "anatomy-front-v2-1": 1,
+            "anatomy-side-1": 1,
+            "anatomy-back-1": 1,
+            "anatomy-joint-guide-1": 1,
+            "anatomy-sheet-4": 4,
         }
         self.assertEqual(set(MODULE.PACKS), set(expected))
         for name, count in expected.items():
@@ -36,6 +45,64 @@ class CharacterAssetFactoryTests(unittest.TestCase):
             for slug, instruction in variants:
                 self.assertTrue(slug.strip())
                 self.assertTrue(instruction.strip())
+
+    def test_anatomy_pack_uses_full_body_reconstruction_prompt(self):
+        self.assertEqual(len(MODULE.PACKS["anatomy-guide-1"]), 1)
+        slug, instruction = MODULE.PACKS["anatomy-guide-1"][0]
+        self.assertEqual(slug, "full-body-anatomy-a-pose")
+        self.assertIn("full-body", instruction)
+        self.assertIn("ANATOMY_BASE", MODULE.__dict__)
+        self.assertIn("do not preserve the input crop", MODULE.ANATOMY_BASE)
+        self.assertIn("hands, fingers and both feet visible", MODULE.ANATOMY_BASE)
+        self.assertIn("later manual component separation", MODULE.ANATOMY_BASE)
+        self.assertIn("exact hairstyle and silhouette", MODULE.ANATOMY_BASE)
+        self.assertIn("Do not redesign the hairstyle", MODULE.ANATOMY_BASE)
+
+    def test_multiple_anatomy_views_have_specific_instructions(self):
+        self.assertIn("orientation and pose specified", MODULE.ANATOMY_BASE)
+        cases = {
+            "anatomy-front-v2-1": ("full-body-front-a-pose-v2", "Front-view full-body"),
+            "anatomy-side-1": ("full-body-side-profile", "strict 90-degree side profile"),
+            "anatomy-back-1": ("full-body-back-view", "directly behind"),
+            "anatomy-joint-guide-1": ("full-body-joint-guide", "construction marks"),
+        }
+        for pack, (slug, phrase) in cases.items():
+            with self.subTest(pack=pack):
+                self.assertEqual(len(MODULE.PACKS[pack]), 1)
+                self.assertEqual(MODULE.PACKS[pack][0][0], slug)
+                self.assertIn(phrase.lower(), MODULE.PACKS[pack][0][1].lower())
+                self.assertIn("exact hairstyle and silhouette", MODULE.ANATOMY_BASE)
+
+    def test_anatomy_sheet_batch_contains_four_distinct_views(self):
+        expected = {
+            "batch-front-a-pose",
+            "batch-side-profile",
+            "batch-back-view",
+            "batch-joint-guide",
+        }
+        actual = {slug for slug, _ in MODULE.PACKS["anatomy-sheet-4"]}
+        self.assertEqual(actual, expected)
+        self.assertIn("exact hairstyle and silhouette", MODULE.ANATOMY_BASE)
+        self.assertIn("orientation and pose specified", MODULE.ANATOMY_BASE)
+        for slug, prompt in MODULE.PACKS["anatomy-sheet-4"]:
+            with self.subTest(slug=slug):
+                self.assertTrue(prompt.strip())
+                self.assertIn("plain light background", prompt.lower())
+
+    def test_optional_huggingface_token_is_not_logged_or_passed_when_absent(self):
+        client_class = Mock(return_value=object())
+        out = io.StringIO()
+        with redirect_stdout(out):
+            MODULE.build_space_client(client_class, " hf_test_secret_value ")
+        client_class.assert_called_once_with(MODULE.SPACE_ID, hf_token="hf_test_secret_value", verbose=True)
+        self.assertNotIn("hf_test_secret_value", out.getvalue())
+
+        client_class.reset_mock()
+        out = io.StringIO()
+        with redirect_stdout(out):
+            MODULE.build_space_client(client_class, "")
+        client_class.assert_called_once_with(MODULE.SPACE_ID, verbose=True)
+        self.assertNotIn("hf_test_secret_value", out.getvalue())
 
     def test_reference_validation(self):
         self.assertEqual(MODULE.validate_path("ref/character.png"), "ref/character.png")

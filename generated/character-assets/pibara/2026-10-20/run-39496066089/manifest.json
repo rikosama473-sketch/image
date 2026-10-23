@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "character_id": "pibara",
+  "pack": "anatomy-guide-1",
+  "pack_status": "complete",
+  "created_at_utc": "2026-10-20T20:55:56.713915+00:00",
+  "source": {
+    "repository": "rikosama473-sketch/image",
+    "ref": "98fb8bf46186f3a1b0a9c164d5babd3f64a78973",
+    "path": "from-PixAI-2034984086876227343-0.png",
+    "url": "https://raw.githubusercontent.com/rikosama473-sketch/image/98fb8bf46186f3a1b0a9c164d5babd3f64a78973/from-PixAI-2034984086876227343-0.png",
+    "sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+    "dimensions": [
+      768,
+      1280
+    ]
+  },
+  "generator": {
+    "space_id": "conradlocke/krea2-identity-edit",
+    "space_url": "https://huggingface.co/spaces/conradlocke/krea2-identity-edit",
+    "api_name": "/edit",
+    "openai_api_key_used": false,
+    "inference_api_paid_by_openai": false,
+    "ref_boost": 4,
+    "grounding_px": 768,
+    "lora_scale": 1,
+    "steps": 12,
+    "guidance_scale": 0,
+    "background_removed": true
+  },
+  "required_asset_ids": [
+    "full-body-anatomy-a-pose"
+  ],
+  "completed_asset_ids": [
+    "full-body-anatomy-a-pose"
+  ],
+  "variants": [
+    {
+      "index": 1,
+      "asset_id": "full-body-anatomy-a-pose",
+      "change": "Reconstruct this exact anime character as a full-body model sheet in a neutral, symmetrical A-pose. Show the entire figure from hair top to soles, with visible hands, fingers, knees, ankles and feet. Preserve recognizable face, signature hairstyle, palette and clothing identity, but adapt clothing into an opaque fitted design suitable for an anatomy reference. Add subtle construction lines for shoulder line, ribcage, pelvis, elbows, wrists, knees and ankles. Clean anime line art and cel shading, single centered figure, no text, no labels, no watermark, no collage.",
+      "prompt": "Identity-guided anime character model-sheet reconstruction from the supplied image. Unlike a normal local edit, do not preserve the input crop or bust framing: extend/recompose the composition into a complete full-body figure from the highest hair strand to both soles. Maintain the recognizable character face, hair identity, palette and costume motifs while making a modest opaque anatomy-study outfit if needed for legibility. Show clear anime body construction with a symmetric neutral A-pose, arms slightly separated from torso, hands, fingers and both feet visible, balanced proportions, clean 2D line art and cel shading. Subtle joint landmarks for shoulders, elbows, wrists, pelvis, knees and ankles are acceptable; avoid labels or writing. One figure only, front view, centered portrait canvas, no panels, no extra poses, no added character, no text, no watermark, no photorealism. The output is a reference guide for later manual component separation, not a claim that individual body parts are already segmented. Requested anatomy model-sheet result: Reconstruct this exact anime character as a full-body model sheet in a neutral, symmetrical A-pose. Show the entire figure from hair top to soles, with visible hands, fingers, knees, ankles and feet. Preserve recognizable face, signature hairstyle, palette and clothing identity, but adapt clothing into an opaque fitted design suitable for an anatomy reference. Add subtle construction lines for shoulder line, ribcage, pelvis, elbows, wrists, knees and ankles. Clean anime line art and cel shading, single centered figure, no text, no labels, no watermark, no collage.",
+      "requested_seed": 1201,
+      "returned_seed": 1201,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39496066089/renders/01-full-body-anatomy-a-pose.png",
+        "sha256": "624ad7e63c213fcdc7a49b713ad384eadb152c2cb2cc63e1b846b9f2a7d4e8d8",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-20/run-39496066089/transparent/01-full-body-anatomy-a-pose.png",
+        "sha256": "fb86da7896f13dfbffcb0efcb24ce463b9b5e6367791cddfbf7eddc817d7136b",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.66974,
+        "opaque_pixel_ratio": 0.26293,
+        "quality_warning": null
+      }
+    }
+  ],
+  "last_error": null,
+  "review_status": "needs_visual_identity_review",
+  "warning": "Identity drift was observed on visual review; refine the prompt or generate another candidate before using this as the character's definitive anatomy sheet.",
+  "visual_review_notes": "Visual inspection confirmed a clean full-body A-pose with hands and feet visible and valid transparent-cutout metrics. However, the render drifts from the original Pibara reference: the hairstyle, hair color/highlights, iris color and outfit are not faithful. Keep this as a provisional anatomy reference only; do not approve it as an identity-faithful Pibara model sheet."
+}

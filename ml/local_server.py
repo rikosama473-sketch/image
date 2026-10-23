@@ -6,6 +6,7 @@ subprocess; the UI does not upload images or contact a remote inference API.
 """
 from __future__ import annotations
 
+import importlib.util
 import json
 import mimetypes
 import os
@@ -18,7 +19,7 @@ import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
-from urllib.parse import unquote, urlparse
+from urllib.parse import parse_qs, unquote, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 UI_ROOT = ROOT / "tools" / "image-creator"
@@ -78,6 +79,176 @@ def _list_outputs(limit: int = 30) -> list[dict[str, Any]]:
         except OSError:
             continue
     return results
+
+
+def _model_search_roots() -> list[tuple[Path, str]]:
+    """Return bounded, explicit locations where local Diffusers pipelines may live."""
+    roots: list[tuple[Path, str]] = [
+        (ROOT / "models", "project"),
+        (ROOT / "outputs" / "models", "project"),
+    ]
+    cache_override = os.environ.get("HUGGINGFACE_HUB_CACHE", "").strip()
+    if cache_override:
+        roots.append((Path(cache_override).expanduser(), "huggingface-cache"))
+    else:
+        hf_home = Path(os.environ.get("HF_HOME", str(Path.home() / ".cache" / "huggingface"))).expanduser()
+        roots.append((hf_home / "hub", "huggingface-cache"))
+        # Keep the conventional cache as fallback if HF_HOME points elsewhere.
+        roots.append((Path.home() / ".cache" / "huggingface" / "hub", "huggingface-cache"))
+
+    unique: list[tuple[Path, str]] = []
+    seen: set[str] = set()
+    for root, source in roots:
+        try:
+            resolved = root.resolve()
+        except OSError:
+            continue
+        key = str(resolved).casefold()
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append((resolved, source))
+    return unique
+
+
+def _scan_local_models(max_directories: int = 12000, max_models: int = 100) -> dict[str, Any]:
+    """Find local Diffusers pipeline folders without loading weights or contacting a hub."""
+    models: list[dict[str, str]] = []
+    seen_paths: set[str] = set()
+    scanned = 0
+    truncated = False
+    skipped_roots: list[str] = []
+
+    for root, source in _model_search_roots():
+        if not root.is_dir():
+            continue
+        if not os.access(root, os.R_OK):
+            skipped_roots.append(str(root))
+            continue
+        for current, dirnames, filenames in os.walk(root, followlinks=False):
+            scanned += 1
+            if scanned > max_directories or len(models) >= max_models:
+                truncated = True
+                break
+            # Do not follow symlinks or dive into common cache/metadata directories.
+            dirnames[:] = sorted(
+                name for name in dirnames
+                if name not in {".git", "node_modules", "__pycache__"}
+                and not (Path(current) / name).is_symlink()
+            )
+            if "model_index.json" not in filenames:
+                continue
+            model_dir = Path(current)
+            try:
+                resolved = model_dir.resolve()
+                marker = (resolved / "model_index.json").read_text(encoding="utf-8")
+                config = json.loads(marker)
+            except (OSError, UnicodeError, json.JSONDecodeError):
+                continue
+            if not isinstance(config, dict) or not isinstance(config.get("_class_name"), str):
+                continue
+            class_name = config["_class_name"].strip()
+            if not class_name:
+                continue
+            canonical = str(resolved).casefold()
+            if canonical in seen_paths:
+                continue
+            seen_paths.add(canonical)
+
+            label = str(resolved)
+            model_source = source
+            if source == "project":
+                try:
+                    label = resolved.relative_to(ROOT.resolve()).as_posix()
+                except ValueError:
+                    # Temporary/external search roots still get a concise human label.
+                    label = resolved.name
+            else:
+                match = re.search(r"models--([^/\\]+)[/\\]snapshots[/\\]([^/\\]+)", str(resolved))
+                if match:
+                    repository_id = match.group(1).replace("--", "/")
+                    label = repository_id + " · caché " + match.group(2)[:8]
+                model_source = "huggingface-cache"
+            models.append({
+                "path": str(resolved),
+                "label": label,
+                "source": model_source,
+                "pipeline_class": class_name[:120],
+            })
+        if truncated:
+            break
+
+    models.sort(key=lambda item: (item["source"] != "project", item["label"].casefold()))
+    return {
+        "models": models,
+        "count": len(models),
+        "scanned_directories": min(scanned, max_directories),
+        "truncated": truncated,
+        "skipped_roots": skipped_roots,
+        "downloads_performed": False,
+        "weights_loaded": False,
+    }
+
+
+def _module_available(name: str) -> bool:
+    """Check dependencies without importing a large machine-learning runtime."""
+    try:
+        return importlib.util.find_spec(name) is not None
+    except (ImportError, ValueError, AttributeError):
+        return False
+
+
+def _diagnose_environment(model: str = "", lora: str = "", device: str = "auto", allow_download: bool = False) -> dict[str, Any]:
+    """Inspect prerequisites without loading weights, generating or downloading."""
+    dependencies = {name: _module_available(name) for name in ("torch", "diffusers", "safetensors")}
+    if device not in {"auto", "cpu", "cuda", "mps"}:
+        device = "auto"
+    model_value = model.strip()
+    model_path = Path(model_value).expanduser() if model_value else None
+    if not model_value:
+        model_state, model_ready = "missing", False
+        model_message = "Indicá una carpeta local de Diffusers o un identificador de modelo."
+    elif model_path and model_path.is_absolute() and model_path.is_file():
+        model_state, model_ready = "single_file_unsupported", False
+        model_message = "Elegí una carpeta de pipeline Diffusers; un checkpoint suelto no se acepta como carpeta de modelo."
+    elif model_path and model_path.is_dir():
+        if (model_path / "model_index.json").is_file():
+            model_state, model_ready = "local_directory_ready", True
+            model_message = "La carpeta contiene model_index.json; está lista para intentar cargarla."
+        else:
+            model_state, model_ready = "directory_without_pipeline_config", False
+            model_message = "La carpeta no contiene model_index.json; puede no ser un pipeline Diffusers completo."
+    elif model_value.startswith((".", "~")) or Path(model_value).suffix:
+        model_state, model_ready = "path_not_found", False
+        model_message = "No existe esa ruta local. Si usás un identificador de Hub, escribilo como organización/modelo."
+    elif allow_download:
+        model_state, model_ready = "hub_identifier_download_enabled", True
+        model_message = "Se intentará resolver el identificador y descargar pesos porque habilitaste esa opción."
+    else:
+        model_state, model_ready = "hub_identifier_or_cached_model", False
+        model_message = "No se encontró una carpeta local. Un identificador de Hub podría funcionar si ya está en caché; no se descargará nada."
+    lora_value = lora.strip()
+    if not lora_value:
+        lora_state, lora_message = "not_configured", "La LoRA es opcional y no está configurada."
+    else:
+        lora_path = Path(lora_value).expanduser()
+        if lora_path.is_file():
+            lora_state, lora_message = "local_file", "Archivo LoRA local encontrado; su compatibilidad se revisa al cargar."
+        elif lora_path.is_dir():
+            lora_state, lora_message = "local_directory", "Carpeta LoRA local encontrada; su compatibilidad se revisa al cargar."
+        else:
+            lora_state, lora_message = "not_found_or_hub_id", "No se encontró una ruta local para la LoRA; revisá caché y descargas si usás un identificador remoto."
+    engine_exists = ENGINE.is_file()
+    return {
+        "python_version": sys.version.split()[0], "platform": sys.platform,
+        "engine_exists": engine_exists, "dependencies": dependencies,
+        "dependencies_ready": all(dependencies.values()) and engine_exists,
+        "model": {"state": model_state, "ready_to_try": model_ready, "message": model_message},
+        "lora": {"state": lora_state, "message": lora_message},
+        "device_requested": device,
+        "device_note": "La disponibilidad CUDA/MPS y el consumo de memoria no se miden aquí; el motor los verifica al iniciar.",
+        "allow_download": bool(allow_download), "downloads_default_off": True, "inference_started": False,
+    }
 
 
 def _validate_payload(data: Any) -> dict[str, Any]:
@@ -208,23 +379,38 @@ def _run_job(job_id: str, config: dict[str, Any], job_dir: Path) -> None:
         )
         summary = (result.stdout or "")[-12000:]
         error = (result.stderr or "")[-12000:]
+        # The diffusion engine creates a timestamped run directory inside job_dir.
+        # Search recursively or successful generations appear to fail in the UI.
         images = []
         if job_dir.exists():
             images = [
                 "/generated/" + file.relative_to(OUTPUT_ROOT).as_posix()
-                for file in sorted(job_dir.glob("*.png"))
+                for file in sorted(job_dir.rglob("*.png"))
+                if file.is_file()
             ]
+        expected = int(config.get("count", 1))
+        succeeded = bool(images) and result.returncode == 0
+        complete = succeeded and len(images) >= expected
+        partial = bool(images) and not complete
+        if complete:
+            state = "completed"
+            public_error = ""
+        elif partial:
+            state = "partial"
+            public_error = f"El motor guardó {len(images)} de {expected} imágenes solicitadas. Revisá el registro para conocer los fallos."
+        else:
+            state = "failed"
+            public_error = error or summary or "El motor terminó sin producir imágenes."
         with JOBS_LOCK:
             JOBS[job_id].update({
-                "status": "completed" if result.returncode == 0 and images else "failed",
+                "status": state,
                 "return_code": result.returncode,
                 "stdout": summary,
                 "stderr": error,
                 "images": images,
+                "requested_count": expected,
                 "finished_at": time.time(),
-                "error": "" if result.returncode == 0 and images else (
-                    error or summary or "El motor terminó sin producir imágenes."
-                ),
+                "error": public_error,
             })
     except subprocess.TimeoutExpired:
         with JOBS_LOCK:
@@ -260,6 +446,15 @@ class CreatorHandler(BaseHTTPRequestHandler):
             return self._serve_file(UI_ROOT / "index.html")
         if parsed.path in {"/app.js", "/app.css"}:
             return self._serve_file(UI_ROOT / parsed.path.lstrip("/"))
+        if parsed.path == "/api/models":
+            return _json_response(self, 200, _scan_local_models())
+        if parsed.path == "/api/diagnostics":
+            query = parse_qs(parsed.query)
+            model = query.get("model", [""])[0][:2048]
+            lora = query.get("lora", [""])[0][:2048]
+            device = query.get("device", ["auto"])[0]
+            allow_download = query.get("allow_download", ["false"])[0].lower() in {"1", "true", "yes"}
+            return _json_response(self, 200, _diagnose_environment(model, lora, device, allow_download))
         if parsed.path == "/api/runs":
             return _json_response(self, 200, {"runs": _list_outputs()})
         if parsed.path.startswith("/api/jobs/"):

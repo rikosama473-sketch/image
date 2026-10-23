@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10131c">
+<title>IMAGE — Taller manual de peinados</title>
+<style>
+:root{color-scheme:dark;--bg:#10131c;--panel:#181d28;--panel2:#202838;--line:#354156;--text:#f3f5fb;--muted:#9eacc3;--pink:#ee5d9d;--gold:#f0cd83;--blue:#91bdff;--green:#a5e6c2}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:14px/1.45 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select{font:inherit}button{cursor:pointer;color:inherit;border:1px solid var(--line);background:#252e3e;border-radius:8px;padding:8px 10px}button:hover{border-color:#879bb9;background:#303b4f}button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #ffabd0;outline-offset:2px}input,select{color:var(--text);background:#121722;border:1px solid var(--line);border-radius:7px;padding:8px;min-width:0;width:100%}input[type=range]{padding:0;accent-color:var(--pink)}input[type=file]{display:none}.primary{background:var(--pink);border-color:var(--pink);font-weight:800}.subtle{background:transparent}.small{font-size:11px;padding:6px 8px}.muted{color:var(--muted)}.tag{display:inline-block;font-size:10px;padding:3px 6px;border:1px solid #57637a;border-radius:5px;color:#c6d3e8}.tag.warn{color:#ffe5ab;border-color:#806843;background:#332a1e}.tag.good{color:#b3f0d0;border-color:#376b56;background:#173128}
+header{padding:13px 17px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line);background:#171c27;position:sticky;top:0;z-index:5}.brand{font-weight:900;letter-spacing:.07em;font-size:16px;white-space:nowrap}.brand em{font-style:normal;color:#ff90bf}.subtitle{color:var(--muted);font-size:12px}.spacer{flex:1}.actions{display:flex;flex-wrap:wrap;gap:7px}.studio-module-nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.studio-module-nav a{display:inline-block;border:1px solid var(--line);border-radius:7px;padding:6px 8px;color:var(--muted);text-decoration:none;font-size:11px;white-space:nowrap}.studio-module-nav a:hover{border-color:#879bb9;color:var(--text);background:var(--panel2)}
+.notice{margin:12px 14px 0;padding:10px 12px;border:1px solid #67563a;background:#2d271e;color:#f4dfb3;border-radius:9px;font-size:12px}.notice strong{color:#ffe4a0}.notice.ok{border-color:#3b6b56;background:#172d25;color:#bfead2}.notice.error{border-color:#7c3f55;background:#341e2a;color:#ffd1df}
+.layout{display:grid;grid-template-columns:270px minmax(360px,1fr) 310px;gap:0;min-height:calc(100vh - 66px)}aside{padding:14px;background:var(--panel);min-width:0;overflow:auto;border-right:1px solid var(--line)}aside.right{border-left:1px solid var(--line);border-right:0}.section{padding:0 0 15px;margin:0 0 15px;border-bottom:1px solid var(--line)}.section:last-child{border:0}.section h2{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}.field{display:flex;flex-direction:column;gap:5px;margin:9px 0}.field label{font-size:11px;color:#bec9da}.row{display:flex;gap:7px}.row>*{flex:1}.help{font-size:11px;color:var(--muted);line-height:1.55;margin:8px 0}.slot-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.slot{min-height:62px;text-align:left;display:flex;flex-direction:column;gap:4px}.slot strong{font-size:12px}.slot small{font-size:10px;color:var(--muted)}.slot.active{border-color:var(--pink);background:#3a2535;box-shadow:inset 0 0 0 1px #ee5d9d}
+#workspace{display:flex;flex-direction:column;min-width:0;min-height:0}.workbar{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:10px 13px;border-bottom:1px solid var(--line);background:#141924}.workbar strong{font-size:12px}.workbar span{font-size:11px;color:var(--muted)}.stage{flex:1;min-height:570px;position:relative;overflow:auto;display:flex;align-items:center;justify-content:center;padding:18px;background-color:#2a2f3a;background-image:linear-gradient(45deg,#343b48 25%,transparent 25%),linear-gradient(-45deg,#343b48 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#343b48 75%),linear-gradient(-45deg,transparent 75%,#343b48 75%);background-size:24px 24px;background-position:0 0,0 12px,12px -12px,-12px 0}.canvasWrap{height:min(78vh,850px);min-height:500px;max-width:100%;aspect-ratio:3/5;position:relative;flex:none;box-shadow:0 12px 34px #0007}.canvasWrap canvas{width:100%;height:100%;display:block;touch-action:none;cursor:move}.emptyHint{position:absolute;left:14px;right:14px;bottom:14px;max-width:260px;font-size:11px;line-height:1.5;color:#edf1fa;background:#131925e8;border:1px solid #58637a;padding:10px;border-radius:8px;pointer-events:none}.statusbar{padding:8px 13px;background:#141924;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;gap:10px;justify-content:space-between}
+.styleList{display:grid;grid-template-columns:1fr 1fr;gap:8px}.styleCard{min-width:0;padding:6px;background:#111721;border:1px solid var(--line);border-radius:8px;text-align:left}.styleCard.active{border:2px solid var(--pink);padding:5px;background:#302433}.styleCard img,.styleCard canvas{width:100%;height:120px;object-fit:contain;display:block;border-radius:5px;background-color:#252b36;background-image:linear-gradient(45deg,#303746 25%,transparent 25%),linear-gradient(-45deg,#303746 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#303746 75%),linear-gradient(-45deg,transparent 75%,#303746 75%);background-size:12px 12px;background-position:0 0,0 6px,6px -6px,-6px 0}.styleCard b{display:block;font-size:11px;margin:5px 0 2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.styleCard small{display:block;color:var(--muted);font-size:9px}.layerList{display:flex;flex-direction:column;gap:6px}.layer{display:grid;grid-template-columns:36px minmax(0,1fr) 32px;align-items:center;gap:8px;padding:6px;border:1px solid var(--line);background:#111721;border-radius:8px}.layer.active{border-color:var(--pink);background:#302433}.layer img{width:36px;height:46px;object-fit:contain;border-radius:4px;background:#28303d}.layerName{min-width:0}.layerName b{display:block;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.layerName small{display:block;color:var(--muted);font-size:9px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.eye{padding:5px 2px;background:transparent;border:0;font-size:15px}.badgeLine{display:flex;gap:6px;flex-wrap:wrap;margin:7px 0}.count{font-size:10px;color:var(--muted)}.rangeRow{display:grid;grid-template-columns:1fr 48px;align-items:center;gap:8px}.rangeRow output{text-align:right;font-size:10px;color:#ffc4dc}.divider{height:1px;background:var(--line);margin:12px 0}.twoCols{display:grid;grid-template-columns:1fr 1fr;gap:7px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:1120px){.layout{grid-template-columns:230px minmax(300px,1fr)}aside.right{grid-column:1/-1;border-left:0;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:15px}.stage{min-height:540px}}@media(max-width:700px){header{position:relative}.subtitle{display:none}.layout{display:flex;flex-direction:column}aside,aside.right{border:0;border-bottom:1px solid var(--line)}aside.right{display:block}.stage{min-height:65vh;padding:10px}.canvasWrap{height:65vh;min-height:420px}.notice{margin:9px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><em>IMAGE</em> / HAIRSTYLE WORKBENCH</div>
+  <div class="subtitle">Taller manual de peinados · piezas PNG y variantes guardables</div>
+  <nav class="studio-module-nav" data-image-studio-nav aria-label="Navegación del estudio IMAGE"><a href="../avatar-maker/index.html">Constructor</a><a href="../visual-reference-library/index.html">Biblioteca visual</a><a href="../manual-character-editor/index.html">Editor de capas</a><a href="http://127.0.0.1:8765/" target="_blank" rel="noopener noreferrer">Generador local IA ↗</a></nav>
+  <div class="spacer"></div>
+  <div class="actions">
+    <button id="demoBtn" class="primary">Cargar muestra por capas</button>
+    <button id="importProjectBtn">Abrir JSON</button>
+    <button id="saveProjectBtn">Guardar JSON</button>
+    <button id="exportBtn">Exportar PNG</button>
+  </div>
+  <input id="projectFile" type="file" accept=".json,application/json">
+</header>
+<div class="notice" id="notice"><strong>Modo manual:</strong> esta herramienta no llama a ninguna IA ni a una API. Usa piezas que ya existen en el repositorio o PNG que importes. Las piezas de la muestra están marcadas como candidatas: sirven para probar la composición, no están certificadas como recortes finales.</div>
+<div class="layout">
+<aside>
+  <section class="section">
+    <h2>Identidad del personaje</h2>
+    <div class="field"><label for="characterName">Nombre</label><input id="characterName" value="Personaje de prueba" maxlength="80"></div>
+    <div class="field"><label for="styleName">Nombre de la variante actual</label><input id="styleName" value="Bob recto" maxlength="80"></div>
+    <div class="row"><button id="newStyleBtn" class="primary">Guardar como variante</button><button id="updateStyleBtn">Actualizar</button></div>
+    <div class="row" style="margin-top:7px"><button id="duplicateStyleBtn">Duplicar variante</button><button id="deleteStyleBtn" class="subtle">Eliminar variante</button></div>
+    <p class="help">Cada look se guarda con ID propio. Los estilos parecidos no se fusionan ni se borran automáticamente: podés conservar, por ejemplo, tres cortes casi iguales que cambian el flequillo o el largo.</p>
+  </section>
+  <section class="section">
+    <h2>Armar el peinado por piezas</h2>
+    <div class="slot-grid" id="slots">
+      <button class="slot active" data-slot="haircut"><strong>✂ Corte / silueta</strong><small>Bob, pixie, wolf cut…</small></button>
+      <button class="slot" data-slot="bangs"><strong>⌁ Flequillo</strong><small>Recto, cortina, lateral…</small></button>
+      <button class="slot" data-slot="sidelocks"><strong>〰 Mechones laterales</strong><small>Patillas, mechones largos…</small></button>
+      <button class="slot" data-slot="tie"><strong>↗ Recogidos</strong><small>Coleta, moño, trenza…</small></button>
+      <button class="slot" data-slot="accessory"><strong>✦ Accesorios</strong><small>Moños, clips, cintas…</small></button>
+      <button class="slot" data-slot="other"><strong>＋ Otras capas</strong><small>Importación manual</small></button>
+    </div>
+    <div class="field"><label for="pieceName">Nombre de la pieza PNG</label><input id="pieceName" placeholder="Ej. flequillo cortina largo" maxlength="100"></div>
+    <div class="field"><label for="pieceType">Clasificación de la pieza</label><select id="pieceType"><option value="haircut">Corte completo / silueta</option><option value="bangs">Flequillo</option><option value="sidelocks">Mechones laterales</option><option value="tie">Coleta, moño o trenza</option><option value="accessory">Accesorio</option><option value="face">Rostro</option><option value="body">Cuerpo</option><option value="clothes">Ropa</option><option value="other">Otra capa</option></select></div>
+    <div class="field"><label for="pieceTags">Etiquetas / rasgos (separados por coma)</label><input id="pieceTags" placeholder="bob_cut, blunt_bangs, side_ponytail" maxlength="500"></div>
+    <button id="importPieceBtn" class="primary" style="width:100%">Importar pieza PNG transparente</button>
+    <input id="pieceFile" type="file" accept="image/png,image/webp">
+    <p class="help">Para alinear con precisión, exportá cada pieza en el mismo lienzo de la base y conservá su posición original. Si el PNG está recortado al borde del objeto, podrás colocarlo y escalarlo manualmente.</p>
+  </section>
+  <section class="section">
+    <h2>Catálogo de muestra</h2>
+    <div class="row"><button id="loadHairCatalogBtn">Cargar peinados candidatos</button><button id="clearBtn">Limpiar composición</button></div>
+    <p class="help">La muestra del repositorio tiene cinco siluetas candidatas: bob, largo, coleta alta, coletas dobles y trenza lateral. Se muestran como opciones separadas; no implica que ya estén aprobadas ni que sean piezas de procedencia comercialmente autorizada.</p>
+    <div class="badgeLine"><span class="tag warn">Pendiente de revisión visual</span><span class="tag">Sin IA / sin API</span></div>
+    <div id="catalogStatus" class="count">Catálogo sin cargar.</div>
+  </section>
+  <section class="section">
+    <h2>Conservación de la forma</h2>
+    <p class="help">Un peinado completo alternativo reemplaza la capa de peinado activa. Flequillos, mechones, trenzas parciales y adornos pueden apilarse entre sí. El sistema no vuelve a dibujar cara, ojos, cuerpo ni ropa: superpone las piezas que vos elegís.</p>
+    <a href="../manual-character-editor/index.html" style="color:#ffb6d4;font-size:11px">Abrir editor de recortes manuales →</a><br><a href="./hair-style-taxonomy.json" style="color:#ffb6d4;font-size:11px">Ver taxonomía de cortes y etiquetas →</a>
+  </section>
+</aside>
+<main id="workspace">
+  <div class="workbar"><strong>LIENZO DE COMPOSICIÓN</strong><span>768 × 1280 px · PNG alfa · arrastrá la capa seleccionada</span><div class="spacer"></div><button id="checkerBtn" class="small">Fondo de transparencia</button></div>
+  <div class="stage" id="stage">
+    <div class="canvasWrap"><canvas id="canvas" width="768" height="1280" aria-label="Vista previa del personaje compuesto"></canvas></div>
+    <div class="emptyHint" id="emptyHint">Cargá la muestra por capas o importá tus propias piezas PNG. Para un cambio de look, guardá una variante: el rostro y el cuerpo permanecen mientras alternás el cabello.</div>
+  </div>
+  <div class="statusbar"><span id="status">Listo para composición manual.</span><span id="layerCount">0 capas</span></div>
+</main>
+<aside class="right">
+  <section class="section">
+    <h2>Variantes de peinado</h2>
+    <div id="styleList" class="styleList"></div>
+    <p class="help">Elegí una variante para cambiar de look conservando el mismo conjunto base. Los registros se guardan en el JSON del personaje.</p>
+  </section>
+  <section class="section">
+    <h2>Capas de la composición</h2>
+    <div class="row"><button id="raiseBtn" class="small">Traer al frente</button><button id="lowerBtn" class="small">Enviar atrás</button></div>
+    <div class="layerList" id="layerList" style="margin-top:8px"></div>
+  </section>
+  <section class="section" id="adjustSection">
+    <h2>Ajustar capa seleccionada</h2>
+    <div id="adjustBody" class="help">Elegí una capa de la lista para ajustar su posición, tamaño, giro y opacidad.</div>
+  </section>
+  <section class="section">
+    <h2>Cómo combinar</h2>
+    <p class="help">Para conseguir muchas combinaciones útiles, conviene reunir piezas de la misma línea artística: 1) silueta posterior, 2) flequillo, 3) mechones laterales, 4) coleta/trenza, 5) accesorio. Después guardás combinaciones como looks diferentes. No basta con multiplicar archivos: cada pieza debe encajar en el mismo rostro y en el mismo sistema de coordenadas.</p>
+  </section>
+</aside>
+</div>
+<script>
+(function(){
+"use strict";
+const $=id=>document.getElementById(id),W=768,H=1280,ROOT="../../";
+const canvas=$("canvas"),ctx=canvas.getContext("2d",{alpha:true});
+let catalog=null,layers=[],styles=[],selectedLayer=null,activeStyle=null,nextId=1,activeSlot="haircut",checker=true,drag=null,activeRecipe=null;
+ const HAIR_CATEGORIES=["haircut","bangs","sidelocks","tie","ahoge","accessory"];
+const imageCache=new Map();
+const slotLabels={haircut:"Corte completo",bangs:"Flequillo",sidelocks:"Mechones laterales",tie:"Coleta / trenza",ahoge:"Ahoge",accessory:"Accesorio",face:"Rostro",body:"Cuerpo",clothes:"Ropa",other:"Otra capa"};
+function uid(prefix){return prefix+"-"+Date.now().toString(36)+"-"+(nextId++).toString(36);}
+function esc(value){return String(value==null?"":value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
+function say(message,type){const n=$("notice");n.className="notice"+(type?" "+type:"");n.innerHTML=(type==="error"?"<strong>Atención:</strong> ":type==="ok"?"<strong>Listo:</strong> ":"<strong>Modo manual:</strong> ")+esc(message);}
+function setStatus(message){$("status").textContent=message;}
+function layerUrl(layer){if(layer.dataUrl)return layer.dataUrl;if(layer.repoPath)return ROOT+layer.repoPath;if(layer.src)return layer.src;return "";}
+function loadImage(layer){const url=layerUrl(layer);if(!url)return Promise.reject(new Error("La capa no contiene una ruta de imagen."));if(imageCache.has(url))return imageCache.get(url);const p=new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>reject(new Error("No se pudo cargar "+(layer.name||url)));im.src=url;});imageCache.set(url,p);return p;}
+function serialLayer(layer){const out={};Object.keys(layer).forEach(k=>{if(k!=="_image")out[k]=layer[k];});return out;}
+function serialStyle(style){return {id:style.id,name:style.name,description:style.description||"",states:style.states,recipe_id:style.recipe_id||null};}
+async function drawCanvasOnly(){
+ ctx.clearRect(0,0,W,H);
+ const ordered=layers.filter(l=>l.visible!==false).slice().sort((a,b)=>(a.order||0)-(b.order||0));
+ for(const l of ordered){try{const im=await loadImage(l);const w=l.w||im.naturalWidth,h=l.h||im.naturalHeight;ctx.save();ctx.globalAlpha=Number.isFinite(l.opacity)?l.opacity:1;ctx.translate((l.x||0)+w/2,(l.y||0)+h/2);ctx.rotate((l.rotation||0)*Math.PI/180);ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore();}catch(e){setStatus("No se pudo dibujar una capa: "+e.message);}}
+ $("emptyHint").style.display=layers.some(l=>l.visible!==false)?"none":"block";
+}
+async function render(){
+ await drawCanvasOnly();
+ $("layerCount").textContent=layers.length+" capas · "+layers.filter(l=>l.visible!==false).length+" visibles";
+ renderLayerList();renderStyleList();renderAdjust();if(window.HairWorkbenchAPI&&Array.isArray(window.HairWorkbenchAPI.renderHooks))window.HairWorkbenchAPI.renderHooks.forEach(fn=>{try{fn();}catch(e){}});
+}
+function thumbSrc(l){return layerUrl(l);}
+function renderLayerList(){
+ const root=$("layerList");
+ if(!layers.length){root.innerHTML='<div class="help">Todavía no hay piezas. Importá un PNG o cargá la muestra.</div>';return;}
+ root.innerHTML=layers.slice().sort((a,b)=>(b.order||0)-(a.order||0)).map(l=>'<div class="layer '+(l.id===selectedLayer?"active":"")+'" data-layer="'+esc(l.id)+'"><img alt="" src="'+esc(thumbSrc(l))+'"><div class="layerName"><b>'+esc(l.name)+'</b><small>'+esc(slotLabels[l.category]||l.category||"Capa")+(l.status==="pending_visual_review"?" · pendiente":"")+(l.tags&&l.tags.length?" · "+l.tags.join(", "):"")+'</small></div><button class="eye" data-eye="'+esc(l.id)+'" title="Mostrar u ocultar">'+(l.visible===false?"○":"◉")+'</button></div>').join("");
+ root.querySelectorAll("[data-layer]").forEach(el=>el.addEventListener("click",e=>{if(e.target.closest("[data-eye]"))return;selectedLayer=el.dataset.layer;render();}));
+ root.querySelectorAll("[data-eye]").forEach(el=>el.addEventListener("click",e=>{e.stopPropagation();const l=layers.find(x=>x.id===el.dataset.eye);if(l){l.visible=l.visible===false;render();}}));
+}
+function renderStyleList(){
+ const root=$("styleList");
+ if(!styles.length){root.innerHTML='<div class="help">Aún no guardaste variantes.</div>';return;}
+ root.innerHTML=styles.map(s=>'<button class="styleCard '+(s.id===activeStyle?"active":"")+'" data-style="'+esc(s.id)+'"><canvas class="styleThumb" width="96" height="160" data-preview="'+esc(s.id)+'" aria-label="Vista compuesta de '+esc(s.name)+'"></canvas><b>'+esc(s.name)+'</b><small>'+esc(s.description||"Variante manual")+'</small></button>').join("");
+ root.querySelectorAll("[data-style]").forEach(el=>el.addEventListener("click",()=>applyStyle(el.dataset.style)));
+ root.querySelectorAll("[data-preview]").forEach(node=>{const style=styles.find(s=>s.id===node.dataset.preview);if(style)drawStylePreview(style,node);});
+}
+async function drawStylePreview(style,target){
+ const pctx=target.getContext("2d",{alpha:true});pctx.clearRect(0,0,target.width,target.height);const states=style.states||{};
+ const visible=layers.filter(l=>{const st=states[l.id];if(st)return st.visible!==false;if(HAIR_CATEGORIES.includes(l.category))return false;return l.visible!==false;}).slice().sort((a,b)=>{const sa=states[a.id]||{},sb=states[b.id]||{};const oa=sa.order===undefined?(a.order||0):sa.order,ob=sb.order===undefined?(b.order||0):sb.order;return oa-ob;});
+ pctx.save();pctx.scale(target.width/W,target.height/H);
+ for(const l of visible){try{const im=await loadImage(l),st=states[l.id]||{},w=st.w||l.w||im.naturalWidth,h=st.h||l.h||im.naturalHeight,x=st.x===undefined?(l.x||0):st.x,y=st.y===undefined?(l.y||0):st.y,rot=st.rotation===undefined?(l.rotation||0):st.rotation,opacity=st.opacity===undefined?(l.opacity==null?1:l.opacity):st.opacity;pctx.save();pctx.globalAlpha=opacity;pctx.translate(x+w/2,y+h/2);pctx.rotate(rot*Math.PI/180);pctx.drawImage(im,-w/2,-h/2,w,h);pctx.restore();}catch(e){}}
+ pctx.restore();
+}
+function renderAdjust(){
+ const root=$("adjustBody"),l=layers.find(x=>x.id===selectedLayer);
+ if(!l){root.textContent="Elegí una capa de la lista para ajustar su posición, tamaño, giro y opacidad.";return;}
+ root.innerHTML='<div class="field"><label>Posición X</label><input data-prop="x" type="number" value="'+Math.round(l.x||0)+'" min="-1200" max="1200"></div><div class="field"><label>Posición Y</label><input data-prop="y" type="number" value="'+Math.round(l.y||0)+'" min="-1600" max="1600"></div><div class="field"><label>Tamaño</label><div class="rangeRow"><input data-prop="scale" type="range" min="0.1" max="2.5" step="0.01" value="'+(Number(l.w||1)/(Number(l.sourceW||l.w||1)))+'"><output>'+Math.round((l.scale||1)*100)+'%</output></div></div><div class="field"><label>Giro</label><div class="rangeRow"><input data-prop="rotation" type="range" min="-180" max="180" step="1" value="'+(l.rotation||0)+'"><output>'+Math.round(l.rotation||0)+'°</output></div></div><div class="field"><label>Opacidad</label><div class="rangeRow"><input data-prop="opacity" type="range" min="0" max="1" step="0.01" value="'+(l.opacity==null?1:l.opacity)+'"><output>'+Math.round((l.opacity==null?1:l.opacity)*100)+'%</output></div></div><div class="field"><label>Etiquetas de esta pieza</label><input data-tags value="'+esc((l.tags||[]).join(", "))+'" placeholder="bob_cut, blunt_bangs"></div><div class="twoCols"><button data-reset>Restablecer</button><button data-remove class="subtle">Quitar capa</button></div><p class="help">Si la imagen tiene el mismo lienzo 768×1280 que el resto, X e Y pueden permanecer en 0 para alinear las piezas.</p>';
+ root.querySelectorAll("[data-prop]").forEach(input=>input.addEventListener("input",()=>{
+  const key=input.dataset.prop;
+  if(key==="scale"){
+   const scale=Number(input.value),sw=l.sourceW||l.w||1,sh=l.sourceH||l.h||1,cx=(l.x||0)+(l.w||sw)/2,cy=(l.y||0)+(l.h||sh)/2;
+   l.scale=scale;l.w=sw*scale;l.h=sh*scale;l.x=cx-l.w/2;l.y=cy-l.h/2;
+  }else l[key]=Number(input.value);
+  if(input.type==="range"){const o=input.parentElement.querySelector("output");if(o)o.value=key==="opacity"?Math.round(l.opacity*100)+"%":key==="rotation"?Math.round(l.rotation)+"°":Math.round(l.scale*100)+"%";}
+  drawCanvasOnly();
+ }));
+ root.querySelector("[data-tags]").addEventListener("change",e=>{l.tags=e.target.value.split(/[,;]/).map(t=>t.trim()).filter(Boolean);renderLayerList();});
+ root.querySelector("[data-reset]").addEventListener("click",()=>{const imSize={w:l.sourceW||W,h:l.sourceH||H};l.x=(W-imSize.w)/2;l.y=(H-imSize.h)/2;l.w=imSize.w;l.h=imSize.h;l.scale=1;l.rotation=0;l.opacity=1;render();});
+ root.querySelector("[data-remove]").addEventListener("click",()=>removeLayer(l.id));
+}
+function addLayer(raw){const l=Object.assign({id:uid("layer"),name:"Pieza importada",category:activeSlot,visible:true,x:0,y:0,w:W,h:H,sourceW:W,sourceH:H,scale:1,rotation:0,opacity:1,order:layers.length,status:"imported"},raw||{});if(l.repoPath)l.src=ROOT+l.repoPath;layers.push(l);selectedLayer=l.id;return l;}
+function removeLayer(id){layers=layers.filter(l=>l.id!==id);if(selectedLayer===id)selectedLayer=layers.length?layers[layers.length-1].id:null;Object.keys(styles).forEach(i=>{const s=styles[i];if(s.states)delete s.states[id];});render();setStatus("Capa quitada de la composición. Las otras piezas permanecen intactas.");}
+function captureStates(){const o={};layers.forEach(l=>o[l.id]={visible:l.visible!==false,x:l.x||0,y:l.y||0,w:l.w||W,h:l.h||H,scale:l.scale||1,rotation:l.rotation||0,opacity:l.opacity==null?1:l.opacity,order:l.order||0});return o;}
+function applyStyle(id){const s=styles.find(x=>x.id===id);if(!s)return;activeRecipe=s.recipe_id?{id:s.recipe_id,name:s.name}:null;const states=s.states||{};layers.forEach(l=>{const st=states[l.id];if(st){Object.assign(l,st);}else if(HAIR_CATEGORIES.includes(l.category))l.visible=false;});activeStyle=id;$("styleName").value=s.name;setStatus("Variante aplicada: "+s.name+". Las capas base conservan su identidad.");render();}
+function saveNewStyle(copyFrom){
+ const name=$("styleName").value.trim()||("Look "+(styles.length+1));
+ const s={id:uid("style"),name:name,description:"Variante manual"+(activeRecipe?" · receta "+activeRecipe.id:"")+" · "+new Date().toLocaleDateString("es-AR"),recipe_id:activeRecipe&&activeRecipe.id||null,states:copyFrom?JSON.parse(JSON.stringify(copyFrom.states||{})):captureStates()};
+ styles.push(s);activeStyle=s.id;setStatus("Variante guardada sin fusionar similitudes: "+name);say("Variante «"+name+"» guardada. Cada variante conserva su ID, aunque su aspecto sea parecido a otro look.","ok");render();
+}
+function loadStyleFromCurrent(){const s=styles.find(x=>x.id===activeStyle);if(!s){saveNewStyle(null);return;}s.name=$("styleName").value.trim()||s.name;s.states=captureStates();s.recipe_id=activeRecipe&&activeRecipe.id||null;setStatus("Actualizada la variante: "+s.name);render();}
+function duplicateStyle(){const s=styles.find(x=>x.id===activeStyle);if(!s){say("Primero seleccioná o guardá una variante.","error");return;}const requested=$("styleName").value.trim();const copy=JSON.parse(JSON.stringify(s));copy.id=uid("style");copy.name=requested&&requested!==s.name?requested:s.name+" — copia";copy.description="Copia independiente; editable";styles.push(copy);activeStyle=copy.id;$("styleName").value=copy.name;setStatus("Variante duplicada. Es un registro independiente aunque sea visualmente igual.");render();}
+function deleteStyle(){if(!activeStyle)return;const s=styles.find(x=>x.id===activeStyle);if(!s)return;styles=styles.filter(x=>x.id!==activeStyle);activeStyle=styles.length?styles[0].id:null;if(activeStyle)applyStyle(activeStyle);else render();setStatus("Variante eliminada; no se eliminaron las imágenes originales.");}
+function uniqueStyleForHair(hairId){
+ const hair=layers.find(l=>l.id===hairId);if(!hair)return;
+ layers.forEach(l=>{if(l.category==="haircut")l.visible=l.id===hairId;});
+ $("styleName").value=hair.name;
+ const existing=styles.find(s=>s.name===hair.name&&s.states&&s.states[hair.id]&&s.states[hair.id].visible!==false);
+ if(existing){applyStyle(existing.id);return;}
+ saveNewStyle(null);
+}
+async function loadCatalog(){
+ try{const r=await fetch("../avatar-maker/assets/catalog.json",{cache:"no-store"});if(!r.ok)throw new Error("No se pudo leer tools/avatar-maker/assets/catalog.json.");catalog=await r.json();$("catalogStatus").textContent=(catalog.candidate_layers||[]).filter(x=>x.category==="hair").length+" cortes candidatos registrados.";return catalog;}
+ catch(e){$("catalogStatus").textContent=e.message;throw e;}
+}
+function inferredCatalogTags(item){
+  const map={"hair-bob":["bob_cut","short_hair","blunt_bangs"],"hair-long":["long_hair","straight_hair"],"hair-ponytail":["high_ponytail","ponytail","updo"],"hair-twintails":["twintails","long_hair"],"hair-braid":["side_braid","long_hair"]};
+  return map[item.id]||[];
+ }
+ async function loadCandidateHair(addToComposition){
+ const c=catalog||await loadCatalog();const hair=(c.candidate_layers||[]).filter(x=>x.category==="hair");
+ if(!hair.length)throw new Error("El catálogo no incluye piezas de cabello.");
+ const known=new Set(layers.map(l=>l.catalogId));
+ for(const item of hair){if(known.has(item.id))continue;addLayer({id:item.id,catalogId:item.id,name:item.label,category:"haircut",repoPath:item.repo_path,x:0,y:0,w:W,h:H,sourceW:W,sourceH:H,scale:1,rotation:0,opacity:1,order:layers.length,visible:false,status:item.status,description:item.review,tags:inferredCatalogTags(item)});}
+ if(addToComposition){const first=hair[0];layers.forEach(l=>{if(l.category==="haircut")l.visible=l.catalogId===first.id;});}
+ $("catalogStatus").textContent=hair.length+" cortes listados · cada uno se conserva como entrada independiente.";
+}
+async function loadDemo(){
+ try{
+  const c=await loadCatalog(),items=c.candidate_layers||[];
+  const byId=id=>items.find(x=>x.id===id);
+  const chosen=[byId("body"),byId("clothing"),byId("face")].filter(Boolean);
+  const hair=items.filter(x=>x.category==="hair");
+  if(!chosen.length||!hair.length)throw new Error("La muestra necesita piezas base y variantes de cabello en assets/catalog.json.");
+  layers=[];styles=[];activeStyle=null;activeRecipe=null;selectedLayer=null;imageCache.clear();nextId=1;
+  chosen.forEach((item,index)=>addLayer({id:item.id,catalogId:item.id,name:item.label,category:item.category==="clothes"?"clothes":item.category,repoPath:item.repo_path,x:0,y:0,w:W,h:H,sourceW:W,sourceH:H,scale:1,rotation:0,opacity:1,order:index,visible:true,status:item.status}));
+  const sampleTags={"hair-bob":["bob_cut","short_hair","blunt_bangs"],"hair-long":["long_hair","straight_hair"],"hair-ponytail":["high_ponytail","updo"],"hair-twintails":["twintails","long_hair"],"hair-braid":["side_braid","long_hair"]};
+  hair.forEach((item,index)=>addLayer({id:item.id,catalogId:item.id,name:item.label,category:"haircut",repoPath:item.repo_path,x:0,y:0,w:W,h:H,sourceW:W,sourceH:H,scale:1,rotation:0,opacity:1,order:chosen.length+index,visible:index===0,status:item.status,description:item.review,tags:sampleTags[item.id]||[]}));
+  selectedLayer=hair[0].id;$("characterName").value="Pibara · muestra técnica";$("styleName").value=hair[0].label;
+  hair.forEach(item=>{const states={};layers.forEach(l=>states[l.id]={visible:l.category==="haircut"?l.catalogId===item.id:l.visible!==false,x:l.x,y:l.y,w:l.w,h:l.h,scale:l.scale,rotation:l.rotation,opacity:l.opacity,order:l.order});styles.push({id:uid("style"),name:item.label,description:"Máscara candidata · revisión pendiente",states});});
+  activeStyle=styles[0].id;
+  await render();setStatus("Muestra manual cargada. Cambiá entre los cinco peinados sin cambiar el conjunto base.");say("Muestra cargada desde el catálogo existente. Los cinco peinados y las capas de rostro/cuerpo siguen pendientes de revisión visual; no se ha generado ni enviado ninguna imagen.","ok");
+ }catch(e){say(e.message+" Abrí esta herramienta a través del servidor local del repositorio para resolver las rutas de imágenes.","error");setStatus("La muestra no se pudo cargar.");}
+}
+async function importPiece(file){
+ if(!file)return;if(!/^image\/(png|webp)$/.test(file.type)){say("Importá un PNG o WebP para conservar la transparencia. No se aceptan archivos con fondo como si fueran recortes limpios.","error");return;}
+ const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(new Error("No se pudo leer el archivo."));reader.readAsDataURL(file);});
+ const im=await new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error("El navegador no pudo abrir el PNG."));img.src=data;});
+ const name=$("pieceName").value.trim()||file.name.replace(/\.(png|webp)$/i,"");
+ const type=$("pieceType").value;
+ if(type==="haircut")layers.filter(l=>l.category==="haircut").forEach(l=>l.visible=false);
+ const x=im.naturalWidth===W&&im.naturalHeight===H?0:(W-im.naturalWidth)/2;
+ const y=im.naturalWidth===W&&im.naturalHeight===H?0:(H-im.naturalHeight)/2;
+ const l=addLayer({name:name,category:type,dataUrl:data,x:x,y:y,w:im.naturalWidth,h:im.naturalHeight,sourceW:im.naturalWidth,sourceH:im.naturalHeight,scale:1,rotation:0,opacity:1,order:layers.length,visible:true,status:"user_imported",sourceName:file.name,tags:$("pieceTags").value.split(/[,;]/).map(t=>t.trim()).filter(Boolean)});
+ selectedLayer=l.id;$("styleName").value=name;$("pieceName").value="";$("pieceTags").value="";imageCache.set(data,Promise.resolve(im));render();
+ setStatus("Pieza importada: "+name+" ("+im.naturalWidth+"×"+im.naturalHeight+"). Guardá una variante para conservar esta combinación.");
+ say("Pieza incorporada manualmente. La herramienta no ha redibujado ni enviado la imagen a ningún servicio.","ok");
+}
+function saveProject(){
+ const project={schema_version:2,app:"IMAGE Hairstyle Workbench",manual_only:true,active_recipe_id:activeRecipe&&activeRecipe.id||null,character:{name:$("characterName").value.trim()||"Personaje sin nombre",width:W,height:H},layers:layers.map(serialLayer),styles:styles.map(serialStyle),active_style_id:activeStyle,selected_layer_id:selectedLayer,notes:"Variantes visuales independientes; estilos parecidos no se fusionan. Revisar los derechos de cada recurso importado."};
+ const blob=new Blob([JSON.stringify(project,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=(project.character.name.replace(/[^a-z0-9_-]+/gi,"-").replace(/^-|-$/g,"")||"personaje")+"-peinados.json";a.click();URL.revokeObjectURL(url);setStatus("Proyecto JSON guardado con "+layers.length+" capas y "+styles.length+" variantes.");
+}
+async function openProject(file){
+ const project=JSON.parse(await file.text());
+ if(!project||project.app!=="IMAGE Hairstyle Workbench"||!Array.isArray(project.layers)||!Array.isArray(project.styles))throw new Error("El archivo no es un proyecto válido de Hairstyle Workbench.");
+ layers=project.layers;styles=project.styles;activeStyle=project.active_style_id||null;selectedLayer=project.selected_layer_id||null;nextId+=layers.length+styles.length;
+ $("characterName").value=project.character&&project.character.name||"Personaje";imageCache.clear();
+ if(activeStyle)applyStyle(activeStyle);else await render();
+ say("Proyecto abierto: "+layers.length+" capas y "+styles.length+" variantes. Los PNG importados se conservan dentro del JSON.","ok");
+}
+async function exportPng(){
+ try{const out=document.createElement("canvas");out.width=W;out.height=H;const ox=out.getContext("2d",{alpha:true});const ordered=layers.filter(l=>l.visible!==false).slice().sort((a,b)=>(a.order||0)-(b.order||0));for(const l of ordered){const im=await loadImage(l),w=l.w||im.naturalWidth,h=l.h||im.naturalHeight;ox.save();ox.globalAlpha=l.opacity==null?1:l.opacity;ox.translate((l.x||0)+w/2,(l.y||0)+h/2);ox.rotate((l.rotation||0)*Math.PI/180);ox.drawImage(im,-w/2,-h/2,w,h);ox.restore();}const blob=await new Promise((resolve,reject)=>out.toBlob(b=>b?resolve(b):reject(new Error("No se pudo exportar el PNG.")),"image/png"));const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=($("characterName").value.trim()||"personaje").replace(/[^a-z0-9_-]+/gi,"-")+"-composicion.png";a.click();URL.revokeObjectURL(url);setStatus("PNG transparente exportado sin el tablero visual.");
+ }catch(e){say("Exportación interrumpida: "+e.message,"error");}
+}
+function setSlot(slot){activeSlot=slot;$("pieceType").value=slot;document.querySelectorAll("[data-slot]").forEach(b=>b.classList.toggle("active",b.dataset.slot===slot));}
+function reorderLayer(delta){const l=layers.find(x=>x.id===selectedLayer);if(!l)return;const sorted=layers.slice().sort((a,b)=>(a.order||0)-(b.order||0)),i=sorted.findIndex(x=>x.id===l.id),next=Math.max(0,Math.min(sorted.length-1,i+delta));if(i===next)return;sorted.splice(i,1);sorted.splice(next,0,l);sorted.forEach((x,index)=>x.order=index);render();}
+$("demoBtn").addEventListener("click",loadDemo);$("loadHairCatalogBtn").addEventListener("click",async()=>{try{await loadCandidateHair(false);render();say("Opciones de peinado cargadas. Seleccioná una para activarla, ajustarla y guardarla como variante.","ok");}catch(e){say(e.message,"error");}});
+$("importPieceBtn").addEventListener("click",()=>$("pieceFile").click());$("pieceFile").addEventListener("change",async e=>{try{await importPiece(e.target.files[0]);}catch(err){say(err.message,"error");}finally{e.target.value="";}});
+$("saveProjectBtn").addEventListener("click",saveProject);$("exportBtn").addEventListener("click",exportPng);$("importProjectBtn").addEventListener("click",()=>$("projectFile").click());$("projectFile").addEventListener("change",async e=>{try{await openProject(e.target.files[0]);}catch(err){say("No se pudo abrir el JSON: "+err.message,"error");}finally{e.target.value="";}});
+$("newStyleBtn").addEventListener("click",()=>saveNewStyle(null));$("updateStyleBtn").addEventListener("click",loadStyleFromCurrent);$("duplicateStyleBtn").addEventListener("click",duplicateStyle);$("deleteStyleBtn").addEventListener("click",deleteStyle);$("clearBtn").addEventListener("click",()=>{if(!confirm("¿Vaciar la composición actual? Las imágenes originales no se borrarán."))return;layers=[];styles=[];activeStyle=null;selectedLayer=null;render();setStatus("Composición vacía.");});
+$("raiseBtn").addEventListener("click",()=>reorderLayer(1));$("lowerBtn").addEventListener("click",()=>reorderLayer(-1));$("checkerBtn").addEventListener("click",()=>{checker=!checker;$("stage").style.backgroundColor=checker?"#2a2f3a":"#e8e4e5";$("stage").style.backgroundImage=checker?"linear-gradient(45deg,#343b48 25%,transparent 25%),linear-gradient(-45deg,#343b48 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#343b48 75%),linear-gradient(-45deg,transparent 75%,#343b48 75%)":"none";});
+document.querySelectorAll("[data-slot]").forEach(b=>b.addEventListener("click",()=>setSlot(b.dataset.slot)));
+$("canvas").addEventListener("pointerdown",e=>{const l=layers.find(x=>x.id===selectedLayer);if(!l)return;const rect=canvas.getBoundingClientRect();drag={id:l.id,x:e.clientX,y:e.clientY,layerX:l.x||0,layerY:l.y||0,scaleX:W/rect.width,scaleY:H/rect.height};canvas.setPointerCapture(e.pointerId);});
+$("canvas").addEventListener("pointermove",e=>{if(!drag)return;const l=layers.find(x=>x.id===drag.id);if(!l)return;l.x=drag.layerX+(e.clientX-drag.x)*drag.scaleX;l.y=drag.layerY+(e.clientY-drag.y)*drag.scaleY;drawCanvasOnly();});
+$("canvas").addEventListener("pointerup",()=>{if(drag){drag=null;render();}});$("canvas").addEventListener("pointercancel",()=>{drag=null;});
+$("characterName").addEventListener("change",()=>setStatus("Identidad actualizada. El nombre se conserva al exportar el proyecto."));
+window.HairWorkbenchAPI={
+ getLayers:()=>layers,render:render,say:say,setStatus:setStatus,setSlot:setSlot,
+ setActiveRecipe:recipe=>{activeRecipe=recipe;},
+ setStyleName:name=>{$("styleName").value=name;},
+ getCatalogHairCount:()=>((catalog&&catalog.candidate_layers)||[]).filter(x=>x.category==="hair").length,
+ renderHooks:[]
+};
+(async()=>{try{await loadCatalog();}catch(e){}render();})();
+})();
+</script>
+<script src="./hairstyle-library.js"></script>
+</body>
+</html>
