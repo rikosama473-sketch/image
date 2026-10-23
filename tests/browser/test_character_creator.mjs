@@ -123,6 +123,39 @@ try {
   const pngHeader = await readFile(pngPath);
   assert.deepEqual([...pngHeader.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
 
+  // Handoff into the manual editor must preserve the full image and independent layers.
+  const manualPage = await context.newPage();
+  manualPage.on("pageerror", (error) => pageErrors.push("manual editor: " + error.message));
+  await manualPage.goto(baseUrl + "/tools/manual-character-editor/index.html", { waitUntil: "domcontentloaded" });
+  await manualPage.locator("#projectFile").setInputFiles(projectPath);
+  await manualPage.waitForFunction(() => /Proyecto del Constructor importado/.test(document.querySelector("#status")?.textContent || ""));
+  await manualPage.waitForFunction(() => document.querySelectorAll("#layers .layer-item").length >= 3);
+  const importedLayerNames = await manualPage.locator("#layers .layer-name").allTextContents();
+  assert.ok(importedLayerNames.some((name) => /Prueba completa/.test(name)), "The original independent layer should survive constructor handoff");
+  assert.ok(importedLayerNames.some((name) => /Ilustración base/.test(name)), "The base illustration should remain explicitly identified");
+
+  // The manual editor also needs to save, reopen and export its own project.
+  const manualSavePromise = manualPage.waitForEvent("download");
+  await manualPage.locator("#saveProjectBtn").click();
+  const manualProjectDownload = await manualSavePromise;
+  const manualProjectPath = await manualProjectDownload.path();
+  assert.ok(manualProjectPath, "The manual project JSON should be downloadable");
+  const manualProject = JSON.parse(await readFile(manualProjectPath, "utf8"));
+  assert.equal(manualProject.app, "IMAGE Manual Character Editor");
+  assert.ok(manualProject.layers.length >= 3);
+  await manualPage.locator("#projectFile").setInputFiles(manualProjectPath);
+  await manualPage.waitForFunction(() => /Proyecto .* recuperaron|Proyecto abierto|Proyecto cargado|proyecto .*restaur/i.test(document.querySelector("#status")?.textContent || ""));
+  assert.ok(await manualPage.locator("#layers .layer-item").count() >= 3, "Manual editor project reopen must restore editable layers");
+  const compositePromise = manualPage.waitForEvent("download");
+  await manualPage.locator("#exportCompositeBtn").click();
+  const compositeDownload = await compositePromise;
+  const compositePath = await compositeDownload.path();
+  assert.ok(compositePath, "The manual editor composite should export a PNG");
+  const compositeStat = await stat(compositePath);
+  assert.ok(compositeStat.size > 1000);
+  const compositeHeader = await readFile(compositePath);
+  assert.deepEqual([...compositeHeader.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+
   // The Internet toggle is a functional state switch, not only color decoration.
   const internetToggle = page.locator("#internetModeToggle");
   await page.waitForFunction(() => document.querySelector("#internetModeToggle")?.dataset.state === "on");
