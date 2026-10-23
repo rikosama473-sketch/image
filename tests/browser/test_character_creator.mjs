@@ -197,6 +197,21 @@ try {
   await page.waitForFunction(() => document.querySelector("#internetModeToggle")?.dataset.state === "off");
   assert.equal(await internetToggle.getAttribute("aria-pressed"), "false");
 
+  // The switch must actually prevent remote navigation, not simply recolor links.
+  await page.locator('#nav [data-cat="anatomy"]').click();
+  const remoteLink = page.locator('#content a[href^="https://github.com"]').first();
+  await remoteLink.waitFor();
+  const constructorUrl = page.url();
+  assert.equal(await remoteLink.getAttribute("aria-disabled"), "true");
+  await remoteLink.click();
+  await page.waitForFunction(() => /Modo Internet está apagado/.test(document.querySelector("#toast")?.textContent || ""));
+  assert.equal(page.url(), constructorUrl, "A blocked Internet link must not navigate away");
+  await page.evaluate(() => {
+    Object.defineProperty(navigator, "onLine", { configurable: true, get: () => false });
+    window.dispatchEvent(new Event("offline"));
+  });
+  await page.waitForFunction(() => document.querySelector("#internetModeToggle")?.dataset.state === "unavailable");
+
   // The local generation tool must guide model discovery and preflight without starting inference.
   const generatorUrl = "http://127.0.0.1:" + generatorPort;
   await waitForGeneratorHttp(generatorUrl + "/api/models");
