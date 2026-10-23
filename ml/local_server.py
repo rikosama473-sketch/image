@@ -81,6 +81,114 @@ def _list_outputs(limit: int = 30) -> list[dict[str, Any]]:
     return results
 
 
+def _model_search_roots() -> list[tuple[Path, str]]:
+    """Return bounded, explicit locations where local Diffusers pipelines may live."""
+    roots: list[tuple[Path, str]] = [
+        (ROOT / "models", "project"),
+        (ROOT / "outputs" / "models", "project"),
+    ]
+    cache_override = os.environ.get("HUGGINGFACE_HUB_CACHE", "").strip()
+    if cache_override:
+        roots.append((Path(cache_override).expanduser(), "huggingface-cache"))
+    else:
+        hf_home = Path(os.environ.get("HF_HOME", str(Path.home() / ".cache" / "huggingface"))).expanduser()
+        roots.append((hf_home / "hub", "huggingface-cache"))
+        # Keep the conventional cache as fallback if HF_HOME points elsewhere.
+        roots.append((Path.home() / ".cache" / "huggingface" / "hub", "huggingface-cache"))
+
+    unique: list[tuple[Path, str]] = []
+    seen: set[str] = set()
+    for root, source in roots:
+        try:
+            resolved = root.resolve()
+        except OSError:
+            continue
+        key = str(resolved).casefold()
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append((resolved, source))
+    return unique
+
+
+def _scan_local_models(max_directories: int = 12000, max_models: int = 100) -> dict[str, Any]:
+    """Find local Diffusers pipeline folders without loading weights or contacting a hub."""
+    models: list[dict[str, str]] = []
+    seen_paths: set[str] = set()
+    scanned = 0
+    truncated = False
+    skipped_roots: list[str] = []
+
+    for root, source in _model_search_roots():
+        if not root.is_dir():
+            continue
+        if not os.access(root, os.R_OK):
+            skipped_roots.append(str(root))
+            continue
+        for current, dirnames, filenames in os.walk(root, followlinks=False):
+            scanned += 1
+            if scanned > max_directories or len(models) >= max_models:
+                truncated = True
+                break
+            # Do not follow symlinks or dive into common cache/metadata directories.
+            dirnames[:] = sorted(
+                name for name in dirnames
+                if name not in {".git", "node_modules", "__pycache__"}
+                and not (Path(current) / name).is_symlink()
+            )
+            if "model_index.json" not in filenames:
+                continue
+            model_dir = Path(current)
+            try:
+                resolved = model_dir.resolve()
+                marker = (resolved / "model_index.json").read_text(encoding="utf-8")
+                config = json.loads(marker)
+            except (OSError, UnicodeError, json.JSONDecodeError):
+                continue
+            if not isinstance(config, dict) or not isinstance(config.get("_class_name"), str):
+                continue
+            class_name = config["_class_name"].strip()
+            if not class_name:
+                continue
+            canonical = str(resolved).casefold()
+            if canonical in seen_paths:
+                continue
+            seen_paths.add(canonical)
+
+            label = str(resolved)
+            model_source = source
+            if source == "project":
+                try:
+                    label = resolved.relative_to(ROOT.resolve()).as_posix()
+                except ValueError:
+                    label = str(resolved)
+            else:
+                match = re.search(r"models--([^/\\]+)[/\\]snapshots[/\\]([^/\\]+)", str(resolved))
+                if match:
+                    repository_id = match.group(1).replace("--", "/")
+                    label = repository_id + " · caché " + match.group(2)[:8]
+                model_source = "huggingface-cache"
+            models.append({
+                "path": str(resolved),
+                "label": label,
+                "source": model_source,
+                "pipeline_class": class_name[:120],
+            })
+        if truncated:
+            break
+
+    models.sort(key=lambda item: (item["source"] != "project", item["label"].casefold()))
+    return {
+        "models": models,
+        "count": len(models),
+        "scanned_directories": min(scanned, max_directories),
+        "truncated": truncated,
+        "skipped_roots": skipped_roots,
+        "downloads_performed": False,
+        "weights_loaded": False,
+    }
+
+
 def _module_available(name: str) -> bool:
     """Check dependencies without importing a large machine-learning runtime."""
     try:
@@ -337,6 +445,8 @@ class CreatorHandler(BaseHTTPRequestHandler):
             return self._serve_file(UI_ROOT / "index.html")
         if parsed.path in {"/app.js", "/app.css"}:
             return self._serve_file(UI_ROOT / parsed.path.lstrip("/"))
+        if parsed.path == "/api/models":
+            return _json_response(self, 200, _scan_local_models())
         if parsed.path == "/api/diagnostics":
             query = parse_qs(parsed.query)
             model = query.get("model", [""])[0][:2048]
