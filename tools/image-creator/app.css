@@ -116,3 +116,20 @@ footer { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; justify
   .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   footer { align-items: flex-start; flex-direction: column; }
 }
+
+/* Safe preflight diagnostics for the local diffusion engine. */
+#diagnose-button{width:100%;min-height:42px;margin-top:9px;border:1px solid #46546b;border-radius:10px;padding:9px 14px;background:#171e2a;color:#dce6f5;font-size:12px;font-weight:700}
+#diagnose-button:hover{border-color:#8aabff;background:#1d293b}
+#diagnose-button:disabled{opacity:.6;cursor:wait}
+.diagnostics-panel{margin-top:11px;padding:13px;border:1px solid #2a3444;border-radius:12px;background:#0b1018}
+.diagnostics-heading{display:flex;gap:10px;align-items:center;justify-content:space-between;font-size:11px}
+.diagnostics-heading span{color:#b7c9ec;font-size:10px;text-align:right}
+.diagnostics-list{display:grid;gap:7px;margin-top:11px}
+.diagnostic-row{display:grid;grid-template-columns:96px minmax(0,1fr);gap:9px;padding:8px;border:1px solid #273448;border-radius:8px;background:#0f151f}
+.diagnostic-row strong{font-size:10px;color:#dce5f4}
+.diagnostic-row span{font-size:10px;line-height:1.5;color:#aebbd0;overflow-wrap:anywhere}
+.diagnostic-row[data-kind=ok]{border-color:#285a49}.diagnostic-row[data-kind=ok] strong{color:#a5e7c2}
+.diagnostic-row[data-kind=warn]{border-color:#6b5228}.diagnostic-row[data-kind=warn] strong{color:#f5d18a}
+.diagnostic-row[data-kind=error]{border-color:#653f46}.diagnostic-row[data-kind=error] strong{color:#ffb0b0}
+.diagnostics-note{margin:10px 0 0;color:#77869c;font-size:9px;line-height:1.5}
+@media(max-width:520px){.diagnostic-row{grid-template-columns:1fr;gap:4px}}
