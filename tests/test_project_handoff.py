@@ -175,6 +175,12 @@ class ImageProjectHandoffTests(unittest.TestCase):
             with self.subTest(category=category):
                 self.assertIn('value="'+category+'"', self.avatar)
 
+    def test_saved_piece_semantic_category_and_source_provenance_round_trip(self) -> None:
+        self.assertIn('sourceCategory:part.sourceCategory||"anatomy"', self.avatar)
+        self.assertIn('const categoryLabels={hair:"Cabello",eyes:"Ojos / cejas",face:"Rostro",body:"Cuerpo",clothes:"Ropa",accessories:"Accesorios"}', self.avatar)
+        self.assertIn('sourceCategory,character:state.name||"Personaje"', self.avatar)
+        self.assertIn('layer.sourceCategory=sourceCategory;layer.category=category;', self.avatar)
+
     def test_internet_mode_uses_colored_states_and_blocks_unavailable_online_features(self) -> None:
         for feature in (
             'id="internetModeToggle"',
