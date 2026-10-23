@@ -110,3 +110,5 @@ Abrir el taller en navegador con el lanzador local y probar el filtro «Uso como
 - Se amplió la prueba del servidor local para recorrer por HTTP real la interfaz, sus archivos JS/CSS y `/api/diagnostics`, además de verificar la respuesta a un identificador de trabajo inválido. Se añadió comprobación de sintaxis del JavaScript independiente al workflow; estas pruebas deben terminar en verde antes de considerar cerrada la tanda.
 
 - Se terminó el flujo de clasificación de piezas: la biblioteca local muestra categorías en español y conserva tanto la categoría reutilizable elegida como la categoría de origen de la extracción. Al volver a añadir una pieza, su procedencia categórica viaja con la capa y se conserva en el JSON del Constructor.
+
+- El generador local ahora permite explorar carpetas de modelos Diffusers existentes mediante `/api/models` y el botón **Buscar modelos locales**. La búsqueda se limita a carpetas del proyecto y cachés conocidas, valida `model_index.json`, no carga pesos y no descarga nada. El usuario elige cuándo usar una ruta detectada y puede volver a ejecutar el diagnóstico.
