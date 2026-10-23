@@ -92,6 +92,97 @@ def resolve_lora_source(source: str, weight_name: str | None) -> tuple[str, str 
     return source, weight_name
 
 
+def run_generation_batch(
+    args: argparse.Namespace,
+    pipe: Any,
+    torch: Any,
+    device: str,
+    run_dir: Path,
+    diffusers_version: str = "unknown",
+    torch_version: str = "unknown",
+) -> dict[str, Any]:
+    """Run requests sequentially and preserve an auditable result manifest."""
+    run_dir.mkdir(parents=True, exist_ok=False)
+    saved: list[dict[str, Any]] = []
+    failures: list[dict[str, Any]] = []
+    for index in range(args.count):
+        image_seed = args.seed + index
+        try:
+            generator_device = "cuda" if device == "cuda" else "cpu"
+            generator = torch.Generator(device=generator_device).manual_seed(image_seed)
+            call_args: dict[str, Any] = {
+                "prompt": args.prompt, "negative_prompt": args.negative_prompt or None,
+                "width": args.width, "height": args.height,
+                "num_inference_steps": args.steps, "guidance_scale": args.guidance_scale,
+                "generator": generator,
+            }
+            if args.lora:
+                call_args["cross_attention_kwargs"] = {"scale": args.lora_scale}
+            result = pipe(**call_args)
+            if not getattr(result, "images", None):
+                raise RuntimeError("El pipeline no devolvió ninguna imagen.")
+            image = result.images[0]
+            stem = f"image-{index + 1:03d}-seed-{image_seed}"
+            image_path = run_dir / f"{stem}.png"
+            image.save(image_path)
+            metadata = {
+                "model": args.model, "lora": args.lora,
+                "lora_weight_name": args.lora_weight_name,
+                "lora_scale": args.lora_scale if args.lora else None,
+                "prompt": args.prompt, "negative_prompt": args.negative_prompt,
+                "seed": image_seed, "width": args.width, "height": args.height,
+                "steps": args.steps, "guidance_scale": args.guidance_scale,
+                "scheduler": type(pipe.scheduler).__name__ if getattr(pipe, "scheduler", None) else None,
+                "device": device, "precision": args.precision,
+                "diffusers_version": diffusers_version, "torch_version": torch_version,
+                "python_version": platform.python_version(), "safetensors_only": True,
+                "allow_download": args.allow_download, "image_path": image_path.name,
+            }
+            (run_dir / f"{stem}.json").write_text(json.dumps(metadata, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            saved.append({"seed": image_seed, "image_path": image_path.name})
+            print(f"Saved {image_path}")
+        except Exception as exc:
+            failure = {"seed": image_seed, "error": f"{type(exc).__name__}: {exc}"}
+            failures.append(failure)
+            print(f"Generation failed for seed {image_seed}: {failure['error']}", file=sys.stderr)
+
+    if len(saved) == args.count and not failures:
+        status, exit_code = "completed", 0
+    elif saved:
+        status, exit_code = "partial", 3
+    else:
+        status, exit_code = "failed", 1
+    manifest = {
+        "schema_version": 1, "run_status": status,
+        "requested_count": args.count, "generated_count": len(saved), "failed_count": len(failures),
+        "requested_seed": args.seed, "generated": saved, "failures": failures,
+        "parameters": {
+            "model": args.model, "lora": args.lora or None,
+            "lora_weight_name": args.lora_weight_name or None,
+            "lora_scale": args.lora_scale if args.lora else None,
+            "prompt": args.prompt, "negative_prompt": args.negative_prompt,
+            "width": args.width, "height": args.height, "steps": args.steps,
+            "guidance_scale": args.guidance_scale, "device": device,
+            "precision": args.precision, "low_memory": args.low_memory,
+            "cpu_offload": args.cpu_offload, "allow_download": args.allow_download,
+        },
+        "runtime": {
+            "python_version": platform.python_version(), "torch_version": torch_version,
+            "diffusers_version": diffusers_version,
+        },
+    }
+    try:
+        (run_dir / "run-manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    except OSError as exc:
+        print(f"Could not write run manifest: {type(exc).__name__}: {exc}", file=sys.stderr)
+        if status == "completed":
+            exit_code = 3
+            manifest["run_status"] = "partial"
+            manifest["manifest_write_error"] = f"{type(exc).__name__}: {exc}"
+    print(f"Run status: {manifest['run_status']} ({len(saved)}/{args.count} images)")
+    return {"exit_code": exit_code, "manifest": manifest, "run_dir": str(run_dir)}
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -164,64 +255,14 @@ def main(argv: list[str] | None = None) -> int:
         output_root = Path.cwd() / output_root
     run_stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     run_dir = output_root / f"run-{run_stamp}-seed-{args.seed}"
-    run_dir.mkdir(parents=True, exist_ok=False)
-
-    for index in range(args.count):
-        image_seed = args.seed + index
-        generator_device = "cuda" if device == "cuda" else "cpu"
-        generator = torch.Generator(device=generator_device).manual_seed(image_seed)
-        call_args: dict[str, Any] = {
-            "prompt": args.prompt,
-            "negative_prompt": args.negative_prompt or None,
-            "width": args.width,
-            "height": args.height,
-            "num_inference_steps": args.steps,
-            "guidance_scale": args.guidance_scale,
-            "generator": generator,
-        }
-        if args.lora:
-            call_args["cross_attention_kwargs"] = {"scale": args.lora_scale}
-        try:
-            result = pipe(**call_args)
-            image = result.images[0]
-        except Exception as exc:
-            print(f"Generation failed for seed {image_seed}: {type(exc).__name__}: {exc}", file=sys.stderr)
-            continue
-
-        stem = f"image-{index + 1:03d}-seed-{image_seed}"
-        image_path = run_dir / f"{stem}.png"
-        image.save(image_path)
-        metadata = {
-            "model": args.model,
-            "lora": args.lora,
-            "lora_weight_name": args.lora_weight_name,
-            "lora_scale": args.lora_scale if args.lora else None,
-            "prompt": args.prompt,
-            "negative_prompt": args.negative_prompt,
-            "seed": image_seed,
-            "width": args.width,
-            "height": args.height,
-            "steps": args.steps,
-            "guidance_scale": args.guidance_scale,
-            "scheduler": type(pipe.scheduler).__name__ if getattr(pipe, "scheduler", None) else None,
-            "device": device,
-            "precision": args.precision,
-            "diffusers_version": getattr(diffusers, "__version__", "unknown"),
-            "torch_version": getattr(torch, "__version__", "unknown"),
-            "python_version": platform.python_version(),
-            "safetensors_only": True,
-            "allow_download": args.allow_download,
-            "image_path": image_path.name,
-        }
-        (run_dir / f"{stem}.json").write_text(
-            json.dumps(metadata, ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
-        )
-        print(f"Saved {image_path}")
-
+    batch_result = run_generation_batch(
+        args, pipe, torch, device, run_dir,
+        diffusers_version=getattr(diffusers, "__version__", "unknown"),
+        torch_version=getattr(torch, "__version__", "unknown"),
+    )
     print(f"Run directory: {run_dir}")
     print("CPU generation can be very slow. Memory and output quality depend on the selected base model and hardware.")
-    return 0
+    return int(batch_result["exit_code"])
 
 
 if __name__ == "__main__":
