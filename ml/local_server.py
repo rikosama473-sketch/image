@@ -161,7 +161,8 @@ def _scan_local_models(max_directories: int = 12000, max_models: int = 100) -> d
                 try:
                     label = resolved.relative_to(ROOT.resolve()).as_posix()
                 except ValueError:
-                    label = str(resolved)
+                    # Temporary/external search roots still get a concise human label.
+                    label = resolved.name
             else:
                 match = re.search(r"models--([^/\\]+)[/\\]snapshots[/\\]([^/\\]+)", str(resolved))
                 if match:
