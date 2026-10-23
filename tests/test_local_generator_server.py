@@ -186,14 +186,6 @@ class LocalGeneratorPayloadTests(unittest.TestCase):
         self.assertEqual(report["count"], 0)
         self.assertFalse(report["truncated"])
 
-    def test_model_inventory_endpoint_is_read_only_and_returns_local_paths(self) -> None:
-        status, body, _ = self.request("/api/models")
-        report = json.loads(body.decode("utf-8"))
-        self.assertEqual(status, 200)
-        self.assertIn("models", report)
-        self.assertFalse(report["downloads_performed"])
-        self.assertFalse(report["weights_loaded"])
-
     def test_model_picker_interface_calls_read_only_inventory(self) -> None:
         index = (PROJECT_ROOT / "tools/image-creator/index.html").read_text(encoding="utf-8")
         app = (PROJECT_ROOT / "tools/image-creator/app.js").read_text(encoding="utf-8")
@@ -241,6 +233,14 @@ class LocalGeneratorHttpTests(unittest.TestCase):
         status, body, _ = self.request("/app.css")
         self.assertEqual(status, 200)
         self.assertIn(b"diagnostics-panel", body)
+
+    def test_model_inventory_endpoint_is_read_only_and_returns_local_paths(self) -> None:
+        status, body, _ = self.request("/api/models")
+        report = json.loads(body.decode("utf-8"))
+        self.assertEqual(status, 200)
+        self.assertIn("models", report)
+        self.assertFalse(report["downloads_performed"])
+        self.assertFalse(report["weights_loaded"])
 
     def test_diagnostic_endpoint_reports_that_it_does_not_generate_or_download(self) -> None:
         query = urlencode({"model": "org/example-model", "device": "cpu", "allow_download": "false"})
