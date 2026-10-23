@@ -1,6 +1,8 @@
 """Regression tests for IMAGE's local diffusion job server."""
 from __future__ import annotations
 
+import importlib.util
+import json
 import subprocess
 import sys
 import tempfile
@@ -112,6 +114,40 @@ class LocalGeneratorPayloadTests(unittest.TestCase):
         self.assertTrue(parsed["low_memory"])
         self.assertEqual(parsed["device"], "auto")
         self.assertEqual(parsed["count"], 1)
+
+
+    def test_diagnostics_recognizes_a_diffusers_folder_without_loading_it(self) -> None:
+        model_dir = Path(self.tempdir.name) / "fixture-model"
+        model_dir.mkdir()
+        (model_dir / "model_index.json").write_text(json.dumps({"_class_name": "TestPipeline"}), encoding="utf-8")
+        with mock.patch.object(server.importlib.util, "find_spec", side_effect=lambda name: object() if name in {"torch", "diffusers", "safetensors"} else None):
+            report = server._diagnose_environment(str(model_dir), device="cpu")
+        self.assertTrue(report["dependencies_ready"])
+        self.assertEqual(report["model"]["state"], "local_directory_ready")
+        self.assertTrue(report["model"]["ready_to_try"])
+        self.assertFalse(report["inference_started"])
+        self.assertTrue(report["downloads_default_off"])
+
+    def test_unknown_cached_model_is_not_reported_as_ready_without_downloads(self) -> None:
+        report = server._diagnose_environment("org/example-model", allow_download=False)
+        self.assertEqual(report["model"]["state"], "hub_identifier_or_cached_model")
+        self.assertFalse(report["model"]["ready_to_try"])
+        self.assertFalse(report["inference_started"])
+        self.assertIn("no se descargará nada", report["model"]["message"])
+
+    def test_downloading_weights_requires_the_explicit_download_flag(self) -> None:
+        report = server._diagnose_environment("org/example-model", allow_download=True)
+        self.assertEqual(report["model"]["state"], "hub_identifier_download_enabled")
+        self.assertTrue(report["model"]["ready_to_try"])
+        self.assertTrue(report["allow_download"])
+
+    def test_preflight_interface_is_connected_to_local_endpoint(self) -> None:
+        index = (PROJECT_ROOT / "tools/image-creator/index.html").read_text(encoding="utf-8")
+        app = (PROJECT_ROOT / "tools/image-creator/app.js").read_text(encoding="utf-8")
+        self.assertIn('id="diagnose-button"', index)
+        self.assertIn('id="diagnostics-panel"', index)
+        self.assertIn('"/api/diagnostics?"', app)
+        self.assertIn("async function runDiagnostics()", app)
 
 
 if __name__ == "__main__":
