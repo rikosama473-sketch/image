@@ -158,8 +158,12 @@ function syncInternetUI(){
  const button=$("internetModeToggle"),label=$("internetModeLabel"),help=$("internetModeStatus");
  const unavailable=!navigator.onLine||(internetModeEnabled&&internetStatus!=="online");const visualState=unavailable?"unavailable":internetModeEnabled?"on":"off";
  if(button){button.dataset.state=visualState;button.setAttribute("aria-pressed",String(internetModeEnabled));button.title=visualState==="on"?"Modo Internet activo: se habilitan las funciones externas.":"Modo Internet desactivado o no disponible; las funciones locales siguen habilitadas.";}
- if(label)label.textContent=visualState==="on"?"ACTIVO · CONECTADO":visualState==="off"?"DESACTIVADO":!navigator.onLine?"SIN CONEXIÓN":internetStatus==="checking"?"COMPROBANDO…":"INTERNET NO VERIFICADO";
- if(help)help.textContent=visualState==="on"?"Servicios externos habilitados. El editor, las capas y la exportación siguen siendo locales.":visualState==="off"?"Modo Internet apagado por vos. Los enlaces y acciones online quedan inactivos; el trabajo local continúa.":!navigator.onLine?"Sin conexión de red: las funciones online se muestran en gris. El editor y la biblioteca local siguen disponibles.":"No se pudo verificar Internet. Las funciones online quedan en gris hasta recuperar la conexión.";
+ const labelText=visualState==="on"?"ACTIVO · CONECTADO":visualState==="off"?"DESACTIVADO":!navigator.onLine?"SIN CONEXIÓN":internetStatus==="checking"?"COMPROBANDO…":"INTERNET NO VERIFICADO";
+ const helpText=visualState==="on"?"Servicios externos habilitados. El editor, las capas y la exportación siguen siendo locales.":visualState==="off"?"Modo Internet apagado por vos. Los enlaces y acciones online quedan inactivos; el trabajo local continúa.":!navigator.onLine?"Sin conexión de red: las funciones online se muestran en gris. El editor y la biblioteca local siguen disponibles.":"No se pudo verificar Internet. Las funciones online quedan en gris hasta recuperar la conexión.";
+ // Updating textContent unconditionally replaces child text nodes. Since a MutationObserver
+ // watches new controls, that would trigger itself forever and freeze initial page load.
+ if(label&&label.textContent!==labelText)label.textContent=labelText;
+ if(help&&help.textContent!==helpText)help.textContent=helpText;
  document.querySelectorAll("a[href],button[data-requires-internet]").forEach(control=>{
   if(control.tagName==="A"&&isExternalHttpLink(control))control.dataset.requiresInternet="true";
   if(control.dataset.requiresInternet!=="true")return;if(!("internetOriginalTitle" in control.dataset))control.dataset.internetOriginalTitle=control.getAttribute("title")||"";const locked=!internetModeUsable();control.classList.toggle("internet-blocked",locked);control.setAttribute("aria-disabled",String(locked));
