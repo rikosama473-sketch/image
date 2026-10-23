@@ -41,10 +41,17 @@
           <form id="creator-form">
             <label class="field">
               <span>Modelo base <b>*</b></span>
-              <input id="model" name="model" required autocomplete="off" placeholder="models/tu-modelo-diffusers">
+              <input id="model" name="model" list="local-model-options" required autocomplete="off" placeholder="models/tu-modelo-diffusers">
+              <datalist id="local-model-options"></datalist>
               <small>Carpeta local del modelo compatible. No hay un modelo elegido automáticamente.</small>
             </label>
 
+            <div class="model-scan-row">
+              <button id="scan-models-button" type="button">Buscar modelos locales</button>
+              <select id="local-model-picker" aria-label="Modelos locales detectados" disabled><option value="">Todavía no se buscó</option></select>
+              <button id="use-model-button" type="button" disabled>Usar modelo</button>
+            </div>
+            <p id="model-scan-status" class="model-scan-status" role="status" aria-live="polite">La búsqueda solo inspecciona carpetas locales conocidas; no consulta ni descarga modelos de Internet.</p>
             <label class="field">
               <span>LoRA de estilo <i>Opcional</i></span>
               <input id="lora" name="lora" autocomplete="off" placeholder="models/mi-estilo.safetensors">
