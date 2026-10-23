@@ -194,6 +194,62 @@
     }
   });
 
+
+  const diagnoseButton = $("diagnose-button");
+  const diagnosticsPanel = $("diagnostics-panel");
+  const diagnosticsList = $("diagnostics-list");
+  const diagnosticsSummary = $("diagnostics-summary");
+
+  function addDiagnosticRow(label, detail, kind) {
+    const row = document.createElement("div");
+    row.className = "diagnostic-row";
+    row.dataset.kind = kind;
+    const title = document.createElement("strong");
+    title.textContent = label;
+    const description = document.createElement("span");
+    description.textContent = detail;
+    row.append(title, description);
+    diagnosticsList.append(row);
+  }
+
+  async function runDiagnostics() {
+    diagnoseButton.disabled = true;
+    diagnoseButton.textContent = "Comprobando…";
+    diagnosticsPanel.hidden = false;
+    diagnosticsList.replaceChildren();
+    diagnosticsSummary.textContent = "Analizando sin generar ni descargar";
+    try {
+      const query = new URLSearchParams({
+        model: value("model").trim(),
+        lora: value("lora").trim(),
+        device: value("device"),
+        allow_download: String(checked("allow-download"))
+      });
+      const report = await api("/api/diagnostics?" + query.toString());
+      addDiagnosticRow("Python", report.python_version + " · " + report.platform, "ok");
+      addDiagnosticRow("Motor", report.engine_exists ? "Script de inferencia encontrado." : "No se encontró ml/generate_diffusion.py.", report.engine_exists ? "ok" : "error");
+      for (const [name, present] of Object.entries(report.dependencies || {})) {
+        addDiagnosticRow(name, present ? "Paquete detectable en este entorno." : "Falta instalar este paquete para usar difusión local.", present ? "ok" : "error");
+      }
+      addDiagnosticRow("Modelo", report.model.message, report.model.ready_to_try ? "ok" : "warn");
+      const loraKind = ["not_configured", "local_file", "local_directory"].includes(report.lora.state) ? "ok" : "warn";
+      addDiagnosticRow("LoRA", report.lora.message, loraKind);
+      addDiagnosticRow("Dispositivo", (report.device_requested || "auto") + " · " + report.device_note, "warn");
+      const ready = report.dependencies_ready && report.model.ready_to_try;
+      diagnosticsSummary.textContent = ready ? "REQUISITOS BÁSICOS DETECTADOS" : "REVISAR ANTES DE GENERAR";
+      setStatus(ready ? "success" : "idle", ready ? "Revisión preliminar aprobada" : "Todavía faltan comprobaciones", ready ? "Los requisitos básicos parecen estar presentes. La carga e inferencia reales aún pueden revelar incompatibilidades." : "Corregí los puntos señalados. Esta revisión no descargó modelos ni lanzó una generación.");
+    } catch (error) {
+      diagnosticsSummary.textContent = "No se pudo completar";
+      addDiagnosticRow("Diagnóstico", error.message, "error");
+      setStatus("error", "No se pudo comprobar el motor", error.message);
+    } finally {
+      diagnoseButton.disabled = false;
+      diagnoseButton.textContent = "Volver a comprobar requisitos";
+    }
+  }
+
+  diagnoseButton.addEventListener("click", runDiagnostics);
+
   refreshButton.addEventListener("click", refreshGallery);
   $("cpu-offload").addEventListener("change", (event) => {
     if (event.target.checked) {
