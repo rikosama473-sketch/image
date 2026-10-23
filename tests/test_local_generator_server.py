@@ -4,6 +4,10 @@ from __future__ import annotations
 import importlib.util
 import json
 import subprocess
+import threading
+from http.client import HTTPConnection
+from http.server import ThreadingHTTPServer
+from urllib.parse import urlencode
 import sys
 import tempfile
 import unittest
@@ -149,6 +153,61 @@ class LocalGeneratorPayloadTests(unittest.TestCase):
         self.assertIn('id="diagnostics-panel"', index)
         self.assertIn('"/api/diagnostics?"', app)
         self.assertIn("async function runDiagnostics()", app)
+
+
+
+class LocalGeneratorHttpTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.httpd = ThreadingHTTPServer(("127.0.0.1", 0), server.CreatorHandler)
+        cls.port = cls.httpd.server_address[1]
+        cls.thread = threading.Thread(target=cls.httpd.serve_forever, daemon=True)
+        cls.thread.start()
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.httpd.shutdown()
+        cls.httpd.server_close()
+        cls.thread.join(timeout=2)
+
+    def request(self, path: str):
+        connection = HTTPConnection("127.0.0.1", self.port, timeout=5)
+        connection.request("GET", path)
+        response = connection.getresponse()
+        status = response.status
+        body = response.read()
+        headers = dict(response.getheaders())
+        connection.close()
+        return status, body, headers
+
+    def test_serves_local_creator_ui_and_diagnostic_assets(self) -> None:
+        status, body, headers = self.request("/")
+        self.assertEqual(status, 200)
+        self.assertIn(b"IMAGE", body)
+        self.assertIn("Content-Security-Policy", headers)
+
+        status, body, _ = self.request("/app.js")
+        self.assertEqual(status, 200)
+        self.assertIn(b"runDiagnostics", body)
+
+        status, body, _ = self.request("/app.css")
+        self.assertEqual(status, 200)
+        self.assertIn(b"diagnostics-panel", body)
+
+    def test_diagnostic_endpoint_reports_that_it_does_not_generate_or_download(self) -> None:
+        query = urlencode({"model": "org/example-model", "device": "cpu", "allow_download": "false"})
+        status, body, _ = self.request("/api/diagnostics?" + query)
+        report = json.loads(body.decode("utf-8"))
+        self.assertEqual(status, 200)
+        self.assertEqual(report["device_requested"], "cpu")
+        self.assertFalse(report["inference_started"])
+        self.assertFalse(report["allow_download"])
+        self.assertTrue(report["downloads_default_off"])
+
+    def test_invalid_job_id_is_rejected(self) -> None:
+        status, body, _ = self.request("/api/jobs/not-a-job-id")
+        self.assertEqual(status, 400)
+        self.assertIn("Identificador de trabajo no válido", json.loads(body.decode("utf-8"))["error"])
 
 
 if __name__ == "__main__":
