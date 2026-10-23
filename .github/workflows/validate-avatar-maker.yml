@@ -14,6 +14,7 @@ on:
       - "tests/test_project_handoff.py"
       - "tests/test_local_generator_server.py"
       - "tests/test_diffusion_engine_contract.py"
+      - "tests/browser/**"
       - "scripts/validate_manual_character_editor.py"
       - "scripts/validate_avatar_maker.py"
       - "README.md"
@@ -41,6 +42,7 @@ on:
       - "ml/generate_diffusion.py"
       - "tests/test_local_generator_server.py"
       - "tests/test_diffusion_engine_contract.py"
+      - "tests/browser/**"
       - "tests/test_studio_navigation.py"
       - "tests/test_project_handoff.py"
       - "scripts/validate_manual_character_editor.py"
@@ -75,6 +77,12 @@ jobs:
         run: python scripts/validate_avatar_maker.py
       - name: Validate local generator browser script syntax
         run: node --check tools/image-creator/app.js
+      - name: Install Playwright Chromium for real UI tests
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Run real Chromium end-to-end editor workflow
+        run: node tests/browser/test_character_creator.mjs
       - name: Validate manual hairstyle workbench without AI or external API
         run: python scripts/validate_hairstyle_workbench.py
       - name: Validate visual reference library and contact-sheet tooling
