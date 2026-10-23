@@ -156,6 +156,54 @@ class LocalGeneratorPayloadTests(unittest.TestCase):
 
 
 
+    def test_scan_local_models_only_returns_valid_diffusers_pipeline_folders(self) -> None:
+        with tempfile.TemporaryDirectory() as tempdir:
+            root = Path(tempdir)
+            valid = root / "models" / "sample-pipeline"
+            valid.mkdir(parents=True)
+            (valid / "model_index.json").write_text(json.dumps({"_class_name": "StableDiffusionPipeline"}), encoding="utf-8")
+            malformed = root / "models" / "bad-model"
+            malformed.mkdir()
+            (malformed / "model_index.json").write_text("{not-json", encoding="utf-8")
+            unsupported = root / "models" / "checkpoint-file"
+            unsupported.mkdir()
+            (unsupported / "model_index.json").write_text(json.dumps({"name": "not a pipeline"}), encoding="utf-8")
+            with mock.patch.object(server, "_model_search_roots", return_value=[(root / "models", "project")]):
+                report = server._scan_local_models()
+        self.assertEqual(report["count"], 1)
+        self.assertEqual(report["models"][0]["pipeline_class"], "StableDiffusionPipeline")
+        self.assertEqual(report["models"][0]["label"], "sample-pipeline")
+        self.assertTrue(Path(report["models"][0]["path"]).is_absolute())
+        self.assertFalse(report["downloads_performed"])
+        self.assertFalse(report["weights_loaded"])
+
+    def test_model_scanner_handles_missing_roots_without_throwing(self) -> None:
+        with tempfile.TemporaryDirectory() as tempdir:
+            missing_root = Path(tempdir) / "does-not-exist"
+            with mock.patch.object(server, "_model_search_roots", return_value=[(missing_root, "project")]):
+                report = server._scan_local_models()
+        self.assertEqual(report["models"], [])
+        self.assertEqual(report["count"], 0)
+        self.assertFalse(report["truncated"])
+
+    def test_model_inventory_endpoint_is_read_only_and_returns_local_paths(self) -> None:
+        status, body, _ = self.request("/api/models")
+        report = json.loads(body.decode("utf-8"))
+        self.assertEqual(status, 200)
+        self.assertIn("models", report)
+        self.assertFalse(report["downloads_performed"])
+        self.assertFalse(report["weights_loaded"])
+
+    def test_model_picker_interface_calls_read_only_inventory(self) -> None:
+        index = (PROJECT_ROOT / "tools/image-creator/index.html").read_text(encoding="utf-8")
+        app = (PROJECT_ROOT / "tools/image-creator/app.js").read_text(encoding="utf-8")
+        self.assertIn('id="scan-models-button"', index)
+        self.assertIn('id="local-model-picker"', index)
+        self.assertIn('api("/api/models")', app)
+        self.assertIn("async function scanLocalModels()", app)
+
+
+
 class LocalGeneratorHttpTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
