@@ -106,3 +106,5 @@ Abrir el taller en navegador con el lanzador local y probar el filtro «Uso como
 - La generación real mediante Diffusers continúa sin calificarse como validada para el hardware objetivo mientras no se prueben un modelo compatible y una inferencia real. No se presume que el motor genere imágenes sin un modelo suministrado.
 
 - Añadida comprobación preliminar desde la interfaz local: botón **Comprobar requisitos del motor**, endpoint `/api/diagnostics`, comprobación de paquetes Python sin importar el runtime de ML, verificación de `model_index.json`, estado de LoRA y aviso explícito de que la prueba no descarga pesos ni ejecuta inferencia. El botón no aprueba calidad o rendimiento; solo reduce errores de configuración evitables.
+
+- Se amplió la prueba del servidor local para recorrer por HTTP real la interfaz, sus archivos JS/CSS y `/api/diagnostics`, además de verificar la respuesta a un identificador de trabajo inválido. Se añadió comprobación de sintaxis del JavaScript independiente al workflow; estas pruebas deben terminar en verde antes de considerar cerrada la tanda.
