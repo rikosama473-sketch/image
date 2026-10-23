@@ -162,7 +162,7 @@ class ImageProjectHandoffTests(unittest.TestCase):
             with self.subTest(feature=feature):
                 self.assertIn(feature, self.avatar)
         self.assertIn("Las imágenes no se suben a GitHub ni a una nube", self.avatar)
-        self.assertIn("Pieza guardada en la biblioteca local de esta PC.", self.avatar)
+        self.assertIn('toast("Pieza guardada como "+({hair:"cabello",eyes:"ojos",face:"rostro",body:"cuerpo",clothes:"ropa",accessories:"accesorios"}[category])+" en la biblioteca local.")', self.avatar)
 
 
     def test_saved_anatomy_pieces_require_semantic_category_and_keep_source_category(self) -> None:
