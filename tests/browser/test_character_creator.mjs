@@ -52,7 +52,7 @@ try {
   const baseUrl = `http://127.0.0.1:${serverPort}`;
   const response = await waitForHttp(baseUrl + "/api/status");
   const status = await response.json();
-  assert.equal(status.service, "IMAGE local AI image editing bridge");
+  assert.equal(status.service, "IMAGE local AI edit bridge");
   assert.equal(status.api_key_configured, false, "E2E must run without a provider key");
 
   browser = await chromium.launch({ headless: true });
