@@ -137,19 +137,6 @@ try {
   }
   assert.equal(await page.locator("#layerBrightness").inputValue(), "1.2");
 
-  // The three provisional visual profiles must populate the editable character identity.
-  await page.locator("#aiIdentityPreset").selectOption("pibara");
-  await page.locator("#aiApplyIdentityPreset").click();
-  assert.match(await page.locator("#aiIdentityProfile").inputValue(), /ojos azules intensos/i);
-  await page.locator("#aiIdentityPreset").selectOption("chie");
-  await page.locator("#aiApplyIdentityPreset").click();
-  assert.match(await page.locator("#aiIdentityProfile").inputValue(), /ojos marrones o ámbar/i);
-  await page.locator("#aiIdentityPreset").selectOption("sunna");
-  await page.locator("#aiApplyIdentityPreset").click();
-  const sunnaProfile = await page.locator("#aiIdentityProfile").inputValue();
-  assert.match(sunnaProfile, /cabello blanco plateado/i);
-  assert.match(sunnaProfile, /no inventes un color de ojos/i);
-
   // The reusable identity profile is included in AI edits and survives JSON project round-trips.
   const stableIdentity = "Identidad de prueba: cabello verde oscuro, ojos dorados y pinza azul.";
   let capturedEditPrompt = "";
@@ -163,6 +150,19 @@ try {
     });
   });
   await page.locator('#nav [data-cat="ai"]').click();
+  // The three provisional visual profiles must populate the editable character identity.
+  await page.locator("#aiIdentityPreset").selectOption("pibara");
+  await page.locator("#aiApplyIdentityPreset").click();
+  assert.match(await page.locator("#aiIdentityProfile").inputValue(), /ojos azules intensos/i);
+  await page.locator("#aiIdentityPreset").selectOption("chie");
+  await page.locator("#aiApplyIdentityPreset").click();
+  assert.match(await page.locator("#aiIdentityProfile").inputValue(), /ojos marrones o ámbar/i);
+  await page.locator("#aiIdentityPreset").selectOption("sunna");
+  await page.locator("#aiApplyIdentityPreset").click();
+  const sunnaProfile = await page.locator("#aiIdentityProfile").inputValue();
+  assert.match(sunnaProfile, /cabello blanco plateado/i);
+  assert.match(sunnaProfile, /no inventes un color de ojos/i);
+
   const internetMode = await page.locator("#internetModeToggle").getAttribute("aria-pressed");
   if (internetMode !== "true") await page.locator("#internetModeToggle").click();
   await page.locator("#aiIdentityProfile").fill(stableIdentity);
