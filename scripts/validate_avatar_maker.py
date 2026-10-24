@@ -27,6 +27,8 @@ def main():
     dup=sorted({x for x in parser.ids if parser.ids.count(x)>1}); missing=sorted(REQUIRED_IDS-set(parser.ids))
     absent=[x for x in REQUIRED_FEATURES if x not in html]
     if 'id="aiIdentityProfile"' not in html: absent.append("Persistent identity profile control missing")
+    for token in ('const AI_IDENTITY_PRESETS=[', 'id="aiIdentityPreset"', 'id="aiApplyIdentityPreset"', 'item=>item.id===$("aiIdentityPreset").value', "no son prompts originales"):
+        if token not in html: absent.append("Identity preset catalog missing: "+token)
     if html.count("identityProfilePrompt()") < 4: absent.append("Identity profile must affect edit, cutout and anatomy prompts")
     for token in ("function layerFilter(layer)", "ctx.filter=layerFilter(l)", 'field("Tono de capa","layerHue"', 'field("Brillo","layerBrightness"', 'field("Contraste","layerContrast"', 'field("Saturación","layerSaturation"', 'field("Desenfoque suave","layerBlur"', 'id="resetLayerColor"'):
         if token not in html: absent.append("Local layer adjustment missing: "+token)
