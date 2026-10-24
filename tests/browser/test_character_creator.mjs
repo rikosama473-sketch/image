@@ -149,6 +149,14 @@ try {
   assert.match(await hiddenOriginal.innerText(), /Prueba completa/);
   assert.equal(await hiddenOriginal.locator("[data-visible]").count(), 1);
 
+  // Flat background removal follows only the connected border region, makes a separate transparent PNG, and keeps its source.
+  await page.locator("#layerBackgroundColor").evaluate((element) => { element.value = "#ffffff"; element.dispatchEvent(new Event("input", {bubbles:true})); });
+  await page.locator("#layerBackgroundTolerance").evaluate((element) => { element.value = "100"; element.dispatchEvent(new Event("input", {bubbles:true})); });
+  await page.locator("#layerBackgroundFeather").evaluate((element) => { element.value = "20"; element.dispatchEvent(new Event("input", {bubbles:true})); });
+  await page.locator("#createLayerBackgroundVariant").click();
+  await page.waitForFunction(() => /Variante sin fondo creada/.test(document.querySelector("#toast")?.textContent || ""));
+  await page.waitForFunction(() => [...document.querySelectorAll("#layerList [data-layer]")].some((element) => /Fondo eliminado/.test(element.innerText)));
+
   // The reusable identity profile is included in AI edits and survives JSON project round-trips.
   const stableIdentity = "Identidad de prueba: cabello verde oscuro, ojos dorados y pinza azul.";
   let capturedEditPrompt = "";
@@ -200,6 +208,10 @@ try {
   assert.ok(recolorVariant && String(recolorVariant.dataUrl || "").startsWith("data:image/png;base64,"), "Local recolor must be a reusable PNG layer saved in the project JSON");
   const recolorOriginal = project.layers.find((layer) => layer.id === recolorVariant.sourceLayerId);
   assert.ok(recolorOriginal && recolorOriginal.visible === false, "Original layer is preserved and hidden rather than deleted");
+  const backgroundVariant = project.layers.find((layer) => layer.kind === "local_background_variant");
+  assert.ok(backgroundVariant && String(backgroundVariant.dataUrl || "").startsWith("data:image/png;base64,"), "Local background removal must create a reusable PNG layer");
+  const backgroundOriginal = project.layers.find((layer) => layer.id === backgroundVariant.sourceLayerId);
+  assert.ok(backgroundOriginal && backgroundOriginal.visible === false, "The source image remains recoverable after background removal");
   const editedLayer = project.layers.find((layer) => Number(layer.brightness) === 1.2);
   assert.ok(editedLayer, "Per-layer brightness must be saved into project JSON");
   assert.equal(editedLayer.hue, 27);
