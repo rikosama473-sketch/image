@@ -128,6 +128,14 @@ try {
   await libraryCard.locator("[data-local-part-add]").click();
   await page.waitForFunction(() => [...document.querySelectorAll("#layerList [data-layer]")].some((el) => /Prueba completa/.test(el.innerText)) &&
     [...document.querySelectorAll("#layerList [data-layer]")].length >= 3);
+  // Layer color controls are local/non-destructive and all values belong to the saved layer.
+  for (const [control, value] of [["layerHue", "27"], ["layerBrightness", "1.2"], ["layerContrast", "1.1"], ["layerSaturation", "1.3"], ["layerBlur", "1.5"]]) {
+    await page.locator("#" + control).evaluate((element, nextValue) => {
+      element.value = nextValue;
+      element.dispatchEvent(new Event("input", { bubbles: true }));
+    }, value);
+  }
+  assert.equal(await page.locator("#layerBrightness").inputValue(), "1.2");
 
   // The reusable identity profile is included in AI edits and survives JSON project round-trips.
   const stableIdentity = "Identidad de prueba: cabello verde oscuro, ojos dorados y pinza azul.";
@@ -163,11 +171,20 @@ try {
   assert.equal(project.identityProfile, stableIdentity, "Project JSON must preserve the character identity profile");
   assert.ok(Array.isArray(project.layers) && project.layers.length >= 2, "Constructor JSON stores independent layers; the base illustration is described separately");
   assert.ok(project.layers.some((layer) => layer.category === "hair" && layer.sourceCategory === "test"));
+  const editedLayer = project.layers.find((layer) => Number(layer.brightness) === 1.2);
+  assert.ok(editedLayer, "Per-layer brightness must be saved into project JSON");
+  assert.equal(editedLayer.hue, 27);
+  assert.equal(editedLayer.contrast, 1.1);
+  assert.equal(editedLayer.saturation, 1.3);
+  assert.equal(editedLayer.blur, 1.5);
 
   const beforeReload = await page.locator("#layerList [data-layer]").count();
   await page.locator("#jsonFile").setInputFiles(projectPath);
   await page.waitForFunction(() => /Diseño cargado/.test(document.querySelector("#toast")?.textContent || ""));
   await page.waitForFunction((expected) => document.querySelectorAll("#layerList [data-layer]").length >= expected, beforeReload);
+  await page.locator("#layerList [data-layer].active").click();
+  assert.equal(await page.locator("#layerBrightness").inputValue(), "1.2", "Layer brightness must be restored from JSON");
+  assert.equal(await page.locator("#layerHue").inputValue(), "27", "Layer hue must be restored from JSON");
   await page.locator('#nav [data-cat="ai"]').click();
   assert.equal(await page.locator("#aiIdentityProfile").inputValue(), stableIdentity, "Project import must restore the character identity profile");
 
