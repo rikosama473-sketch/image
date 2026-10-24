@@ -233,13 +233,22 @@ function toast(m){$("toast").textContent=m;$("toast").classList.remove("hidden")
 function status(m,warn){$("stageNote").textContent=m;$("stageNote").classList.toggle("warn",!!warn);$("statusText").textContent=m;}
 function combos(){const imports=state.layers.filter(x=>x.kind==="import").length;const choices=looks.length*backgrounds.length*styles.length*6*3*2*2*Math.pow(361,4)*Math.pow(2,Math.min(imports,40));$("comboCount").textContent=new Intl.NumberFormat("es-AR",{notation:choices>999999?"compact":"standard",maximumFractionDigits:1}).format(choices);$("layerCount").textContent=(1+state.layers.length)+" capa"+(state.layers.length===0?"":"s");}
 function contain(ctx,i){const sc=Math.min(W/i.naturalWidth,H/i.naturalHeight);ctx.drawImage(i,(W-i.naturalWidth*sc)/2,(H-i.naturalHeight*sc)/2,i.naturalWidth*sc,i.naturalHeight*sc);}
+function layerFilter(layer){
+ const bounded=(key,fallback,min,max)=>{const value=Number(layer[key]);return Number.isFinite(value)?Math.max(min,Math.min(max,value)):fallback;};
+ const hue=bounded("hue",0,0,360);
+ const brightness=bounded("brightness",1,.2,2);
+ const contrast=bounded("contrast",1,.2,2);
+ const saturation=bounded("saturation",1,0,2);
+ const blur=bounded("blur",0,0,8);
+ return "hue-rotate("+hue+"deg) brightness("+brightness+") contrast("+contrast+") saturate("+saturation+") blur("+blur+"px)";
+}
 async function drawCanvas(){
  const can=$("canvas"),ctx=can.getContext("2d",{alpha:true});ctx.clearRect(0,0,W,H);if(!state.transparent){ctx.fillStyle=state.background;ctx.fillRect(0,0,W,H);}
  if(state.baseVisible!==false){
   try{const base=await img(activeLook().src),sty=styles.find(x=>x.id===state.style);ctx.save();ctx.filter=(sty.filter==="none"?"":sty.filter+" ")+"brightness("+state.lighting+")";if(base.naturalWidth===W&&base.naturalHeight===H)ctx.drawImage(base,0,0);else contain(ctx,base);ctx.restore();status("Ilustración base visible · "+activeLook().label,false);}
   catch(e){status("No se pudo cargar la imagen: abre mediante el lanzador local.",true);}
  }else status("Ilustración base oculta · las capas activas siguen visibles.",false);
- for(const l of state.layers.slice().sort((a,b)=>(a.order||0)-(b.order||0))){if(!l.visible)continue;try{const i=l.dataUrl?await img(l.dataUrl):await img(l.src);ctx.save();ctx.globalAlpha=l.opacity===undefined?1:l.opacity;ctx.filter="hue-rotate("+(l.hue||0)+"deg)";ctx.drawImage(i,l.x||0,l.y||0,l.w||W,l.h||H);ctx.restore();}catch(e){}}
+ for(const l of state.layers.slice().sort((a,b)=>(a.order||0)-(b.order||0))){if(!l.visible)continue;try{const i=l.dataUrl?await img(l.dataUrl):await img(l.src);ctx.save();ctx.globalAlpha=l.opacity===undefined?1:l.opacity;ctx.filter=layerFilter(l);ctx.drawImage(i,l.x||0,l.y||0,l.w||W,l.h||H);ctx.restore();}catch(e){}}
  $("stage").classList.toggle("checker",state.transparent||state.checker);$("checkerBtn").classList.toggle("active",state.checker);
 }
 function syncBaseToggle(){
@@ -285,9 +294,12 @@ function renderLayers(){
 }
 function adjust(){
  const root=$("content");let box=$("adjustBox");if(box)box.remove();const l=state.layers.find(x=>x.id===state.selected);if(!l)return;
- box=document.createElement("section");box.id="adjustBox";box.innerHTML='<div class="sectionhead"><b>Ajustes de capa</b><span>'+((l.kind==="candidate"||l.kind==="ai_cutout")?"Pendiente de revisión":"Editable")+'</span></div>'+field("Posición X","posX",-384,384,l.x||0,1)+field("Posición Y","posY",-640,640,l.y||0,1)+field("Tamaño","scale",.1,2.5,l.w/W,.01)+field("Opacidad","opacity",0,1,l.opacity,.01)+'<div class="actions"><button id="centerLayer" class="btn">Centrar</button><button id="frontLayer" class="btn">Traer adelante</button><button id="backLayer" class="btn">Enviar atrás</button><button id="deleteLayer" class="btn">Quitar</button></div>'+((l.kind==="candidate"||l.kind==="ai_cutout")?'<div class="notice" style="margin-top:8px"><b>Recorte pendiente de revisión</b>Conservá el PNG original y revisá la silueta con y sin esta capa.</div>':'');root.prepend(box);
+ box=document.createElement("section");box.id="adjustBox";box.innerHTML='<div class="sectionhead"><b>Ajustes de capa</b><span>'+((l.kind==="candidate"||l.kind==="ai_cutout")?"Pendiente de revisión":"Editable")+'</span></div>'+field("Posición X","posX",-384,384,l.x||0,1)+field("Posición Y","posY",-640,640,l.y||0,1)+field("Tamaño","scale",.1,2.5,l.w/W,.01)+field("Opacidad","opacity",0,1,l.opacity,.01)+'<div class="sectionhead" style="margin-top:12px"><b>Color y acabado local</b><span>Sin API · reversible</span></div>'+field("Tono de capa","layerHue",0,360,l.hue||0,1)+field("Brillo","layerBrightness",.2,2,l.brightness===undefined?1:l.brightness,.01)+field("Contraste","layerContrast",.2,2,l.contrast===undefined?1:l.contrast,.01)+field("Saturación","layerSaturation",0,2,l.saturation===undefined?1:l.saturation,.01)+field("Desenfoque suave","layerBlur",0,8,l.blur||0,.1)+'<p class="tiny">Los filtros se aplican en el lienzo, sin reescribir el PNG. Se guardan con el proyecto. Para cambiar solo el cabello o los ojos, seleccioná una capa que contenga únicamente esa pieza.</p><div class="actions"><button id="centerLayer" class="btn">Centrar</button><button id="frontLayer" class="btn">Traer adelante</button><button id="backLayer" class="btn">Enviar atrás</button><button id="resetLayerColor" class="btn">Restablecer color</button><button id="deleteLayer" class="btn">Quitar</button></div>'+((l.kind==="candidate"||l.kind==="ai_cutout")?'<div class="notice" style="margin-top:8px"><b>Recorte pendiente de revisión</b>Conservá el PNG original y revisá la silueta con y sin esta capa.</div>':'');root.prepend(box);
  [["posX","x"],["posY","y"],["opacity","opacity"]].forEach(([id,key])=>$(id).oninput=e=>{l[key]=Number(e.target.value);e.target.nextElementSibling.value=key==="opacity"?Math.round(l[key]*100)+"%":l[key];drawCanvas();});
  $("scale").oninput=e=>{const s=Number(e.target.value),cx=l.x+l.w/2,cy=l.y+l.h/2;l.w=W*s;l.h=H*s;l.x=Math.round(cx-l.w/2);l.y=Math.round(cy-l.h/2);e.target.nextElementSibling.value=Math.round(s*100)+"%";drawCanvas();};
+ const layerFilters=[["layerHue","hue","°"],["layerBrightness","brightness","×"],["layerContrast","contrast","×"],["layerSaturation","saturation","×"],["layerBlur","blur"," px"]];
+ layerFilters.forEach(([id,key,unit])=>$(id).oninput=e=>{l[key]=Number(e.target.value);e.target.nextElementSibling.value=Number(e.target.value)+(unit===" px"?" px":unit);drawCanvas();});
+ $("resetLayerColor").onclick=()=>{l.hue=0;l.brightness=1;l.contrast=1;l.saturation=1;l.blur=0;adjust();render();toast("Filtros de color restablecidos sin alterar la imagen original.");};
  $("centerLayer").onclick=()=>{l.x=0;l.y=0;l.w=W;l.h=H;render();};$("frontLayer").onclick=()=>{l.order=Math.max(-1,...state.layers.map(x=>x.order||0))+1;render();};$("backLayer").onclick=()=>{l.order=Math.min(0,...state.layers.map(x=>x.order||0))-1;render();};$("deleteLayer").onclick=()=>{state.layers=state.layers.filter(x=>x.id!==l.id);state.selected="base";render();gallery();};
 }
 function field(label,id,min,max,value,step){const show=id==="scale"?Math.round(value*100)+"%":id==="opacity"?Math.round(value*100)+"%":value;return '<div class="field"><label for="'+id+'">'+label+'</label><input id="'+id+'" type="range" min="'+min+'" max="'+max+'" step="'+step+'" value="'+value+'"><output>'+show+'</output></div>';}
