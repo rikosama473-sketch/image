@@ -3,7 +3,7 @@
   "project": "IMAGE Character Creator",
   "title": "Biblioteca local de ilustraciones",
   "generated_from": "data/training-labels.csv and files present in the repository tree",
-  "asset_count": 773,
+  "asset_count": 774,
   "notice": "This library indexes existing raster files in this repository for personal browsing. Filename hints do not prove authorship, franchise identity, license, or permission to redistribute/train. Items remain unreviewed until their source and rights are confirmed.",
   "filters": [
     "Todos",
@@ -11738,7 +11738,30 @@
       "character_id": "pibara",
       "pack": "anatomy-sheet-4",
       "manifest_status": "needs_visual_identity_review"
+    },
+    {
+      "id": "generated-pibara-anatomy-side-1-full-body-side-profile-f3777be4",
+      "catalog_id": "GEN-F3777BE4-FULL-BODY-SIDE-PROFILE",
+      "label": "Guía anatómica — full-body-side-profile — Pibara",
+      "path": "generated/character-assets/pibara/2026-10-24/run-40104589145/transparent/01-full-body-side-profile.png",
+      "src": "../../generated/character-assets/pibara/2026-10-24/run-40104589145/transparent/01-full-body-side-profile.png",
+      "kind": "anatomy_guide",
+      "origin_hint": "Generated in repository workflow via the public image-edit Space; source: from-PixAI-2034984086876227343-0.png; run: 40104589145",
+      "visual_review": "needs_visual_identity_review",
+      "license_review": "unreviewed",
+      "training_permission": "unreviewed",
+      "tags": [
+        "Anatomía",
+        "Cuerpo completo"
+      ],
+      "size_bytes": 327682,
+      "sha256_git_blob": "",
+      "sha256": "91334a5375929e036da8b01a59817ab5009454b67eb4fc456d66cf20e276adc1",
+      "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+      "character_id": "pibara",
+      "pack": "anatomy-side-1",
+      "manifest_status": "needs_visual_identity_review"
     }
   ],
-  "updated_at_utc": "2026-10-23T15:08:54.929129+00:00"
+  "updated_at_utc": "2026-10-24T14:56:42.906358+00:00"
 }
