@@ -124,10 +124,16 @@ def entries_from_config(config: dict[str, Any], rows: int, columns: int) -> list
 
 
 def fit_to_canvas(crop: Image.Image, size: tuple[int, int], resample: Image.Resampling) -> Image.Image:
-    """Fit crop into a transparent, fixed-size canvas without stretching."""
+    """Scale up or down proportionally, then center on a transparent fixed-size canvas."""
     crop = crop.convert("RGBA")
     target_w, target_h = size
-    crop.thumbnail((target_w, target_h), resample)
+    scale = min(target_w / crop.width, target_h / crop.height)
+    scaled_size = (
+        max(1, min(target_w, round(crop.width * scale))),
+        max(1, min(target_h, round(crop.height * scale))),
+    )
+    if crop.size != scaled_size:
+        crop = crop.resize(scaled_size, resample=resample)
     canvas = Image.new("RGBA", (target_w, target_h), (0, 0, 0, 0))
     canvas.alpha_composite(crop, ((target_w - crop.width) // 2, (target_h - crop.height) // 2))
     return canvas
