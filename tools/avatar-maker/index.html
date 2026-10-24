@@ -292,14 +292,90 @@ function renderLayers(){
  $("layerTabs").querySelector("[data-base]").onclick=()=>{state.selected="base";renderLayers();adjust();};$("layerTabs").querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{state.selected=b.dataset.tab;renderLayers();adjust();});
  adjust();
 }
+function parseLayerRecolorHex(value){
+ const match=/^#?([0-9a-f]{6})$/i.exec(String(value||""));
+ if(!match)throw new TypeError("Elegí un color RGB hexadecimal válido.");
+ return [0,2,4].map(i=>parseInt(match[1].slice(i,i+2),16));
+}
+function recolorRgbToHsl(r,g,b){
+ r/=255;g/=255;b/=255;
+ const max=Math.max(r,g,b),min=Math.min(r,g,b),delta=max-min,l=(max+min)/2;
+ let h=0,s=0;
+ if(delta){s=delta/(1-Math.abs(2*l-1));if(max===r)h=((g-b)/delta)%6;else if(max===g)h=(b-r)/delta+2;else h=(r-g)/delta+4;h*=60;if(h<0)h+=360;}
+ return [h,s,l];
+}
+function recolorHslToRgb(h,s,l){
+ const c=(1-Math.abs(2*l-1))*s,x=c*(1-Math.abs((h/60)%2-1)),m=l-c/2;
+ let r=0,g=0,b=0;
+ if(h<60){r=c;g=x;}else if(h<120){r=x;g=c;}else if(h<180){g=c;b=x;}else if(h<240){g=x;b=c;}else if(h<300){r=x;b=c;}else{r=c;b=x;}
+ return [r,g,b].map(v=>Math.max(0,Math.min(255,Math.round((v+m)*255))));
+}
+function recolorSmoothstep(value){
+ const t=Math.max(0,Math.min(1,value));
+ return t*t*(3-2*t);
+}
+async function createLocalColorVariant(){
+ const sourceLayer=state.layers.find(layer=>layer.id===state.selected);
+ if(!sourceLayer){toast("Seleccioná una capa independiente antes de recolorear.");return;}
+ try{
+  const source=await img(sourceLayer.dataUrl||sourceLayer.src);
+  const canvas=document.createElement("canvas");
+  canvas.width=source.naturalWidth;canvas.height=source.naturalHeight;
+  const ctx=canvas.getContext("2d",{willReadFrequently:true});
+  ctx.drawImage(source,0,0);
+  const image=ctx.getImageData(0,0,canvas.width,canvas.height);
+  const data=image.data;
+  const from=parseLayerRecolorHex($("layerRecolorSource").value);
+  const to=parseLayerRecolorHex($("layerRecolorTarget").value);
+  const tolerance=Math.max(0,Math.min(255,Number($("layerRecolorTolerance").value)||0));
+  const softness=Math.max(0,Math.min(160,Number($("layerRecolorSoftness").value)||0));
+  const preserveShading=$("layerRecolorPreserveShading").checked;
+  const targetHsl=recolorRgbToHsl(to[0],to[1],to[2]);
+  let changed=0;
+  for(let i=0;i<data.length;i+=4){
+   if(data[i+3]===0)continue;
+   const r=data[i],g=data[i+1],b=data[i+2];
+   const dr=r-from[0],dg=g-from[1],db=b-from[2];
+   const distance=Math.sqrt((dr*dr+dg*dg+db*db)/3);
+   let weight=0;
+   if(distance<=tolerance)weight=1;
+   else if(softness>0&&distance<tolerance+softness)weight=1-recolorSmoothstep((distance-tolerance)/softness);
+   if(weight<=0)continue;
+   const replacement=preserveShading
+    ?recolorHslToRgb(targetHsl[0],targetHsl[1],recolorRgbToHsl(r,g,b)[2])
+    :to;
+   data[i]=Math.round(r*(1-weight)+replacement[0]*weight);
+   data[i+1]=Math.round(g*(1-weight)+replacement[1]*weight);
+   data[i+2]=Math.round(b*(1-weight)+replacement[2]*weight);
+   changed++;
+  }
+  if(!changed){toast("No se encontraron píxeles del color elegido. Probá otro color o aumentá la tolerancia.");return;}
+  const dataUrl=canvas.toDataURL("image/png");
+  const variant={...sourceLayer,id:"recolor-"+Date.now()+"-"+Math.random().toString(36).slice(2,6),
+   name:("Recolor local · "+String(sourceLayer.name||"Capa")).slice(0,100),
+   dataUrl,src:"",assetId:undefined,kind:"local_color_variant",group:null,visible:true,
+   order:Math.max(-1,...state.layers.map(x=>Number.isFinite(x.order)?x.order:-1))+1,
+   sourceLayerId:sourceLayer.id,sourceKind:sourceLayer.kind,sourceStatus:sourceLayer.status,
+   status:"unreviewed_local_color_variant"};
+  sourceLayer.visible=false;
+  state.layers.push(variant);
+  cache.set(dataUrl,img(dataUrl));
+  state.selected=variant.id;
+  await render();
+  toast("Variante recoloreada creada ("+changed.toLocaleString("es-AR")+" píxeles). El original quedó oculto, no borrado; podés volver a mostrarlo.");
+ }catch(error){
+  toast("No se pudo recolorear la capa: "+String(error&&error.message||error).slice(0,160));
+ }
+}
 function adjust(){
  const root=$("content");let box=$("adjustBox");if(box)box.remove();const l=state.layers.find(x=>x.id===state.selected);if(!l)return;
- box=document.createElement("section");box.id="adjustBox";box.innerHTML='<div class="sectionhead"><b>Ajustes de capa</b><span>'+((l.kind==="candidate"||l.kind==="ai_cutout")?"Pendiente de revisión":"Editable")+'</span></div>'+field("Posición X","posX",-384,384,l.x||0,1)+field("Posición Y","posY",-640,640,l.y||0,1)+field("Tamaño","scale",.1,2.5,l.w/W,.01)+field("Opacidad","opacity",0,1,l.opacity,.01)+'<div class="sectionhead" style="margin-top:12px"><b>Color y acabado local</b><span>Sin API · reversible</span></div>'+field("Tono de capa","layerHue",0,360,l.hue||0,1)+field("Brillo","layerBrightness",.2,2,l.brightness===undefined?1:l.brightness,.01)+field("Contraste","layerContrast",.2,2,l.contrast===undefined?1:l.contrast,.01)+field("Saturación","layerSaturation",0,2,l.saturation===undefined?1:l.saturation,.01)+field("Desenfoque suave","layerBlur",0,8,l.blur||0,.1)+'<p class="tiny">Los filtros se aplican en el lienzo, sin reescribir el PNG. Se guardan con el proyecto. Para cambiar solo el cabello o los ojos, seleccioná una capa que contenga únicamente esa pieza.</p><div class="actions"><button id="centerLayer" class="btn">Centrar</button><button id="frontLayer" class="btn">Traer adelante</button><button id="backLayer" class="btn">Enviar atrás</button><button id="resetLayerColor" class="btn">Restablecer color</button><button id="deleteLayer" class="btn">Quitar</button></div>'+((l.kind==="candidate"||l.kind==="ai_cutout")?'<div class="notice" style="margin-top:8px"><b>Recorte pendiente de revisión</b>Conservá el PNG original y revisá la silueta con y sin esta capa.</div>':'');root.prepend(box);
+ box=document.createElement("section");box.id="adjustBox";box.innerHTML='<div class="sectionhead"><b>Ajustes de capa</b><span>'+((l.kind==="candidate"||l.kind==="ai_cutout")?"Pendiente de revisión":"Editable")+'</span></div>'+field("Posición X","posX",-384,384,l.x||0,1)+field("Posición Y","posY",-640,640,l.y||0,1)+field("Tamaño","scale",.1,2.5,l.w/W,.01)+field("Opacidad","opacity",0,1,l.opacity,.01)+'<div class="sectionhead" style="margin-top:12px"><b>Color y acabado local</b><span>Sin API · reversible</span></div>'+field("Tono de capa","layerHue",0,360,l.hue||0,1)+field("Brillo","layerBrightness",.2,2,l.brightness===undefined?1:l.brightness,.01)+field("Contraste","layerContrast",.2,2,l.contrast===undefined?1:l.contrast,.01)+field("Saturación","layerSaturation",0,2,l.saturation===undefined?1:l.saturation,.01)+field("Desenfoque suave","layerBlur",0,8,l.blur||0,.1)+'<div class="sectionhead" style="margin-top:12px"><b>Recolor local por rango</b><span>Sin API · crea una capa</span></div><div class="field"><label for="layerRecolorSource">Color que querés reemplazar</label><input id="layerRecolorSource" type="color" value="#000000"><output>RGB de origen</output></div><div class="field"><label for="layerRecolorTarget">Nuevo color</label><input id="layerRecolorTarget" type="color" value="#00ff00"><output>RGB de destino</output></div>'+field("Tolerancia de color","layerRecolorTolerance",0,255,36,1)+field("Borde suave","layerRecolorSoftness",0,160,24,1)+'<label class="tiny" style="display:flex;align-items:center;gap:8px;margin:6px 0"><input id="layerRecolorPreserveShading" type="checkbox" checked> Conservar luces y sombras originales</label><button type="button" id="createLayerRecolor" class="btn primary">Crear variante recoloreada</button><p class="tiny">Recolorea píxeles del rango seleccionado en la capa actual y crea una variante PNG separada. Conserva el origen ocultándolo, no borrándolo. Para cambiar solo pelo u ojos, seleccioná una capa que contenga únicamente esa pieza.</p><div class="actions"><button id="centerLayer" class="btn">Centrar</button><button id="frontLayer" class="btn">Traer adelante</button><button id="backLayer" class="btn">Enviar atrás</button><button id="resetLayerColor" class="btn">Restablecer filtros</button><button id="deleteLayer" class="btn">Quitar</button></div>'+((l.kind==="candidate"||l.kind==="ai_cutout")?'<div class="notice" style="margin-top:8px"><b>Recorte pendiente de revisión</b>Conservá el PNG original y revisá la silueta con y sin esta capa.</div>':'');root.prepend(box);
  [["posX","x"],["posY","y"],["opacity","opacity"]].forEach(([id,key])=>$(id).oninput=e=>{l[key]=Number(e.target.value);e.target.nextElementSibling.value=key==="opacity"?Math.round(l[key]*100)+"%":l[key];drawCanvas();});
  $("scale").oninput=e=>{const s=Number(e.target.value),cx=l.x+l.w/2,cy=l.y+l.h/2;l.w=W*s;l.h=H*s;l.x=Math.round(cx-l.w/2);l.y=Math.round(cy-l.h/2);e.target.nextElementSibling.value=Math.round(s*100)+"%";drawCanvas();};
  const layerFilters=[["layerHue","hue","°"],["layerBrightness","brightness","×"],["layerContrast","contrast","×"],["layerSaturation","saturation","×"],["layerBlur","blur"," px"]];
  layerFilters.forEach(([id,key,unit])=>$(id).oninput=e=>{l[key]=Number(e.target.value);e.target.nextElementSibling.value=Number(e.target.value)+(unit===" px"?" px":unit);drawCanvas();});
  $("resetLayerColor").onclick=()=>{l.hue=0;l.brightness=1;l.contrast=1;l.saturation=1;l.blur=0;adjust();render();toast("Filtros de color restablecidos sin alterar la imagen original.");};
+ $("createLayerRecolor").onclick=createLocalColorVariant;
  $("centerLayer").onclick=()=>{l.x=0;l.y=0;l.w=W;l.h=H;render();};$("frontLayer").onclick=()=>{l.order=Math.max(-1,...state.layers.map(x=>x.order||0))+1;render();};$("backLayer").onclick=()=>{l.order=Math.min(0,...state.layers.map(x=>x.order||0))-1;render();};$("deleteLayer").onclick=()=>{state.layers=state.layers.filter(x=>x.id!==l.id);state.selected="base";render();gallery();};
 }
 function field(label,id,min,max,value,step){const show=id==="scale"?Math.round(value*100)+"%":id==="opacity"?Math.round(value*100)+"%":value;return '<div class="field"><label for="'+id+'">'+label+'</label><input id="'+id+'" type="range" min="'+min+'" max="'+max+'" step="'+step+'" value="'+value+'"><output>'+show+'</output></div>';}
