@@ -149,6 +149,27 @@ try {
   assert.match(await hiddenOriginal.innerText(), /Prueba completa/);
   assert.equal(await hiddenOriginal.locator("[data-visible]").count(), 1);
 
+  // Use a deterministic local raster with a white matte and a red foreground shape.
+  const flatBgDataUrl = await page.evaluate(() => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 32; canvas.height = 32;
+    const context = canvas.getContext("2d");
+    context.fillStyle = "#ffffff"; context.fillRect(0, 0, 32, 32);
+    context.fillStyle = "#e61924"; context.fillRect(8, 8, 16, 16);
+    return canvas.toDataURL("image/png");
+  });
+  const flatBgBytes = Buffer.from(flatBgDataUrl.split(",")[1], "base64");
+  await page.locator("#imageFile").setInputFiles({name:"white-background-test.png",mimeType:"image/png",buffer:flatBgBytes});
+  await page.waitForFunction(() => [...document.querySelectorAll("#layerList [data-layer]")].some((element) => /white-background-test/.test(element.innerText)));
+
+  // Flat background removal follows only the connected border region, makes a separate transparent PNG, and keeps its source.
+  await page.locator("#layerBackgroundColor").evaluate((element) => { element.value = "#ffffff"; element.dispatchEvent(new Event("input", {bubbles:true})); });
+  await page.locator("#layerBackgroundTolerance").evaluate((element) => { element.value = "100"; element.dispatchEvent(new Event("input", {bubbles:true})); });
+  await page.locator("#layerBackgroundFeather").evaluate((element) => { element.value = "20"; element.dispatchEvent(new Event("input", {bubbles:true})); });
+  await page.locator("#createLayerBackgroundVariant").click();
+  await page.waitForFunction(() => /Variante sin fondo creada/.test(document.querySelector("#toast")?.textContent || ""));
+  await page.waitForFunction(() => [...document.querySelectorAll("#layerList [data-layer]")].some((element) => /Fondo eliminado/.test(element.innerText)));
+
   // The reusable identity profile is included in AI edits and survives JSON project round-trips.
   const stableIdentity = "Identidad de prueba: cabello verde oscuro, ojos dorados y pinza azul.";
   let capturedEditPrompt = "";
@@ -200,6 +221,18 @@ try {
   assert.ok(recolorVariant && String(recolorVariant.dataUrl || "").startsWith("data:image/png;base64,"), "Local recolor must be a reusable PNG layer saved in the project JSON");
   const recolorOriginal = project.layers.find((layer) => layer.id === recolorVariant.sourceLayerId);
   assert.ok(recolorOriginal && recolorOriginal.visible === false, "Original layer is preserved and hidden rather than deleted");
+  const backgroundVariant = project.layers.find((layer) => layer.kind === "local_background_variant");
+  assert.ok(backgroundVariant && String(backgroundVariant.dataUrl || "").startsWith("data:image/png;base64,"), "Local background removal must create a reusable PNG layer");
+  const backgroundOriginal = project.layers.find((layer) => layer.id === backgroundVariant.sourceLayerId);
+  assert.ok(backgroundOriginal && backgroundOriginal.visible === false, "The source image remains recoverable after background removal");
+  const backgroundAlpha = await page.evaluate(async (dataUrl) => {
+    const image = new Image(); image.src = dataUrl; await image.decode();
+    const canvas = document.createElement("canvas"); canvas.width = image.naturalWidth; canvas.height = image.naturalHeight;
+    const context = canvas.getContext("2d", {willReadFrequently:true}); context.drawImage(image,0,0);
+    return {corner:context.getImageData(0,0,1,1).data[3],center:context.getImageData(16,16,1,1).data[3]};
+  }, backgroundVariant.dataUrl);
+  assert.equal(backgroundAlpha.corner, 0, "Border-connected white background pixels must become transparent");
+  assert.equal(backgroundAlpha.center, 255, "The enclosed red foreground must remain opaque");
   const editedLayer = project.layers.find((layer) => Number(layer.brightness) === 1.2);
   assert.ok(editedLayer, "Per-layer brightness must be saved into project JSON");
   assert.equal(editedLayer.hue, 27);
@@ -211,7 +244,7 @@ try {
   await page.locator("#jsonFile").setInputFiles(projectPath);
   await page.waitForFunction(() => /Diseño cargado/.test(document.querySelector("#toast")?.textContent || ""));
   await page.waitForFunction((expected) => document.querySelectorAll("#layerList [data-layer]").length >= expected, beforeReload);
-  await page.locator("#layerList [data-layer].active").click();
+  await page.locator(`#layerList [data-layer="${editedLayer.id}"]`).click();
   assert.equal(await page.locator("#layerBrightness").inputValue(), "1.2", "Layer brightness must be restored from JSON");
   assert.equal(await page.locator("#layerHue").inputValue(), "27", "Layer hue must be restored from JSON");
   await page.locator('#nav [data-cat="ai"]').click();
