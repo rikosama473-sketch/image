@@ -138,7 +138,7 @@ try {
     await route.fulfill({
       status: 200,
       contentType: "application/json",
-      body: JSON.stringify({ image_base64: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4z8DwHwAFAAH/iZk9HQAAAAB5JRU5ErkJggg==" })
+      body: JSON.stringify({ image_base64: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4z8DwHwAFAAH/iZk9HQAAAABJRU5ErkJggg==" })
     });
   });
   await page.locator('#nav [data-cat="ai"]').click();
@@ -147,7 +147,7 @@ try {
   await page.locator("#aiIdentityProfile").fill(stableIdentity);
   await page.locator("#aiPrompt").fill("Cambia únicamente la forma del flequillo.");
   await page.locator("#aiRun").click();
-  await page.waitForFunction(() => /Resultado listo/.test(document.querySelector("#toast")?.textContent || ""));
+  await page.waitForSelector(".ai-result");
   assert.ok(capturedEditPrompt.includes(stableIdentity), "AI prompt must include the persistent identity profile");
   await page.locator('#nav [data-cat="anatomy"]').click();
 
