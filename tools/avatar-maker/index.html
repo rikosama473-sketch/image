@@ -367,15 +367,110 @@ async function createLocalColorVariant(){
   toast("No se pudo recolorear la capa: "+String(error&&error.message||error).slice(0,160));
  }
 }
+async function createLocalBackgroundVariant(){
+ const sourceLayer=state.layers.find(layer=>layer.id===state.selected);
+ if(!sourceLayer){toast("Seleccioná una capa independiente antes de quitar el fondo.");return;}
+ try{
+  const source=await img(sourceLayer.dataUrl||sourceLayer.src);
+  const width=source.naturalWidth,height=source.naturalHeight,count=width*height;
+  if(!width||!height||count>16000000)throw new RangeError("La imagen debe ser válida y no superar 16 megapíxeles.");
+  const canvas=document.createElement("canvas");
+  canvas.width=width;canvas.height=height;
+  const ctx=canvas.getContext("2d",{willReadFrequently:true});
+  ctx.drawImage(source,0,0);
+  const image=ctx.getImageData(0,0,width,height),data=image.data;
+  const target=parseLayerRecolorHex($("layerBackgroundColor").value);
+  const tolerance=Math.max(0,Math.min(255,Number($("layerBackgroundTolerance").value)||0));
+  const feather=Math.max(0,Math.min(100,Number($("layerBackgroundFeather").value)||0));
+  const edgeSensitivity=Math.max(0,Math.min(180,Number($("layerBackgroundEdge").value)||0));
+  const protectLineArt=$("layerBackgroundProtectLines").checked;
+  const decontaminate=$("layerBackgroundUnmatte").checked;
+  const reach=Math.min(255,tolerance+feather);
+  const visited=new Uint8Array(count);
+  let queue=new Int32Array(Math.min(count,Math.max(1024,width*2+height*2))),queueHead=0,queueTail=0,queueSize=0;
+  const enqueue=index=>{
+   if(queueSize===queue.length){
+    if(queue.length>=count)throw new RangeError("La cola de recorte superó el número de píxeles.");
+    const next=new Int32Array(Math.min(count,queue.length*2));
+    for(let offset=0;offset<queueSize;offset++)next[offset]=queue[(queueHead+offset)%queue.length];
+    queue=next;queueHead=0;queueTail=queueSize;
+   }
+   queue[queueTail]=index;queueTail++;if(queueTail===queue.length)queueTail=0;queueSize++;
+  };
+  const distanceAt=index=>{
+   const offset=index*4,dr=data[offset]-target[0],dg=data[offset+1]-target[1],db=data[offset+2]-target[2];
+   return Math.sqrt((dr*dr+dg*dg+db*db)/3);
+  };
+  const seed=index=>{
+   if(visited[index])return;
+   const offset=index*4;
+   if(data[offset+3]===0||distanceAt(index)>tolerance)return;
+   visited[index]=1;enqueue(index);
+  };
+  for(let x=0;x<width;x++){seed(x);if(height>1)seed((height-1)*width+x);}
+  for(let y=1;y<height-1;y++){seed(y*width);if(width>1)seed(y*width+width-1);}
+  const visitNeighbor=(neighbor,currentOffset)=>{
+   if(visited[neighbor])return;
+   const offset=neighbor*4;
+   if(data[offset+3]===0){visited[neighbor]=1;return;}
+   const distance=distanceAt(neighbor);
+   if(distance>reach)return;
+   if(protectLineArt){
+    const delta=Math.sqrt(((data[offset]-data[currentOffset])**2+(data[offset+1]-data[currentOffset+1])**2+(data[offset+2]-data[currentOffset+2])**2)/3);
+    if(delta>edgeSensitivity)return;
+   }
+   visited[neighbor]=1;
+   if(distance<=tolerance)enqueue(neighbor);
+  };
+  while(queueSize>0){
+   const index=queue[queueHead];queueHead++;if(queueHead===queue.length)queueHead=0;queueSize--;
+   const x=index%width,y=Math.floor(index/width),offset=index*4;
+   if(x)visitNeighbor(index-1,offset);
+   if(x+1<width)visitNeighbor(index+1,offset);
+   if(y)visitNeighbor(index-width,offset);
+   if(y+1<height)visitNeighbor(index+width,offset);
+  }
+  let changed=0;
+  for(let i=0;i<count;i++){
+   if(!visited[i])continue;
+   const offset=i*4,distance=distanceAt(i),before=data[offset+3];
+   if(distance<=tolerance)data[offset+3]=0;
+   else if(feather>0){
+    const alpha=Math.max(0,Math.min(1,(distance-tolerance)/feather));
+    data[offset+3]=Math.round(data[offset+3]*alpha);
+    if(decontaminate&&alpha>0&&alpha<1){
+     for(let channel=0;channel<3;channel++)data[offset+channel]=Math.max(0,Math.min(255,Math.round((data[offset+channel]-target[channel]*(1-alpha))/alpha)));
+    }
+   }
+   if(data[offset+3]!==before)changed++;
+  }
+  if(!changed){toast("No se encontró fondo conectado de ese color. Probá con otro color o una tolerancia mayor.");return;}
+  ctx.putImageData(image,0,0);
+  const dataUrl=canvas.toDataURL("image/png");
+  const variant={...sourceLayer,id:"background-"+Date.now()+"-"+Math.random().toString(36).slice(2,6),
+   name:("Fondo eliminado · "+String(sourceLayer.name||"Capa")).slice(0,100),
+   dataUrl,src:"",assetId:undefined,kind:"local_background_variant",group:null,visible:true,
+   order:Math.max(-1,...state.layers.map(x=>Number.isFinite(x.order)?x.order:-1))+1,
+   sourceLayerId:sourceLayer.id,sourceKind:sourceLayer.kind,sourceStatus:sourceLayer.status,
+   status:"unreviewed_local_background_removal"};
+  sourceLayer.visible=false;
+  state.layers.push(variant);cache.set(dataUrl,img(dataUrl));state.selected=variant.id;
+  await render();
+  toast("Variante sin fondo creada ("+changed.toLocaleString("es-AR")+" píxeles de borde). El original quedó oculto, no borrado.");
+ }catch(error){
+  toast("No se pudo quitar el fondo: "+String(error&&error.message||error).slice(0,160));
+ }
+}
 function adjust(){
  const root=$("content");let box=$("adjustBox");if(box)box.remove();const l=state.layers.find(x=>x.id===state.selected);if(!l)return;
- box=document.createElement("section");box.id="adjustBox";box.innerHTML='<div class="sectionhead"><b>Ajustes de capa</b><span>'+((l.kind==="candidate"||l.kind==="ai_cutout")?"Pendiente de revisión":"Editable")+'</span></div>'+field("Posición X","posX",-384,384,l.x||0,1)+field("Posición Y","posY",-640,640,l.y||0,1)+field("Tamaño","scale",.1,2.5,l.w/W,.01)+field("Opacidad","opacity",0,1,l.opacity,.01)+'<div class="sectionhead" style="margin-top:12px"><b>Color y acabado local</b><span>Sin API · reversible</span></div>'+field("Tono de capa","layerHue",0,360,l.hue||0,1)+field("Brillo","layerBrightness",.2,2,l.brightness===undefined?1:l.brightness,.01)+field("Contraste","layerContrast",.2,2,l.contrast===undefined?1:l.contrast,.01)+field("Saturación","layerSaturation",0,2,l.saturation===undefined?1:l.saturation,.01)+field("Desenfoque suave","layerBlur",0,8,l.blur||0,.1)+'<div class="sectionhead" style="margin-top:12px"><b>Recolor local por rango</b><span>Sin API · crea una capa</span></div><div class="field"><label for="layerRecolorSource">Color que querés reemplazar</label><input id="layerRecolorSource" type="color" value="#000000"><output>RGB de origen</output></div><div class="field"><label for="layerRecolorTarget">Nuevo color</label><input id="layerRecolorTarget" type="color" value="#00ff00"><output>RGB de destino</output></div>'+field("Tolerancia de color","layerRecolorTolerance",0,255,36,1)+field("Borde suave","layerRecolorSoftness",0,160,24,1)+'<label class="tiny" style="display:flex;align-items:center;gap:8px;margin:6px 0"><input id="layerRecolorPreserveShading" type="checkbox" checked> Conservar luces y sombras originales</label><button type="button" id="createLayerRecolor" class="btn primary">Crear variante recoloreada</button><p class="tiny">Recolorea píxeles del rango seleccionado en la capa actual y crea una variante PNG separada. Conserva el origen ocultándolo, no borrándolo. Para cambiar solo pelo u ojos, seleccioná una capa que contenga únicamente esa pieza.</p><div class="actions"><button id="centerLayer" class="btn">Centrar</button><button id="frontLayer" class="btn">Traer adelante</button><button id="backLayer" class="btn">Enviar atrás</button><button id="resetLayerColor" class="btn">Restablecer filtros</button><button id="deleteLayer" class="btn">Quitar</button></div>'+((l.kind==="candidate"||l.kind==="ai_cutout")?'<div class="notice" style="margin-top:8px"><b>Recorte pendiente de revisión</b>Conservá el PNG original y revisá la silueta con y sin esta capa.</div>':'');root.prepend(box);
+ box=document.createElement("section");box.id="adjustBox";box.innerHTML='<div class="sectionhead"><b>Ajustes de capa</b><span>'+((l.kind==="candidate"||l.kind==="ai_cutout")?"Pendiente de revisión":"Editable")+'</span></div>'+field("Posición X","posX",-384,384,l.x||0,1)+field("Posición Y","posY",-640,640,l.y||0,1)+field("Tamaño","scale",.1,2.5,l.w/W,.01)+field("Opacidad","opacity",0,1,l.opacity,.01)+'<div class="sectionhead" style="margin-top:12px"><b>Color y acabado local</b><span>Sin API · reversible</span></div>'+field("Tono de capa","layerHue",0,360,l.hue||0,1)+field("Brillo","layerBrightness",.2,2,l.brightness===undefined?1:l.brightness,.01)+field("Contraste","layerContrast",.2,2,l.contrast===undefined?1:l.contrast,.01)+field("Saturación","layerSaturation",0,2,l.saturation===undefined?1:l.saturation,.01)+field("Desenfoque suave","layerBlur",0,8,l.blur||0,.1)+'<div class="sectionhead" style="margin-top:12px"><b>Recolor local por rango</b><span>Sin API · crea una capa</span></div><div class="field"><label for="layerRecolorSource">Color que querés reemplazar</label><input id="layerRecolorSource" type="color" value="#000000"><output>RGB de origen</output></div><div class="field"><label for="layerRecolorTarget">Nuevo color</label><input id="layerRecolorTarget" type="color" value="#00ff00"><output>RGB de destino</output></div>'+field("Tolerancia de color","layerRecolorTolerance",0,255,36,1)+field("Borde suave","layerRecolorSoftness",0,160,24,1)+'<label class="tiny" style="display:flex;align-items:center;gap:8px;margin:6px 0"><input id="layerRecolorPreserveShading" type="checkbox" checked> Conservar luces y sombras originales</label><button type="button" id="createLayerRecolor" class="btn primary">Crear variante recoloreada</button><p class="tiny">Recolorea píxeles del rango seleccionado en la capa actual y crea una variante PNG separada. Conserva el origen ocultándolo, no borrándolo. Para cambiar solo pelo u ojos, seleccioná una capa que contenga únicamente esa pieza.</p>+'<div class="sectionhead" style="margin-top:12px"><b>Quitar fondo plano en local</b><span>Sin modelo · crea una capa</span></div><div class="field"><label for="layerBackgroundColor">Color de fondo</label><input id="layerBackgroundColor" type="color" value="#ffffff"><output>Color conectado al borde</output></div>'+field("Tolerancia del fondo","layerBackgroundTolerance",0,255,36,1)+field("Suavizado del borde","layerBackgroundFeather",0,100,18,1)+field("Protección de tinta","layerBackgroundEdge",0,180,42,1)+'<label class="tiny" style="display:flex;align-items:center;gap:8px;margin:6px 0"><input id="layerBackgroundProtectLines" type="checkbox" checked> Proteger contornos anime con cambios bruscos de color</label><label class="tiny" style="display:flex;align-items:center;gap:8px;margin:6px 0"><input id="layerBackgroundUnmatte" type="checkbox" checked> Limpiar halos del color de fondo en el borde</label><button type="button" id="createLayerBackgroundVariant" class="btn primary">Quitar fondo plano y conservar original</button><p class="tiny">Elimina solo el fondo conectado al borde: blancos encerrados por líneas y zonas similares interiores se conservan. Es un recorte por color, no segmentación semántica. Resultado pendiente de revisión.</p><div class="actions"><button id="centerLayer" class="btn">Centrar</button><button id="frontLayer" class="btn">Traer adelante</button><button id="backLayer" class="btn">Enviar atrás</button><button id="resetLayerColor" class="btn">Restablecer filtros</button><button id="deleteLayer" class="btn">Quitar</button></div>'+((l.kind==="candidate"||l.kind==="ai_cutout")?'<div class="notice" style="margin-top:8px"><b>Recorte pendiente de revisión</b>Conservá el PNG original y revisá la silueta con y sin esta capa.</div>':'');root.prepend(box);
  [["posX","x"],["posY","y"],["opacity","opacity"]].forEach(([id,key])=>$(id).oninput=e=>{l[key]=Number(e.target.value);e.target.nextElementSibling.value=key==="opacity"?Math.round(l[key]*100)+"%":l[key];drawCanvas();});
  $("scale").oninput=e=>{const s=Number(e.target.value),cx=l.x+l.w/2,cy=l.y+l.h/2;l.w=W*s;l.h=H*s;l.x=Math.round(cx-l.w/2);l.y=Math.round(cy-l.h/2);e.target.nextElementSibling.value=Math.round(s*100)+"%";drawCanvas();};
  const layerFilters=[["layerHue","hue","°"],["layerBrightness","brightness","×"],["layerContrast","contrast","×"],["layerSaturation","saturation","×"],["layerBlur","blur"," px"]];
  layerFilters.forEach(([id,key,unit])=>$(id).oninput=e=>{l[key]=Number(e.target.value);e.target.nextElementSibling.value=Number(e.target.value)+(unit===" px"?" px":unit);drawCanvas();});
  $("resetLayerColor").onclick=()=>{l.hue=0;l.brightness=1;l.contrast=1;l.saturation=1;l.blur=0;adjust();render();toast("Filtros de color restablecidos sin alterar la imagen original.");};
  $("createLayerRecolor").onclick=createLocalColorVariant;
+ $("createLayerBackgroundVariant").onclick=createLocalBackgroundVariant;
  $("centerLayer").onclick=()=>{l.x=0;l.y=0;l.w=W;l.h=H;render();};$("frontLayer").onclick=()=>{l.order=Math.max(-1,...state.layers.map(x=>x.order||0))+1;render();};$("backLayer").onclick=()=>{l.order=Math.min(0,...state.layers.map(x=>x.order||0))-1;render();};$("deleteLayer").onclick=()=>{state.layers=state.layers.filter(x=>x.id!==l.id);state.selected="base";render();gallery();};
 }
 function field(label,id,min,max,value,step){const show=id==="scale"?Math.round(value*100)+"%":id==="opacity"?Math.round(value*100)+"%":value;return '<div class="field"><label for="'+id+'">'+label+'</label><input id="'+id+'" type="range" min="'+min+'" max="'+max+'" step="'+step+'" value="'+value+'"><output>'+show+'</output></div>';}
