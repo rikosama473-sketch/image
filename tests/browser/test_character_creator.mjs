@@ -244,7 +244,7 @@ try {
   await page.locator("#jsonFile").setInputFiles(projectPath);
   await page.waitForFunction(() => /Diseño cargado/.test(document.querySelector("#toast")?.textContent || ""));
   await page.waitForFunction((expected) => document.querySelectorAll("#layerList [data-layer]").length >= expected, beforeReload);
-  await page.locator("#layerList [data-layer].active").click();
+  await page.locator("#layerList [data-layer]").filter({hasText:/Prueba completa/}).first().click();
   assert.equal(await page.locator("#layerBrightness").inputValue(), "1.2", "Layer brightness must be restored from JSON");
   assert.equal(await page.locator("#layerHue").inputValue(), "27", "Layer hue must be restored from JSON");
   await page.locator('#nav [data-cat="ai"]').click();
