@@ -129,6 +129,28 @@ try {
   await page.waitForFunction(() => [...document.querySelectorAll("#layerList [data-layer]")].some((el) => /Prueba completa/.test(el.innerText)) &&
     [...document.querySelectorAll("#layerList [data-layer]")].length >= 3);
 
+  // The reusable identity profile is included in AI edits and survives JSON project round-trips.
+  const stableIdentity = "Identidad de prueba: cabello verde oscuro, ojos dorados y pinza azul.";
+  let capturedEditPrompt = "";
+  await page.route("**/api/ai-edit", async (route) => {
+    const payload = route.request().postDataJSON();
+    capturedEditPrompt = String(payload.prompt || "");
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({ image_base64: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4z8DwHwAFAAH/iZk9HQAAAABJRU5ErkJggg==" })
+    });
+  });
+  await page.locator('#nav [data-cat="ai"]').click();
+  const internetMode = await page.locator("#internetModeToggle").getAttribute("aria-pressed");
+  if (internetMode !== "true") await page.locator("#internetModeToggle").click();
+  await page.locator("#aiIdentityProfile").fill(stableIdentity);
+  await page.locator("#aiPrompt").fill("Cambia únicamente la forma del flequillo.");
+  await page.locator("#aiRun").click();
+  await page.waitForSelector(".ai-result");
+  assert.ok(capturedEditPrompt.includes(stableIdentity), "AI prompt must include the persistent identity profile");
+  await page.locator('#nav [data-cat="anatomy"]').click();
+
   const saveProjectPromise = page.waitForEvent("download");
   await page.locator("#saveBtn").click();
   const projectDownload = await saveProjectPromise;
@@ -138,6 +160,7 @@ try {
   assert.ok(projectStat.size > 50, "The project JSON should not be empty");
   const project = JSON.parse(await readFile(projectPath, "utf8"));
   assert.equal(project.app, "IMAGE Character Creator");
+  assert.equal(project.identityProfile, stableIdentity, "Project JSON must preserve the character identity profile");
   assert.ok(Array.isArray(project.layers) && project.layers.length >= 2, "Constructor JSON stores independent layers; the base illustration is described separately");
   assert.ok(project.layers.some((layer) => layer.category === "hair" && layer.sourceCategory === "test"));
 
@@ -145,6 +168,8 @@ try {
   await page.locator("#jsonFile").setInputFiles(projectPath);
   await page.waitForFunction(() => /Diseño cargado/.test(document.querySelector("#toast")?.textContent || ""));
   await page.waitForFunction((expected) => document.querySelectorAll("#layerList [data-layer]").length >= expected, beforeReload);
+  await page.locator('#nav [data-cat="ai"]').click();
+  assert.equal(await page.locator("#aiIdentityProfile").inputValue(), stableIdentity, "Project import must restore the character identity profile");
 
   // Export must be a real, non-empty PNG, not only a button or an alert.
   const pngPromise = page.waitForEvent("download");
