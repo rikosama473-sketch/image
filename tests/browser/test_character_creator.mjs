@@ -149,6 +149,19 @@ try {
   assert.match(await hiddenOriginal.innerText(), /Prueba completa/);
   assert.equal(await hiddenOriginal.locator("[data-visible]").count(), 1);
 
+  // Use a deterministic local raster with a white matte and a red foreground shape.
+  const flatBgDataUrl = await page.evaluate(() => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 32; canvas.height = 32;
+    const context = canvas.getContext("2d");
+    context.fillStyle = "#ffffff"; context.fillRect(0, 0, 32, 32);
+    context.fillStyle = "#e61924"; context.fillRect(8, 8, 16, 16);
+    return canvas.toDataURL("image/png");
+  });
+  const flatBgBytes = Buffer.from(flatBgDataUrl.split(",")[1], "base64");
+  await page.locator("#imageFile").setInputFiles({name:"white-background-test.png",mimeType:"image/png",buffer:flatBgBytes});
+  await page.waitForFunction(() => [...document.querySelectorAll("#layerList [data-layer]")].some((element) => /white-background-test/.test(element.innerText)));
+
   // Flat background removal follows only the connected border region, makes a separate transparent PNG, and keeps its source.
   await page.locator("#layerBackgroundColor").evaluate((element) => { element.value = "#ffffff"; element.dispatchEvent(new Event("input", {bubbles:true})); });
   await page.locator("#layerBackgroundTolerance").evaluate((element) => { element.value = "100"; element.dispatchEvent(new Event("input", {bubbles:true})); });
@@ -212,6 +225,14 @@ try {
   assert.ok(backgroundVariant && String(backgroundVariant.dataUrl || "").startsWith("data:image/png;base64,"), "Local background removal must create a reusable PNG layer");
   const backgroundOriginal = project.layers.find((layer) => layer.id === backgroundVariant.sourceLayerId);
   assert.ok(backgroundOriginal && backgroundOriginal.visible === false, "The source image remains recoverable after background removal");
+  const backgroundAlpha = await page.evaluate(async (dataUrl) => {
+    const image = new Image(); image.src = dataUrl; await image.decode();
+    const canvas = document.createElement("canvas"); canvas.width = image.naturalWidth; canvas.height = image.naturalHeight;
+    const context = canvas.getContext("2d", {willReadFrequently:true}); context.drawImage(image,0,0);
+    return {corner:context.getImageData(0,0,1,1).data[3],center:context.getImageData(16,16,1,1).data[3]};
+  }, backgroundVariant.dataUrl);
+  assert.equal(backgroundAlpha.corner, 0, "Border-connected white background pixels must become transparent");
+  assert.equal(backgroundAlpha.center, 255, "The enclosed red foreground must remain opaque");
   const editedLayer = project.layers.find((layer) => Number(layer.brightness) === 1.2);
   assert.ok(editedLayer, "Per-layer brightness must be saved into project JSON");
   assert.equal(editedLayer.hue, 27);
