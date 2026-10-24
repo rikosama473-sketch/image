@@ -137,6 +137,18 @@ try {
   }
   assert.equal(await page.locator("#layerBrightness").inputValue(), "1.2");
 
+  // Local selective recoloring creates a new PNG layer and keeps the original hidden, not deleted.
+  await page.locator("#layerRecolorSource").fill("#000000");
+  await page.locator("#layerRecolorTarget").fill("#00ff00");
+  await page.locator("#layerRecolorTolerance").evaluate((element) => { element.value = "90"; element.dispatchEvent(new Event("input", {bubbles:true})); });
+  await page.locator("#layerRecolorSoftness").evaluate((element) => { element.value = "30"; element.dispatchEvent(new Event("input", {bubbles:true})); });
+  await page.locator("#createLayerRecolor").click();
+  await page.waitForFunction(() => /Variante recoloreada creada/.test(document.querySelector("#toast")?.textContent || ""));
+  await page.waitForFunction(() => [...document.querySelectorAll("#layerList [data-layer]")].some((element) => /Recolor local/.test(element.innerText)));
+  const hiddenOriginal = page.locator("#layerList [data-layer]").filter({hasText:/Prueba completa/}).first();
+  assert.match(await hiddenOriginal.innerText(), /Prueba completa/);
+  assert.equal(await hiddenOriginal.locator("[data-visible]").count(), 1);
+
   // The reusable identity profile is included in AI edits and survives JSON project round-trips.
   const stableIdentity = "Identidad de prueba: cabello verde oscuro, ojos dorados y pinza azul.";
   let capturedEditPrompt = "";
@@ -184,6 +196,10 @@ try {
   assert.equal(project.identityProfile, stableIdentity, "Project JSON must preserve the character identity profile");
   assert.ok(Array.isArray(project.layers) && project.layers.length >= 2, "Constructor JSON stores independent layers; the base illustration is described separately");
   assert.ok(project.layers.some((layer) => layer.category === "hair" && layer.sourceCategory === "test"));
+  const recolorVariant = project.layers.find((layer) => layer.kind === "local_color_variant");
+  assert.ok(recolorVariant && String(recolorVariant.dataUrl || "").startsWith("data:image/png;base64,"), "Local recolor must be a reusable PNG layer saved in the project JSON");
+  const recolorOriginal = project.layers.find((layer) => layer.id === recolorVariant.sourceLayerId);
+  assert.ok(recolorOriginal && recolorOriginal.visible === false, "Original layer is preserved and hidden rather than deleted");
   const editedLayer = project.layers.find((layer) => Number(layer.brightness) === 1.2);
   assert.ok(editedLayer, "Per-layer brightness must be saved into project JSON");
   assert.equal(editedLayer.hue, 27);
