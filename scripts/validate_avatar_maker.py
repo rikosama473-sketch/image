@@ -26,6 +26,10 @@ def main():
     html=HTML_PATH.read_text(encoding="utf-8"); parser=Inspector(); parser.feed(html)
     dup=sorted({x for x in parser.ids if parser.ids.count(x)>1}); missing=sorted(REQUIRED_IDS-set(parser.ids))
     absent=[x for x in REQUIRED_FEATURES if x not in html]
+    if 'id="aiIdentityProfile"' not in html: absent.append("Persistent identity profile control missing")
+    if html.count("identityProfilePrompt()") < 4: absent.append("Identity profile must affect edit, cutout and anatomy prompts")
+    if 'identityProfile:String(state.identityProfile||"").slice(0,1200)' not in html: absent.append("Identity profile missing from JSON project export")
+    if 'state.identityProfile=typeof d.identityProfile==="string"?d.identityProfile.slice(0,1200):""' not in html: absent.append("Identity profile missing from JSON project import")
     server=SERVER_PATH.read_text(encoding="utf-8")
     server_required=("def validate_mask_data_url(", "def validate_quality(", "def validate_variants(", "def validate_cutout_model(", "def do_remove_background(", "ALLOWED_CUTOUT_MODELS", "_CUTOUT_SESSIONS", 'payload["mask"] = mask_payload', '"n": variants', "OPENAI_API_KEY", "rembg-local")
     absent.extend("server: "+x for x in server_required if x not in server)
