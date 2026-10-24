@@ -86,7 +86,9 @@ def validate_layer(layer: Any) -> str:
 
 
 def entries_from_config(config: dict[str, Any], rows: int, columns: int) -> list[dict[str, Any]]:
-    # Preferred explicit mapping: each grid cell is assigned to a semantic folder.
+    # Cells and regions are two alternative mapping modes; reject ambiguous configs.
+    if config.get("cells") is not None and config.get("regions") is not None:
+        raise ValueError("Usa 'cells' o 'regions', pero no ambos a la vez.")
     entries = config.get("cells")
     if entries is None:
         # Region mode permits a different local rectangle inside a given cell.
@@ -94,6 +96,7 @@ def entries_from_config(config: dict[str, Any], rows: int, columns: int) -> list
     if not isinstance(entries, list) or not entries:
         raise ValueError("Configura una lista no vacía 'cells' o 'regions'.")
     normalized: list[dict[str, Any]] = []
+    seen_targets: set[tuple[int, int, str]] = set()
     for index, item in enumerate(entries, start=1):
         if not isinstance(item, dict):
             raise ValueError(f"Elemento {index} debe ser un objeto.")
@@ -102,11 +105,17 @@ def entries_from_config(config: dict[str, Any], rows: int, columns: int) -> list
         if row > rows or column > columns:
             raise ValueError(f"Elemento {index}: fila/columna fuera de la grilla.")
         layer = validate_layer(item.get("layer"))
+        target = (row, column, layer)
+        if target in seen_targets:
+            raise ValueError(f"Asignación duplicada para fila {row}, columna {column}, capa {layer!r}.")
+        seen_targets.add(target)
         bbox = item.get("bbox")
         if bbox is not None:
             if not isinstance(bbox, list) or len(bbox) != 4:
                 raise ValueError(f"Elemento {index}.bbox debe ser [x, y, ancho, alto].")
-            x, y, width, height = [int(v) for v in bbox]
+            if any(isinstance(v, bool) or not isinstance(v, int) for v in bbox):
+                raise ValueError(f"Elemento {index}.bbox requiere cuatro enteros.")
+            x, y, width, height = bbox
             if min(x, y) < 0 or min(width, height) <= 0:
                 raise ValueError(f"Elemento {index}.bbox contiene valores no válidos.")
             bbox = [x, y, width, height]
@@ -125,6 +134,8 @@ def fit_to_canvas(crop: Image.Image, size: tuple[int, int], resample: Image.Resa
 
 
 def process(input_path: Path, config_path: Path, output_dir: Path) -> dict[str, Any]:
+    if input_path.suffix.lower() not in SUPPORTED_EXTENSIONS:
+        raise ValueError("La imagen de entrada debe ser PNG, JPEG, WebP, BMP, TIFF o TIF.")
     config = load_config(config_path)
     try:
         with Image.open(input_path) as opened:
@@ -174,7 +185,7 @@ def process(input_path: Path, config_path: Path, output_dir: Path) -> dict[str, 
             x1, y1, x2, y2 = x1 + bx, y1 + by, x1 + bx + bw, y1 + by + bh
 
         cropped = source.crop((x1, y1, x2, y2))
-        if cropped.getbbox() is None:
+        if cropped.getchannel("A").getbbox() is None:
             manifest["errors"].append(
                 {"row": row, "column": column, "layer": layer, "error": "recorte completamente transparente"}
             )
