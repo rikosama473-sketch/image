@@ -28,6 +28,8 @@ def main():
     absent=[x for x in REQUIRED_FEATURES if x not in html]
     if 'id="aiIdentityProfile"' not in html: absent.append("Persistent identity profile control missing")
     if html.count("identityProfilePrompt()") < 4: absent.append("Identity profile must affect edit, cutout and anatomy prompts")
+    for token in ("function layerFilter(layer)", "ctx.filter=layerFilter(l)", 'field("Tono de capa","layerHue"', 'field("Brillo","layerBrightness"', 'field("Contraste","layerContrast"', 'field("Saturación","layerSaturation"', 'field("Desenfoque suave","layerBlur"', 'id="resetLayerColor"'):
+        if token not in html: absent.append("Local layer adjustment missing: "+token)
     if 'identityProfile:String(state.identityProfile||"").slice(0,1200)' not in html: absent.append("Identity profile missing from JSON project export")
     if 'state.identityProfile=typeof d.identityProfile==="string"?d.identityProfile.slice(0,1200):""' not in html: absent.append("Identity profile missing from JSON project import")
     server=SERVER_PATH.read_text(encoding="utf-8")
