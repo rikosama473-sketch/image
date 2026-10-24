@@ -138,8 +138,8 @@ try {
   assert.equal(await page.locator("#layerBrightness").inputValue(), "1.2");
 
   // Local selective recoloring creates a new PNG layer and keeps the original hidden, not deleted.
-  await page.locator("#layerRecolorSource").fill("#000000");
-  await page.locator("#layerRecolorTarget").fill("#00ff00");
+  await page.locator("#layerRecolorSource").evaluate((element) => { element.value = "#000000"; element.dispatchEvent(new Event("input", {bubbles:true})); });
+  await page.locator("#layerRecolorTarget").evaluate((element) => { element.value = "#00ff00"; element.dispatchEvent(new Event("input", {bubbles:true})); });
   await page.locator("#layerRecolorTolerance").evaluate((element) => { element.value = "90"; element.dispatchEvent(new Event("input", {bubbles:true})); });
   await page.locator("#layerRecolorSoftness").evaluate((element) => { element.value = "30"; element.dispatchEvent(new Event("input", {bubbles:true})); });
   await page.locator("#createLayerRecolor").click();
