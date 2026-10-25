@@ -268,6 +268,16 @@ def main(argv: list[str] | None = None) -> int:
 
     cutout_session = None
     if args.transparent_background:
+        cache_root = Path(os.environ.get("U2NET_HOME", str(Path.home() / ".u2net"))).expanduser()
+        cutout_model_path = cache_root / "isnet-anime.onnx"
+        if not args.allow_download and not cutout_model_path.is_file():
+            print(
+                f"Falta el modelo local de recorte {cutout_model_path}. "
+                "Activá la descarga inicial de modelos o instalá el peso isnet-anime.onnx en esa caché. "
+                "No se descargó nada porque la opción está desactivada.",
+                file=sys.stderr,
+            )
+            return 2
         try:
             import onnxruntime as ort
             from rembg import new_session
