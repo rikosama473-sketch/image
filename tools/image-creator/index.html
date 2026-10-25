@@ -28,7 +28,7 @@
       <section class="hero">
         <div class="eyebrow">TU COLECCIÓN · TU ESTILO · TU MOTOR</div>
         <h1>Imágenes a tu manera<span>.</span></h1>
-        <p>Generá nuevas imágenes con un modelo compatible y tu futura LoRA de estilo. Todo el proceso de generación se ejecuta en esta PC.</p>
+        <p>Escribí lo que imaginás. IMAGE prepara el prompt para un solo personaje anime, limita el consumo y crea PNG con transparencia mediante recorte local. La inferencia se ejecuta en esta PC.</p>
       </section>
 
       <div class="workspace">
@@ -40,10 +40,36 @@
 
           <form id="creator-form">
             <label class="field">
+              <span>¿Qué querés crear? <b>*</b></span>
+              <textarea id="prompt" name="prompt" rows="4" required maxlength="8000" placeholder="Personaje anime original, cabello plateado largo, ojos azules brillantes, ilustración detallada…"></textarea>
+            </label>
+
+            <details class="negative-settings">
+              <summary>Bloqueos automáticos y negativos extra <span>Se aplican siempre</span></summary>
+              <p>El motor agrega negativos de anatomía, manos y dedos deformes; evita personajes duplicados, fondos, auras, efectos flotantes, emojis, textos, logos y marcas de agua cuando el modo personaje está activo.</p>
+            <label class="field">
+              <span>Extras que querés evitar (opcional)</span>
+              <input id="negative-prompt" name="negative_prompt" autocomplete="off" placeholder="Ej.: sombrero, espada, lentes, expresión triste…">
+              <small>Solo suma términos: los bloqueos base no se pueden borrar desde este campo.</small>
+            </label>
+            </details>
+
+            <div class="model-preset-note"><strong>Modelo anime preconfigurado</strong><span>La primera generación descarga los pesos del modelo (varios GB) y el recortador anime local. Después quedan en caché. Tus prompts e imágenes no se envían a una API de generación remota.</span></div>
+
+            <div class="character-options">
+              <label class="check-row"><input id="character-mode" type="checkbox" checked><span><strong>Un personaje anime</strong><small>Evita multitudes, duplicados, collages, fondos detallados, auras, emojis y elementos flotantes.</small></span></label>
+              <label class="check-row"><input id="transparent-background" type="checkbox" checked><span><strong>PNG con fondo transparente</strong><small>Genera sobre blanco y aplica un segundo paso local isnet-anime. No depende de que el modelo invente transparencia.</small></span></label>
+            </div>
+
+            <details class="advanced">
+              <summary>Motor y ajustes avanzados <span>Modelo · resolución · semilla · CPU</span></summary>
+              <div class="model-settings">
+              <p class="advanced-intro">Pensado para empezar en el Ryzen 5 5600G: una tarea por vez y un límite de hilos CPU. Los pesos se descargan solo al generar si la descarga está autorizada.</p>
+            <label class="field">
               <span>Modelo base <b>*</b></span>
-              <input id="model" name="model" list="local-model-options" required autocomplete="off" placeholder="models/tu-modelo-diffusers">
+              <input id="model" name="model" list="local-model-options" required autocomplete="off" value="Ojimi/anime-kawai-diffusion" placeholder="models/tu-modelo-diffusers">
               <datalist id="local-model-options"></datalist>
-              <small>Carpeta local del modelo compatible. No hay un modelo elegido automáticamente.</small>
+              <small>Modelo anime inicial preconfigurado. También podés elegir una carpeta local compatible.</small>
             </label>
 
             <div class="model-scan-row">
@@ -58,37 +84,28 @@
               <small>Debe ser compatible con el modelo base. La LoRA propia se entrenará en una fase separada.</small>
             </label>
 
-            <label class="field">
-              <span>¿Qué querés crear? <b>*</b></span>
-              <textarea id="prompt" name="prompt" rows="4" required maxlength="8000" placeholder="Personaje anime original, cabello plateado largo, ojos azules brillantes, ilustración detallada…"></textarea>
-            </label>
 
-            <label class="field">
-              <span>Evitar en la imagen</span>
-              <input id="negative-prompt" name="negative_prompt" autocomplete="off" placeholder="borroso, manos deformes, texto, marca de agua…">
-            </label>
-
-            <details class="advanced">
-              <summary>Ajustes de generación <span>Semilla · resolución · LoRA · memoria</span></summary>
+              </div>
               <div class="settings-grid">
-                <label class="field"><span>Ancho</span><input id="width" type="number" min="64" max="2048" step="8" value="512"></label>
-                <label class="field"><span>Alto</span><input id="height" type="number" min="64" max="2048" step="8" value="512"></label>
-                <label class="field"><span>Pasos</span><input id="steps" type="number" min="1" max="150" value="20"></label>
-                <label class="field"><span>Imágenes</span><input id="count" type="number" min="1" max="8" value="1"></label>
+                <label class="field"><span>Ancho</span><input id="width" type="number" min="64" max="768" step="8" value="512"></label>
+                <label class="field"><span>Alto</span><input id="height" type="number" min="64" max="1024" step="8" value="768"></label>
+                <label class="field"><span>Pasos</span><input id="steps" type="number" min="1" max="30" value="16"></label>
+                <label class="field"><span>Imágenes</span><input id="count" type="number" min="1" max="2" value="1"></label>
                 <label class="field"><span>Semilla</span><input id="seed" type="number" min="0" max="4294967295" value="7"></label>
-                <label class="field"><span>Guía</span><input id="guidance-scale" type="number" min="0" max="40" step="0.5" value="7"></label>
+                <label class="field"><span>Guía</span><input id="guidance-scale" type="number" min="0" max="12" step="0.5" value="6.5"></label>
                 <label class="field"><span>Intensidad LoRA</span><input id="lora-scale" type="number" min="0" max="2" step="0.05" value="0.8"></label>
                 <label class="field"><span>Precisión</span>
                   <select id="precision"><option value="auto">Automática</option><option value="fp16">FP16</option><option value="bf16">BF16</option><option value="fp32">FP32</option></select>
                 </label>
                 <label class="field full"><span>Dispositivo</span>
-                  <select id="device"><option value="auto">Automático (recomendado)</option><option value="cuda">GPU CUDA</option><option value="mps">Apple MPS</option><option value="cpu">CPU</option></select>
+                  <select id="device"><option value="cpu" selected>CPU limitado (AMD Ryzen 5 5600G)</option><option value="auto">Automático</option><option value="cuda">GPU CUDA NVIDIA</option><option value="mps">Apple MPS</option></select>
                 </label>
+                <label class="field full"><span>Hilos máximos de CPU</span><input id="cpu-threads" type="number" min="1" max="6" step="1" value="4"><small>Máximo de 6; empezá con 4 para dejar recursos al sistema.</small></label>
               </div>
               <div class="toggle-list">
-                <label class="check-row"><input id="low-memory" type="checkbox" checked><span><strong>Modos de ahorro de memoria</strong><small>Activa optimizaciones disponibles en el pipeline.</small></span></label>
+                <label class="check-row"><input id="low-memory" type="checkbox" checked><span><strong>Modos de ahorro de memoria</strong><small>Atención/VAE por partes cuando el pipeline lo admite.</small></span></label>
                 <label class="check-row"><input id="cpu-offload" type="checkbox"><span><strong>Descargar componentes a la RAM</strong><small>Solo para GPU CUDA; puede reducir VRAM y ralentizar la generación.</small></span></label>
-                <label class="check-row warning"><input id="allow-download" type="checkbox"><span><strong>Permitir descargas de modelos</strong><small>Desactivado por defecto. Al marcarlo, el motor podrá bajar pesos remotos.</small></span></label>
+                <label class="check-row warning"><input id="allow-download" type="checkbox" checked><span><strong>Permitir descarga inicial del modelo anime recomendado</strong><small>Descarga pesos a esta PC y los guarda en caché. No activa una API remota ni sube tus imágenes.</small></span></label>
               </div>
             </details>
 
@@ -99,7 +116,7 @@
               <p class="diagnostics-note">No genera imágenes, no descarga pesos y no garantiza la compatibilidad visual del modelo.</p>
             </section>
             <button id="generate-button" type="submit"><span>Generar imágenes</span><span aria-hidden="true">↗</span></button>
-            <p class="privacy-note"><span class="lock">◇</span> No se envían prompts ni imágenes a una API remota. Solo se descargan pesos si activás la opción anterior.</p>
+            <p class="privacy-note"><span class="lock">◇</span> Prompt e imágenes se procesan localmente. La descarga inicial obtiene únicamente archivos de modelos; no se apilan generaciones simultáneas.</p>
           </form>
         </section>
 
@@ -117,7 +134,7 @@
           <div id="gallery" class="gallery">
             <div class="empty-state"><div class="empty-symbol">▧</div><strong>Todavía no hay resultados</strong><p>Las imágenes generadas se guardarán en <code>outputs/generated</code>.</p></div>
           </div>
-          <p class="footnote">La calidad y el consumo dependen del modelo instalado y del hardware. Una LoRA aprende similitudes de estilo; no garantiza reproducir píxeles exactos.</p>
+          <p class="footnote">Los negativos ayudan, pero no garantizan anatomía perfecta. La transparencia se verifica después con el segmentador local; los bordes y el cabello fino deben revisarse. El rendimiento real del modelo aún debe medirse en tu PC.</p>
         </section>
       </div>
     </main>
