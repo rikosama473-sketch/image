@@ -49,3 +49,13 @@ Generador local de imágenes anime que aprende el patrón visual de la colecció
 - Garantizar 2 GB de RAM sin una prueba en hardware real.
 - Garantizar reproducción pixel a pixel de una imagen con una LoRA.
 - Controles anatómicos exactos que todavía no estén respaldados por datos y pruebas.
+
+
+## Perfil directo y recursos reducidos (2026-10)
+
+- La vista principal empieza por una sola caja de prompt; selección de modelo, LoRA, semilla y parámetros técnicos quedan plegados en ajustes avanzados.
+- Candidato inicial preconfigurado: `Ojimi/anime-kawai-diffusion`. El checkpoint no se incorpora en Git; la descarga de pesos ocurre en la primera generación si se autoriza. La caché queda en la PC.
+- Perfil predeterminado: CPU, 512×768, 16 pasos, una salida, cuatro hilos (1–6 configurables), un solo trabajo activo y máximo 786.432 píxeles por imagen.
+- El prompt positivo se expande con una descripción de personaje único; los negativos base se combinan siempre con los negativos extra. Se cubren errores anatómicos, personajes duplicados, collages, escenarios, auras, partículas, emojis, textos, logos y marcas de agua.
+- Para un PNG alfa real, el motor genera sobre blanco y aplica el segmentador local `rembg/isnet-anime` con hilos ONNX limitados. Si falta el segmentador o no se detecta transparencia, la generación falla claramente; nunca se declara transparente solo por el prompt.
+- Los negativos son heurísticos, no garantías; requieren revisión visual. La configuración aún debe medirse en el equipo objetivo.
