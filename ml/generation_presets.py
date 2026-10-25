@@ -1,7 +1,7 @@
 """Safe anime-character prompt defaults for IMAGE's local CPU-oriented creator."""
 from __future__ import annotations
 
-RECOMMENDED_MODEL_ID = "Ojimi/anime-kawai-diffusion"
+RECOMMENDED_MODEL_ID = "hakurei/waifu-diffusion"
 
 BASE_NEGATIVE_PROMPT = (
     "worst quality, low quality, lowres, blurry, jpeg artifacts, noisy image, "
