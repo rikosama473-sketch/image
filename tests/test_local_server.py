@@ -22,7 +22,7 @@ class LocalServerTests(unittest.TestCase):
         self.assertFalse(config["allow_download"])
         self.assertEqual(config["count"], 1)
         self.assertTrue(config["low_memory"])
-        self.assertEqual(config["device"], "auto")
+        self.assertEqual(config["device"], "cpu")
 
     def test_prompt_and_model_are_required(self) -> None:
         for payload in (
