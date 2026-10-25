@@ -8,7 +8,7 @@ from generation_presets import BASE_NEGATIVE_PROMPT, CHARACTER_ONLY_NEGATIVE_PRO
 
 class GenerationPresetTests(unittest.TestCase):
     def test_recommended_model_is_preconfigured(self):
-        self.assertEqual(RECOMMENDED_MODEL_ID, "Ojimi/anime-kawai-diffusion")
+        self.assertEqual(RECOMMENDED_MODEL_ID, "hakurei/waifu-diffusion")
     def test_character_prompt_blocks_common_non_character_extras(self):
         positive, negative = build_generation_prompts("silver hair, blue eyes")
         self.assertIn("one single anime character", positive)
