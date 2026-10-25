@@ -20,7 +20,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
-from generation_presets import RECOMMENDED_MODEL_ID, build_generation_prompts
+from generation_presets import RECOMMENDED_MODEL_ID, RECOMMENDED_MODEL_REVISION, build_generation_prompts
 from urllib.parse import parse_qs, unquote, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -246,6 +246,7 @@ def _diagnose_environment(model: str = "", lora: str = "", device: str = "auto",
     return {
         "python_version": sys.version.split()[0], "platform": sys.platform,
         "recommended_model": RECOMMENDED_MODEL_ID,
+        "recommended_model_revision": RECOMMENDED_MODEL_REVISION,
         "optional_dependencies": {"rembg": _module_available("rembg"), "onnxruntime": _module_available("onnxruntime")},
         "engine_exists": engine_exists, "dependencies": dependencies,
         "dependencies_ready": all(dependencies.values()) and engine_exists,
@@ -271,6 +272,9 @@ def _validate_payload(data: Any) -> dict[str, Any]:
         raise ValueError("Indica una carpeta de modelo compatible.")
     if len(model) > 2048 or not isinstance(negative_prompt, str) or len(negative_prompt) > MAX_PROMPT_CHARS:
         raise ValueError("El modelo o el prompt superan el límite permitido.")
+    model_revision = data.get("model_revision", RECOMMENDED_MODEL_REVISION)
+    if not isinstance(model_revision, str) or not model_revision.strip() or len(model_revision) > 128 or not re.fullmatch(r"[A-Za-z0-9._/-]+", model_revision):
+        raise ValueError("La revisión/variante del modelo no es válida.")
     lora = data.get("lora", "")
     weight_name = data.get("lora_weight_name", "")
     if not isinstance(lora, str) or len(lora) > 2048:
@@ -334,6 +338,7 @@ def _validate_payload(data: Any) -> dict[str, Any]:
     )
     return {
         "model": model.strip(),
+        "model_revision": model_revision.strip(),
         "lora": lora.strip(),
         "lora_weight_name": weight_name.strip(),
         "prompt": effective_prompt,
@@ -362,6 +367,7 @@ def _build_command(config: dict[str, Any], job_dir: Path) -> list[str]:
     command = [
         sys.executable, str(ENGINE),
         "--model", config["model"],
+        "--revision", config["model_revision"],
         "--prompt", config["prompt"],
         "--user-prompt", config["user_prompt"],
         "--negative-prompt", config["negative_prompt"],
