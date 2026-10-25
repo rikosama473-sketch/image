@@ -7,7 +7,7 @@
 3. Ejecuta `start-image-creator.bat`.
 4. Escribe una descripción y pulsa **Generar imágenes**.
 
-La interfaz preconfigura `Ojimi/anime-kawai-diffusion` como candidato anime de arranque basado en Stable Diffusion 1.x. Sus pesos no se incluyen en Git porque son grandes. La primera generación los descarga a la caché local cuando se permite esa descarga; el segmentador `isnet-anime` también descarga sus pesos locales en su primer uso.
+La interfaz preconfigura `hakurei/waifu-diffusion` como candidato anime de arranque basado en Stable Diffusion 1.x (rama principal FP32; la variante FP16 existe pero no se elige por defecto para CPU). Sus pesos no se incluyen en Git porque son grandes. La primera generación los descarga a la caché local cuando se permite esa descarga; el segmentador `isnet-anime` también descarga sus pesos locales en su primer uso.
 
 ## Perfil seguro inicial
 
