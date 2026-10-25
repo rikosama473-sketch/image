@@ -19,6 +19,8 @@ import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
+
+from generation_presets import RECOMMENDED_MODEL_ID, RECOMMENDED_MODEL_REVISION, build_generation_prompts
 from urllib.parse import parse_qs, unquote, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,6 +30,8 @@ OUTPUT_ROOT = ROOT / "outputs" / "generated"
 MAX_BODY_BYTES = 64 * 1024
 MAX_PROMPT_CHARS = 8000
 MAX_JOBS_IN_MEMORY = 80
+MAX_PIXELS_PER_IMAGE = 786432
+MAX_CPU_THREADS = 6
 JOBS: dict[str, dict[str, Any]] = {}
 JOBS_LOCK = threading.Lock()
 JOB_ID_RE = re.compile(r"^[0-9a-f]{32}$")
@@ -241,6 +245,9 @@ def _diagnose_environment(model: str = "", lora: str = "", device: str = "auto",
     engine_exists = ENGINE.is_file()
     return {
         "python_version": sys.version.split()[0], "platform": sys.platform,
+        "recommended_model": RECOMMENDED_MODEL_ID,
+        "recommended_model_revision": RECOMMENDED_MODEL_REVISION,
+        "optional_dependencies": {"rembg": _module_available("rembg"), "onnxruntime": _module_available("onnxruntime")},
         "engine_exists": engine_exists, "dependencies": dependencies,
         "dependencies_ready": all(dependencies.values()) and engine_exists,
         "model": {"state": model_state, "ready_to_try": model_ready, "message": model_message},
@@ -255,7 +262,7 @@ def _validate_payload(data: Any) -> dict[str, Any]:
     if not isinstance(data, dict):
         raise ValueError("El cuerpo de la solicitud debe ser un objeto JSON.")
     prompt = data.get("prompt", "")
-    model = data.get("model", "")
+    model = data.get("model", RECOMMENDED_MODEL_ID)
     negative_prompt = data.get("negative_prompt", "")
     if not isinstance(prompt, str) or not prompt.strip():
         raise ValueError("Escribe una descripción de la imagen.")
@@ -265,6 +272,9 @@ def _validate_payload(data: Any) -> dict[str, Any]:
         raise ValueError("Indica una carpeta de modelo compatible.")
     if len(model) > 2048 or not isinstance(negative_prompt, str) or len(negative_prompt) > MAX_PROMPT_CHARS:
         raise ValueError("El modelo o el prompt superan el límite permitido.")
+    model_revision = data.get("model_revision", RECOMMENDED_MODEL_REVISION)
+    if not isinstance(model_revision, str) or not model_revision.strip() or len(model_revision) > 128 or not re.fullmatch(r"[A-Za-z0-9._/-]+", model_revision):
+        raise ValueError("La revisión/variante del modelo no es válida.")
     lora = data.get("lora", "")
     weight_name = data.get("lora_weight_name", "")
     if not isinstance(lora, str) or len(lora) > 2048:
@@ -296,8 +306,12 @@ def _validate_payload(data: Any) -> dict[str, Any]:
             raise ValueError(f"{key} debe estar entre {low} y {high}.")
         return value
 
-    device = data.get("device", "auto")
+    device = data.get("device", "cpu")
     precision = data.get("precision", "auto")
+    character_mode = data.get("character_mode", True)
+    transparent_background = data.get("transparent_background", True)
+    if not isinstance(character_mode, bool) or not isinstance(transparent_background, bool):
+        raise ValueError("Los modos de personaje y transparencia deben ser booleanos.")
     if device not in {"auto", "cpu", "cuda", "mps"}:
         raise ValueError("Dispositivo no válido.")
     if precision not in {"auto", "fp16", "bf16", "fp32"}:
@@ -307,22 +321,39 @@ def _validate_payload(data: Any) -> dict[str, Any]:
     low_memory = data.get("low_memory", True)
     if not all(isinstance(flag, bool) for flag in (allow_download, cpu_offload, low_memory)):
         raise ValueError("Las opciones de memoria/descarga deben ser booleanas.")
-    width = integer("width", 512, 64, 2048)
-    height = integer("height", 512, 64, 2048)
+    width = integer("width", 512, 64, 768)
+    height = integer("height", 768, 64, 1024)
     if width % 8 or height % 8:
         raise ValueError("El ancho y el alto deben ser múltiplos de ocho.")
+    if width * height > MAX_PIXELS_PER_IMAGE:
+        raise ValueError("Para cuidar la RAM, el área máxima es 786.432 píxeles por imagen.")
+    cpu_threads = integer("cpu_threads", 4, 1, MAX_CPU_THREADS)
+    steps = integer("steps", 16, 1, 30)
+    count = integer("count", 1, 1, 2)
+    guidance_scale = number("guidance_scale", 6.5, 0, 12)
+    user_prompt = prompt.strip()
+    user_negative_prompt = negative_prompt.strip()
+    effective_prompt, effective_negative_prompt = build_generation_prompts(
+        user_prompt, user_negative_prompt, character_mode, transparent_background
+    )
     return {
         "model": model.strip(),
+        "model_revision": model_revision.strip(),
         "lora": lora.strip(),
         "lora_weight_name": weight_name.strip(),
-        "prompt": prompt.strip(),
-        "negative_prompt": negative_prompt.strip(),
+        "prompt": effective_prompt,
+        "user_prompt": user_prompt,
+        "negative_prompt": effective_negative_prompt,
+        "user_negative_prompt": user_negative_prompt,
+        "character_mode": character_mode,
+        "transparent_background": transparent_background,
         "width": width,
         "height": height,
-        "steps": integer("steps", 20, 1, 150),
-        "guidance_scale": number("guidance_scale", 7.0, 0, 40),
+        "steps": steps,
+        "guidance_scale": guidance_scale,
         "seed": integer("seed", 7, 0, 2**32 - 1),
-        "count": integer("count", 1, 1, 8),
+        "count": count,
+        "cpu_threads": cpu_threads,
         "lora_scale": number("lora_scale", 0.8, 0, 2),
         "device": device,
         "precision": precision,
@@ -336,8 +367,12 @@ def _build_command(config: dict[str, Any], job_dir: Path) -> list[str]:
     command = [
         sys.executable, str(ENGINE),
         "--model", config["model"],
+        "--revision", config["model_revision"],
         "--prompt", config["prompt"],
+        "--user-prompt", config["user_prompt"],
         "--negative-prompt", config["negative_prompt"],
+        "--user-negative-prompt", config["user_negative_prompt"],
+        "--cpu-threads", str(config["cpu_threads"]),
         "--width", str(config["width"]),
         "--height", str(config["height"]),
         "--steps", str(config["steps"]),
@@ -349,6 +384,10 @@ def _build_command(config: dict[str, Any], job_dir: Path) -> list[str]:
         "--precision", config["precision"],
         "--output-dir", str(job_dir),
     ]
+    if config["character_mode"]:
+        command.append("--character-mode")
+    if config["transparent_background"]:
+        command.append("--transparent-background")
     if config["lora"]:
         command.extend(["--lora", config["lora"]])
     if config["lora_weight_name"]:
@@ -368,13 +407,18 @@ def _run_job(job_id: str, config: dict[str, Any], job_dir: Path) -> None:
         JOBS[job_id]["started_at"] = time.time()
         JOBS[job_id]["output_dir"] = str(job_dir.relative_to(OUTPUT_ROOT))
     try:
+        job_env = os.environ.copy()
+        threads = str(config.get("cpu_threads", 4))
+        for variable in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS", "NUMEXPR_NUM_THREADS"):
+            job_env[variable] = threads
         result = subprocess.run(
             command,
             cwd=ROOT,
+            env=job_env,
             stdin=subprocess.DEVNULL,
             capture_output=True,
             text=True,
-            timeout=24 * 60 * 60,
+            timeout=60 * 60,
             check=False,
         )
         summary = (result.stdout or "")[-12000:]

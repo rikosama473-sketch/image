@@ -142,3 +142,22 @@ footer { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; justify
 .model-scan-row select{min-width:0;width:100%;border:1px solid #34445b;border-radius:8px;background:#0b111a;color:#e6edf9;padding:8px;font-size:10px}
 .model-scan-status{margin:4px 0 10px;color:#98a8bf;font-size:10px;line-height:1.5;overflow-wrap:anywhere}
 @media(max-width:560px){.model-scan-row{grid-template-columns:1fr 1fr}.model-scan-row select{grid-column:1/-1;grid-row:2}.model-scan-row button:first-child{grid-column:1}.model-scan-row button:last-child{grid-column:2;grid-row:1}}
+
+
+/* Prompt-first anime generator: safe defaults stay visible, technical controls fold away. */
+.model-preset-note{display:grid;gap:5px;margin:0 0 14px;padding:11px 13px;border:1px solid #35536f;border-radius:10px;background:#0e1a2a}
+.model-preset-note strong{font-size:11px;color:#b7d2ff}
+.model-preset-note span{font-size:10px;line-height:1.55;color:#aebed3}
+.character-options{display:grid;gap:10px;padding:12px 13px;margin:0 0 14px;border:1px solid #314054;border-radius:11px;background:#0d141e}
+.character-options .check-row strong{font-size:12px}
+.character-options .check-row small{font-size:10px;line-height:1.5}
+.negative-settings{margin:0 0 15px;border:1px solid #2a3444;border-radius:10px;background:#0c1118}
+.negative-settings summary{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;padding:12px 13px;cursor:pointer;font-size:11px;font-weight:700;color:#dce4f1}
+.negative-settings summary span{font-size:9px;color:#a9d7b8;font-weight:500}
+.negative-settings>p{margin:0;padding:0 13px 11px;color:#97a6ba;font-size:10px;line-height:1.55}
+.negative-settings .field{margin:0;padding:0 13px 13px}
+.model-settings{padding:0 13px 12px;border-bottom:1px solid var(--line-soft)}
+.model-settings .field{margin-top:12px;margin-bottom:10px}
+.model-settings .model-scan-row{margin-top:7px}
+.model-settings .model-scan-status{margin-bottom:8px}
+.advanced-intro{font-size:10px;line-height:1.55;color:#9baec8;margin:12px 0 8px}

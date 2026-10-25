@@ -409,6 +409,7 @@ try {
   const generatorPage = await context.newPage();
   generatorPage.on("pageerror", (error) => pageErrors.push("local generator: " + error.message));
   await generatorPage.goto(generatorUrl + "/", { waitUntil: "domcontentloaded" });
+  await generatorPage.locator("details.advanced").evaluate((element) => { element.open = true; });
   await generatorPage.waitForSelector("#scan-models-button");
   await generatorPage.locator("#scan-models-button").click();
   await generatorPage.waitForFunction(() => {

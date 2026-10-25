@@ -24,6 +24,9 @@ class DiffusionEngineContractTests(unittest.TestCase):
         self.assertEqual(args.count, 1)
         self.assertEqual(args.device, "auto")
         self.assertEqual(args.precision, "auto")
+        self.assertEqual(args.cpu_threads, 4)
+        self.assertFalse(args.transparent_background)
+        self.assertFalse(args.character_mode)
 
     def test_resolution_must_be_a_multiple_of_eight(self) -> None:
         parser, args = self.parse("--width", "513")
@@ -34,6 +37,12 @@ class DiffusionEngineContractTests(unittest.TestCase):
         parser, args = self.parse("--count", "17")
         with self.assertRaises(SystemExit):
             engine.validate_args(args, parser)
+
+    def test_local_profile_rejects_excessive_resolution_steps_and_threads(self) -> None:
+        for args_list in (("--width", "776"), ("--steps", "31"), ("--cpu-threads", "7"), ("--count", "3")):
+            parser, args = self.parse(*args_list)
+            with self.subTest(args=args_list), self.assertRaises(SystemExit):
+                engine.validate_args(args, parser)
 
     def test_local_lora_file_becomes_parent_plus_weight_name(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

@@ -121,9 +121,13 @@
   function payloadFromForm() {
     return {
       model: value("model").trim(),
+      model_revision: value("model-revision"),
       lora: value("lora").trim(),
       prompt: value("prompt").trim(),
       negative_prompt: value("negative-prompt").trim(),
+      character_mode: checked("character-mode"),
+      transparent_background: checked("transparent-background"),
+      cpu_threads: Number(value("cpu-threads")),
       width: Number(value("width")),
       height: Number(value("height")),
       steps: Number(value("steps")),
@@ -178,7 +182,7 @@
     requestInFlight = true;
     setBusy(true);
     jobOutput.hidden = true;
-    setStatus("working", "Preparando el motor", "Se validan parámetros y se carga el modelo local. Si el modelo no está instalado, la ejecución fallará sin descargar nada.");
+    setStatus("working", "Preparando el motor", checked("allow-download") ? "Si faltan pesos, se descargarán una vez a la caché local. Después el modelo y el recortador se ejecutan en esta PC." : "Se intenta usar solamente el modelo local o la caché ya existente.");
     try {
       const data = await api("/api/generate", {
         method: "POST",
@@ -223,7 +227,8 @@
         model: value("model").trim(),
         lora: value("lora").trim(),
         device: value("device"),
-        allow_download: String(checked("allow-download"))
+        allow_download: String(checked("allow-download")),
+        transparent_background: String(checked("transparent-background"))
       });
       const report = await api("/api/diagnostics?" + query.toString());
       addDiagnosticRow("Python", report.python_version + " · " + report.platform, "ok");
@@ -232,10 +237,12 @@
         addDiagnosticRow(name, present ? "Paquete detectable en este entorno." : "Falta instalar este paquete para usar difusión local.", present ? "ok" : "error");
       }
       addDiagnosticRow("Modelo", report.model.message, report.model.ready_to_try ? "ok" : "warn");
+      const cutoutAvailable = Boolean(report.optional_dependencies && report.optional_dependencies.rembg && report.optional_dependencies.onnxruntime);
+      addDiagnosticRow("PNG transparente", cutoutAvailable ? "Segmentador anime y ONNX Runtime detectados." : "Falta instalar requirements-avatar-cutout.txt para el recorte local isnet-anime.", checked("transparent-background") && !cutoutAvailable ? "error" : (checked("transparent-background") ? "ok" : "warn"));
       const loraKind = ["not_configured", "local_file", "local_directory"].includes(report.lora.state) ? "ok" : "warn";
       addDiagnosticRow("LoRA", report.lora.message, loraKind);
       addDiagnosticRow("Dispositivo", (report.device_requested || "auto") + " · " + report.device_note, "warn");
-      const ready = report.dependencies_ready && report.model.ready_to_try;
+      const ready = report.dependencies_ready && report.model.ready_to_try && (!checked("transparent-background") || cutoutAvailable);
       diagnosticsSummary.textContent = ready ? "REQUISITOS BÁSICOS DETECTADOS" : "REVISAR ANTES DE GENERAR";
       setStatus(ready ? "success" : "idle", ready ? "Revisión preliminar aprobada" : "Todavía faltan comprobaciones", ready ? "Los requisitos básicos parecen estar presentes. La carga e inferencia reales aún pueden revelar incompatibilidades." : "Corregí los puntos señalados. Esta revisión no descargó modelos ni lanzó una generación.");
     } catch (error) {
@@ -312,6 +319,9 @@
   });
   $("device").addEventListener("change", () => {
     if ($("device").value !== "cuda") $("cpu-offload").checked = false;
+  });
+  $("transparent-background").addEventListener("change", () => {
+    setStatus("idle", "Transparencia actualizada", checked("transparent-background") ? "Se aplicará segmentación anime local después de generar. El recortador necesita estar instalado y puede descargar sus pesos la primera vez." : "Se conservará el fondo generado por el modelo.");
   });
   $("lora").addEventListener("input", () => {
     $("lora-scale").disabled = !$("lora").value.trim();

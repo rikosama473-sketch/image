@@ -112,3 +112,13 @@ Abrir el taller en navegador con el lanzador local y probar el filtro «Uso como
 - Se terminó el flujo de clasificación de piezas: la biblioteca local muestra categorías en español y conserva tanto la categoría reutilizable elegida como la categoría de origen de la extracción. Al volver a añadir una pieza, su procedencia categórica viaja con la capa y se conserva en el JSON del Constructor.
 
 - El generador local ahora permite explorar carpetas de modelos Diffusers existentes mediante `/api/models` y el botón **Buscar modelos locales**. La búsqueda se limita a carpetas del proyecto y cachés conocidas, valida `model_index.json`, no carga pesos y no descarga nada. El usuario elige cuándo usar una ruta detectada y puede volver a ejecutar el diagnóstico.
+
+
+## Generador anime de prompt primero (2026-10-25)
+
+- Se preconfigura `hakurei/waifu-diffusion` con la rama `fp16` pública (aprox. 2,74 GB en Hugging Face) y conversión de pesos a FP32 al cargar en CPU; el selector de variante, modelo y LoRA queda en opciones avanzadas.
+- Los negativos se componen en el servidor y no pueden eliminarse dejando vacío el campo extra. Los términos aportados por el usuario se suman a los controles de anatomía y personaje único.
+- El perfil sencillo se limita a 512×768, 786.432 píxeles, 16 pasos, una imagen, un único trabajo activo y cuatro hilos CPU (hasta seis configurables).
+- La transparencia se obtiene con segmentador local `rembg/isnet-anime` después de generar sobre blanco. Solo se guarda como PNG transparente si se detecta alfa no opaco; si falta el paquete o falla la segmentación, el error queda visible.
+- Se añaden instalador de dependencias CPU y lanzador Windows. Los pesos grandes no van a Git; se descargan a la caché local bajo autorización visible en el panel.
+- Pendiente de aceptación en el equipo objetivo: generación real en Ryzen 5 5600G, medición de tiempo/RAM y revisión del cabello fino. CI valida contratos/UI, no simula los pesos ni ese hardware.
