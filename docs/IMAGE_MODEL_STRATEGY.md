@@ -69,3 +69,14 @@ Antes de escoger un checkpoint:
 ## Salvaguardas del conjunto
 
 No borrar, renombrar ni sobrescribir imágenes originales automáticamente. No entrenar imágenes cuyo permiso siga sin revisar. Una imagen generada en una plataforma puede incluir personajes, diseños o materiales de terceros aunque la haya generado la cuenta del usuario. Registrar por separado procedencia, permisos y utilidad técnica de cada registro.
+
+
+## Perfil inicial — prompt primero y CPU limitada (2026-10)
+
+La vista simplificada propone `Ojimi/anime-kawai-diffusion` como candidato de arranque anime para Diffusers. El identificador se preconfigura, pero los pesos no se distribuyen en Git: la primera generación los descarga en caché local si se autoriza. Esta selección no constituye medición de rendimiento/calidad en la PC objetivo.
+
+El perfil por defecto se limita a CPU, 512×768, 16 pasos, una salida, cuatro hilos y una sola tarea activa. El usuario puede escoger otro modelo detectado en disco. No debe afirmarse que el Ryzen 5 5600G obtiene aceleración CUDA con su gráfica AMD integrada.
+
+Los prompts añaden composición de personaje único y negativos anatómicos; no garantizan anatomía perfecta. El PNG con alfa se obtiene con un paso distinto: generación sobre blanco y segmentador local `rembg/isnet-anime` con límites de hilos. Si falla la segmentación o no hay transparencia verificable, el resultado no se etiqueta como transparente.
+
+El instalador opcional `tools/image-creator/setup-image-creator.bat` prepara PyTorch CPU, Diffusers y el recortador. El lanzador `start-image-creator.bat` abre el servidor en loopback. No se suben prompts/imágenes de inferencia; la instalación o primer uso necesita Internet para descargar dependencias y pesos que no estén en caché.
