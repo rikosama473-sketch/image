@@ -19,6 +19,7 @@ from typing import Any
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", required=True, help="Local Diffusers model directory or cached hub identifier")
+    parser.add_argument("--revision", default="fp16", help="Model hub branch/commit to load (ignored for local model directories)")
     parser.add_argument("--lora", help="Optional local LoRA file/directory or cached hub identifier")
     parser.add_argument("--lora-weight-name", help="Optional filename within a LoRA directory/repository")
     parser.add_argument("--lora-scale", type=float, default=0.8, help="Style LoRA strength, usually tested around 0.5–1.0")
@@ -157,7 +158,7 @@ def run_generation_batch(
             # make the UI hide a valid PNG; the batch itself can still be partial.
             saved.append({"seed": image_seed, "image_path": image_path.name})
             metadata = {
-                "model": args.model, "lora": args.lora,
+                "model": args.model, "model_revision": args.revision, "lora": args.lora,
                 "lora_weight_name": args.lora_weight_name,
                 "lora_scale": args.lora_scale if args.lora else None,
                 "prompt": args.user_prompt or args.prompt,
@@ -194,7 +195,7 @@ def run_generation_batch(
         "requested_count": args.count, "generated_count": len(saved), "failed_count": len(failures),
         "requested_seed": args.seed, "generated": saved, "failures": failures,
         "parameters": {
-            "model": args.model, "lora": args.lora or None,
+            "model": args.model, "model_revision": args.revision, "lora": args.lora or None,
             "lora_weight_name": args.lora_weight_name or None,
             "lora_scale": args.lora_scale if args.lora else None,
             "prompt": args.user_prompt or args.prompt,
@@ -283,12 +284,16 @@ def main(argv: list[str] | None = None) -> int:
             return 2
 
     try:
-        pipe = AutoPipelineForText2Image.from_pretrained(
-            args.model,
-            torch_dtype=dtype,
-            use_safetensors=True,
-            local_files_only=local_files_only,
-        )
+        load_options: dict[str, Any] = {
+            "torch_dtype": dtype,
+            "use_safetensors": True,
+            "local_files_only": local_files_only,
+        }
+        if not model_path.is_dir():
+            if not args.revision or len(args.revision) > 128:
+                raise RuntimeError("The model revision must be a non-empty branch/commit name up to 128 characters.")
+            load_options["revision"] = args.revision
+        pipe = AutoPipelineForText2Image.from_pretrained(args.model, **load_options)
         if args.lora:
             lora_source, weight_name = resolve_lora_source(args.lora, args.lora_weight_name)
             pipe.load_lora_weights(
