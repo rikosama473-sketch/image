@@ -121,6 +121,7 @@
   function payloadFromForm() {
     return {
       model: value("model").trim(),
+      model_revision: value("model-revision"),
       lora: value("lora").trim(),
       prompt: value("prompt").trim(),
       negative_prompt: value("negative-prompt").trim(),
