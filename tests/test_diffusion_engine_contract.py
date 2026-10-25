@@ -39,7 +39,7 @@ class DiffusionEngineContractTests(unittest.TestCase):
             engine.validate_args(args, parser)
 
     def test_local_profile_rejects_excessive_resolution_steps_and_threads(self) -> None:
-        for args_list in (("--width", "768", "--height", "1024"), ("--steps", "31"), ("--cpu-threads", "7"), ("--count", "3")):
+        for args_list in (("--width", "776"), ("--steps", "31"), ("--cpu-threads", "7"), ("--count", "3")):
             parser, args = self.parse(*args_list)
             with self.subTest(args=args_list), self.assertRaises(SystemExit):
                 engine.validate_args(args, parser)
