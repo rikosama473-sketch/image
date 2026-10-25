@@ -304,7 +304,6 @@
     const selectedPath = modelPicker.value;
     if (!selectedPath) return;
     $("model").value = selectedPath;
-    $("allow-download").checked = false;
     setStatus("idle", "Modelo local seleccionado", "Se eligió una carpeta que contiene model_index.json. Ejecutá el diagnóstico antes de generar; la compatibilidad de inferencia aún debe comprobarse.");
   });
   scanModelsButton.addEventListener("click", scanLocalModels);
