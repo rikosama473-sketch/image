@@ -33,14 +33,19 @@ class LocalGeneratorJobTests(unittest.TestCase):
             "model": "model-fixture",
             "lora": "",
             "lora_weight_name": "",
-            "prompt": "anime portrait",
-            "negative_prompt": "",
+            "prompt": "anime portrait, one single anime character",
+            "user_prompt": "anime portrait",
+            "negative_prompt": "bad anatomy, multiple people",
+            "user_negative_prompt": "",
+            "character_mode": True,
+            "transparent_background": False,
             "width": 512,
-            "height": 512,
+            "height": 768,
             "steps": 4,
-            "guidance_scale": 7.0,
+            "guidance_scale": 6.5,
             "seed": 7,
             "count": 1,
+            "cpu_threads": 4,
             "lora_scale": 0.8,
             "device": "cpu",
             "precision": "fp32",
@@ -112,12 +117,41 @@ class LocalGeneratorPayloadTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "count debe ser un número entero"):
             server._validate_payload({"model": "m", "prompt": "x", "count": True})
 
-    def test_payload_defaults_to_local_only_and_low_memory_mode(self) -> None:
-        parsed = server._validate_payload({"model": "m", "prompt": "anime portrait"})
+    def test_payload_rejects_unsafe_resolution_steps_batch_and_thread_count(self) -> None:
+        for payload in ({"width": 768, "height": 1024}, {"height": 1025}, {"steps": 31}, {"count": 3}, {"cpu_threads": 7}):
+            request = {"model": "m", "prompt": "anime portrait", **payload}
+            with self.subTest(payload=payload), self.assertRaises(ValueError):
+                server._validate_payload(request)
+
+    def test_payload_builds_character_safe_prompts_and_preserves_user_prompt(self) -> None:
+        parsed = server._validate_payload({"model": "m", "prompt": "red hair, blue eyes"})
+        self.assertEqual(parsed["user_prompt"], "red hair, blue eyes")
+        self.assertIn("one single anime character", parsed["prompt"])
+        self.assertIn("plain pure white background", parsed["prompt"])
+        self.assertIn("bad anatomy", parsed["negative_prompt"])
+        self.assertIn("multiple people", parsed["negative_prompt"])
+        self.assertIn("aura", parsed["negative_prompt"])
+        self.assertIn("emojis", parsed["negative_prompt"])
+        self.assertTrue(parsed["transparent_background"])
+        self.assertTrue(parsed["character_mode"])
+
+    def test_user_negative_terms_are_added_without_replacing_base_blocks(self) -> None:
+        parsed = server._validate_payload({"model": "m", "prompt": "anime", "negative_prompt": "hat, sword"})
+        self.assertIn("bad anatomy", parsed["negative_prompt"])
+        self.assertIn("hat, sword", parsed["negative_prompt"])
+        self.assertEqual(parsed["user_negative_prompt"], "hat, sword")
+
+    def test_payload_defaults_to_cpu_safe_local_profile(self) -> None:
+        parsed = server._validate_payload({"prompt": "anime portrait"})
         self.assertFalse(parsed["allow_download"])
         self.assertTrue(parsed["low_memory"])
-        self.assertEqual(parsed["device"], "auto")
+        self.assertEqual(parsed["model"], server.RECOMMENDED_MODEL_ID)
+        self.assertEqual(parsed["device"], "cpu")
+        self.assertEqual(parsed["width"], 512)
+        self.assertEqual(parsed["height"], 768)
+        self.assertEqual(parsed["steps"], 16)
         self.assertEqual(parsed["count"], 1)
+        self.assertEqual(parsed["cpu_threads"], 4)
 
 
     def test_diagnostics_recognizes_a_diffusers_folder_without_loading_it(self) -> None:
@@ -132,6 +166,8 @@ class LocalGeneratorPayloadTests(unittest.TestCase):
         self.assertTrue(report["model"]["ready_to_try"])
         self.assertFalse(report["inference_started"])
         self.assertTrue(report["downloads_default_off"])
+        self.assertEqual(report["recommended_model"], server.RECOMMENDED_MODEL_ID)
+        self.assertIn("rembg", report["optional_dependencies"])
 
     def test_unknown_cached_model_is_not_reported_as_ready_without_downloads(self) -> None:
         report = server._diagnose_environment("org/example-model", allow_download=False)
