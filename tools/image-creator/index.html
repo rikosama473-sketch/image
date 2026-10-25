@@ -54,7 +54,7 @@
             </label>
             </details>
 
-            <div class="model-preset-note"><strong>Modelo anime preconfigurado</strong><span>La primera generación descarga los pesos del modelo (varios GB) y el recortador anime local. Después quedan en caché. Tus prompts e imágenes no se envían a una API de generación remota.</span></div>
+            <div class="model-preset-note"><strong>Modelo anime preconfigurado</strong><span>La primera generación descarga los pesos de la variante elegida (unos GB) y el recortador anime local. Después quedan en caché. Tus prompts e imágenes no se envían a una API de generación remota.</span></div>
 
             <div class="character-options">
               <label class="check-row"><input id="character-mode" type="checkbox" checked><span><strong>Un personaje anime</strong><small>Evita multitudes, duplicados, collages, fondos detallados, auras, emojis y elementos flotantes.</small></span></label>
@@ -71,6 +71,7 @@
               <datalist id="local-model-options"></datalist>
               <small>Modelo anime preconfigurado. También podés elegir una carpeta local compatible.</small>
             </label>
+            <label class="field"><span>Variante de descarga</span><select id="model-revision"><option value="fp16" selected>FP16 · descarga menor (recomendado)</option><option value="main">Principal FP32 · descarga mayor</option></select><small>Para el modelo sugerido, FP16 descarga menos peso y se convierte a precisión FP32 al ejecutar sobre CPU.</small></label>
 
             <div class="model-scan-row">
               <button id="scan-models-button" type="button">Buscar modelos locales</button>
