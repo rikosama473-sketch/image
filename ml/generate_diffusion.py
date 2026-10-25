@@ -22,8 +22,13 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--lora", help="Optional local LoRA file/directory or cached hub identifier")
     parser.add_argument("--lora-weight-name", help="Optional filename within a LoRA directory/repository")
     parser.add_argument("--lora-scale", type=float, default=0.8, help="Style LoRA strength, usually tested around 0.5–1.0")
-    parser.add_argument("--prompt", required=True, help="Positive text prompt")
-    parser.add_argument("--negative-prompt", default="", help="Negative text prompt")
+    parser.add_argument("--prompt", required=True, help="Effective positive prompt sent to the model")
+    parser.add_argument("--user-prompt", default="", help="Original user prompt, retained separately in the manifest")
+    parser.add_argument("--negative-prompt", default="", help="Effective negative prompt sent to the model")
+    parser.add_argument("--user-negative-prompt", default="", help="Additional user negative terms, excluding built-in presets")
+    parser.add_argument("--character-mode", action="store_true", help="Use one-character composition mode")
+    parser.add_argument("--transparent-background", action="store_true", help="Run local isnet-anime segmentation and save verified RGBA transparency")
+    parser.add_argument("--cpu-threads", type=int, default=4, help="Maximum CPU intra-op threads (1-6)")
     parser.add_argument("--width", type=int, default=512)
     parser.add_argument("--height", type=int, default=512)
     parser.add_argument("--steps", type=int, default=20)
@@ -40,16 +45,20 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def validate_args(args: argparse.Namespace, parser: argparse.ArgumentParser) -> None:
-    if args.count < 1 or args.count > 16:
-        parser.error("--count must be between 1 and 16; generations are run sequentially.")
-    if args.steps < 1 or args.steps > 150:
-        parser.error("--steps must be between 1 and 150.")
-    if args.width < 64 or args.height < 64 or args.width % 8 or args.height % 8:
-        parser.error("--width and --height must be at least 64 and multiples of 8.")
+    if args.count < 1 or args.count > 2:
+        parser.error("--count must be between 1 and 2; images are processed sequentially to protect memory.")
+    if args.steps < 1 or args.steps > 30:
+        parser.error("--steps must be between 1 and 30 for the safe local profile.")
+    if args.width < 64 or args.height < 64 or args.width > 768 or args.height > 1024 or args.width % 8 or args.height % 8:
+        parser.error("--width must be 64–768, --height 64–1024, and both multiples of 8.")
+    if args.width * args.height > 786432:
+        parser.error("Image area may not exceed 786432 pixels in the safe local profile.")
+    if args.cpu_threads < 1 or args.cpu_threads > 6:
+        parser.error("--cpu-threads must be between 1 and 6.")
     if not 0 <= args.lora_scale <= 2:
         parser.error("--lora-scale must be between 0 and 2.")
-    if args.guidance_scale < 0:
-        parser.error("--guidance-scale cannot be negative.")
+    if not 0 <= args.guidance_scale <= 12:
+        parser.error("--guidance-scale must be between 0 and 12 in the safe local profile.")
     if args.cpu_offload and args.device == "cpu":
         parser.error("--cpu-offload requires CUDA; it cannot be combined with --device cpu.")
     if args.cpu_offload and args.device == "mps":
@@ -100,6 +109,7 @@ def run_generation_batch(
     run_dir: Path,
     diffusers_version: str = "unknown",
     torch_version: str = "unknown",
+    cutout_session: Any = None,
 ) -> dict[str, Any]:
     """Run requests sequentially and preserve an auditable result manifest."""
     run_dir.mkdir(parents=True, exist_ok=False)
@@ -122,6 +132,24 @@ def run_generation_batch(
             if not getattr(result, "images", None):
                 raise RuntimeError("El pipeline no devolvió ninguna imagen.")
             image = result.images[0]
+            if args.transparent_background:
+                if cutout_session is None:
+                    raise RuntimeError("El recortador anime local no está preparado; no se guardó una imagen sin transparencia verificada.")
+                from rembg import remove
+                cutout = remove(
+                    image,
+                    session=cutout_session,
+                    alpha_matting=False,
+                    post_process_mask=False,
+                    decontaminate=True,
+                )
+                if not hasattr(cutout, "getchannel") or not hasattr(cutout, "convert"):
+                    raise RuntimeError("El recortador local no devolvió una imagen con canal alfa verificable.")
+                cutout = cutout.convert("RGBA")
+                alpha_histogram = cutout.getchannel("A").histogram()
+                if sum(alpha_histogram[:255]) <= 0:
+                    raise RuntimeError("El recortador no encontró transparencia; no se guardó un falso PNG transparente.")
+                image = cutout
             stem = f"image-{index + 1:03d}-seed-{image_seed}"
             image_path = run_dir / f"{stem}.png"
             image.save(image_path)
@@ -132,7 +160,14 @@ def run_generation_batch(
                 "model": args.model, "lora": args.lora,
                 "lora_weight_name": args.lora_weight_name,
                 "lora_scale": args.lora_scale if args.lora else None,
-                "prompt": args.prompt, "negative_prompt": args.negative_prompt,
+                "prompt": args.user_prompt or args.prompt,
+                "effective_prompt": args.prompt,
+                "negative_prompt": args.negative_prompt,
+                "user_negative_prompt": args.user_negative_prompt,
+                "character_mode": args.character_mode,
+                "transparent_background": args.transparent_background,
+                "transparent_engine": "rembg:isnet-anime" if args.transparent_background else None,
+                "cpu_threads": args.cpu_threads,
                 "seed": image_seed, "width": args.width, "height": args.height,
                 "steps": args.steps, "guidance_scale": args.guidance_scale,
                 "scheduler": type(pipe.scheduler).__name__ if getattr(pipe, "scheduler", None) else None,
@@ -162,7 +197,13 @@ def run_generation_batch(
             "model": args.model, "lora": args.lora or None,
             "lora_weight_name": args.lora_weight_name or None,
             "lora_scale": args.lora_scale if args.lora else None,
-            "prompt": args.prompt, "negative_prompt": args.negative_prompt,
+            "prompt": args.user_prompt or args.prompt,
+            "effective_prompt": args.prompt, "negative_prompt": args.negative_prompt,
+            "user_negative_prompt": args.user_negative_prompt,
+            "character_mode": args.character_mode,
+            "transparent_background": args.transparent_background,
+            "transparent_engine": "rembg:isnet-anime" if args.transparent_background else None,
+            "cpu_threads": args.cpu_threads,
             "width": args.width, "height": args.height, "steps": args.steps,
             "guidance_scale": args.guidance_scale, "device": device,
             "precision": args.precision, "low_memory": args.low_memory,
@@ -203,6 +244,11 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit(2) from exc
 
     try:
+        torch.set_num_threads(args.cpu_threads)
+        try:
+            torch.set_num_interop_threads(1)
+        except RuntimeError:
+            pass
         device = choose_device(torch, args.device)
         dtype = choose_dtype(torch, args.precision, device)
         if args.cpu_offload and device != "cuda":
@@ -218,6 +264,23 @@ def main(argv: list[str] | None = None) -> int:
         local_files_only = True
     else:
         local_files_only = not args.allow_download
+
+    cutout_session = None
+    if args.transparent_background:
+        try:
+            import onnxruntime as ort
+            from rembg import new_session
+            session_options = ort.SessionOptions()
+            session_options.intra_op_num_threads = args.cpu_threads
+            session_options.inter_op_num_threads = 1
+            cutout_session = new_session("isnet-anime", sess_opts=session_options)
+        except ImportError:
+            print("Falta el recortador local. Ejecutá: python -m pip install -r requirements-avatar-cutout.txt. El modelo de recorte también se descarga una vez al primer uso.", file=sys.stderr)
+            return 2
+        except Exception as exc:
+            print(f"No se pudo preparar isnet-anime: {type(exc).__name__}: {exc}", file=sys.stderr)
+            print("Revisá la conexión inicial y el espacio en disco; no se enviaron imágenes a un servicio de inferencia remoto.", file=sys.stderr)
+            return 2
 
     try:
         pipe = AutoPipelineForText2Image.from_pretrained(
@@ -261,6 +324,7 @@ def main(argv: list[str] | None = None) -> int:
         args, pipe, torch, device, run_dir,
         diffusers_version=getattr(diffusers, "__version__", "unknown"),
         torch_version=getattr(torch, "__version__", "unknown"),
+        cutout_session=cutout_session,
     )
     print(f"Run directory: {run_dir}")
     print("CPU generation can be very slow. Memory and output quality depend on the selected base model and hardware.")
