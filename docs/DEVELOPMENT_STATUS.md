@@ -116,7 +116,7 @@ Abrir el taller en navegador con el lanzador local y probar el filtro «Uso como
 
 ## Generador anime de prompt primero (2026-10-25)
 
-- Se preconfigura `hakurei/waifu-diffusion` como candidato inicial y el selector de modelo/LoRA se mueve a opciones avanzadas para dejar el prompt y los modos de personaje a la vista.
+- Se preconfigura `hakurei/waifu-diffusion` con la rama `fp16` pública (aprox. 2,74 GB en Hugging Face) y conversión de pesos a FP32 al cargar en CPU; el selector de variante, modelo y LoRA queda en opciones avanzadas.
 - Los negativos se componen en el servidor y no pueden eliminarse dejando vacío el campo extra. Los términos aportados por el usuario se suman a los controles de anatomía y personaje único.
 - El perfil sencillo se limita a 512×768, 786.432 píxeles, 16 pasos, una imagen, un único trabajo activo y cuatro hilos CPU (hasta seis configurables).
 - La transparencia se obtiene con segmentador local `rembg/isnet-anime` después de generar sobre blanco. Solo se guarda como PNG transparente si se detecta alfa no opaco; si falta el paquete o falla la segmentación, el error queda visible.
