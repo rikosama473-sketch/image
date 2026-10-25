@@ -73,7 +73,7 @@ No borrar, renombrar ni sobrescribir imágenes originales automáticamente. No e
 
 ## Perfil inicial — prompt primero y CPU limitada (2026-10)
 
-La vista simplificada propone `Ojimi/anime-kawai-diffusion` como candidato de arranque anime para Diffusers. El identificador se preconfigura, pero los pesos no se distribuyen en Git: la primera generación los descarga en caché local si se autoriza. Esta selección no constituye medición de rendimiento/calidad en la PC objetivo.
+La vista simplificada propone `hakurei/waifu-diffusion` como candidato de arranque anime para Diffusers. El identificador se preconfigura, pero los pesos no se distribuyen en Git: la primera generación los descarga en caché local si se autoriza. Esta selección no constituye medición de rendimiento/calidad en la PC objetivo.
 
 El perfil por defecto se limita a CPU, 512×768, 16 pasos, una salida, cuatro hilos y una sola tarea activa. El usuario puede escoger otro modelo detectado en disco. No debe afirmarse que el Ryzen 5 5600G obtiene aceleración CUDA con su gráfica AMD integrada.
 
