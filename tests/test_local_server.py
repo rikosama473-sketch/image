@@ -23,6 +23,7 @@ class LocalServerTests(unittest.TestCase):
         self.assertEqual(config["count"], 1)
         self.assertTrue(config["low_memory"])
         self.assertEqual(config["device"], "cpu")
+        self.assertEqual(config["model_revision"], "fp16")
 
     def test_prompt_and_model_are_required(self) -> None:
         for payload in (
@@ -43,6 +44,8 @@ class LocalServerTests(unittest.TestCase):
         config = local_server._validate_payload(self.valid_payload())
         command = local_server._build_command(config, PROJECT_ROOT / "outputs/generated/test")
         self.assertNotIn("--allow-download", command)
+        self.assertIn("--revision", command)
+        self.assertIn("fp16", command)
         config["allow_download"] = True
         command = local_server._build_command(config, PROJECT_ROOT / "outputs/generated/test")
         self.assertIn("--allow-download", command)
