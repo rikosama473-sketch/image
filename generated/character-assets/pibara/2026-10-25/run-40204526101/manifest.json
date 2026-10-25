@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "character_id": "pibara",
+  "pack": "anatomy-back-1",
+  "pack_status": "complete",
+  "created_at_utc": "2026-10-25T14:56:25.859196+00:00",
+  "source": {
+    "repository": "rikosama473-sketch/image",
+    "ref": "a9dcf7fe6d63480535666322ef40160f9fd50f14",
+    "path": "from-PixAI-2034984086876227343-0.png",
+    "url": "https://raw.githubusercontent.com/rikosama473-sketch/image/a9dcf7fe6d63480535666322ef40160f9fd50f14/from-PixAI-2034984086876227343-0.png",
+    "sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+    "dimensions": [
+      768,
+      1280
+    ]
+  },
+  "generator": {
+    "space_id": "conradlocke/krea2-identity-edit",
+    "space_url": "https://huggingface.co/spaces/conradlocke/krea2-identity-edit",
+    "api_name": "/edit",
+    "openai_api_key_used": false,
+    "inference_api_paid_by_openai": false,
+    "ref_boost": 4.0,
+    "grounding_px": 768,
+    "lora_scale": 1.0,
+    "steps": 12,
+    "guidance_scale": 0.0,
+    "background_removed": true
+  },
+  "required_asset_ids": [
+    "full-body-back-view"
+  ],
+  "completed_asset_ids": [
+    "full-body-back-view"
+  ],
+  "variants": [
+    {
+      "index": 1,
+      "asset_id": "full-body-back-view",
+      "change": "Show the same anime character from directly behind, full body from the top of the hair to the soles, standing in a neutral symmetrical A-pose with both arms slightly away from the torso. Prioritize the exact back silhouette of the hairstyle, tied sections and loose strands, hair color/highlights, outfit seams, jacket shape, belt and accessory placement from the source. Use consistent anatomy and matching costume design; do not invent a different character. Plain light background, clean anime model-sheet line art and cel shading, no text, no labels, no watermark, no extra views.",
+      "prompt": "Identity-guided anime character model-sheet reconstruction from the supplied image. Unlike a normal local edit, do not preserve the input crop or bust framing: extend/recompose the composition into a complete full-body figure from the highest hair strand to both soles. Preserve the source face, exact hairstyle and silhouette, bangs, tied sections, loose strands, hair color/highlight pattern, iris color, signature accessories and visible costume details. Do not redesign the hairstyle or change the hair/iris colors. Keep the recognizable source outfit, palette and color blocking; extend only hidden lower-body clothing consistently with the design. If coverage must change, retain the source silhouette and signature details rather than inventing a generic unrelated outfit. Show clear anime body construction with a symmetric neutral A-pose, arms slightly separated from torso, hands, fingers and both feet visible, balanced proportions, clean 2D line art and cel shading. Subtle joint landmarks for shoulders, elbows, wrists, pelvis, knees and ankles are acceptable; avoid labels or writing. One figure only, use the orientation and pose specified by the requested anatomy view, centered portrait canvas, no panels, no extra poses, no added character, no text, no watermark, no photorealism. The output is a reference guide for later manual component separation, not a claim that individual body parts are already segmented. Requested anatomy model-sheet result: Show the same anime character from directly behind, full body from the top of the hair to the soles, standing in a neutral symmetrical A-pose with both arms slightly away from the torso. Prioritize the exact back silhouette of the hairstyle, tied sections and loose strands, hair color/highlights, outfit seams, jacket shape, belt and accessory placement from the source. Use consistent anatomy and matching costume design; do not invent a different character. Plain light background, clean anime model-sheet line art and cel shading, no text, no labels, no watermark, no extra views.",
+      "requested_seed": 1201,
+      "returned_seed": 1201,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-25/run-40204526101/renders/01-full-body-back-view.png",
+        "sha256": "47f5aa2dd4331296dd08081a275e399890e2e10f09dbebeb8d547abffdb9720d",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-25/run-40204526101/transparent/01-full-body-back-view.png",
+        "sha256": "8ba76d2fede811dc8219693c493c31a66b838e43ff9668cafc669dae44f1e8f1",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.66881,
+        "opaque_pixel_ratio": 0.25483,
+        "quality_warning": null
+      }
+    }
+  ],
+  "last_error": null,
+  "review_status": "needs_visual_identity_review",
+  "warning": "Generated renders and automated transparent cutouts require review of likeness and hair/accessory edges."
+}
