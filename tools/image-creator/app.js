@@ -308,7 +308,8 @@
     const selectedPath = modelPicker.value;
     if (!selectedPath) return;
     $("model").value = selectedPath;
-    setStatus("idle", "Modelo local seleccionado", "Se eligió una carpeta que contiene model_index.json. Ejecutá el diagnóstico antes de generar; la compatibilidad de inferencia aún debe comprobarse.");
+    $("model-variant").value = "none";
+    setStatus("idle", "Modelo local seleccionado", "Se eligió una carpeta que contiene model_index.json. Se usarán los pesos predeterminados de esa carpeta; la variante FP16 solo se aplica a modelos Hub que la incluyen. Ejecutá el diagnóstico antes de generar.");
   });
   scanModelsButton.addEventListener("click", scanLocalModels);
 
