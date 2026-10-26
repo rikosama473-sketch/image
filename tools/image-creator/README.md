@@ -16,6 +16,7 @@ La interfaz preconfigura `hakurei/waifu-diffusion` desde la revisión `main` con
 - 16 pasos, una imagen por solicitud, procesamiento secuencial, cuatro hilos CPU por defecto (ajustable entre 1 y 6).
 - Una sola generación activa; no se apilan trabajos de difusión concurrentes.
 - El modo **Un personaje anime** añade términos positivos de sujeto único y negativos base para anatomía, dedos, personajes múltiples, fondos, auras, partículas, emojis, textos, logos y marcas de agua.
+- Los prompts positivos y negativos se ajustan al límite del tokenizador del modelo (ventana CLIP); el usuario recibe un aviso si fue necesario recortar texto y los metadatos conservan tanto la descripción original como el prompt efectivo.
 - **PNG con fondo transparente** genera sobre blanco y después usa `rembg/isnet-anime` localmente. La salida solo se guarda como transparente si se detectan píxeles no opacos en el canal alfa.
 
 ## Privacidad y limitaciones
