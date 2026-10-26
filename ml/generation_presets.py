@@ -2,34 +2,26 @@
 from __future__ import annotations
 
 RECOMMENDED_MODEL_ID = "hakurei/waifu-diffusion"
-RECOMMENDED_MODEL_REVISION = "fp16"
+RECOMMENDED_MODEL_REVISION = "main"
+RECOMMENDED_MODEL_VARIANT = "fp16"
 
 BASE_NEGATIVE_PROMPT = (
-    "worst quality, low quality, lowres, blurry, jpeg artifacts, noisy image, "
-    "bad anatomy, bad proportions, deformed body, malformed hands, bad hands, "
-    "extra fingers, missing fingers, fused fingers, too many fingers, "
-    "extra arms, missing arms, extra legs, missing legs, twisted limbs, "
-    "deformed face, asymmetrical eyes, crossed eyes, uneven pupils, "
-    "duplicated facial features, distorted mouth, unnatural joints"
+    "lowres, blurry, worst quality, low quality, bad anatomy, bad hands, "
+    "extra fingers, missing fingers, fused fingers, extra limbs, bad proportions, "
+    "deformed face, crossed eyes, distorted mouth"
 )
 CHARACTER_ONLY_NEGATIVE_PROMPT = (
-    "multiple people, multiple characters, crowd, group, duplicate character, "
-    "extra person, multiple heads, extra head, extra face, extra body, "
-    "character sheet, multiple views, collage, split screen, panels, "
-    "scenery, landscape, room, city, street, forest, architecture, detailed background, "
-    "aura, glowing aura, magical effects, particles, floating symbols, "
-    "emojis, stickers, text, watermark, logo, signature, border, speech bubble, "
-    "UI elements, unrelated props outside the character"
+    "multiple people, 2girls, 2boys, duplicate character, extra head, "
+    "character sheet, multiple views, collage, split screen, background, scenery, "
+    "aura, particles, emojis, stickers, text, watermark, logo, signature, "
+    "unrelated props"
 )
 CHARACTER_PROMPT_SUFFIX = (
-    "one single anime character, one subject only, centered composition, "
-    "full-body character design, entire character visible from head to feet, "
-    "coherent anatomy and proportions, natural readable pose, clean anime line art, "
-    "clear hair strands, clearly defined eyes and mouth, clothing design visible"
+    "solo, one anime character, full body, centered, clean anime line art, "
+    "coherent proportions, clear face, visible clothing"
 )
 WHITE_BACKGROUND_PROMPT_SUFFIX = (
-    "isolated single subject on a plain pure white background, no scenery, "
-    "clean silhouette and clear separation from background for local transparent cutout"
+    "isolated character, plain white background, no scenery"
 )
 
 

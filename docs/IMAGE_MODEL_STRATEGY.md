@@ -73,7 +73,7 @@ No borrar, renombrar ni sobrescribir imágenes originales automáticamente. No e
 
 ## Perfil inicial — prompt primero y CPU limitada (2026-10)
 
-La vista simplificada propone `hakurei/waifu-diffusion` como candidato de arranque anime para Diffusers. El identificador se preconfigura junto con la rama pública `fp16` para reducir la descarga inicial (aprox. 2,74 GB según el árbol de archivos de Hugging Face); al ejecutar en CPU, el pipeline carga en precisión FP32. Los pesos no se distribuyen en Git: la primera generación los descarga en caché local si se autoriza. Esta selección no constituye medición de rendimiento/calidad en la PC objetivo.
+La vista simplificada propone `hakurei/waifu-diffusion` como candidato de arranque anime para Diffusers. El identificador se preconfigura en la revisión estable `main` con `variant=fp16`, para que Diffusers seleccione los archivos `.fp16.safetensors` sin cambiar a la rama `fp16` (que ofrece archivos `.bin`). El pipeline carga esos pesos en FP32 al ejecutar en CPU. Los pesos no se distribuyen en Git: la primera generación los descarga en caché local si se autoriza. Esta selección no constituye medición de rendimiento/calidad en la PC objetivo.
 
 El perfil por defecto se limita a CPU, 512×768, 16 pasos, una salida, cuatro hilos y una sola tarea activa. El usuario puede escoger otro modelo detectado en disco. No debe afirmarse que el Ryzen 5 5600G obtiene aceleración CUDA con su gráfica AMD integrada.
 

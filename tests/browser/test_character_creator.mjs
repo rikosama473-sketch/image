@@ -409,7 +409,15 @@ try {
   const generatorPage = await context.newPage();
   generatorPage.on("pageerror", (error) => pageErrors.push("local generator: " + error.message));
   await generatorPage.goto(generatorUrl + "/", { waitUntil: "domcontentloaded" });
+  assert.ok(await generatorPage.locator("#prompt").isVisible(), "the primary flow must start with the prompt");
+  assert.match(await generatorPage.locator("#prompt").getAttribute("placeholder"), /cabello|ojos|personaje/i);
+  assert.equal(await generatorPage.locator("#character-mode").isChecked(), true);
+  assert.equal(await generatorPage.locator("#transparent-background").isChecked(), true);
+  assert.equal(await generatorPage.locator("#count").inputValue(), "1");
   await generatorPage.locator("details.advanced").evaluate((element) => { element.open = true; });
+  assert.equal(await generatorPage.locator("#model").inputValue(), "hakurei/waifu-diffusion");
+  assert.equal(await generatorPage.locator("#model-variant").inputValue(), "fp16");
+  assert.equal(await generatorPage.locator("#model-revision").count(), 0, "the UI must not confuse a model branch with a weights variant");
   await generatorPage.waitForSelector("#scan-models-button");
   await generatorPage.locator("#scan-models-button").click();
   await generatorPage.waitForFunction(() => {

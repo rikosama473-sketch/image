@@ -24,6 +24,9 @@ class DiffusionEngineContractTests(unittest.TestCase):
         self.assertEqual(args.count, 1)
         self.assertEqual(args.device, "auto")
         self.assertEqual(args.precision, "auto")
+        self.assertEqual(args.revision, "main")
+        self.assertEqual(args.variant, "fp16")
+        self.assertTrue(hasattr(engine, "os"), "the transparency cache path needs the os module")
         self.assertEqual(args.cpu_threads, 4)
         self.assertFalse(args.transparent_background)
         self.assertFalse(args.character_mode)
@@ -43,6 +46,57 @@ class DiffusionEngineContractTests(unittest.TestCase):
             parser, args = self.parse(*args_list)
             with self.subTest(args=args_list), self.assertRaises(SystemExit):
                 engine.validate_args(args, parser)
+
+    def test_model_hub_uses_main_revision_and_safe_fp16_variant(self) -> None:
+        _, args = self.parse()
+        options = engine.build_model_load_options(args, Path("org/model"), dtype="float32", local_files_only=False)
+        self.assertEqual(options["revision"], "main")
+        self.assertEqual(options["variant"], "fp16")
+        self.assertTrue(options["use_safetensors"])
+        self.assertFalse(options["local_files_only"])
+
+    def test_standard_weights_omit_variant_and_local_models_ignore_hub_revision(self) -> None:
+        _, standard_args = self.parse("--variant", "none")
+        standard = engine.build_model_load_options(
+            standard_args, Path("org/model"), dtype="float32", local_files_only=True
+        )
+        self.assertNotIn("variant", standard)
+        with tempfile.TemporaryDirectory() as directory:
+            local_path = Path(directory)
+            local_options = engine.build_model_load_options(
+                standard_args, local_path, dtype="float32", local_files_only=True
+            )
+        self.assertNotIn("revision", local_options)
+        self.assertNotIn("variant", local_options)
+        self.assertTrue(local_options["use_safetensors"])
+
+    def test_prompt_preparation_preserves_fixed_suffix_and_caps_long_inputs(self) -> None:
+        class WordTokenizer:
+            model_max_length = 77
+            def encode(self, text, add_special_tokens=False):
+                return text.split()
+            def decode(self, token_ids, skip_special_tokens=True):
+                return " ".join(token_ids)
+
+        long_prompt = " ".join(["silverhair blueeyes olive skin athletic body combat pose clothing mouth"] * 18)
+        extra_negatives = "helmet, sword, " + ", ".join("customterm" + str(index) for index in range(100))
+        _, args = self.parse(
+            "--user-prompt", long_prompt,
+            "--user-negative-prompt", extra_negatives,
+            "--character-mode", "--transparent-background",
+        )
+        positive, negative, prompt_trimmed, negative_trimmed = engine.prepare_generation_prompts(
+            args, WordTokenizer(), max_tokens=75
+        )
+        self.assertTrue(prompt_trimmed)
+        self.assertTrue(negative_trimmed)
+        self.assertLessEqual(len(positive.split()), 75)
+        self.assertLessEqual(len(negative.split()), 75)
+        self.assertTrue(positive.endswith("isolated character, plain white background, no scenery"))
+        for required in ("multiple people", "background", "aura", "emojis", "watermark"):
+            self.assertIn(required, negative)
+        self.assertIn("helmet", negative)
+        self.assertNotIn("customterm99", negative)
 
     def test_local_lora_file_becomes_parent_plus_weight_name(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -100,10 +154,13 @@ class DiffusionBatchTests(unittest.TestCase):
             self.assertEqual(result["manifest"]["generated_count"], 2)
             manifest = json.loads((run_dir / "run-manifest.json").read_text(encoding="utf-8"))
             self.assertEqual([item["seed"] for item in manifest["generated"]], [40, 41])
+            self.assertEqual(manifest["parameters"]["model_variant"], "fp16")
             for item in manifest["generated"]:
                 image_path = run_dir / item["image_path"]
                 self.assertTrue(image_path.is_file())
-                self.assertEqual(json.loads(image_path.with_suffix(".json").read_text(encoding="utf-8"))["seed"], item["seed"])
+                sidecar = json.loads(image_path.with_suffix(".json").read_text(encoding="utf-8"))
+                self.assertEqual(sidecar["seed"], item["seed"])
+                self.assertEqual(sidecar["model_variant"], "fp16")
 
     def test_partial_batch_preserves_success_and_records_failed_seed(self):
         with tempfile.TemporaryDirectory() as tempdir:

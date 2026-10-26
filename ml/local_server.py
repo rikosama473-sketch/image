@@ -20,7 +20,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
-from generation_presets import RECOMMENDED_MODEL_ID, RECOMMENDED_MODEL_REVISION, build_generation_prompts
+from generation_presets import RECOMMENDED_MODEL_ID, RECOMMENDED_MODEL_REVISION, RECOMMENDED_MODEL_VARIANT, build_generation_prompts
 from urllib.parse import parse_qs, unquote, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -247,6 +247,7 @@ def _diagnose_environment(model: str = "", lora: str = "", device: str = "auto",
         "python_version": sys.version.split()[0], "platform": sys.platform,
         "recommended_model": RECOMMENDED_MODEL_ID,
         "recommended_model_revision": RECOMMENDED_MODEL_REVISION,
+        "recommended_model_variant": RECOMMENDED_MODEL_VARIANT,
         "optional_dependencies": {"rembg": _module_available("rembg"), "onnxruntime": _module_available("onnxruntime")},
         "engine_exists": engine_exists, "dependencies": dependencies,
         "dependencies_ready": all(dependencies.values()) and engine_exists,
@@ -274,7 +275,10 @@ def _validate_payload(data: Any) -> dict[str, Any]:
         raise ValueError("El modelo o el prompt superan el límite permitido.")
     model_revision = data.get("model_revision", RECOMMENDED_MODEL_REVISION)
     if not isinstance(model_revision, str) or not model_revision.strip() or len(model_revision) > 128 or not re.fullmatch(r"[A-Za-z0-9._/-]+", model_revision):
-        raise ValueError("La revisión/variante del modelo no es válida.")
+        raise ValueError("La revisión del modelo no es válida.")
+    model_variant = data.get("model_variant", RECOMMENDED_MODEL_VARIANT)
+    if not isinstance(model_variant, str) or model_variant not in {"fp16", "none"}:
+        raise ValueError("La variante de pesos debe ser fp16 o none.")
     lora = data.get("lora", "")
     weight_name = data.get("lora_weight_name", "")
     if not isinstance(lora, str) or len(lora) > 2048:
@@ -339,6 +343,7 @@ def _validate_payload(data: Any) -> dict[str, Any]:
     return {
         "model": model.strip(),
         "model_revision": model_revision.strip(),
+        "model_variant": model_variant,
         "lora": lora.strip(),
         "lora_weight_name": weight_name.strip(),
         "prompt": effective_prompt,
@@ -368,6 +373,7 @@ def _build_command(config: dict[str, Any], job_dir: Path) -> list[str]:
         sys.executable, str(ENGINE),
         "--model", config["model"],
         "--revision", config["model_revision"],
+        "--variant", config["model_variant"],
         "--prompt", config["prompt"],
         "--user-prompt", config["user_prompt"],
         "--negative-prompt", config["negative_prompt"],

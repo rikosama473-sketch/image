@@ -121,7 +121,7 @@
   function payloadFromForm() {
     return {
       model: value("model").trim(),
-      model_revision: value("model-revision"),
+      model_variant: value("model-variant"),
       lora: value("lora").trim(),
       prompt: value("prompt").trim(),
       negative_prompt: value("negative-prompt").trim(),
@@ -161,7 +161,11 @@
         if (job.status === "partial") {
           setStatus("error", "Generación parcial", count + " de " + requested + " imágenes guardadas. " + (job.error || "Revisá el registro del motor."));
         } else {
-          setStatus("success", "Generación terminada", count + " " + (count === 1 ? "imagen guardada" : "imágenes guardadas") + ". Los parámetros se conservaron junto a los archivos.");
+          const promptAdjusted = /Aviso: se ajustó el prompt al límite del tokenizador/i.test(String(job.stderr || ""));
+          const completionNote = promptAdjusted
+            ? " El prompt usado se ajustó al límite del modelo; el texto original y el prompt efectivo están disponibles en «Ver parámetros»."
+            : " Los parámetros se conservaron junto a los archivos.";
+          setStatus("success", "Generación terminada", count + " " + (count === 1 ? "imagen guardada" : "imágenes guardadas") + "." + completionNote);
         }
       } else {
         setStatus("error", "No se pudo completar la generación", job.error || "Revisá la salida del motor y la ruta del modelo/LoRA.");
@@ -304,7 +308,8 @@
     const selectedPath = modelPicker.value;
     if (!selectedPath) return;
     $("model").value = selectedPath;
-    setStatus("idle", "Modelo local seleccionado", "Se eligió una carpeta que contiene model_index.json. Ejecutá el diagnóstico antes de generar; la compatibilidad de inferencia aún debe comprobarse.");
+    $("model-variant").value = "none";
+    setStatus("idle", "Modelo local seleccionado", "Se eligió una carpeta que contiene model_index.json. Se usarán los pesos predeterminados de esa carpeta; la variante FP16 solo se aplica a modelos Hub que la incluyen. Ejecutá el diagnóstico antes de generar.");
   });
   scanModelsButton.addEventListener("click", scanLocalModels);
 

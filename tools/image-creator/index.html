@@ -72,7 +72,7 @@
               <datalist id="local-model-options"></datalist>
               <small>Modelo anime preconfigurado. También podés elegir una carpeta local compatible.</small>
             </label>
-            <label class="field"><span>Variante de descarga</span><select id="model-revision"><option value="fp16" selected>FP16 · descarga menor (recomendado)</option><option value="main">Principal FP32 · descarga mayor</option></select><small>Para el modelo sugerido, FP16 descarga menos peso y se convierte a precisión FP32 al ejecutar sobre CPU.</small></label>
+            <label class="field"><span>Variante de pesos</span><select id="model-variant"><option value="fp16" selected>FP16 segura · descarga menor (recomendada)</option><option value="none">Pesos estándar · descarga mayor</option></select><small>Se mantiene la revisión estable main y Diffusers elige archivos safetensors FP16 en modelos Hub. En CPU se convierten a precisión FP32 al cargar; no se usan archivos pickle .bin. Las carpetas locales usan los pesos predeterminados que ya contienen.</small></label>
 
             <div class="model-scan-row">
               <button id="scan-models-button" type="button">Buscar modelos locales</button>

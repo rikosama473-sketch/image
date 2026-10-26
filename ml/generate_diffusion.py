@@ -9,17 +9,21 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import platform
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from generation_presets import CHARACTER_PROMPT_SUFFIX, WHITE_BACKGROUND_PROMPT_SUFFIX, build_generation_prompts
+
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", required=True, help="Local Diffusers model directory or cached hub identifier")
-    parser.add_argument("--revision", default="fp16", help="Model hub branch/commit to load (ignored for local model directories)")
+    parser.add_argument("--revision", default="main", help="Model hub branch/commit to load (ignored for local model directories)")
+    parser.add_argument("--variant", choices=("fp16", "none"), default="fp16", help="Select fp16 safetensors weights on the model revision, or none for standard weights")
     parser.add_argument("--lora", help="Optional local LoRA file/directory or cached hub identifier")
     parser.add_argument("--lora-weight-name", help="Optional filename within a LoRA directory/repository")
     parser.add_argument("--lora-scale", type=float, default=0.8, help="Style LoRA strength, usually tested around 0.5–1.0")
@@ -102,6 +106,122 @@ def resolve_lora_source(source: str, weight_name: str | None) -> tuple[str, str 
     return source, weight_name
 
 
+
+def _encode_prompt(tokenizer: Any, text: str) -> list[int]:
+    return list(tokenizer.encode(text, add_special_tokens=False))
+
+
+def _decode_prompt(tokenizer: Any, token_ids: list[int]) -> str:
+    try:
+        return str(tokenizer.decode(token_ids, skip_special_tokens=True)).strip()
+    except TypeError:
+        return str(tokenizer.decode(token_ids)).strip()
+
+
+def _token_count(tokenizer: Any, text: str) -> int:
+    return len(_encode_prompt(tokenizer, text))
+
+
+def _fit_positive_prompt(
+    user_prompt: str,
+    character_mode: bool,
+    transparent_background: bool,
+    tokenizer: Any,
+    max_tokens: int,
+) -> tuple[str, bool]:
+    """Keep user details first but reserve tokens for the fixed character/cutout recipe."""
+    positive, _ = build_generation_prompts(
+        user_prompt, "", character_mode, transparent_background
+    )
+    if _token_count(tokenizer, positive) <= max_tokens:
+        return positive, False
+
+    suffix_parts = []
+    if character_mode:
+        suffix_parts.append(CHARACTER_PROMPT_SUFFIX)
+    if transparent_background:
+        suffix_parts.append(WHITE_BACKGROUND_PROMPT_SUFFIX)
+    suffix = ", ".join(suffix_parts)
+    suffix_tokens = _encode_prompt(tokenizer, suffix) if suffix else []
+    source_tokens = _encode_prompt(tokenizer, user_prompt)
+    user_budget = max(0, max_tokens - len(suffix_tokens) - (1 if suffix else 0))
+    kept_user_tokens = source_tokens[:user_budget]
+    user_text = _decode_prompt(tokenizer, kept_user_tokens)
+    parts = [part for part in (user_text, suffix) if part]
+    candidate = ", ".join(parts)
+
+    while _token_count(tokenizer, candidate) > max_tokens and kept_user_tokens:
+        kept_user_tokens.pop()
+        user_text = _decode_prompt(tokenizer, kept_user_tokens)
+        candidate = ", ".join(part for part in (user_text, suffix) if part)
+    if _token_count(tokenizer, candidate) > max_tokens:
+        candidate = _decode_prompt(tokenizer, _encode_prompt(tokenizer, candidate)[:max_tokens])
+    return candidate, True
+
+
+def _fit_negative_prompt(
+    negative_prompt: str,
+    tokenizer: Any,
+    max_tokens: int,
+) -> tuple[str, bool]:
+    """Keep early, built-in protection tags before optional user extras when truncating."""
+    if _token_count(tokenizer, negative_prompt) <= max_tokens:
+        return negative_prompt, False
+    accepted: list[str] = []
+    for term in (item.strip() for item in negative_prompt.split(",")):
+        if not term:
+            continue
+        candidate = ", ".join([*accepted, term])
+        if _token_count(tokenizer, candidate) <= max_tokens:
+            accepted.append(term)
+    result = ", ".join(accepted)
+    if not result:
+        result = _decode_prompt(tokenizer, _encode_prompt(tokenizer, negative_prompt)[:max_tokens])
+    return result, True
+
+
+def prepare_generation_prompts(
+    args: argparse.Namespace,
+    tokenizer: Any,
+    max_tokens: int | None = None,
+) -> tuple[str, str, bool, bool]:
+    """Rebuild from the user's original text and keep both prompts inside the CLIP window."""
+    if args.user_prompt:
+        user_prompt = args.user_prompt
+        # When invoked by the local server the submitted negative is already composed;
+        # the separate user field is the unmodified optional extra.
+        user_negative = args.user_negative_prompt
+    else:
+        user_prompt = args.prompt
+        user_negative = args.user_negative_prompt or args.negative_prompt
+
+    _, raw_negative = build_generation_prompts(
+        user_prompt,
+        user_negative,
+        bool(args.character_mode),
+        bool(args.transparent_background),
+    )
+    reported_limit = getattr(tokenizer, "model_max_length", 77)
+    try:
+        reported_limit = int(reported_limit)
+    except (TypeError, ValueError, OverflowError):
+        reported_limit = 77
+    if reported_limit > 512:
+        reported_limit = 77
+    token_limit = max_tokens if max_tokens is not None else min(75, max(1, reported_limit - 2))
+    effective_prompt, prompt_truncated = _fit_positive_prompt(
+        user_prompt,
+        bool(args.character_mode),
+        bool(args.transparent_background),
+        tokenizer,
+        token_limit,
+    )
+    effective_negative, negative_truncated = _fit_negative_prompt(
+        raw_negative, tokenizer, token_limit
+    )
+    return effective_prompt, effective_negative, prompt_truncated, negative_truncated
+
+
 def run_generation_batch(
     args: argparse.Namespace,
     pipe: Any,
@@ -116,13 +236,22 @@ def run_generation_batch(
     run_dir.mkdir(parents=True, exist_ok=False)
     saved: list[dict[str, Any]] = []
     failures: list[dict[str, Any]] = []
+    tokenizer = getattr(pipe, "tokenizer", None)
+    if tokenizer is not None and callable(getattr(tokenizer, "encode", None)):
+        effective_prompt, effective_negative_prompt, prompt_truncated, negative_prompt_truncated = prepare_generation_prompts(args, tokenizer)
+    else:
+        # Lightweight fake pipelines used by unit tests may not expose a tokenizer.
+        effective_prompt, effective_negative_prompt = args.prompt, args.negative_prompt
+        prompt_truncated = negative_prompt_truncated = False
+    if prompt_truncated or negative_prompt_truncated:
+        print("Aviso: se ajustó el prompt al límite del tokenizador; el texto original se conserva en los metadatos.", file=sys.stderr)
     for index in range(args.count):
         image_seed = args.seed + index
         try:
             generator_device = "cuda" if device == "cuda" else "cpu"
             generator = torch.Generator(device=generator_device).manual_seed(image_seed)
             call_args: dict[str, Any] = {
-                "prompt": args.prompt, "negative_prompt": args.negative_prompt or None,
+                "prompt": effective_prompt, "negative_prompt": effective_negative_prompt or None,
                 "width": args.width, "height": args.height,
                 "num_inference_steps": args.steps, "guidance_scale": args.guidance_scale,
                 "generator": generator,
@@ -158,12 +287,14 @@ def run_generation_batch(
             # make the UI hide a valid PNG; the batch itself can still be partial.
             saved.append({"seed": image_seed, "image_path": image_path.name})
             metadata = {
-                "model": args.model, "model_revision": args.revision, "lora": args.lora,
+                "model": args.model, "model_revision": args.revision, "model_variant": args.variant, "lora": args.lora,
                 "lora_weight_name": args.lora_weight_name,
                 "lora_scale": args.lora_scale if args.lora else None,
                 "prompt": args.user_prompt or args.prompt,
-                "effective_prompt": args.prompt,
-                "negative_prompt": args.negative_prompt,
+                "effective_prompt": effective_prompt,
+                "negative_prompt": effective_negative_prompt,
+                "prompt_truncated": prompt_truncated,
+                "negative_prompt_truncated": negative_prompt_truncated,
                 "user_negative_prompt": args.user_negative_prompt,
                 "character_mode": args.character_mode,
                 "transparent_background": args.transparent_background,
@@ -195,11 +326,12 @@ def run_generation_batch(
         "requested_count": args.count, "generated_count": len(saved), "failed_count": len(failures),
         "requested_seed": args.seed, "generated": saved, "failures": failures,
         "parameters": {
-            "model": args.model, "model_revision": args.revision, "lora": args.lora or None,
+            "model": args.model, "model_revision": args.revision, "model_variant": args.variant, "lora": args.lora or None,
             "lora_weight_name": args.lora_weight_name or None,
             "lora_scale": args.lora_scale if args.lora else None,
             "prompt": args.user_prompt or args.prompt,
-            "effective_prompt": args.prompt, "negative_prompt": args.negative_prompt,
+            "effective_prompt": effective_prompt, "negative_prompt": effective_negative_prompt,
+            "prompt_truncated": prompt_truncated, "negative_prompt_truncated": negative_prompt_truncated,
             "user_negative_prompt": args.user_negative_prompt,
             "character_mode": args.character_mode,
             "transparent_background": args.transparent_background,
@@ -225,6 +357,30 @@ def run_generation_batch(
             manifest["manifest_write_error"] = f"{type(exc).__name__}: {exc}"
     print(f"Run status: {manifest['run_status']} ({len(saved)}/{args.count} images)")
     return {"exit_code": exit_code, "manifest": manifest, "run_dir": str(run_dir)}
+
+
+
+def build_model_load_options(
+    args: argparse.Namespace,
+    model_path: Path,
+    dtype: Any,
+    local_files_only: bool,
+) -> dict[str, Any]:
+    """Build safe Diffusers load options; prefer named safetensors variants over pickle."""
+    options: dict[str, Any] = {
+        "torch_dtype": dtype,
+        "use_safetensors": True,
+        "local_files_only": local_files_only,
+    }
+    if not model_path.is_dir():
+        if not args.revision or len(args.revision) > 128:
+            raise RuntimeError("The model revision must be a non-empty branch/commit name up to 128 characters.")
+        options["revision"] = args.revision
+        # In current Diffusers, variant selects model.fp16.safetensors from the
+        # main revision; it is not the same as switching to an fp16 branch.
+        if args.variant != "none":
+            options["variant"] = args.variant
+    return options
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -260,6 +416,10 @@ def main(argv: list[str] | None = None) -> int:
     model_path = Path(args.model).expanduser()
     if model_path.exists() and not model_path.is_dir():
         parser.error("--model must be a Diffusers model directory or hub identifier, not a single checkpoint file.")
+    if model_path.is_dir():
+        # The local-folder picker does not infer which weight variants exist;
+        # use the folder default and record that accurately in provenance.
+        args.variant = "none"
     if not args.allow_download and not model_path.is_dir():
         # A hub identifier can still work when its files are already cached.
         local_files_only = True
@@ -294,15 +454,7 @@ def main(argv: list[str] | None = None) -> int:
             return 2
 
     try:
-        load_options: dict[str, Any] = {
-            "torch_dtype": dtype,
-            "use_safetensors": True,
-            "local_files_only": local_files_only,
-        }
-        if not model_path.is_dir():
-            if not args.revision or len(args.revision) > 128:
-                raise RuntimeError("The model revision must be a non-empty branch/commit name up to 128 characters.")
-            load_options["revision"] = args.revision
+        load_options = build_model_load_options(args, model_path, dtype, local_files_only)
         pipe = AutoPipelineForText2Image.from_pretrained(args.model, **load_options)
         if args.lora:
             lora_source, weight_name = resolve_lora_source(args.lora, args.lora_weight_name)

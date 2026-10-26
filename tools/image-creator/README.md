@@ -7,7 +7,7 @@
 3. Ejecuta `start-image-creator.bat`.
 4. Escribe una descripción y pulsa **Generar imágenes**.
 
-La interfaz preconfigura `hakurei/waifu-diffusion` como candidato anime de arranque basado en Stable Diffusion 1.x. La variante `fp16` queda seleccionada para reducir la descarga (el árbol de esa variante ronda 2,74 GB en Hugging Face); los pesos se convierten a precisión FP32 al cargarlos para inferencia CPU. Los pesos no se incluyen en Git. La primera generación los descarga a la caché local si autorizás la descarga; el segmentador `isnet-anime` también guarda sus pesos localmente.
+La interfaz preconfigura `hakurei/waifu-diffusion` desde la revisión `main` con `variant=fp16`: Diffusers busca los archivos `.fp16.safetensors` sin cambiar a la rama separada `fp16`, que publica pesos `.bin`. Así se mantiene la carga de `safetensors` segura y se selecciona el conjunto FP16 más pequeño; los pesos se convierten a precisión FP32 al cargarlos para inferencia CPU. Los pesos no se incluyen en Git. La primera generación los descarga a la caché local si autorizás la descarga; el segmentador `isnet-anime` también guarda sus pesos localmente.
 
 ## Perfil seguro inicial
 
@@ -16,6 +16,7 @@ La interfaz preconfigura `hakurei/waifu-diffusion` como candidato anime de arran
 - 16 pasos, una imagen por solicitud, procesamiento secuencial, cuatro hilos CPU por defecto (ajustable entre 1 y 6).
 - Una sola generación activa; no se apilan trabajos de difusión concurrentes.
 - El modo **Un personaje anime** añade términos positivos de sujeto único y negativos base para anatomía, dedos, personajes múltiples, fondos, auras, partículas, emojis, textos, logos y marcas de agua.
+- Los prompts positivos y negativos se ajustan al límite del tokenizador del modelo (ventana CLIP); el usuario recibe un aviso si fue necesario recortar texto y los metadatos conservan tanto la descripción original como el prompt efectivo.
 - **PNG con fondo transparente** genera sobre blanco y después usa `rembg/isnet-anime` localmente. La salida solo se guarda como transparente si se detectan píxeles no opacos en el canal alfa.
 
 ## Privacidad y limitaciones
