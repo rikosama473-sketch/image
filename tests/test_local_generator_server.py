@@ -120,7 +120,7 @@ class LocalGeneratorPayloadTests(unittest.TestCase):
             server._validate_payload({"model": "m", "prompt": "x", "count": True})
 
     def test_payload_rejects_unsafe_resolution_steps_batch_and_thread_count(self) -> None:
-        for payload in ({"width": 776}, {"height": 1025}, {"steps": 31}, {"count": 3}, {"cpu_threads": 7}):
+        for payload in ({"width": 776}, {"height": 1025}, {"steps": 31}, {"count": 3}, {"cpu_threads": 7}, {"model_variant": []}):
             request = {"model": "m", "prompt": "anime portrait", **payload}
             with self.subTest(payload=payload), self.assertRaises(ValueError):
                 server._validate_payload(request)
