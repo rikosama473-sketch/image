@@ -116,9 +116,17 @@ Abrir el taller en navegador con el lanzador local y probar el filtro «Uso como
 
 ## Generador anime de prompt primero (2026-10-25)
 
-- Se preconfigura `hakurei/waifu-diffusion` con la rama `fp16` pública (aprox. 2,74 GB en Hugging Face) y conversión de pesos a FP32 al cargar en CPU; el selector de variante, modelo y LoRA queda en opciones avanzadas.
+- Se preconfigura `hakurei/waifu-diffusion` en la revisión `main`, seleccionando con `variant=fp16` los archivos `.fp16.safetensors` (sin cambiar a la rama separada `fp16`, que contiene `.bin`); los pesos se cargan a FP32 en CPU y el selector de variante queda en opciones avanzadas.
 - Los negativos se componen en el servidor y no pueden eliminarse dejando vacío el campo extra. Los términos aportados por el usuario se suman a los controles de anatomía y personaje único.
 - El perfil sencillo se limita a 512×768, 786.432 píxeles, 16 pasos, una imagen, un único trabajo activo y cuatro hilos CPU (hasta seis configurables).
 - La transparencia se obtiene con segmentador local `rembg/isnet-anime` después de generar sobre blanco. Solo se guarda como PNG transparente si se detecta alfa no opaco; si falta el paquete o falla la segmentación, el error queda visible.
 - Se añaden instalador de dependencias CPU y lanzador Windows. Los pesos grandes no van a Git; se descargan a la caché local bajo autorización visible en el panel.
 - Pendiente de aceptación en el equipo objetivo: generación real en Ryzen 5 5600G, medición de tiempo/RAM y revisión del cabello fino. CI valida contratos/UI, no simula los pesos ni ese hardware.
+
+
+## Corrección de carga del modelo de difusión (2026-10-26)
+
+- Separar `revision=main` de `variant=fp16`: la variante elige pesos `.fp16.safetensors` de la revisión estable, no una rama Hub distinta. El cargador mantiene `use_safetensors=True`.
+- Añadir `os` al motor de generación para resolver el directorio local del modelo `isnet-anime` usado en el recorte transparente.
+- Pruebas nuevas cubren las opciones de carga del Hub, los modelos locales, la variante estándar, y la presencia de la dependencia `os` en la ruta de caché.
+- Pendiente igual que antes: descargar pesos reales con permiso y validar una generación completa en el PC de destino; las pruebas contractuales no sustituyen esa aceptación.
