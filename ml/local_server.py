@@ -277,7 +277,7 @@ def _validate_payload(data: Any) -> dict[str, Any]:
     if not isinstance(model_revision, str) or not model_revision.strip() or len(model_revision) > 128 or not re.fullmatch(r"[A-Za-z0-9._/-]+", model_revision):
         raise ValueError("La revisión del modelo no es válida.")
     model_variant = data.get("model_variant", RECOMMENDED_MODEL_VARIANT)
-    if model_variant not in {"fp16", "none"}:
+    if not isinstance(model_variant, str) or model_variant not in {"fp16", "none"}:
         raise ValueError("La variante de pesos debe ser fp16 o none.")
     lora = data.get("lora", "")
     weight_name = data.get("lora_weight_name", "")
