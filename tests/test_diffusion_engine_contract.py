@@ -126,10 +126,13 @@ class DiffusionBatchTests(unittest.TestCase):
             self.assertEqual(result["manifest"]["generated_count"], 2)
             manifest = json.loads((run_dir / "run-manifest.json").read_text(encoding="utf-8"))
             self.assertEqual([item["seed"] for item in manifest["generated"]], [40, 41])
+            self.assertEqual(manifest["parameters"]["model_variant"], "fp16")
             for item in manifest["generated"]:
                 image_path = run_dir / item["image_path"]
                 self.assertTrue(image_path.is_file())
-                self.assertEqual(json.loads(image_path.with_suffix(".json").read_text(encoding="utf-8"))["seed"], item["seed"])
+                sidecar = json.loads(image_path.with_suffix(".json").read_text(encoding="utf-8"))
+                self.assertEqual(sidecar["seed"], item["seed"])
+                self.assertEqual(sidecar["model_variant"], "fp16")
 
     def test_partial_batch_preserves_success_and_records_failed_seed(self):
         with tempfile.TemporaryDirectory() as tempdir:
