@@ -16,6 +16,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from generation_presets import CHARACTER_PROMPT_SUFFIX, WHITE_BACKGROUND_PROMPT_SUFFIX, build_generation_prompts
+
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -102,6 +104,122 @@ def resolve_lora_source(source: str, weight_name: str | None) -> tuple[str, str 
     if candidate.is_file():
         return str(candidate.parent.resolve()), weight_name or candidate.name
     return source, weight_name
+
+
+
+def _encode_prompt(tokenizer: Any, text: str) -> list[int]:
+    return list(tokenizer.encode(text, add_special_tokens=False))
+
+
+def _decode_prompt(tokenizer: Any, token_ids: list[int]) -> str:
+    try:
+        return str(tokenizer.decode(token_ids, skip_special_tokens=True)).strip()
+    except TypeError:
+        return str(tokenizer.decode(token_ids)).strip()
+
+
+def _token_count(tokenizer: Any, text: str) -> int:
+    return len(_encode_prompt(tokenizer, text))
+
+
+def _fit_positive_prompt(
+    user_prompt: str,
+    character_mode: bool,
+    transparent_background: bool,
+    tokenizer: Any,
+    max_tokens: int,
+) -> tuple[str, bool]:
+    """Keep user details first but reserve tokens for the fixed character/cutout recipe."""
+    positive, _ = build_generation_prompts(
+        user_prompt, "", character_mode, transparent_background
+    )
+    if _token_count(tokenizer, positive) <= max_tokens:
+        return positive, False
+
+    suffix_parts = []
+    if character_mode:
+        suffix_parts.append(CHARACTER_PROMPT_SUFFIX)
+    if transparent_background:
+        suffix_parts.append(WHITE_BACKGROUND_PROMPT_SUFFIX)
+    suffix = ", ".join(suffix_parts)
+    suffix_tokens = _encode_prompt(tokenizer, suffix) if suffix else []
+    source_tokens = _encode_prompt(tokenizer, user_prompt)
+    user_budget = max(0, max_tokens - len(suffix_tokens) - (1 if suffix else 0))
+    kept_user_tokens = source_tokens[:user_budget]
+    user_text = _decode_prompt(tokenizer, kept_user_tokens)
+    parts = [part for part in (user_text, suffix) if part]
+    candidate = ", ".join(parts)
+
+    while _token_count(tokenizer, candidate) > max_tokens and kept_user_tokens:
+        kept_user_tokens.pop()
+        user_text = _decode_prompt(tokenizer, kept_user_tokens)
+        candidate = ", ".join(part for part in (user_text, suffix) if part)
+    if _token_count(tokenizer, candidate) > max_tokens:
+        candidate = _decode_prompt(tokenizer, _encode_prompt(tokenizer, candidate)[:max_tokens])
+    return candidate, True
+
+
+def _fit_negative_prompt(
+    negative_prompt: str,
+    tokenizer: Any,
+    max_tokens: int,
+) -> tuple[str, bool]:
+    """Keep early, built-in protection tags before optional user extras when truncating."""
+    if _token_count(tokenizer, negative_prompt) <= max_tokens:
+        return negative_prompt, False
+    accepted: list[str] = []
+    for term in (item.strip() for item in negative_prompt.split(",")):
+        if not term:
+            continue
+        candidate = ", ".join([*accepted, term])
+        if _token_count(tokenizer, candidate) <= max_tokens:
+            accepted.append(term)
+    result = ", ".join(accepted)
+    if not result:
+        result = _decode_prompt(tokenizer, _encode_prompt(tokenizer, negative_prompt)[:max_tokens])
+    return result, True
+
+
+def prepare_generation_prompts(
+    args: argparse.Namespace,
+    tokenizer: Any,
+    max_tokens: int | None = None,
+) -> tuple[str, str, bool, bool]:
+    """Rebuild from the user's original text and keep both prompts inside the CLIP window."""
+    if args.user_prompt:
+        user_prompt = args.user_prompt
+        # When invoked by the local server the submitted negative is already composed;
+        # the separate user field is the unmodified optional extra.
+        user_negative = args.user_negative_prompt
+    else:
+        user_prompt = args.prompt
+        user_negative = args.user_negative_prompt or args.negative_prompt
+
+    _, raw_negative = build_generation_prompts(
+        user_prompt,
+        user_negative,
+        bool(args.character_mode),
+        bool(args.transparent_background),
+    )
+    _, reported_limit = (None, getattr(tokenizer, "model_max_length", 77))
+    try:
+        reported_limit = int(reported_limit)
+    except (TypeError, ValueError, OverflowError):
+        reported_limit = 77
+    if reported_limit > 512:
+        reported_limit = 77
+    token_limit = max_tokens if max_tokens is not None else min(75, max(1, reported_limit - 2))
+    effective_prompt, prompt_truncated = _fit_positive_prompt(
+        user_prompt,
+        bool(args.character_mode),
+        bool(args.transparent_background),
+        tokenizer,
+        token_limit,
+    )
+    effective_negative, negative_truncated = _fit_negative_prompt(
+        raw_negative, tokenizer, token_limit
+    )
+    return effective_prompt, effective_negative, prompt_truncated, negative_truncated
 
 
 def run_generation_batch(
