@@ -161,7 +161,11 @@
         if (job.status === "partial") {
           setStatus("error", "Generación parcial", count + " de " + requested + " imágenes guardadas. " + (job.error || "Revisá el registro del motor."));
         } else {
-          setStatus("success", "Generación terminada", count + " " + (count === 1 ? "imagen guardada" : "imágenes guardadas") + ". Los parámetros se conservaron junto a los archivos.");
+          const promptAdjusted = /Aviso: se ajustó el prompt al límite del tokenizador/i.test(String(job.stderr || ""));
+          const completionNote = promptAdjusted
+            ? " El prompt usado se ajustó al límite del modelo; el texto original y el prompt efectivo están disponibles en «Ver parámetros»."
+            : " Los parámetros se conservaron junto a los archivos.";
+          setStatus("success", "Generación terminada", count + " " + (count === 1 ? "imagen guardada" : "imágenes guardadas") + "." + completionNote);
         }
       } else {
         setStatus("error", "No se pudo completar la generación", job.error || "Revisá la salida del motor y la ruta del modelo/LoRA.");
