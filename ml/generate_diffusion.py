@@ -201,7 +201,7 @@ def prepare_generation_prompts(
         bool(args.character_mode),
         bool(args.transparent_background),
     )
-    _, reported_limit = (None, getattr(tokenizer, "model_max_length", 77))
+    reported_limit = getattr(tokenizer, "model_max_length", 77)
     try:
         reported_limit = int(reported_limit)
     except (TypeError, ValueError, OverflowError):
@@ -416,6 +416,10 @@ def main(argv: list[str] | None = None) -> int:
     model_path = Path(args.model).expanduser()
     if model_path.exists() and not model_path.is_dir():
         parser.error("--model must be a Diffusers model directory or hub identifier, not a single checkpoint file.")
+    if model_path.is_dir():
+        # The local-folder picker does not infer which weight variants exist;
+        # use the folder default and record that accurately in provenance.
+        args.variant = "none"
     if not args.allow_download and not model_path.is_dir():
         # A hub identifier can still work when its files are already cached.
         local_files_only = True
