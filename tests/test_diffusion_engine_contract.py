@@ -70,6 +70,34 @@ class DiffusionEngineContractTests(unittest.TestCase):
         self.assertNotIn("variant", local_options)
         self.assertTrue(local_options["use_safetensors"])
 
+    def test_prompt_preparation_preserves_fixed_suffix_and_caps_long_inputs(self) -> None:
+        class WordTokenizer:
+            model_max_length = 77
+            def encode(self, text, add_special_tokens=False):
+                return text.split()
+            def decode(self, token_ids, skip_special_tokens=True):
+                return " ".join(token_ids)
+
+        long_prompt = " ".join(["silverhair blueeyes olive skin athletic body combat pose clothing mouth"] * 18)
+        extra_negatives = "helmet, sword, " + ", ".join("customterm" + str(index) for index in range(100))
+        _, args = self.parse(
+            "--user-prompt", long_prompt,
+            "--user-negative-prompt", extra_negatives,
+            "--character-mode", "--transparent-background",
+        )
+        positive, negative, prompt_trimmed, negative_trimmed = engine.prepare_generation_prompts(
+            args, WordTokenizer(), max_tokens=75
+        )
+        self.assertTrue(prompt_trimmed)
+        self.assertTrue(negative_trimmed)
+        self.assertLessEqual(len(positive.split()), 75)
+        self.assertLessEqual(len(negative.split()), 75)
+        self.assertTrue(positive.endswith("isolated character, plain white background, no scenery"))
+        for required in ("multiple people", "background", "aura", "emojis", "watermark"):
+            self.assertIn(required, negative)
+        self.assertIn("helmet", negative)
+        self.assertNotIn("customterm99", negative)
+
     def test_local_lora_file_becomes_parent_plus_weight_name(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "style.safetensors"
