@@ -229,6 +229,30 @@ def run_generation_batch(
     return {"exit_code": exit_code, "manifest": manifest, "run_dir": str(run_dir)}
 
 
+
+def build_model_load_options(
+    args: argparse.Namespace,
+    model_path: Path,
+    dtype: Any,
+    local_files_only: bool,
+) -> dict[str, Any]:
+    """Build safe Diffusers load options; prefer named safetensors variants over pickle."""
+    options: dict[str, Any] = {
+        "torch_dtype": dtype,
+        "use_safetensors": True,
+        "local_files_only": local_files_only,
+    }
+    if not model_path.is_dir():
+        if not args.revision or len(args.revision) > 128:
+            raise RuntimeError("The model revision must be a non-empty branch/commit name up to 128 characters.")
+        options["revision"] = args.revision
+        # In current Diffusers, variant selects model.fp16.safetensors from the
+        # main revision; it is not the same as switching to an fp16 branch.
+        if args.variant != "none":
+            options["variant"] = args.variant
+    return options
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -296,19 +320,7 @@ def main(argv: list[str] | None = None) -> int:
             return 2
 
     try:
-        load_options: dict[str, Any] = {
-            "torch_dtype": dtype,
-            "use_safetensors": True,
-            "local_files_only": local_files_only,
-        }
-        if not model_path.is_dir():
-            if not args.revision or len(args.revision) > 128:
-                raise RuntimeError("The model revision must be a non-empty branch/commit name up to 128 characters.")
-            load_options["revision"] = args.revision
-            # The recommended Hub revision stores safe FP16 tensor variants using
-            # *.fp16.safetensors names. Do not switch to pickle-backed .bin files.
-            if args.variant != "none":
-                load_options["variant"] = args.variant
+        load_options = build_model_load_options(args, model_path, dtype, local_files_only)
         pipe = AutoPipelineForText2Image.from_pretrained(args.model, **load_options)
         if args.lora:
             lora_source, weight_name = resolve_lora_source(args.lora, args.lora_weight_name)
