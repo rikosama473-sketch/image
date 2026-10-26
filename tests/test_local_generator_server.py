@@ -129,7 +129,7 @@ class LocalGeneratorPayloadTests(unittest.TestCase):
         parsed = server._validate_payload({"model": "m", "prompt": "red hair, blue eyes"})
         self.assertEqual(parsed["user_prompt"], "red hair, blue eyes")
         self.assertIn("one anime character", parsed["prompt"])
-        self.assertIn("plain pure white background", parsed["prompt"])
+        self.assertIn("plain white background", parsed["prompt"])
         self.assertIn("bad anatomy", parsed["negative_prompt"])
         self.assertIn("multiple people", parsed["negative_prompt"])
         self.assertIn("aura", parsed["negative_prompt"])
