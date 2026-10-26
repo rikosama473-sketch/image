@@ -171,6 +171,8 @@ class LocalGeneratorPayloadTests(unittest.TestCase):
         self.assertFalse(report["inference_started"])
         self.assertTrue(report["downloads_default_off"])
         self.assertEqual(report["recommended_model"], server.RECOMMENDED_MODEL_ID)
+        self.assertEqual(report["recommended_model_revision"], "main")
+        self.assertEqual(report["recommended_model_variant"], "fp16")
         self.assertIn("rembg", report["optional_dependencies"])
 
     def test_unknown_cached_model_is_not_reported_as_ready_without_downloads(self) -> None:
