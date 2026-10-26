@@ -2,7 +2,8 @@
 from __future__ import annotations
 
 RECOMMENDED_MODEL_ID = "hakurei/waifu-diffusion"
-RECOMMENDED_MODEL_REVISION = "fp16"
+RECOMMENDED_MODEL_REVISION = "main"
+RECOMMENDED_MODEL_VARIANT = "fp16"
 
 BASE_NEGATIVE_PROMPT = (
     "worst quality, low quality, lowres, blurry, jpeg artifacts, noisy image, "
