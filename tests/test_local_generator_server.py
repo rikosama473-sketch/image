@@ -31,7 +31,8 @@ class LocalGeneratorJobTests(unittest.TestCase):
         self.job_dir = self.output_root / ("ui-run-" + self.job_id)
         self.config = {
             "model": "model-fixture",
-            "model_revision": "fp16",
+            "model_revision": "main",
+            "model_variant": "fp16",
             "lora": "",
             "lora_weight_name": "",
             "prompt": "anime portrait, one single anime character",
