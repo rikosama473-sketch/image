@@ -236,13 +236,22 @@ def run_generation_batch(
     run_dir.mkdir(parents=True, exist_ok=False)
     saved: list[dict[str, Any]] = []
     failures: list[dict[str, Any]] = []
+    tokenizer = getattr(pipe, "tokenizer", None)
+    if tokenizer is not None and callable(getattr(tokenizer, "encode", None)):
+        effective_prompt, effective_negative_prompt, prompt_truncated, negative_prompt_truncated = prepare_generation_prompts(args, tokenizer)
+    else:
+        # Lightweight fake pipelines used by unit tests may not expose a tokenizer.
+        effective_prompt, effective_negative_prompt = args.prompt, args.negative_prompt
+        prompt_truncated = negative_prompt_truncated = False
+    if prompt_truncated or negative_prompt_truncated:
+        print("Aviso: se ajustó el prompt al límite del tokenizador; el texto original se conserva en los metadatos.", file=sys.stderr)
     for index in range(args.count):
         image_seed = args.seed + index
         try:
             generator_device = "cuda" if device == "cuda" else "cpu"
             generator = torch.Generator(device=generator_device).manual_seed(image_seed)
             call_args: dict[str, Any] = {
-                "prompt": args.prompt, "negative_prompt": args.negative_prompt or None,
+                "prompt": effective_prompt, "negative_prompt": effective_negative_prompt or None,
                 "width": args.width, "height": args.height,
                 "num_inference_steps": args.steps, "guidance_scale": args.guidance_scale,
                 "generator": generator,
@@ -282,8 +291,10 @@ def run_generation_batch(
                 "lora_weight_name": args.lora_weight_name,
                 "lora_scale": args.lora_scale if args.lora else None,
                 "prompt": args.user_prompt or args.prompt,
-                "effective_prompt": args.prompt,
-                "negative_prompt": args.negative_prompt,
+                "effective_prompt": effective_prompt,
+                "negative_prompt": effective_negative_prompt,
+                "prompt_truncated": prompt_truncated,
+                "negative_prompt_truncated": negative_prompt_truncated,
                 "user_negative_prompt": args.user_negative_prompt,
                 "character_mode": args.character_mode,
                 "transparent_background": args.transparent_background,
@@ -319,7 +330,8 @@ def run_generation_batch(
             "lora_weight_name": args.lora_weight_name or None,
             "lora_scale": args.lora_scale if args.lora else None,
             "prompt": args.user_prompt or args.prompt,
-            "effective_prompt": args.prompt, "negative_prompt": args.negative_prompt,
+            "effective_prompt": effective_prompt, "negative_prompt": effective_negative_prompt,
+            "prompt_truncated": prompt_truncated, "negative_prompt_truncated": negative_prompt_truncated,
             "user_negative_prompt": args.user_negative_prompt,
             "character_mode": args.character_mode,
             "transparent_background": args.transparent_background,
