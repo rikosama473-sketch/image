@@ -130,3 +130,11 @@ Abrir el taller en navegador con el lanzador local y probar el filtro «Uso como
 - Añadir `os` al motor de generación para resolver el directorio local del modelo `isnet-anime` usado en el recorte transparente.
 - Pruebas nuevas cubren las opciones de carga del Hub, los modelos locales, la variante estándar, y la presencia de la dependencia `os` en la ruta de caché.
 - Pendiente igual que antes: descargar pesos reales con permiso y validar una generación completa en el PC de destino; las pruebas contractuales no sustituyen esa aceptación.
+
+
+## Presets compactos y límite del tokenizador (2026-10-26)
+
+- Se compactaron los negativos predeterminados como etiquetas cortas compatibles con el vocabulario anime: anatomía/manos/dedos, multiplicidad, duplicados, hoja de personaje/collage, fondo/escenario, aura/partículas, emojis/texto/marcas de agua y objetos externos.
+- Antes de inferir, el motor consulta el límite del tokenizador y ajusta los prompts positivo/negativo a un máximo de 75 tokens (o al límite menor reportado). Se conserva espacio para las instrucciones fijas de personaje único y fondo blanco; los términos negativos base tienen prioridad sobre extras opcionales.
+- Si el prompt debió ajustarse, se registra una advertencia, se conserva el texto original y se guarda el prompt efectivo con indicadores de truncamiento en los metadatos. La interfaz explica esa situación al completar la generación.
+- Las pruebas verifican que la descripción efectiva no exceda el presupuesto, que se mantenga la instrucción de transparencia y que los negativos esenciales sobrevivan antes de los extras.
