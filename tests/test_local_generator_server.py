@@ -149,6 +149,7 @@ class LocalGeneratorPayloadTests(unittest.TestCase):
         self.assertTrue(parsed["low_memory"])
         self.assertEqual(parsed["model"], server.RECOMMENDED_MODEL_ID)
         self.assertEqual(parsed["model_revision"], server.RECOMMENDED_MODEL_REVISION)
+        self.assertEqual(parsed["model_variant"], server.RECOMMENDED_MODEL_VARIANT)
         self.assertEqual(parsed["device"], "cpu")
         self.assertEqual(parsed["width"], 512)
         self.assertEqual(parsed["height"], 768)
