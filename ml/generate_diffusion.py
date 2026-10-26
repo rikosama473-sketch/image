@@ -160,7 +160,7 @@ def run_generation_batch(
             # make the UI hide a valid PNG; the batch itself can still be partial.
             saved.append({"seed": image_seed, "image_path": image_path.name})
             metadata = {
-                "model": args.model, "model_revision": args.revision, "lora": args.lora,
+                "model": args.model, "model_revision": args.revision, "model_variant": args.variant, "lora": args.lora,
                 "lora_weight_name": args.lora_weight_name,
                 "lora_scale": args.lora_scale if args.lora else None,
                 "prompt": args.user_prompt or args.prompt,
@@ -197,7 +197,7 @@ def run_generation_batch(
         "requested_count": args.count, "generated_count": len(saved), "failed_count": len(failures),
         "requested_seed": args.seed, "generated": saved, "failures": failures,
         "parameters": {
-            "model": args.model, "model_revision": args.revision, "lora": args.lora or None,
+            "model": args.model, "model_revision": args.revision, "model_variant": args.variant, "lora": args.lora or None,
             "lora_weight_name": args.lora_weight_name or None,
             "lora_scale": args.lora_scale if args.lora else None,
             "prompt": args.user_prompt or args.prompt,
