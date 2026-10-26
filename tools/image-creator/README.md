@@ -7,7 +7,7 @@
 3. Ejecuta `start-image-creator.bat`.
 4. Escribe una descripción y pulsa **Generar imágenes**.
 
-La interfaz preconfigura `hakurei/waifu-diffusion` como candidato anime de arranque basado en Stable Diffusion 1.x. La variante `fp16` queda seleccionada para reducir la descarga (el árbol de esa variante ronda 2,74 GB en Hugging Face); los pesos se convierten a precisión FP32 al cargarlos para inferencia CPU. Los pesos no se incluyen en Git. La primera generación los descarga a la caché local si autorizás la descarga; el segmentador `isnet-anime` también guarda sus pesos localmente.
+La interfaz preconfigura `hakurei/waifu-diffusion` desde la revisión `main` con `variant=fp16`: Diffusers busca los archivos `.fp16.safetensors` sin cambiar a la rama separada `fp16`, que publica pesos `.bin`. Así se mantiene la carga de `safetensors` segura y se selecciona el conjunto FP16 más pequeño; los pesos se convierten a precisión FP32 al cargarlos para inferencia CPU. Los pesos no se incluyen en Git. La primera generación los descarga a la caché local si autorizás la descarga; el segmentador `isnet-anime` también guarda sus pesos localmente.
 
 ## Perfil seguro inicial
 
