@@ -24,6 +24,9 @@ class DiffusionEngineContractTests(unittest.TestCase):
         self.assertEqual(args.count, 1)
         self.assertEqual(args.device, "auto")
         self.assertEqual(args.precision, "auto")
+        self.assertEqual(args.revision, "main")
+        self.assertEqual(args.variant, "fp16")
+        self.assertTrue(hasattr(engine, "os"), "the transparency cache path needs the os module")
         self.assertEqual(args.cpu_threads, 4)
         self.assertFalse(args.transparent_background)
         self.assertFalse(args.character_mode)
@@ -43,6 +46,29 @@ class DiffusionEngineContractTests(unittest.TestCase):
             parser, args = self.parse(*args_list)
             with self.subTest(args=args_list), self.assertRaises(SystemExit):
                 engine.validate_args(args, parser)
+
+    def test_model_hub_uses_main_revision_and_safe_fp16_variant(self) -> None:
+        _, args = self.parse()
+        options = engine.build_model_load_options(args, Path("org/model"), dtype="float32", local_files_only=False)
+        self.assertEqual(options["revision"], "main")
+        self.assertEqual(options["variant"], "fp16")
+        self.assertTrue(options["use_safetensors"])
+        self.assertFalse(options["local_files_only"])
+
+    def test_standard_weights_omit_variant_and_local_models_ignore_hub_revision(self) -> None:
+        _, standard_args = self.parse("--variant", "none")
+        standard = engine.build_model_load_options(
+            standard_args, Path("org/model"), dtype="float32", local_files_only=True
+        )
+        self.assertNotIn("variant", standard)
+        with tempfile.TemporaryDirectory() as directory:
+            local_path = Path(directory)
+            local_options = engine.build_model_load_options(
+                standard_args, local_path, dtype="float32", local_files_only=True
+            )
+        self.assertNotIn("revision", local_options)
+        self.assertNotIn("variant", local_options)
+        self.assertTrue(local_options["use_safetensors"])
 
     def test_local_lora_file_becomes_parent_plus_weight_name(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
