@@ -13,7 +13,7 @@ class GenerationPresetTests(unittest.TestCase):
         self.assertEqual(RECOMMENDED_MODEL_VARIANT, "fp16")
     def test_character_prompt_blocks_common_non_character_extras(self):
         positive, negative = build_generation_prompts("silver hair, blue eyes")
-        self.assertIn("one single anime character", positive)
+        self.assertIn("one anime character", positive)
         self.assertIn("plain pure white background", positive)
         for term in ("bad anatomy", "multiple people", "aura", "emojis", "watermark"):
             self.assertIn(term, negative)
@@ -24,7 +24,7 @@ class GenerationPresetTests(unittest.TestCase):
         self.assertTrue(negative.endswith("hat, sword"))
     def test_transparency_off_does_not_add_white_background_instruction(self):
         positive, negative = build_generation_prompts("anime portrait", character_mode=True, transparent_background=False)
-        self.assertIn("one single anime character", positive)
+        self.assertIn("one anime character", positive)
         self.assertNotIn("plain pure white background", positive)
         self.assertIn("multiple characters", negative)
     def test_character_mode_can_be_disabled_without_dropping_anatomy_negatives(self):
