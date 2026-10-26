@@ -35,7 +35,7 @@ class LocalGeneratorJobTests(unittest.TestCase):
             "model_variant": "fp16",
             "lora": "",
             "lora_weight_name": "",
-            "prompt": "anime portrait, one single anime character",
+            "prompt": "anime portrait, one anime character",
             "user_prompt": "anime portrait",
             "negative_prompt": "bad anatomy, multiple people",
             "user_negative_prompt": "",
@@ -128,7 +128,7 @@ class LocalGeneratorPayloadTests(unittest.TestCase):
     def test_payload_builds_character_safe_prompts_and_preserves_user_prompt(self) -> None:
         parsed = server._validate_payload({"model": "m", "prompt": "red hair, blue eyes"})
         self.assertEqual(parsed["user_prompt"], "red hair, blue eyes")
-        self.assertIn("one single anime character", parsed["prompt"])
+        self.assertIn("one anime character", parsed["prompt"])
         self.assertIn("plain pure white background", parsed["prompt"])
         self.assertIn("bad anatomy", parsed["negative_prompt"])
         self.assertIn("multiple people", parsed["negative_prompt"])
