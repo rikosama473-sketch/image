@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import platform
 import sys
 from datetime import datetime, timezone
@@ -19,7 +20,8 @@ from typing import Any
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", required=True, help="Local Diffusers model directory or cached hub identifier")
-    parser.add_argument("--revision", default="fp16", help="Model hub branch/commit to load (ignored for local model directories)")
+    parser.add_argument("--revision", default="main", help="Model hub branch/commit to load (ignored for local model directories)")
+    parser.add_argument("--variant", choices=("fp16", "none"), default="fp16", help="Select fp16 safetensors weights on the model revision, or none for standard weights")
     parser.add_argument("--lora", help="Optional local LoRA file/directory or cached hub identifier")
     parser.add_argument("--lora-weight-name", help="Optional filename within a LoRA directory/repository")
     parser.add_argument("--lora-scale", type=float, default=0.8, help="Style LoRA strength, usually tested around 0.5–1.0")
@@ -303,6 +305,10 @@ def main(argv: list[str] | None = None) -> int:
             if not args.revision or len(args.revision) > 128:
                 raise RuntimeError("The model revision must be a non-empty branch/commit name up to 128 characters.")
             load_options["revision"] = args.revision
+            # The recommended Hub revision stores safe FP16 tensor variants using
+            # *.fp16.safetensors names. Do not switch to pickle-backed .bin files.
+            if args.variant != "none":
+                load_options["variant"] = args.variant
         pipe = AutoPipelineForText2Image.from_pretrained(args.model, **load_options)
         if args.lora:
             lora_source, weight_name = resolve_lora_source(args.lora, args.lora_weight_name)
