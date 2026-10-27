@@ -7,6 +7,12 @@
 3. Ejecuta `start-image-creator.bat`.
 4. Escribe una descripción y pulsa **Generar imágenes**.
 
+## Flujo principal: escribir y generar
+
+El panel inicial está pensado para no tener que configurar nada: escribís el prompt y pulsás **Generar imágenes**. IMAGE usa el modelo anime preconfigurado, añade negativos de protección para anatomía/manos/rostros y, en modo personaje (activado por defecto), bloquea sujetos duplicados, fondos, auras, emojis, textos y otros elementos sobrantes. También genera un PNG con transparencia mediante el segmentador local.
+
+Las opciones de personaje y los negativos adicionales están plegados bajo **Personalizar resultado**; modelo, variante de pesos, resolución, semilla, hilos CPU y diagnósticos están bajo **Motor y ajustes avanzados**. La primera generación necesita descargar localmente los pesos del modelo y del segmentador (varios GB); no están incluidos en Git ni se envían los prompts a servicios de generación remotos.
+
 La interfaz preconfigura `hakurei/waifu-diffusion` desde la revisión `main` con `variant=fp16`: Diffusers busca los archivos `.fp16.safetensors` sin cambiar a la rama separada `fp16`, que publica pesos `.bin`. Así se mantiene la carga de `safetensors` segura y se selecciona el conjunto FP16 más pequeño; los pesos se convierten a precisión FP32 al cargarlos para inferencia CPU. Los pesos no se incluyen en Git. La primera generación los descarga a la caché local si autorizás la descarga; el segmentador `isnet-anime` también guarda sus pesos localmente.
 
 ## Perfil seguro inicial
