@@ -3,7 +3,7 @@
   "project": "IMAGE Character Creator",
   "title": "Biblioteca local de ilustraciones",
   "generated_from": "data/training-labels.csv and files present in the repository tree",
-  "asset_count": 776,
+  "asset_count": 779,
   "notice": "This library indexes existing raster files in this repository for personal browsing. Filename hints do not prove authorship, franchise identity, license, or permission to redistribute/train. Items remain unreviewed until their source and rights are confirmed.",
   "filters": [
     "Todos",
@@ -11807,7 +11807,76 @@
       "character_id": "pibara",
       "pack": "anatomy-joint-guide-1",
       "manifest_status": "needs_visual_identity_review"
+    },
+    {
+      "id": "generated-pibara-eyes-4-eye-catchlights-f3777be4",
+      "catalog_id": "GEN-F3777BE4-EYE-CATCHLIGHTS",
+      "label": "Variante eye-catchlights — Pibara — eyes-4",
+      "path": "generated/character-assets/pibara/2026-10-27/run-40529124114/transparent/01-eye-catchlights.png",
+      "src": "../../generated/character-assets/pibara/2026-10-27/run-40529124114/transparent/01-eye-catchlights.png",
+      "kind": "generated_full_illustration",
+      "origin_hint": "Generated in repository workflow via the public image-edit Space; source: from-PixAI-2034984086876227343-0.png; run: 40529124114",
+      "visual_review": "needs_visual_identity_review",
+      "license_review": "unreviewed",
+      "training_permission": "unreviewed",
+      "tags": [
+        "Generado",
+        "eyes-4"
+      ],
+      "size_bytes": 751372,
+      "sha256_git_blob": "",
+      "sha256": "3b47efc767b143429fbc3dbd7442c2a53252fe5d2f7794331408bc24f8b96c15",
+      "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+      "character_id": "pibara",
+      "pack": "eyes-4",
+      "manifest_status": "needs_visual_identity_review"
+    },
+    {
+      "id": "generated-pibara-eyes-4-eye-iris-rings-f3777be4",
+      "catalog_id": "GEN-F3777BE4-EYE-IRIS-RINGS",
+      "label": "Variante eye-iris-rings — Pibara — eyes-4",
+      "path": "generated/character-assets/pibara/2026-10-27/run-40529124114/transparent/02-eye-iris-rings.png",
+      "src": "../../generated/character-assets/pibara/2026-10-27/run-40529124114/transparent/02-eye-iris-rings.png",
+      "kind": "generated_full_illustration",
+      "origin_hint": "Generated in repository workflow via the public image-edit Space; source: from-PixAI-2034984086876227343-0.png; run: 40529124114",
+      "visual_review": "needs_visual_identity_review",
+      "license_review": "unreviewed",
+      "training_permission": "unreviewed",
+      "tags": [
+        "Generado",
+        "eyes-4"
+      ],
+      "size_bytes": 751914,
+      "sha256_git_blob": "",
+      "sha256": "661a46c86915cb814df8df44cad855b345cce4ba0b03cfa8a35e43d27275d156",
+      "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+      "character_id": "pibara",
+      "pack": "eyes-4",
+      "manifest_status": "needs_visual_identity_review"
+    },
+    {
+      "id": "generated-pibara-eyes-4-eye-upper-highlight-f3777be4",
+      "catalog_id": "GEN-F3777BE4-EYE-UPPER-HIGHLIGHT",
+      "label": "Variante eye-upper-highlight — Pibara — eyes-4",
+      "path": "generated/character-assets/pibara/2026-10-27/run-40529124114/transparent/03-eye-upper-highlight.png",
+      "src": "../../generated/character-assets/pibara/2026-10-27/run-40529124114/transparent/03-eye-upper-highlight.png",
+      "kind": "generated_full_illustration",
+      "origin_hint": "Generated in repository workflow via the public image-edit Space; source: from-PixAI-2034984086876227343-0.png; run: 40529124114",
+      "visual_review": "needs_visual_identity_review",
+      "license_review": "unreviewed",
+      "training_permission": "unreviewed",
+      "tags": [
+        "Generado",
+        "eyes-4"
+      ],
+      "size_bytes": 753052,
+      "sha256_git_blob": "",
+      "sha256": "0a0a091e5330a7a4d8bda855e7c7791d870d954015caee13138af7ba9114bd2b",
+      "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+      "character_id": "pibara",
+      "pack": "eyes-4",
+      "manifest_status": "needs_visual_identity_review"
     }
   ],
-  "updated_at_utc": "2026-10-26T15:51:58.556577+00:00"
+  "updated_at_utc": "2026-10-27T15:18:44.275519+00:00"
 }
