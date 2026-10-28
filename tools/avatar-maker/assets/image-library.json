@@ -3,7 +3,7 @@
   "project": "IMAGE Character Creator",
   "title": "Biblioteca local de ilustraciones",
   "generated_from": "data/training-labels.csv and files present in the repository tree",
-  "asset_count": 779,
+  "asset_count": 780,
   "notice": "This library indexes existing raster files in this repository for personal browsing. Filename hints do not prove authorship, franchise identity, license, or permission to redistribute/train. Items remain unreviewed until their source and rights are confirmed.",
   "filters": [
     "Todos",
@@ -11876,7 +11876,30 @@
       "character_id": "pibara",
       "pack": "eyes-4",
       "manifest_status": "needs_visual_identity_review"
+    },
+    {
+      "id": "generated-pibara-eyes-4-eye-lower-lash-f3777be4",
+      "catalog_id": "GEN-F3777BE4-EYE-LOWER-LASH",
+      "label": "Variante eye-lower-lash — Pibara — eyes-4",
+      "path": "generated/character-assets/pibara/2026-10-28/run-40714858403/transparent/04-eye-lower-lash.png",
+      "src": "../../generated/character-assets/pibara/2026-10-28/run-40714858403/transparent/04-eye-lower-lash.png",
+      "kind": "generated_full_illustration",
+      "origin_hint": "Generated in repository workflow via the public image-edit Space; source: from-PixAI-2034984086876227343-0.png; run: 40714858403",
+      "visual_review": "needs_visual_identity_review",
+      "license_review": "unreviewed",
+      "training_permission": "unreviewed",
+      "tags": [
+        "Generado",
+        "eyes-4"
+      ],
+      "size_bytes": 770169,
+      "sha256_git_blob": "",
+      "sha256": "512a50167c812cee90d0f5589f103b0181ff97ad3e44a910ac3ad1d82e55f64d",
+      "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+      "character_id": "pibara",
+      "pack": "eyes-4",
+      "manifest_status": "needs_visual_identity_review"
     }
   ],
-  "updated_at_utc": "2026-10-27T15:18:44.275519+00:00"
+  "updated_at_utc": "2026-10-28T15:22:12.968251+00:00"
 }

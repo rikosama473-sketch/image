@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "character_id": "pibara",
+  "pack": "eyes-4",
+  "pack_status": "complete",
+  "created_at_utc": "2026-10-28T15:20:47.772625+00:00",
+  "source": {
+    "repository": "rikosama473-sketch/image",
+    "ref": "1ec342dc18c6c6b179c504ca3e33fb65eb64e474",
+    "path": "from-PixAI-2034984086876227343-0.png",
+    "url": "https://raw.githubusercontent.com/rikosama473-sketch/image/1ec342dc18c6c6b179c504ca3e33fb65eb64e474/from-PixAI-2034984086876227343-0.png",
+    "sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+    "dimensions": [
+      768,
+      1280
+    ]
+  },
+  "generator": {
+    "space_id": "conradlocke/krea2-identity-edit",
+    "space_url": "https://huggingface.co/spaces/conradlocke/krea2-identity-edit",
+    "api_name": "/edit",
+    "openai_api_key_used": false,
+    "inference_api_paid_by_openai": false,
+    "ref_boost": 4.0,
+    "grounding_px": 768,
+    "lora_scale": 1.0,
+    "steps": 12,
+    "guidance_scale": 0.0,
+    "background_removed": true
+  },
+  "required_asset_ids": [
+    "eye-catchlights",
+    "eye-iris-rings",
+    "eye-upper-highlight",
+    "eye-lower-lash"
+  ],
+  "completed_asset_ids": [
+    "eye-catchlights",
+    "eye-iris-rings",
+    "eye-upper-highlight",
+    "eye-lower-lash"
+  ],
+  "variants": [
+    {
+      "index": 1,
+      "asset_id": "eye-catchlights",
+      "change": "Keep original iris color and expression. Add a soft secondary catchlight to each iris only; change nothing else.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Keep original iris color and expression. Add a soft secondary catchlight to each iris only; change nothing else.",
+      "requested_seed": 1201,
+      "returned_seed": 1201,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-27/run-40529124114/renders/01-eye-catchlights.png",
+        "sha256": "7569dbf38c5ff8308aa6a3fe46bb26453e8f5eab7095faed16a37c89c0016e1c",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-27/run-40529124114/transparent/01-eye-catchlights.png",
+        "sha256": "3b47efc767b143429fbc3dbd7442c2a53252fe5d2f7794331408bc24f8b96c15",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.29192,
+        "opaque_pixel_ratio": 0.61668,
+        "quality_warning": null
+      }
+    },
+    {
+      "index": 2,
+      "asset_id": "eye-iris-rings",
+      "change": "Keep original iris color and expression. Make iris rings slightly more defined and pupils crisp; preserve original eye shape and all other details.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Keep original iris color and expression. Make iris rings slightly more defined and pupils crisp; preserve original eye shape and all other details.",
+      "requested_seed": 1202,
+      "returned_seed": 1202,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-27/run-40529124114/renders/02-eye-iris-rings.png",
+        "sha256": "517eb1cad7e7d03ec8cc128957b77d2fd2e9d186ae418f5cf9d98bf5e7a6c9b2",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-27/run-40529124114/transparent/02-eye-iris-rings.png",
+        "sha256": "661a46c86915cb814df8df44cad855b345cce4ba0b03cfa8a35e43d27275d156",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.29163,
+        "opaque_pixel_ratio": 0.63397,
+        "quality_warning": null
+      }
+    },
+    {
+      "index": 3,
+      "asset_id": "eye-upper-highlight",
+      "change": "Keep original iris color and expression. Add a subtle anime-style upper iris highlight while keeping the original eye shape, eyelashes and eyebrows.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Keep original iris color and expression. Add a subtle anime-style upper iris highlight while keeping the original eye shape, eyelashes and eyebrows.",
+      "requested_seed": 1203,
+      "returned_seed": 1203,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-27/run-40529124114/renders/03-eye-upper-highlight.png",
+        "sha256": "b5a5b7d49d30b8041742385f48314fce7164118c0c9b7bb09195b80edfe89554",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-27/run-40529124114/transparent/03-eye-upper-highlight.png",
+        "sha256": "0a0a091e5330a7a4d8bda855e7c7791d870d954015caee13138af7ba9114bd2b",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.29141,
+        "opaque_pixel_ratio": 0.60854,
+        "quality_warning": null
+      }
+    },
+    {
+      "index": 4,
+      "asset_id": "eye-lower-lash",
+      "change": "Keep original iris color and expression. Add a tidy, subtle lower-lash detail only; do not change eye shape or other features.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Keep original iris color and expression. Add a tidy, subtle lower-lash detail only; do not change eye shape or other features.",
+      "requested_seed": 1204,
+      "returned_seed": 1204,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-28/run-40714858403/renders/04-eye-lower-lash.png",
+        "sha256": "051714005cb97e9ee836129c2f11a2f7494dceecfeda9110d84b8d900f558f8c",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-28/run-40714858403/transparent/04-eye-lower-lash.png",
+        "sha256": "512a50167c812cee90d0f5589f103b0181ff97ad3e44a910ac3ad1d82e55f64d",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.29146,
+        "opaque_pixel_ratio": 0.60241,
+        "quality_warning": null
+      }
+    }
+  ],
+  "last_error": null,
+  "review_status": "needs_visual_identity_review",
+  "warning": "Generated renders and automated transparent cutouts require review of likeness and hair/accessory edges."
+}
