@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "character_id": "pibara",
+  "pack": "accessories-4",
+  "pack_status": "partial",
+  "created_at_utc": "2026-10-29T15:21:24.678016+00:00",
+  "source": {
+    "repository": "rikosama473-sketch/image",
+    "ref": "fa4b17e5a64886f9160995bc5024031f2861fcb5",
+    "path": "from-PixAI-2034984086876227343-0.png",
+    "url": "https://raw.githubusercontent.com/rikosama473-sketch/image/fa4b17e5a64886f9160995bc5024031f2861fcb5/from-PixAI-2034984086876227343-0.png",
+    "sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+    "dimensions": [
+      768,
+      1280
+    ]
+  },
+  "generator": {
+    "space_id": "conradlocke/krea2-identity-edit",
+    "space_url": "https://huggingface.co/spaces/conradlocke/krea2-identity-edit",
+    "api_name": "/edit",
+    "openai_api_key_used": false,
+    "inference_api_paid_by_openai": false,
+    "ref_boost": 4.0,
+    "grounding_px": 768,
+    "lora_scale": 1.0,
+    "steps": 12,
+    "guidance_scale": 0.0,
+    "background_removed": true
+  },
+  "required_asset_ids": [
+    "ribbon",
+    "hair-clip",
+    "star-pin",
+    "headband"
+  ],
+  "completed_asset_ids": [
+    "ribbon",
+    "hair-clip",
+    "star-pin"
+  ],
+  "variants": [
+    {
+      "index": 1,
+      "asset_id": "ribbon",
+      "change": "Add one small tasteful ribbon hair accessory suited to the existing palette. Preserve all existing accessories; change nothing else.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Add one small tasteful ribbon hair accessory suited to the existing palette. Preserve all existing accessories; change nothing else.",
+      "requested_seed": 1201,
+      "returned_seed": 1201,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-29/run-40900597755/renders/01-ribbon.png",
+        "sha256": "d7b395967e43ce5d16c5e33f3c945591285f191fb2be3574003ec45512d2e963",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-29/run-40900597755/transparent/01-ribbon.png",
+        "sha256": "6d45d7d02051169878df0d68a6729777861cbcca2b850e6ba99fa78784f77ef1",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.29179,
+        "opaque_pixel_ratio": 0.59753,
+        "quality_warning": null
+      }
+    },
+    {
+      "index": 2,
+      "asset_id": "hair-clip",
+      "change": "Add one small simple hair clip near the temple, coordinated with the existing palette. Preserve existing accessories; change nothing else.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Add one small simple hair clip near the temple, coordinated with the existing palette. Preserve existing accessories; change nothing else.",
+      "requested_seed": 1202,
+      "returned_seed": 1202,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-29/run-40900597755/renders/02-hair-clip.png",
+        "sha256": "3e6c096beb1edacfaab490ecdfd4432bc27d048ef5d875ac4099cd60991e2592",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-29/run-40900597755/transparent/02-hair-clip.png",
+        "sha256": "a01d9f33f262b6c4b1c2123125905af157c04164e18ff91cef7402dcfd8eae34",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.29124,
+        "opaque_pixel_ratio": 0.60222,
+        "quality_warning": null
+      }
+    },
+    {
+      "index": 3,
+      "asset_id": "star-pin",
+      "change": "Add one tiny star-shaped hair pin near the temple. Preserve existing accessories; change nothing else.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Add one tiny star-shaped hair pin near the temple. Preserve existing accessories; change nothing else.",
+      "requested_seed": 1203,
+      "returned_seed": 1203,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-29/run-40900597755/renders/03-star-pin.png",
+        "sha256": "c931ae319e649fbd7a2fd1ed28b706412ea5c69d90ca1ab6cb5e535f299d731b",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-29/run-40900597755/transparent/03-star-pin.png",
+        "sha256": "7126dd13a5fb804c467b6f099fa5d113a6d501ffb5689f9251e508d61619179a",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.29182,
+        "opaque_pixel_ratio": 0.59946,
+        "quality_warning": null
+      }
+    }
+  ],
+  "last_error": "You have exceeded your ZeroGPU runs limit. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens",
+  "review_status": "needs_visual_identity_review",
+  "warning": "Generated renders and automated transparent cutouts require review of likeness and hair/accessory edges."
+}
