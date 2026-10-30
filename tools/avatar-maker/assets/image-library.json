@@ -3,7 +3,7 @@
   "project": "IMAGE Character Creator",
   "title": "Biblioteca local de ilustraciones",
   "generated_from": "data/training-labels.csv and files present in the repository tree",
-  "asset_count": 783,
+  "asset_count": 784,
   "notice": "This library indexes existing raster files in this repository for personal browsing. Filename hints do not prove authorship, franchise identity, license, or permission to redistribute/train. Items remain unreviewed until their source and rights are confirmed.",
   "filters": [
     "Todos",
@@ -11968,7 +11968,30 @@
       "character_id": "pibara",
       "pack": "accessories-4",
       "manifest_status": "needs_visual_identity_review"
+    },
+    {
+      "id": "generated-pibara-accessories-4-headband-f3777be4",
+      "catalog_id": "GEN-F3777BE4-HEADBAND",
+      "label": "Variante headband — Pibara — accessories-4",
+      "path": "generated/character-assets/pibara/2026-10-30/run-41079780028/transparent/04-headband.png",
+      "src": "../../generated/character-assets/pibara/2026-10-30/run-41079780028/transparent/04-headband.png",
+      "kind": "generated_full_illustration",
+      "origin_hint": "Generated in repository workflow via the public image-edit Space; source: from-PixAI-2034984086876227343-0.png; run: 41079780028",
+      "visual_review": "needs_visual_identity_review",
+      "license_review": "unreviewed",
+      "training_permission": "unreviewed",
+      "tags": [
+        "Generado",
+        "accessories-4"
+      ],
+      "size_bytes": 774979,
+      "sha256_git_blob": "",
+      "sha256": "a59e7d48a44aeb3117d3882e2437148fec5782396fe5d8d2c364a1927a6bf806",
+      "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+      "character_id": "pibara",
+      "pack": "accessories-4",
+      "manifest_status": "needs_visual_identity_review"
     }
   ],
-  "updated_at_utc": "2026-10-29T15:23:42.346351+00:00"
+  "updated_at_utc": "2026-10-30T15:22:28.052051+00:00"
 }
