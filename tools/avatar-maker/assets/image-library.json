@@ -3,7 +3,7 @@
   "project": "IMAGE Character Creator",
   "title": "Biblioteca local de ilustraciones",
   "generated_from": "data/training-labels.csv and files present in the repository tree",
-  "asset_count": 784,
+  "asset_count": 787,
   "notice": "This library indexes existing raster files in this repository for personal browsing. Filename hints do not prove authorship, franchise identity, license, or permission to redistribute/train. Items remain unreviewed until their source and rights are confirmed.",
   "filters": [
     "Todos",
@@ -11991,7 +11991,76 @@
       "character_id": "pibara",
       "pack": "accessories-4",
       "manifest_status": "needs_visual_identity_review"
+    },
+    {
+      "id": "generated-pibara-face-details-4-freckles-f3777be4",
+      "catalog_id": "GEN-F3777BE4-FRECKLES",
+      "label": "Variante freckles — Pibara — face-details-4",
+      "path": "generated/character-assets/pibara/2026-10-31/run-41212888407/transparent/01-freckles.png",
+      "src": "../../generated/character-assets/pibara/2026-10-31/run-41212888407/transparent/01-freckles.png",
+      "kind": "generated_full_illustration",
+      "origin_hint": "Generated in repository workflow via the public image-edit Space; source: from-PixAI-2034984086876227343-0.png; run: 41212888407",
+      "visual_review": "needs_visual_identity_review",
+      "license_review": "unreviewed",
+      "training_permission": "unreviewed",
+      "tags": [
+        "Generado",
+        "face-details-4"
+      ],
+      "size_bytes": 751006,
+      "sha256_git_blob": "",
+      "sha256": "7cd9b74fad79679af7c8bca19e7658fe244be99ace5c3b2d585a350354d2150b",
+      "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+      "character_id": "pibara",
+      "pack": "face-details-4",
+      "manifest_status": "needs_visual_identity_review"
+    },
+    {
+      "id": "generated-pibara-face-details-4-beauty-mark-f3777be4",
+      "catalog_id": "GEN-F3777BE4-BEAUTY-MARK",
+      "label": "Variante beauty-mark — Pibara — face-details-4",
+      "path": "generated/character-assets/pibara/2026-10-31/run-41212888407/transparent/02-beauty-mark.png",
+      "src": "../../generated/character-assets/pibara/2026-10-31/run-41212888407/transparent/02-beauty-mark.png",
+      "kind": "generated_full_illustration",
+      "origin_hint": "Generated in repository workflow via the public image-edit Space; source: from-PixAI-2034984086876227343-0.png; run: 41212888407",
+      "visual_review": "needs_visual_identity_review",
+      "license_review": "unreviewed",
+      "training_permission": "unreviewed",
+      "tags": [
+        "Generado",
+        "face-details-4"
+      ],
+      "size_bytes": 752735,
+      "sha256_git_blob": "",
+      "sha256": "99e0cd4bdfd383874ed3c2b06214c475032e4b0c6ee02978fb44807502a68a19",
+      "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+      "character_id": "pibara",
+      "pack": "face-details-4",
+      "manifest_status": "needs_visual_identity_review"
+    },
+    {
+      "id": "generated-pibara-face-details-4-soft-blush-f3777be4",
+      "catalog_id": "GEN-F3777BE4-SOFT-BLUSH",
+      "label": "Variante soft-blush — Pibara — face-details-4",
+      "path": "generated/character-assets/pibara/2026-10-31/run-41212888407/transparent/03-soft-blush.png",
+      "src": "../../generated/character-assets/pibara/2026-10-31/run-41212888407/transparent/03-soft-blush.png",
+      "kind": "generated_full_illustration",
+      "origin_hint": "Generated in repository workflow via the public image-edit Space; source: from-PixAI-2034984086876227343-0.png; run: 41212888407",
+      "visual_review": "needs_visual_identity_review",
+      "license_review": "unreviewed",
+      "training_permission": "unreviewed",
+      "tags": [
+        "Generado",
+        "face-details-4"
+      ],
+      "size_bytes": 751355,
+      "sha256_git_blob": "",
+      "sha256": "7e1aae8c08bd4ee44d1a8ca716455a47e8a5ac80f6cf3837cb6015f703931030",
+      "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+      "character_id": "pibara",
+      "pack": "face-details-4",
+      "manifest_status": "needs_visual_identity_review"
     }
   ],
-  "updated_at_utc": "2026-10-30T15:22:28.052051+00:00"
+  "updated_at_utc": "2026-10-31T15:05:27.758698+00:00"
 }
