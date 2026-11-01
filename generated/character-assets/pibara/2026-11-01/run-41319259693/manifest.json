@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "character_id": "pibara",
+  "pack": "face-details-4",
+  "pack_status": "complete",
+  "created_at_utc": "2026-11-01T15:04:14.728409+00:00",
+  "source": {
+    "repository": "rikosama473-sketch/image",
+    "ref": "3fcb70bb762d6dd9fcf2df7c49b5627ef7a33abe",
+    "path": "from-PixAI-2034984086876227343-0.png",
+    "url": "https://raw.githubusercontent.com/rikosama473-sketch/image/3fcb70bb762d6dd9fcf2df7c49b5627ef7a33abe/from-PixAI-2034984086876227343-0.png",
+    "sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+    "dimensions": [
+      768,
+      1280
+    ]
+  },
+  "generator": {
+    "space_id": "conradlocke/krea2-identity-edit",
+    "space_url": "https://huggingface.co/spaces/conradlocke/krea2-identity-edit",
+    "api_name": "/edit",
+    "openai_api_key_used": false,
+    "inference_api_paid_by_openai": false,
+    "ref_boost": 4.0,
+    "grounding_px": 768,
+    "lora_scale": 1.0,
+    "steps": 12,
+    "guidance_scale": 0.0,
+    "background_removed": true
+  },
+  "required_asset_ids": [
+    "freckles",
+    "beauty-mark",
+    "soft-blush",
+    "lower-eyeliner"
+  ],
+  "completed_asset_ids": [
+    "freckles",
+    "beauty-mark",
+    "soft-blush",
+    "lower-eyeliner"
+  ],
+  "variants": [
+    {
+      "index": 1,
+      "asset_id": "freckles",
+      "change": "Add a very light cluster of tiny freckles across the upper cheeks only. Do not alter face shape, skin tone, expression, eye color, hairstyle or accessories.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Add a very light cluster of tiny freckles across the upper cheeks only. Do not alter face shape, skin tone, expression, eye color, hairstyle or accessories.",
+      "requested_seed": 1201,
+      "returned_seed": 1201,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-31/run-41212888407/renders/01-freckles.png",
+        "sha256": "039b6a8368abc486acbe19738120dded0548a7f8069e70f3549f8e75ca51d3d7",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-31/run-41212888407/transparent/01-freckles.png",
+        "sha256": "7cd9b74fad79679af7c8bca19e7658fe244be99ace5c3b2d585a350354d2150b",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.29177,
+        "opaque_pixel_ratio": 0.62667,
+        "quality_warning": null
+      }
+    },
+    {
+      "index": 2,
+      "asset_id": "beauty-mark",
+      "change": "Add one tiny, subtle beauty mark beneath one eye. Do not alter face structure, skin tone, expression, eye color, hairstyle or accessories.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Add one tiny, subtle beauty mark beneath one eye. Do not alter face structure, skin tone, expression, eye color, hairstyle or accessories.",
+      "requested_seed": 1202,
+      "returned_seed": 1202,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-31/run-41212888407/renders/02-beauty-mark.png",
+        "sha256": "d5ff7f6bffee56ebb54ee6b05501cb0d60bed8c60d09e02837bca2511422716a",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-31/run-41212888407/transparent/02-beauty-mark.png",
+        "sha256": "99e0cd4bdfd383874ed3c2b06214c475032e4b0c6ee02978fb44807502a68a19",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.29169,
+        "opaque_pixel_ratio": 0.62487,
+        "quality_warning": null
+      }
+    },
+    {
+      "index": 3,
+      "asset_id": "soft-blush",
+      "change": "Add a soft restrained cheek blush that matches the source palette. Do not alter face shape, skin tone, expression, eye color, hairstyle or accessories.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Add a soft restrained cheek blush that matches the source palette. Do not alter face shape, skin tone, expression, eye color, hairstyle or accessories.",
+      "requested_seed": 1203,
+      "returned_seed": 1203,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-10-31/run-41212888407/renders/03-soft-blush.png",
+        "sha256": "82ccdb15d2ca23fdac328d534206a462574f85fd3997ccd1bf8cbf1b4b33361c",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-10-31/run-41212888407/transparent/03-soft-blush.png",
+        "sha256": "7e1aae8c08bd4ee44d1a8ca716455a47e8a5ac80f6cf3837cb6015f703931030",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.29166,
+        "opaque_pixel_ratio": 0.6303,
+        "quality_warning": null
+      }
+    },
+    {
+      "index": 4,
+      "asset_id": "lower-eyeliner",
+      "change": "Add a fine, subtle anime-style lower eyeliner detail while preserving exact eye shape, iris color and expression.",
+      "prompt": "Precise image-to-image edit of the supplied original anime character illustration, not a new character. Preserve exact recognizable identity, face shape, eye shape and color except when this named variant explicitly edits the eyes, skin tone, hair color except when explicitly requested, existing accessories except when adding one, body proportions, line art, shading, palette, clothing, pose, framing and background. Make only the single change requested below. Keep every other region as close to the source as possible. Do not add text, logos, watermarks, characters, clothing or props that were not requested. Do not turn the anime illustration photorealistic. Requested single change: Add a fine, subtle anime-style lower eyeliner detail while preserving exact eye shape, iris color and expression.",
+      "requested_seed": 1204,
+      "returned_seed": 1204,
+      "render": {
+        "file": "generated/character-assets/pibara/2026-11-01/run-41319259693/renders/04-lower-eyeliner.png",
+        "sha256": "156461847f4402125ed30ec594e4ab4b6e18b768c411d9ff7cea06a1a61e0801",
+        "dimensions": [
+          768,
+          1280
+        ]
+      },
+      "transparent_layer": {
+        "file": "generated/character-assets/pibara/2026-11-01/run-41319259693/transparent/04-lower-eyeliner.png",
+        "sha256": "ff332fbd1cf8552b92f2792bece9527d7fe6bb0e861d9ce83bdcdb555ef3c270",
+        "dimensions": [
+          768,
+          1280
+        ],
+        "transparent_pixel_ratio": 0.29169,
+        "opaque_pixel_ratio": 0.60117,
+        "quality_warning": null
+      }
+    }
+  ],
+  "last_error": null,
+  "review_status": "needs_visual_identity_review",
+  "warning": "Generated renders and automated transparent cutouts require review of likeness and hair/accessory edges."
+}

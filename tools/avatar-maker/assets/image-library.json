@@ -3,7 +3,7 @@
   "project": "IMAGE Character Creator",
   "title": "Biblioteca local de ilustraciones",
   "generated_from": "data/training-labels.csv and files present in the repository tree",
-  "asset_count": 787,
+  "asset_count": 788,
   "notice": "This library indexes existing raster files in this repository for personal browsing. Filename hints do not prove authorship, franchise identity, license, or permission to redistribute/train. Items remain unreviewed until their source and rights are confirmed.",
   "filters": [
     "Todos",
@@ -12060,7 +12060,30 @@
       "character_id": "pibara",
       "pack": "face-details-4",
       "manifest_status": "needs_visual_identity_review"
+    },
+    {
+      "id": "generated-pibara-face-details-4-lower-eyeliner-f3777be4",
+      "catalog_id": "GEN-F3777BE4-LOWER-EYELINER",
+      "label": "Variante lower-eyeliner — Pibara — face-details-4",
+      "path": "generated/character-assets/pibara/2026-11-01/run-41319259693/transparent/04-lower-eyeliner.png",
+      "src": "../../generated/character-assets/pibara/2026-11-01/run-41319259693/transparent/04-lower-eyeliner.png",
+      "kind": "generated_full_illustration",
+      "origin_hint": "Generated in repository workflow via the public image-edit Space; source: from-PixAI-2034984086876227343-0.png; run: 41319259693",
+      "visual_review": "needs_visual_identity_review",
+      "license_review": "unreviewed",
+      "training_permission": "unreviewed",
+      "tags": [
+        "Generado",
+        "face-details-4"
+      ],
+      "size_bytes": 756942,
+      "sha256_git_blob": "",
+      "sha256": "ff332fbd1cf8552b92f2792bece9527d7fe6bb0e861d9ce83bdcdb555ef3c270",
+      "source_sha256": "f3777be442119b85a9ddab6c59a576f37761248a902e13289c3ff520ebcb67c0",
+      "character_id": "pibara",
+      "pack": "face-details-4",
+      "manifest_status": "needs_visual_identity_review"
     }
   ],
-  "updated_at_utc": "2026-10-31T15:05:27.758698+00:00"
+  "updated_at_utc": "2026-11-01T15:05:34.130670+00:00"
 }
